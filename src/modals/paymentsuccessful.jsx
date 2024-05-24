@@ -1,0 +1,63 @@
+import { Button, Typography } from "@material-tailwind/react";
+import React, { useState } from "react";
+import { IoMdCloseCircle } from "react-icons/io";
+const Paymentsuccessful = ({isOpen,setIsOpen}) => {
+ 
+
+  return (
+    <>
+      
+
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm"
+        >
+          <div
+            className="relative m-4 w-2/5 min-w-[40%] max-w-[40%] rounded-lg bg-white font-sans text-base font-light leading-relaxed  antialiased shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4">
+              <div className="flex text-secondary justify-end text-2xl font-snormal cursor-pointer"
+               onClick={() => setIsOpen(false)}
+              >
+                <IoMdCloseCircle />
+              </div>
+              <div className="text-center">
+                <Typography variant="h5">Transaction Successfull</Typography>
+                <Typography className="text-[14px] mt-4">
+                  Your Name TAG is successfully Allocated To <br></br> Your
+                  Number.
+                </Typography>
+              </div>
+              <div className="p-4 shadow rounded-xl">
+                <div className="flex justify-between items-center">
+                  <h1>Payment Status</h1>
+                  <Button className="bg-secondary  py-2 px-6 text-white">
+                    Success
+                  </Button>
+                </div>
+                <div className="flex justify-between mt-3 items-center">
+                  <h1 className="text-[#7A798A] text-sm">Name TAG Type</h1>
+                  <p className="text-sm font-bold">Corporate</p>
+                </div>
+                <div className="flex justify-between mt-3 items-center">
+                  <h1 className="text-[#7A798A] text-sm">Name TAG Price</h1>
+                  <p className="text-sm font-bold">20000</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-center mt-4">
+                <Button className="bg-secondary  py-2 px-6 text-white"
+                 onClick={() => setIsOpen(false)}
+                >
+                  OK
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Paymentsuccessful;
