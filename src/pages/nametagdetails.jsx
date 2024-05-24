@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Button, Chip, Radio, Typography } from "@material-tailwind/react";
+import { Button, Chip, Typography } from "@material-tailwind/react";
 import Img from "../assets/images/IMG (1).png";
 
 const Nametagdetails = () => {

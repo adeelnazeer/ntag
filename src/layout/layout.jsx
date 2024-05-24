@@ -1,37 +1,28 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import Sidebar from "../components/sideBar";
-import TagNames from "../pages/buytagname";
-import Dashboard from "../pages/dashboard";
-import TagDetails from "../pages/tagDetails";
-import ProceedPayment from "../pages/proceedPayment";
-import Paymentsuccessful from "../modals/paymentsuccessful";
-import Nametagdetails from "../pages/nametagdetails";
-import Schedulecall from "../pages/schedulecall";
+import Header from "../components/header";
+import Footer from "../components/footer";
 
-const Layout = () => {
+const DashboardLayout = ({ children }) => {
   return (
-    <>
-      <div className="bg-secondary py-6">
-        <h1 className="text-center text-[36px] text-white font-bold">
-          Corporate Name TAG
-        </h1>
-      </div>
-      <div className="grid grid-cols-12">
-        <div className="col-span-3">
-          <Sidebar />
+    <div className=" h-screen flex flex-col">
+      <Header />
+      <div className=" flex-1 overflow-auto">
+        <div className="bg-secondary py-6">
+          <h1 className="text-center text-[36px] text-white font-bold">
+            Corporate Name TAG
+          </h1>
         </div>
-        <div className="col-span-9 px-5">
-            {/* <TagNames/> */}
-            {/* <Dashboard/> */}
-            {/* <TagDetails/> */}
-            {/* <ProceedPayment/> */}
-            {/* <Paymentsuccessful/> */}
-            {/* <Nametagdetails/> */}
-            <Schedulecall/>
+        <div className="grid grid-cols-12">
+          <div className="col-span-3">
+            <Sidebar />
+          </div>
+          <div className="col-span-9 px-5 ">{children}</div>
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 
-export default Layout;
+export default DashboardLayout;

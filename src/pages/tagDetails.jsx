@@ -1,7 +1,9 @@
 import { Button, Radio, Typography } from "@material-tailwind/react";
-import React from "react";
 import Img from "../assets/images/wallet (2).png";
+import { useNavigate } from "react-router-dom";
+import { ConstentRoutes } from "../utilities/routesConst";
 const TagDetails = () => {
+  const navigate = useNavigate();
   return (
     <div className="p-4 rounded-xl shadow mt-6">
       <div className="flex justify-between bg-[#F6F7FB] px-5 py-3 rounded-xl">
@@ -40,20 +42,24 @@ const TagDetails = () => {
           Term of Services
         </Typography>
         <div className=" flex items-start">
-         <span>*</span> <Radio />
+          <span>*</span> <Radio />
           <Typography className="text-xs leading-[40px] ">
             I hereby confirm that the information above including information
             provided at the time of registration of this telecom cloud account,
             is complete, truthful and accurate, and will promptly provide
-            telecom  cloud with writen notice of any  updates there to. I consent
+            telecom cloud with writen notice of any updates there to. I consent
             to the collection, use storage and disclosure of this information
-            for the purposes of risk control  and compliance with{" "}
+            for the purposes of risk control and compliance with{" "}
           </Typography>
         </div>
       </div>
       <div className="flex justify-center mt-2">
-      <Button className=" bg-secondary text-white text-[14px] w-[400px]">Purchase</Button>
-
+        <Button
+          className=" bg-secondary text-white text-[14px] w-[400px]"
+          onClick={() => navigate(ConstentRoutes.processPayment)}
+        >
+          Purchase
+        </Button>
       </div>
     </div>
   );

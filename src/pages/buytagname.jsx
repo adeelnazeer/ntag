@@ -1,7 +1,9 @@
 import { Button, Typography } from "@material-tailwind/react";
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import { ConstentRoutes } from "../utilities/routesConst";
 
 const TagNames = () => {
+  const navigate = useNavigate();
   return (
     <div className="p-4">
       <div className="mt-4">
@@ -11,7 +13,12 @@ const TagNames = () => {
         <Typography className="mt-4 font-normal text-[26px]">
           Currently no name Tag is register against your account
         </Typography>
-        <Button className="mt-32 bg-secondary text-white text-[14px] w-[400px]">BUY Name TAG</Button>
+        <Button
+          className="mt-32 bg-secondary text-white text-[14px] w-[400px]"
+          onClick={() => navigate(ConstentRoutes.nameTagDetail)}
+        >
+          BUY Name TAG
+        </Button>
       </div>
     </div>
   );

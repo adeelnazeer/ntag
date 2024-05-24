@@ -4,9 +4,11 @@ import Img from "../assets/images/IMG.png";
 import Img1 from "../assets/images/IMG (1).png";
 import Img2 from "../assets/images/IMG (2).png";
 import Img3 from "../assets/images/IMG (3).png";
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import { ConstentRoutes } from "../utilities/routesConst";
 
 const Dashboardtable = () => {
+  const navigate = useNavigate();
   return (
     <div className="p-4 rounded-xl shadow pb-7">
       <div className="flex justify-between">
@@ -82,7 +84,10 @@ const Dashboardtable = () => {
           <Button className="bg-[#edf6eb]  py-2 px-6 text-secondary">
             Available
           </Button>
-          <Button className="bg-secondary  py-2 px-6 text-white">
+          <Button
+            className="bg-secondary  py-2 px-6 text-white"
+            onClick={() => navigate(ConstentRoutes.tagDetail)}
+          >
             Buy Now
           </Button>
         </div>
@@ -105,7 +110,10 @@ const Dashboardtable = () => {
           <Button className="bg-[#edf6eb]  py-2 px-6 text-secondary">
             Available
           </Button>
-          <Button className="bg-secondary  py-2 px-6 text-white">
+          <Button
+            className="bg-secondary  py-2 px-6 text-white"
+            onClick={() => navigate(ConstentRoutes.tagDetail)}
+          >
             Buy Now
           </Button>
         </div>
@@ -128,17 +136,21 @@ const Dashboardtable = () => {
           <Button className="bg-[#edf6eb]  py-2 px-6 text-secondary">
             Available
           </Button>
-          <Button className="bg-secondary  py-2 px-6 text-white">
+          <Button
+            className="bg-secondary  py-2 px-6 text-white"
+            onClick={() => navigate(ConstentRoutes.tagDetail)}
+          >
             Buy Now
           </Button>
         </div>
       </div>
       <div className="flex justify-center gap-8 mt-4">
         <p>1</p>
-        <p className="text-secondary"><u>2</u></p>
+        <p className="text-secondary">
+          <u>2</u>
+        </p>
         <p>3</p>
         <p>4</p>
-
       </div>
     </div>
   );
