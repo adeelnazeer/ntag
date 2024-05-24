@@ -1,5 +1,5 @@
-import { Button, Radio, Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
+import { Button, Typography } from "@material-tailwind/react";
+import { useState } from "react";
 import Img from "../assets/images/wallet (2).png";
 import Paymentsuccessful from "../modals/paymentsuccessful";
 
@@ -36,8 +36,9 @@ const ProceedPayment = () => {
       </div>
 
       <div className="flex justify-center mt-2">
-        <Button className=" bg-secondary text-white text-[14px] w-[400px]" 
-        onClick={()=>setIsOpen(true)}
+        <Button
+          className=" bg-secondary text-white text-[14px] w-[400px]"
+          onClick={() => setIsOpen(true)}
         >
           Proceed Payment
         </Button>

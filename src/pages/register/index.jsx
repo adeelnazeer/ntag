@@ -1,14 +1,14 @@
 import Footer from "../../components/footer";
-import LoginForm from "./components/form";
 import Header from "../../components/header";
+import { MultiStepForm } from "./components/stepper";
 
-const Login = () => {
+const RegisterPage = () => {
   return (
     <div className="flex flex-col h-screen overflow-auto">
       <Header />
-      <LoginForm />
+      <MultiStepForm />
       <Footer />
     </div>
   );
 };
-export default Login;
+export default RegisterPage;

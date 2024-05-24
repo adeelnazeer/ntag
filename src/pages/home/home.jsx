@@ -2,10 +2,12 @@ import { Button } from "@headlessui/react";
 import Carusal from "./components/carusal";
 import Services from "./components/services";
 import Footer from "../../components/footer";
+import Header from "../../components/header";
 
 const HomePage = () => {
   return (
     <>
+      <Header />
       <div className=" px-6">
         <Carusal />
         <Services />

@@ -1,4 +1,4 @@
-import { Input, Label } from "@headlessui/react";
+import { Input } from "@headlessui/react";
 
 const ContactForm = () => {
   return (

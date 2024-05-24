@@ -3,13 +3,17 @@ import { Stepper, Step, Button, Typography } from "@material-tailwind/react";
 import CompanyForm from "./companyForm";
 import ContactForm from "./contactForm";
 import AccountForm from "./accountForm";
+import { FaRegUser } from "react-icons/fa6";
+import { MdContacts } from "react-icons/md";
+import { MdManageAccounts } from "react-icons/md";
+
 // import {
 //   CogIcon,
 //   UserIcon,
 //   BuildingLibraryIcon,
 // } from "@heroicons/react/24/outline";
 
-export function StepperWithContent() {
+export function MultiStepForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
@@ -18,14 +22,18 @@ export function StepperWithContent() {
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
   return (
-    <div className="w-full px-24 py-4">
+    <div className="w-full px-24 py-4 flex-1">
       <Stepper
         activeStep={activeStep}
         isLastStep={(value) => setIsLastStep(value)}
         isFirstStep={(value) => setIsFirstStep(value)}
       >
-        <Step onClick={() => setActiveStep(0)}>
-          {/* <UserIcon className="h-5 w-5" /> */}
+        <Step
+          onClick={() => setActiveStep(0)}
+          activeClassName=" bg-secondary"
+          completedClassName=" bg-secondary"
+        >
+          <FaRegUser className="h-5 w-5" />
           <div className="absolute -bottom-[2.5rem] w-max text-center">
             <Typography
               className="text-[#555] text-base  font-semibold"
@@ -35,8 +43,12 @@ export function StepperWithContent() {
             </Typography>
           </div>
         </Step>
-        <Step onClick={() => setActiveStep(1)}>
-          {/* <CogIcon className="h-5 w-5" /> */}
+        <Step
+          onClick={() => setActiveStep(1)}
+          activeClassName=" bg-secondary"
+          completedClassName=" bg-secondary"
+        >
+          <MdContacts className="h-5 w-5" />
           <div className="absolute -bottom-[2.5rem] w-max text-center">
             <Typography
               className="text-[#555] text-base  font-semibold"
@@ -46,8 +58,12 @@ export function StepperWithContent() {
             </Typography>
           </div>
         </Step>
-        <Step onClick={() => setActiveStep(2)} activeClassName="adeel">
-          {/* <BuildingLibraryIcon className="h-5 w-5" /> */}
+        <Step
+          onClick={() => setActiveStep(2)}
+          activeClassName=" bg-secondary"
+          completedClassName=" bg-secondary"
+        >
+          <MdManageAccounts className="h-5 w-5" />
           <div className="absolute -bottom-[2.5rem] w-max text-center">
             <Typography
               className="text-[#555] text-base  font-semibold"

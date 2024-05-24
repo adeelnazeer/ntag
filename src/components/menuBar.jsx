@@ -1,11 +1,17 @@
- import { Button } from "@headlessui/react";
-import Logo from "../assets/images/logo.png";
-import TagName from "../assets/images/tagname.png";
-
+import { Button } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
+import { ConstentRoutes } from "../utilities/routesConst";
 const MenuBar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex py-6 gap-16 items-center max-w-6xl mx-auto">
-      <Button className=" text-primaryLight font-medium  py-1 px-2">
+      <Button
+        className=" text-primaryLight font-medium  py-1 px-2"
+        onClick={() => {
+          navigate(ConstentRoutes.dashboard);
+        }}
+      >
         Home
       </Button>
       <Button className=" text-primaryLight font-medium py-1 px-2">
