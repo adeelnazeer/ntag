@@ -1,17 +1,23 @@
-import { Button } from "@headlessui/react";
+ import { Button } from "@headlessui/react";
 import Logo from "../assets/images/logo.png";
 import TagName from "../assets/images/tagname.png";
 
 const MenuBar = () => {
   return (
-    <div className="flex py-8 gap-16 items-center max-w-6xl mx-auto">
-      <Button className=" text-20">Home</Button>
-      <Button className=" text-20">Home</Button>
-      <Button className=" text-20">Home</Button>
-      <Button className=" text-20">Home</Button>
-      <Button className=" text-20">Home</Button>
-      <Button className=" text-20">Home</Button>
-      <Button className=" text-20">Home</Button>
+    <div className="flex py-6 gap-16 items-center max-w-6xl mx-auto">
+      <Button className=" text-primaryLight font-medium  py-1 px-2">
+        Home
+      </Button>
+      <Button className=" text-primaryLight font-medium py-1 px-2">
+        Service Overview
+      </Button>
+      <Button className=" text-primaryLight font-medium py-1 px-2">
+        Pricing
+      </Button>
+      <Button className=" text-primaryLight font-medium py-1 px-2">
+        Solutions
+      </Button>
+      <Button className=" text-primaryLight font-medium py-1 px-2">Help</Button>
     </div>
   );
 };
