@@ -20,12 +20,7 @@ const ScheduleCall = () => {
           <Sidebar />
         </div>
         <div className="col-span-9 px-5">
-          {/* <TagNames/> */}
-          {/* <Dashboard/> */}
-          {/* <TagDetails/> */}
-          {/* <ProceedPayment/> */}
-          {/* <Paymentsuccessful/> */}
-          {/* <Nametagdetails/> */}
+  
           <Schedulecall />
         </div>
       </div>

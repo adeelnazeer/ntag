@@ -13,11 +13,11 @@ const DashboardLayout = ({ children }) => {
             Corporate Name TAG
           </h1>
         </div>
-        <div className="grid grid-cols-12">
+        <div className="grid grid-cols-12 ">
           <div className="col-span-3">
             <Sidebar />
           </div>
-          <div className="col-span-9 px-5 ">{children}</div>
+          <div className="col-span-9 px-5 pt-4">{children}</div>
         </div>
       </div>
       <Footer />

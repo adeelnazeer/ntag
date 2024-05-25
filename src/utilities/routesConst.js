@@ -8,4 +8,5 @@ export const ConstentRoutes = {
   tagDetail: "/tag-detail",
   processPayment: "/process-payment",
   nameTagDetail: "/name-tag-detail",
+  profilePage: "/profile",
 };
