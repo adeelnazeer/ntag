@@ -1,8 +1,14 @@
 import { Input } from "@headlessui/react";
+import { Typography } from "@material-tailwind/react";
 
 const ContactForm = () => {
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="flex flex-col gap-4 max-w-3xl mx-auto">
+      <div>
+        <Typography className="text-[#555] text-base  font-semibold">
+          Contact Information
+        </Typography>
+      </div>
       <div>
         <label className="text-base text-[#555]">First Name</label>
         <Input

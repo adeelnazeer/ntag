@@ -6,60 +6,112 @@ import { ImStatsDots } from "react-icons/im";
 import { FaUser } from "react-icons/fa";
 import { FaMicrophone } from "react-icons/fa";
 import { IoLogOutSharp } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const activeDashboard = location?.pathname == ConstentRoutes.dashboard;
+  const activeTwo = location?.pathname == ConstentRoutes.buyTag;
+  const activeThree = location?.pathname == ConstentRoutes.manageTagName;
+  const activeProfile = location?.pathname == ConstentRoutes.profilePage;
+
   return (
     <div className="main fixed overflow-auto">
       <div className="">
-        <Card className="h-[calc(100vh-6rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-          <List className="text-[16px] font-normal text-black ">
-            <ListItem className="py-6" onClick={()=>navigate(ConstentRoutes.dashboard)}>
-              <ListItemPrefix>
-                <MdHomeFilled className="h-5 w-5" />
-              </ListItemPrefix>
-              Dashboard
-            </ListItem>
-            <ListItem className="py-6" onClick={()=>navigate(ConstentRoutes.buyTag)}>
-              <ListItemPrefix>
-                <FaHashtag className="h-4 w-4" />
-              </ListItemPrefix>
-              Buy Name Tag
-            </ListItem>
-            <ListItem className="py-6" onClick={()=>navigate(ConstentRoutes.manageTagName)}>
-              <ListItemPrefix>
-                <BsFire className="h-4 w-4" />
-              </ListItemPrefix>
-              Manage Tag Name
-            </ListItem>
-            <ListItem className="py-6">
-              <ListItemPrefix>
-                <ImStatsDots className="h-4 w-4" />
-              </ListItemPrefix>
-              Statistics
-            </ListItem>
-            <ListItem className="py-6" onClick={()=>navigate(ConstentRoutes.voiceMail)}>
-              {" "}
-              <ListItemPrefix>
-                <FaMicrophone className="h-4 w-4" />
-              </ListItemPrefix>
-              Voice mail
-            </ListItem>
-            <ListItem className="py-6">
-              {" "}
-              <ListItemPrefix>
-                <FaUser className="h-4 w-4" />
-              </ListItemPrefix>
-              Profile
-            </ListItem>
-            <ListItem className="text-[#FF4842] py-6">
-              <ListItemPrefix>
-                <IoLogOutSharp className="h-4 w-4" />
-              </ListItemPrefix>
-              Log Out
-            </ListItem>
+        <Card className="px-4 py-4 h-[calc(100vh-123px)] w-full max-w-[20rem] shadow-xl shadow-blue-gray-900/5">
+          <List className="text-[16px] gap-4 p-0 font-normal text-black ">
+            <div className="flex gap-6 ">
+              <div
+                className={`${activeDashboard ? "bg-secondary" : "bg-white"
+                  }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+              />
+              <ListItem
+                className={`py-4 ${activeDashboard ? " bg-secondary text-white" : ""
+                  } focus:bg-secondary focus:text-white`}
+                onClick={() => navigate(ConstentRoutes.dashboard)}
+              >
+                <ListItemPrefix>
+                  <MdHomeFilled className="h-5 w-5" />
+                </ListItemPrefix>
+                Dashboard
+              </ListItem>
+            </div>
+            <div className="flex gap-6 ">
+              <div
+                className={`${activeTwo ? "bg-secondary" : "bg-white"
+                  }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+              />
+              <ListItem
+                className={`py-4 ${activeTwo ? " bg-secondary text-white" : ""
+                  } focus:bg-secondary focus:text-white`}
+                onClick={() => navigate(ConstentRoutes.buyTag)}
+              >
+                <ListItemPrefix>
+                  <FaHashtag className="h-4 w-4" />
+                </ListItemPrefix>
+                Buy Name Tag
+              </ListItem>
+            </div>
+            <div className="flex gap-6 ">
+              <div
+                className={`${activeThree ? "bg-secondary" : "bg-white"
+                  }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+              />
+              <ListItem
+                className={`py-4 ${activeThree ? " bg-secondary text-white" : ""
+                  } focus:bg-secondary focus:text-white`}
+                onClick={() => navigate(ConstentRoutes.manageTagName)}
+              >
+                <ListItemPrefix>
+                  <BsFire className="h-4 w-4" />
+                </ListItemPrefix>
+                Manage Tag Name
+              </ListItem>
+            </div>
+            <div className="flex gap-6 ">
+              <div className=" bg-white w-2 h-full rounded-tr-[10px] rounded-br-[10px]" />
+              <ListItem className="py-4">
+                <ListItemPrefix>
+                  <ImStatsDots className="h-4 w-4" />
+                </ListItemPrefix>
+                Statistics
+              </ListItem>
+            </div>
+            <div className="flex gap-6 ">
+              <div className=" bg-white w-2 h-full rounded-tr-[10px] rounded-br-[10px]" />
+              <ListItem className="py-4"
+                onClick={() => navigate(ConstentRoutes.voiceMail)}
+              >
+                <ListItemPrefix>
+                  <FaMicrophone className="h-4 w-4" />
+                </ListItemPrefix>
+                Voice mail
+              </ListItem>
+            </div>
+            <div className="flex gap-6 ">
+              <div className=" bg-white w-2 h-full rounded-tr-[10px] rounded-br-[10px]" />
+              <ListItem
+                className={`py-4 ${activeProfile ? " bg-secondary text-white" : ""
+                  } focus:bg-secondary focus:text-white`}
+                onClick={() => navigate(ConstentRoutes.profilePage)}
+              >
+                <ListItemPrefix>
+                  <FaUser className="h-4 w-4" />
+                </ListItemPrefix>
+                Profile
+              </ListItem>
+            </div>
+            <div className="flex gap-6 ">
+              <div className=" bg-white w-2 h-full rounded-tr-[10px] rounded-br-[10px]" />
+              <ListItem className="text-[#FF4842] py-4">
+                <ListItemPrefix>
+                  <IoLogOutSharp className="h-4 w-4" />
+                </ListItemPrefix>
+                Log Out
+              </ListItem>
+            </div>
           </List>
         </Card>
       </div>
