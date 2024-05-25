@@ -40,7 +40,7 @@ const Sidebar = () => {
               </ListItemPrefix>
               Statistics
             </ListItem>
-            <ListItem className="py-6">
+            <ListItem className="py-6" onClick={()=>navigate(ConstentRoutes.voiceMail)}>
               {" "}
               <ListItemPrefix>
                 <FaMicrophone className="h-4 w-4" />
