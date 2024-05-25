@@ -12,6 +12,7 @@ import TagNames from "./pages/buytagname";
 import TagDetails from "./pages/tagDetails";
 import ProceedPayment from "./pages/proceedPayment";
 import Nametagdetails from "./pages/nametagdetails";
+import Voicemail from "./pages/voicemail";
 
 function App() {
   return (
@@ -65,6 +66,14 @@ function App() {
           element={
             <DashboardLayout>
               <Nametagdetails />
+            </DashboardLayout>
+          }
+        />
+         <Route
+          path={ConstentRoutes.voiceMail}
+          element={
+            <DashboardLayout>
+              <Voicemail />
             </DashboardLayout>
           }
         />
