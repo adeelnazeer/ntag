@@ -9,4 +9,5 @@ export const ConstentRoutes = {
   processPayment: "/process-payment",
   nameTagDetail: "/name-tag-detail",
   profilePage: "/profile",
+  voiceMail:"/voicemail"
 };

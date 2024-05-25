@@ -24,14 +24,12 @@ const Sidebar = () => {
           <List className="text-[16px] gap-4 p-0 font-normal text-black ">
             <div className="flex gap-6 ">
               <div
-                className={`${
-                  activeDashboard ? "bg-secondary" : "bg-white"
-                }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                className={`${activeDashboard ? "bg-secondary" : "bg-white"
+                  }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
               />
               <ListItem
-                className={`py-4 ${
-                  activeDashboard ? " bg-secondary text-white" : ""
-                } focus:bg-secondary focus:text-white`}
+                className={`py-4 ${activeDashboard ? " bg-secondary text-white" : ""
+                  } focus:bg-secondary focus:text-white`}
                 onClick={() => navigate(ConstentRoutes.dashboard)}
               >
                 <ListItemPrefix>
@@ -42,14 +40,12 @@ const Sidebar = () => {
             </div>
             <div className="flex gap-6 ">
               <div
-                className={`${
-                  activeTwo ? "bg-secondary" : "bg-white"
-                }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                className={`${activeTwo ? "bg-secondary" : "bg-white"
+                  }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
               />
               <ListItem
-                className={`py-4 ${
-                  activeTwo ? " bg-secondary text-white" : ""
-                } focus:bg-secondary focus:text-white`}
+                className={`py-4 ${activeTwo ? " bg-secondary text-white" : ""
+                  } focus:bg-secondary focus:text-white`}
                 onClick={() => navigate(ConstentRoutes.buyTag)}
               >
                 <ListItemPrefix>
@@ -60,14 +56,12 @@ const Sidebar = () => {
             </div>
             <div className="flex gap-6 ">
               <div
-                className={`${
-                  activeThree ? "bg-secondary" : "bg-white"
-                }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                className={`${activeThree ? "bg-secondary" : "bg-white"
+                  }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
               />
               <ListItem
-                className={`py-4 ${
-                  activeThree ? " bg-secondary text-white" : ""
-                } focus:bg-secondary focus:text-white`}
+                className={`py-4 ${activeThree ? " bg-secondary text-white" : ""
+                  } focus:bg-secondary focus:text-white`}
                 onClick={() => navigate(ConstentRoutes.manageTagName)}
               >
                 <ListItemPrefix>
@@ -87,7 +81,9 @@ const Sidebar = () => {
             </div>
             <div className="flex gap-6 ">
               <div className=" bg-white w-2 h-full rounded-tr-[10px] rounded-br-[10px]" />
-              <ListItem className="py-4">
+              <ListItem className="py-4"
+                onClick={() => navigate(ConstentRoutes.voiceMail)}
+              >
                 <ListItemPrefix>
                   <FaMicrophone className="h-4 w-4" />
                 </ListItemPrefix>
@@ -97,9 +93,8 @@ const Sidebar = () => {
             <div className="flex gap-6 ">
               <div className=" bg-white w-2 h-full rounded-tr-[10px] rounded-br-[10px]" />
               <ListItem
-                className={`py-4 ${
-                  activeProfile ? " bg-secondary text-white" : ""
-                } focus:bg-secondary focus:text-white`}
+                className={`py-4 ${activeProfile ? " bg-secondary text-white" : ""
+                  } focus:bg-secondary focus:text-white`}
                 onClick={() => navigate(ConstentRoutes.profilePage)}
               >
                 <ListItemPrefix>

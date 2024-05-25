@@ -15,6 +15,7 @@ import ProceedPayment from "./pages/proceedPayment";
 import Nametagdetails from "./pages/nametagdetails";
 import ProfilePage from "./pages/profile";
 import { ToastContainer } from "react-toastify";
+import Voicemail from "./pages/voicemail";
 
 function App() {
   return (
@@ -76,6 +77,14 @@ function App() {
           element={
             <DashboardLayout>
               <ProfilePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.voiceMail}
+          element={
+            <DashboardLayout>
+              <Voicemail />
             </DashboardLayout>
           }
         />
