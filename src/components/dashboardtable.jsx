@@ -14,42 +14,38 @@ const Dashboardtable = (props) => {
   };
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-  
+
   return (
     <div className="p-4 rounded-xl shadow pb-7">
       <div className="flex justify-between">
         <div className="flex gap-4">
           <Button
-            className={`py-[8px] px-[24px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${
-              pagination?.tag_digits == 3 ? "bg-secondary text-white" : ""
-            }`}
+            className={`py-[8px] px-[24px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${pagination?.tag_digits == 3 ? "bg-secondary text-white" : ""
+              }`}
             variant="outlined"
             onClick={() => setPagination((st) => ({ ...st, tag_digits: 3 }))}
           >
             3-Digit
           </Button>
           <Button
-            className={`py-[8px] px-[24px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${
-              pagination?.tag_digits == 4 ? "bg-secondary text-white" : ""
-            }`}
+            className={`py-[8px] px-[24px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${pagination?.tag_digits == 4 ? "bg-secondary text-white" : ""
+              }`}
             variant="outlined"
             onClick={() => setPagination((st) => ({ ...st, tag_digits: 4 }))}
           >
             4-Digit
           </Button>
           <Button
-            className={`py-[8px] px-[24px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${
-              pagination?.tag_digits == 5 ? "bg-secondary text-white" : ""
-            }`}
+            className={`py-[8px] px-[24px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${pagination?.tag_digits == 5 ? "bg-secondary text-white" : ""
+              }`}
             variant="outlined"
             onClick={() => setPagination((st) => ({ ...st, tag_digits: 5 }))}
           >
             5-Digit
           </Button>
           <Button
-            className={`py-[8px] px-[24px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${
-              pagination?.tag_digits == 0 ? "bg-secondary text-white" : ""
-            }`}
+            className={`py-[8px] px-[24px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${pagination?.tag_digits == 0 ? "bg-secondary text-white" : ""
+              }`}
             variant="outlined"
             onClick={() => setPagination((st) => ({ ...st, tag_digits: 0 }))}
           >
@@ -121,7 +117,7 @@ const Dashboardtable = (props) => {
             </Button>
             <Button
               className="bg-secondary  py-2 px-6 text-white"
-              onClick={() => navigate(ConstentRoutes.tagDetail,{state:single})}
+              onClick={() => navigate(ConstentRoutes.tagDetail, { state: single })}
             >
               Buy Now
             </Button>
@@ -131,16 +127,11 @@ const Dashboardtable = (props) => {
 
       <div className="flex justify-center gap-8 mt-4">
         <Pagination
-          currentPage={pagination?.current_page}
-          totalPages={data?.length || 0}
+          currentPage={pagination?.page}
+          totalPages={Math.ceil(metaData?.total / 10) || 0}
           onPageChange={handlePageChange}
         />
-        <p>1</p>
-        <p className="text-secondary">
-          <u>2</u>
-        </p>
-        <p>3</p>
-        <p>4</p>
+
       </div>
     </div>
   );

@@ -35,14 +35,13 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
   const pageNumbers = getPageNumbers();
 
-  console.log({pageNumbers})
 
   return (
     <nav className=" flex justify-center">
       <ul className="flex space-x-1 sm:space-x-2 md:space-x-4">
         <li>
           <button
-            className={`rounded bg-gray-200 px-2 py-1 hover:bg-gray-300 sm:px-3 sm:py-1.5 sm:text-lg md:px-4 md:py-2 md:text-xl`}
+            className={` text-base hover:border-none focus:border-none text-primary `}
             disabled={currentPage === 1}
             onClick={() => onPageChange(currentPage - 1)}
           >
@@ -56,11 +55,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
               <span className="px-3 py-1">...</span>
             ) : (
               <button
-                className={`${
-                  currentPage === page
-                    ? "bg-[#5538c8] text-white"
-                    : "bg-gray-200 hover:bg-gray-300"
-                } rounded px-2 py-1 sm:px-3 sm:py-1.5 sm:text-lg md:px-4 md:py-2 md:text-xl`}
+                className={`${currentPage === page
+                    ? " text-secondary "
+                    : " text-primary"
+                  }  text-base hover:border-none focus:border-none`}
                 onClick={() => onPageChange(page)}
               >
                 {page}
@@ -71,7 +69,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
         <li>
           <button
-            className={`rounded bg-gray-200 px-2 py-1 hover:bg-gray-300 sm:px-3 sm:py-1.5 sm:text-lg md:px-4 md:py-2 md:text-xl `}
+            className={` text-base hover:border-none focus:border-none text-primary `}
             disabled={currentPage === totalPages}
             onClick={() => onPageChange(currentPage + 1)}
           >
