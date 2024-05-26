@@ -1,8 +1,21 @@
 import { Button, Input } from "@headlessui/react";
 import LoginImg from "../../../assets/images/login.png";
-
+import { useForm } from "react-hook-form";
+import { useRegisterHook } from "../../hooks/useRegisterHook";
 const LoginForm = () => {
+  const registerHook = useRegisterHook();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+  registerHook.handleLogin(data);
+  };
   return (
+    <form onSubmit={handleSubmit(onSubmit)}>
     <div className=" flex-1 overflow-auto">
       <div className="bg-secondary overflow-auto h-full flex justify-between gap-6 py-8 px-16">
         <div className="flex-1">
@@ -16,14 +29,27 @@ const LoginForm = () => {
           <Input
             className="mt-6 w-full rounded-xl p-4 bg-[#F6F7FB] outline-none "
             placeholder="User name"
-            style={{ border: "2px solid #8A8AA033" }}
+            style={
+              errors.username
+                ? { border: "1px solid red" }
+                : { border: "1px solid #8A8AA033" }
+            }
+            {...register("username", { required: true })}
           />
           <Input
             className="mt-6 w-full rounded-xl p-4 bg-[#F6F7FB] outline-none "
             placeholder="Enter Password"
-            style={{ border: "2px solid #8A8AA033" }}
+            type="password"
+            style={
+              errors.password
+                ? { border: "1px solid red" }
+                : { border: "1px solid #8A8AA033" }
+            }
+            {...register("password", { required: true })}
           />
-          <Button className="w-full mt-10 px-4 py-2 bg-secondary text-white text-[22px] font-semibold">
+          <Button className="w-full mt-10 px-4 py-2 bg-secondary text-white text-[22px] font-semibold"
+          type="submit"
+          >
             LOGIN
           </Button>
           <div className="mt-6 flex justify-center gap-4">
@@ -35,6 +61,7 @@ const LoginForm = () => {
       </div>
       {/* <Footer /> */}
     </div>
+    </form>
   );
 };
 

@@ -17,5 +17,28 @@ export const useTagList = () => {
       });
   }, [pagination]);
 
-  return { data, setPagination, pagination, metaData };
+  const handleTagDetails = (data) => {
+    const payLoad = {
+      username: data?.username,
+      password: data?.password,
+      channel: "channel",
+    };
+    APICall("post", payLoad, EndPoints.buytags)
+      .then((res) => {
+        console.log(res,"res")
+        if (res?.success) {
+          toast.success(res?.message || "");
+          const token = res?.data?.token;
+          localStorage.setItem("token", token);
+          navigate('/dashboard')
+        } else {
+          toast.error(res?.message);
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+
+  return { data, setPagination, pagination, metaData,handleTagDetails };
 };
