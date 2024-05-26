@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:5174",
+  baseURL: import.meta.env.VITE_APP_BASE_URL,
 });
 
 axiosInstance.interceptors.request.use(
