@@ -5,7 +5,8 @@ const EndPoints = {
     register: "/customer/auth/register",
     login:"/customer/auth/login",
     buytags:"/customer/buy/tags",
-    updateProfile:"/customer/updatecustomer/"
+    updateProfile:"/customer/updatecustomer/",
+    verifyOtp:'/customer/verifyotp'
   },
 };
 

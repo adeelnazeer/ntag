@@ -6,7 +6,6 @@ import { useRegisterHook } from "../../hooks/useRegisterHook";
 
 const GetLabel = ({ name }) => {
   return (
-   
     <label className="text-base text-[#555]">
       {name} <span className=" text-red-500">*</span>
     </label>
@@ -16,7 +15,7 @@ const GetLabel = ({ name }) => {
 const CompanyForm = ({ register, errors, watch }) => {
   const registerData = useRegisterHook();
   const watchAllFields = watch();
- 
+
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
       <div>
@@ -97,7 +96,7 @@ const CompanyForm = ({ register, errors, watch }) => {
           type="password"
           style={
             errors.confirm_password ||
-              watchAllFields?.password != watchAllFields?.confirm_password
+            watchAllFields?.password != watchAllFields?.confirm_password
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
@@ -124,7 +123,9 @@ const CompanyForm = ({ register, errors, watch }) => {
             }}
             {...register("msisdn", { required: true })}
             style={
-              errors.msisdn ? { border: "1px solid red" } : { border: "1px solid #8A8AA033" }
+              errors.msisdn
+                ? { border: "1px solid red" }
+                : { border: "1px solid #8A8AA033" }
             }
           />
           {registerData?.expirationTime ? (
@@ -150,19 +151,33 @@ const CompanyForm = ({ register, errors, watch }) => {
 
       <div>
         <GetLabel name="Verification Code" />
+        <div className="relative mt-2  items-center flex w-full">
         <Input
-          className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
+          className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="Enter verification code"
-          type="number"
           {...register("verification_code", {
             required: true,
+            validate: (val) => {
+              if (watch("verification_code") != val) {
+                return "Your OTP does not match";
+              }
+            },
           })}
           style={
-            errors.verification_code
+            errors.verification_code ||
+            registerData.verifyOtp.code != watchAllFields?.verification_code
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
         />
+        <p
+          size="sm"
+          className="!absolute right-3 cursor-pointer text-sm rounded"
+          onClick={() => registerData.handleVerifyOtp(watchAllFields)}
+        >
+          Verify OTP
+        </p>
+        </div>
       </div>
 
       <div className="col-span-2">

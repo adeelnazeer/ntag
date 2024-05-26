@@ -48,6 +48,7 @@ const UploadBtn = ({register}) => {
       console.error('File validation error:', validationError);
     }
   };
+  console.log(base64,"asdsd")
 
   return (
     <div className="flex gap-4">

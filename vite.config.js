@@ -12,6 +12,7 @@ export default defineConfig({
       "/customer/corptaglist": "https://78b9-59-103-109-25.ngrok-free.app",
       "/customer/auth/register": "https://78b9-59-103-109-25.ngrok-free.app",
       "/customer/auth/login": "https://78b9-59-103-109-25.ngrok-free.app",
+      "/customer/verifyotp":"https://78b9-59-103-109-25.ngrok-free.app"
 
     },
     // https: true,
