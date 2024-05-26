@@ -3,9 +3,9 @@ const EndPoints = {
     corp: "/customer/corptaglist",
     generateOtp: "/customer/generateotp",
     register: "/customer/auth/register",
-    login:"/customer/auth/login",
-    buytags:"/customer/buy/tags",
-    updateProfile:"/customer/updatecustomer/"
+    login: "/customer/auth/login",
+    buytags: "/customer/buy/tags",
+    updateProfile: (slug) => `/customer/updatecustomer/${slug}`,
   },
 };
 

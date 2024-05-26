@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 
 const UploadBtn = ({register}) => {
@@ -39,6 +40,8 @@ const UploadBtn = ({register}) => {
       try {
         const base64String = await convertToBase64(file);
         register('document_name1', { value: base64String, required: true });
+        register('document_file_name1', { value: fileName});
+
         setBase64(base64String);
       } catch (error) {
       }

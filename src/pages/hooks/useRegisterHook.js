@@ -3,9 +3,10 @@ import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { ConstentRoutes } from "../../utilities/routesConst";
 
 export const useRegisterHook = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [expirationTime, setExpirationTime] = useState(null);
 
   const handleExipre = () => {
@@ -33,41 +34,42 @@ export const useRegisterHook = () => {
       });
   };
 
-  const handleRegister = (data, setActiveStep) => {
+  const handleRegister = (data, setActiveStep, reset) => {
     const payload = { ...data };
-    (payload.channel = "WEB"),
-      APICall("post", payload, EndPoints.customer.register)
-        .then((res) => {
-          if (res?.success) {
-            toast.success(res?.message || "");
-            setActiveStep(1);
-            const token = res?.data?.token;
-            localStorage.setItem("token", token);
-          } else {
-            toast.error(res?.message);
-          }
-        })
-        .catch((err) => {
-          console.log("err", err);
-       
-        });
+    payload.channel = "WEB"
+    APICall("post", payload, EndPoints.customer.register)
+      .then((res) => {
+        if (res?.success) {
+          toast.success(res?.message || "");
+          setActiveStep(1);
+          const token = res?.data?.token;
+          localStorage.setItem("token", token);
+          reset()
+        } else {
+          toast.error(res?.message);
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+
+      });
   };
-  const handleUpdateProfile = (data, setActiveStep) => {
+  const handleUpdateProfile = (data) => {
+    const id = localStorage.getItem("id")
     const payload = { ...data };
-    (payload.channel = "WEB"),
-      APICall("put", payload, EndPoints.customer.updateProfile)
+    payload.channel = "WEB",
+      APICall("put", payload, EndPoints.customer.updateProfile(id))
         .then((res) => {
           if (res?.success) {
             toast.success(res?.message || "");
-            const token = res?.data?.token;
-            localStorage.setItem("token", token);
+            navigate(ConstentRoutes.dashboard)
           } else {
             toast.error(res?.message);
           }
         })
         .catch((err) => {
           console.log("err", err);
-       
+
         });
   };
 
@@ -80,11 +82,12 @@ export const useRegisterHook = () => {
 
     APICall("post", payLoad, EndPoints.customer.login)
       .then((res) => {
-        console.log(res,"res")
         if (res?.success) {
           toast.success(res?.message || "");
           const token = res?.data?.token;
           localStorage.setItem("token", token);
+          localStorage.setItem("id", res?.data?.customer_account_id);
+          localStorage.setItem("number", res?.data?.phone_number);
           navigate('/dashboard')
         } else {
           toast.error(res?.message);

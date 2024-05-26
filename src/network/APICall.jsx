@@ -59,7 +59,7 @@ const APICall = async (
         if (error.response) {
           if (error.response.status === 401) {
             reject(new Error("Session expired. Please log in again."));
-            window.location.href = "/logout";
+            // window.location.href = "/logout";
             return;
           }
           if (error.response.data && error.response.data?.message) {
