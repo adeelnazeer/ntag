@@ -14,6 +14,7 @@ const Dashboardtable = (props) => {
   };
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+  
   return (
     <div className="p-4 rounded-xl shadow pb-7">
       <div className="flex justify-between">
@@ -120,7 +121,7 @@ const Dashboardtable = (props) => {
             </Button>
             <Button
               className="bg-secondary  py-2 px-6 text-white"
-              onClick={() => navigate(ConstentRoutes.tagDetail)}
+              onClick={() => navigate(ConstentRoutes.tagDetail,{state:single})}
             >
               Buy Now
             </Button>

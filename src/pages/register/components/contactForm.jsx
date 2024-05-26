@@ -1,7 +1,15 @@
 import { Input } from "@headlessui/react";
 import { Typography } from "@material-tailwind/react";
+import { useRegisterHook } from "../../hooks/useRegisterHook";
 
-const ContactForm = () => {
+const GetLabel = ({ name }) => {
+  return (
+    <label className="text-base text-[#555]">
+      {name} <span className=" text-red-500">*</span>
+    </label>
+  );
+};
+const ContactForm = ({ register, errors,watch }) => {
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
       <div>
@@ -14,7 +22,12 @@ const ContactForm = () => {
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="First Name"
-          style={{ border: "1px solid #8A8AA033" }}
+          style={
+            errors.contactf_name
+              ? { border: "1px solid red" }
+              : { border: "1px solid #8A8AA033" }
+          }
+          {...register("contactf_name", { required: true })}
         />
       </div>
       <div>
@@ -22,7 +35,12 @@ const ContactForm = () => {
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="Last Name"
-          style={{ border: "1px solid #8A8AA033" }}
+          style={
+            errors.contactl_name
+              ? { border: "1px solid red" }
+              : { border: "1px solid #8A8AA033" }
+          }
+          {...register("contactl_name", { required: true })}
         />
       </div>
       <div>
@@ -30,7 +48,12 @@ const ContactForm = () => {
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="City"
-          style={{ border: "1px solid #8A8AA033" }}
+          style={
+            errors.city
+              ? { border: "1px solid red" }
+              : { border: "1px solid #8A8AA033" }
+          }
+          {...register("city",)}
         />
       </div>
       <div>
@@ -38,7 +61,12 @@ const ContactForm = () => {
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="Specific Address"
-          style={{ border: "1px solid #8A8AA033" }}
+          style={
+            errors.address
+              ? { border: "1px solid red" }
+              : { border: "1px solid #8A8AA033" }
+          }
+          {...register("address", )}
         />
       </div>
       <div>
@@ -48,7 +76,12 @@ const ContactForm = () => {
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="Business Registration/TIN Number"
-          style={{ border: "1px solid #8A8AA033" }}
+          style={
+            errors.ntn
+              ? { border: "1px solid red" }
+              : { border: "1px solid #8A8AA033" }
+          }
+          {...register("ntn", { required: true })}
         />
       </div>
     </div>

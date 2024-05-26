@@ -6,6 +6,7 @@ import { useRegisterHook } from "../../hooks/useRegisterHook";
 
 const GetLabel = ({ name }) => {
   return (
+   
     <label className="text-base text-[#555]">
       {name} <span className=" text-red-500">*</span>
     </label>
@@ -15,6 +16,7 @@ const GetLabel = ({ name }) => {
 const CompanyForm = ({ register, errors, watch }) => {
   const registerData = useRegisterHook();
   const watchAllFields = watch();
+ 
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
       <div>

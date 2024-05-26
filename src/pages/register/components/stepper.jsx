@@ -28,9 +28,14 @@ export function MultiStepForm() {
     if (activeStep == 0) {
       registerHook.handleRegister(data, setActiveStep);
     }
-    console.log(data);
-  };
+    if (activeStep == 1) {
+      setActiveStep(2)
 
+    }if(activeStep == 2 ){
+      registerHook.handleUpdateProfile(data);
+    }
+
+  };
   return (
     <form
       className="w-full  max-w-7xl mx-auto px-4 py-4 flex-1"
@@ -93,9 +98,9 @@ export function MultiStepForm() {
         {activeStep == 0 ? (
           <CompanyForm register={register} errors={errors} watch={watch} />
         ) : activeStep == 1 ? (
-          <AccountForm />
+          <AccountForm register={register} errors={errors} watch={watch}/>
         ) : (
-          <ContactForm />
+          <ContactForm register={register} errors={errors} watch={watch}/>
         )}
       </div>
       {activeStep == 0 ? (
@@ -120,7 +125,7 @@ export function MultiStepForm() {
           )}
           <Button
             className=" w-[30%] bg-secondary"
-            onClick={() => setActiveStep(2)}
+            // onClick={() => setActiveStep(2)}
             type="submit"
           >
             {activeStep == 2 ? "Finish" : "Next"}
