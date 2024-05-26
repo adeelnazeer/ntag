@@ -5,8 +5,8 @@ const EndPoints = {
     register: "/customer/auth/register",
     login:"/customer/auth/login",
     buytags:"/customer/buy/tags",
-    updateProfile:"/customer/updatecustomer/",
-    verifyOtp:'/customer/verifyotp'
+    verifyOtp:'/customer/verifyotp',
+    updateProfile: (slug) => `/customer/updatecustomer/${slug}`,
   },
 };
 

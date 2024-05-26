@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Input } from "@headlessui/react";
 import { Typography } from "@material-tailwind/react";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
@@ -9,7 +10,7 @@ const GetLabel = ({ name }) => {
     </label>
   );
 };
-const ContactForm = ({ register, errors,watch }) => {
+const ContactForm = ({ register, errors, watch }) => {
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
       <div>
@@ -66,22 +67,7 @@ const ContactForm = ({ register, errors,watch }) => {
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
-          {...register("address", )}
-        />
-      </div>
-      <div>
-        <label className="text-base text-[#555]">
-          Business Registration/TIN Number
-        </label>
-        <Input
-          className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-          placeholder="Business Registration/TIN Number"
-          style={
-            errors.ntn
-              ? { border: "1px solid red" }
-              : { border: "1px solid #8A8AA033" }
-          }
-          {...register("ntn", { required: true })}
+          {...register("address",)}
         />
       </div>
     </div>

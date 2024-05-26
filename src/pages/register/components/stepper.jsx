@@ -21,12 +21,13 @@ export function MultiStepForm() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     if (activeStep == 0) {
-      registerHook.handleRegister(data, setActiveStep);
+      registerHook.handleRegister(data, setActiveStep,reset);
     }
     if (activeStep == 1) {
       setActiveStep(2)
