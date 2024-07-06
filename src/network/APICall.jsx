@@ -9,7 +9,7 @@ axiosInstance.interceptors.request.use(
     const tempConfig = config;
     const token = localStorage.getItem("token");
     if (token) {
-      tempConfig.headers.Authorization = `Bearer ${token}`;
+      tempConfig.headers.Authorization = `Bearer ${token || ""}`;
     }
     return tempConfig;
   },
