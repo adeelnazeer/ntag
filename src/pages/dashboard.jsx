@@ -10,6 +10,7 @@ const DashboardPage = () => {
         pagination={data?.pagination}
         setPagination={data?.setPagination}
         metaData={data?.metaData}
+        loading={data?.loading}
       />
     </div>
   );

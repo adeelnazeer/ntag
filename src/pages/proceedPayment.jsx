@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { GiVibratingSmartphone } from "react-icons/gi";
 import { useRegisterHook } from "./hooks/useRegisterHook";
 import CountdownTimer from "../components/counter";
+import PhoneInput from "react-phone-number-input";
+import { InputWithDropdown } from "../components/phoneNumber";
 const ProceedPayment = () => {
   const {
     register,
@@ -32,19 +34,29 @@ const ProceedPayment = () => {
   })
 
   const handleNewNumber = () => {
-    registerData.handleVerifyOtp(stateNewNumber?.verification_code, setNewNumber)
+    registerData.handleVerifyOtp(stateNewNumber?.verification_code, setNewNumber, true)
   }
 
   const onSubmit = (data) => {
-    let payLoad = {
-      ...state,
-      data
+    const values = {
+      transaction_type: "CORP_BUYTAG",
+      channel: "WEB",
+      msisdn: phoneNumber?.checked1 == true ? user?.phone_number : value,
+      account_id: user?.customer_account_id,
+      customer_tag_id: state?.id,
+      customer_tag_name: state?.tag_name,
+      customer_tag_no: state?.tag_no,
+      mobile_no: phoneNumber?.checked1 == true ? user?.phone_number : value,
+      phone_number: phoneNumber?.checked1 == true ? user?.phone_number : value,
+      payment_method: "CASH",
+      reserve_type: "R"
     }
-    dashboard.handleTagDetails(data);
-    setIsOpen(true);
+    dashboard.handleTagDetails(values, setIsOpen);
+    // setIsOpen(true);
   };
 
-  console.log({ stateNewNumber })
+  const [value, setValue] = useState()
+
   return (
     <>
       {newNumber ?
@@ -54,7 +66,15 @@ const ProceedPayment = () => {
               Mobile Number <span className=" text-red-500">*</span>
             </label>
             <div className="relative mt-2  items-center flex w-full">
-              <Input
+              <PhoneInput
+                international
+                countryCallingCodeEditable={false}
+                defaultCountry="PK"
+                className="w-full rounded-xl border border-[#8A8AA033] px-4 py-2 bg-white outline-none "
+                value={value}
+                onChange={setValue}
+              />
+              {/* <Input
                 type="text"
                 label="verification code"
                 placeholder="Phone number"
@@ -69,19 +89,19 @@ const ProceedPayment = () => {
                 style={
                   stateNewNumber?.errors?.phone_number ? { border: "1px solid red" } : { border: "1px solid #8A8AA033" }
                 }
-              />
-              {registerData?.expirationTim != null ? (
+              /> */}
+              {registerData?.expirationTime != null ? (
                 <CountdownTimer
                   expirationTime={registerData?.expirationTime}
                   onExpire={registerData?.handleExipre}
                 />
               ) : (
-                stateNewNumber?.phone_number && (
+                value && (
                   <p
                     size="sm"
                     className="!absolute right-3 cursor-pointer text-sm rounded"
                     onClick={() =>
-                      registerData.handleGetOtp(stateNewNumber?.phone_number)
+                      registerData.handleGetOtp(value)
                     }
                   >
                     Get Code
@@ -134,7 +154,7 @@ const ProceedPayment = () => {
           </div>
           <div className="flex justify-center">
             <Button className=" bg-secondary  mt-3 mx-auto text-white text-[14px]"
-              disabled={!stateNewNumber?.phone_number || !stateNewNumber?.verification_code || stateNewNumber?.term == false}
+              disabled={!value || !stateNewNumber?.verification_code || stateNewNumber?.term == false}
               onClick={() => { handleNewNumber() }}
             >
               Submit
@@ -167,6 +187,7 @@ const ProceedPayment = () => {
                   <button
                     className={`text-[14px] px-4 py-2 font-medium text-[#7A798A] rounded-2xl border border-[#7A798A] bg-transparent ${phoneNumber?.checked1 == false ? "opacity-70" : " opacity-100"}`} size="small"
                     disabled={phoneNumber?.checked1 == false}
+                    type="text"
                   >Add TAG #</button>
                   <Checkbox
                     checked={phoneNumber?.checked1}
@@ -216,7 +237,9 @@ const ProceedPayment = () => {
                 Proceed Payment
               </Button>
             </div>
-            {isOpen && <Paymentsuccessful isOpen={isOpen} setIsOpen={setIsOpen} />}
+            {isOpen && <Paymentsuccessful isOpen={isOpen} setIsOpen={setIsOpen}
+              state={state}
+            />}
           </div>
         </form>
       }

@@ -20,7 +20,8 @@
     "react-phone-number-input": "^3.4.3",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.23.1",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "use-react-countries": "^2.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

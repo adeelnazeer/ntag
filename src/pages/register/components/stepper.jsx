@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 
 export function MultiStepForm() {
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
@@ -22,17 +22,19 @@ export function MultiStepForm() {
     handleSubmit,
     watch,
     reset,
+    setValue,
+    getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm({ msisdn: "" });
 
   const onSubmit = (data) => {
     if (activeStep == 0) {
-      registerHook.handleRegister(data, setActiveStep,reset);
+      registerHook.handleRegister(data, setActiveStep, reset);
     }
     if (activeStep == 1) {
       setActiveStep(2)
 
-    }if(activeStep == 2 ){
+    } if (activeStep == 2) {
       registerHook.handleUpdateProfile(data);
     }
 
@@ -42,7 +44,7 @@ export function MultiStepForm() {
       className="w-full  max-w-7xl mx-auto px-4 py-4 flex-1"
       onSubmit={handleSubmit(onSubmit)}
     >
-       
+
       {/* {activeStep != 0 && (
         <Stepper
           activeStep={activeStep}
@@ -98,11 +100,13 @@ export function MultiStepForm() {
       )} */}
       <div className={"mt-6"}>
         {activeStep == 0 ? (
-          <CompanyForm register={register} errors={errors} watch={watch} />
+          <CompanyForm register={register} errors={errors} watch={watch} setValue={setValue}
+            getValues={getValues}
+          />
         ) : activeStep == 1 ? (
-          <AccountForm register={register} errors={errors} watch={watch}/>
+          <AccountForm register={register} errors={errors} watch={watch} />
         ) : (
-          <ContactForm register={register} errors={errors} watch={watch}/>
+          <ContactForm register={register} errors={errors} watch={watch} />
         )}
       </div>
       {activeStep == 0 ? (

@@ -1,13 +1,13 @@
+/* eslint-disable react/prop-types */
 import { Button, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
-const Paymentsuccessful = ({isOpen,setIsOpen}) => {
- 
-
+import { useNavigate } from "react-router-dom";
+import { ConstentRoutes } from "../utilities/routesConst";
+const Paymentsuccessful = ({ isOpen, setIsOpen,state }) => {
+  const navigate = useNavigate()
   return (
     <>
-      
-
       {isOpen && (
         <div
           className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm"
@@ -18,7 +18,7 @@ const Paymentsuccessful = ({isOpen,setIsOpen}) => {
           >
             <div className="p-4">
               <div className="flex text-secondary justify-end text-2xl font-snormal cursor-pointer"
-               onClick={() => setIsOpen(false)}
+                onClick={() => setIsOpen(false)}
               >
                 <IoMdCloseCircle />
               </div>
@@ -38,16 +38,19 @@ const Paymentsuccessful = ({isOpen,setIsOpen}) => {
                 </div>
                 <div className="flex justify-between mt-3 items-center">
                   <h1 className="text-[#7A798A] text-sm">Name TAG Type</h1>
-                  <p className="text-sm font-bold">Corporate</p>
+                  <p className="text-sm font-bold">{state?.tag_type}</p>
                 </div>
                 <div className="flex justify-between mt-3 items-center">
                   <h1 className="text-[#7A798A] text-sm">Name TAG Price</h1>
-                  <p className="text-sm font-bold">20000</p>
+                  <p className="text-sm font-bold">{state.totalPrice}</p>
                 </div>
               </div>
               <div className="flex items-center justify-center mt-4">
                 <Button className="bg-secondary  py-2 px-6 text-white"
-                 onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    navigate(ConstentRoutes.dashboard)
+                    setIsOpen(false)
+                  }}
                 >
                   OK
                 </Button>
