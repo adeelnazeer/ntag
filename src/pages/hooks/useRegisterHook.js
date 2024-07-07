@@ -8,6 +8,10 @@ import { ConstentRoutes } from "../../utilities/routesConst";
 export const useRegisterHook = () => {
   const navigate = useNavigate();
   const [expirationTime, setExpirationTime] = useState(null);
+  const [verifyOtp, setVerifyOtp] = useState({
+    id: "",
+    code: "",
+  });
 
   const handleExipre = () => {
     setExpirationTime(0);
@@ -22,9 +26,33 @@ export const useRegisterHook = () => {
     };
     APICall("post", data, EndPoints.customer.generateOtp)
       .then((res) => {
+        console.log(res, "response");
         if (res?.success) {
           toast.success(res?.message || "");
           setExpirationTime(res.data.expiration_time);
+          setVerifyOtp((st) => ({
+            ...st,
+            id: res.data?.otp_id,
+            code: res?.data?.msisdn,
+          }));
+        } else {
+          toast.error(res?.message);
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+  const handleVerifyOtp = (watch) => {
+    const data = {
+      otp_id: verifyOtp.id,
+      otp_code: watch.verification_code,
+      transaction_type: "OTP_GENRATION",
+    };
+    APICall("post", data, EndPoints.customer.verifyOtp)
+      .then((res) => {
+        if (res?.success) {
+          toast.success(res?.message || "");
         } else {
           toast.error(res?.message);
         }
@@ -69,7 +97,6 @@ export const useRegisterHook = () => {
         })
         .catch((err) => {
           console.log("err", err);
-
         });
   };
 
@@ -105,6 +132,8 @@ export const useRegisterHook = () => {
     handleExipre,
     handleRegister,
     handleLogin,
-    handleUpdateProfile
+    handleUpdateProfile,
+    verifyOtp,
+    handleVerifyOtp,
   };
 };

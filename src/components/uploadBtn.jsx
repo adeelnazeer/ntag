@@ -51,12 +51,14 @@ const UploadBtn = ({register}) => {
       console.error('File validation error:', validationError);
     }
   };
+  console.log(base64,"asdsd")
 
   return (
     <div className="flex gap-4">
       <label className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer">
         Upload
         <input
+        
           type="file"
           id="uploadFile1"
           className="hidden"

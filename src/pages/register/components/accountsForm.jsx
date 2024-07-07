@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import { Input } from "@headlessui/react";
-import { Checkbox, Radio, Typography } from "@material-tailwind/react";
+import { Button, Checkbox, Radio, Typography } from "@material-tailwind/react";
 import CountdownTimer from "../../../components/counter";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
-
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
+import { useState } from "react";
 const GetLabel = ({ name }) => {
   return (
-   
-    <label className="text-base text-[#555]">
+    <label className="text-[14px] text-[#555] font-[500]">
       {name} <span className=" text-red-500">*</span>
     </label>
   );
@@ -16,28 +17,26 @@ const GetLabel = ({ name }) => {
 const CompanyForm = ({ register, errors, watch }) => {
   const registerData = useRegisterHook();
   const watchAllFields = watch();
- 
+  const [value, setValue] = useState()
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
-      <div>
+       <div className="flex justify-between items-center py-3">
+        <Button className=" bg-secondary text-white">
+          Corporate Account Registration
+        </Button>
+        <Typography className="text-[#555] text-base  font-semibold">
+          Already have an account?{" "}
+          <span className="text-secondary">Log in</span>
+        </Typography>
+      </div>
+      <hr></hr>
+      <div className="py-3">
         <Typography className="text-[#555] text-base  font-semibold">
           Account Information
         </Typography>
       </div>
-      <div className="flex items-center  justify-between rounded-xl mt-3 text-[#555]">
-        <div className=" flex items-start">
-          <Radio />
-          <Typography className="text-xs leading-[40px] ">
-            Individual Account
-          </Typography>
-        </div>
-        <div className=" flex items-start">
-          <Radio checked />
-          <Typography className="text-xs leading-[40px] ">
-            Bussiness Account
-          </Typography>
-        </div>
-      </div>
+      <hr></hr>
+
       <div>
         <GetLabel name="Company Name" />
         <Input
@@ -65,7 +64,7 @@ const CompanyForm = ({ register, errors, watch }) => {
         />
       </div>
       <div>
-        <label className="text-base text-[#555]">Email</label>
+        <label className="text-[14px] text-[#555] font-[500]">Email</label>
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="Email"
@@ -74,7 +73,7 @@ const CompanyForm = ({ register, errors, watch }) => {
         />
       </div>
       <div>
-        <GetLabel name="Passward" />
+        <GetLabel name="Password" />
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="Password"
@@ -97,7 +96,7 @@ const CompanyForm = ({ register, errors, watch }) => {
           type="password"
           style={
             errors.confirm_password ||
-              watchAllFields?.password != watchAllFields?.confirm_password
+            watchAllFields?.password != watchAllFields?.confirm_password
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
@@ -111,20 +110,26 @@ const CompanyForm = ({ register, errors, watch }) => {
           })}
         />
       </div>
+  
       <div>
         <GetLabel name="Phone Number" />
-        <div className="relative mt-2  items-center flex w-full">
-          <Input
-            type="text"
-            label="verification code"
-            placeholder="Phone number"
-            className="w-full rounded-xl px-4 py-2 bg-white outline-none "
+        <div className="relative mt-2 items-center flex w-full">
+          <PhoneInput
+            placeholder="Enter phone number"
+            value={watchAllFields?.msisdn}
+            onChange={(phone) => {
+              setValue(phone);
+            }}
+            defaultCountry="US"
+            className="w-full rounded-xl px-4 py-2 bg-white outline-none"
             containerProps={{
               className: "min-w-0",
             }}
             {...register("msisdn", { required: true })}
             style={
-              errors.msisdn ? { border: "1px solid red" } : { border: "1px solid #8A8AA033" }
+              errors.msisdn
+                ? { border: "1px solid red" }
+                : { border: "1px solid #8A8AA033" }
             }
           />
           {registerData?.expirationTime ? (
@@ -150,19 +155,33 @@ const CompanyForm = ({ register, errors, watch }) => {
 
       <div>
         <GetLabel name="Verification Code" />
-        <Input
-          className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-          placeholder="Enter verification code"
-          type="number"
-          {...register("verification_code", {
-            required: true,
-          })}
-          style={
-            errors.verification_code
-              ? { border: "1px solid red" }
-              : { border: "1px solid #8A8AA033" }
-          }
-        />
+        <div className="relative mt-2  items-center flex w-full">
+          <Input
+            className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
+            placeholder="Enter verification code"
+            {...register("verification_code", {
+              required: true,
+              validate: (val) => {
+                if (watch("verification_code") != val) {
+                  return "Your OTP does not match";
+                }
+              },
+            })}
+            style={
+              errors.verification_code ||
+              registerData.verifyOtp.code != watchAllFields?.verification_code
+                ? { border: "1px solid red" }
+                : { border: "1px solid #8A8AA033" }
+            }
+          />
+          <p
+            size="sm"
+            className="!absolute right-3 cursor-pointer text-sm rounded"
+            onClick={() => registerData.handleVerifyOtp(watchAllFields)}
+          >
+            Verify OTP
+          </p>
+        </div>
       </div>
 
       <div className="col-span-2">

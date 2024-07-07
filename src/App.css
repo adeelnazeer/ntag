@@ -34,3 +34,10 @@
 .read-the-docs {
   color: #888;
 }
+input.PhoneInputInput {
+  outline: none;
+  background: white;
+}
+select.PhoneInputCountrySelect {
+  background: white;
+}
