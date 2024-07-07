@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const UploadBtn = ({register}) => {
+const UploadBtn = ({register,setIsOpen}) => {
   const [error, setError] = useState(null);
   const [fileName, setFileName] = useState(null);
   const [base64, setBase64] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState(null);
 
   const validateFile = (file) => {
     const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
@@ -37,21 +38,34 @@ const UploadBtn = ({register}) => {
 
     if (!validationError) {
       setFileName(file.name);
-      try {
-        const base64String = await convertToBase64(file);
-        register('document_name1', { value: base64String, required: true });
-        register('document_file_name1', { value: fileName});
-
-        setBase64(base64String);
-      } catch (error) {
-      }
+      setIsOpen(true);
+      setUploadedFile(file);
     } else {
       setFileName(null);
       setBase64(null);
       console.error('File validation error:', validationError);
     }
   };
-  console.log(base64,"asdsd")
+
+  useEffect(() => {
+    const registerDocument = async () => {
+      if (!uploadedFile) return;
+
+      try {
+        const base64String = await convertToBase64(uploadedFile);
+        register('document_name1', { value: base64String, required: true });
+        register('document_file_name1', { value: uploadedFile.name });
+
+        setBase64(base64String);
+      } catch (error) {
+        console.error('File conversion error:', error);
+      }
+    };
+
+    if (setIsOpen === false && uploadedFile) {
+      registerDocument();
+    }
+  }, [setIsOpen, uploadedFile, register]);
 
   return (
     <div className="flex gap-4">
