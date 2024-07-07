@@ -3,8 +3,8 @@ import { Input } from "@headlessui/react";
 import { Button, Checkbox, Radio, Typography } from "@material-tailwind/react";
 import CountdownTimer from "../../../components/counter";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 import { useState } from "react";
 const GetLabel = ({ name }) => {
   return (
@@ -14,11 +14,20 @@ const GetLabel = ({ name }) => {
   );
 };
 
-const CompanyForm = ({ register, errors, watch, setValue }) => {
+const CompanyForm = ({
+  register,
+  errors,
+  watch,
+  setValue,
+  Controller,
+  control,
+}) => {
   const registerData = useRegisterHook();
   const watchAllFields = watch();
-  const [phone, setPhone] = useState("")
-  console.log({ phone })
+  const [phone, setPhone] = useState();
+  console.log(phone, "phone");
+  console.log(watchAllFields, "watchAllFields");
+
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
       <div className="flex justify-between items-center py-3">
@@ -97,7 +106,7 @@ const CompanyForm = ({ register, errors, watch, setValue }) => {
           type="password"
           style={
             errors?.confirm_password ||
-              watchAllFields?.password != watchAllFields?.confirm_password
+            watchAllFields?.password != watchAllFields?.confirm_password
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
@@ -111,31 +120,25 @@ const CompanyForm = ({ register, errors, watch, setValue }) => {
           })}
         />
       </div>
-
+      {/* className="w-full rounded-xl px-4 py-2 bg-white outline-none" */}
       <div>
         <GetLabel name="Phone Number" />
         <div className="relative mt-2 items-center flex w-full">
-          <PhoneInput
-            placeholder="Enter phone number"
+          <Controller
             name="msisdn"
-            onChange={(event) => {
-              setValue('msisdn', event, {
-                shouldValidate: true,
-                shouldDirty: true
-              })
-              setPhone(event)
-            }}
-            defaultCountry="PK"
-            className="w-full rounded-xl px-4 py-2 bg-white outline-none"
-            containerProps={{
-              className: "min-w-0",
-            }}
-            {...register("msisdn", { required: true })}
-            style={
-              errors?.msisdn
-                ? { border: "1px solid red" }
-                : { border: "1px solid #8A8AA033" }
-            }
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <PhoneInput
+                className="w-full rounded-xl px-4 py-2 bg-white outline-none"
+                country="US"
+                value={field.value}
+                onChange={(value) => {
+                  field.onChange(value);
+                  setPhone(value);
+                }}
+              />
+            )}
           />
           {registerData?.expirationTime ? (
             <CountdownTimer
@@ -147,9 +150,7 @@ const CompanyForm = ({ register, errors, watch, setValue }) => {
             <p
               size="sm"
               className="!absolute right-3 cursor-pointer text-sm rounded"
-              onClick={() =>
-                registerData.handleGetOtp(phone)
-              }
+              onClick={() => registerData.handleGetOtp(phone)}
             >
               Get Code
             </p>
@@ -162,6 +163,7 @@ const CompanyForm = ({ register, errors, watch, setValue }) => {
         <GetLabel name="Verification Code" />
         <div className="relative mt-2  items-center flex w-full">
           <Input
+          valueAsNumber
             className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
             placeholder="Enter verification code"
             {...register("verification_code", {

@@ -4,10 +4,17 @@ import { FaRegPlayCircle } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
+import { useVoiceMailHook } from "./hooks/useVoiceMailHook";
+import { useEffect } from "react";
 
 const Voicemail = () => {
+  const getVoiceMail=useVoiceMailHook()
   const TABLE_HEAD = ["#", " Caller No", "Caller Time", "Status", "Action"];
   const navigate = useNavigate();
+  useEffect(()=>{
+getVoiceMail.handleGetVoiceMail()
+  },[])
+  console.log(getVoiceMail.voiceMail,"voive")
   return (
     <div className="p-4 rounded-xl shadow pb-7">
       <div className="flex justify-between items-center">
@@ -117,7 +124,7 @@ const Voicemail = () => {
                 </Typography>
               </td>
               <td className="p-4 border-b border-blue-gray-50">
-                <Chip className="w-[74px] bg-secondary py-3" value="New" />
+                <Chip className="w-[74px] bg-secondary py-3 text-center" value="New" />
               </td>
               <td className="p-4 border-b border-blue-gray-50">
                 <div className="flex gap-3 items-center bg-[#F6F7FB] w-[94px] justify-center p-2">

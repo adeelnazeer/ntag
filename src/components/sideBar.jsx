@@ -17,10 +17,16 @@ const Sidebar = () => {
   const activeThree = location?.pathname == ConstentRoutes.manageTagName;
   const activeProfile = location?.pathname == ConstentRoutes.profilePage;
 
+  const handleLogOut=()=>{
+    localStorage.removeItem('token')
+    localStorage.removeItem('id')
+
+    navigate('/')
+  }
   return (
     <div className="main fixed overflow-auto">
-      <div className="">
-        <Card className="px-4 py-4 h-[calc(100vh-123px)] w-full max-w-[20rem] shadow-xl shadow-blue-gray-900/5">
+      <div className="overflow-scroll">
+        <Card className="px-4 py-4 h-[calc(100vh-325px)] w-full max-w-[20rem] overflow-scroll shadow-xl shadow-blue-gray-900/5">
           <List className="text-[16px] gap-4 p-0 font-normal text-black ">
             <div className="flex gap-6 ">
               <div
@@ -105,7 +111,7 @@ const Sidebar = () => {
             </div>
             <div className="flex gap-6 ">
               <div className=" bg-white w-2 h-full rounded-tr-[10px] rounded-br-[10px]" />
-              <ListItem className="text-[#FF4842] py-4">
+              <ListItem className="text-[#FF4842] py-4" onClick={handleLogOut}>
                 <ListItemPrefix>
                   <IoLogOutSharp className="h-4 w-4" />
                 </ListItemPrefix>
