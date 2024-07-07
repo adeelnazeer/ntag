@@ -3,11 +3,11 @@ import { Button, Typography } from "@material-tailwind/react";
 import CompanyForm from "./accountsForm";
 import ContactForm from "./contactForm";
 import AccountForm from "./companyForm";
-import { useForm } from "react-hook-form";
+import { useForm,Controller } from "react-hook-form";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 
 export function MultiStepForm() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(1);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
@@ -24,6 +24,7 @@ export function MultiStepForm() {
     reset,
     setValue,
     getValues,
+    control,
     formState: { errors },
   } = useForm({ msisdn: "" });
 
@@ -101,7 +102,7 @@ export function MultiStepForm() {
       <div className={"mt-6"}>
         {activeStep == 0 ? (
           <CompanyForm register={register} errors={errors} watch={watch} setValue={setValue}
-            getValues={getValues}
+            getValues={getValues} Controller={Controller} control={control}
           />
         ) : activeStep == 1 ? (
           <AccountForm register={register} errors={errors} watch={watch} />

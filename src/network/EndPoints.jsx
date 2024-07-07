@@ -7,6 +7,7 @@ const EndPoints = {
     login:"/customer/auth/login",
     buytags:"/customer/buy/tags",
     verifyOtp:'/customer/verifyotp',
+    getVoiceMail:'/customer/voicemail',
     updateProfile: (slug) => `/customer/updatecustomer/${slug}`,
   },
 };

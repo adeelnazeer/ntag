@@ -29,55 +29,9 @@ const AccountForm = ({ register, errors, watch }) => {
           <span className="text-secondary">Step 2 of 2</span>
         </Typography>
       </div>
+  
       <hr></hr>
-      <div className="py-3">
-        <Typography className="text-[#555] text-base  font-semibold">
-          Contact Information
-        </Typography>
-      </div>
-      <hr></hr>
-      <div>
-        <GetLabel name="First Name" />
-        <Input
-          className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-          placeholder="First Name"
-          value={watchAllFields.company_name}
-          style={
-            errors.company_name
-              ? { border: "1px solid red" }
-              : { border: "1px solid #8A8AA033" }
-          }
-          // {...register("company_name", { required: true })}
-        />
-      </div>
-      <div>
-        <GetLabel name="Last Name" />
-        <Input
-          className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-          placeholder="Last Name"
-          value={watchAllFields.company_name}
-          style={
-            errors.company_name
-              ? { border: "1px solid red" }
-              : { border: "1px solid #8A8AA033" }
-          }
-          // {...register("company_name", { required: true })}
-        />
-      </div>
-      <div>
-        <GetLabel name="Contact Number" />
-        <Input
-          className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-          placeholder="Contact Number"
-          value={watchAllFields.company_name}
-          style={
-            errors.company_name
-              ? { border: "1px solid red" }
-              : { border: "1px solid #8A8AA033" }
-          }
-          // {...register("company_name", { required: true })}
-        />
-      </div>
+    
       <div className="py-3">
         <Typography className="text-[#555] text-base  font-semibold">
           Company Basic Information
@@ -94,6 +48,7 @@ const AccountForm = ({ register, errors, watch }) => {
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
+          {...register("company_name", { required: true })}
         />
       </div>
       <div>
@@ -169,13 +124,13 @@ const AccountForm = ({ register, errors, watch }) => {
           errors.document_name1 ? { border: "1px solid red" } : { border: "" }
         }
       >
-        {/* <UploadBtn register={register} /> */}
-        <Button
+        <UploadBtn setIsOpen={setOpen} register={register} />
+        {/* <Button
           className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer"
           onClick={() => setOpen(true)}
         >
           Upload
-        </Button>
+        </Button> */}
       </div>
 
       <FormSubmission isOpen={open} setIsOpen={setOpen} />

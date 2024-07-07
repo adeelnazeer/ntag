@@ -24,6 +24,7 @@ const Header = () => {
   useEffect(() => {
     if (selectedValue == "corporate") {
       navigate(ConstentRoutes.register);
+      setIsOpen(false)
     }
   }, [selectedValue]);
 
@@ -102,6 +103,7 @@ const Header = () => {
                         className="block w-full cursor-pointer select-none rounded-md px-3 pt-[5px] pb-1 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
                       >
                         <Radio
+                        className="h-3 w-3 hover:before:opacity-0"
                           name="color"
                           value="corporate"
                           color="green"
@@ -119,6 +121,8 @@ const Header = () => {
                         className="block w-full cursor-pointer select-none rounded-md px-3 pt-[5px] pb-1 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
                       >
                         <Radio
+                        ripple={false}
+                           className="h-3 w-3 hover:before:opacity-0"
                           name="color"
                           value="individual"
                           color="green"
