@@ -14,13 +14,14 @@ const GetLabel = ({ name }) => {
   );
 };
 
-const CompanyForm = ({ register, errors, watch }) => {
+const CompanyForm = ({ register, errors, watch, setValue }) => {
   const registerData = useRegisterHook();
   const watchAllFields = watch();
-  const [value, setValue] = useState()
+  const [phone, setPhone] = useState("")
+  console.log({ phone })
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
-       <div className="flex justify-between items-center py-3">
+      <div className="flex justify-between items-center py-3">
         <Button className=" bg-secondary text-white">
           Corporate Account Registration
         </Button>
@@ -43,7 +44,7 @@ const CompanyForm = ({ register, errors, watch }) => {
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="Company name"
           style={
-            errors.company_name
+            errors?.company_name
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
@@ -56,7 +57,7 @@ const CompanyForm = ({ register, errors, watch }) => {
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="User name"
           style={
-            errors.account_id
+            errors?.account_id
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
@@ -82,7 +83,7 @@ const CompanyForm = ({ register, errors, watch }) => {
             required: true,
           })}
           style={
-            errors.password
+            errors?.password
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
@@ -95,8 +96,8 @@ const CompanyForm = ({ register, errors, watch }) => {
           placeholder="Confirm Password"
           type="password"
           style={
-            errors.confirm_password ||
-            watchAllFields?.password != watchAllFields?.confirm_password
+            errors?.confirm_password ||
+              watchAllFields?.password != watchAllFields?.confirm_password
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
@@ -110,24 +111,28 @@ const CompanyForm = ({ register, errors, watch }) => {
           })}
         />
       </div>
-  
+
       <div>
         <GetLabel name="Phone Number" />
         <div className="relative mt-2 items-center flex w-full">
           <PhoneInput
             placeholder="Enter phone number"
-            value={watchAllFields?.msisdn}
-            onChange={(phone) => {
-              setValue(phone);
+            name="msisdn"
+            onChange={(event) => {
+              setValue('msisdn', event, {
+                shouldValidate: true,
+                shouldDirty: true
+              })
+              setPhone(event)
             }}
-            defaultCountry="US"
+            defaultCountry="PK"
             className="w-full rounded-xl px-4 py-2 bg-white outline-none"
             containerProps={{
               className: "min-w-0",
             }}
             {...register("msisdn", { required: true })}
             style={
-              errors.msisdn
+              errors?.msisdn
                 ? { border: "1px solid red" }
                 : { border: "1px solid #8A8AA033" }
             }
@@ -138,17 +143,17 @@ const CompanyForm = ({ register, errors, watch }) => {
               onExpire={registerData?.handleExipre}
             />
           ) : (
-            watchAllFields?.msisdn && (
-              <p
-                size="sm"
-                className="!absolute right-3 cursor-pointer text-sm rounded"
-                onClick={() =>
-                  registerData.handleGetOtp(watchAllFields?.msisdn)
-                }
-              >
-                Get Code
-              </p>
-            )
+            // watchAllFields?.msisdn && (
+            <p
+              size="sm"
+              className="!absolute right-3 cursor-pointer text-sm rounded"
+              onClick={() =>
+                registerData.handleGetOtp(phone)
+              }
+            >
+              Get Code
+            </p>
+            // )
           )}
         </div>
       </div>
@@ -168,19 +173,18 @@ const CompanyForm = ({ register, errors, watch }) => {
               },
             })}
             style={
-              errors.verification_code ||
-              registerData.verifyOtp.code != watchAllFields?.verification_code
+              errors?.verification_code
                 ? { border: "1px solid red" }
                 : { border: "1px solid #8A8AA033" }
             }
           />
-          <p
+          {/* <p
             size="sm"
             className="!absolute right-3 cursor-pointer text-sm rounded"
-            onClick={() => registerData.handleVerifyOtp(watchAllFields)}
+            onClick={() => registerData.handleVerifyOtp(watchAllFields?.verification_code)}
           >
             Verify OTP
-          </p>
+          </p> */}
         </div>
       </div>
 

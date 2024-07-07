@@ -5,7 +5,7 @@ import ContactForm from "../../register/components/contactForm";
 import { FaRegUser } from "react-icons/fa6";
 import { MdContacts } from "react-icons/md";
 
-export function MultiStepFormProfile() {
+export function MultiStepFormProfile({ watch, register, errors }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
@@ -52,7 +52,13 @@ export function MultiStepFormProfile() {
         </Step>
       </Stepper>
       <div className="mt-32">
-        {activeStep == 0 ? <CompanyForm /> : <ContactForm />}
+        {activeStep == 0 ? <CompanyForm watch={watch}
+          register={register}
+          errors={errors}
+        /> : <ContactForm watch={watch}
+          register={register}
+          errors={errors}
+        />}
       </div>
       <div className="mt-8 flex justify-between">
         <Button

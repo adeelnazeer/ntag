@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button, Typography } from "@material-tailwind/react";
+import { Button, Spinner, Typography } from "@material-tailwind/react";
 import { FaSearch } from "react-icons/fa";
 import Img1 from "../assets/images/IMG (1).png";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { useState } from "react";
 import Pagination from "./pagination";
 
 const Dashboardtable = (props) => {
-  const { data, pagination, setPagination, metaData } = props;
+  const { data, pagination, setPagination, metaData, loading } = props;
   const handlePageChange = (selected) => {
     setPagination((st) => ({ ...st, page: selected }));
   };
@@ -88,42 +88,68 @@ const Dashboardtable = (props) => {
           </Button>
         </div>
       </div> */}
-      {data?.map((single) => (
-        <div
-          className="flex justify-between p-2 border rounded-xl mt-12 items-center mt-3"
-          key={single?.id}
-        >
-          <div className="flex gap-8 items-center">
-            <div>
-              <img className="rounded" src={Img1} alt="north" />
-            </div>
-            <Typography className="w-[109px]">
-              {single?.tag_name || ""}
-            </Typography>
-            <Typography className="bg-[#EBEBEB] px-5 py-1">
-              #{single?.tag_no}
-            </Typography>
-            <div>
-              <p className="text-[#7A798A] text-[13px]">Current Price</p>
-              <p className="text-secondary text-[18px] font-bold">
-                {single?.tag_price || ""}{" "}
-                <span className="text-[#7A798A] text-[13px]">+Tax</span>
-              </p>
-            </div>
+      <>
+        {loading ?
+          <div className=" min-h-44 flex justify-between items-center">
+            <Spinner className=" h-12 w-12 mx-auto" color="green"/>
           </div>
-          <div className="flex gap-3">
-            <Button className="bg-[#edf6eb]  py-2 px-6 text-secondary">
-              Available
-            </Button>
-            <Button
-              className="bg-secondary  py-2 px-6 text-white"
-              onClick={() => navigate(ConstentRoutes.tagDetail, { state: single })}
-            >
-              Buy Now
-            </Button>
-          </div>
-        </div>
-      ))}
+          :
+          <>
+            {data?.map((single) => (
+              <div
+                className="flex justify-between p-2 border rounded-xl mt-12 items-center mt-3"
+                key={single?.id}
+              >
+                <div className="flex gap-8 items-center">
+                  <div>
+                    <img className="rounded" src={Img1} alt="north" />
+                  </div>
+                  <Typography className="w-[109px]">
+                    {single?.tag_name || ""}
+                  </Typography>
+                  <Typography className="bg-[#EBEBEB] px-5 py-1">
+                    #{single?.tag_no}
+                  </Typography>
+                  <div>
+                    <p className="text-[#7A798A] text-[13px]">Current Price</p>
+                    <p className="text-secondary text-[18px] font-bold">
+                      {single?.tag_price || ""}{" "}
+                      <span className="text-[#7A798A] text-[13px]">+Tax</span>
+                    </p>
+                  </div>
+                </div>
+                {single?.status == 1 &&
+                  <div className="flex gap-3">
+                    <Button className="bg-[#edf6eb]  py-2 px-6 text-secondary">
+                      Available
+                    </Button>
+                    <Button
+                      className="bg-secondary  py-2 px-6 text-white"
+                      onClick={() => navigate(ConstentRoutes.tagDetail, { state: single })}
+                    >
+                      Buy Now
+                    </Button>
+                  </div>
+                }
+                {single?.status == 2 &&
+                  <div className="flex gap-3">
+                    <Button className="bg-[#F9050533]  py-2 px-6 text-[#F90505] border border-[#F90505]">
+                      Already Booked
+                    </Button>
+                  </div>
+                }
+                {single?.status == 3 &&
+                  <div className="flex gap-3">
+                    <Button className="bg-[#EBEBEB]  py-2 px-6 text-[#000]">
+                      Reserved
+                    </Button>
+                  </div>
+                }
+              </div>
+            ))}
+          </>
+        }
+      </>
 
       <div className="flex justify-center gap-8 mt-4">
         <Pagination

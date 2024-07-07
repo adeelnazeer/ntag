@@ -8,14 +8,14 @@ import { ConstentRoutes } from "../../utilities/routesConst";
 export const useRegisterHook = () => {
   const navigate = useNavigate();
   const [expirationTime, setExpirationTime] = useState(null);
-  const [verifyOtp, setVerifyOtp] = useState({
-    id: "",
-    code: "",
-  });
+  const [verified, setVerified] = useState(false)
+  const [otpId, setOtpId] = useState("")
 
   const handleExipre = () => {
-    setExpirationTime(0);
+    setExpirationTime(null);
   };
+
+  console.log({ otpId })
 
   const handleGetOtp = (phone) => {
     const data = {
@@ -26,33 +26,11 @@ export const useRegisterHook = () => {
     };
     APICall("post", data, EndPoints.customer.generateOtp)
       .then((res) => {
-        console.log(res, "response");
         if (res?.success) {
           toast.success(res?.message || "");
           setExpirationTime(res.data.expiration_time);
-          setVerifyOtp((st) => ({
-            ...st,
-            id: res.data?.otp_id,
-            code: res?.data?.msisdn,
-          }));
-        } else {
-          toast.error(res?.message);
-        }
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  };
-  const handleVerifyOtp = (watch) => {
-    const data = {
-      otp_id: verifyOtp.id,
-      otp_code: watch.verification_code,
-      transaction_type: "OTP_GENRATION",
-    };
-    APICall("post", data, EndPoints.customer.verifyOtp)
-      .then((res) => {
-        if (res?.success) {
-          toast.success(res?.message || "");
+          setOtpId(res?.data?.otp_id)
+          localStorage.setItem("otp", res?.data?.otp_id)
         } else {
           toast.error(res?.message);
         }
@@ -62,9 +40,37 @@ export const useRegisterHook = () => {
       });
   };
 
+  const handleVerifyOtp = (code, setNewNumber, newNumber) => {
+    const data = {
+      otp_id: otpId,
+      otp_code: code,
+      transaction_type: "OTP_GENRATION"
+    }
+    APICall("post", data, EndPoints.customer.verifyOty)
+      .then((res) => {
+        if (res?.success) {
+          toast.success(res?.message || "");
+          if (newNumber) {
+            setNewNumber(false)
+          }
+          setVerified(true)
+        } else {
+          toast.error(res?.message);
+          setVerified(false)
+        }
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.message || "Something went wrong try again!")
+        setVerified(false)
+      });
+  };
+
   const handleRegister = (data, setActiveStep, reset) => {
+    const otp = localStorage.getItem("otp")
     const payload = { ...data };
     payload.channel = "WEB"
+    payload.otp_id = otp,
+      payload.otp_code = data?.verification_code
     APICall("post", payload, EndPoints.customer.register)
       .then((res) => {
         if (res?.success) {
@@ -115,6 +121,7 @@ export const useRegisterHook = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("id", res?.data?.customer_account_id);
           localStorage.setItem("number", res?.data?.phone_number);
+          localStorage.setItem("user", JSON.stringify(res?.data))
           navigate('/dashboard')
         } else {
           toast.error(res?.message);
@@ -129,11 +136,11 @@ export const useRegisterHook = () => {
   return {
     handleGetOtp,
     expirationTime,
+    verified,
+    handleVerifyOtp,
     handleExipre,
     handleRegister,
     handleLogin,
     handleUpdateProfile,
-    verifyOtp,
-    handleVerifyOtp,
   };
 };

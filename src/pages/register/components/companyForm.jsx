@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Input } from "@headlessui/react";
 import UploadBtn from "../../../components/uploadBtn";
 import { Button, Typography } from "@material-tailwind/react";
