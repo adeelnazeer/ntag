@@ -8,9 +8,11 @@ import { ConstentRoutes } from "../../utilities/routesConst";
 export const useRegisterHook = () => {
   const navigate = useNavigate();
   const [expirationTime, setExpirationTime] = useState(null);
+  const [verified, setVerified] = useState(false)
+  const [otpId, setOtpId] = useState("")
 
   const handleExipre = () => {
-    setExpirationTime(0);
+    setExpirationTime(null);
   };
 
   const handleGetOtp = (phone) => {
@@ -25,12 +27,36 @@ export const useRegisterHook = () => {
         if (res?.success) {
           toast.success(res?.message || "");
           setExpirationTime(res.data.expiration_time);
+          setOtpId(res?.data?.otp_id)
         } else {
           toast.error(res?.message);
         }
       })
       .catch((err) => {
         console.log("err", err);
+      });
+  };
+
+  const handleVerifyOtp = (code, setNewNumber) => {
+    const data = {
+      otp_id: otpId,
+      otp_code: code,
+      transaction_type: "OTP_GENRATION"
+    }
+    APICall("post", data, EndPoints.customer.verifyOty)
+      .then((res) => {
+        if (res?.success) {
+          toast.success(res?.message || "");
+          setNewNumber(false)
+          setVerified(true)
+        } else {
+          toast.error(res?.message);
+          setVerified(false)
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message)
+        setVerified(false)
       });
   };
 
@@ -88,6 +114,7 @@ export const useRegisterHook = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("id", res?.data?.customer_account_id);
           localStorage.setItem("number", res?.data?.phone_number);
+          localStorage.setItem("user", JSON.stringify(res?.data))
           navigate('/dashboard')
         } else {
           toast.error(res?.message);
@@ -102,6 +129,8 @@ export const useRegisterHook = () => {
   return {
     handleGetOtp,
     expirationTime,
+    verified,
+    handleVerifyOtp,
     handleExipre,
     handleRegister,
     handleLogin,

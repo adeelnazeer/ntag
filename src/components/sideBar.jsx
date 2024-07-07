@@ -12,7 +12,7 @@ import { ConstentRoutes } from "../utilities/routesConst";
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const activeDashboard = location?.pathname == ConstentRoutes.dashboard;
+  const activeDashboard = location?.pathname?.includes(ConstentRoutes.dashboard);
   const activeTwo = location?.pathname == ConstentRoutes.buyTag;
   const activeThree = location?.pathname == ConstentRoutes.manageTagName;
   const activeProfile = location?.pathname == ConstentRoutes.profilePage;

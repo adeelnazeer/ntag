@@ -5,8 +5,8 @@ export const ConstentRoutes = {
   dashboard: "/dashboard",
   manageTagName: "/manage-tag",
   buyTag: "/buy-tag",
-  tagDetail: "/tag-detail",
-  processPayment: "/process-payment",
+  tagDetail: "/dashboard/tag-detail",
+  processPayment: "/dashboard/process-payment",
   nameTagDetail: "/name-tag-detail",
   profilePage: "/profile",
   voiceMail:"/voicemail"
