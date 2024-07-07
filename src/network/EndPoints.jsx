@@ -4,8 +4,9 @@ const EndPoints = {
     generateOtp: "/customer/generateotp",
     verifyOty:"/customer/verifyotp",
     register: "/customer/auth/register",
-    login: "/customer/auth/login",
-    buytags: "/customer/buy/tags",
+    login:"/customer/auth/login",
+    buytags:"/customer/buy/tags",
+    verifyOtp:'/customer/verifyotp',
     updateProfile: (slug) => `/customer/updatecustomer/${slug}`,
   },
 };

@@ -24,6 +24,7 @@ export const useRegisterHook = () => {
     };
     APICall("post", data, EndPoints.customer.generateOtp)
       .then((res) => {
+        console.log(res, "response");
         if (res?.success) {
           toast.success(res?.message || "");
           setExpirationTime(res.data.expiration_time);
@@ -95,7 +96,6 @@ export const useRegisterHook = () => {
         })
         .catch((err) => {
           console.log("err", err);
-
         });
   };
 
@@ -134,6 +134,6 @@ export const useRegisterHook = () => {
     handleExipre,
     handleRegister,
     handleLogin,
-    handleUpdateProfile
+    handleUpdateProfile,
   };
 };
