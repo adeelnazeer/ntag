@@ -8,14 +8,14 @@ import { ConstentRoutes } from "../../utilities/routesConst";
 export const useRegisterHook = () => {
   const navigate = useNavigate();
   const [expirationTime, setExpirationTime] = useState(null);
+  const [loading, setLoading] = useState(false)
   const [verified, setVerified] = useState(false)
   const [otpId, setOtpId] = useState("")
+  const [state, setState] = useState({})
 
   const handleExipre = () => {
     setExpirationTime(null);
   };
-
-  console.log({ otpId })
 
   const handleGetOtp = (phone) => {
     const data = {
@@ -78,6 +78,8 @@ export const useRegisterHook = () => {
           setActiveStep(1);
           const token = res?.data?.token;
           localStorage.setItem("token", token);
+          localStorage.setItem("id", res?.data?.customer_account_id)
+          localStorage.setItem("user", JSON.stringify(res?.data))
           reset()
         } else {
           toast.error(res?.message);
@@ -96,6 +98,7 @@ export const useRegisterHook = () => {
         .then((res) => {
           if (res?.success) {
             toast.success(res?.message || "");
+            localStorage.setItem("user", JSON.stringify(res?.data))
             navigate(ConstentRoutes.dashboard)
           } else {
             toast.error(res?.message);
@@ -107,6 +110,7 @@ export const useRegisterHook = () => {
   };
 
   const handleLogin = (data) => {
+    setLoading(true)
     const payLoad = {
       username: data?.username,
       password: data?.password,
@@ -126,21 +130,59 @@ export const useRegisterHook = () => {
         } else {
           toast.error(res?.message);
         }
+        setLoading(false)
       })
       .catch((err) => {
-        console.log("err", err);
+        setLoading(false)
         toast.error(err?.message);
+      });
+  };
+
+  const verifyAccount = (data, name) => {
+    APICall("post", data, EndPoints.customer.verifyAccount)
+      .then((res) => {
+        if (res?.success) {
+          setState(st => ({
+            ...st,
+            success: {
+              ...st.success,
+              [name]: true
+            },
+            error: {
+              ...st.error,
+              [name]: ""
+            },
+          }))
+        } else {
+          setState(st => ({
+            ...st,
+            error: {
+              ...st.error,
+              [name]: res?.message
+            },
+            success: {
+              ...st.success,
+              [name]: false
+            }
+          }))
+        }
+      })
+      .catch((err) => {
+        toast.error(err.response?.message || "Something went wrong try again!")
       });
   };
 
   return {
     handleGetOtp,
     expirationTime,
+    state,
     verified,
+    loading,
     handleVerifyOtp,
     handleExipre,
     handleRegister,
     handleLogin,
     handleUpdateProfile,
+    verifyAccount
   };
 };

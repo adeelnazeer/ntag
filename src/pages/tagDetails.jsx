@@ -1,4 +1,4 @@
-import { Button, Checkbox, Radio, Typography } from "@material-tailwind/react";
+import { Button, Checkbox, Typography } from "@material-tailwind/react";
 import Img from "../assets/images/wallet (2).png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
@@ -13,8 +13,7 @@ const TagDetails = () => {
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+     formState: { errors },
   } = useForm();
 
   const taxAmount = (Number(stateData.tag_price) * Number(stateData.service_fee)) / 100;

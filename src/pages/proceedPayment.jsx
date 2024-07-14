@@ -10,13 +10,10 @@ import { GiVibratingSmartphone } from "react-icons/gi";
 import { useRegisterHook } from "./hooks/useRegisterHook";
 import CountdownTimer from "../components/counter";
 import PhoneInput from "react-phone-number-input";
-import { InputWithDropdown } from "../components/phoneNumber";
 const ProceedPayment = () => {
   const {
-    register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    formState: { },
   } = useForm();
   const dashboard = useTagList();
   const registerData = useRegisterHook();
@@ -37,19 +34,21 @@ const ProceedPayment = () => {
     registerData.handleVerifyOtp(stateNewNumber?.verification_code, setNewNumber, true)
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     const values = {
       transaction_type: "CORP_BUYTAG",
       channel: "WEB",
-      msisdn: phoneNumber?.checked1 == true ? user?.phone_number : value,
       account_id: user?.customer_account_id,
       customer_tag_id: state?.id,
       customer_tag_name: state?.tag_name,
       customer_tag_no: state?.tag_no,
-      mobile_no: phoneNumber?.checked1 == true ? user?.phone_number : value,
-      phone_number: phoneNumber?.checked1 == true ? user?.phone_number : value,
+      phone_number: user?.phone_number,
       payment_method: "CASH",
-      reserve_type: "R"
+      reserve_type: "R",
+      msisdn: user?.phone_number,
+    }
+    if (phoneNumber?.checked2) {
+      values.msisdn = value
     }
     dashboard.handleTagDetails(values, setIsOpen);
     // setIsOpen(true);
@@ -67,9 +66,9 @@ const ProceedPayment = () => {
             </label>
             <div className="relative mt-2  items-center flex w-full">
               <PhoneInput
+                defaultCountry="ET"
                 international
                 countryCallingCodeEditable={false}
-                defaultCountry="PK"
                 className="w-full rounded-xl border border-[#8A8AA033] px-4 py-2 bg-white outline-none "
                 value={value}
                 onChange={setValue}
@@ -184,11 +183,11 @@ const ProceedPayment = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button
+                  <div
                     className={`text-[14px] px-4 py-2 font-medium text-[#7A798A] rounded-2xl border border-[#7A798A] bg-transparent ${phoneNumber?.checked1 == false ? "opacity-70" : " opacity-100"}`} size="small"
                     disabled={phoneNumber?.checked1 == false}
                     type="text"
-                  >Add TAG #</button>
+                  >Add TAG #</div>
                   <Checkbox
                     checked={phoneNumber?.checked1}
                     onChange={() => { setPhoneNumber(st => ({ ...st, checked1: !st.checked1, checked2: false })) }}

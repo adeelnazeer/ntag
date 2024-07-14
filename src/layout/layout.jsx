@@ -2,8 +2,37 @@
 import Sidebar from "../components/sideBar";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import APICall from "../network/APICall";
+import UplaodDocument from "../components/uploadDocumentModal";
 
 const DashboardLayout = ({ children }) => {
+  const token = localStorage.getItem("token")
+  const user = JSON.parse(localStorage.getItem('user'))
+  const navigate = useNavigate()
+  const [open, setOpen] = useState({ show: false })
+  const checkDocument = () => {
+    APICall("get", null, `/customer/check-documents/${user?.customer_account_id}`).then(res => {
+      if (res?.data?.file_doc_name1 == null) {
+        setOpen(st => ({
+          ...st,
+          show: true,
+          data: res?.data
+        }))
+      }
+      localStorage.setItem('data', JSON.stringify(res?.data))
+    }).catch(err => console.log("err", err))
+  }
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login')
+    }
+    checkDocument()
+  }, [])
+
+
   return (
     <div className=" h-screen flex flex-col">
       <Header />
@@ -14,13 +43,16 @@ const DashboardLayout = ({ children }) => {
           </h1>
         </div>
         <div className="grid grid-cols-12 ">
-          <div className="col-span-3">
+          <div className="col-span-2">
             <Sidebar />
           </div>
-          <div className="col-span-9 px-5 pt-4">{children}</div>
+          <div className="col-span-10 px-5 pt-4"><div className="w-11/12 mx-auto">{children}</div></div>
         </div>
       </div>
       <Footer />
+      <UplaodDocument open={open} setOpen={setOpen}
+        checkDocument={checkDocument}
+      />
     </div>
   );
 };

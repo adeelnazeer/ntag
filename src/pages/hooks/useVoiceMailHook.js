@@ -1,32 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
 import { toast } from "react-toastify";
 
 
 export const useVoiceMailHook = () => {
-
   const [voiceMail, setVoiceMail] = useState();
-
-
+  const [loading, setLoading] = useState(true)
   const handleGetVoiceMail = () => {
-    APICall("get",voiceMail, EndPoints.customer.getVoiceMail)
+    APICall("get", null, EndPoints.customer.getVoiceMail)
       .then((res) => {
-        console.log(res,"res")
         if (res?.success) {
-
-          setVoiceMail(res?.data);
+          setVoiceMail(res);
         } else {
           toast.error(res?.message);
         }
+        setLoading(false)
       })
       .catch((err) => {
-        console.log("err", err);
+        toast.error(err)
+        setLoading(false)
       });
   };
 
+  useEffect(() => {
+    handleGetVoiceMail()
+  }, [])
+
   return {
     handleGetVoiceMail,
-    voiceMail
+    voiceMail,
+    loading
   };
 };

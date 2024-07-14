@@ -5,6 +5,7 @@ import CountdownTimer from "../../../components/counter";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
+import TickIcon from '../../../assets/images/tick.png'
 import { useState } from "react";
 const GetLabel = ({ name }) => {
   return (
@@ -21,13 +22,11 @@ const CompanyForm = ({
   setValue,
   Controller,
   control,
+  setData
 }) => {
   const registerData = useRegisterHook();
   const watchAllFields = watch();
   const [phone, setPhone] = useState();
-  console.log(phone, "phone");
-  console.log(watchAllFields, "watchAllFields");
-
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
       <div className="flex justify-between items-center py-3">
@@ -49,38 +48,90 @@ const CompanyForm = ({
 
       <div>
         <GetLabel name="Company Name" />
-        <Input
-          className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-          placeholder="Company name"
-          style={
-            errors?.company_name
-              ? { border: "1px solid red" }
-              : { border: "1px solid #8A8AA033" }
+        <div className="mt-2  flex items-center gap-2">
+          <Input
+            className="w-full rounded-xl px-4 py-2 bg-white outline-none "
+            placeholder="Company name"
+            style={
+              errors?.company_name
+                ? { border: "1px solid red" }
+                : { border: "1px solid #8A8AA033" }
+            }
+            {...register("company_name", { required: true })}
+            onChange={(e) => {
+              if (e.target.value?.length > 2) {
+                registerData.verifyAccount({ company_name: e.target.value }, "company_name")
+              }
+              setValue("company_name", e.target.value, {
+                shouldValidate: true,
+                shouldDirty: true
+              })
+              setData(st => ({ ...st, company_name: e.target.value }))
+            }}
+          />
+          {registerData?.state?.success?.company_name && watchAllFields?.company_name != "" &&
+            <div>
+              <img className="w-5" src={TickIcon} alt="" />
+            </div>
           }
-          {...register("company_name", { required: true })}
-        />
+        </div>
+        <p className=" text-right mt-1 text-[#FF0000]">{registerData?.state?.error?.company_name}</p>
       </div>
-      <div>
+      <div >
         <GetLabel name="User Name" />
-        <Input
-          className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-          placeholder="User name"
-          style={
-            errors?.account_id
-              ? { border: "1px solid red" }
-              : { border: "1px solid #8A8AA033" }
+        <div className="mt-2  flex items-center gap-2">
+          <Input
+            className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
+            placeholder="User name"
+            style={
+              errors?.account_id
+                ? { border: "1px solid red" }
+                : { border: "1px solid #8A8AA033" }
+            }
+            {...register("account_id", { required: true })}
+            onChange={(e) => {
+              if (e.target.value?.length > 2) {
+                registerData.verifyAccount({ account_id: e.target.value }, "account_id")
+              }
+              setValue("account_id", e.target.value, {
+                shouldValidate: true,
+                shouldDirty: true
+              })
+            }}
+          />
+          {registerData?.state?.success?.account_id && watchAllFields?.account_id != "" &&
+            <div>
+              <img className="w-5" src={TickIcon} alt="" />
+            </div>
           }
-          {...register("account_id", { required: true })}
-        />
+        </div>
+        <p className=" text-right mt-1 text-[#FF0000]">{registerData?.state?.error?.account_id}</p>
       </div>
       <div>
         <label className="text-[14px] text-[#555] font-[500]">Email</label>
-        <Input
-          className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-          placeholder="Email"
-          style={{ border: "1px solid #8A8AA033" }}
-          {...register("email")}
-        />
+        <div className="mt-2  flex items-center gap-2">
+          <Input
+            className="w-full rounded-xl px-4 py-2 bg-white outline-none "
+            placeholder="Email"
+            style={{ border: "1px solid #8A8AA033" }}
+            {...register("email")}
+            onChange={(e) => {
+              if (e.target.value?.length > 6) {
+                registerData.verifyAccount({ email: e.target.value }, "email")
+              }
+              setValue("email", e.target.value, {
+                shouldValidate: true,
+                shouldDirty: true
+              })
+            }}
+          />
+          {registerData?.state?.success?.email &&
+            <div>
+              <img className="w-5" src={TickIcon} alt="" />
+            </div>
+          }
+        </div>
+        <p className=" text-right mt-1 text-[#FF0000]">{registerData?.state?.error?.email}</p>
       </div>
       <div>
         <GetLabel name="Password" />
@@ -106,7 +157,7 @@ const CompanyForm = ({
           type="password"
           style={
             errors?.confirm_password ||
-            watchAllFields?.password != watchAllFields?.confirm_password
+              watchAllFields?.password != watchAllFields?.confirm_password
               ? { border: "1px solid red" }
               : { border: "1px solid #8A8AA033" }
           }
@@ -123,47 +174,60 @@ const CompanyForm = ({
       {/* className="w-full rounded-xl px-4 py-2 bg-white outline-none" */}
       <div>
         <GetLabel name="Phone Number" />
-        <div className="relative mt-2 items-center flex w-full">
-          <Controller
-            name="msisdn"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <PhoneInput
-                className="w-full rounded-xl px-4 py-2 bg-white outline-none"
-                country="US"
-                value={field.value}
-                onChange={(value) => {
-                  field.onChange(value);
-                  setPhone(value);
-                }}
-              />
-            )}
-          />
-          {registerData?.expirationTime ? (
-            <CountdownTimer
-              expirationTime={registerData?.expirationTime}
-              onExpire={registerData?.handleExipre}
+        <div className="mt-2  flex items-center gap-2">
+          <div className="relative items-center flex w-full">
+            <Controller
+              name="phone_number"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <PhoneInput
+                  className="w-full rounded-xl px-4 py-2 bg-white outline-none"
+                  defaultCountry="ET"
+                  international
+                  countryCallingCodeEditable={false}
+                  value={field.value}
+                  onChange={(value) => {
+                    field.onChange(value);
+                    setPhone(value);
+                    if (value?.length > 9) {
+                      registerData.verifyAccount({ phone_number: value }, "phone_number")
+                    }
+                  }}
+                />
+              )}
             />
-          ) : (
-            // watchAllFields?.msisdn && (
-            <p
-              size="sm"
-              className="!absolute right-3 cursor-pointer text-sm rounded"
-              onClick={() => registerData.handleGetOtp(phone)}
-            >
-              Get Code
-            </p>
-            // )
-          )}
+            {registerData?.expirationTime ? (
+              <CountdownTimer
+                expirationTime={registerData?.expirationTime}
+                onExpire={registerData?.handleExipre}
+              />
+            ) : (
+              // watchAllFields?.msisdn && (
+              <p
+                size="sm"
+                className="!absolute right-3 cursor-pointer text-sm rounded"
+                onClick={() => registerData.handleGetOtp(phone)}
+              >
+                Get Code
+              </p>
+              // )
+            )}
+          </div>
+          {registerData?.state?.success?.phone_number &&
+            <div>
+              <img className="w-5" src={TickIcon} alt="" />
+            </div>
+          }
         </div>
+        <p className=" text-right mt-1 text-[#FF0000]">{registerData?.state?.error?.phone_number}</p>
       </div>
 
       <div>
         <GetLabel name="Verification Code" />
         <div className="relative mt-2  items-center flex w-full">
           <Input
-          valueAsNumber
+            valueAsNumber
             className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
             placeholder="Enter verification code"
             {...register("verification_code", {

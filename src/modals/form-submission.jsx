@@ -1,7 +1,14 @@
 import { Button, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
-const FormSubmission = ({ isOpen, setIsOpen }) => {
+import { useRegisterHook } from "../pages/hooks/useRegisterHook";
+const FormSubmission = ({ isOpen, setIsOpen, data }) => {
+  const registerHook = useRegisterHook();
+
+  const handleSubmit = () => {
+    registerHook.handleUpdateProfile(data, setIsOpen);
+
+  }
   return (
     <>
       {isOpen && (
@@ -25,19 +32,21 @@ const FormSubmission = ({ isOpen, setIsOpen }) => {
                 </div>
               </div>
               <div className="flex justify-center">
-              <div className="flex items-center justify-between mt-8 w-[440px]">
-                <Button className="bg-white text-[#757575] border border-secondary  py-2 px-6 ">
-                  Cancel
-                </Button>
-                <Button
-                  className="bg-secondary  py-2 px-6 text-white"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Submit
-                </Button>
+                <div className="flex items-center justify-between mt-8 w-[440px]">
+                  <Button className="bg-white text-[#757575] border border-secondary  py-2 px-6 "
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className="bg-secondary  py-2 px-6 text-white"
+                    onClick={() => handleSubmit()}
+                  >
+                    Submit
+                  </Button>
+                </div>
               </div>
-              </div>
-              
+
             </div>
           </div>
         </div>

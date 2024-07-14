@@ -1,5 +1,6 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import 'react-toastify/dist/ReactToastify.css';
+import "react-datepicker/dist/react-datepicker.css";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home/home";
