@@ -20,9 +20,6 @@ const MenuBar = () => {
       <Button className=" text-primaryLight font-medium py-1 px-2">
         Pricing
       </Button>
-      <Button className=" text-primaryLight font-medium py-1 px-2">
-        Solutions
-      </Button>
       <Button className=" text-primaryLight font-medium py-1 px-2">Help</Button>
     </div>
   );

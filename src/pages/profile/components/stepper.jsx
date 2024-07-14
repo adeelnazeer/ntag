@@ -1,11 +1,13 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Stepper, Step, Button, Typography } from "@material-tailwind/react";
-import CompanyForm from "../../register/components/accountsForm";
-import ContactForm from "../../register/components/contactForm";
+
 import { FaRegUser } from "react-icons/fa6";
 import { MdContacts } from "react-icons/md";
+import CompanyForm from "../../register/components/accountsForm";
+import ContactForm from "../../register/components/contactForm";
 
-export function MultiStepFormProfile({ watch, register, errors }) {
+export function MultiStepFormProfile({ watch, register, errors, setValue, getValues, Controller, control, setData, data }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
@@ -52,12 +54,14 @@ export function MultiStepFormProfile({ watch, register, errors }) {
         </Step>
       </Stepper>
       <div className="mt-32">
-        {activeStep == 0 ? <CompanyForm watch={watch}
-          register={register}
-          errors={errors}
+        {activeStep == 0 ? <CompanyForm register={register} errors={errors} watch={watch} setValue={setValue}
+          getValues={getValues} Controller={Controller} control={control}
+          setData={setData}
+
         /> : <ContactForm watch={watch}
           register={register}
           errors={errors}
+          data={data}
         />}
       </div>
       <div className="mt-8 flex justify-between">

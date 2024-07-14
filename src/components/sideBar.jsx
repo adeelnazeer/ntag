@@ -16,11 +16,13 @@ const Sidebar = () => {
   const activeTwo = location?.pathname == ConstentRoutes.buyTag;
   const activeThree = location?.pathname == ConstentRoutes.manageTagName;
   const activeProfile = location?.pathname == ConstentRoutes.profilePage;
+  const activeVoiceMail = location?.pathname == ConstentRoutes.voiceMail;
 
-  const handleLogOut=()=>{
+
+  const handleLogOut = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('id')
-
+    localStorage.clear()
     navigate('/')
   }
   return (
@@ -86,8 +88,13 @@ const Sidebar = () => {
               </ListItem>
             </div>
             <div className="flex gap-6 ">
-              <div className=" bg-white w-2 h-full rounded-tr-[10px] rounded-br-[10px]" />
-              <ListItem className="py-4"
+              <div
+                className={`${activeVoiceMail ? "bg-secondary" : "bg-white"
+                  }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+              />
+              <ListItem
+                className={`py-4 ${activeVoiceMail ? " bg-secondary text-white" : ""
+                  } focus:bg-secondary focus:text-white`}
                 onClick={() => navigate(ConstentRoutes.voiceMail)}
               >
                 <ListItemPrefix>
@@ -97,7 +104,10 @@ const Sidebar = () => {
               </ListItem>
             </div>
             <div className="flex gap-6 ">
-              <div className=" bg-white w-2 h-full rounded-tr-[10px] rounded-br-[10px]" />
+            <div
+                className={`${activeProfile ? "bg-secondary" : "bg-white"
+                  }  w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+              />
               <ListItem
                 className={`py-4 ${activeProfile ? " bg-secondary text-white" : ""
                   } focus:bg-secondary focus:text-white`}

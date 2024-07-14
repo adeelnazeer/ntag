@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Typography } from "@material-tailwind/react";
 import CompanyForm from "./accountsForm";
 import ContactForm from "./contactForm";
 import AccountForm from "./companyForm";
-import { useForm,Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 
 export function MultiStepForm() {
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
   const registerHook = useRegisterHook();
+  const [open, setOpen] = useState(false);
+  const [data, setData] = useState(null)
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   setActiveStep(1);
@@ -33,9 +35,10 @@ export function MultiStepForm() {
       registerHook.handleRegister(data, setActiveStep, reset);
     }
     if (activeStep == 1) {
-      setActiveStep(2)
-
-    } if (activeStep == 2) {
+      setData(st => ({ ...st, data: data }))
+      setOpen(true)
+    }
+    if (activeStep == 2) {
       registerHook.handleUpdateProfile(data);
     }
 
@@ -103,9 +106,14 @@ export function MultiStepForm() {
         {activeStep == 0 ? (
           <CompanyForm register={register} errors={errors} watch={watch} setValue={setValue}
             getValues={getValues} Controller={Controller} control={control}
+            setData={setData}
           />
         ) : activeStep == 1 ? (
-          <AccountForm register={register} errors={errors} watch={watch} />
+          <AccountForm register={register} errors={errors} watch={watch}
+            data={data}
+            open={open}
+            setOpen={setOpen}
+          />
         ) : (
           <ContactForm register={register} errors={errors} watch={watch} />
         )}
@@ -135,7 +143,7 @@ export function MultiStepForm() {
             // onClick={() => setActiveStep(2)}
             type="submit"
           >
-            {activeStep == 2 ? "Finish" : "Next"}
+            {activeStep == 2 ? "Finish" : "Submit"}
           </Button>
         </div>
       )}

@@ -4,7 +4,7 @@ import MenuBar from "./menuBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
 import { useEffect, useState } from "react";
-import { Menu, MenuHandler, Button, MenuItem, MenuList, Radio, Typography } from "@material-tailwind/react";
+import { Menu, MenuHandler, Button, MenuItem, MenuList, Radio, Typography, ListItemPrefix } from "@material-tailwind/react";
 import "../App.css";
 const Header = () => {
   const navigate = useNavigate();
@@ -13,14 +13,7 @@ const Header = () => {
   const [selectedValue, setSelectedValue] = useState("");
   const token = localStorage.getItem("token")
   const user = JSON.parse(localStorage.getItem("user"))
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
+  
   useEffect(() => {
     if (selectedValue == "corporate") {
       navigate(ConstentRoutes.register);
@@ -56,7 +49,7 @@ const Header = () => {
                 </MenuHandler>
                 <MenuList>
                   <MenuItem className=" focus:border-none border-none transition-none hover:border-none focus-within:border-none"
-                  onClick={()=>navigate(ConstentRoutes.profilePage)}
+                    onClick={() => navigate(ConstentRoutes.profilePage)}
                   >Profile</MenuItem>
                   <MenuItem className=" focus:border-none border-none transition-none hover:border-none"
                     onClick={() => {
@@ -81,63 +74,71 @@ const Header = () => {
               Register
             </Button> */}
               <div className="relative">
-                <Button
-                  className=" bg-white text-base font-medium text-secondary py-1 px-2"
-                  onClick={toggleDropdown}
-                >
-                  Register
-                </Button>
-                {isOpen && (
-                  <div>
-                    <ul
-                      role="menu"
-                      className="absolute z-10 min-w-[180px] overflow-auto rounded-md border border-blue-gray-50 bg-white py-2 px-3 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
+                <Menu>
+                  <MenuHandler>
+                    <Button
+                      className=" bg-white text-base  font-medium text-secondary py-1 px-2">
+                      Register
+                    </Button>
+                  </MenuHandler>
+                  <MenuList>
+                    <p className="text-[13px] outline-none text-[#555555] font-[400]">
+                      Select Customer Type
+                    </p>
+                    <MenuItem className=" focus:border-none border-none transition-none hover:border-none focus-within:border-none"
+                      onClick={() => {
+                        navigate(ConstentRoutes.register);
+                      }}
                     >
-                      <li>
-                        <p className="text-[13px] text-[#555555] font-[400]">
-                          Select Customer Type
-                        </p>
-                      </li>
-                      <li
-                        role="menuitem"
-                        className="block w-full cursor-pointer select-none rounded-md px-3 pt-[5px] pb-1 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+                      <label
+                        className="flex w-full cursor-pointer items-center"
                       >
-                        <Radio
-                        className="h-3 w-3 hover:before:opacity-0"
-                          name="color"
-                          value="corporate"
-                          color="green"
-                          checked={selectedValue === "corporate"}
-                          onChange={handleChange}
-                          label={
-                            <Typography className="text-secondary text-sm">
-                              Corporate
-                            </Typography>
-                          }
-                        />
-                      </li>
-                      <li
-                        role="menuitem"
-                        className="block w-full cursor-pointer select-none rounded-md px-3 pt-[5px] pb-1 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+                        <ListItemPrefix className="mr-3">
+                          <Radio
+                            id="vertical-list-react"
+                            ripple={false}
+                            name="color"
+                            value="individual"
+                            color="green"
+                            checked={selectedValue === "individual"}
+                            className="h-3 w-3 p-0 hover:before:opacity-0"
+                            containerProps={{
+                              className: "p-0",
+                            }}
+                          />
+                        </ListItemPrefix>
+                        <Typography className="text-secondary font-normal text-sm">
+                          Corporate
+                        </Typography>
+                      </label>
+                    </MenuItem>
+                    <MenuItem className=" focus:border-none border-none transition-none hover:border-none focus-within:border-none"
+                    >
+                      <label
+                        className="flex w-full cursor-pointer items-center"
                       >
-                        <Radio
-                        ripple={false}
-                           className="h-3 w-3 hover:before:opacity-0"
-                          name="color"
-                          value="individual"
-                          color="green"
-                          checked={selectedValue === "individual"}
-                          onChange={handleChange}
-                          label={
-                            <Typography className="text-secondary text-sm">
-                              Individual
-                            </Typography>
-                          }
-                        />
-                      </li>
-                    </ul>
-                  </div>
-                )}
+                        <ListItemPrefix className="mr-3">
+                          <Radio
+                            id="vertical-list-react"
+                            ripple={false}
+                            name="color"
+                            value="individual"
+                            color="green"
+                            checked={selectedValue === "individual"}
+                            className="h-3 w-3 p-0 hover:before:opacity-0"
+                            containerProps={{
+                              className: "p-0",
+                            }}
+                          />
+                        </ListItemPrefix>
+                        <Typography className="text-secondary  font-normal text-sm">
+                          Individual
+                        </Typography>
+                      </label>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+
               </div>
             </div>
           }

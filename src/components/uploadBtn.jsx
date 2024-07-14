@@ -38,7 +38,7 @@ const UploadBtn = ({register,setIsOpen}) => {
 
     if (!validationError) {
       setFileName(file.name);
-      setIsOpen(true);
+      // setIsOpen(true);
       setUploadedFile(file);
     } else {
       setFileName(null);

@@ -14,6 +14,8 @@ const Dashboardtable = (props) => {
   };
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+  const docStatus = JSON.parse(localStorage.getItem('data'))
+
 
   return (
     <div className="p-4 rounded-xl shadow pb-7">
@@ -127,8 +129,8 @@ const Dashboardtable = (props) => {
                       className="bg-secondary  py-2 px-6 text-white"
                       onClick={() => navigate(ConstentRoutes.tagDetail, { state: single })}
                     >
-                      Buy Now
-                    </Button>
+                {docStatus?.doc_approval_status == 0 ? "Reserve  Now " : "Buy Now"}
+                </Button>
                   </div>
                 }
                 {single?.status == 2 &&
