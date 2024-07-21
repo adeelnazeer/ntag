@@ -8,7 +8,7 @@ import { useState } from "react";
 
 const GetLabel = ({ name }) => {
   return (
-    <label className="text-base text-[#555]">
+    <label className="md:text-base text-[16px]  text-[#555]">
       {name} <span className=" text-red-500">*</span>
     </label>
   );
@@ -19,11 +19,11 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open }) => {
     <>
 
       <div className="flex flex-col gap-4 max-w-3xl mx-auto">
-        <div className="flex justify-between items-center py-3">
+        <div className="flex justify-between items-center py-3 md:gap-0 gap-6">
           <Button className=" bg-secondary text-white">
             Company Information
           </Button>
-          <Typography className="text-[#555] text-base  font-semibold">
+          <Typography className="text-[#555] md:text-base text-[16px]  font-semibold">
             Already have an account?{" "}
             <span className="text-secondary">Step 2 of 2</span>
           </Typography>
@@ -31,7 +31,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open }) => {
 
         <hr></hr>
         <div>
-          <Typography className="text-[#555] text-base  font-semibold">
+          <Typography className="text-[#555] md:text-base text-[16px]  font-semibold">
             Contact Information
           </Typography>
         </div>
@@ -77,7 +77,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open }) => {
       </div>
       <div className="flex flex-col gap-4 max-w-3xl mx-auto mt-8">
         <div>
-          <Typography className="text-[#555] text-base  font-semibold">
+          <Typography className="text-[#555] md:text-base text-[16px]   font-semibold">
             Company Basic Information
           </Typography>
         </div>

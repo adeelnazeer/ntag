@@ -58,16 +58,16 @@ import Card from "../../../assets/images/Card.png";
 const CarouselCustomNavigation = () => {
   return (
     <Carousel
-      className="rounded-xl"
+      className="rounded-xl "
       nextArrow={false}
       prevArrow={false}
       navigation={({ setActiveIndex, activeIndex, length }) => (
-        <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+        <div className="absolute bottom-4 left-2/4 z-10 flex -translate-x-2/4 gap-2 ">
           {new Array(length).fill("").map((_, i) => (
             <span
               key={i}
               className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
+                activeIndex === i ? "w-8 bg-black" : "w-4 bg-white/50"
               }`}
               onClick={() => setActiveIndex(i)}
             />
@@ -75,12 +75,12 @@ const CarouselCustomNavigation = () => {
         </div>
       )}
     >
-      <div className=" grid grid-cols-2 bg-secondary justify-between items-center  rounded-[15px]">
+      <div className=" grid md:grid-cols-2 grid-cols-1  bg-secondary justify-between items-center md:mt-0 mt-12 rounded-[15px]">
         <div className=" pl-12 pr-6 col-span-1">
-          <h2 className="text-white text-[46px] font-semibold">
+          <h2 className="text-white md:text-[46px] text-[25px] font-semibold mt-12 md:mt-0">
             Service For Computer
           </h2>
-          <p className=" text-white mt-4 text-[18px]">
+          <p className=" text-white mt-4 md:text-[18px] text-[15px]">
             Want to receive a monthly email in your inbox with awesome free
             Webflow cloneables, resources and more? Please submit your email
             below. Want to receive a monthly email in your inbox with awesome
@@ -88,16 +88,16 @@ const CarouselCustomNavigation = () => {
             email below.
           </p>
         </div>
-        <div className=" col-span-1">
+        <div className="flex-1  md:mt-0 mt-12">
           <img src={Card} alt="card" className=" h-[500px] w-full" />
         </div>
       </div>
-      <div className=" grid grid-cols-2 bg-secondary justify-between items-center  rounded-[15px]">
+      <div className=" grid md:grid-cols-2 grid-cols-1  bg-secondary justify-between items-center md:mt-0 mt-12 rounded-[15px]">
         <div className=" pl-12 pr-6 col-span-1">
-          <h2 className="text-white text-[46px] font-semibold">
+          <h2 className="text-white md:text-[46px] text-[25px] font-semibold mt-12 md:mt-0">
             Service For Computer
           </h2>
-          <p className=" text-white mt-4 text-[18px]">
+          <p className=" text-white mt-4 md:text-[18px] text-[15px]">
             Want to receive a monthly email in your inbox with awesome free
             Webflow cloneables, resources and more? Please submit your email
             below. Want to receive a monthly email in your inbox with awesome
@@ -105,7 +105,7 @@ const CarouselCustomNavigation = () => {
             email below.
           </p>
         </div>
-        <div className="flex-1">
+        <div className="flex-1  md:mt-0 mt-12">
           <img src={Card} alt="card" className=" h-[500px] w-full" />
         </div>
       </div>

@@ -11,18 +11,18 @@ const Voicemail = () => {
 
   return (
     <div className="p-4 rounded-xl shadow pb-7">
-      <div className="flex justify-between items-center">
+      <div className="flex md:justify-between justify-start flex-col-reverse gap-4 md:gap-0 md:flex-row items-center">
         <div className="btn">
           <Button className="bg-secondary  py-2 px-6 text-white">
             Voice Mail
           </Button>
         </div>
 
-        <div className="flex items-center bg-white rounded-md relative">
+        <div className="flex items-center bg-white rounded-md relative md:w-[220px] w-full">
           <input
             type="text"
             placeholder="Search..."
-            className=" border rounded bg-white flex-grow outline-none p-2"
+            className=" border rounded bg-white flex-grow outline-none p-2 "
           />
           <div className="p-2 bg-secondary rounded right-1 absolute">
             <FaSearch className="text-white " />
