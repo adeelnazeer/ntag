@@ -11,9 +11,9 @@ const TagNames = () => {
   const docStatus = JSON.parse(localStorage.getItem('data'))
   
   return (
-    <div className="p-4">
+    <div className="md:p-4 p-2">
       <div className="mt-4">
-        <Typography className="text-[#1F1F2C] md:text-[26px] text-[20px] font-bold">
+        <Typography className="text-[#1F1F2C] md:text-[26px] text-[20px] font-bold text-center md:text-start">
           Welcome Back Name tag services!
         </Typography>
         {loading ?
@@ -29,9 +29,9 @@ const TagNames = () => {
             }
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
               {data?.map(single =>
-                <div className="p-4 rounded-xl shadow pb-6 mt-6 " key={single?.id}>
+                <div className="md:p-4 p-1 rounded-xl shadow pb-6 md:mt-6 mt-2" key={single?.id}>
                   <>
-                    <div className="flex justify-between bg-[#F6F7FB] px-5 py-3 rounded-xl items-center">
+                    <div className="flex justify-between bg-[#F6F7FB] md:px-5 px-2 py-3 rounded-xl items-center">
                       <img className="rounded h-[40px]" src={Img} alt="kfc" />
                       <div>
                         <Typography className="text-[14px] font-bold bg-secondary py-1 px-4 text-white">
@@ -39,33 +39,33 @@ const TagNames = () => {
                         </Typography>
                       </div>
                     </div>
-                    <div className="flex justify-between  px-5 py-3 rounded-xl mt-1">
+                    <div className="flex justify-between  md:px-5 px-2 py-3 rounded-xl mt-1">
                       <Typography className="md:text-[14px] text-[12px]">
                         Registered Mobile Number
                       </Typography>
                       <Typography className="md:text-[17px] text-[12px] font-bold">{single?.msisdn}</Typography>
                     </div>
-                    <div className="px-5 py-3 rounded-xl mt-1">
+                    <div className="md:px-5 px-2 py-3 rounded-xl mt-1">
                       <div className="flex justify-between">
                         <Typography className="text-[14px]">Contact Number</Typography>
                         <Typography className="md:text-[17px] text-[12px] font-bold">{single?.msisdn}</Typography>
                       </div>
                     </div>
-                    <div className="flex justify-between  px-5 py-3 rounded-xl mt-1">
+                    <div className="flex justify-between  md:px-5 px-2 py-3 rounded-xl mt-1">
                       <Typography className="text-[14px]">Service Monthly Fee</Typography>
                       <Typography className="md:text-[17px] text-[12px] font-bold">{single?.service_fee}</Typography>
                     </div>
-                    <div className="flex justify-between  px-5 py-3 rounded-xl mt-1">
+                    <div className="flex justify-between  md:px-5 px-2 py-3 rounded-xl mt-1">
                       <Typography className="text-[14px]">Expiry Date</Typography>
                       <Typography className="md:text-[17px] text-[12px] font-bold">{moment(single?.expiry_date).format("DD-MM-YYYY")}</Typography>
                     </div>
-                    <div className="flex justify-between  px-5 py-3 rounded-xl mt-1">
+                    <div className="flex justify-between  md:px-5 px-2 py-3 rounded-xl mt-1">
                       <Typography className="text-[14px]">
                         Service Registration Date
                       </Typography>
                       <Typography className="md:text-[17px] text-[12px] font-bold">{moment(single?.created_date).format('DD-MM-YYYY')}</Typography>
                     </div>
-                    <div className="flex justify-between  px-5 py-3 rounded-xl mt-1">
+                    <div className="flex justify-between  md:px-5 px-2 py-3 rounded-xl mt-1">
                       <Typography className="text-[14px]">Current Service Status</Typography>
                       <Chip className="bg-secondary" value={single?.status} />
                     </div>

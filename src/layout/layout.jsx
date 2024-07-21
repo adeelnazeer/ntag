@@ -46,7 +46,7 @@ const DashboardLayout = ({ children }) => {
           <div className="col-span-2">
             <Sidebar />
           </div>
-          <div className="md:col-span-10 col-span-12 px-5 pt-4 mt-6 md:mt-0"><div className="w-11/12 mx-auto">{children}</div></div>
+          <div className="md:col-span-10 col-span-12 md:px-5 px-2 md:pt-4 pt-2 mt-2 md:mt-0 md:block "><div className="md:w-11/12 w-full md:mx-auto ">{children}</div></div>
         </div>
       </div>
       <Footer />

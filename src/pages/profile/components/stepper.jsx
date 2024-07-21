@@ -16,7 +16,7 @@ export function MultiStepFormProfile({ watch, register, errors, setValue, getVal
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
   return (
-    <div className="w-full md:px-24 px-4 py-4 flex-1">
+    <div className="w-full md:px-24 px-2 py-4 flex-1">
       <Stepper
         activeStep={activeStep}
         isLastStep={(value) => setIsLastStep(value)}
@@ -28,7 +28,7 @@ export function MultiStepFormProfile({ watch, register, errors, setValue, getVal
           completedClassName=" bg-secondary"
         >
           <FaRegUser className="h-5 w-5" />
-          <div className="absolute -bottom-[2.5rem] w-max text-center">
+          <div className="absolute md:-bottom-[2.5rem] -bottom-[3.5rem] md:w-max text-center">
             <Typography
               className="text-[#555] md:text-base text-[12px]  font-semibold"
               color={activeStep === 0 ? "blue-gray" : "gray"}
