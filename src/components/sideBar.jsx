@@ -56,13 +56,13 @@ const Sidebar = () => {
       </div>
       <div
         ref={sidebarRef}
-        className={`fixed lg:static top-0 left-0 h-full w-64 bg-white shadow-lg transition-transform transform mt-[64px] ${
+        className={`fixed lg:fixed top-0 md:top-auto left-0 h-full w-64 bg-white shadow-lg transition-transform transform pt-[64px] ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 z-50`}
       >
         <div className="overflow-scroll ">
           <Card className="px-4 py-4 h-[calc(100vh-325px)] w-full max-w-[20rem] overflow-scroll shadow-xl shadow-blue-gray-900/5">
-            <List className="text-[16px] gap-4 p-0 font-normal text-black">
+            <List className="text-[16px] min-w-full w-full gap-4 p-0 font-normal text-black">
               <div className="flex gap-6">
                 <div
                   className={`${

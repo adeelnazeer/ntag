@@ -3,12 +3,14 @@ import LoginImg from "../../../assets/images/login.png";
 import { useForm } from "react-hook-form";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 import { Button } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
   const registerHook = useRegisterHook();
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
-     formState: { errors },
+    formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
@@ -54,7 +56,9 @@ const LoginForm = () => {
               LOGIN
             </Button>
             <div className="mt-6 flex justify-center gap-4">
-              <p className=" text-[#8A8AA066] text-base">Register</p>
+              <p className=" text-[#8A8AA066] text-base cursor-pointer"
+                onClick={() => navigate('/register')}
+              >Register</p>
               <div className=" w-[2px] bg-[#8A8AA033]" />
               <p className=" text-[#8A8AA066] text-base">Forget Password</p>
             </div>

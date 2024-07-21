@@ -37,7 +37,7 @@ const DashboardLayout = ({ children }) => {
     <div className=" h-screen flex flex-col">
       <Header />
       <div className=" flex-1 overflow-auto">
-        <div className="bg-secondary py-6">
+        <div className="bg-secondary py-6 ">
           <h1 className="text-center md:text-[36px] text-[25px] text-white font-bold">
             Corporate Name TAG
           </h1>

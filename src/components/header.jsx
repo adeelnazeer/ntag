@@ -43,7 +43,7 @@ const Header = () => {
 
   return (
     <div
-      className={`sticky top-0 z-10 bg-[#f5f5f5] md:${classes} mb-1 md:mb-0`}
+      className={`sticky top-0 z-50 bg-[#f5f5f5] md:${classes} mb-2 md:mb-6`}
     >
       <div className="flex justify-between items-center h-16 md:mx-4 mx-0 px-2 md:px-0 bg-secondary">
         <div className="h-full flex items-center">

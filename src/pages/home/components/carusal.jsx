@@ -77,7 +77,7 @@ const CarouselCustomNavigation = () => {
     >
       <div className=" grid md:grid-cols-2 grid-cols-1  bg-secondary justify-between items-center md:mt-0 mt-2 rounded-[15px]">
         <div className=" md:pl-12 md:pr-6 px-2 col-span-1">
-          <h2 className="text-white md:text-[46px] text-[25px] font-semibold mt-12 md:mt-0">
+          <h2 className="text-white md:text-[46px] text-[25px] font-semibold mt-4 md:mt-0">
             Service For Computer
           </h2>
           <p className=" text-white mt-4 md:text-[18px] text-[15px]">
@@ -89,12 +89,12 @@ const CarouselCustomNavigation = () => {
           </p>
         </div>
         <div className="flex-1  md:mt-0 mt-2">
-          <img src={Card} alt="card" className=" h-[500px] w-full" />
+          <img src={Card} alt="card" className=" md:h-[500px] w-full" />
         </div>
       </div>
       <div className=" grid md:grid-cols-2 grid-cols-1  bg-secondary justify-between items-center md:mt-0 mt-2 rounded-[15px]">
         <div className=" md:pl-12 md:pr-6 px-2 col-span-1">
-          <h2 className="text-white md:text-[46px] text-[25px] font-semibold mt-12 md:mt-0">
+          <h2 className="text-white md:text-[46px] text-[25px] font-semibold mt-4 md:mt-0">
             Service For Computer
           </h2>
           <p className=" text-white mt-4 md:text-[18px] text-[15px]">
@@ -106,7 +106,7 @@ const CarouselCustomNavigation = () => {
           </p>
         </div>
         <div className="flex-1  md:mt-0 mt-2">
-          <img src={Card} alt="card" className=" h-[500px] w-full" />
+          <img src={Card} alt="card" className=" md:h-[500px] w-full" />
         </div>
       </div>
     </Carousel>
