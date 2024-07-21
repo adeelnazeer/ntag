@@ -5,7 +5,7 @@ import { useRegisterHook } from "../../hooks/useRegisterHook";
 
 const GetLabel = ({ name }) => {
   return (
-    <label className="text-base text-[#555]">
+    <label className="md:text-base text-[16px]  text-[#555]">
       {name} <span className=" text-red-500">*</span>
     </label>
   );
@@ -16,12 +16,12 @@ const ContactForm = ({ register, errors, watch }) => {
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
       <div>
-        <Typography className="text-[#555] text-base  font-semibold">
+        <Typography className="text-[#555] md:text-base text-[16px]   font-semibold">
           Contact Information
         </Typography>
       </div>
       <div>
-        <label className="text-base text-[#555]">First Name</label>
+        <label className="md:text-base text-[16px]  text-[#555]">First Name</label>
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="First Name"
@@ -34,7 +34,7 @@ const ContactForm = ({ register, errors, watch }) => {
         />
       </div>
       <div>
-        <label className="text-base text-[#555]">Last Name</label>
+        <label className="md:text-base text-[16px]  text-[#555]">Last Name</label>
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="Last Name"
@@ -47,7 +47,7 @@ const ContactForm = ({ register, errors, watch }) => {
         />
       </div>
       <div>
-        <label className="text-base text-[#555]">City</label>
+        <label className="md:text-base text-[16px]  text-[#555]">City</label>
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="City"
@@ -60,7 +60,7 @@ const ContactForm = ({ register, errors, watch }) => {
         />
       </div>
       <div>
-        <label className="text-base text-[#555]">Specific Address</label>
+        <label className="md:text-base text-[16px]  text-[#555]">Specific Address</label>
         <Input
           className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
           placeholder="Specific Address"

@@ -17,13 +17,13 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className=" flex-1 overflow-auto">
-        <div className="bg-secondary overflow-auto h-full flex justify-between gap-6 py-8 px-16">
+        <div className="bg-secondary overflow-auto md:h-full flex md:flex-row flex-col justify-between md:gap-6 gap-0 md:py-8 py-4 md:px-16 px-4">
           <div className="flex-1">
-            <img src={LoginImg} alt="login" className="h-[95%] mx-auto" />
+            <img src={LoginImg} alt="login" className="md:h-[95%] h-[180px] mx-auto" />
           </div>
           <div className="bg-white flex-[.5] rounded-[15px] p-10">
-            <h2 className=" font-semibold text-[38px]">Login</h2>
-            <p className="text-base mt-6">
+            <h2 className=" font-semibold md:text-[38px] text-[25px] ">Login</h2>
+            <p className="md:text-base text-[16px] mt-6">
               Please enter user name and password to Login for Name Tag
             </p>
             <Input

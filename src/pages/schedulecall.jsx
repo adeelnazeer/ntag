@@ -12,14 +12,14 @@ const Schedulecall = () => {
   const [selected, setSelected] = useState("")
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-    <Typography className="text-[41px] example-custom-input text-[#646E82]" onClick={onClick} ref={ref}>
-      {value?.split(" ")?.[0] || "00:00"} <span className="text-xs ml-[-10px] ">{value?.split(" ")?.[1]}</span>
+    <Typography className="md:text-[41px] text-[25px] example-custom-input text-[#646E82]" onClick={onClick} ref={ref}>
+      {value?.split(" ")?.[0] || "00:00"} <span className="text-xs md:ml-[-10px] ml-0 ">{value?.split(" ")?.[1]}</span>
     </Typography>
 
   ));
 
   return (
-    <div className=" grid grid-cols-2 gap-x-6 gap-y-10 mt-4">
+    <div className=" grid md:grid-cols-2 grid-cols-1 gap-x-6 gap-y-10 mt-4">
       {loading ?
         <div className=" min-h-44 flex col-span-2 justify-between items-center">
           <Spinner className=" h-12 w-12 mx-auto" color="green" />
@@ -28,23 +28,23 @@ const Schedulecall = () => {
         <>
           {data?.map((single, index) =>
             <div key={single?.id}>
-              <div className="flex justify-between">
-                <Typography className=" font-semibold">
+              <div className="flex justify-between  py-2 ">
+                <Typography className=" font-semibold md:text-[14px] text-[12px]">
                   Schedule Incoming Call
                 </Typography>
-                <Typography className=" text-[14px] font-semibold">
+                <Typography className=" md:text-[14px] text-[12px] font-semibold">
                   #{single?.tag_no}
                 </Typography>
-                <Typography className=" text-[14px] font-semibold">
+                <Typography className=" md:text-[14px] text-[12px] font-semibold">
                   {single?.msisdn}
                 </Typography>
               </div>
-              <div className="container max-w-[800px]">
+              <div className="container md:max-w-[800px] max-w-full">
                 <div className="p-4 rounded-xl shadow pb-6 mt-1 ">
                   <div className="flex justify-between ">
                     <div className="flex gap-2 items-center">
                       <LuCalendarClock className="text-secondary text-xl" />
-                      <Typography className="text-sm font-semibold">
+                      <Typography className="md:text-[14px] text-[12px] font-semibold">
                         Schedule Service Is Active
                       </Typography>
                     </div>
@@ -58,9 +58,9 @@ const Schedulecall = () => {
                       }}
                     />
                   </div>
-                  <div className="flex justify-between mt-5 gap-2">
+                  <div className="flex justify-between md:flex-row flex-col mt-5 gap-2">
                     <div className="clock rounded-xl bg-[#F5F5F5] p-3 w-full">
-                      <Typography className="text-[14px] text-[#898F9A] font-normal">
+                      <Typography className="md:text-[14px] text-[12px] text-[#898F9A] font-normal">
                         FROM
                       </Typography>
                       <div className="flex justify-between gap-4">
@@ -84,7 +84,7 @@ const Schedulecall = () => {
                       </div>
                     </div>
                     <div className="clock rounded-xl bg-[#F5F5F5] p-3 w-full">
-                      <Typography className="text-[14px] text-[#898F9A] font-normal">
+                      <Typography className="md:text-[14px] text-[12px] text-[#898F9A] font-normal">
                         TO
                       </Typography>
                       <div className="flex justify-between gap-4">
@@ -105,7 +105,7 @@ const Schedulecall = () => {
                       </div>
                     </div>
                   </div>
-                  <Typography className="mt-5 ">
+                  <Typography className="mt-5 md:text-[14px] text-[12px]">
                     Your Service will be activated from {single?.incall_start_dt && moment(single?.incall_start_dt).format("hh:mm A") || "00:00"}  to {single?.incall_end_dt && moment(single?.incall_end_dt).format("hh:mm A") || "00:00"}
                   </Typography>
                   <div className="p-4 rounded-xl shadow pb-6 mt-6 ">

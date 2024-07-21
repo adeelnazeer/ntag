@@ -5,7 +5,7 @@ const MenuBar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex py-6 gap-16 items-center max-w-6xl mx-auto">
+    <div className="flex py-6 gap-16 items-center max-w-6xl mx-auto md:block hidden">
       <Button
         className=" text-primaryLight font-medium  py-1 px-2"
         onClick={() => {

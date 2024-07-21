@@ -38,7 +38,7 @@ const DashboardLayout = ({ children }) => {
       <Header />
       <div className=" flex-1 overflow-auto">
         <div className="bg-secondary py-6">
-          <h1 className="text-center text-[36px] text-white font-bold">
+          <h1 className="text-center md:text-[36px] text-[25px] text-white font-bold">
             Corporate Name TAG
           </h1>
         </div>
@@ -46,7 +46,7 @@ const DashboardLayout = ({ children }) => {
           <div className="col-span-2">
             <Sidebar />
           </div>
-          <div className="col-span-10 px-5 pt-4"><div className="w-11/12 mx-auto">{children}</div></div>
+          <div className="md:col-span-10 col-span-12 px-5 pt-4 mt-6 md:mt-0"><div className="w-11/12 mx-auto">{children}</div></div>
         </div>
       </div>
       <Footer />

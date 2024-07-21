@@ -29,18 +29,18 @@ const CompanyForm = ({
   const [phone, setPhone] = useState();
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
-      <div className="flex justify-between items-center py-3">
+      <div className="flex justify-between flex-col md:flex-row items-center py-3 md:gap-0 gap-6">
         <Button className=" bg-secondary text-white">
           Corporate Account Registration
         </Button>
-        <Typography className="text-[#555] text-base  font-semibold">
+        <Typography className="text-[#555] md:text-base text-[16px]  font-semibold">
           Already have an account?{" "}
           <span className="text-secondary">Log in</span>
         </Typography>
       </div>
       <hr></hr>
       <div className="py-3">
-        <Typography className="text-[#555] text-base  font-semibold">
+        <Typography className="text-[#555] md:text-base text-[16px]  font-semibold">
           Account Information
         </Typography>
       </div>
