@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Input } from "@headlessui/react";
-import { Button, Checkbox, Radio, Typography } from "@material-tailwind/react";
+import { Button, Checkbox, Typography } from "@material-tailwind/react";
 import CountdownTimer from "../../../components/counter";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 import "react-phone-number-input/style.css";
@@ -27,7 +27,13 @@ const CompanyForm = ({
   const registerData = useRegisterHook();
   const watchAllFields = watch();
   const [phone, setPhone] = useState();
-  return (
+  const handleKeyPress = (e, value, fieldName) => {
+    if (e.key === 'Enter' || e.key === 'Tab') {
+      e.preventDefault();
+      registerData.verifyAccount({ [fieldName]: value }, fieldName);
+    }
+  };
+   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
       <div className="flex justify-between flex-col md:flex-row items-center py-3 md:gap-0 gap-6">
         <Button className=" bg-secondary text-white">
@@ -59,15 +65,14 @@ const CompanyForm = ({
             }
             {...register("company_name", { required: true })}
             onChange={(e) => {
-              if (e.target.value?.length > 2) {
-                registerData.verifyAccount({ company_name: e.target.value }, "company_name")
-              }
               setValue("company_name", e.target.value, {
                 shouldValidate: true,
                 shouldDirty: true
               })
               setData(st => ({ ...st, company_name: e.target.value }))
             }}
+            onKeyDown={(e) => handleKeyPress(e, e.target.value, "company_name")}
+
           />
           {registerData?.state?.success?.company_name && watchAllFields?.company_name != "" &&
             <div>
@@ -90,14 +95,14 @@ const CompanyForm = ({
             }
             {...register("account_id", { required: true })}
             onChange={(e) => {
-              if (e.target.value?.length > 2) {
-                registerData.verifyAccount({ account_id: e.target.value }, "account_id")
-              }
+
               setValue("account_id", e.target.value, {
                 shouldValidate: true,
                 shouldDirty: true
               })
             }}
+            onKeyDown={(e) => handleKeyPress(e, e.target.value, "account_id")}
+
           />
           {registerData?.state?.success?.account_id && watchAllFields?.account_id != "" &&
             <div>
@@ -116,14 +121,13 @@ const CompanyForm = ({
             style={{ border: "1px solid #8A8AA033" }}
             {...register("email")}
             onChange={(e) => {
-              if (e.target.value?.length > 6) {
-                registerData.verifyAccount({ email: e.target.value }, "email")
-              }
               setValue("email", e.target.value, {
                 shouldValidate: true,
                 shouldDirty: true
               })
             }}
+            onKeyDown={(e) => handleKeyPress(e, e.target.value, "email")}
+
           />
           {registerData?.state?.success?.email &&
             <div>
@@ -182,18 +186,18 @@ const CompanyForm = ({
               defaultValue=""
               render={({ field }) => (
                 <PhoneInput
-                  className="w-full rounded-xl px-4 py-2 bg-white outline-none"
+                  className="w-full rounded-xl px-4 py-2 border border-[#8A8AA033] bg-white outline-none"
                   defaultCountry="ET"
                   international
                   countryCallingCodeEditable={false}
                   value={field.value}
+                  countries={["ET"]}
                   onChange={(value) => {
                     field.onChange(value);
                     setPhone(value);
-                    if (value?.length > 9) {
-                      registerData.verifyAccount({ phone_number: value }, "phone_number")
-                    }
                   }}
+                  onKeyDown={(e) => handleKeyPress(e, e.target.value, "phone_number")}
+
                 />
               )}
             />
@@ -206,7 +210,7 @@ const CompanyForm = ({
               // watchAllFields?.msisdn && (
               <p
                 size="sm"
-                className="!absolute right-3 cursor-pointer text-sm rounded"
+                className="!absolute right-3 cursor-pointer text-xs font-medium rounded"
                 onClick={() => registerData.handleGetOtp(phone)}
               >
                 Get Code
