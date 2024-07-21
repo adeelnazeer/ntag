@@ -8,11 +8,11 @@ const HomePage = () => {
   return (
     <>
       <Header />
-      <div className=" px-6">
+      <div className=" md:px-6 px-2">
         <Carusal />
         <Services />
         <div className=" py-8 max-w-sm mx-auto">
-          <Button className="w-full px-4 py-2 bg-secondary text-white text-[22px] font-semibold">
+          <Button className="w-full md:px-4 px-2 py-2 bg-secondary text-white text-[22px] font-semibold">
             BUY HASH TAG
           </Button>
         </div>

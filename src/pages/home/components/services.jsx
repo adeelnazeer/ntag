@@ -1,7 +1,7 @@
 const Services = () => {
   return (
     <div
-      className=" rounded-[15px] px-10 py-6 mt-8"
+      className=" rounded-[15px] md:px-10 px-2 py-6 mt-8"
       style={{ border: ".5px solid #0000004d" }}
     >
       <h2 className=" md:text-[50px] text-[25px] text-secondary  font-semibold text-center">

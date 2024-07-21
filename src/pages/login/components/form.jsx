@@ -21,7 +21,7 @@ const LoginForm = () => {
           <div className="flex-1">
             <img src={LoginImg} alt="login" className="md:h-[95%] h-[180px] mx-auto" />
           </div>
-          <div className="bg-white flex-[.5] rounded-[15px] p-10">
+          <div className="bg-white flex-[.5] rounded-[15px] md:p-10 p-5">
             <h2 className=" font-semibold md:text-[38px] text-[25px] ">Login</h2>
             <p className="md:text-base text-[16px] mt-6">
               Please enter user name and password to Login for Name Tag

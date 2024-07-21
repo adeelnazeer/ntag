@@ -40,7 +40,7 @@ const Schedulecall = () => {
                 </Typography>
               </div>
               <div className="container md:max-w-[800px] max-w-full">
-                <div className="p-4 rounded-xl shadow pb-6 mt-1 ">
+                <div className="md:p-4 p-2 rounded-xl shadow pb-6 mt-1 ">
                   <div className="flex justify-between ">
                     <div className="flex gap-2 items-center">
                       <LuCalendarClock className="text-secondary text-xl" />
