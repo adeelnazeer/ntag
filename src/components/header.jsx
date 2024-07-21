@@ -42,7 +42,9 @@ const Header = () => {
   const classes = location?.pathname !== ConstentRoutes.home ? "mb-8" : "";
 
   return (
-    <div className={`sticky top-0 z-10 bg-[#f5f5f5] ${classes}`}>
+    <div
+      className={`sticky top-0 z-10 bg-[#f5f5f5] md:${classes} mb-1 md:mb-0`}
+    >
       <div className="flex justify-between items-center h-16 md:mx-4 mx-0 px-2 md:px-0 bg-secondary">
         <div className="h-full flex items-center">
           <img
@@ -170,18 +172,27 @@ const Header = () => {
             <h2>Name TAG</h2>
           </div>
         </div>
-        {location.pathname == "/dashboard" ? "" : 
-         <div className="md:hidden flex items-center bg-secondary">
-         <IconButton onClick={() => setMenuOpen(!menuOpen)} className="bg-secondary">
-           {menuOpen ? (
-             <FaTimes className="h-6 w-6 " />
-           ) : (
-             <FaBars className="h-6 w-6 bg-secondary" />
-           )}
-         </IconButton>
-       </div>
-        }
-       
+        {location.pathname == "/dashboard" ||
+        location.pathname == "/buy-tag" ||
+        location.pathname == "/manage-tag" ||
+        location.pathname == "/voicemail" || 
+        location.pathname == "/profile"
+        ? (
+          ""
+        ) : (
+          <div className="md:hidden flex items-center bg-secondary">
+            <IconButton
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="bg-secondary"
+            >
+              {menuOpen ? (
+                <FaTimes className="h-6 w-6 " />
+              ) : (
+                <FaBars className="h-6 w-6 bg-secondary" />
+              )}
+            </IconButton>
+          </div>
+        )}
       </div>
       {menuOpen && (
         <div className="md:hidden bg-secondary p-4">

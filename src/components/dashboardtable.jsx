@@ -17,7 +17,7 @@ const Dashboardtable = (props) => {
   const docStatus = JSON.parse(localStorage.getItem('data'));
 
   return (
-    <div className="p-4 rounded-xl shadow pb-7">
+    <div className="md:p-4 p-2 rounded-xl shadow pb-7">
       <div className="flex flex-col-reverse md:flex-row justify-between md:gap-0 gap-4">
         <div className="flex gap-4 mb-4 md:mb-0">
           <Button
@@ -78,10 +78,10 @@ const Dashboardtable = (props) => {
               key={single?.id}
             >
               <div className="flex gap-16 items-center">
-                <div className="md:w-full md:w-[110px] w-[109px]">
+                <div className=" md:w-[110px] w-[109px]">
                   <img className="rounded w-16 h-16 md:w-auto md:h-auto" src={Img1} alt="north" />
                 </div>
-                <Typography className="md:w-[110px] w-[109px] text-center md:text-base text-[13px] md:text-left">
+                <Typography className="md:w-[120px] w-[109px] text-center md:text-base text-[13px] md:text-left">
                   {single?.tag_name || ""}
                 </Typography>
                 <Typography className="bg-[#EBEBEB] px-5 py-1 md:w-[110px] w-[109px]">
