@@ -78,14 +78,10 @@ const CarouselCustomNavigation = () => {
       <div className=" grid md:grid-cols-2 grid-cols-1  bg-secondary justify-between items-center md:mt-0 mt-2 rounded-[15px]">
         <div className=" md:pl-12 md:pr-6 px-2 col-span-1">
           <h2 className="text-white md:text-[46px] text-[25px] font-semibold mt-4 md:mt-0">
-            Service For Computer
+            Name TAG
           </h2>
           <p className=" text-white mt-4 md:text-[18px] text-[15px]">
-            Want to receive a monthly email in your inbox with awesome free
-            Webflow cloneables, resources and more? Please submit your email
-            below. Want to receive a monthly email in your inbox with awesome
-            free Webflow cloneables, resources and more? Please submit your
-            email below.
+           With Name TAG, you can take your personal or corporate brand to the next level, enhance customer engagement, and generate new revenue streams. Don't just be a number – be a name that's remembered!
           </p>
         </div>
         <div className="flex-1  md:mt-0 mt-2">
@@ -95,14 +91,10 @@ const CarouselCustomNavigation = () => {
       <div className=" grid md:grid-cols-2 grid-cols-1  bg-secondary justify-between items-center md:mt-0 mt-2 rounded-[15px]">
         <div className=" md:pl-12 md:pr-6 px-2 col-span-1">
           <h2 className="text-white md:text-[46px] text-[25px] font-semibold mt-4 md:mt-0">
-            Service For Computer
+            Name TAG
           </h2>
           <p className=" text-white mt-4 md:text-[18px] text-[15px]">
-            Want to receive a monthly email in your inbox with awesome free
-            Webflow cloneables, resources and more? Please submit your email
-            below. Want to receive a monthly email in your inbox with awesome
-            free Webflow cloneables, resources and more? Please submit your
-            email below.
+           With Name TAG, you can take your personal or corporate brand to the next level, enhance customer engagement, and generate new revenue streams. Don't just be a number – be a name that's remembered!
           </p>
         </div>
         <div className="flex-1  md:mt-0 mt-2">
