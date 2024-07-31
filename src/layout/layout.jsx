@@ -26,9 +26,9 @@ const DashboardLayout = ({ children }) => {
   }
 
   useEffect(() => {
-    if (!token) {
-      navigate('/login')
-    }
+    // if (!token) {
+    //   navigate('/login')
+    // }
     checkDocument()
   }, [])
 
