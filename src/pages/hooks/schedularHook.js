@@ -10,29 +10,23 @@ const useSchedularHook = () => {
 
     useEffect(() => {
         const user=JSON.parse(localStorage.getItem("user"))
-        console.log({user})
         setLoading(true)
-        APICall("get", null, EndPoints.customer.getSchedular)
+        APICall("get", null, `${EndPoints.customer.getSchedular}?account_id=${user?.id}`)
             .then((res) => {
                 console.log(res, "res")
                 if (res?.success) {
-
                     setData(res?.data);
                 } else {
                     toast.error(res?.message);
                 }
                 setLoading(false)
-
             })
             .catch((err) => {
-                console.log("err", err);
                 setLoading(false)
             });
     }, [])
 
     const handleSchedular = (item) => {
-        console.log({ item })
-        console.log("clicked")
         const payload = {
             incoming_call_status: item?.incoming_call_status,
             incall_start_dt: moment(item?.incall_start_dt).format("YYYY-MM-DD hh:mm:ss"),

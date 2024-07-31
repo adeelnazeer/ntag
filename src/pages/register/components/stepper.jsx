@@ -48,105 +48,54 @@ export function MultiStepForm() {
       className="w-full  max-w-7xl mx-auto px-4 py-4 flex-1"
       onSubmit={handleSubmit(onSubmit)}
     >
-
-      {/* {activeStep != 0 && (
-        <Stepper
-          activeStep={activeStep}
-          isLastStep={(value) => setIsLastStep(value)}
-          isFirstStep={(value) => setIsFirstStep(value)}
-        >
-          <Step
-            onClick={() => setActiveStep(0)}
-            activeClassName=" bg-secondary"
-            completedClassName=" bg-secondary"
-          >
-            <FaRegUser className="h-5 w-5" />
-            <div className="absolute -bottom-[2.5rem] w-max text-center">
-              <Typography
-                className="text-[#555] text-base  font-semibold"
-                color={activeStep === 0 ? "blue-gray" : "gray"}
-              >
-                Account Information
-              </Typography>
-            </div>
-          </Step>
-          <Step
-            onClick={() => setActiveStep(1)}
-            activeClassName=" bg-secondary"
-            completedClassName=" bg-secondary"
-          >
-            <MdContacts className="h-5 w-5" />
-            <div className="absolute -bottom-[2.5rem] w-max text-center">
-              <Typography
-                className="text-[#555] text-base  font-semibold"
-                color={activeStep === 1 ? "blue-gray" : "gray"}
-              >
-                Contact Information
-              </Typography>
-            </div>
-          </Step>
-          <Step
-            onClick={() => setActiveStep(2)}
-            activeClassName=" bg-secondary"
-            completedClassName=" bg-secondary"
-          >
-            <MdManageAccounts className="h-5 w-5" />
-            <div className="absolute -bottom-[2.5rem] w-max text-center">
-              <Typography
-                className="text-[#555] text-base  font-semibold"
-                color={activeStep === 2 ? "blue-gray" : "gray"}
-              >
-                Company Information
-              </Typography>
-            </div>
-          </Step>
-        </Stepper>
-      )} */}
-      <div className={"mt-6"}>
-        {activeStep == 0 ? (
-          <CompanyForm register={register} errors={errors} watch={watch} setValue={setValue}
-            getValues={getValues} Controller={Controller} control={control}
-            setData={setData}
-          />
-        ) : activeStep == 1 ? (
-          <AccountForm register={register} errors={errors} watch={watch}
-            data={data}
-            open={open}
-            setOpen={setOpen}
-          />
-        ) : (
-          <ContactForm register={register} errors={errors} watch={watch} />
-        )}
-      </div>
-      {activeStep == 0 ? (
-        <div className="mt-10 flex  justify-center">
-          <Button
-            className=" w-[30%] bg-secondary"
-            // onClick={() => setActiveStep(1)}
-            type="submit"
-          >
-            Register
-          </Button>
+      <div className=" max-w-3xl mx-auto mt-6 p-4 pb-8 bg-[#fff] rounded-[24px] shadow-sm">
+        <div className={""}>
+          {activeStep == 0 ? (
+            <CompanyForm register={register} errors={errors} watch={watch} setValue={setValue}
+              getValues={getValues} Controller={Controller} control={control}
+              setData={setData}
+            />
+          ) : activeStep == 1 ? (
+            <AccountForm register={register} errors={errors} watch={watch}
+              data={data}
+              open={open}
+              setOpen={setOpen}
+              setData={setData}
+            />
+          ) : (
+            <ContactForm register={register} errors={errors} watch={watch} />
+          )}
         </div>
-      ) : (
-        <div className="mt-10 gap-6 flex  justify-center">
-          {activeStep == 2 && (
+        {activeStep == 0 ? (
+          <div className="mt-10 flex  justify-center">
             <Button
               className=" w-[30%] bg-secondary"
-              onClick={() => setActiveStep(1)}
+              // onClick={() => setActiveStep(1)}
+              type="submit"
             >
-              Previous
+              Register
             </Button>
-          )}
-          <Button
-            className=" w-[30%] bg-secondary"
-            // onClick={() => setActiveStep(2)}
-            type="submit"
-          >
-            {activeStep == 2 ? "Finish" : "Submit"}
-          </Button>
-        </div>
-      )}
+          </div>
+        ) : (
+          <div className="mt-10 gap-6 flex  justify-center">
+            {activeStep == 2 && (
+              <Button
+                className=" w-[30%] bg-secondary"
+                onClick={() => setActiveStep(1)}
+              >
+                Previous
+              </Button>
+            )}
+            <Button
+              className=" w-[30%] bg-secondary"
+              // onClick={() => setActiveStep(2)}
+              type="submit"
+            >
+              {activeStep == 2 ? "Finish" : "Submit"}
+            </Button>
+          </div>
+        )}
+      </div>
     </form>
   );
 }

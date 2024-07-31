@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 
-const UploadBtn = ({register,setIsOpen}) => {
+const UploadBtn = ({ register, setIsOpen, setData }) => {
   const [error, setError] = useState(null);
   const [fileName, setFileName] = useState(null);
   const [base64, setBase64] = useState(null);
@@ -55,7 +55,11 @@ const UploadBtn = ({register,setIsOpen}) => {
         const base64String = await convertToBase64(uploadedFile);
         register('document_name1', { value: base64String, required: true });
         register('document_file_name1', { value: uploadedFile.name });
-
+        setData(st => ({
+          ...st,
+          document_file_name1: uploadedFile.name,
+          document_name1: base64String
+        }))
         setBase64(base64String);
       } catch (error) {
         console.error('File conversion error:', error);
@@ -72,14 +76,14 @@ const UploadBtn = ({register,setIsOpen}) => {
       <label className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer">
         Upload
         <input
-        
+
           type="file"
           id="uploadFile1"
           className="hidden"
           onChange={handleChange}
           accept=".jpg,.jpeg,.png,.pdf"
-        
-          
+
+
         />
       </label>
       <div>
