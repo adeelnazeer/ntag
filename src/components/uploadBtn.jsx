@@ -1,10 +1,8 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 
-const UploadBtn = ({register,setIsOpen}) => {
+const UploadBtn = ({ register, open, setIsOpen }) => {
   const [error, setError] = useState(null);
   const [fileName, setFileName] = useState(null);
-  const [base64, setBase64] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
 
   const validateFile = (file) => {
@@ -38,11 +36,9 @@ const UploadBtn = ({register,setIsOpen}) => {
 
     if (!validationError) {
       setFileName(file.name);
-      // setIsOpen(true);
       setUploadedFile(file);
     } else {
       setFileName(null);
-      setBase64(null);
       console.error('File validation error:', validationError);
     }
   };
@@ -55,31 +51,26 @@ const UploadBtn = ({register,setIsOpen}) => {
         const base64String = await convertToBase64(uploadedFile);
         register('document_name1', { value: base64String, required: true });
         register('document_file_name1', { value: uploadedFile.name });
-
-        setBase64(base64String);
       } catch (error) {
         console.error('File conversion error:', error);
       }
     };
 
-    if (setIsOpen === false && uploadedFile) {
+    if (!open && uploadedFile) {
       registerDocument();
     }
-  }, [setIsOpen, uploadedFile, register]);
+  }, [open, uploadedFile, register]);
 
   return (
     <div className="flex gap-4">
       <label className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer">
         Upload
         <input
-        
           type="file"
           id="uploadFile1"
           className="hidden"
           onChange={handleChange}
           accept=".jpg,.jpeg,.png,.pdf"
-        
-          
         />
       </label>
       <div>

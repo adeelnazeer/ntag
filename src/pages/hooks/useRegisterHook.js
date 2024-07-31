@@ -94,6 +94,8 @@ export const useRegisterHook = () => {
     const id = localStorage.getItem("id")
     const payload = { ...data };
     payload.channel = "WEB",
+
+    console.log(payload,"pay")
       APICall("put", payload, EndPoints.customer.updateProfile(id))
         .then((res) => {
           if (res?.success) {
