@@ -6,11 +6,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import APICall from "../network/APICall";
 import UplaodDocument from "../components/uploadDocumentModal";
+import { useTheDimensions } from "../components/useDimension";
 
 const DashboardLayout = ({ children }) => {
   const token = localStorage.getItem("token")
   const user = JSON.parse(localStorage.getItem('user'))
   const navigate = useNavigate()
+  const height = useTheDimensions()
+  console.log({ height })
   const [open, setOpen] = useState({ show: false })
   const checkDocument = () => {
     APICall("get", null, `/customer/check-documents/${user?.customer_account_id}`).then(res => {
@@ -36,13 +39,13 @@ const DashboardLayout = ({ children }) => {
   return (
     <div className=" h-screen flex flex-col">
       <Header />
-      <div className=" flex-1 overflow-auto">
+      <div className=" flex-1 flex flex-col overflow-auto">
         <div className="bg-secondary py-6 ">
           <h1 className="text-center md:text-[36px] text-[25px] text-white font-bold">
             Corporate Name TAG
           </h1>
         </div>
-        <div className="grid grid-cols-12 ">
+        <div className="grid flex-1 overflow-auto grid-cols-12 ">
           <div className="col-span-2">
             <Sidebar />
           </div>
