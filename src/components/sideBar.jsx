@@ -51,7 +51,7 @@ const Sidebar = () => {
 
   return (
     <div>
-      <div className="lg:hidden fixed top-4 right-5 z-50">
+      <div className="block md:hidden lg:hidden fixed top-4 right-5 z-50">
         <FaBars className="text-3xl cursor-pointer text-white" onClick={toggleSidebar} />
       </div>
       <div
