@@ -31,6 +31,7 @@ export function MultiStepForm() {
   } = useForm({ msisdn: "" });
 
   const onSubmit = (data) => {
+console.log(data,"data")
     if (activeStep == 0) {
       registerHook.handleRegister(data, setActiveStep, reset);
     }

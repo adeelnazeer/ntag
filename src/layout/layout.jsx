@@ -41,15 +41,16 @@ const DashboardLayout = ({ children }) => {
       <Header />
       <div className=" flex-1 flex flex-col overflow-auto">
         <div className="bg-secondary py-6 ">
-          <h1 className="text-center md:text-[36px] text-[25px] text-white font-bold">
+          <h1 className="text-center lg:text-[36px] md:text-[15px] text-[25px] text-white font-bold">
             Corporate Name TAG
           </h1>
         </div>
         <div className="grid flex-1 overflow-auto grid-cols-12 ">
-          <div className="col-span-2">
+          <div className="md:col-span-2 lg:col-span-2 ">
             <Sidebar />
+  
           </div>
-          <div className="md:col-span-10 col-span-12 md:px-5 px-2 md:pt-4 pt-2 mt-2 md:mt-0 md:block "><div className="md:w-11/12 w-full md:mx-auto ">{children}</div></div>
+          <div className="md:col-span-10 lg:col-span-10 col-span-12 md:px-5 px-2 md:pt-4 pt-2 mt-2 md:mt-0 md:block "><div className="md:w-11/12 w-full md:mx-auto ">{children}</div></div>
         </div>
       </div>
       <Footer />
