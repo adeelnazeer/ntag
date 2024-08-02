@@ -29,7 +29,8 @@ function App() {
           path={ConstentRoutes.dashboard}
           element={
             <DashboardLayout>
-              <DashboardPage />
+              <TagNames />
+
             </DashboardLayout>
           }
         />
@@ -45,7 +46,8 @@ function App() {
           path={ConstentRoutes.buyTag}
           element={
             <DashboardLayout>
-              <TagNames />
+              <DashboardPage />
+
             </DashboardLayout>
           }
         />
