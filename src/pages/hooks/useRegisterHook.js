@@ -8,10 +8,10 @@ import { ConstentRoutes } from "../../utilities/routesConst";
 export const useRegisterHook = () => {
   const navigate = useNavigate();
   const [expirationTime, setExpirationTime] = useState(null);
-  const [loading, setLoading] = useState(false)
-  const [verified, setVerified] = useState(false)
-  const [otpId, setOtpId] = useState("")
-  const [state, setState] = useState({})
+  const [loading, setLoading] = useState(false);
+  const [verified, setVerified] = useState(false);
+  const [otpId, setOtpId] = useState("");
+  const [state, setState] = useState({});
 
   const handleExipre = () => {
     setExpirationTime(null);
@@ -29,8 +29,8 @@ export const useRegisterHook = () => {
         if (res?.success) {
           toast.success(res?.message || "");
           setExpirationTime(res.data.expiration_time);
-          setOtpId(res?.data?.otp_id)
-          localStorage.setItem("otp", res?.data?.otp_id)
+          setOtpId(res?.data?.otp_id);
+          localStorage.setItem("otp", res?.data?.otp_id);
         } else {
           toast.error(res?.message);
         }
@@ -44,33 +44,36 @@ export const useRegisterHook = () => {
     const data = {
       otp_id: otpId,
       otp_code: code,
-      transaction_type: "OTP_GENRATION"
-    }
+      transaction_type: "OTP_GENRATION",
+    };
     APICall("post", data, EndPoints.customer.verifyOty)
       .then((res) => {
         if (res?.success) {
           toast.success(res?.message || "");
           if (newNumber) {
-            setNewNumber(false)
+            setNewNumber(false);
           }
-          setVerified(true)
+          setVerified(true);
         } else {
           toast.error(res?.message);
-          setVerified(false)
+          setVerified(false);
         }
       })
       .catch((err) => {
-        toast.error(err.response?.data?.message || "Something went wrong try again!")
-        setVerified(false)
+        toast.error(
+          err.response?.data?.message || "Something went wrong try again!"
+        );
+        setVerified(false);
       });
   };
 
   const handleRegister = (data, setActiveStep, reset) => {
-    const otp = localStorage.getItem("otp")
+    const otp = localStorage.getItem("otp");
     const payload = { ...data };
-    payload.channel = "WEB"
-    payload.otp_id = otp,
-      payload.otp_code = data?.verification_code
+    payload.channel = "WEB";
+    (payload.otp_id = otp), (payload.otp_code = data?.verification_code);
+    console.log(payload, "pay post");
+
     APICall("post", payload, EndPoints.customer.register)
       .then((res) => {
         if (res?.success) {
@@ -78,24 +81,27 @@ export const useRegisterHook = () => {
           setActiveStep(1);
           const token = res?.data?.token;
           localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify(res?.data))
-          reset()
+          localStorage.setItem("id", res?.data?.customer_account_id);
+          localStorage.setItem("user", JSON.stringify(res?.data));
+          reset();
         } else {
+          toast.error(res?.message);
+        }
       })
       .catch((err) => {
         console.log("err", err);
-
       });
+  };
   const handleUpdateProfile = (data) => {
-    const id = localStorage.getItem("id")
-    const payload = { ...data };
-    payload.channel = "WEB",
+    const id = localStorage.getItem("id");
+    const payload = { ...data.data };
+    (payload.channel = "WEB"),
       APICall("put", payload, EndPoints.customer.updateProfile(id))
         .then((res) => {
           if (res?.success) {
             toast.success(res?.message || "");
-            localStorage.setItem("user", JSON.stringify(res?.data))
-            navigate(ConstentRoutes.dashboard)
+            localStorage.setItem("user", JSON.stringify(res?.data));
+            navigate(ConstentRoutes.dashboard);
           } else {
             toast.error(res?.message);
           }
@@ -103,7 +109,10 @@ export const useRegisterHook = () => {
         .catch((err) => {
           console.log("err", err);
         });
-    setLoading(true)
+  };
+
+  const handleLogin = (data) => {
+    setLoading(true);
     const payLoad = {
       username: data?.username,
       password: data?.password,
@@ -118,15 +127,15 @@ export const useRegisterHook = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("id", res?.data?.customer_account_id);
           localStorage.setItem("number", res?.data?.phone_number);
-          localStorage.setItem("user", JSON.stringify(res?.data))
-          navigate('/dashboard')
+          localStorage.setItem("user", JSON.stringify(res?.data));
+          navigate("/dashboard");
         } else {
           toast.error(res?.message);
         }
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => {
-        setLoading(false)
+        setLoading(false);
         toast.error(err);
       });
   };
@@ -135,33 +144,33 @@ export const useRegisterHook = () => {
     APICall("post", data, EndPoints.customer.verifyAccount)
       .then((res) => {
         if (res?.success) {
-          setState(st => ({
+          setState((st) => ({
             ...st,
             success: {
               ...st.success,
-              [name]: true
+              [name]: true,
             },
             error: {
               ...st.error,
-              [name]: ""
+              [name]: "",
             },
-          }))
+          }));
         } else {
-          setState(st => ({
+          setState((st) => ({
             ...st,
             error: {
               ...st.error,
-              [name]: res?.message
+              [name]: res?.message,
             },
             success: {
               ...st.success,
-              [name]: false
-            }
-          }))
+              [name]: false,
+            },
+          }));
         }
       })
       .catch((err) => {
-        toast.error(err.response?.message || "Something went wrong try again!")
+        toast.error(err.response?.message || "Something went wrong try again!");
       });
   };
 
@@ -176,6 +185,6 @@ export const useRegisterHook = () => {
     handleRegister,
     handleLogin,
     handleUpdateProfile,
-    verifyAccount
+    verifyAccount,
   };
 };
