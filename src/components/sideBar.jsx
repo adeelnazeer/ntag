@@ -50,17 +50,17 @@ const Sidebar = () => {
   }, [isOpen]);
 
   return (
-    <div>
+    <div className="w-full h-full">
       <div className="lg:hidden fixed top-4 right-5 z-50">
         <FaBars className="text-3xl cursor-pointer text-white" onClick={toggleSidebar} />
       </div>
       <div
         ref={sidebarRef}
-        className={` fixed top-0 md:z-0 md:top-auto left-0 h-full w-64 bg-white shadow-lg transition-transform transform pt-4 ${isOpen ? "translate-x-0" : "-translate-x-full"
+        className={` top-0 fixed   md:relative md:z-0 md:top-auto left-0 h-full w-64 bg-white shadow-lg transition-transform transform pt-4 ${isOpen ? "translate-x-0" : "-translate-x-full"
           } lg:translate-x-0 z-50`}
       >
         <div className="overflow-scroll h-full ">
-          <Card className="px-4 py-4 md:h-[calc(100vh-280px)] h-full w-full max-w-[20rem] overflow-scroll shadow-xl shadow-blue-gray-900/5">
+          <Card className="px-4 py-4  h-full w-full  overflow-scroll shadow-xl shadow-blue-gray-900/5">
             <List className="text-[16px] min-w-full w-full gap-4 p-0 font-normal text-black">
               <div className="flex gap-6">
                 <div

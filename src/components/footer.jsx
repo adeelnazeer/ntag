@@ -4,7 +4,7 @@ import { ConstentRoutes } from "../utilities/routesConst";
 const Footer = () => {
   const location = useLocation();
   return (
-    <div className="bg-[#f5f5f5] px-6 mt-4 py-4 sticky bottom-0 z-10 ">
+    <div className="bg-[#f5f5f5] px-6 py-4 sticky bottom-0 z-10 ">
       {(location?.pathname !== ConstentRoutes?.login &&
         location?.pathname !== ConstentRoutes?.register) && (
           <div className=" flex justify-center max-w-7xl mx-auto">
@@ -14,7 +14,7 @@ const Footer = () => {
             <p className=" text-secondary  font-medium text-base  py-1 px-2">
               STORAGE SERVICES
             </p> */}
-            <p className=" text-secondary  font-medium text-base  py-1 px-2">
+            <p className=" text-secondary mt-2  font-medium text-base  py-1 px-2">
               Terms and Conditions
             </p>
             {/* <p className=" text-secondary  font-medium text-base  py-1 px-2">
@@ -28,7 +28,7 @@ const Footer = () => {
             </p> */}
           </div>
         )}
-      <div className="mt-2">
+      <div>
         <p className=" text-center font-medium text-[18px] text-[#757575]">
           ©2024 All rights reserved.
         </p>

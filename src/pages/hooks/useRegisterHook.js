@@ -78,18 +78,14 @@ export const useRegisterHook = () => {
           setActiveStep(1);
           const token = res?.data?.token;
           localStorage.setItem("token", token);
-          localStorage.setItem("id", res?.data?.customer_account_id)
           localStorage.setItem("user", JSON.stringify(res?.data))
           reset()
         } else {
-          toast.error(res?.message);
-        }
       })
       .catch((err) => {
         console.log("err", err);
 
       });
-  };
   const handleUpdateProfile = (data) => {
     const id = localStorage.getItem("id")
     const payload = { ...data };
@@ -107,9 +103,6 @@ export const useRegisterHook = () => {
         .catch((err) => {
           console.log("err", err);
         });
-  };
-
-  const handleLogin = (data) => {
     setLoading(true)
     const payLoad = {
       username: data?.username,

@@ -54,7 +54,7 @@ const Schedulecall = () => {
                         </Typography>
                       </div>
                       <Switch className="checked:bg-secondary"
-                        checked={single?.incoming_call_status || selected == single?.id}
+                        checked={single?.incoming_call_status}
                         onChange={(e) => {
                           const newFormValues = [...data]
                           newFormValues[index]['incoming_call_status'] = e?.target?.checked
@@ -70,10 +70,10 @@ const Schedulecall = () => {
                         </Typography>
                       </div>
                       <Switch className="checked:bg-secondary"
-                        checked={single?.incoming_call_status || selected == single?.id}
+                        checked={single?.voic_email}
                         onChange={(e) => {
                           const newFormValues = [...data]
-                          newFormValues[index]['incoming_call_status'] = e?.target?.checked
+                          newFormValues[index]['voic_email'] = e?.target?.checked
                           setData(newFormValues)
                           setSelected(selected == single?.id ? "" : single?.id)
                         }}
@@ -86,10 +86,10 @@ const Schedulecall = () => {
                         </Typography>
                       </div>
                       <Switch className="checked:bg-secondary"
-                        checked={single?.incoming_call_status || selected == single?.id}
+                        checked={single?.servic}
                         onChange={(e) => {
                           const newFormValues = [...data]
-                          newFormValues[index]['incoming_call_status'] = e?.target?.checked
+                          newFormValues[index]['service'] = e?.target?.checked
                           setData(newFormValues)
                           setSelected(selected == single?.id ? "" : single?.id)
                         }}
@@ -152,7 +152,7 @@ const Schedulecall = () => {
                     Your Service will be activated from {single?.incall_start_dt && moment(single?.incall_start_dt).format("hh:mm A") || "00:00"}  to {single?.incall_end_dt && moment(single?.incall_end_dt).format("hh:mm A") || "00:00"}
                   </Typography>
 
-                  {selected == single?.id &&
+                  {single?.incoming_call_status == true &&
                     <div className="flex justify-center gap-4 mt-5">
                       <Button className=" bg-secondary text-white text-[14px] font-normal"
                         disabled={!single?.incall_start_dt || !single?.incall_start_dt}

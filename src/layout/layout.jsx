@@ -29,9 +29,9 @@ const DashboardLayout = ({ children }) => {
   }
 
   useEffect(() => {
-    // if (!token) {
-    //   navigate('/login')
-    // }
+    if (!token) {
+      navigate('/login')
+    }
     checkDocument()
   }, [])
 
@@ -45,11 +45,13 @@ const DashboardLayout = ({ children }) => {
             Corporate Name TAG
           </h1>
         </div>
-        <div className="grid flex-1 overflow-auto grid-cols-12 ">
-          <div className="col-span-2">
+        <div className="flex  flex-1 overflow-auto grid-cols-12  h-full">
+          <div className="md:w-72 h-full">
             <Sidebar />
           </div>
-          <div className="md:col-span-10 col-span-12 md:px-5 px-2 md:pt-4 pt-2 mt-2 md:mt-0 md:block "><div className="md:w-11/12 w-full md:mx-auto ">{children}</div></div>
+          <div className="w-full col-span-12 md:px-5 px-2 h-full overflow-auto md:pt-4 pt-2 mt-2 md:mt-0 md:block ">
+            <div className="md:w-11/12 w-full md:mx-auto ">{children}</div>
+            </div>
         </div>
       </div>
       <Footer />
