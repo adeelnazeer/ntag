@@ -48,7 +48,7 @@ const Header = () => {
               onClick={() => navigate(ConstentRoutes.home)}
             />
           </div>
-          <div className="hidden  md:flex h-full items-center gap-8">
+          <div className="hidden  md:flex lg:flex h-full items-center gap-8">
             <div className="md:hidden block flex py-6 gap-16 items-center max-w-6xl mx-auto">
               <Button
                 className="text-primaryLight font-medium py-1 px-2"

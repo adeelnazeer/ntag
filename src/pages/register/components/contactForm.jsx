@@ -11,7 +11,7 @@ const GetLabel = ({ name }) => {
   );
 };
 const ContactForm = ({ register, errors, watch }) => {
-  const watchAllFields = watch();
+
 
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">

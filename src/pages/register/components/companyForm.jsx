@@ -171,7 +171,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData }) 
               }
             >
               <UploadBtn setIsOpen={setOpen} register={register}
-                setData={setData}
+                setData={setData} watch={watch}
               />
               {/* <Button
           className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer"
