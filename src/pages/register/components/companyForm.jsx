@@ -13,7 +13,7 @@ const GetLabel = ({ name }) => {
     </label>
   );
 };
-const AccountForm = ({ register, errors, watch, data, setOpen, open, setData }) => {
+const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,setValue }) => {
 
   return (
     <>
@@ -171,7 +171,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData }) 
               }
             >
               <UploadBtn setIsOpen={setOpen} register={register}
-                setData={setData} watch={watch}
+                setData={setData} watch={watch} setValue={setValue}
               />
               {/* <Button
           className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer"
