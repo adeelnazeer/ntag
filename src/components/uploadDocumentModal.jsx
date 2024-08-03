@@ -13,15 +13,12 @@ const UplaodDocument = ({ open, setOpen, checkDocument }) => {
     const validateFile = (file) => {
         const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
         const maxSize = 2 * 1024 * 1024; // 2MB
-
         if (!validTypes.includes(file.type)) {
             return 'Only JPG, JPEG, PNG, and PDF files are allowed';
         }
-
         if (file.size > maxSize) {
             return 'File size exceeds 2MB';
         }
-
         return null;
     };
 
@@ -61,11 +58,14 @@ const UplaodDocument = ({ open, setOpen, checkDocument }) => {
                 }
             })
             .catch((err) => {
+                toast.error(err);
                 console.log("err", err);
             });
     }
     return (
-        <Dialog open={open?.show}>
+        <Dialog open={open?.show}
+            zIndex={99}
+        >
             <DialogHeader>
                 <Typography variant="h5" color="blue-gray">
                     Your Attention is Required!

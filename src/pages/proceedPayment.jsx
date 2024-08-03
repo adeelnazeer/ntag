@@ -13,7 +13,6 @@ import PhoneInput from "react-phone-number-input";
 const ProceedPayment = () => {
   const {
     handleSubmit,
-    formState: { },
   } = useForm();
   const dashboard = useTagList();
   const registerData = useRegisterHook();
@@ -21,6 +20,7 @@ const ProceedPayment = () => {
   const state = location.state;
   const [isOpen, setIsOpen] = useState(false);
   const [newNumber, setNewNumber] = useState(false)
+  const docStatus = JSON.parse(localStorage.getItem('data'))
   const [stateNewNumber, setStateNumber] = useState({
     term: false
   })
@@ -98,7 +98,7 @@ const ProceedPayment = () => {
                 value && (
                   <p
                     size="sm"
-                    className="!absolute right-3 cursor-pointer text-sm rounded"
+                    className="!absolute right-3  bg-[#f5f5f5] p-2 shadow-sm border border-[#8A8AA033] cursor-pointer text-xs font-medium rounded"
                     onClick={() =>
                       registerData.handleGetOtp(value)
                     }
@@ -233,7 +233,7 @@ const ProceedPayment = () => {
               <Button className=" bg-secondary text-white text-[14px] w-[400px]"
                 type="submit"
               >
-                Proceed Payment
+                {docStatus?.doc_approval_status == 0 ? "Proceed to Reservation" : "Proceed to Payment"}
               </Button>
             </div>
             {isOpen && <Paymentsuccessful isOpen={isOpen} setIsOpen={setIsOpen}
