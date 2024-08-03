@@ -62,6 +62,7 @@ console.log(data,"data")
               open={open}
               setOpen={setOpen}
               setData={setData}
+              setValue={setValue}
             />
           ) : (
             <ContactForm register={register} errors={errors} watch={watch} />

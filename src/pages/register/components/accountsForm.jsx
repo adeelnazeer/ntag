@@ -197,6 +197,7 @@ const CompanyForm = ({
                     international
                     countryCallingCodeEditable={false}
                     value={field.value}
+                    limitMaxLength={10}
                     countries={["ET"]}
                     onChange={(value) => {
                       field.onChange(value);
@@ -216,7 +217,7 @@ const CompanyForm = ({
                 // watchAllFields?.msisdn && (
                 <p
                   size="sm"
-                  className="!absolute right-3 cursor-pointer text-xs font-medium rounded"
+                  className="!absolute right-3  bg-[#f5f5f5] p-2 shadow-sm border border-[#8A8AA033] cursor-pointer text-xs font-medium rounded"
                   onClick={() => registerData.handleGetOtp(phone)}
                 >
                   Get Code
@@ -269,7 +270,7 @@ const CompanyForm = ({
             <Typography className="font-normal text-[#555] text-base">
               Term of Services
             </Typography>
-            <div className=" flex items-start">
+            <div className=" flex items-center">
               <Checkbox
                 {...register("term", {
                   required: true,
@@ -280,13 +281,8 @@ const CompanyForm = ({
                     : { border: "1px solid #8A8AA033" }
                 }
               />
-              <Typography className="text-sm text-[#00000066] leading-[40px] ">
-                I hereby confirm that the information above including information
-                provided at the time of registration of this telecom cloud
-                account, is complete, truthful and accurate, and will promptly
-                provide telecom cloud with writen notice of any updates there to.
-                I consent to the collection, use storage and disclosure of this
-                information for the purposes of risk control and compliance with{" "}
+              <Typography className="text-sm cursor-pointer text-[#5B6AB0] hover:underline leading-[40px] ">
+                Term of Use & Privacy Policy
               </Typography>
             </div>
           </div>
