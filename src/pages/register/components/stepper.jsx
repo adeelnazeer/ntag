@@ -55,6 +55,7 @@ console.log(data,"data")
             <CompanyForm register={register} errors={errors} watch={watch} setValue={setValue}
               getValues={getValues} Controller={Controller} control={control}
               setData={setData}
+         
             />
           ) : activeStep == 1 ? (
             <AccountForm register={register} errors={errors} watch={watch}
@@ -63,6 +64,7 @@ console.log(data,"data")
               setOpen={setOpen}
               setData={setData}
               setValue={setValue}
+            
             />
           ) : (
             <ContactForm register={register} errors={errors} watch={watch} />
