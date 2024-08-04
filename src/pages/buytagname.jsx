@@ -84,7 +84,7 @@ const TagNames = () => {
             <div className="text-center">
               <Button
                 className="mt-8 bg-secondary text-white text-[14px] md:w-[400px] w-full"
-                onClick={() => navigate(ConstentRoutes.dashboard)}
+                onClick={() => navigate(ConstentRoutes.buyTag)}
               >
                 {docStatus?.doc_approval_status == 0 ? "Reserve  Name TAG " : "BUY Name TAG"}
               </Button>

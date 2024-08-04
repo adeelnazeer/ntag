@@ -13,9 +13,9 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const sidebarRef = useRef(null);
-
-  const activeDashboard = location?.pathname?.includes(ConstentRoutes.dashboard);
-  const activeTwo = location?.pathname === ConstentRoutes.buyTag;
+  const docStatus = JSON.parse(localStorage.getItem('data'))
+  const activeDashboard = location?.pathname === ConstentRoutes.dashboard;
+  const activeTwo =location?.pathname?.includes("dashboard"); 
   const activeThree = location?.pathname === ConstentRoutes.manageTagName;
   const activeProfile = location?.pathname === ConstentRoutes.profilePage;
   const activeVoiceMail = location?.pathname === ConstentRoutes.voiceMail;
@@ -95,7 +95,7 @@ const Sidebar = () => {
                   <ListItemPrefix>
                     <FaHashtag className="h-4 w-4" />
                   </ListItemPrefix>
-                  Buy Name Tag
+                  {docStatus?.doc_approval_status == 0 ?"Reserve Name Tag":"Buy Name Tag"}
                 </ListItem>
               </div>
               <div className="flex gap-6">

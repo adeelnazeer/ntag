@@ -2,9 +2,8 @@
 import { Input } from "@headlessui/react";
 import UploadBtn from "../../../components/uploadBtn";
 import { Button, Typography } from "@material-tailwind/react";
-import { useRegisterHook } from "../../hooks/useRegisterHook";
 import FormSubmission from "../../../modals/form-submission";
-import { useState } from "react";
+import PhoneInput from "react-phone-number-input";
 
 const GetLabel = ({ name }) => {
   return (
@@ -65,15 +64,27 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
           </div>
           <div className="mb-3">
             <GetLabel name="Contact Number" />
-            <Input
-              className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder="Contact Number"
+            <PhoneInput
+              className="w-full rounded-xl px-4 py-2 border border-[#8A8AA033] bg-white outline-none"
+              defaultCountry="ET"
+              international
+              name="contact_no"
+              countryCallingCodeEditable={false}
+              limitMaxLength={10}
+              countries={["ET"]}
               style={
                 errors.contact_no
                   ? { border: "1px solid red" }
                   : { border: "1px solid #8A8AA033" }
               }
               {...register("contact_no", { required: true })}
+              onChange={(phone) => {
+                setValue("contact_no", phone, {
+                  shouldValidate: true,
+                  shouldDirty: true
+                })
+                setData(st => ({ ...st, contact_no: phone }))
+              }}
             />
           </div>
 

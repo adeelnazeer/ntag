@@ -86,7 +86,7 @@ const Schedulecall = () => {
                         </Typography>
                       </div>
                       <Switch className="checked:bg-secondary"
-                        checked={single?.servic}
+                        checked={single?.service}
                         onChange={(e) => {
                           const newFormValues = [...data]
                           newFormValues[index]['service'] = e?.target?.checked
@@ -151,9 +151,7 @@ const Schedulecall = () => {
                   <Typography className="mt-5 md:text-[14px] text-[12px]">
                     Your Service will be activated from {single?.incall_start_dt && moment(single?.incall_start_dt).format("hh:mm A") || "00:00"}  to {single?.incall_end_dt && moment(single?.incall_end_dt).format("hh:mm A") || "00:00"}
                   </Typography>
-
-                  {single?.incoming_call_status == true &&
-                    <div className="flex justify-center gap-4 mt-5">
+                     <div className="flex justify-center gap-4 mt-5">
                       <Button className=" bg-secondary text-white text-[14px] font-normal"
                         disabled={!single?.incall_start_dt || !single?.incall_start_dt}
                         onClick={() => {
@@ -169,7 +167,6 @@ const Schedulecall = () => {
                         Cancel
                       </Button>
                     </div>
-                  }
                 </div>
               </div>
             </div>

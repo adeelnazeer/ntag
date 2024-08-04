@@ -9,24 +9,24 @@ const TagDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const stateData = location.state;
+  const docStatus = JSON.parse(localStorage.getItem('data'))
 
   const {
     register,
     handleSubmit,
-     formState: { errors },
+    formState: { errors },
   } = useForm();
 
   const taxAmount = (Number(stateData.tag_price) * Number(stateData.service_fee)) / 100;
   const totalAfterTax = (Number(stateData.tag_price) + taxAmount).toFixed(0);
   const onSubmit = (data) => {
-    let payLoad={
+    let payLoad = {
       ...stateData,
-      totalPrice:totalAfterTax,
-      terms:data.term,
+      totalPrice: totalAfterTax,
+      terms: data.term,
     }
-    navigate(ConstentRoutes.processPayment,{state:payLoad})
+    navigate(ConstentRoutes.processPayment, { state: payLoad })
   };
-  console.log(stateData, "data");
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="p-4 rounded-xl shadow mt-6">
@@ -99,9 +99,9 @@ const TagDetails = () => {
           <Button
             className=" bg-secondary text-white text-[14px] w-[400px]"
             type="submit"
-            // onClick={() => navigate(ConstentRoutes.processPayment)}
+          // onClick={() => navigate(ConstentRoutes.processPayment)}
           >
-            Purchase
+            {docStatus?.doc_approval_status == 0 ? "Reserve" : "Purchase"}
           </Button>
         </div>
       </div>

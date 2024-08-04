@@ -33,6 +33,7 @@ export const useTagList = () => {
         }
       })
       .catch((err) => {
+        toast.error(err?.message)
         console.log("err", err);
       });
   };

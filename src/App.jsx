@@ -47,7 +47,6 @@ function App() {
           element={
             <DashboardLayout>
               <DashboardPage />
-
             </DashboardLayout>
           }
         />
@@ -100,6 +99,7 @@ function App() {
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
+        zIndex={50}
       />
     </>
   );
