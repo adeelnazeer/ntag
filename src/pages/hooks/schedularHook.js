@@ -35,6 +35,7 @@ const useSchedularHook = () => {
         }
         APICall("put", payload, `${EndPoints.customer.getSchedular}/${item?.corp_subscriber_id}`)
             .then((res) => {
+                toast.success(res?.message)
                 console.log(res, "res")
                 // if (res?.success) {
 
@@ -45,6 +46,7 @@ const useSchedularHook = () => {
 
             })
             .catch((err) => {
+                toast.error(err)
                 console.log("err", err);
             });
     }
