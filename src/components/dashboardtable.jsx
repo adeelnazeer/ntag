@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button, Spinner, Typography } from "@material-tailwind/react";
+import { Button, Chip, Spinner, Typography } from "@material-tailwind/react";
 import { FaSearch } from "react-icons/fa";
 import Img1 from "../assets/images/IMG (1).png";
 import { useNavigate } from "react-router-dom";
@@ -12,10 +12,9 @@ const Dashboardtable = (props) => {
   const handlePageChange = (selected) => {
     setPagination((st) => ({ ...st, page: selected }));
   };
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(null);
   const navigate = useNavigate();
   const docStatus = JSON.parse(localStorage.getItem('data'));
-
   return (
     <div className="md:p-4 p-2 rounded-xl shadow pb-7">
       <div className="flex mb-4 flex-col-reverse md:flex-row justify-between md:gap-0 gap-4">
@@ -48,7 +47,19 @@ const Dashboardtable = (props) => {
           >
             More
           </Button>
+          {(search || pagination?.tag_digits) &&
+            <p
+              className={`md:py-[8px] cursor-pointer font-medium hover:underline md:px-[24px] py-[4px] px-[12px] border-none text-[#1F1F2C]`}
+              onClick={() => {
+                setPagination({ page: 1 })
+                setSearch(null)
+              }}
+            >
+              Reset
+            </p>
+          }
         </div>
+
         <div className="flex items-center bg-white rounded-md relative w-full md:w-auto">
           <input
             type="text"
@@ -57,6 +68,7 @@ const Dashboardtable = (props) => {
             onChange={(e) => setSearch(e.target.value)}
             className="border rounded bg-white flex-grow outline-none p-2"
           />
+
           <div
             className="p-2 bg-secondary rounded right-1 cursor-pointer absolute"
             onClick={() => setPagination((st) => ({ ...st, search: search }))}
@@ -72,7 +84,7 @@ const Dashboardtable = (props) => {
         </div>
         :
         <>
-          {data?.map((single) => (
+          {data?.length > 0 ? data?.map((single) => (
             <div key={single?.id} className=" grid  grid-cols-6 sm:col-span-6 justify-between gap-8 p-2 border rounded-xl mt-3 items-center  ">
               <div>
                 <img className="rounded w-16 h-16 md:w-auto md:h-auto" src={Img1} alt="north" />
@@ -108,18 +120,32 @@ const Dashboardtable = (props) => {
                   </div>
                 }
                 {single?.status === 2 &&
-                  <Button className="bg-[#F9050533] py-2 px-6 text-[#F90505] border border-[#F90505]">
-                    Already Booked
-                  </Button>
+                  // <Button className="bg-[#F9050533] py-2 px-6 text-[#F90505] border border-[#F90505]">
+                  //   Already Booked
+                  // </Button>
+                  <Chip
+                    variant="ghost"
+                    color="red"
+                    size="sm"
+                    value="Reserved"
+
+                  />
                 }
                 {single?.status === 3 &&
-                  <Button className="bg-[#EBEBEB] py-2 px-6 text-[#000]">
-                    Reserved
-                  </Button>
+                  <Chip
+                    variant="ghost"
+                    color="red"
+                    size="sm"
+                    value="Reserved"
+
+                  />
+                  // <Button className="bg-[#EBEBEB] py-2 px-6 text-[#000]">
+                  //   Reserved
+                  // </Button>
                 }
               </div>
             </div>
-          ))}
+          )) : <p className=" min-h-32 flex justify-center items-center font-medium">No Data to display</p>}
         </>
         // <div>dd</div>
         // <div>dd</div>

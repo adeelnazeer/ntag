@@ -86,7 +86,7 @@ const Schedulecall = () => {
                         </Typography>
                       </div>
                       <Switch className="checked:bg-secondary"
-                        checked={single?.servic}
+                        checked={single?.service}
                         onChange={(e) => {
                           const newFormValues = [...data]
                           newFormValues[index]['service'] = e?.target?.checked

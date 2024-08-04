@@ -8,7 +8,9 @@ export const useVoiceMailHook = () => {
   const [voiceMail, setVoiceMail] = useState();
   const [loading, setLoading] = useState(true)
   const handleGetVoiceMail = () => {
-    APICall("get", null, EndPoints.customer.getVoiceMail)
+    const user = JSON.parse(localStorage.getItem("user"))
+
+    APICall("get", null, `${EndPoints.customer.getVoiceMail}?account_id=${user?.id}`)
       .then((res) => {
         if (res?.success) {
           setVoiceMail(res);
