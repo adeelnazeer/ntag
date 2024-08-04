@@ -32,7 +32,7 @@ const DashboardLayout = ({ children }) => {
     if (!token) {
       navigate('/login')
     }
-    // checkDocument()
+    checkDocument()
   }, [])
 
 

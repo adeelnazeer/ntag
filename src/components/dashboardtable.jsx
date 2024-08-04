@@ -147,11 +147,6 @@ const Dashboardtable = (props) => {
             </div>
           )) : <p className=" min-h-32 flex justify-center items-center font-medium">No Data to display</p>}
         </>
-        // <div>dd</div>
-        // <div>dd</div>
-        // <div>dd</div>
-        // <div>dd</div>
-        // <div>dd</div>
 
         // <div className="overflow-x-auto">
         //   {data?.map((single) => (
