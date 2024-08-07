@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Button, Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
-const Paymentsuccessful = ({ isOpen, setIsOpen,state }) => {
+const Paymentsuccessful = ({ isOpen, setIsOpen, state }) => {
   const navigate = useNavigate()
+  const docStatus = JSON.parse(localStorage.getItem('data'))
+
   return (
     <>
       {isOpen && (
@@ -24,16 +25,22 @@ const Paymentsuccessful = ({ isOpen, setIsOpen,state }) => {
               </div>
               <div className="text-center">
                 <Typography variant="h5">Transaction Successfull</Typography>
-                <Typography className="text-[14px] mt-4">
-                  Your Name TAG is successfully Allocated To <br></br> Your
-                  Number.
-                </Typography>
+                {docStatus?.doc_approval_status == 0 ?
+                  <Typography className="text-[14px] mt-4">
+                    Your Name TAG is successfully Reserved for 24 hours.
+                  </Typography>
+                  :
+                  <Typography className="text-[14px] mt-4">
+                    Your Name TAG is successfully Allocated To <br></br> Your
+                    Number.
+                  </Typography>
+                }
               </div>
               <div className="p-4 shadow rounded-xl">
                 <div className="flex justify-between items-center">
-                  <h1>Payment Status</h1>
+                  <h1>{docStatus?.doc_approval_status?"Reservation Status":"Payment"} Status</h1>
                   <Button className="bg-secondary  py-2 px-6 text-white">
-                    Success
+                  {docStatus?.doc_approval_status?"Reserved":"Success"} 
                   </Button>
                 </div>
                 <div className="flex justify-between mt-3 items-center">
