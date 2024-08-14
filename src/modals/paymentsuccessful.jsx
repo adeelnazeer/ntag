@@ -38,9 +38,9 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state }) => {
               </div>
               <div className="p-4 shadow rounded-xl">
                 <div className="flex justify-between items-center">
-                  <h1>{docStatus?.doc_approval_status?"Reservation Status":"Payment"} Status</h1>
+                  <h1>{"Payment"} Status</h1>
                   <Button className="bg-secondary  py-2 px-6 text-white">
-                  {docStatus?.doc_approval_status?"Reserved":"Success"} 
+                  {docStatus?.doc_approval_status==0?"Pending":"Success"} 
                   </Button>
                 </div>
                 <div className="flex justify-between mt-3 items-center">

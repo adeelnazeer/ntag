@@ -9,5 +9,8 @@ export const ConstentRoutes = {
   processPayment: "/dashboard/process-payment",
   nameTagDetail: "/name-tag-detail",
   profilePage: "/profile",
-  voiceMail:"/voicemail"
+  voiceMail: "/voicemail",
+  termofuse: "/term-of-use",
+  privacyPolicy: "/privacy-policy"
+
 };

@@ -281,8 +281,16 @@ const CompanyForm = ({
                     : { border: "1px solid #8A8AA033" }
                 }
               />
-              <Typography className="text-sm cursor-pointer text-[#5B6AB0] hover:underline leading-[40px] ">
-                Term of Use & Privacy Policy
+              <Typography className="text-sm cursor-pointer  leading-[40px] ">
+                <span className="text-[#5B6AB0] hover:underline"
+                  onClick={() => {
+                    navigate(ConstentRoutes.termofuse)
+                  }}
+                >Term of Use </span> & <span className="text-[#5B6AB0] hover:underline"
+                  onClick={() => {
+                    navigate(ConstentRoutes.privacyPolicy)
+                  }}
+                > Privacy Policy</span>
               </Typography>
             </div>
           </div>

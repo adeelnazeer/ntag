@@ -17,6 +17,7 @@ import Nametagdetails from "./pages/nametagdetails";
 import ProfilePage from "./pages/profile";
 import { ToastContainer } from "react-toastify";
 import Voicemail from "./pages/voicemail";
+import TermOfUse from "./pages/termOfUser";
 
 function App() {
   return (
@@ -30,7 +31,6 @@ function App() {
           element={
             <DashboardLayout>
               <TagNames />
-
             </DashboardLayout>
           }
         />
@@ -88,6 +88,18 @@ function App() {
             <DashboardLayout>
               <Voicemail />
             </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.termofuse}
+          element={
+            <TermOfUse />
+          }
+        />
+        <Route
+          path={ConstentRoutes.privacyPolicy}
+          element={
+            <TermOfUse />
           }
         />
       </Routes>
