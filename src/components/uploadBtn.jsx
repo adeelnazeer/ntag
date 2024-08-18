@@ -86,7 +86,7 @@ const UploadBtn = ({ register, setIsOpen, watch, setValue }) => {
       <label
         className={`flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer ${isUploadDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
-        Upload
+        Upload documents
         <input
           type="file"
           id="uploadFile"

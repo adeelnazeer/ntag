@@ -7,7 +7,7 @@ import moment from "moment";
 
 const TagNames = () => {
   const navigate = useNavigate();
-  const { data, loading } = useSchedularHook()
+  const { data, loading } = useSchedularHook("tagname")
   const docStatus = JSON.parse(localStorage.getItem('data'))
   
   return (

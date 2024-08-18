@@ -72,6 +72,7 @@ const ProceedPayment = () => {
                 className="w-full rounded-xl border border-[#8A8AA033] px-4 py-2 bg-white outline-none "
                 value={value}
                 onChange={setValue}
+                limitMaxLength={10}
               />
               {/* <Input
                 type="text"
@@ -183,11 +184,11 @@ const ProceedPayment = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <div
+                  {/* <div
                     className={`text-[14px] px-4 py-2 font-medium text-[#7A798A] rounded-2xl border border-[#7A798A] bg-transparent ${phoneNumber?.checked1 == false ? "opacity-70" : " opacity-100"}`} size="small"
                     disabled={phoneNumber?.checked1 == false}
                     type="text"
-                  >Add TAG #</div>
+                  >Add TAG #</div> */}
                   <Checkbox
                     checked={phoneNumber?.checked1}
                     onChange={() => { setPhoneNumber(st => ({ ...st, checked1: !st.checked1, checked2: false })) }}
@@ -199,7 +200,7 @@ const ProceedPayment = () => {
               <div className="flex justify-between">
                 <div className="flex gap-2 items-center">
                   <Typography className="text-[14px]">
-                    Enter New Mobile Number
+                    Enter New Mobile Number <span className="ml-4">{value || ""}</span>
                   </Typography>
                 </div>
 

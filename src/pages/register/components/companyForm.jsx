@@ -23,7 +23,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
             Company Information
           </Button>
           <Typography className="text-[#555] md:text-base text-[16px]  font-semibold">
-            Already have an account?{" "}
+            {/* Already have an account?{" "} */}
             <span className="text-secondary">Step 2 of 2</span>
           </Typography>
         </div>
@@ -162,11 +162,11 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               />
             </div>
             <div className="text-base text-[#555]">
-              <GetLabel name="Business Registration/TIN Number" />
+              <GetLabel name="Business Registration/NTN Number" />
 
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-                placeholder="Business Registration/TIN Number"
+                placeholder="Business Registration/NTN Number"
                 style={
                   errors.comp_reg_no
                     ? { border: "1px solid red" }

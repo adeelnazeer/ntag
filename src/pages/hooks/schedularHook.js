@@ -4,26 +4,44 @@ import { toast } from "react-toastify";
 import EndPoints from "../../network/EndPoints";
 import moment from "moment";
 
-const useSchedularHook = () => {
+const useSchedularHook = (value) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
-
+    const docStatus = JSON.parse(localStorage.getItem('data'))
     useEffect(() => {
-        const user=JSON.parse(localStorage.getItem("user"))
+        console.log(docStatus)
+
+        const user = JSON.parse(localStorage.getItem("user"))
         setLoading(true)
-        APICall("get", null, `${EndPoints.customer.getSchedular}?account_id=${user?.id}`)
-            .then((res) => {
-                console.log(res, "res")
-                if (res?.success) {
-                    setData(res?.data);
-                } else {
-                    toast.error(res?.message);
-                }
-                setLoading(false)
-            })
-            .catch((err) => {
-                setLoading(false)
-            });
+        if (docStatus?.doc_approval_status == 0) {
+            APICall("get", null, `${EndPoints.customer.getReserve}/${user?.customer_account_id}`)
+                .then((res) => {
+                    console.log(res, "res ddjjd")
+                    if (res?.success) {
+                        setData(res?.data);
+                    } else {
+                        toast.error(res?.message);
+                    }
+                    setLoading(false)
+                })
+                .catch((err) => {
+                    setLoading(false)
+                });
+
+        } else {
+            APICall("get", null, `${EndPoints.customer.getSchedular}?account_id=${user?.id}`)
+                .then((res) => {
+                    if (res?.success) {
+                        setData(res?.data);
+                    } else {
+                        toast.error(res?.message);
+                    }
+                    setLoading(false)
+                })
+                .catch((err) => {
+                    setLoading(false)
+                });
+        }
     }, [])
 
     const handleSchedular = (item) => {

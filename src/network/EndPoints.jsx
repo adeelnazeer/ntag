@@ -9,6 +9,7 @@ const EndPoints = {
     verifyOtp: '/customer/verifyotp',
     getVoiceMail: '/customer/voicemail',
     getSchedular: "/customer/corp-subscriber",
+    getReserve: "/customer/reserve/tags",
     verifyAccount: "/customer/auth/very/accounts",
     updateProfile: (slug) => `/customer/updatecustomer/${slug}`,
   },

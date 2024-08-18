@@ -15,7 +15,7 @@ const Sidebar = () => {
   const sidebarRef = useRef(null);
   const docStatus = JSON.parse(localStorage.getItem('data'))
   const activeDashboard = location?.pathname === ConstentRoutes.dashboard;
-  const activeTwo =location?.pathname?.includes("dashboard"); 
+  const activeTwo = location?.pathname?.includes("dashboard");
   const activeThree = location?.pathname === ConstentRoutes.manageTagName;
   const activeProfile = location?.pathname === ConstentRoutes.profilePage;
   const activeVoiceMail = location?.pathname === ConstentRoutes.voiceMail;
@@ -95,7 +95,7 @@ const Sidebar = () => {
                   <ListItemPrefix>
                     <FaHashtag className="h-4 w-4" />
                   </ListItemPrefix>
-                  {docStatus?.doc_approval_status == 0 ?"Reserve Name Tag":"Buy Name Tag"}
+                  {docStatus?.doc_approval_status != 0 ? "Buy Name Tag" : "Reserve Name Tag"}
                 </ListItem>
               </div>
               <div className="flex gap-6">
@@ -108,6 +108,7 @@ const Sidebar = () => {
                     navigate(ConstentRoutes.manageTagName);
                     setIsOpen(false);
                   }}
+                  disabled={docStatus?.doc_approval_status == 0}
                 >
                   <ListItemPrefix>
                     <BsFire className="h-4 w-4" />
@@ -117,7 +118,10 @@ const Sidebar = () => {
               </div>
               <div className="flex gap-6">
                 <div className="bg-white w-2 h-full rounded-tr-[10px] rounded-br-[10px]" />
-                <ListItem className="py-4">
+                <ListItem className="py-4"
+                  disabled={docStatus?.doc_approval_status == 0}
+
+                >
                   <ListItemPrefix>
                     <ImStatsDots className="h-4 w-4" />
                   </ListItemPrefix>
@@ -134,6 +138,7 @@ const Sidebar = () => {
                     navigate(ConstentRoutes.voiceMail);
                     setIsOpen(false);
                   }}
+                  disabled={docStatus?.doc_approval_status == 0}
                 >
                   <ListItemPrefix>
                     <FaMicrophone className="h-4 w-4" />
