@@ -6,14 +6,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import APICall from "../network/APICall";
 import UplaodDocument from "../components/uploadDocumentModal";
-import { useTheDimensions } from "../components/useDimension";
 
 const DashboardLayout = ({ children }) => {
   const token = localStorage.getItem("token")
   const user = JSON.parse(localStorage.getItem('user'))
+  const [data, setData] = useState(user || null)
   const navigate = useNavigate()
-  const height = useTheDimensions()
-  console.log({ height })
   const [open, setOpen] = useState({ show: false })
   const checkDocument = () => {
     APICall("get", null, `/customer/check-documents/${user?.customer_account_id}`).then(res => {
@@ -25,6 +23,7 @@ const DashboardLayout = ({ children }) => {
         }))
       }
       localStorage.setItem('data', JSON.stringify(res?.data))
+      setData(res?.data)
     }).catch(err => console.log("err", err))
   }
 
@@ -47,12 +46,11 @@ const DashboardLayout = ({ children }) => {
         </div>
         <div className="flex  flex-1 overflow-auto grid-cols-12  h-full">
           <div className="md:w-72 h-full">
-            <Sidebar />
-  
+            <Sidebar data={data} />
           </div>
           <div className="w-full col-span-12 md:px-5 px-2 h-full overflow-auto md:pt-4 pt-2 mt-2 md:mt-0 md:block ">
             <div className="md:w-11/12 w-full md:mx-auto ">{children}</div>
-            </div>
+          </div>
         </div>
       </div>
       <Footer />

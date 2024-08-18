@@ -8,7 +8,7 @@ import { useState } from "react";
 import Pagination from "./pagination";
 
 const Dashboardtable = (props) => {
-  const { data, pagination, setPagination, metaData, loading } = props;
+  const { data, pagination, setPagination, filters, metaData, loading } = props;
   const handlePageChange = (selected) => {
     setPagination((st) => ({ ...st, page: selected }));
   };
@@ -17,29 +17,18 @@ const Dashboardtable = (props) => {
   const docStatus = JSON.parse(localStorage.getItem('data'));
   return (
     <div className="md:p-4 p-2 rounded-xl shadow pb-7">
-      <div className="flex mb-4 flex-col-reverse md:flex-row justify-between md:gap-0 gap-4">
-        <div className="flex gap-4 mb-4 md:mb-0">
-          <Button
-            className={`md:py-[8px] md:px-[24px] py-[4px] px-[12px]  border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${pagination?.tag_digits === 3 ? "bg-secondary text-white" : ""}`}
-            variant="outlined"
-            onClick={() => setPagination((st) => ({ ...st, tag_digits: 3 }))}
-          >
-            3-Digit
-          </Button>
-          <Button
-            className={`md:py-[8px] md:px-[24px] py-[4px] px-[12px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${pagination?.tag_digits === 4 ? "bg-secondary text-white" : ""}`}
-            variant="outlined"
-            onClick={() => setPagination((st) => ({ ...st, tag_digits: 4 }))}
-          >
-            4-Digit
-          </Button>
-          <Button
-            className={`md:py-[8px] md:px-[24px] py-[4px] px-[12px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${pagination?.tag_digits === 5 ? "bg-secondary text-white" : ""}`}
-            variant="outlined"
-            onClick={() => setPagination((st) => ({ ...st, tag_digits: 5 }))}
-          >
-            5-Digit
-          </Button>
+      <div className="flex mb-4 flex-col-reverse md:flex-row justify-between items-start md:gap-1 gap-4">
+        <div className="flex gap-2 mb-4 flex-wrap md:mb-0">
+          {filters?.map(single =>
+            <Button
+              key={single?.id}
+              className={`md:py-[8px] md:px-[24px] py-[4px] px-[12px]  border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${pagination?.tag_digits === single?.tag_digits ? "bg-secondary text-white" : ""}`}
+              variant="outlined"
+              onClick={() => setPagination((st) => ({ ...st, tag_digits: single?.tag_digits }))}
+            >
+              {single?.tag_digits}-Digit
+            </Button>
+          )}
           <Button
             className={`md:py-[8px] md:px-[24px] py-[4px] px-[12px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${pagination?.tag_digits === 0 ? "bg-secondary text-white" : ""}`}
             variant="outlined"
@@ -47,9 +36,9 @@ const Dashboardtable = (props) => {
           >
             More
           </Button>
-          {(search || pagination?.tag_digits) &&
+          {(search || pagination?.tag_digits == 0 || pagination?.tag_digits) &&
             <p
-              className={`md:py-[8px] cursor-pointer font-medium hover:underline md:px-[24px] py-[4px] px-[12px] border-none text-[#1F1F2C]`}
+              className={`md:py-[8px] cursor-pointer leading-none font-medium hover:underline md:px-[24px] py-[4px] px-[12px] border-none text-[#1F1F2C]`}
               onClick={() => {
                 setPagination({ page: 1 })
                 setSearch(null)
@@ -65,7 +54,15 @@ const Dashboardtable = (props) => {
             type="text"
             placeholder="Search..."
             value={search || ""}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              if (e.target?.value == "") {
+                setPagination({ page: 1 })
+                setSearch(null)
+              } else {
+                setSearch(e.target.value)
+              }
+            }
+            }
             className="border rounded bg-white flex-grow outline-none p-2"
           />
 

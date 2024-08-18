@@ -32,7 +32,7 @@ const CompanyForm = ({
   const [phone, setPhone] = useState();
   const handleKeyPress = (e, value, fieldName) => {
     if (e.key === 'Enter' || e.key === 'Tab') {
-      e.preventDefault();
+      // e.preventDefault();
       registerData.verifyAccount({ [fieldName]: value }, fieldName);
     }
   };
@@ -79,7 +79,6 @@ const CompanyForm = ({
               }}
               maxLength={50}
               onKeyDown={(e) => handleKeyPress(e, e.target.value, "company_name")}
-
             />
             {registerData?.state?.success?.company_name && watchAllFields?.company_name != "" &&
               <div>
@@ -154,7 +153,11 @@ const CompanyForm = ({
             maxLength={50}
             type="password"
             {...register("password", {
-              required: true,
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters long",
+              },
             })}
             style={
               errors?.password

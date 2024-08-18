@@ -7,7 +7,6 @@ const FormSubmission = ({ isOpen, setIsOpen, data }) => {
 
   const handleSubmit = () => {
     registerHook.handleUpdateProfile(data, setIsOpen);
-
   }
   return (
     <>

@@ -93,7 +93,6 @@ export const useRegisterHook = () => {
       });
   };
   const handleUpdateProfile = (data) => {
-    console.log(data,"data")
     const id = localStorage.getItem("id");
     const payload = { ...data.data };
     (payload.channel = "WEB"),

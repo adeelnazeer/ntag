@@ -9,8 +9,6 @@ const useSchedularHook = (value) => {
     const [loading, setLoading] = useState(true)
     const docStatus = JSON.parse(localStorage.getItem('data'))
     useEffect(() => {
-        console.log(docStatus)
-
         const user = JSON.parse(localStorage.getItem("user"))
         setLoading(true)
         if (docStatus?.doc_approval_status == 0) {
