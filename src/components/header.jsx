@@ -45,7 +45,6 @@ const Header = () => {
               className="rounded-tr-[50px] h-full pr-6 bg-white cursor-pointer"
               src={Logo}
               alt="logo"
-              onClick={() => navigate(ConstentRoutes.home)}
             />
           </div>
           <div className="hidden  md:flex lg:flex h-full items-center gap-8">
@@ -167,7 +166,10 @@ const Header = () => {
                 </div>
               </div>
             )}
-            <div className="flex h-full font-semibold gap-2 items-center pl-6 rounded-tl-[50px] bg-white">
+            <div className="flex h-full font-semibold gap-2 items-center pl-6 rounded-tl-[50px] cursor-pointer bg-white"
+              onClick={() => navigate(ConstentRoutes.home)}
+
+            >
               <img src={TagName} alt="tagname" />
               <h2>Name TAG</h2>
             </div>

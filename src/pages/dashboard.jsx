@@ -11,6 +11,7 @@ const DashboardPage = () => {
         setPagination={data?.setPagination}
         metaData={data?.metaData}
         loading={data?.loading}
+        filters={data?.filters}
       />
     </div>
   );

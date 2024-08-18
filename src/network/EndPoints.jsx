@@ -11,6 +11,7 @@ const EndPoints = {
     getSchedular: "/customer/corp-subscriber",
     getReserve: "/customer/reserve/tags",
     verifyAccount: "/customer/auth/very/accounts",
+    getFilter: "/customer/unique-tag-digits",
     updateProfile: (slug) => `/customer/updatecustomer/${slug}`,
   },
 };

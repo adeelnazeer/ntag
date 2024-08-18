@@ -32,18 +32,22 @@ const Schedulecall = () => {
               <div className="container max-w-full">
                 <div className="md:p-4 p-2 rounded-xl shadow pb-6 mt-1 ">
                   <div className="flex gap-8 justify-between p-4 w-4/6 rounded-lg border bg-[#F0F0F8] shadow-md ">
-                    <Typography className=" font-medium md:text-[14px] text-[12px]">
-                      Tag Number
-                    </Typography>
-                    <Typography className=" md:text-[14px] text-[12px] font-medium">
-                      #{single?.tag_no}
-                    </Typography>
-                    <Typography className=" md:text-[14px] text-[12px] font-medium">
-                      Mobile Number
-                    </Typography>
-                    <Typography className=" md:text-[14px] text-[12px] font-medium">
-                      {single?.msisdn}
-                    </Typography>
+                    <div className="flex gap-4">
+                      <Typography className=" font-medium md:text-[14px] text-[12px]">
+                        Tag Number
+                      </Typography>
+                      <Typography className=" md:text-[14px] text-[12px] font-medium">
+                        #{single?.tag_no}
+                      </Typography>
+                    </div>
+                    <div className=" flex gap-4">
+                      <Typography className=" md:text-[14px] text-[12px] font-medium">
+                        Mobile Number
+                      </Typography>
+                      <Typography className=" md:text-[14px] text-[12px] font-medium">
+                        {single?.msisdn}
+                      </Typography>
+                    </div>
                   </div>
                   <div className="flex justify-between mt-6 gap-7 ">
                     <div className="flex justify-between flex-1">
@@ -151,22 +155,22 @@ const Schedulecall = () => {
                   <Typography className="mt-5 md:text-[14px] text-[12px]">
                     Your Service will be activated from {single?.incall_start_dt && moment(single?.incall_start_dt).format("hh:mm A") || "00:00"}  to {single?.incall_end_dt && moment(single?.incall_end_dt).format("hh:mm A") || "00:00"}
                   </Typography>
-                     <div className="flex justify-center gap-4 mt-5">
-                      <Button className=" bg-secondary text-white text-[14px] font-normal"
-                        disabled={!single?.incall_start_dt || !single?.incall_start_dt}
-                        onClick={() => {
-                          handleSchedular(single)
-                        }}
-                      >
-                        Apply
-                      </Button>
-                      <Button
-                        className="border-secondary  text-[14px] font-normal"
-                        variant="outlined"
-                      >
-                        Cancel
-                      </Button>
-                    </div>
+                  <div className="flex justify-center gap-4 mt-5">
+                    <Button className=" bg-secondary text-white text-[14px] font-normal"
+                      disabled={!single?.incall_start_dt || !single?.incall_start_dt}
+                      onClick={() => {
+                        handleSchedular(single)
+                      }}
+                    >
+                      Apply
+                    </Button>
+                    <Button
+                      className="border-secondary  text-[14px] font-normal"
+                      variant="outlined"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

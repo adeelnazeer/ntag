@@ -7,6 +7,7 @@ export const useTagList = () => {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({ page: 1 });
   const [metaData, setMetaData] = useState(null);
+  const [filters, setFilters] = useState([])
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     setLoading(true)
@@ -21,6 +22,16 @@ export const useTagList = () => {
         setLoading(false)
       });
   }, [pagination]);
+
+  useEffect(() => {
+    APICall("get", pagination, EndPoints.customer.getFilter)
+      .then((res) => {
+        setFilters(res?.data)
+      })
+      .catch((err) => {
+        setFilters([])
+      });
+  }, [])
 
   const handleTagDetails = (data, setOpenModal) => {
     APICall("post", data, EndPoints.customer.buytags)
@@ -38,5 +49,5 @@ export const useTagList = () => {
       });
   };
 
-  return { data, setPagination, pagination, metaData, handleTagDetails, loading };
+  return { data, setPagination,filters, pagination, metaData, handleTagDetails, loading };
 };
