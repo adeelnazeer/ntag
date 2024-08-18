@@ -77,6 +77,7 @@ const CompanyForm = ({
                 })
                 setData(st => ({ ...st, company_name: e.target.value }))
               }}
+              maxLength={50}
               onKeyDown={(e) => handleKeyPress(e, e.target.value, "company_name")}
 
             />
@@ -94,6 +95,7 @@ const CompanyForm = ({
             <Input
               className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder="User name"
+              maxLength={50}
               style={
                 errors?.account_id
                   ? { border: "1px solid red" }
@@ -124,6 +126,7 @@ const CompanyForm = ({
             <Input
               className="w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder="Email"
+              maxLength={50}
               style={{ border: "1px solid #8A8AA033" }}
               {...register("email")}
               onChange={(e) => {
@@ -148,6 +151,7 @@ const CompanyForm = ({
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
             placeholder="Password"
+            maxLength={50}
             type="password"
             {...register("password", {
               required: true,
@@ -165,6 +169,7 @@ const CompanyForm = ({
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
             placeholder="Confirm Password"
             type="password"
+            maxLength={50}
             style={
               errors?.confirm_password ||
                 watchAllFields?.password != watchAllFields?.confirm_password
@@ -241,6 +246,7 @@ const CompanyForm = ({
               valueAsNumber
               className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder="Enter verification code"
+              maxLength={50}
               {...register("verification_code", {
                 required: true,
                 validate: (val) => {

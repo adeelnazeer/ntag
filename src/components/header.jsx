@@ -45,6 +45,7 @@ const Header = () => {
               className="rounded-tr-[50px] h-full pr-6 bg-white cursor-pointer"
               src={Logo}
               alt="logo"
+              onClick={() => navigate(ConstentRoutes.home)}
             />
           </div>
           <div className="hidden  md:flex lg:flex h-full items-center gap-8">

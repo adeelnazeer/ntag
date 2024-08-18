@@ -41,6 +41,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
             <Input
               className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder="First Name"
+              maxLength={50}
               style={
                 errors.contactf_name
                   ? { border: "1px solid red" }
@@ -54,6 +55,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
             <Input
               className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder="Last Name"
+              maxLength={50}
               style={
                 errors.contactl_name
                   ? { border: "1px solid red" }
@@ -99,6 +101,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="Comapny Name"
+                maxLength={50}
                 value={data?.company_name}
                 disabled
                 style={
@@ -113,6 +116,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="Industry"
+                maxLength={50}
                 style={
                   errors.comp_industry
                     ? { border: "1px solid red" }
@@ -126,6 +130,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="State/Province"
+                maxLength={50}
                 style={
                   errors.comp_state
                     ? { border: "1px solid red" }
@@ -140,6 +145,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="City"
+                maxLength={50}
                 style={
                   errors.comp_city
                     ? { border: "1px solid red" }
@@ -153,6 +159,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="Address"
+                maxLength={50}
                 style={
                   errors.comp_addr
                     ? { border: "1px solid red" }
@@ -167,6 +174,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="Business Registration/NTN Number"
+                maxLength={50}
                 style={
                   errors.comp_reg_no
                     ? { border: "1px solid red" }
