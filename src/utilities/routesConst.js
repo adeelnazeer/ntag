@@ -2,6 +2,7 @@ export const ConstentRoutes = {
   home: "/",
   login: "/login",
   register: "/register",
+  forgetPassword: "/resetpassword",
   dashboard: "/buy-tag",
   manageTagName: "/manage-tag",
   buyTag: "/dashboard",
