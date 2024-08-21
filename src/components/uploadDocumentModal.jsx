@@ -89,8 +89,8 @@ const UplaodDocument = ({ open, setOpen, checkDocument }) => {
                 </Typography>
                 <div className="flex gap-4">
                     <label className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer">
-                        Upload
-                        <input
+                    Upload documents
+                    <input
 
                             type="file"
                             id="uploadFile1"
