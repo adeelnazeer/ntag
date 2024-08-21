@@ -18,6 +18,7 @@ import ProfilePage from "./pages/profile";
 import { ToastContainer } from "react-toastify";
 import Voicemail from "./pages/voicemail";
 import TermOfUse from "./pages/termOfUser";
+import ForgetPassword from "./pages/forgetPassword";
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
         <Route path={ConstentRoutes.home} element={<HomePage />} />
         <Route path={ConstentRoutes.login} element={<Login />} />
         <Route path={ConstentRoutes.register} element={<RegisterPage />} />
+        <Route path={ConstentRoutes.forgetPassword} element={<ForgetPassword />} />
+
         <Route
           path={ConstentRoutes.dashboard}
           element={
