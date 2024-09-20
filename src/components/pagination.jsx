@@ -41,7 +41,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <ul className="flex space-x-1 sm:space-x-2 md:space-x-4">
         <li>
           <button
-            className={` text-base hover:border-none focus:border-none text-primary `}
+            className={` text-base hover:border-none w-8 h-8 rounded-full focus:border-none text-primary `}
             disabled={currentPage === 1}
             onClick={() => onPageChange(currentPage - 1)}
           >
@@ -56,9 +56,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             ) : (
               <button
                 className={`${currentPage === page
-                    ? " text-secondary "
-                    : " text-primary"
-                  }  text-base hover:border-none focus:border-none`}
+                    ? " text-secondary border-dotted border-secondary "
+                    : " text-primary border-dotted border-primary"
+                  }  text-base w-8 h-8 rounded-full hover:border-none focus:border-none`}
                 onClick={() => onPageChange(page)}
               >
                 {page}
@@ -69,7 +69,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
         <li>
           <button
-            className={` text-base hover:border-none focus:border-none text-primary `}
+            className={` text-base w-8 h-8 rounded-full hover:border-none focus:border-none text-primary `}
             disabled={currentPage === totalPages}
             onClick={() => onPageChange(currentPage + 1)}
           >

@@ -9,11 +9,14 @@ const TagNames = () => {
   const navigate = useNavigate();
   const { data, loading } = useSchedularHook("tagname")
   const docStatus = JSON.parse(localStorage.getItem('data'))
-  
+
   return (
-    <div className="md:p-4 p-2">
-      <div className="mt-4">
-        <Typography className="text-[#1F1F2C] md:text-[26px] text-[20px] font-bold text-center md:text-start">
+    <div className=" shadow bg-white rounded-xl">
+      <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-lg font-bold ">
+        Corporate Name TAG
+      </Typography>
+      <div className="p-8">
+        <Typography className="text-[#1F1F2C] text-lg font-bold text-center">
           Welcome Back Name tag services!
         </Typography>
         {loading ?
@@ -23,7 +26,7 @@ const TagNames = () => {
           :
           <>
             {data?.length == 0 &&
-              <Typography className="mt-4 font-normal md:text-[26px] text-[20px]">
+              <Typography className="mt-2 font-normal text-base text-center">
                 Currently no name Tag is register against your account
               </Typography>
             }
@@ -34,7 +37,7 @@ const TagNames = () => {
                     <div className="flex justify-between bg-[#F6F7FB] md:px-5 px-2 py-3 rounded-xl items-center">
                       <img className="rounded h-[40px]" src={Img} alt="kfc" />
                       <div>
-                        <Typography className="text-[14px] font-bold bg-secondary py-1 px-4 text-white">
+                        <Typography className="text-[14px]  bg-secondary py-1 px-4 rounded-lg text-white">
                           #{single?.tag_no}
                         </Typography>
                       </div>
@@ -43,27 +46,27 @@ const TagNames = () => {
                       <Typography className="md:text-[14px] text-[12px]">
                         Registered Mobile Number
                       </Typography>
-                      <Typography className="md:text-[17px] text-[12px] font-bold">{single?.msisdn}</Typography>
+                      <Typography className="md:text-[14px] text-[12px] ">{single?.msisdn}</Typography>
                     </div>
                     <div className="md:px-5 px-2 py-3 rounded-xl mt-1">
                       <div className="flex justify-between">
                         <Typography className="text-[14px]">Contact Number</Typography>
-                        <Typography className="md:text-[17px] text-[12px] font-bold">{single?.msisdn}</Typography>
+                        <Typography className="md:text-[14px] text-[12px] ">{single?.msisdn}</Typography>
                       </div>
                     </div>
                     <div className="flex justify-between  md:px-5 px-2 py-3 rounded-xl mt-1">
                       <Typography className="text-[14px]">Service Monthly Fee</Typography>
-                      <Typography className="md:text-[17px] text-[12px] font-bold">{single?.service_fee}</Typography>
+                      <Typography className="md:text-[14px] text-[12px] ">{single?.service_fee}</Typography>
                     </div>
                     <div className="flex justify-between  md:px-5 px-2 py-3 rounded-xl mt-1">
                       <Typography className="text-[14px]">Expiry Date</Typography>
-                      <Typography className="md:text-[17px] text-[12px] font-bold">{moment(single?.expiry_date).format("DD-MM-YYYY")}</Typography>
+                      <Typography className="md:text-[14px] text-[12px] ">{moment(single?.expiry_date).format("DD-MM-YYYY")}</Typography>
                     </div>
                     <div className="flex justify-between  md:px-5 px-2 py-3 rounded-xl mt-1">
                       <Typography className="text-[14px]">
                         Service Registration Date
                       </Typography>
-                      <Typography className="md:text-[17px] text-[12px] font-bold">{moment(single?.created_date).format('DD-MM-YYYY')}</Typography>
+                      <Typography className="md:text-[14px] text-[12px] ">{moment(single?.created_date).format('DD-MM-YYYY')}</Typography>
                     </div>
                     <div className="flex justify-between  md:px-5 px-2 py-3 rounded-xl mt-1">
                       <Typography className="text-[14px]">Current Service Status</Typography>

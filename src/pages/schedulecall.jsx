@@ -19,7 +19,10 @@ const Schedulecall = () => {
   ));
 
   return (
-    <div className=" grid grid-cols-1 gap-x-6 gap-y-10 mt-4">
+    <div className=" grid rounded-xl shadow grid-cols-1 gap-x-6 gap-y-6 pb-6">
+      <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-lg font-bold ">
+        Corporate Name TAG
+      </Typography>
       {loading ?
         <div className=" min-h-44 flex col-span-2 justify-between items-center">
           <Spinner className=" h-12 w-12 mx-auto" color="green" />
@@ -28,23 +31,22 @@ const Schedulecall = () => {
         <>
           {data?.length > 0 ? data?.map((single, index) =>
             <div key={single?.id}>
-
-              <div className="container max-w-full">
-                <div className="md:p-4 p-2 rounded-xl shadow pb-6 mt-1 ">
-                  <div className="flex gap-8 justify-between p-4 w-4/6 rounded-lg border bg-[#F0F0F8] shadow-md ">
-                    <div className="flex gap-4">
-                      <Typography className=" font-medium md:text-[14px] text-[12px]">
-                        Tag Number
+              <div className="container px-6 max-w-full">
+                <div className="md:p-6 p-4 border-[#77777733] rounded-2xl border bg-[#F6F7FB]shadow pb-6 mt-1 ">
+                  <div className="flex gap-8 pb-4 w-4/6">
+                    <div className="flex gap-4 p-3 rounded-lg shadow border border-[#8080801f]">
+                      <Typography className=" font-semibold md:text-[14px] text-[12px]">
+                        Tag Number:
                       </Typography>
-                      <Typography className=" md:text-[14px] text-[12px] font-medium">
+                      <Typography className=" md:text-[14px] text-[12px] font-semibold">
                         #{single?.tag_no}
                       </Typography>
                     </div>
-                    <div className=" flex gap-4">
-                      <Typography className=" md:text-[14px] text-[12px] font-medium">
-                        Mobile Number
+                    <div className=" flex gap-4  p-3 border border-[#8080801f] rounded-lg shadow">
+                      <Typography className=" md:text-[14px] text-[12px] font-semibold">
+                        Mobile Number:
                       </Typography>
-                      <Typography className=" md:text-[14px] text-[12px] font-medium">
+                      <Typography className=" md:text-[14px] text-[12px] font-semibold">
                         {single?.msisdn}
                       </Typography>
                     </div>
@@ -155,26 +157,29 @@ const Schedulecall = () => {
                   <Typography className="mt-5 md:text-[14px] text-[12px]">
                     Your Service will be activated from {single?.incall_start_dt && moment(single?.incall_start_dt).format("hh:mm A") || "00:00"}  to {single?.incall_end_dt && moment(single?.incall_end_dt).format("hh:mm A") || "00:00"}
                   </Typography>
-                  <div className="flex justify-center gap-4 mt-5">
-                    <Button className=" bg-secondary text-white text-[14px] font-normal"
+                  <div className="flex  gap-4 mt-5">
+                    <Button
+                      className="border-secondary text-[14px] px-6 min-w-32 font-normal py-2"
+                      variant="outlined"
+                      size="small"
+                    >
+                      Cancel
+                    </Button>
+                    <Button className=" bg-secondary text-white px-6 min-w-32 text-[14px] py-2 font-normal"
                       disabled={!single?.incall_start_dt || !single?.incall_start_dt}
+                      size="small"
                       onClick={() => {
                         handleSchedular(single)
                       }}
                     >
                       Apply
                     </Button>
-                    <Button
-                      className="border-secondary  text-[14px] font-normal"
-                      variant="outlined"
-                    >
-                      Cancel
-                    </Button>
+
                   </div>
                 </div>
               </div>
             </div>
-          ) : <div className="text-center">Currently no name Tag is register against your account
+          ) : <div className="text-center mb-10">Currently no name Tag is register against your account
           </div>}
         </>
       }

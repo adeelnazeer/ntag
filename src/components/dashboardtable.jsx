@@ -16,8 +16,11 @@ const Dashboardtable = (props) => {
   const navigate = useNavigate();
   const docStatus = JSON.parse(localStorage.getItem('data'));
   return (
-    <div className="md:p-4 p-2 rounded-xl shadow pb-7">
-      <div className="flex mb-4 flex-col-reverse md:flex-row justify-between items-start md:gap-1 gap-4">
+    <div className="rounded-xl shadow pb-7">
+      <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-lg font-bold ">
+        Corporate Name TAG
+      </Typography>
+      <div className="flex mb-4 md:p-4 p-2  flex-col-reverse md:flex-row justify-between items-start md:gap-1 gap-4">
         <div className="flex gap-2 mb-4 flex-wrap md:mb-0">
           {filters?.map(single =>
             <Button
@@ -80,7 +83,7 @@ const Dashboardtable = (props) => {
           <Spinner className="h-12 w-12 mx-auto" color="green" />
         </div>
         :
-        <>
+        <div className="px-4">
           {data?.length > 0 ? data?.map((single) => (
             <div key={single?.id} className=" grid  grid-cols-6 sm:col-span-6 justify-between gap-8 p-2 border rounded-xl mt-3 items-center  ">
               <div>
@@ -143,7 +146,7 @@ const Dashboardtable = (props) => {
               </div>
             </div>
           )) : <p className=" min-h-32 flex justify-center items-center font-medium">No Data to display</p>}
-        </>
+        </div>
 
         // <div className="overflow-x-auto">
         //   {data?.map((single) => (

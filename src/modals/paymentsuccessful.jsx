@@ -36,7 +36,7 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state }) => {
                   </Typography>
                 }
               </div>
-              <div className="p-4 shadow rounded-xl">
+              <div className="p-4 shadow rounded-xl mt-2 border bg-[#80808021] border-[#80808038]">
                 <div className="flex justify-between items-center">
                   <h1>{"Payment"} Status</h1>
                   <Button className="bg-secondary  py-2 px-6 text-white">

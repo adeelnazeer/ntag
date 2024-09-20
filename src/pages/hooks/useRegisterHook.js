@@ -188,7 +188,7 @@ export const useRegisterHook = () => {
         }
       })
       .catch((err) => {
-        toast.error(err.response?.message || "Something went wrong try again!");
+        toast.error(err || "Something went wrong try again!");
       });
   };
 
