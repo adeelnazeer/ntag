@@ -111,6 +111,24 @@ export const useRegisterHook = () => {
         });
   };
 
+  const handleUpdateUserInfo = (data) => {
+    const id = localStorage.getItem("id");
+    const payload = { ...data };
+    payload.channel = "WEB";
+      APICall("put", payload, EndPoints.customer.updateProfile(id))
+        .then((res) => {
+          if (res?.success) {
+            toast.success(res?.message || "");
+            localStorage.setItem("user", JSON.stringify(res?.data));
+          } else {
+            toast.error(res?.message);
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+  };
+
   const handleLogin = (data) => {
     setLoading(true);
     const payLoad = {
@@ -170,7 +188,7 @@ export const useRegisterHook = () => {
         }
       })
       .catch((err) => {
-        toast.error(err.response?.message || "Something went wrong try again!");
+        toast.error(err || "Something went wrong try again!");
       });
   };
 
@@ -185,6 +203,7 @@ export const useRegisterHook = () => {
     handleRegister,
     handleLogin,
     handleUpdateProfile,
+    handleUpdateUserInfo,
     verifyAccount,
   };
 };

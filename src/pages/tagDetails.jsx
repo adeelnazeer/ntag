@@ -30,46 +30,49 @@ const TagDetails = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="p-4 rounded-xl shadow mt-6">
-        <div className="flex justify-between bg-[#F6F7FB] px-5 py-3 rounded-xl">
+        <Typography className="text-[#1F1F2C] pb-3 px-6 border-b text-lg font-bold ">
+          {docStatus?.doc_approval_status == 0 ? "Reserve" : "Buy"} Name TAG
+        </Typography>
+        <div className="flex justify-between mt-3 border bg-[#F6F7FB] border-[#77777733] px-5 py-3 rounded-xl">
           <Typography className="text-[14px]">Name Tag</Typography>
-          <Typography className="text-[17px] font-bold">
+          <Typography className="text-[14px] ">
             {stateData.tag_name}
           </Typography>
         </div>
-        <div className="flex justify-between bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
+        <div className="flex justify-between border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
           <Typography className="text-[14px]">Name TAG Number</Typography>
-          <Typography className="text-[17px] font-bold">
+          <Typography className="text-[14px] ">
             #{stateData.tag_no}
           </Typography>
         </div>
-        <div className=" bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
+        <div className=" border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
           <div className="flex justify-between">
             <Typography className="text-[14px]">Name TAG Price</Typography>
-            <Typography className="text-[17px] font-bold">
+            <Typography className="text-[14px] ">
               #{stateData.tag_price}
             </Typography>
           </div>
           <div className="flex justify-between mt-3">
             <Typography className="text-[14px]">Tax</Typography>
-            <Typography className="text-[17px] font-bold">
+            <Typography className="text-[17px] ">
               {stateData?.service_fee}
             </Typography>
           </div>
           <div className="flex justify-between mt-3 border-t py-2">
             <Typography className="text-[14px]">Total Price</Typography>
-            <Typography className="text-[17px] font-bold">{totalAfterTax}</Typography>
+            <Typography className="text-[17px] ">{totalAfterTax}</Typography>
           </div>
         </div>
-        <div className="flex justify-between bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
+        <div className="flex items-center justify-between border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
           <Typography className="text-[14px]">Payment Method</Typography>
-          <div className="flex gap-2">
+          <div className="flex items-center px-2 py-1 border rounded-lg border-[#88C140] gap-2">
             <img src={Img} alt="abc" />
-            <Typography className="text-[17px] font-bold">
+            <Typography className="text-[14px] font-bold">
               Mobile Wallet
             </Typography>
           </div>
         </div>
-        <div className="bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3 text-[#555]">
+        <div className=" px-5 py-3 rounded-xl mt-3 text-[#555]">
           <Typography className="font-normal text-sm">
             Term of Services
           </Typography>
@@ -85,13 +88,12 @@ const TagDetails = () => {
                   : { border: "1px solid #8A8AA033" }
               }
             />
-            <Typography className="text-xs leading-[40px] ">
-              I hereby confirm that the information above including information
-              provided at the time of registration of this telecom cloud
-              account, is complete, truthful and accurate, and will promptly
-              provide telecom cloud with writen notice of any updates there to.
-              I consent to the collection, use storage and disclosure of this
-              information for the purposes of risk control and compliance with{" "}
+            <Typography className="text-sm cursor-pointer  leading-[40px] ">
+              <span className="text-[#5B6AB0] hover:underline"
+                onClick={() => {
+                  navigate(ConstentRoutes.termofuse)
+                }}
+              >Term & Conditions </span>
             </Typography>
           </div>
         </div>
