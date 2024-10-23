@@ -1,6 +1,6 @@
 import { Button, Chip, Spinner, Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
-import { ConstentRoutes } from "../utilities/routesConst";
+import { ConstentRoutes, getStatus } from "../utilities/routesConst";
 import useSchedularHook from "./hooks/schedularHook";
 import Img from "../assets/images/wallet (2).png";
 import moment from "moment";
@@ -68,18 +68,20 @@ const TagNames = () => {
                       </Typography>
                       <Typography className="md:text-[14px] text-[12px] ">{moment(single?.created_date).format('DD-MM-YYYY')}</Typography>
                     </div>
-                    <div className="flex justify-between  md:px-5 px-2 py-3 rounded-xl mt-1">
+                    <div className="flex justify-between  gap-1 md:px-5 px-2 py-3 rounded-xl mt-1">
                       <Typography className="text-[14px]">Current Service Status</Typography>
-                      <Chip className="bg-secondary" value={single?.status} />
+                      <Chip className="bg-secondary whitespace-normal" value={getStatus(single?.status)} />
                     </div>
-                    {/* <div className="flex justify-center gap-4 mt-2 ">
-                <Button className=" bg-secondary text-white text-[14px] font-normal">
-                  Unsubscribe
-                </Button>
-                <Button className=" bg-secondary text-white text-[14px] font-normal">
-                  Deactivate
-                </Button>
-              </div> */}
+                    {single?.type == "reserve" &&
+                      <div className="flex justify-center gap-4 mt-2 ">
+                        <Button
+                          className="mt-8 bg-secondary text-white text-[14px] w-full"
+                          onClick={() => navigate(ConstentRoutes.tagDetail, { state: single?.corp_tag_list })}
+                        >
+                          {docStatus?.doc_approval_status == 0 ? "Reserve  Name TAG " : "BUY Name TAG"}
+                        </Button>
+                      </div>
+                    }
                   </>
                 </div>
               )}
