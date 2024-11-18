@@ -150,12 +150,16 @@ const CompanyForm = ({
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
             placeholder="Password"
-            maxLength={50}
+            maxLength={8}
             type="password"
             {...register("password", {
               required: "Password is required",
               minLength: {
                 value: 5,
+                message: "Password must be at least 8 characters long",
+              },
+              maxLength: {
+                value: 8,
                 message: "Password must be at least 8 characters long",
               },
             })}
@@ -172,7 +176,7 @@ const CompanyForm = ({
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
             placeholder="Confirm Password"
             type="password"
-            maxLength={50}
+            maxLength={8}
             style={
               errors?.confirm_password ||
                 watchAllFields?.password != watchAllFields?.confirm_password
@@ -206,6 +210,7 @@ const CompanyForm = ({
                     countryCallingCodeEditable={false}
                     value={field.value}
                     limitMaxLength={10}
+                    disabled={registerData?.expirationTime}
                     countries={["ET"]}
                     onChange={(value) => {
                       field.onChange(value);
@@ -249,7 +254,7 @@ const CompanyForm = ({
               valueAsNumber
               className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder="Enter verification code"
-              maxLength={50}
+              maxLength={4}
               {...register("verification_code", {
                 required: true,
                 validate: (val) => {
@@ -293,11 +298,11 @@ const CompanyForm = ({
               <Typography className="text-sm cursor-pointer  leading-[40px] ">
                 <span className="text-[#5B6AB0] hover:underline"
                   onClick={() => {
-                    navigate(ConstentRoutes.termofuse)
+                    window.open(ConstentRoutes.termofuse, '_blank');
                   }}
-                >Term of Use </span> & <span className="text-[#5B6AB0] hover:underline"
+                >Terms & Conditions </span> & <span className="text-[#5B6AB0] hover:underline"
                   onClick={() => {
-                    navigate(ConstentRoutes.privacyPolicy)
+                    window.open(ConstentRoutes.privacyPolicy, '_blank');
                   }}
                 > Privacy Policy</span>
               </Typography>

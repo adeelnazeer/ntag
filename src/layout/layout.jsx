@@ -45,7 +45,7 @@ const DashboardLayout = ({ children }) => {
           </h1>
         </div> */}
         <div className="flex  flex-1 overflow-auto grid-cols-12  h-full">
-          <div className="md:w-72 h-full">
+          <div className="md:w-72 h-full bg-[#fbfbfb]">
             <Sidebar data={data} />
           </div>
           <div className="w-full col-span-12 md:px-5 px-2 h-full overflow-auto md:py-4 py-2 mt-2 md:mt-0 md:block ">

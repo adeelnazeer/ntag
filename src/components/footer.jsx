@@ -14,7 +14,11 @@ const Footer = () => {
             <p className=" text-secondary  font-medium text-base  py-1 px-2">
               STORAGE SERVICES
             </p> */}
-            <p className=" text-secondary mt-2  font-medium text-base  py-1 px-2">
+            <p className=" text-secondary mt-2 hover:underline cursor-pointer  font-medium text-base  py-1 px-2"
+            onClick={()=>{
+              window.open(ConstentRoutes.termofuse,"_blank")
+            }}
+            >
               Terms and Conditions
             </p>
             {/* <p className=" text-secondary  font-medium text-base  py-1 px-2">

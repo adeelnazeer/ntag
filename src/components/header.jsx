@@ -81,6 +81,12 @@ const Header = () => {
                       Profile
                     </MenuItem>
                     <MenuItem
+                      className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
+                      onClick={() => navigate(ConstentRoutes.forgetPassword)}
+                    >
+                      Change Password
+                    </MenuItem>
+                    <MenuItem
                       className="focus:border-none border-none transition-none hover:border-none"
                       onClick={handleLogout}
                     >
@@ -167,7 +173,14 @@ const Header = () => {
               </div>
             )}
             <div className="flex h-full font-semibold gap-2 items-center pl-6 rounded-tl-[50px] cursor-pointer bg-white"
-              onClick={() => navigate(ConstentRoutes.home)}
+              onClick={() => {
+                if (!token) {
+                  navigate(ConstentRoutes.home)
+                }
+                else {
+                  navigate(ConstentRoutes.dashboard)
+                }
+              }}
 
             >
               <img src={TagName} alt="tagname" />

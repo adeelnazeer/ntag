@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Button, Chip, Spinner, Typography } from "@material-tailwind/react";
-import { FaSearch } from "react-icons/fa";
+import { FaHashtag, FaSearch } from "react-icons/fa";
 import Img1 from "../assets/images/IMG (1).png";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
@@ -16,12 +16,12 @@ const Dashboardtable = (props) => {
   const navigate = useNavigate();
   const docStatus = JSON.parse(localStorage.getItem('data'));
   return (
-    <div className="rounded-xl shadow pb-7">
+    <div className="rounded-xl shadow pb-7 bg-white">
       <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-lg font-bold ">
         Corporate Name TAG
       </Typography>
-      <div className="flex mb-4 md:p-4 p-2  flex-col-reverse md:flex-row justify-between items-start md:gap-1 gap-4">
-        <div className="flex gap-2 mb-4 flex-wrap md:mb-0">
+      <div className="flex mb-4 md:p-4 p-2  flex-wrap gap-y-4 flex-col-reverse md:flex-row justify-between items-start gap-4">
+        <div className="flex gap-2 mb-4 md:mb-0">
           {filters?.map(single =>
             <Button
               key={single?.id}
@@ -35,11 +35,14 @@ const Dashboardtable = (props) => {
           <Button
             className={`md:py-[8px] md:px-[24px] py-[4px] px-[12px] border-dashed border-[#47A432] text-[#1F1F2C] font-normal ${pagination?.tag_digits === 0 ? "bg-secondary text-white" : ""}`}
             variant="outlined"
-            onClick={() => setPagination((st) => ({ ...st, tag_digits: 0 }))}
+            onClick={() => {
+              setSearch("")
+              setPagination({ tag_digits: 0 })
+            }}
           >
-            More
+            All
           </Button>
-          {(search || pagination?.tag_digits == 0 || pagination?.tag_digits) &&
+          {/* {(search || pagination?.tag_digits == 0 || pagination?.tag_digits) &&
             <p
               className={`md:py-[8px] cursor-pointer leading-none font-medium hover:underline md:px-[24px] py-[4px] px-[12px] border-none text-[#1F1F2C]`}
               onClick={() => {
@@ -49,13 +52,13 @@ const Dashboardtable = (props) => {
             >
               Reset
             </p>
-          }
+          } */}
         </div>
 
         <div className="flex items-center bg-white rounded-md relative w-full md:w-auto">
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="Enter number to search"
             value={search || ""}
             onChange={(e) => {
               if (e.target?.value == "") {
@@ -66,7 +69,12 @@ const Dashboardtable = (props) => {
               }
             }
             }
-            className="border rounded bg-white flex-grow outline-none p-2"
+            className="border rounded min-w-72 bg-white flex-grow outline-none p-2"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === 'Tab') {
+                setPagination((st) => ({ ...st, search: search }))
+              }
+            }}
           />
 
           <div
@@ -87,21 +95,23 @@ const Dashboardtable = (props) => {
           {data?.length > 0 ? data?.map((single) => (
             <div key={single?.id} className=" grid  grid-cols-6 sm:col-span-6 justify-between gap-8 p-2 border rounded-xl mt-3 items-center  ">
               <div>
-                <img className="rounded w-16 h-16 md:w-auto md:h-auto" src={Img1} alt="north" />
+                <FaHashtag className="h-6 w-8 text-[#88c140]" />
+
+                {/* <img className="rounded w-16 h-16 md:w-auto md:h-auto" src={Img1} alt="north" /> */}
               </div>
               <div>
-                <Typography className="  text-center md:text-base text-[13px] md:text-left">
+                <Typography className="  text-center md:text-sm text-[13px] md:text-left">
                   {single?.tag_name || ""}
                 </Typography></div>
               <div>
-                <Typography className="bg-[#EBEBEB] text-center rounded-md px-5 py-1  ">
+                <Typography className="bg-[#EBEBEB] text-center text-sm rounded-md px-5 py-1  ">
                   #{single?.tag_no}
                 </Typography>
               </div>
               <div>
                 <p className="text-[#7A798A] text-[13px]">Current Price</p>
                 <p className="text-secondary md:text-[18px] text-[13px] md:w-[240px]   font-bold">
-                  {single?.tag_price || ""}{" "}
+                  Birr. {single?.tag_price || ""}{" "}
                   <span className="text-[#7A798A] text-[13px]">+Tax</span>
                 </p>
               </div>

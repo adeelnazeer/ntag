@@ -17,8 +17,8 @@ const TagDetails = () => {
     formState: { errors },
   } = useForm();
 
-  const taxAmount = (Number(stateData.tag_price) * Number(stateData.service_fee)) / 100;
-  const totalAfterTax = (Number(stateData.tag_price) + taxAmount).toFixed(0);
+  const taxAmount = (Number(stateData.tag_price) * Number(0.15));
+  const totalAfterTax = (Number(stateData.tag_price) + taxAmount);
   const onSubmit = (data) => {
     let payLoad = {
       ...stateData,
@@ -28,7 +28,7 @@ const TagDetails = () => {
     navigate(ConstentRoutes.processPayment, { state: payLoad })
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className=" bg-white max-w-[800px]">
       <div className="p-4 rounded-xl shadow mt-6">
         <Typography className="text-[#1F1F2C] pb-3 px-6 border-b text-lg font-bold ">
           {docStatus?.doc_approval_status == 0 ? "Reserve" : "Buy"} Name TAG
@@ -49,18 +49,18 @@ const TagDetails = () => {
           <div className="flex justify-between">
             <Typography className="text-[14px]">Name TAG Price</Typography>
             <Typography className="text-[14px] ">
-              #{stateData.tag_price}
+              Birr. {stateData.tag_price}
             </Typography>
           </div>
           <div className="flex justify-between mt-3">
             <Typography className="text-[14px]">Tax</Typography>
-            <Typography className="text-[17px] ">
-              {stateData?.service_fee}
+            <Typography className="text-[14px] ">
+              Birr. {taxAmount}
             </Typography>
           </div>
           <div className="flex justify-between mt-3 border-t py-2">
             <Typography className="text-[14px]">Total Price</Typography>
-            <Typography className="text-[17px] ">{totalAfterTax}</Typography>
+            <Typography className="text-[17px] ">Birr. {totalAfterTax}</Typography>
           </div>
         </div>
         <div className="flex items-center justify-between border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
@@ -91,7 +91,7 @@ const TagDetails = () => {
             <Typography className="text-sm cursor-pointer  leading-[40px] ">
               <span className="text-[#5B6AB0] hover:underline"
                 onClick={() => {
-                  navigate(ConstentRoutes.termofuse)
+                  window.open(ConstentRoutes.termofuse, "_blank")
                 }}
               >Term & Conditions </span>
             </Typography>
@@ -99,7 +99,7 @@ const TagDetails = () => {
         </div>
         <div className="flex justify-center mt-2">
           <Button
-            className=" bg-secondary text-white text-[14px] w-[400px]"
+            className=" bg-secondary text-white text-[14px] w-[280px]"
             type="submit"
           // onClick={() => navigate(ConstentRoutes.processPayment)}
           >

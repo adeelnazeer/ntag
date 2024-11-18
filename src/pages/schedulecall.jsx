@@ -8,7 +8,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 
 const Schedulecall = () => {
-  const { data, loading, setData, handleSchedular } = useSchedularHook()
+  const { buyData, loading, setData, handleSchedular } = useSchedularHook()
   const [selected, setSelected] = useState("")
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
@@ -19,7 +19,7 @@ const Schedulecall = () => {
   ));
 
   return (
-    <div className=" grid rounded-xl shadow grid-cols-1 gap-x-6 gap-y-6 pb-6">
+    <div className=" grid rounded-xl max-w-[800px] bg-white shadow grid-cols-1 gap-x-6 gap-y-6 pb-6">
       <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-lg font-bold ">
         Corporate Name TAG
       </Typography>
@@ -29,47 +29,31 @@ const Schedulecall = () => {
         </div>
         :
         <>
-          {data?.length > 0 ? data?.map((single, index) =>
+          {buyData?.length > 0 ? buyData?.map((single, index) =>
             <div key={single?.id}>
-              <div className="container px-6 max-w-full">
+              <div className="container px-6 max-w-full text-[#737791]">
                 <div className="md:p-6 p-4 border-[#77777733] rounded-2xl border bg-[#F6F7FB]shadow pb-6 mt-1 ">
                   <div className="flex gap-8 pb-4 w-4/6">
                     <div className="flex gap-4 p-3 rounded-lg shadow border border-[#8080801f]">
-                      <Typography className=" font-semibold md:text-[14px] text-[12px]">
+                      <Typography className=" font-medium md:text-[14px] text-[12px]">
                         Tag Number:
                       </Typography>
-                      <Typography className=" md:text-[14px] text-[12px] font-semibold">
+                      <Typography className=" md:text-[14px] text-[12px] font-medium">
                         #{single?.tag_no}
                       </Typography>
                     </div>
                     <div className=" flex gap-4  p-3 border border-[#8080801f] rounded-lg shadow">
-                      <Typography className=" md:text-[14px] text-[12px] font-semibold">
+                      <Typography className=" md:text-[14px] text-[12px] font-medium">
                         Mobile Number:
                       </Typography>
-                      <Typography className=" md:text-[14px] text-[12px] font-semibold">
+                      <Typography className=" md:text-[14px] text-[12px] font-medium">
                         {single?.msisdn}
                       </Typography>
                     </div>
                   </div>
                   <div className="flex justify-between mt-6 gap-7 ">
-                    <div className="flex justify-between flex-1">
-                      <div className="flex gap-2 items-center">
-                        <LuCalendarClock className="text-secondary text-xl" />
-                        <Typography className="md:text-[14px] text-[12px] font-semibold">
-                          Schedule Service Is Active
-                        </Typography>
-                      </div>
-                      <Switch className="checked:bg-secondary"
-                        checked={single?.incoming_call_status}
-                        onChange={(e) => {
-                          const newFormValues = [...data]
-                          newFormValues[index]['incoming_call_status'] = e?.target?.checked
-                          setData(newFormValues)
-                          setSelected(selected == single?.id ? "" : single?.id)
-                        }}
-                      />
-                    </div>
-                    <div className="flex justify-around flex-1">
+
+                    {/* <div className="flex justify-around flex-1">
                       <div className="flex gap-2 items-center">
                         <Typography className="md:text-[14px] text-[12px]   font-medium">
                           Voice mail
@@ -78,24 +62,45 @@ const Schedulecall = () => {
                       <Switch className="checked:bg-secondary"
                         checked={single?.voic_email}
                         onChange={(e) => {
-                          const newFormValues = [...data]
+                          const newFormValues = [...buyData]
                           newFormValues[index]['voic_email'] = e?.target?.checked
                           setData(newFormValues)
                           setSelected(selected == single?.id ? "" : single?.id)
                         }}
                       />
-                    </div>
-                    <div className="flex justify-around flex-1">
+                    </div> */}
+                    <div className="flex gap-6 flex-1">
                       <div className="flex gap-2 items-center">
                         <Typography className="md:text-[14px] text-[12px]   font-medium">
                           Service ON/OFF
                         </Typography>
                       </div>
                       <Switch className="checked:bg-secondary"
-                        checked={single?.service}
+                        checked={single?.service_status}
                         onChange={(e) => {
-                          const newFormValues = [...data]
-                          newFormValues[index]['service'] = e?.target?.checked
+                          const newFormValues = [...buyData]
+                          newFormValues[index]['service_status'] = e?.target?.checked
+                          setData(newFormValues)
+                          if (e.target?.checked == false) {
+                            newFormValues[index]['incoming_call_status'] = e?.target?.checked
+                          }
+                          setSelected(selected == single?.id ? "" : single?.id)
+                        }}
+                      />
+                    </div>
+                    <div className="flex justify-between flex-1">
+                      <div className="flex gap-2 items-center">
+                        <LuCalendarClock className="text-secondary text-xl" />
+                        <Typography className="md:text-[14px] text-[12px] font-medium">
+                          Schedule Service Is Active
+                        </Typography>
+                      </div>
+                      <Switch className="checked:bg-secondary"
+                        checked={single?.incoming_call_status}
+                        disabled={single?.service_status == 0}
+                        onChange={(e) => {
+                          const newFormValues = [...buyData]
+                          newFormValues[index]['incoming_call_status'] = e?.target?.checked
                           setData(newFormValues)
                           setSelected(selected == single?.id ? "" : single?.id)
                         }}
@@ -112,7 +117,7 @@ const Schedulecall = () => {
                           <DatePicker
                             selected={single?.incall_start_dt && new Date(single?.incall_start_dt)}
                             onChange={(date) => {
-                              const newFormValues = [...data]
+                              const newFormValues = [...buyData]
                               newFormValues[index]['incall_start_dt'] = date
                               setData(newFormValues)
                             }}
@@ -139,7 +144,7 @@ const Schedulecall = () => {
                           <DatePicker
                             selected={single?.incall_end_dt && new Date(single?.incall_end_dt)}
                             onChange={(date) => {
-                              const newFormValues = [...data]
+                              const newFormValues = [...buyData]
                               newFormValues[index]['incall_end_dt'] = date
                               setData(newFormValues)
                             }}
@@ -162,11 +167,18 @@ const Schedulecall = () => {
                       className="border-secondary text-[14px] px-6 min-w-32 font-normal py-2"
                       variant="outlined"
                       size="small"
+                      onClick={() => {
+                        const newFormValues = [...buyData]
+                        newFormValues[index]['incoming_call_status'] = false
+                        setData(newFormValues)
+                        setSelected(selected == single?.id ? "" : single?.id)
+                        handleSchedular(single)
+                      }}
                     >
                       Cancel
                     </Button>
                     <Button className=" bg-secondary text-white px-6 min-w-32 text-[14px] py-2 font-normal"
-                      disabled={!single?.incall_start_dt || !single?.incall_start_dt}
+                      disabled={!single?.incall_start_dt || !single?.incall_start_dt||!single?.incoming_call_status}
                       size="small"
                       onClick={() => {
                         handleSchedular(single)

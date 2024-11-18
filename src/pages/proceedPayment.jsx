@@ -45,23 +45,28 @@ const ProceedPayment = () => {
       customer_tag_name: state?.tag_name,
       customer_tag_no: state?.tag_no,
       phone_number: user?.phone_number,
-      payment_method: "CASH",
+      payment_method: "Mobile Wallet",
       reserve_type: "R",
       msisdn: user?.phone_number,
     }
     if (phoneNumber?.checked2) {
       values.msisdn = value
     }
-    dashboard.handleTagDetails(values, setIsOpen);
+    dashboard.handleTagDetails({
+      title: "diamond_" + state?.totalPrice,
+      amount: state?.totalPrice.toString(),
+    }, setIsOpen);
     // setIsOpen(true);
   };
+
+  console.log({ state })
 
   const [value, setValue] = useState()
 
   return (
     <>
       {newNumber ?
-        <div className="p-4 bg-[#FFFFFF] rounded-xl shadow pb-6 mt-6">
+        <div className="p-4 bg-[#FFFFFF] max-w-[800px] rounded-xl shadow pb-6 mt-6">
           <div className=" pb-3 px-6 border-b mb-4">
             <Typography className="text-[#1F1F2C] text-lg font-bold ">
               {docStatus?.doc_approval_status == 0 ? "Reserve" : "Buy"} Name TAG
@@ -83,6 +88,7 @@ const ProceedPayment = () => {
                 value={value}
                 onChange={setValue}
                 limitMaxLength={10}
+                disabled={registerData?.expirationTime}
               />
               {/* <Input
                 type="text"
@@ -131,6 +137,7 @@ const ProceedPayment = () => {
                   type="text"
                   label="verification code"
                   placeholder="Phone verification code"
+                  maxLength={4}
                   className="w-full rounded-xl border border-[#8A8AA033] px-4 py-2 bg-white outline-none "
                   containerProps={{
                     className: "min-w-0",
@@ -160,11 +167,11 @@ const ProceedPayment = () => {
               <Typography className="text-sm cursor-pointer  leading-[40px] ">
                 <span className="text-[#5B6AB0] hover:underline"
                   onClick={() => {
-                    navigate(ConstentRoutes.termofuse)
+                    window.open(ConstentRoutes.termofuse, '_blank');
                   }}
-                >Term of Use </span> & <span className="text-[#5B6AB0] hover:underline"
+                >Terms and Conditions </span> & <span className="text-[#5B6AB0] hover:underline"
                   onClick={() => {
-                    navigate(ConstentRoutes.privacyPolicy)
+                    window.open(ConstentRoutes.privacyPolicy, '_blank');
                   }}
                 > Privacy Policy</span>
               </Typography>
@@ -179,7 +186,7 @@ const ProceedPayment = () => {
             </Button>
           </div>
         </div> :
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className=" bg-white max-w-[800px]">
           <div className="p-4 rounded-xl shadow pb-6 mt-6">
             <Typography className="text-[#1F1F2C] pb-3 px-6 border-b text-lg font-bold ">
               {docStatus?.doc_approval_status == 0 ? "Reserve" : "Buy"} Name TAG
@@ -190,18 +197,16 @@ const ProceedPayment = () => {
             </div>
             <div className="flex justify-between border-[#77777733] border bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
               <Typography className="text-[14px]">TAG Price</Typography>
-              <Typography className="text-[14px] ">{state.totalPrice}</Typography>
+              <Typography className="text-[14px] ">Birr. {state.totalPrice}</Typography>
             </div>
             <div className=" border-[#77777733] border bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
               <div className="flex justify-between">
                 <div className="flex gap-2 items-center">
                   <Typography className="text-[14px]">
-                    Primary Phone{" "}
+                    Primary Mobile Number
                   </Typography>
                   <GiVibratingSmartphone />
-                  <Typography className="text-[14px] border border-[#88C140] p-2 rounded-lg text-[#0000008F] ml-2">
-                    {user?.phone_number}
-                  </Typography>
+
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -210,6 +215,9 @@ const ProceedPayment = () => {
                     disabled={phoneNumber?.checked1 == false}
                     type="text"
                   >Add TAG #</div> */}
+                  <Typography className="text-[14px] md:min-w-[200px] border border-[#88C140] p-2 rounded-lg text-[#0000008F]">
+                    {user?.phone_number}
+                  </Typography>
                   <Checkbox
                     checked={phoneNumber?.checked1}
                     onChange={() => { setPhoneNumber(st => ({ ...st, checked1: !st.checked1, checked2: false })) }}
@@ -230,10 +238,14 @@ const ProceedPayment = () => {
                     className={`text-[14px] flex gap-2 items-center px-4 py-2 font-medium text-[#7A798A] rounded-lg border border-[#88C140] bg-transparent ${phoneNumber?.checked2 == false ? "opacity-70" : " opacity-100"}`} size="small"
                     disabled={phoneNumber?.checked2 == false}
                     type="text"
-                    onClick={() => setNewNumber(true)}
+                    onClick={() => {
+                      setNewNumber(true)
+                      registerData.setExpirationTime(null)
+                      setStateNumber({ term: false })
+                    }}
                   >
                     <GiVibratingSmartphone />
-                    Mobile Number</button>
+                    Add Mobile Number</button>
                   <Checkbox
                     checked={phoneNumber?.checked2}
                     onChange={() => { setPhoneNumber(st => ({ ...st, checked2: !st.checked2, checked1: false })) }}
@@ -252,16 +264,18 @@ const ProceedPayment = () => {
             </div>
 
             <div className="flex justify-center mt-4">
-              <Button className=" bg-secondary text-white text-[14px] w-[400px]"
+              <Button className=" bg-secondary text-white text-[14px] w-[280px]"
                 type="submit"
+                loading={dashboard?.loadingPayment}
               >
                 {docStatus?.doc_approval_status == 0 ? "Proceed to Reservation" : "Proceed to Payment"}
               </Button>
             </div>
             {isOpen && <Paymentsuccessful isOpen={isOpen} setIsOpen={setIsOpen}
               state={state}
+              user={phoneNumber?.checked2 ? value : user?.phone_number}
             />}
-          </div>
+          </div>   
         </form>
       }
     </>

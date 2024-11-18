@@ -1,15 +1,22 @@
 /* eslint-disable react/prop-types */
 import { Input } from "@headlessui/react";
 import { useForm } from "react-hook-form";
+import { useRegisterHook } from "../../hooks/useRegisterHook";
 
 const ContactInfo = ({ profileData }) => {
+  const registerData = useRegisterHook();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues: profileData });
   const onSubmit = (data) => {
-    console.log({ data });
+    registerData.handleUpdateUserInfo({
+      contact_fname: data?.contact_fname,
+      contact_lname: data?.contact_lname,
+      email: data?.email,
+      contact_no: data?.contact_no,
+    });
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -21,6 +28,7 @@ const ContactInfo = ({ profileData }) => {
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
             placeholder="First Name"
+            maxLength={15}
             style={
               errors?.contact_fname
                 ? { border: "1px solid red" }
@@ -36,6 +44,7 @@ const ContactInfo = ({ profileData }) => {
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
             placeholder="Last Name"
+            maxLength={15}
             style={
               errors.contact_lname
                 ? { border: "1px solid red" }
@@ -51,6 +60,7 @@ const ContactInfo = ({ profileData }) => {
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
             placeholder="Email"
+            maxLength={30}
             style={
               errors.email
                 ? { border: "1px solid red" }
@@ -66,6 +76,7 @@ const ContactInfo = ({ profileData }) => {
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
             placeholder="Contact No"
+            maxLength={15}
             style={
               errors.contact_no
                 ? { border: "1px solid red" }

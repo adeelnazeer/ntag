@@ -2,7 +2,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+ import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home/home";
 import { ConstentRoutes } from "./utilities/routesConst";
 import Login from "./pages/login";
