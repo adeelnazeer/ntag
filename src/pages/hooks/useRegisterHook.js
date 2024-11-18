@@ -95,38 +95,39 @@ export const useRegisterHook = () => {
   const handleUpdateProfile = (data) => {
     const id = localStorage.getItem("id");
     const payload = { ...data.data };
-    (payload.channel = "WEB"),
-      APICall("put", payload, EndPoints.customer.updateProfile(id))
-        .then((res) => {
-          if (res?.success) {
-            toast.success(res?.message || "");
-            localStorage.setItem("user", JSON.stringify(res?.data));
-            navigate(ConstentRoutes.dashboard);
-          } else {
-            toast.error(res?.message);
-          }
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
+    payload.channel = "WEB"
+    APICall("put", payload, EndPoints.customer.updateProfile(id))
+      .then((res) => {
+        if (res?.success) {
+          toast.success(res?.message || "");
+          localStorage.setItem("user", JSON.stringify(res?.data));
+          localStorage.removeItem("otp")
+          window.location.replace(ConstentRoutes.dashboard)
+        } else {
+          toast.error(res?.message);
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
   };
 
   const handleUpdateUserInfo = (data) => {
     const id = localStorage.getItem("id");
     const payload = { ...data };
     payload.channel = "WEB";
-      APICall("put", payload, EndPoints.customer.updateProfile(id))
-        .then((res) => {
-          if (res?.success) {
-            toast.success(res?.message || "");
-            localStorage.setItem("user", JSON.stringify(res?.data));
-          } else {
-            toast.error(res?.message);
-          }
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
+    APICall("put", payload, EndPoints.customer.updateProfile(id))
+      .then((res) => {
+        if (res?.success) {
+          toast.success(res?.message || "");
+          localStorage.setItem("user", JSON.stringify(res?.data));
+        } else {
+          toast.error(res?.message);
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
   };
 
   const handleLogin = (data) => {
@@ -205,5 +206,6 @@ export const useRegisterHook = () => {
     handleUpdateProfile,
     handleUpdateUserInfo,
     verifyAccount,
+    setExpirationTime
   };
 };

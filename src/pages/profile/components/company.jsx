@@ -32,12 +32,13 @@ const CompanyInfo = ({ profileData }) => {
             Comapny Name
           </label>
           <Input
-            className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
+            className="mt-2 w-full rounded-xl px-4 py-2 bg-[#8080801f] outline-none "
             style={
               errors?.comp_name
                 ? { border: "1px solid red" }
                 : { border: "1px solid #8A8AA033" }
             }
+            readOnly
             {...register("comp_name", { required: true })}
           />
         </div>
@@ -46,7 +47,8 @@ const CompanyInfo = ({ profileData }) => {
             User Name
           </label>
           <Input
-            className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
+            className="mt-2 w-full rounded-xl px-4 py-2 bg-[#8080801f] outline-none "
+            readOnly
             style={
               errors.username
                 ? { border: "1px solid red" }
@@ -60,7 +62,8 @@ const CompanyInfo = ({ profileData }) => {
             Email
           </label>
           <Input
-            className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
+            className="mt-2 w-full rounded-xl px-4 py-2 bg-[#8080801f] outline-none "
+            readOnly
             style={
               errors.email
                 ? { border: "1px solid red" }
@@ -75,6 +78,7 @@ const CompanyInfo = ({ profileData }) => {
           </label>
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
+            maxLength={20}
             style={
               errors.comp_industry
                 ? { border: "1px solid red" }
@@ -90,6 +94,7 @@ const CompanyInfo = ({ profileData }) => {
           </label>
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
+            maxLength={20}
             style={
               errors.comp_state
                 ? { border: "1px solid red" }
@@ -104,6 +109,7 @@ const CompanyInfo = ({ profileData }) => {
           </label>
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
+            maxLength={20}
             style={
               errors.comp_city
                 ? { border: "1px solid red" }
@@ -118,6 +124,7 @@ const CompanyInfo = ({ profileData }) => {
           </label>
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
+            maxLength={50}
             style={
               errors.comp_addr
                 ? { border: "1px solid red" }
@@ -132,6 +139,7 @@ const CompanyInfo = ({ profileData }) => {
           </label>
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
+            maxLength={15}
             style={
               errors.comp_reg_no
                 ? { border: "1px solid red" }
@@ -145,7 +153,8 @@ const CompanyInfo = ({ profileData }) => {
             Phone Number
           </label>
           <Input
-            className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
+            className="mt-2 w-full rounded-xl px-4 py-2 bg-[#8080801f] outline-none "
+            readOnly
             style={
               errors.phone_number
                 ? { border: "1px solid red" }

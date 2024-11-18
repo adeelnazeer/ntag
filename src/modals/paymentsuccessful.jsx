@@ -3,7 +3,7 @@ import { Button, Typography } from "@material-tailwind/react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
-const Paymentsuccessful = ({ isOpen, setIsOpen, state }) => {
+const Paymentsuccessful = ({ isOpen, setIsOpen, state, user }) => {
   const navigate = useNavigate()
   const docStatus = JSON.parse(localStorage.getItem('data'))
 
@@ -19,12 +19,15 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state }) => {
           >
             <div className="p-4">
               <div className="flex text-secondary justify-end text-2xl font-snormal cursor-pointer"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  navigate(ConstentRoutes.dashboard)
+                  setIsOpen(false)
+                }}
               >
                 <IoMdCloseCircle />
               </div>
               <div className="text-center">
-                <Typography variant="h5">Transaction Successfull</Typography>
+                <Typography variant="h5">{docStatus?.doc_approval_status == 0 ? "Reservation" : "Transaction"} Successfull</Typography>
                 {docStatus?.doc_approval_status == 0 ?
                   <Typography className="text-[14px] mt-4">
                     Your Name TAG is successfully Reserved for 24 hours.
@@ -40,16 +43,25 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state }) => {
                 <div className="flex justify-between items-center">
                   <h1>{"Payment"} Status</h1>
                   <Button className="bg-secondary  py-2 px-6 text-white">
-                  {docStatus?.doc_approval_status==0?"Pending":"Success"} 
+                    {docStatus?.doc_approval_status == 0 ? "Document Approval Pending" : "Success"}
                   </Button>
                 </div>
+
                 <div className="flex justify-between mt-3 items-center">
-                  <h1 className="text-[#7A798A] text-sm">Name TAG Type</h1>
-                  <p className="text-sm font-bold">{state?.tag_type}</p>
+                  <h1 className="text-[#7A798A] text-sm">Registered Mobile Number</h1>
+                  <p className="text-sm font-bold">{user}</p>
+                </div>
+                <div className="flex justify-between mt-3 items-center">
+                  <h1 className="text-[#7A798A] text-sm">TAG Name</h1>
+                  <p className="text-sm font-bold">{state?.tag_name}</p>
                 </div>
                 <div className="flex justify-between mt-3 items-center">
                   <h1 className="text-[#7A798A] text-sm">Name TAG Price</h1>
-                  <p className="text-sm font-bold">{state.totalPrice}</p>
+                  <p className="text-sm font-bold">Birr. {state?.totalPrice}</p>
+                </div>
+                <div className="flex justify-between mt-3 items-center">
+                  <h1 className="text-[#7A798A] text-sm">Service Fee</h1>
+                  <p className="text-sm font-bold">Birr. {state?.service_fee}</p>
                 </div>
               </div>
               <div className="flex items-center justify-center mt-4">

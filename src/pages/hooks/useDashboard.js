@@ -5,10 +5,11 @@ import { toast } from "react-toastify";
 
 export const useTagList = () => {
   const [data, setData] = useState([]);
-  const [pagination, setPagination] = useState({ page: 1 });
+  const [pagination, setPagination] = useState({ page: 1, tag_digits: 0 });
   const [metaData, setMetaData] = useState(null);
   const [filters, setFilters] = useState([])
   const [loading, setLoading] = useState(false)
+  const [loadingPayment, setLoadingPayment] = useState(false)
   useEffect(() => {
     setLoading(true)
     APICall("get", pagination, EndPoints.customer.corp)
@@ -34,20 +35,36 @@ export const useTagList = () => {
   }, [])
 
   const handleTagDetails = (data, setOpenModal) => {
-    APICall("post", data, EndPoints.customer.buytags)
+    setLoadingPayment(true)
+    APICall("post", data, EndPoints.customer.createOrder)
       .then((res) => {
         if (res?.success) {
-          toast.success(res?.message || "");
-          setOpenModal(true)
+          window.open(res?.data, "_blank")
+          // toast.success(res?.message || "");
+          // setOpenModal(true)
         } else {
           toast.error(res?.message);
         }
+        setLoadingPayment(false)
       })
       .catch((err) => {
         toast.error(err?.message)
-        console.log("err", err);
+        setLoadingPayment(false)
       });
+    // APICall("post", data, EndPoints.customer.buytags)
+    //   .then((res) => {
+    //     if (res?.success) {
+    //       toast.success(res?.message || "");
+    //       setOpenModal(true)
+    //     } else {
+    //       toast.error(res?.message);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     toast.error(err?.message)
+    //     console.log("err", err);
+    //   });
   };
 
-  return { data, setPagination,filters, pagination, metaData, handleTagDetails, loading };
+  return { data, setPagination, filters,loadingPayment, pagination, metaData, handleTagDetails, loading };
 };

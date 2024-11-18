@@ -12,6 +12,9 @@ const EndPoints = {
     getReserve: "/customer/reserve/tags",
     verifyAccount: "/customer/auth/very/accounts",
     getFilter: "/customer/unique-tag-digits",
+    forgotPassword: "/customer/auth/forgot/password",
+    createOrder:"/customer/order",
+    newPassword: "/customer/auth/update/password",
     updateProfile: (slug) => `/customer/updatecustomer/${slug}`,
   },
 };

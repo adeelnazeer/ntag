@@ -1,0 +1,164 @@
+{
+    "documentTitle": "Privacy Policy",
+    "sections": [
+      {
+        "title": "Introduction",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Ethio Telecom (\"We\", \"Us\", or \"Our\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and protect your personal information."
+          }
+        ]
+      },
+      {
+        "title": "Definitions",
+        "content": [
+          {
+            "type": "definition",
+            "term": "Personal Information",
+            "definition": "Information that identifies, relates to, or can be used to identify you."
+          },
+          {
+            "type": "definition",
+            "term": "Service",
+            "definition": "Our products, services, and website."
+          }
+        ]
+      },
+      {
+        "title": "Information We Collect",
+        "content": [
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Personal Information",
+                "description": "name, email address, phone number, and other identifiers."
+              },
+              {
+                "title": "Usage Data",
+                "description": "browsing history, search queries, and interactions with the Service."
+              },
+              {
+                "title": "Device Information",
+                "description": "IP address, browser type, and device type."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "How We Collect Information",
+        "content": [
+          {
+            "type": "list",
+            "items": [
+              "Directly from you (e.g., registration, contact forms).",
+              "Automatically through cookies and tracking technologies.",
+              "From third-party sources (e.g., social media, partners)."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Use of Information",
+        "content": [
+          {
+            "type": "list",
+            "items": [
+              "Provide and improve the Service.",
+              "Communicate with you.",
+              "Personalize your experience.",
+              "Comply with legal obligations."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Disclosure of Information",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "We may share your Personal Information with:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Service providers.",
+              "Partners.",
+              "Affiliates.",
+              "Law enforcement agencies (as required by law)."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Cookies and Tracking",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "We use cookies to:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Analyze usage.",
+              "Personalize content.",
+              "Improve performance."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Your Rights",
+        "content": [
+          {
+            "type": "list",
+            "items": [
+              "Access and correct Personal Information.",
+              "Object to processing.",
+              "Request deletion.",
+              "Opt-out of marketing communications."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Security",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "We implement reasonable security measures to protect your Personal Information."
+          }
+        ]
+      },
+      {
+        "title": "Data Retention",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "We retain Personal Information for as long as necessary to provide the Service."
+          }
+        ]
+      },
+      {
+        "title": "Changes to Privacy Policy",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "We reserve the right to update this Privacy Policy at any time."
+          }
+        ]
+      },
+      {
+        "title": "Acceptance",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "By using the Service, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy."
+          }
+        ]
+      }
+    ]
+  }
+  

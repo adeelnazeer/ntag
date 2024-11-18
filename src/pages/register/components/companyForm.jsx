@@ -12,7 +12,7 @@ const GetLabel = ({ name }) => {
     </label>
   );
 };
-const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,setValue }) => {
+const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, setValue }) => {
 
   return (
     <>
@@ -41,7 +41,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
             <Input
               className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder="First Name"
-              maxLength={50}
+              maxLength={15}
               style={
                 errors.contactf_name
                   ? { border: "1px solid red" }
@@ -55,7 +55,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
             <Input
               className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder="Last Name"
-              maxLength={50}
+              maxLength={15}
               style={
                 errors.contactl_name
                   ? { border: "1px solid red" }
@@ -65,7 +65,9 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
             />
           </div>
           <div className="mb-3">
-            <GetLabel name="Contact Number" />
+            <label className="md:text-base text-[16px]  text-[#232323]">
+              Contact Number
+            </label>
             <PhoneInput
               className="w-full rounded-xl px-4 py-2 border border-[#8A8AA033] bg-white outline-none"
               defaultCountry="ET"
@@ -76,15 +78,12 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               countries={["ET"]}
               style={
                 errors.contact_no
-                  ? { border: "1px solid red" }
+                  ? {}
                   : { border: "1px solid #8A8AA033" }
               }
-              {...register("contact_no", { required: true })}
+              {...register("contact_no")}
               onChange={(phone) => {
-                setValue("contact_no", phone, {
-                  shouldValidate: true,
-                  shouldDirty: true
-                })
+                setValue("contact_no", phone)
                 setData(st => ({ ...st, contact_no: phone }))
               }}
             />
@@ -101,7 +100,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="Comapny Name"
-                maxLength={50}
+                maxLength={20}
                 value={data?.company_name}
                 disabled
                 style={
@@ -116,7 +115,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="Industry"
-                maxLength={50}
+                maxLength={20}
                 style={
                   errors.comp_industry
                     ? { border: "1px solid red" }
@@ -130,7 +129,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="State/Province"
-                maxLength={50}
+                maxLength={20}
                 style={
                   errors.comp_state
                     ? { border: "1px solid red" }
@@ -145,7 +144,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="City"
-                maxLength={50}
+                maxLength={20}
                 style={
                   errors.comp_city
                     ? { border: "1px solid red" }
@@ -174,7 +173,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData,set
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
                 placeholder="Business Registration/NTN Number"
-                maxLength={50}
+                maxLength={10}
                 style={
                   errors.comp_reg_no
                     ? { border: "1px solid red" }
