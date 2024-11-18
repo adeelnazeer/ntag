@@ -39,7 +39,7 @@ export const useTagList = () => {
     APICall("post", data, EndPoints.customer.createOrder)
       .then((res) => {
         if (res?.success) {
-          window.open(res?.data, "_blank")
+          window.open(res?.data)
           // toast.success(res?.message || "");
           // setOpenModal(true)
         } else {
