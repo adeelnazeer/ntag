@@ -53,7 +53,7 @@ const ProceedPayment = () => {
       values.msisdn = value
     }
     dashboard.handleTagDetails({
-      title: `${state?.tag_name}_${state?.totalPrice}`,
+      title: state?.tag_name,
       amount: state?.totalPrice.toString(),
     }, setIsOpen);
     // setIsOpen(true);
