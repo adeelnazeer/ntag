@@ -53,7 +53,7 @@ const ProceedPayment = () => {
       values.msisdn = value
     }
     dashboard.handleTagDetails({
-      title: "diamond_" + state?.totalPrice,
+      title: `${state?.tag_name}_${state?.totalPrice}`,
       amount: state?.totalPrice.toString(),
     }, setIsOpen);
     // setIsOpen(true);
@@ -275,7 +275,7 @@ const ProceedPayment = () => {
               state={state}
               user={phoneNumber?.checked2 ? value : user?.phone_number}
             />}
-          </div>   
+          </div>
         </form>
       }
     </>
