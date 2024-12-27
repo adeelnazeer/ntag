@@ -31,7 +31,7 @@ const TagDetails = () => {
     <form onSubmit={handleSubmit(onSubmit)} className=" bg-white max-w-[800px]">
       <div className="p-4 rounded-xl shadow mt-6">
         <Typography className="text-[#1F1F2C] pb-3 px-6 border-b text-lg font-bold ">
-          {docStatus?.doc_approval_status == 0 ? "Reserve" : "Buy"} Name TAG
+          {docStatus?.status == 0 ? "Reserve" : "Buy"} Name TAG
         </Typography>
         <div className="flex justify-between mt-3 border bg-[#F6F7FB] border-[#77777733] px-5 py-3 rounded-xl">
           <Typography className="text-[14px]">Name Tag</Typography>
@@ -103,7 +103,7 @@ const TagDetails = () => {
             type="submit"
           // onClick={() => navigate(ConstentRoutes.processPayment)}
           >
-            {docStatus?.doc_approval_status == 0 ? "Reserve" : "Purchase"}
+            {docStatus?.status == 0 ? "Reserve" : "Purchase"}
           </Button>
         </div>
       </div>

@@ -42,9 +42,10 @@ const ProceedPayment = () => {
       channel: "WEB",
       account_id: user?.customer_account_id,
       customer_tag_id: state?.id,
-      customer_tag_name: state?.tag_name,
+      title: state?.tag_name,
       customer_tag_no: state?.tag_no,
       phone_number: user?.phone_number,
+      amount: state?.totalPrice?.toString(),
       payment_method: "Mobile Wallet",
       reserve_type: "R",
       msisdn: user?.phone_number,
@@ -52,10 +53,7 @@ const ProceedPayment = () => {
     if (phoneNumber?.checked2) {
       values.msisdn = value
     }
-    dashboard.handleTagDetails({
-      title: state?.tag_name,
-      amount: state?.totalPrice.toString(),
-    }, setIsOpen);
+    dashboard.handleTagDetails(values, setIsOpen);
     // setIsOpen(true);
   };
 
@@ -69,7 +67,7 @@ const ProceedPayment = () => {
         <div className="p-4 bg-[#FFFFFF] max-w-[800px] rounded-xl shadow pb-6 mt-6">
           <div className=" pb-3 px-6 border-b mb-4">
             <Typography className="text-[#1F1F2C] text-lg font-bold ">
-              {docStatus?.doc_approval_status == 0 ? "Reserve" : "Buy"} Name TAG
+              {docStatus?.status == 0 ? "Reserve" : "Buy"} Name TAG
             </Typography>
             <Typography className="text-[#1F1F2C] text-xs mt-1 ">
               Enter Your Number To Map Your TAG Number
@@ -189,7 +187,7 @@ const ProceedPayment = () => {
         <form onSubmit={handleSubmit(onSubmit)} className=" bg-white max-w-[800px]">
           <div className="p-4 rounded-xl shadow pb-6 mt-6">
             <Typography className="text-[#1F1F2C] pb-3 px-6 border-b text-lg font-bold ">
-              {docStatus?.doc_approval_status == 0 ? "Reserve" : "Buy"} Name TAG
+              {docStatus?.status == 0 ? "Reserve" : "Buy"} Name TAG
             </Typography>
             <div className="flex justify-between border-[#77777733] mt-4 border bg-[#F6F7FB] px-5 py-3 rounded-xl">
               <Typography className="text-[14px]">Name Tag</Typography>
@@ -268,7 +266,7 @@ const ProceedPayment = () => {
                 type="submit"
                 loading={dashboard?.loadingPayment}
               >
-                {docStatus?.doc_approval_status == 0 ? "Proceed to Reservation" : "Proceed to Payment"}
+                {docStatus?.status == 0 ? "Proceed to Reservation" : "Proceed to Payment"}
               </Button>
             </div>
             {isOpen && <Paymentsuccessful isOpen={isOpen} setIsOpen={setIsOpen}

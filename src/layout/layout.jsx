@@ -8,14 +8,12 @@ import APICall from "../network/APICall";
 import UplaodDocument from "../components/uploadDocumentModal";
 
 const DashboardLayout = ({ children }) => {
-  const token = localStorage.getItem("token")
   const user = JSON.parse(localStorage.getItem('user'))
   const [data, setData] = useState(user || null)
-  const navigate = useNavigate()
   const [open, setOpen] = useState({ show: false })
   const checkDocument = () => {
     APICall("get", null, `/customer/check-documents/${user?.customer_account_id}`).then(res => {
-      if (res?.data?.file_doc_name1 == null) {
+      if (res?.data?.corp_document?.length==0) {
         setOpen(st => ({
           ...st,
           show: true,

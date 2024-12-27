@@ -27,8 +27,8 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user }) => {
                 <IoMdCloseCircle />
               </div>
               <div className="text-center">
-                <Typography variant="h5">{docStatus?.doc_approval_status == 0 ? "Reservation" : "Transaction"} Successfull</Typography>
-                {docStatus?.doc_approval_status == 0 ?
+                <Typography variant="h5">{docStatus?.status == 0 ? "Reservation" : "Transaction"} Successfull</Typography>
+                {docStatus?.status == 0 ?
                   <Typography className="text-[14px] mt-4">
                     Your Name TAG is successfully Reserved for 24 hours.
                   </Typography>

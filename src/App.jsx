@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify";
 import Voicemail from "./pages/voicemail";
 import TermOfUse from "./pages/termOfUser";
 import ForgetPassword from "./pages/forgetPassword";
+import CreateOrder from "./pages/createOrder";
 
 function App() {
   return (
@@ -97,6 +98,12 @@ function App() {
           path={ConstentRoutes.termofuse}
           element={
             <TermOfUse />
+          }
+        />
+          <Route
+          path={"/confirm-order"}
+          element={
+            <CreateOrder />
           }
         />
         <Route

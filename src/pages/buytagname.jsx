@@ -83,13 +83,13 @@ const TagNames = () => {
                       <Chip className="bg-secondary capitalize whitespace-normal" value={getTagStatus(single?.status)} />
                     </div>
 
-                    {docStatus?.doc_approval_status == 1 &&
+                    {(single?.payment_status != 1 || single?.type == "reserve") &&
                       <div className="flex justify-center w-3/5 mx-auto gap-4 mt-2 ">
                         <Button
                           className="mt-4 bg-secondary text-white text-[14px] w-full"
                           onClick={() => navigate(ConstentRoutes.tagDetail, { state: single?.corp_tag_list })}
                         >
-                          {"BUY Name TAG"}
+                          {"Pay Now"}
                         </Button>
                       </div>
                     }
@@ -103,7 +103,7 @@ const TagNames = () => {
                   className="mt-8 bg-secondary text-white text-[14px] md:w-[400px] w-full"
                   onClick={() => navigate(ConstentRoutes.buyTag)}
                 >
-                  {docStatus?.doc_approval_status == 0 ? "Reserve  Name TAG " : "BUY Name TAG"}
+                  {docStatus?.status == 0 ? "Reserve  Name TAG " : "BUY Name TAG"}
                 </Button>
               </div>
             }

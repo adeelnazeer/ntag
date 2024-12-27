@@ -15,6 +15,8 @@ const EndPoints = {
     forgotPassword: "/customer/auth/forgot/password",
     createOrder:"/customer/order",
     newPassword: "/customer/auth/update/password",
+    uploadDocument: "/customer/document/save",
+    updateDocument:"/customer/document/update",
     updateProfile: (slug) => `/customer/updatecustomer/${slug}`,
   },
 };
