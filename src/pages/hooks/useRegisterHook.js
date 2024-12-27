@@ -96,20 +96,33 @@ export const useRegisterHook = () => {
     const id = localStorage.getItem("id");
     const payload = { ...data.data };
     payload.channel = "WEB"
-    APICall("put", payload, EndPoints.customer.updateProfile(id))
-      .then((res) => {
-        if (res?.success) {
-          toast.success(res?.message || "");
-          localStorage.setItem("user", JSON.stringify(res?.data));
-          localStorage.removeItem("otp")
-          window.location.replace(ConstentRoutes.dashboard)
-        } else {
-          toast.error(res?.message);
-        }
+    const uploadDocumentPayload = {
+      doc_type: data?.data?.doc_type,
+      doc_url: data?.data?.doc_url,
+      doc_name: data?.data?.docFileName,
+    }
+    APICall("post", uploadDocumentPayload, `${EndPoints?.customer?.uploadDocument}/${id}`)
+      .then(() => {
       })
       .catch((err) => {
         console.log("err", err);
-      });
+      }).finally(() => {
+        APICall("put", payload, EndPoints.customer.updateProfile(id))
+          .then((res) => {
+            if (res?.success) {
+              toast.success(res?.message || "");
+              localStorage.setItem("user", JSON.stringify(res?.data));
+              localStorage.removeItem("otp")
+              window.location.replace(ConstentRoutes.dashboard)
+            } else {
+              toast.error(res?.message);
+            }
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
+      })
+
   };
 
   const handleUpdateUserInfo = (data) => {

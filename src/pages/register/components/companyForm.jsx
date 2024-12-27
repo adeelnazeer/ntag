@@ -13,6 +13,8 @@ const GetLabel = ({ name }) => {
   );
 };
 const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, setValue }) => {
+  const watchAll = watch()
+  console.log({ watchAll })
 
   return (
     <>
@@ -181,6 +183,22 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, se
                 }
                 {...register("comp_reg_no", { required: true })}
               />
+            </div>
+            <div className="text-base text-[#555]">
+              <GetLabel name="Select Document Type" />
+              <select
+                className="mt-2  w-full border rounded-xl px-4 py-2 bg-white outline-none "
+                style={
+                  errors.doc_type
+                    ? { border: "1px solid red" }
+                    : { border: "1px solid #8A8AA033" }
+                }
+                {...register("doc_type", { required: true })}
+                placeholder="Select Type"
+              >
+                <option className="text-sm" value="NTN">NTN</option>
+                <option className="text-sm">NIC</option>
+              </select>
             </div>
             <div
               className="col-span-2 mt-4"

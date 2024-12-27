@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Typography } from "@material-tailwind/react"
+import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Radio, Typography } from "@material-tailwind/react"
 import { useState } from "react";
 import APICall from "../network/APICall";
 import EndPoints from "../network/EndPoints";
@@ -9,6 +9,7 @@ const UplaodDocument = ({ open, setOpen, checkDocument }) => {
     const [error, setError] = useState(null);
     const [fileName, setFileName] = useState(null);
     const [base64, setBase64] = useState(null);
+    const [type, setType] = useState("NTN")
 
     const validateFile = (file) => {
         const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
@@ -44,14 +45,17 @@ const UplaodDocument = ({ open, setOpen, checkDocument }) => {
 
     const handleSubmit = () => {
         const id = localStorage.getItem("id")
-        const payload = {
-            document_name1: base64,
-            document_file_name1: fileName
+
+        const uploadDocumentPayload = {
+            doc_type: type,
+            doc_url: base64,
+            doc_name: fileName,
         }
-        APICall("put", payload, EndPoints.customer.updateProfile(id))
+
+        APICall("post", uploadDocumentPayload, `${EndPoints?.customer?.uploadDocument}/${id}`)
             .then((res) => {
                 if (res?.success) {
-                    setOpen({ shw: false })
+                    setOpen({ show: false })
                     checkDocument()
                 } else {
                     toast.error(res?.message);
@@ -60,7 +64,7 @@ const UplaodDocument = ({ open, setOpen, checkDocument }) => {
             .catch((err) => {
                 toast.error(err);
                 console.log("err", err);
-            });
+            })
     }
     return (
         <Dialog open={open?.show}
@@ -71,12 +75,12 @@ const UplaodDocument = ({ open, setOpen, checkDocument }) => {
                     Your Attention is Required!
                 </Typography>
             </DialogHeader>
-            <DialogBody divider className="grid place-items-center gap-4">
+            <DialogBody divider className="grid  gap-3">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="h-16 w-16 text-secondary"
+                    className="h-16 w-16 mx-auto text-secondary"
                 >
                     <path
                         fillRule="evenodd"
@@ -84,13 +88,32 @@ const UplaodDocument = ({ open, setOpen, checkDocument }) => {
                         clipRule="evenodd"
                     />
                 </svg>
-                <Typography variant="h4">
+                <Typography variant="h6">
                     You need to upload documents!
                 </Typography>
+                <div >
+                    <div>
+                        <p className="text-sm text-[#555]">
+                            Please Select Document Type
+                        </p>
+                    </div>
+                    <div className="flex gap-10">
+                        <Radio name="type" label="NTN" checked={type == "NTN"} className="text-sm text-secondary"
+                            onChange={() => {
+                                setType("NTN")
+                            }}
+                        />
+                        <Radio name="type" label="NIC" checked={type == "NIC"} className="text-sm text-secondary"
+                            onChange={() => {
+                                setType("NIC")
+                            }}
+                        />
+                    </div>
+                </div>
                 <div className="flex gap-4">
                     <label className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer">
-                    Upload documents
-                    <input
+                        Upload documents
+                        <input
 
                             type="file"
                             id="uploadFile1"

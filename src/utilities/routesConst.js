@@ -66,8 +66,26 @@ export const getPaymentStatus = (status) => {
          return "Payment Failed"
       case 3:
          return "expired payment timeline"
- 
+
       default:
          return "pending for payment"
    }
 }
+
+
+export const getDocStatus = (status) => {
+   switch (status) {
+      case 0:
+      case "0":
+         return "Pending for Approval"
+      case 1:
+      case "1":
+         return "Approved"
+      case 2:
+      case "2":
+         return "Rejected"
+      default:
+         return ""
+   }
+}
+

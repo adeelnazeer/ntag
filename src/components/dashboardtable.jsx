@@ -125,7 +125,7 @@ const Dashboardtable = (props) => {
                       className="bg-secondary md:py-2 py-1 px-6 text-white"
                       onClick={() => navigate(ConstentRoutes.tagDetail, { state: single })}
                     >
-                      {docStatus?.doc_approval_status === 0 ? "Reserve  Now " : "Buy Now"}
+                      {docStatus?.status === 0 ? "Reserve  Now " : "Buy Now"}
                     </Button>
                   </div>
                 }

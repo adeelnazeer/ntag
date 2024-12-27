@@ -36,12 +36,26 @@ export const useTagList = () => {
 
   const handleTagDetails = (data, setOpenModal) => {
     setLoadingPayment(true)
-    APICall("post", data, EndPoints.customer.createOrder)
+    // APICall("post", data, EndPoints.customer.createOrder)
+    //   .then((res) => {
+    //     if (res?.success) {
+    //       window.open(res?.data, "_blank")
+    //       // toast.success(res?.message || "");
+    //       // setOpenModal(true)
+    //     } else {
+    //       toast.error(res?.message);
+    //     }
+    //     setLoadingPayment(false)
+    //   })
+    //   .catch((err) => {
+    //     toast.error(err?.message)
+    //     setLoadingPayment(false)
+    //   });
+    APICall("post", data, EndPoints.customer.buytags)
       .then((res) => {
         if (res?.success) {
-          window.location.replace(res?.data)
-          // toast.success(res?.message || "");
-          // setOpenModal(true)
+          toast.success(res?.message || "");
+          window.open(res?.data, "_blank")
         } else {
           toast.error(res?.message);
         }
@@ -51,20 +65,7 @@ export const useTagList = () => {
         toast.error(err?.message)
         setLoadingPayment(false)
       });
-    // APICall("post", data, EndPoints.customer.buytags)
-    //   .then((res) => {
-    //     if (res?.success) {
-    //       toast.success(res?.message || "");
-    //       setOpenModal(true)
-    //     } else {
-    //       toast.error(res?.message);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     toast.error(err?.message)
-    //     console.log("err", err);
-    //   });
   };
 
-  return { data, setPagination, filters,loadingPayment, pagination, metaData, handleTagDetails, loading };
+  return { data, setPagination, filters, loadingPayment, pagination, metaData, handleTagDetails, loading };
 };

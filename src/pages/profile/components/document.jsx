@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
+import { getDocStatus } from "../../../utilities/routesConst";
 
 /* eslint-disable react/prop-types */
 
@@ -78,6 +79,7 @@ const DocumentInfo = ({ profileData }) => {
       }
     }
   };
+
   return (
     <>
       <div className="mt-10 flex items-center max-w-3xl mx-auto  gap-6">
@@ -100,32 +102,35 @@ const DocumentInfo = ({ profileData }) => {
             // Render image if the file is not a PDF
             <img
               className="h-44 w-full object-contain relative z-20"
-              src={data?.comp_doc_name1}
+              src={data?.corp_document?.[0]?.doc_url}
               alt="Document"
             />
           )}
         </div>
-        <div className="flex gap-4">
-          <label className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer">
-            Upload
-            <input
-              type="file"
-              id="uploadFile1"
-              className="hidden"
-              onChange={(e) => handleChange(e, "comp_doc_name1", "file_doc_name1")}
-              accept=".jpg,.jpeg,.png,.pdf"
-            />
-          </label>
-          <div>
-            <p>Upload Documents</p>
-            <p className="text-base font-semibold text-[#55555566]">
-              Business/Investment/Work Permit License and business
-              registration/TIN
-            </p>
-            <p className="mt-1 text-sm text-[#555]">
-              Only jpg/jpeg/png/pdf files can be uploaded, and the size does not
-              exceed 2MB
-            </p>
+        <div>
+          <p className="mb-2 font-medium text-secondary">{getDocStatus(data?.corp_document?.[0]?.doc_status)}</p>
+          <div className="flex gap-4">
+            <label className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer">
+              Upload
+              <input
+                type="file"
+                id="uploadFile1"
+                className="hidden"
+                onChange={(e) => handleChange(e, "comp_doc_name1", "file_doc_name1")}
+                accept=".jpg,.jpeg,.png,.pdf"
+              />
+            </label>
+            <div>
+              <p>Upload Documents</p>
+              <p className="text-base font-semibold text-[#55555566]">
+                Business/Investment/Work Permit License and business
+                registration/TIN
+              </p>
+              <p className="mt-1 text-sm text-[#555]">
+                Only jpg/jpeg/png/pdf files can be uploaded, and the size does not
+                exceed 2MB
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -134,33 +139,37 @@ const DocumentInfo = ({ profileData }) => {
           <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
           <img
             className="h-44 w-full object-contain relative z-20"
-            src={data?.comp_doc_name2}
+            src={data?.corp_document?.[1]?.doc_url}
             alt=""
           />
         </div>
-        <div className="flex gap-4">
-          <label className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer">
-            Upload
-            <input
-              type="file"
-              id="uploadFile1"
-              className="hidden"
-              onChange={(e) => handleChange(e, "comp_doc_name2", "file_doc_name2")}
-              accept=".jpg,.jpeg,.png,.pdf"
-            />
-          </label>
-          <div>
-            <p>Upload Documents</p>
-            <p className="text-base font-semibold text-[#55555566]">
-              Business/Investment/Work Permit License and business
-              registration/TIN
-            </p>
-            <p className="mt-1 text-sm text-[#555]">
-              Only jpg/jpeg/png/pdf files can be uploaded, and the size does not
-              exceed 2MB
-            </p>
+        <div>
+          <p className="mb-2 font-medium text-secondary">{getDocStatus(data?.corp_document?.[1]?.doc_status)}</p>
+          <div className="flex gap-4">
+            <label className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer">
+              Upload
+              <input
+                type="file"
+                id="uploadFile1"
+                className="hidden"
+                onChange={(e) => handleChange(e, "comp_doc_name2", "file_doc_name2")}
+                accept=".jpg,.jpeg,.png,.pdf"
+              />
+            </label>
+            <div>
+              <p>Upload Documents</p>
+              <p className="text-base font-semibold text-[#55555566]">
+                Business/Investment/Work Permit License and business
+                registration/TIN
+              </p>
+              <p className="mt-1 text-sm text-[#555]">
+                Only jpg/jpeg/png/pdf files can be uploaded, and the size does not
+                exceed 2MB
+              </p>
+            </div>
           </div>
         </div>
+
       </div>
       <div className="mt-10 text-center">
         <button className=" bg-secondary text-white font-medium px-10 py-3"

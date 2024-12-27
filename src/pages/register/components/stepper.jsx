@@ -7,7 +7,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 
 export function MultiStepForm() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(1);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
