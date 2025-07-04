@@ -1,14 +1,15 @@
+/* eslint-disable react/prop-types */
 import { Button, Chip, Typography } from "@material-tailwind/react";
 import Img from "../assets/images/IMG (1).png";
 
 const Nametagdetails = () => {
   return (
-    <div className="p-4 rounded-xl shadow pb-6 mt-6 ">
+    <div className="p-4 rounded-xl shadow pb-6 md:mt-6 ">
       <Typography className="text-[#1F1F2C] text-[26px] font-semibold">
-        Welcome Back Name tag services!
+        NameTAG Service
       </Typography>
       <Typography className="my-3 font-normal">
-        Your Name TAG Details
+        Your NameTAG Details
       </Typography>
       <div className="flex justify-between bg-[#F6F7FB] px-5 py-3 rounded-xl">
         <img className="rounded h-[40px]" src={Img} alt="kfc" />
@@ -20,7 +21,7 @@ const Nametagdetails = () => {
       </div>
       <div className="flex justify-between  px-5 py-3 rounded-xl mt-1">
         <Typography className="text-[14px]">
-          Registered Mobile Number
+          Registered Mobile Number asdsa
         </Typography>
         <Typography className="text-[17px] font-bold">0911246534</Typography>
       </div>

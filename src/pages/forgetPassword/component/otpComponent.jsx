@@ -6,15 +6,19 @@ import EndPoints from "../../../network/EndPoints";
 import { toast } from "react-toastify";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 import { Button } from "@material-tailwind/react";
+import { useAppSelector } from "../../../redux/hooks";
+import { FiRefreshCw } from "react-icons/fi"; // Import refresh icon
 
 const OtpVerification = ({ otpId, setStep }) => {
     const { handleSubmit, control, reset, formState: { errors } } = useForm();
-    const [timeLeft, setTimeLeft] = useState(59); // Countdown timer in seconds
-    const [loading, setLoading] = useState(false)
+    const [timeLeft, setTimeLeft] = useState(120); // Countdown timer in seconds
+    const [loading, setLoading] = useState(false);
+    const [resending, setResending] = useState(false);
     const inputRefs = useRef([]);
-    const { handleGetOtp } = useRegisterHook()
+    const { handleGetOtp } = useRegisterHook();
 
-    // Countdown Timer
+    const reduxOtpId = useAppSelector(state => state.auth.otpId);
+
     useEffect(() => {
         if (timeLeft > 0) {
             const timerId = setTimeout(() => {
@@ -27,51 +31,72 @@ const OtpVerification = ({ otpId, setStep }) => {
 
     // Resend OTP function (resets the timer)
     const handleResendOtp = () => {
-        reset()
-        handleGetOtp(otpId?.phone_number)
-        setTimeLeft(59);
-        inputRefs.current[0].focus(); // Focus on the first field
-        // Add logic to resend the OTP here
+        if (timeLeft > 0 || resending) return;
+
+        setResending(true);
+        reset();
+
+        // Add purpose parameter to help distinguish from registration flow
+        handleGetOtp(otpId?.phone_number, "password_reset")
+            .then(() => {
+                setTimeLeft(59);
+                inputRefs.current[0].focus(); // Focus on the first field
+            })
+            .catch((err) => {
+                toast.error(err?.message || "Failed to resend OTP");
+            })
+            .finally(() => {
+                setResending(false);
+            });
     };
 
-
     const onSubmit = (data) => {
-        setLoading(true)
+        setLoading(true);
         const otp = Object.values(data).join("");
-        const otpId = localStorage.getItem("otp")
+
+        // Use OTP ID from Redux if available, otherwise fall back to props or localStorage
+        const otpIdValue = reduxOtpId || (otpId?.otp_id || localStorage.getItem("otp"));
+
+        if (!otpIdValue) {
+            toast.error("OTP ID not found. Please request a new OTP.");
+            setLoading(false);
+            return;
+        }
+
         const payload = {
-            otp_id: otpId ? otpId : otpId?.otp_id,
+            otp_id: otpIdValue,
             otp_code: otp,
             transaction_type: "OTP_GENRATION",
         };
+
         APICall("post", payload, EndPoints.customer.verifyOty)
             .then((res) => {
                 if (res?.success) {
                     toast.success(res?.message || "");
-                    setStep(3)
-
+                    setStep(3);
                 } else {
                     toast.error(res?.message);
                 }
             })
             .catch((err) => {
                 toast.error(
-                    err.response?.data?.message || "Something went wrong try again!"
+                    err || "Something went wrong try again!"
                 );
-            }).finally(() => {
-                setLoading(false)
             })
-        // Add OTP verification logic here
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return (
         <div className="py-6 px-6">
-            <h2 className="text-2xl font-bold mb-4">OTP Verification</h2>
-            <p className="text-gray-900 mb-6 text-xs font-medium">
-                Please enter the OTP code sent to this number {otpId?.phone_number}
+            <h2 className="text-2xl  font-semibold md:text-[38px] text-[25px]  mb-4">OTP Verification</h2>
+            <p className="text-gray-900  md:text-base text-[16px] mb-6">
+
+                Please enter the OTP sent to the mobile number +{otpId?.phone_number}
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex justify-between mb-2">
+                <div className="flex justify-between mb-6">
                     {[0, 1, 2, 3].map((index) => (
                         <Controller
                             key={index}
@@ -91,13 +116,22 @@ const OtpVerification = ({ otpId, setStep }) => {
                                     ref={(el) => (inputRefs.current[index] = el)}
                                     type="text"
                                     onChange={(e) => {
-                                        field.onChange(e.target.value);
-                                        // Move to the next field if a digit is entered
-                                        if (e.target.value && index < 3) {
-                                            inputRefs.current[index + 1].focus();
+                                        // Only accept digits
+                                        if (/^[0-9]$/.test(e.target.value) || e.target.value === '') {
+                                            field.onChange(e.target.value);
+                                            // Move to the next field if a digit is entered
+                                            if (e.target.value && index < 3) {
+                                                inputRefs.current[index + 1].focus();
+                                            }
                                         }
                                     }}
-                                    className={`mt-2 w-[60px] text-center rounded-xl px-4 py-3 bg-[#F6F7FB] outline-none ${errors[`otp_${index}`] ? "border border-red-500" : "border border-[#8A8AA033]"
+                                    onKeyDown={(e) => {
+                                        // Handle backspace to move to previous field
+                                        if (e.key === 'Backspace' && !field.value && index > 0) {
+                                            inputRefs.current[index - 1].focus();
+                                        }
+                                    }}
+                                    className={`mt-2 w-[60px] h-[60px] text-center rounded-xl font-semibold text-xl px-3 py-2 bg-[#F6F7FB] outline-none ${errors[`otp_${index}`] ? "border border-red-500" : "border border-[#8A8AA033]"
                                         }`}
                                     maxLength="1"
                                     placeholder="-"
@@ -106,25 +140,44 @@ const OtpVerification = ({ otpId, setStep }) => {
                         />
                     ))}
                 </div>
-                <p className="text-gray-400 text-xs mt-4 text-center">
-                    Resend Code:{" "}
-                    {timeLeft > 0 ? (
-                        <span className="text-secondary">{`00:${String(timeLeft).padStart(2, "0")}`}</span>
-                    ) : (
-                        <span
-                            className="text-secondary cursor-pointer"
-                            onClick={handleResendOtp}
-                        >
-                            Resend OTP
-                        </span>
-                    )}
-                </p>
+
+                <div className="flex justify-between items-center mb-6">
+                    {/* Timer display */}
+                    <div className="text-gray-600 text-sm">
+                        {timeLeft > 0 ? (
+                            <span>
+  Time remaining:{" "}
+  <span className="text-secondary font-medium">
+    {`${String(Math.floor(timeLeft / 60)).padStart(2, "0")}:${String(timeLeft % 60).padStart(2, "0")}`}
+  </span>
+</span>
+                        ) : (
+                            <span className="text-red-500">OTP expired</span>
+                        )}
+                    </div>
+
+                    {/* Resend button - larger and with icon */}
+                    <Button
+                        type="button"
+                        onClick={handleResendOtp}
+                        disabled={timeLeft > 0 || resending}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg ${timeLeft > 0 || resending
+                                ? "bg-gray-300 cursor-not-allowed text-gray-600"
+                                : "bg-secondary text-white hover:bg-secondary/90"
+                            }`}
+                        size="sm"
+                    >
+                        <FiRefreshCw className={`${resending ? "animate-spin" : ""}`} />
+                        {resending ? "Sending..." : "Resend OTP"}
+                    </Button>
+                </div>
+
                 <Button
-                    className="w-full mt-10 px-4 py-2 justify-center bg-secondary text-white text-[22px] font-semibold"
+                    className="w-full mt-6 px-4 py-2 justify-center bg-secondary text-white text-[22px] font-semibold"
                     type="submit"
-                    loading={loading}
+                    disabled={loading}
                 >
-                    Submit
+                    {loading ? "Verifying..." : "Verify OTP"}
                 </Button>
             </form>
         </div>

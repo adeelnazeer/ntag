@@ -1,85 +1,75 @@
 /* eslint-disable react/prop-types */
 import { useLocation } from "react-router-dom";
 import Header from "../components/header";
-import TermAndCondition from '../utilities/termAndCondition.json'
-import PrivacyPolicy from '../utilities/privacyPolicy.json'
 
-
-const DocumentRenderer = ({ data }) => {
-    return (
-      <div className="p-6 max-w-4xl mx-auto">
-         <p className=" text-base font-bold text-center mb-8">
-         {data.documentTitle}
-                        </p>
-         {data.sections.map((section, index) => (
-          <div key={index} className="mb-6 text-[#232323]">
-            <h2 className="text-base font-medium mb-4 pt-2">{section.title}</h2>
-            {section.content.map((content, idx) => {
-              switch (content.type) {
-                case 'paragraph':
-                  return (
-                    <p key={idx} className="text-sm mb-4 ">
-                      {content.text}
-                    </p>
-                  );
-  
-                case 'definition':
-                  return (
-                    <div key={idx} className="mb-4">
-                      <strong className="text-gray-800 text-sm">{content.term}: </strong>
-                      <span className="text-sm">{content.definition}</span>
-                    </div>
-                  );
-  
-                case 'list':
-                  return (
-                    <ul key={idx} className="list-disc list-inside space-y-2 ml-6 text-sm mb-4">
-                      {content.items.map((item, itemIdx) => (
-                        <li key={itemIdx}>
-                          {/* Check if the item has title and description for complex lists */}
-                          {item.title && <strong className="font-medium">{item.title}: </strong>}
-                          {item.description && <span>{item.description}</span>}
-                          
-                          {/* If item is a simple string, render directly */}
-                          {typeof item === 'string' && item}
-                          
-                          {/* Render sub-items if they exist */}
-                          {item.subItems && (
-                            <ul className="list-decimal list-inside ml-4 mt-1">
-                              {item.subItems.map((subItem, subIdx) => (
-                                <li key={subIdx}>{subItem}</li>
-                              ))}
-                            </ul>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  );
-  
-                default:
-                  return null;
-              }
-            })}
-          </div>
-        ))}
-      </div>
-    );
-  };
-  
+import React from 'react';
+import { termsData } from "../utilities/termAndCondition";
 
 const TermOfUse = () => {
-    const location = useLocation()
-    return (
-        <div className=" flex flex-col">
-            <Header />
-            <div className="p-3 flex-1">
-                <div className="w-full h-full  max-w-5xl mx-auto  bg-[#fff] rounded-[24px] shadow-sm">
-                    <div className="p-4 pb-8">
-                        <DocumentRenderer data={location?.pathname=="/term-of-use"?TermAndCondition:PrivacyPolicy}/>
-                    </div>
-                </div>
+
+
+  const renderContent = (content) => {
+    return content.map((item, idx) => {
+      if (item.type === "paragraph") {
+        return <p key={idx} className="mb-3 text-gray-700">{item.text}</p>;
+      } else if (item.type === "subtitle") {
+        return <h4 key={idx} className="text-base font-medium mb-2 mt-4 text-gray-800">{item.text}</h4>;
+      } else if (item.type === "list") {
+        return (
+          <ul key={idx} className="list-disc pl-6 mb-3 text-gray-700">
+            {item.items.map((listItem, listIdx) => (
+              <li key={listIdx} className="mb-2">
+                {listItem.title && <span className="font-medium">{listItem.title}: </span>}
+                {listItem.description}
+                {listItem.subItems && (
+                  <ul className="list-disc pl-5 mt-1">
+                    {listItem.subItems.map((subItem, subIdx) => (
+                      <li key={subIdx} className="mt-1 text-gray-600">{subItem}</li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        );
+      } else if (item.type === "definition") {
+        return (
+          <div key={idx} className="mb-3">
+            <span className="font-semibold">{item.term}: </span>
+            <span className="text-gray-700">{item.definition}</span>
+          </div>
+        );
+      }
+      return null;
+    });
+  };
+
+  return (
+    <>
+      <Header />
+      <div className="max-w-4xl mx-auto p-4 my-6 bg-white rounded-lg shadow-md">
+        <h1 className="text-2xl font-bold text-center mb-6 text-secondary pb-2 border-b">
+          {termsData.documentTitle}
+        </h1>
+        
+        <div className="mb-6">
+          {termsData.sections.map((section, index) => (
+            <div key={index} className="mb-6">
+              <div className="bg-gray-100 py-2 px-4 rounded-t-lg ">
+                <h3 className="text-lg font-medium text-gray-800">
+                  {index + 1}. {section.title}
+                </h3>
+              </div>
+              
+              <div className="px-4 py-3 border border-gray-200 border-t-0 rounded-b-lg">
+                {renderContent(section.content)}
+              </div>
             </div>
+          ))}
         </div>
-    );
+      </div>
+    </>
+  );
 };
+
 export default TermOfUse;

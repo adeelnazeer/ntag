@@ -8,19 +8,25 @@ const MenuBar = () => {
     <div className=" py-6 gap-16 items-center max-w-6xl mx-auto md:flex hidden">
       <Button
         className=" text-primaryLight font-medium  py-1 px-2"
-        onClick={() => {
-          navigate(ConstentRoutes.dashboard);
-        }}
       >
-        Home
+        <a href="#home" className="a-href"
+          onClick={() => {
+            navigate(ConstentRoutes.home);
+          }}
+        >
+          Home
+        </a>
       </Button>
       <Button className=" text-primaryLight font-medium py-1 px-2">
-        Service Overview
+        <a href="#service" className="a-href"
+          onClick={() => {
+            navigate(ConstentRoutes.home);
+          }}
+        >
+          Service Overview
+        </a>
       </Button>
-      <Button className=" text-primaryLight font-medium py-1 px-2">
-        Pricing
-      </Button>
-      <Button className=" text-primaryLight font-medium py-1 px-2">Help</Button>
+
     </div>
   );
 };

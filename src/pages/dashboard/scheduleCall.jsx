@@ -12,7 +12,7 @@ const ScheduleCall = () => {
     <>
       <div className="bg-secondary py-6">
         <h1 className="text-center text-[36px] text-white font-bold">
-          Corporate Name TAG
+          Corporate NameTAG
         </h1>
       </div>
       <div className="grid grid-cols-12">

@@ -12,7 +12,7 @@ const Voicemail = () => {
   return (
     <div className="rounded-xl shadow pb-7">
       <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-lg font-bold ">
-        Corporate Name TAG
+        Corporate NameTAG
       </Typography>
       <div className=" w-4/5 mx-auto mt-4">
         <div className="flex md:justify-between p-3 px-6  justify-start flex-col-reverse gap-4 md:gap-0 md:flex-row items-center">
@@ -115,7 +115,7 @@ const Voicemail = () => {
                         <tr>
                           <td colSpan={5}>
                             <Typography className="my-6 font-normal text-base text-center">
-                              Currently no name Tag is register against your account
+                              Currently no NameTAG is register against your account
                             </Typography>
                           </td>
                         </tr>

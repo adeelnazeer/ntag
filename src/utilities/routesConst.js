@@ -3,23 +3,41 @@ export const ConstentRoutes = {
    login: "/login",
    register: "/register",
    forgetPassword: "/resetpassword",
+   changePassword: "/change-password",
    dashboard: "/buy-tag",
    manageTagName: "/manage-tag",
+   blockUnblockTag: "/manage-tag/block",
+   UnSUBblockTag: "/manage-tag/unsubscribe",
+   closeAccount: "/manage-tag/close-account",
    buyTag: "/dashboard",
+   buyTagCustomer: "/customer/dashboard",
    tagDetail: "/dashboard/tag-detail",
    processPayment: "/dashboard/process-payment",
    nameTagDetail: "/name-tag-detail",
    profilePage: "/profile",
    voiceMail: "/voicemail",
-   termofuse: "/term-of-use",
-   privacyPolicy: "/privacy-policy"
+   termofuse: "/Terms",
+   privacyPolicy: "/privacy-policy",
+   FrequentlyAskedQuestions: "/faq",
+   registerNormalUser: "/register-customer",
+   dashboardCustomer: "/customer/buy-tag",
+   tagDetailCustomer: "/customer/dashboard/tag-detail",
+   profilePageCustomer: "/customer/profile",
+   changePasswordCustomer: "/customer/change-password",
+   processPaymentcustomer: "/customer/dashboard/process-payment",
+   changeMyTAG: "/individual/change-my-tag",
+   changeMyTAGCorporate: "/change-my-tag",
 
+   // New customer routes for Manage NameTAG
+   manageTagNameCustomer: "/customer/manage-tag",
+   blockUnblockTagCustomer: "/customer/manage-tag/block",
+   unsubTagCustomer: "/customer/manage-tag/unsubscribe",
 };
 
 export const getStatus = (status) => {
    switch (status) {
       case 0:
-         return "pending for approval"
+         return "Pending For Approval"
       case 1:
          return "Approved"
       case 2:
@@ -27,48 +45,73 @@ export const getStatus = (status) => {
       case 4:
          return "Blocked by Admin"
       case 5:
-         return "suspend by non - payment"
+         return "Suspend by Non-Payment"
       case 6:
-         return "block due to wrong password attempt"
+         return "Block Due to Wrong Password Attempt"
       default:
-         return "pending for approval"
+         return "Pending For Approval"
    }
 }
 
 export const getTagStatus = (status) => {
-   switch (status) {
+   switch (Number(status)) {
       case 0:
-         return "pending for payment"
-      case 1:
-         return "active"
-      case 2:
-         return "pending for doc approval"
+         return "Pending for Document Approval"
       case 3:
-         return "unsub"
+         return "Pending for Payment"
+      case 1:
+         return "Active"
+      case 2:
+         return "Subscribed"
       case 4:
-         return "churn out monthly fee pending"
+         return "Documents Expired"
       case 5:
-         return "block"
+         return "Payment Time Expired"
       case 6:
-         return "expired"
+         return "Acocunt Block"
       default:
-         return "pending for approval"
+         return ""
    }
 }
+
+export const getTagStatusDashboard = (status) => {
+   switch (Number(status)) {
+      case 0:
+         return "Pending for Payment"
+      case 1:
+         return "Active"
+      case 2:
+         return "Document Approval Pending"
+      case 3:
+         return "Expired"
+      case 4:
+         return "Churn out monthly fee pending"
+      case 5:
+         return "Blocked"
+      case 6:
+         return "Unsubscribed"
+      case 8:
+         return "TAG Reserved"
+      default:
+         return ""
+   }
+}
+
+
 
 export const getPaymentStatus = (status) => {
    switch (status) {
       case 0:
-         return "pending for payment"
+         return "Pending"
       case 1:
-         return "payment success"
+         return "Success"
       case 2:
-         return "Payment Failed"
+         return "Failed"
       case 3:
-         return "expired payment timeline"
+         return "Expired Payment Timeline"
 
       default:
-         return "pending for payment"
+         return "Pending for Payment"
    }
 }
 

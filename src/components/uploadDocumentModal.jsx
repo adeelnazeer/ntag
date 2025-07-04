@@ -4,59 +4,117 @@ import { useState } from "react";
 import APICall from "../network/APICall";
 import EndPoints from "../network/EndPoints";
 import { toast } from "react-toastify";
+import { IoCloseOutline } from "react-icons/io5";
+import { useAppSelector } from "../redux/hooks";
 
-const UplaodDocument = ({ open, setOpen, checkDocument }) => {
+const UploadDocument = ({ open, setOpen, checkDocument }) => {
     const [error, setError] = useState(null);
-    const [fileName, setFileName] = useState(null);
-    const [base64, setBase64] = useState(null);
-    const [type, setType] = useState("NTN")
+    const [data, setData] = useState(null);
+    const [fileNames, setFileNames] = useState(["", "", ""]); // Added third slot for the new document
+    const [uploadedFiles, setUploadedFiles] = useState([null, null, null]); // Added third slot
 
-    const validateFile = (file) => {
-        const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-        const maxSize = 2 * 1024 * 1024; // 2MB
-        if (!validTypes.includes(file.type)) {
-            return 'Only JPG, JPEG, PNG, and PDF files are allowed';
-        }
-        if (file.size > maxSize) {
-            return 'File size exceeds 2MB';
-        }
-        return null;
+    // Get customer ID from Redux
+    const customerId = useAppSelector(state => state.user.customerId);
+
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
     };
 
-    const handleChange = async (event) => {
+    const handleChange = async (event, index, type) => {
         const file = event.target.files[0];
-        const validationError = file ? validateFile(file) : null;
-        const reader = new FileReader()
-        const { files } = event.target
-        setError(validationError);
-        if (!validationError) {
-            setFileName(file.name);
-            if (files && files.length !== 0) {
-                reader.onload = () =>
-                    setBase64(reader?.result);
-                reader.readAsDataURL(files[0])
+        if (file) {
+            const fileSizeMB = file.size / (1024 * 1024);
+            if (fileSizeMB > 3) { // Increased to 3MB from 2MB
+                setError("File size exceeds 3MB.");
+                return;
             }
-        } else {
-            setFileName(null);
-            setBase64(null);
-            console.error('File validation error:', validationError);
+
+            const base64String = await convertToBase64(file);
+
+            // Update the respective index in arrays
+            const updatedFileNames = [...fileNames];
+            const updatedUploadedFiles = [...uploadedFiles];
+
+            updatedFileNames[index] = `${file.name}  ${type}`;
+            updatedUploadedFiles[index] = base64String;
+
+            setFileNames(updatedFileNames);
+            setUploadedFiles(updatedUploadedFiles);
+
+            // Use new field names based on index
+            let fieldName = '';
+            switch (index) {
+                case 0:
+                    fieldName = 'registration_license';
+                    break;
+                case 1:
+                    fieldName = 'application_letter';
+                    break;
+                case 2:
+                    fieldName = 'trade_license';
+                    break;
+                default:
+                    fieldName = `document_${index}`;
+            }
+
+            setData(st => ({
+                ...st,
+                [`${fieldName}_url`]: file,
+                [`${fieldName}_name`]: file?.name,
+                [`${fieldName}_type`]: type
+            }));
+
+            setError(null); // Clear error if the file is valid
+
+            // Reset input value to allow re-upload of the same file
+            event.target.value = null;
         }
     };
 
     const handleSubmit = () => {
-        const id = localStorage.getItem("id")
+        // Use customer ID from Redux if available, otherwise fall back to localStorage
+        const id = customerId || localStorage.getItem("id");
 
-        const uploadDocumentPayload = {
-            doc_type: type,
-            doc_url: base64,
-            doc_name: fileName,
+        if (!id) {
+            toast.error("Customer ID not found");
+            return;
         }
 
-        APICall("post", uploadDocumentPayload, `${EndPoints?.customer?.uploadDocument}/${id}`)
+        // Create a FormData object for proper file uploads
+        const formData = new FormData();
+
+        // Add each file to the FormData if it exists
+        if (data?.registration_license_url) {
+            formData.append("registration_license_url", data.registration_license_url);
+        }
+        if (data?.application_letter_url) {
+            formData.append("application_letter_url", data.application_letter_url);
+        }
+        if (data?.trade_license_url) {
+            formData.append("trade_license_url", data.trade_license_url);
+        }
+
+        // Add document names if they exist
+        if (data?.registration_license_name) {
+            formData.append("registration_license_name", data.registration_license_name);
+        }
+        if (data?.application_letter_name) {
+            formData.append("application_letter_name", data.application_letter_name);
+        }
+        if (data?.trade_license_name) {
+            formData.append("trade_license_name", data.trade_license_name);
+        }
+
+        APICall("post", formData, `${EndPoints?.customer?.updateDocument}/${id}`, null, true)
             .then((res) => {
                 if (res?.success) {
-                    setOpen({ show: false })
-                    checkDocument()
+                    setOpen({ show: false });
+                    checkDocument();
                 } else {
                     toast.error(res?.message);
                 }
@@ -64,18 +122,58 @@ const UplaodDocument = ({ open, setOpen, checkDocument }) => {
             .catch((err) => {
                 toast.error(err);
                 console.log("err", err);
-            })
-    }
+            });
+    };
+
+    const handleRemove = (index) => {
+        const updatedFileNames = [...fileNames];
+        const updatedUploadedFiles = [...uploadedFiles];
+
+        updatedFileNames[index] = "";
+        updatedUploadedFiles[index] = null;
+
+        setFileNames(updatedFileNames);
+        setUploadedFiles(updatedUploadedFiles);
+
+        // Update data state by creating a new object
+        setData(prevData => {
+            if (!prevData) return null;
+
+            const newData = { ...prevData };
+            // Use new field names based on index
+            let fieldName = '';
+            switch (index) {
+                case 0:
+                    fieldName = 'registration_license';
+                    break;
+                case 1:
+                    fieldName = 'application_letter';
+                    break;
+                case 2:
+                    fieldName = 'trade_license';
+                    break;
+                default:
+                    fieldName = `document_${index}`;
+            }
+
+            delete newData[`${fieldName}_url`];
+            delete newData[`${fieldName}_name`];
+            delete newData[`${fieldName}_type`];
+
+            return newData;
+        });
+
+        setError(null); // Clear any existing error
+    };
+
     return (
-        <Dialog open={open?.show}
-            zIndex={99}
-        >
+        <Dialog open={open?.show} zIndex={99}>
             <DialogHeader>
                 <Typography variant="h5" color="blue-gray">
                     Your Attention is Required!
                 </Typography>
             </DialogHeader>
-            <DialogBody divider className="grid  gap-3">
+            <DialogBody divider className="grid gap-3">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -89,65 +187,82 @@ const UplaodDocument = ({ open, setOpen, checkDocument }) => {
                     />
                 </svg>
                 <Typography variant="h6">
-                    You need to upload documents!
+                    Please Upload The Documents to Complete the Registration
                 </Typography>
-                <div >
-                    <div>
-                        <p className="text-sm text-[#555]">
-                            Please Select Document Type
-                        </p>
+
+                <div className="flex flex-col gap-4">
+                    <div className="flex justify-between gap-2 flex-wrap">
+                        <label
+                            className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer"
+                        >
+                            Upload Application Letter
+
+                            <input
+                                type="file"
+                                className="hidden"
+                                onChange={(e) => handleChange(e, 0, "Registration")}
+                                accept=".jpg,.jpeg,.png,.pdf"
+                            />
+                        </label>
+                        <label
+                            className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer"
+                        >
+                            Upload Trade License
+                            <input
+                                type="file"
+                                className="hidden"
+                                onChange={(e) => handleChange(e, 1, "Application")}
+                                accept=".jpg,.jpeg,.png,.pdf"
+                            />
+                        </label>
+                        <label
+                            className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer"
+                        >
+                            Upload Registration License
+                            <input
+                                type="file"
+                                className="hidden"
+                                onChange={(e) => handleChange(e, 2, "Trade")}
+                                accept=".jpg,.jpeg,.png,.pdf"
+                            />
+                        </label>
                     </div>
-                    <div className="flex gap-10">
-                        <Radio name="type" label="NTN" checked={type == "NTN"} className="text-sm text-secondary"
-                            onChange={() => {
-                                setType("NTN")
-                            }}
-                        />
-                        <Radio name="type" label="NIC" checked={type == "NIC"} className="text-sm text-secondary"
-                            onChange={() => {
-                                setType("NIC")
-                            }}
-                        />
-                    </div>
-                </div>
-                <div className="flex gap-4">
-                    <label className="flex items-center bg-secondary hover:bg-secondary rounded-lg text-white text-base px-5 py-3 outline-none w-max cursor-pointer">
-                        Upload documents
-                        <input
-
-                            type="file"
-                            id="uploadFile1"
-                            className="hidden"
-                            onChange={handleChange}
-                            accept=".jpg,.jpeg,.png,.pdf"
-
-
-                        />
-                    </label>
                     <div>
                         <p className="text-base font-semibold text-[#55555566]">
-                            Business/Investment/Work Permit License and business registration/TIN
+                            Business Registration License, Application Letter, and Trade License
                         </p>
                         <p className="mt-1 text-sm text-[#555]">
                             Only jpg/jpeg/png/pdf files can be uploaded, and the size does not
-                            exceed 2MB
+                            exceed 3MB
                         </p>
-                        {fileName && <p className="mt-1 text-sm text-green-500">{fileName}</p>}
+                        {fileNames.map((fileName, index) => (
+                            fileName && (
+                                <div key={index} className="flex items-center mt-1">
+                                    <p className="text-sm text-secondary">{fileName}</p>
+                                    <IoCloseOutline
+                                        className="ml-2 text-red-500 text-sm underline cursor-pointer"
+                                        onClick={() => handleRemove(index)}
+                                    />
+                                </div>
+                            )
+                        ))}
                         {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
                     </div>
                 </div>
             </DialogBody>
             <DialogFooter className="space-x-2">
-                <Button className=" bg-secondary"
+                <Button
+                    className="bg-secondary"
                     onClick={() => {
-                        handleSubmit()
+                        handleSubmit();
                     }}
+                    disabled={!data?.trade_license_type || !data?.registration_license_type || !data?.application_letter_type}
                 >
                     Submit
                 </Button>
             </DialogFooter>
         </Dialog>
-    )
-}
+    );
+};
 
-export default UplaodDocument
+export default UploadDocument;
