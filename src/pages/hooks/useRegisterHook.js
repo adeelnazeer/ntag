@@ -11,13 +11,33 @@ export const useRegisterHook = () => {
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
   const [otpId, setOtpId] = useState("");
-  const [state, setState] = useState({});
+  const [state, setState] = useState({
+    success: {},
+    error: {}
+  });
+  const [isResend, setIsResend] = useState(false);
 
   const handleExipre = () => {
     setExpirationTime(null);
   };
 
+  // New function to reset field validation
+  const resetFieldValidation = (fieldName) => {
+    setState((prevState) => ({
+      ...prevState,
+      success: {
+        ...prevState.success,
+        [fieldName]: false
+      },
+      error: {
+        ...prevState.error,
+        [fieldName]: ""
+      }
+    }));
+  };
+
   const handleGetOtp = (phone) => {
+    setIsResend(true);
     const data = {
       msisdn: phone,
       otp_type: "IND",
@@ -71,6 +91,7 @@ export const useRegisterHook = () => {
     const otp = localStorage.getItem("otp");
     const payload = { ...data };
     payload.channel = "WEB";
+
     (payload.otp_id = otp), (payload.otp_code = data?.verification_code);
     console.log(payload, "pay post");
 
@@ -92,28 +113,52 @@ export const useRegisterHook = () => {
         console.log("err", err);
       });
   };
+
   const handleUpdateProfile = (data) => {
     const id = localStorage.getItem("id");
     const payload = { ...data.data };
-    payload.channel = "WEB"
-    const uploadDocumentPayload = {
-      doc_type: data?.data?.doc_type,
-      doc_url: data?.data?.doc_url,
-      doc_name: data?.data?.docFileName,
+    payload.channel = "WEB";
+    payload.ntn = payload.comp_reg_no;
+
+    const formData = new FormData();
+
+    if (data?.registration_license_url) {
+      formData.append("registration_license_url", data.registration_license_url);
+      formData.append("registration_license_name", data.registration_license_name);
+      formData.append("registration_license_type", data.registration_license_type || "Registration");
     }
-    APICall("post", uploadDocumentPayload, `${EndPoints?.customer?.uploadDocument}/${id}`)
-      .then(() => {
-      })
+
+    if (data?.application_letter_url) {
+      formData.append("application_letter_url", data.application_letter_url);
+      formData.append("application_letter_name", data.application_letter_name);
+      formData.append("application_letter_type", data.application_letter_type || "Application");
+    }
+
+    // Add trade license document
+    if (data?.trade_license_url) {
+      formData.append("trade_license_url", data.trade_license_url);
+      formData.append("trade_license_name", data.trade_license_name);
+      formData.append("trade_license_type", data.trade_license_type || "Trade");
+    }
+
+    APICall(
+      "post",
+      formData,
+      `${EndPoints?.customer?.uploadDocument}/${id}`,
+      null, true
+    )
+      .then(() => { })
       .catch((err) => {
         console.log("err", err);
-      }).finally(() => {
+      })
+      .finally(() => {
         APICall("put", payload, EndPoints.customer.updateProfile(id))
           .then((res) => {
             if (res?.success) {
               toast.success(res?.message || "");
               localStorage.setItem("user", JSON.stringify(res?.data));
-              localStorage.removeItem("otp")
-              window.location.replace(ConstentRoutes.dashboard)
+              localStorage.removeItem("otp");
+              window.location.replace(ConstentRoutes.dashboard);
             } else {
               toast.error(res?.message);
             }
@@ -121,14 +166,14 @@ export const useRegisterHook = () => {
           .catch((err) => {
             console.log("err", err);
           });
-      })
-
+      });
   };
 
   const handleUpdateUserInfo = (data) => {
     const id = localStorage.getItem("id");
     const payload = { ...data };
     payload.channel = "WEB";
+
     APICall("put", payload, EndPoints.customer.updateProfile(id))
       .then((res) => {
         if (res?.success) {
@@ -154,13 +199,32 @@ export const useRegisterHook = () => {
     APICall("post", payLoad, EndPoints.customer.login)
       .then((res) => {
         if (res?.success) {
-          toast.success(res?.message || "");
           const token = res?.data?.token;
           localStorage.setItem("token", token);
           localStorage.setItem("id", res?.data?.customer_account_id);
           localStorage.setItem("number", res?.data?.phone_number);
           localStorage.setItem("user", JSON.stringify(res?.data));
-          navigate("/dashboard");
+          localStorage.setItem("customer_type", JSON.stringify(res?.data.customer_type));
+
+          if (res?.data?.customer_type == 'individual') {
+            toast.success(res?.message || "");
+            navigate(ConstentRoutes.dashboardCustomer);
+          }
+          else {
+            if (res?.data?.comp_reg_no == null) {
+              toast.info("Please complete you registration process")
+              navigate(ConstentRoutes.register, {
+                state: {
+                  ...res?.data,
+                  step: 1
+                }
+              });
+            } else {
+              toast.success(res?.message || "");
+              navigate(ConstentRoutes.dashboard);
+            }
+          }
+
         } else {
           toast.error(res?.message);
         }
@@ -176,17 +240,17 @@ export const useRegisterHook = () => {
     APICall("post", data, EndPoints.customer.verifyAccount)
       .then((res) => {
         if (res?.success) {
-          setState((st) => ({
-            ...st,
-            success: {
-              ...st.success,
-              [name]: true,
-            },
-            error: {
-              ...st.error,
-              [name]: "",
-            },
-          }));
+          setState((st) => {
+            const { [name]: _, ...restError } = st.error; // remove `name` key from `error`
+            return {
+              ...st,
+              success: {
+                ...st.success,
+                [name]: true,
+              },
+              error: restError, // assign the rest without `name`
+            };
+          });
         } else {
           setState((st) => ({
             ...st,
@@ -206,6 +270,33 @@ export const useRegisterHook = () => {
       });
   };
 
+  const handleIndividualRegister = (data, reset, setConfirmModal) => {
+    const otp = localStorage.getItem("otp");
+    const payload = { ...data };
+    payload.channel = "WEB";
+    payload.otp_id = otp;
+    payload.otp_code = data?.verification_code;
+    payload.phone_number = data?.phone_number?.replace(/^\+/, '')
+    APICall("post", payload, EndPoints.customer.individualRegister)
+      .then((res) => {
+        if (res?.success) {
+          toast.success(res?.message || "");
+          const token = res?.data?.token;
+          localStorage.setItem("token", token);
+          localStorage.setItem("id", res?.data?.customer_account_id);
+          localStorage.setItem("user", JSON.stringify(res?.data));
+          navigate(ConstentRoutes.dashboardCustomer);
+          reset();
+          setConfirmModal(false)
+        } else {
+          toast.error(res?.message);
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+
   return {
     handleGetOtp,
     expirationTime,
@@ -218,7 +309,11 @@ export const useRegisterHook = () => {
     handleLogin,
     handleUpdateProfile,
     handleUpdateUserInfo,
+    setVerified,
     verifyAccount,
-    setExpirationTime
+    setExpirationTime,
+    resetFieldValidation,
+    handleIndividualRegister,
+    isResend
   };
 };

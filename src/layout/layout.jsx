@@ -3,56 +3,113 @@ import Sidebar from "../components/sideBar";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import APICall from "../network/APICall";
 import UplaodDocument from "../components/uploadDocumentModal";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { setUserData, setCorporateDocuments } from "../redux/userSlice";
+import { getToken } from "../utilities/auth";
+import { BiArrowBack } from "react-icons/bi";
+
 
 const DashboardLayout = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem('user'))
-  const [data, setData] = useState(user || null)
-  const [open, setOpen] = useState({ show: false })
-  const checkDocument = () => {
-    APICall("get", null, `/customer/check-documents/${user?.customer_account_id}`).then(res => {
-      if (res?.data?.corp_document?.length==0) {
-        setOpen(st => ({
-          ...st,
-          show: true,
-          data: res?.data
-        }))
-      }
-      localStorage.setItem('data', JSON.stringify(res?.data))
-      setData(res?.data)
-    }).catch(err => console.log("err", err))
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const locatiion = useLocation()
+
+  let userData = {}
+  userData = useAppSelector(state => state.user.userData);
+
+  if (userData == null || userData == undefined) {
+
+    localStorage.getItem("user");
+    userData = JSON.parse(localStorage.getItem("user"));
   }
+  const corporateDocuments = useAppSelector(state => state.user.corporateDocuments);
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [open, setOpen] = useState({ show: false });
+
+  const checkDocument = () => {
+    const token = getToken();
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    const customerId = userData?.customer_account_id;
+
+    if (!customerId) {
+      console.error("No customer account ID found");
+      return;
+    }
+
+    APICall("get", null, `/customer/check-documents/${customerId}`)
+      .then(res => {
+        if (res?.data) {
+          // Store user data in Redux
+
+          dispatch(setUserData(res.data));
+
+          // Store documents in Redux
+          dispatch(setCorporateDocuments(res.data.corp_document || []));
+
+          // Show upload modal if no documents
+          if (res?.data?.corp_document?.length < 3) {
+            setOpen(st => ({
+              ...st,
+              show: true,
+              data: res.data
+            }));
+          }
+        }
+      })
+      .catch(err => console.log("err", err));
+  };
 
   useEffect(() => {
-    // if (!token) {
-    //   navigate('/login')
-    // }
-    checkDocument()
-  }, [])
+    const token = getToken();
+    if (!token) {
+      navigate('/login');
+      return;
+    }
 
+    checkDocument();
+  }, []);
 
   return (
-    <div className=" h-screen flex flex-col">
+    <div className="h-screen flex flex-col">
       <Header />
-      <div className=" flex-1 flex flex-col overflow-auto">
-        {/* <div className="bg-secondary py-6 ">
-          <h1 className="text-center lg:text-[36px] md:text-[15px] text-[25px] text-white font-bold">
-            Corporate Name TAG
-          </h1>
-        </div> */}
-        <div className="flex  flex-1 overflow-auto grid-cols-12  h-full">
-          <div className="md:w-72 h-full bg-[#fbfbfb]">
-            <Sidebar data={data} />
+      <div className="flex-1 flex flex-col overflow-auto">
+        <div className="flex flex-1 overflow-auto grid-cols-12 h-full">
+          <div className="lg:w-72 h-full bg-[#fbfbfb]">
+            <Sidebar
+              setIsSidebarOpen={setIsSidebarOpen}
+              isSidebarOpen={isSidebarOpen}
+              data={corporateDocuments}
+            />
           </div>
-          <div className="w-full col-span-12 md:px-5 px-2 h-full overflow-auto md:py-4 py-2 mt-2 md:mt-0 md:block ">
-            <div className="md:w-11/12 w-full md:mx-auto ">{children}</div>
+          <div className="w-full col-span-12 md:px-5 px-2 h-full overflow-auto md:py-4 py-2 pt-2 md:mt-0 md:block">
+            <div className="md:w-11/12 w-full md:mx-auto sm:w-full sm:mx-auto">
+              {!locatiion?.pathname?.includes("buy-tag") &&
+                <div className=" pb-4">
+                  <BiArrowBack className=" text-3xl cursor-pointer text-secondary font-bold"
+                    onClick={() => {
+                      navigate(-1)
+
+                    }}
+                  />
+                </div>
+              }
+              {children}
+            </div>
           </div>
         </div>
       </div>
       <Footer />
-      <UplaodDocument open={open} setOpen={setOpen}
+      <UplaodDocument
+        open={open}
+        setOpen={setOpen}
         checkDocument={checkDocument}
       />
     </div>

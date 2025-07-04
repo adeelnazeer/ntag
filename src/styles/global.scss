@@ -9,33 +9,33 @@ button {
   text-transform: none !important;
   &:hover {
     outline: none;
-    border: 1px solid #88c140;
+    border: 1px solid #8dc63f;
   }
   &:focus {
     outline: none;
   }
 }
 
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-  display: none;
-}
+// /* width */
+// ::-webkit-scrollbar {
+//   width: 10px;
+//   // display: none;
+// }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   background: #f1f1f1;
+// }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #88c140;
-}
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   background: #8dc63f;
+// }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   background: #555;
+// }
 
 .react-datepicker__time-container {
   width: 160px;
@@ -49,7 +49,7 @@ button {
 }
 
 .react-datepicker__time-list-item--selected {
-  background: #88c140 !important;
+  background: #8dc63f !important;
 }
 
 .forgot-phone {
@@ -57,3 +57,34 @@ button {
     background: transparent !important;
   }
 }
+.react-datepicker__navigation--next--with-time:not(
+    .react-datepicker__navigation--next--with-today-button
+  ) {
+  right: 42% !important;
+}
+.a-href {
+  &:hover {
+    color: #000;
+  }
+}
+
+@media (max-width: 768px) {
+  .PhoneInputCountry {
+    display: none;
+  }
+}
+
+.login-bg-img {
+  background-image: url("../assets/images/img3.webp");
+  background-size: cover; /* ensures it fills the space */
+  background-position: top; /* centers the image */
+  background-repeat: no-repeat; /* prevents tiling */
+
+   top: 0;
+  left: 0;
+ }
+ .select-payment-option{
+  button{
+    @apply hover:border-[#b0bec5]
+  }
+ }

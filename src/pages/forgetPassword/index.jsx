@@ -8,7 +8,7 @@ const ForgetPassword = () => {
     <>
     <Header/>
     <ForgetPass/>
-    {/* <Footer/> */}
+    <Footer/>
     </>
   )
 }
