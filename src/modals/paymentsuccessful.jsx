@@ -134,7 +134,7 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
 
                   <div className="flex justify-between mt-2 items-center">
                     <h1 className="text-[#7A798A] text-xs md:text-sm">Sub Total </h1>
-                    <p className="text-xs md:text-sm ">{state?.base_price?.toFixed(2)} ETB</p>
+                    <p className="text-xs md:text-sm ">{state?.base_price} ETB</p>
                   </div>
 
                   <div className="flex justify-between mt-2 items-center">

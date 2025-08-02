@@ -62,9 +62,9 @@ const BlockUnblock = () => {
     APICall("get", null, `${EndPoints.customer.getReserve}/${user?.customer_account_id}`)
       .then((res) => {
         if (res?.success) {
-          const activeData = res?.data?.filter(x => x?.status == 1)
+          const activeData = res?.data?.filter(x => x?.status == 1 || x?.status == 4)
           setData(activeData);
-          if (res?.data?.some(x => x?.status == 1)) {
+          if (res?.data?.some(x => x?.status == 1 || x?.status == 4)) {
             setSelectedMsisdn(activeData?.[0]?.msisdn);
             fetchBlockedNumbers(activeData?.[0]?.msisdn)
           }

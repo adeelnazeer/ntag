@@ -41,6 +41,9 @@ import ContactUsIndividual from "./pages/IndividualCustomer/contactUs.jsx";
 import ChangePassword from "./pages/changePassword/index.jsx";
 import CloseAccount from "./pages/closeAccount.jsx";
 import ChangeMyTag from "./pages/changeMyTag.jsx";
+import CloseAccountCustomer from "./pages/IndividualCustomer/closeAccount.jsx";
+import ChangeNumber from "./pages/changeNumber.jsx";
+import ChangeNumberDetailPage from "./pages/changeNumberDetailPage.jsx";
 
 function App() {
   return (
@@ -137,6 +140,15 @@ function App() {
         />
 
         <Route
+          path={ConstentRoutes.closeAccountCustomer}
+          element={
+            <DashboardLayoutCustomer>
+              <CloseAccountCustomer />
+            </DashboardLayoutCustomer>
+          }
+        />
+
+        <Route
           path={"individual/contact"}
           element={
             <DashboardLayoutCustomer>
@@ -171,6 +183,22 @@ function App() {
           element={
             <DashboardLayout>
               <BlockUnblock />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.changeNumber}
+          element={
+            <DashboardLayout>
+              <ChangeNumber />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.changeNumberDetailPage}
+          element={
+            <DashboardLayout>
+              <ChangeNumberDetailPage />
             </DashboardLayout>
           }
         />

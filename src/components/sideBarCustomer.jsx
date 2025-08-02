@@ -35,6 +35,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const activeBlock = location?.pathname === ConstentRoutes.blockUnblockTagCustomer;
     const activeUnsubscribe = location?.pathname === ConstentRoutes.unsubTagCustomer;
     const activeChangeMyTag = location?.pathname === ConstentRoutes.changeMyTAG;
+    const closeAccount = location?.pathname === ConstentRoutes.closeAccountCustomer;
 
     // State to manage dropdown open/closed
     const [openManageMenu, setOpenManageMenu] = useState(activeThree);
@@ -279,7 +280,17 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                         >
                                             Unsubscribe
                                         </div>
+                                        <div
+                                            onClick={() => {
+                                                navigate(ConstentRoutes.closeAccountCustomer)
+                                                setIsSidebarOpen(false);
 
+                                            }}
+                                            className={`py-2 px-3 text-sm rounded-md cursor-pointer 
+                        ${closeAccount ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
+                                        >
+                                            Close Account
+                                        </div>
                                     </div>
                                 )}
                             </div>

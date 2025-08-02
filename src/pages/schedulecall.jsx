@@ -209,35 +209,35 @@ const Schedulecall = () => {
                     <Typography className="text-sm font-extrabold  mb-4">NameTAG: {index + 1} </Typography>
 
                     <div className="flex gap-8 pb-4 w-full">
-                      <div className="flex gap-4 p-3 rounded-lg shadow border border-[#8080801f]">
+                      <div className="flex gap-1 flex-col p-3 rounded-lg shadow border border-[#8080801f]">
                         <Typography className="font-medium md:text-[14px] text-[12px]">
                           NameTAG:
                         </Typography>
-                        <Typography className="md:text-[14px] text-[12px] font-medium">
+                        <Typography className="md:text-[14px] text-[12px]">
                           #{single?.name_tag}
                         </Typography>
                       </div>
-                      <div className="flex gap-4 p-3 rounded-lg shadow border border-[#8080801f]">
+                      <div className="flex gap-1 flex-col p-3 rounded-lg shadow border border-[#8080801f]">
                         <Typography className="font-medium md:text-[14px] text-[12px]">
                           TAG Number:
                         </Typography>
-                        <Typography className="md:text-[14px] text-[12px] font-medium">
+                        <Typography className="md:text-[14px] text-[12px] ">
                           #{single?.tag_no}
                         </Typography>
                       </div>
-                      <div className="flex gap-4 p-3 border border-[#8080801f] rounded-lg shadow">
+                      <div className="flex gap-1 flex-col p-3 border border-[#8080801f] rounded-lg shadow">
                         <Typography className="md:text-[14px] text-[12px] font-medium">
                           Mobile Number:
                         </Typography>
-                        <Typography className="md:text-[14px] text-[12px] font-medium">
+                        <Typography className="md:text-[14px] text-[12px] ">
                           {formatPhoneNumberCustom(single?.msisdn)}
                         </Typography>
                       </div>
-                        <div className="flex gap-4 p-3 border border-[#8080801f] rounded-lg shadow">
+                      <div className="flex gap-1 flex-col p-3 border border-[#8080801f] rounded-lg shadow">
                         <Typography className="md:text-[14px] text-[12px] font-medium">
-                         Service Status:
+                          Service Status:
                         </Typography>
-                        <Typography className="md:text-[14px] text-[12px] font-medium">
+                        <Typography className="md:text-[14px] text-[12px] ">
                           {getTagStatusDashboard(single?.status)}
                         </Typography>
                       </div>
@@ -418,7 +418,7 @@ const Schedulecall = () => {
                       <Button
                         className="bg-secondary text-white px-6 min-w-32 text-[14px] py-2 font-normal"
                         size="small"
-                        disabled={single?.status != 1}
+                        disabled={single?.status != 1 && single?.status != 4}
                         onClick={() => {
                           setSelectedSchedule(single);
                           setShowConfirm(true);

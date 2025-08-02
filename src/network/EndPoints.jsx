@@ -22,6 +22,8 @@ const EndPoints = {
     updateDocument: "/customer/document/update",
     GetAllNumbers: (customerId) => `/customer/phone-number?corp_customer_account_id=${customerId}`,
     CreateNumber: `/customer/phone-number`,
+    ChangeNumber: `/customer/change-msisdn`,
+    ChangeNumberOutstandingFee: `/customer/change-msisdn-outstanding-fee`,
     DeleteNumber: (selectedNumber) => `/customer/phone-number/${selectedNumber}`,
     premiumTag: "/customer/premium-tag-list",
     individualRegister: "/individual/auth/register",
@@ -43,6 +45,7 @@ const EndPoints = {
     individualchangeNumberSaving: "individual/change-number",
     corporatechangeNumberSaving: "customer/change-number",
     updateStatus: `/customer/close-account`,
+    individualCloseAccount: `/individual/close-account`,
     createMandate: "/individual/create-mandate",
     createMandateCorp: "/customer/create-mandate"
   },

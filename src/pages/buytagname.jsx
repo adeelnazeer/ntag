@@ -236,8 +236,7 @@ const TagNames = () => {
             <span>Action Required: Authorize Recurring Payment </span>
             <br />
             <span className=" md:block hidden text-blue-600">
-              To keep your NameTAG number active, authorize recurring payments via telebirr. You’ll get a PIN prompt via push notification. No charges apply for the first 30 days. Without authorization, your number will be deactivated after 30 days.
-              <Button className=" ml-1 cursor-pointer text-white px-2 py-2 bg-secondary"
+To keep your NameTAG number active, authorize recurring payments via telebirr. You’ll get a PIN prompt via push notification. Without authorization, your NameTAG number will be suspened after 30 days.              <Button className=" ml-1 cursor-pointer text-white px-2 py-2 bg-secondary"
                 onClick={() => {
                   handleConfirmStatusChange(single)
                 }}

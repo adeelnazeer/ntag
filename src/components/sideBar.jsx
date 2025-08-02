@@ -36,6 +36,7 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
   const activeBlock = location?.pathname === ConstentRoutes.blockUnblockTag;
   const activeUnsubscribe = location?.pathname === ConstentRoutes.UnSUBblockTag;
   const closeAccount = location?.pathname === ConstentRoutes.closeAccount;
+  const changeNumber = location?.pathname === ConstentRoutes.changeNumber;
   const activeChangeMyTag = location?.pathname === ConstentRoutes.changeMyTAGCorporate;
 
   // State to manage dropdown open/closed
@@ -200,7 +201,7 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                     >
                       Block/Unblock
                     </button>
-                      <div
+                    <div
                       onClick={() => {
                         navigate(ConstentRoutes.changeMyTAGCorporate)
                         setIsSidebarOpen(false);
@@ -210,6 +211,17 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                         ${activeChangeMyTag ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
                     >
                       Change NameTAG
+                    </div>
+                    <div
+                      onClick={() => {
+                        navigate(ConstentRoutes.changeNumber)
+                        setIsSidebarOpen(false);
+
+                      }}
+                      className={`py-2 px-3 text-sm rounded-md cursor-pointer 
+                        ${changeNumber ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
+                    >
+                      Change Mobile Number
                     </div>
                     <button
                       onClick={() => {
@@ -223,7 +235,7 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                     >
                       Unsubscribe
                     </button>
-                  
+
                     <div
                       onClick={() => {
                         navigate(ConstentRoutes.closeAccount)

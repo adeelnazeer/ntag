@@ -105,10 +105,8 @@ const ChangeMyTAG = () => {
       ) : (
         <div>
           <div className="overflow-x-auto  p-6">
-            <Typography className="text-center py-8">
-              The NameTAG change feature will be available soon.
-            </Typography>
-            {/* {(tagData?.[0]?.type == "reserve" || tagData?.[0]?.status != 1) ?
+
+            {(tagData?.[0]?.type == "reserve" || tagData?.[0]?.status != 1) ?
               <div className='pt-4'>
                 <p>You don't have any active NameTAG linked to your mobile number, and no NameTAG is available to change.</p>
               </div>
@@ -122,9 +120,8 @@ const ChangeMyTAG = () => {
                     <th className="py-3 px-4 whitespace-pre text-left text-sm font-medium text-gray-700">
                       Registered Number
                     </th>
-                    <th className="py-3 px-4 text-left text-sm font-medium text-gray-700">
-                      Subscription Date
-                    </th>
+                    <th className="py-3 px-4 whitespace-pre text-left text-sm font-medium text-gray-700">Recurring Fee Due Date</th>
+                    <th className="py-3 px-4 whitespace-pre text-left text-sm font-medium text-gray-700">Outstanding Recurring Fee</th>
                     <th className="py-3 px-4 text-left text-sm font-medium text-gray-700">
                       Service Status
                     </th>
@@ -139,11 +136,15 @@ const ChangeMyTAG = () => {
                     {tagData.length > 0 ? <>
                       <td className="py-4 px-4 text-sm text-gray-700">#{tagData[0].tag_no}</td>
                       <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(userData.phone_number)}</td>
-                      <td className="py-4 px-4 text-sm text-gray-700">{moment(tagData[0].created_date).format('DD-MM-YYYY')}</td>
-                      <td className="py-4 px-4 text-sm text-gray-700 capitalize">{getTagStatus(tagData?.[0]?.status)}</td>
+                      <td className="py-4 px-4 text-sm text-gray-700">
+                        {tagData[0]?.next_charge_dt ? moment(tagData?.[0]?.next_charge_dt).format("DD-MM-YYYY") : 'N/A'}
+                      </td>
+                      <td className="py-4 px-4 text-sm text-gray-700">
+                        {tagData?.[0]?.dues > 0 ? 0 : Math.abs(tagData?.[0]?.dues)} ETB
+                      </td>                      <td className="py-4 px-4 text-sm text-gray-700 capitalize">{getTagStatus(tagData?.[0]?.status)}</td>
                       <td className="py-4 px-4 text-center">
                         <Button
-                          onClick={handleChangeTag}
+                          onClick={() => handleChangeTag(tagData[0].tag_no)}
                           size="sm"
                           className="bg-secondary"
                           disabled={isChangeDisabled()}
@@ -156,7 +157,7 @@ const ChangeMyTAG = () => {
                   </tr>
                 </tbody>
               </table>
-            } */}
+            }
           </div>
 
           {/* <div className="mt-4 text-sm text-gray-600">

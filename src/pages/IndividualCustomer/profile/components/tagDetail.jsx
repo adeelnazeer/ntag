@@ -45,7 +45,8 @@ const TagNamesIndividual = () => {
         APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${user?.id}`)
             .then((res) => {
                 if (res?.success) {
-                    setState(res?.data || [])
+                    const filterData = res?.data?.filter((item) => item?.type == "subscriber");
+                    setState(filterData || [])
                 } else {
                     toast.error(res?.message);
                     setState([])

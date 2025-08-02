@@ -6,7 +6,7 @@ export const termsData = {
       "content": [
         {
           "type": "paragraph",
-          "text": "These Terms and Conditions ('Terms') govern your use of the NameTAG Service ('Service') provided by Ethio Telecom ('we', 'us', 'our'). By subscribing to or using the Service, you ('you', 'your', whether an individual or corporate entity) agree to be bound by these Terms."
+          "text": "These Terms and Conditions (\"Terms\") govern your use of the NameTAG Service (\"Service\") provided by Ethio Telecom (\"we,\" \"us,\" \"our\"). By subscribing to or using the Service, you (\"you,\" \"your\" \u2014 whether an individual or a corporate entity) agree to be bound by these Terms."
         }
       ]
     },
@@ -15,7 +15,7 @@ export const termsData = {
       "content": [
         {
           "type": "paragraph",
-          "text": "NameTAG is a virtual number service that lets you choose a unique and memorable identifier linked to your primary mobile number. It boosts personal identity and brand visibility, making it easier for individuals and businesses to be recognized and communicate seamlessly."
+          "text": "NameTAG is a virtual number service that allows customers to select a unique and memorable NameTAGs linked to their primary mobile number. It enhances personal identity and brand visibility, enabling easier recognition and seamless communication for both individuals and businesses."
         }
       ]
     },
@@ -27,11 +27,11 @@ export const termsData = {
           "items": [
             {
               "title": "Corporate Customers",
-              "description": "Must register with valid company details through the web portal www.nametag.et."
+              "description": "must register with valid company documents through the web portal: www.nametag.et."
             },
             {
               "title": "Individual Customers",
-              "description": "Can register via USSD (*883#), web portal, or mobile app."
+              "description": "can register via: USSD (*883#), web portal, or mobile app."
             }
           ]
         }
@@ -48,34 +48,31 @@ export const termsData = {
           "type": "list",
           "items": [
             {
-              "description": "Register through www.nametag.et and upload valid company documents."
+              "description": "Register through www.nametag.et and upload valid company details and documents."
             },
             {
-              "description": "Reserve a NameTAG number for 48 hours after completing your company profile for document approval."
+              "description": "Reserve a NameTAG number for 24 hours upon completing your company profile for document approval."
             },
             {
-              "description": "Once approved, payment must be made within 24 hours. Failure to do so will result in the reserved NameTAG being released back to the market."
+              "description": "Once documents approved by NameTAG admin, payment must be completed within 24 hours, or the reserved NameTAGs will be released back to the market."
             },
             {
-              "description": "A mobile number cannot be used for an individual NameTAG account if it is already registered under a corporate customer account."
+              "description": "The same mobile number cannot be used for an individual NameTAG account if already registered as a corporate customer or vice versa."
             },
             {
-              "description": "Reserve a unique NameTAG (Platinum, Gold, Silver, or Bronze categories)."
+              "description": "Purchase the NameTAG by paying a one-time subscription fee through the telebirr."
             },
             {
-              "description": "Purchase the NameTAG by paying a one-time fee through the telebirr App."
+              "description": "NameTAG numbers are allocated on a first-come, first-served basis."
             },
             {
-              "description": "NameTAG numbers are assigned on a first-come, first-served basis."
-            },
-            {
-              "description": "If a NameTAG is similar to another brand's name, priority is given to the first customer who requested it."
+              "description": "If a NameTAG is similar to another brand\u2019s name, priority is given to the first customer who requested it."
             },
             {
               "description": "Corporate customers may not reserve or purchase a NameTAG associated with another brand, company, or existing short code."
             },
             {
-              "description": "Ethio Telecom reserves the right to cancel any NameTAG or NameTAG account found to violate brand ownership rights."
+              "description": "Ethio Telecom reserves the right to cancel any NameTAG number or NameTAG account found to violate brand ownership rights."
             },
             {
               "description": "If a NameTAG is used for fraudulent, inappropriate, or abusive calls, Ethio Telecom has the right to suspend or terminate the NameTAG and the associated service."
@@ -87,7 +84,7 @@ export const termsData = {
               "description": "International calling (incoming and outgoing) using NameTAG numbers is not allowed."
             },
             {
-              "description": "A corporate account can reserve or purchase up to five (5) NameTAG numbers."
+              "description": "A corporate account can reserve or purchase up to five (5) NameTAG numbers and can be registered with different corporate numbers."
             },
             {
               "description": "The registered mobile number during account creation is treated as the corporate customer's primary mobile number for authentication and password recovery."
@@ -96,37 +93,96 @@ export const termsData = {
         },
         {
           "type": "subtitle",
-          "text": "For Individual Customers:"
+          "text": "For Individual Customers using USSD Short Code:"
         },
         {
           "type": "list",
           "items": [
             {
-              "description": "Subscribe for regular NameTAG numbers through USSD (*883#) and pay via Airtime."
+              "description": "Individual customers can subscribe for NameTAG numbers through USSD (*883#) and pay via Ethio airtime balance."
             },
             {
-              "description": "Regular NameTAG numbers must be between 5 to 8 digits in length."
+              "description": "For NameTAG customers subscribed the service using USSD channel, service monthly recurring fee will be charged from the airtime balance."
             },
             {
-              "description": "Premium NameTAGs (Platinum, Gold, Silver, Brownz categories) are available via www.nametag.et."
+              "description": "For USSD channel NameTAG numbers must be between 7 to 8 digits of different categories."
             },
             {
-              "description": "Complete payment using the telebirr App."
+              "description": "Using USSD channel, customers can search and buy NameTAG numbers, pay via airtime from their prepaid or postpaid account."
             },
             {
-              "description": "Manage NameTAG subscriptions through USSD, web portal, or mobile app."
+              "description": "On successful subscription fee, requested NameTAG number will be allocated to subscriber\u2019s number."
+            },
+            {
+              "description": "On subscription fee failure, selected NameTAG will be released and will be available for other customers."
+            },
+            {
+              "description": "Individual customers shall not purchase NameTAG numbers associated with corporate brands, companies, or registered short codes."
+            },
+            {
+              "description": "If a NameTAG is used for fraudulent, inappropriate, or abusive calls, Ethio Telecom has the right to suspend or terminate the NameTAG and the associated service."
+            }
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Individual Customers using Web Portal or Mobile App:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Individual customers can subscribe and buy NameTAG using web portal or mobile app, and pay via telebirr account."
+            },
+            {
+              "description": "Recurring fee will be charged using telebirr debit mandate."
+            },
+            {
+              "description": "Regular NameTAG numbers length can be as per availability on the portal or app under different categories including Platinum, Gold, Silver and Bronze."
+            },
+            {
+              "description": "Individuals can manage NameTAG service using web portal or mobile app."
             },
             {
               "description": "Individuals cannot purchase NameTAGs associated with corporate brands, companies, or registered short codes."
             },
             {
-              "description": "Service is restricted to voice calls on-net only."
+              "description": "Individual subscribers can turn off incoming calls on NameTAG number, which will be enabled again after 15 days."
             },
             {
-              "description": "International calls (incoming and outgoing) are not supported for NameTAG numbers."
+              "description": "Individual customers can register only one (1) NameTAG number per primary mobile number."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Service Recurring Fee",
+      "content": [
+        {
+          "type": "subtitle",
+          "text": "Recurring fee using telebirr"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "By subscribing to the NameTAG service, customers agree to a recurring payment using telebirr mandate. Failure to comply will result in automatic unsubscription from NameTAG."
             },
             {
-              "description": "Individual subscribers can deactivate incoming calls for a maximum of 15 days."
+              "description": "To authorize auto-deduction of the recurring fee as per selected package, customers will verify the payment mandate using a telebirr PIN code."
+            }
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Recurring fee using airtime (USSD channel)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "When a customer subscribes to NameTAG via the USSD channel and pays the subscription fee using their airtime balance, the recurring fee will also be automatically deducted from the same airtime balance."
             }
           ]
         }
@@ -142,7 +198,7 @@ export const termsData = {
               "description": "Subscription fees vary based on the length and category of the NameTAG."
             },
             {
-              "title": "Subscription options",
+              "title": "Subscription Plans",
               "description": "",
               "subItems": [
                 "Corporate Customers: Monthly, Quarterly, Biannual, or Yearly plans.",
@@ -150,22 +206,28 @@ export const termsData = {
               ]
             },
             {
-              "description": "All payments must be made via the approved channels (telebirr App or Airtime) depending on customer type and selected plan."
+              "description": "All payments must be made via the approved channels (telebirr or airtime balance) depending on customer type and selected channel."
             },
             {
-              "description": "Failure to pay service fees will result in suspension of the NameTAG Service until payment is made."
+              "description": "NameTAG number can be allocated to mobile number after the successful subscription fee."
             },
             {
-              "description": "Individual customers can register only one (1) NameTAG number per primary mobile number."
+              "description": "Subscription fee will cover the service recurring fee for one month."
             },
             {
-              "description": "Customers are allowed to change their NameTAG number up to five (5) times."
+              "description": "Recurring fee begins after the first month."
             },
             {
-              "description": "New subscription charges will apply each time a customer changes their NameTAG Number."
+              "description": "Failure to pay recurring service fees will result in suspension of the NameTAG Service until payment is made."
             },
             {
-              "description": "Ethio Telecom reserves the right to modify pricing with prior notice."
+              "description": "Subscribers are allowed to change their NameTAG number."
+            },
+            {
+              "description": "New subscription charges and recurring charges will apply each time a customer changes their NameTAG Number."
+            },
+            {
+              "description": "Ethio Telecom reserves the right to change subscription fee or recurring fee without prior notice."
             }
           ]
         }
@@ -185,6 +247,9 @@ export const termsData = {
             },
             {
               "description": "Individual customers can manage their service using USSD, web portal, or mobile app."
+            },
+            {
+              "description": "Individual Customer can turn off their incoming calls that will be automatically turned on after 15 days."
             }
           ]
         }
@@ -200,19 +265,34 @@ export const termsData = {
               "description": "Subscribers can make outgoing calls using their NameTAG number within the Ethio Telecom network."
             },
             {
-              "description": "Only on-net calls are permitted at a fixed price."
+              "description": "Service is restricted to voice calls on-net only."
+            },
+            {
+              "description": "International calls (incoming and outgoing) are not supported for NameTAG numbers."
+            },
+            {
+              "description": "Only on-net P2P calls are permitted as per customers package plan of primary mobile number."
+            },
+            {
+              "description": "Outgoing call charging from NameTAG numbers will be charged from air-time as per the package plan of primary mobile number."
             },
             {
               "description": "Both the calling and receiving parties must be Ethio Telecom subscribers; roaming customers are not eligible for calling through NameTAG numbers."
             },
             {
-              "description": "International incoming and outgoing calls are not supported for NameTAG numbers."
-            },
-            {
               "description": "NameTAG users can receive calls from other NameTAG subscribers or from regular non-subscribers."
             },
             {
-              "description": "Non-subscribers will see incoming calls displayed with a prefix (#) before the caller's mobile number (e.g., #0910561147)."
+              "description": "NameTAG subscribers can dial calls to all Ethio Telecom subscribers, whether NameTAG users or not."
+            },
+            {
+              "description": "Customers will see incoming calls displayed with a prefix (#) before the caller\u2019s mobile number (e.g., #0910561147 or #4545)."
+            },
+            {
+              "description": "Non-subscribers can dial NameTAG subscribers using their NameTAG numbers."
+            },
+            {
+              "description": "Customers can use NameTAG numbers for conference calls with normal mobile numbers."
             }
           ]
         }
@@ -235,10 +315,13 @@ export const termsData = {
               "description": "After unsubscribing, customers have 7 days to re-subscribe to the same NameTAG number before it becomes available to others."
             },
             {
-              "description": "If corporate customer re-subscribes within 7 days, they must pay the applicable subscription fee again."
+              "description": "If a customer re-subscribes within 7 days, they must pay the applicable subscription fee again."
             },
             {
               "description": "After 7 days, unsubscribed NameTAG numbers will be publicly available for others to purchase."
+            },
+            {
+              "description": "Once unsubscribed, customer cannot claim the NameTAG number that was associated with their mobile number."
             }
           ]
         },
@@ -250,36 +333,65 @@ export const termsData = {
           "type": "list",
           "items": [
             {
-              "description": "Individual customers may unsubscribe from the NameTAG service via the web portal, mobile app, or by dialing the USSD code *883#."
+              "description": "Individual customers can unsubscribe from the NameTAG service using USSD, Web portal or Mobile App."
             },
             {
-              "description": "Once unsubscribed, the NameTAG will be immediately removed from the associated mobile number and NameTAG will be available for others to reserve or  buy."
-            },
+              "description": "After unsubscription, the NameTAG will be immediately removed from customer\u2019s mobile number and will be available for sale to other customers."
+            }
           ]
-        },
+        }
       ]
     },
     {
-      "title": "Change of NameTAG:",
+      "title": "Account Closure Policy",
       "content": [
         {
           "type": "list",
           "items": [
             {
-              "description": "Individual customers can replace their existing active NameTAG with another available NameTAG of their choice."
+              "description": "Corporate Customers can request to close their NameTAG account permanently."
             },
             {
-              "description": "To make this change, the customer must pay the applicable subscription fee via the telebirr Super App or USSD, along with a recurring monthly fee based on the price of the newly selected NameTAG."
+              "description": "Clear any outstanding payments."
             },
             {
-              "description": "Once the subscription fee is successfully paid for new NameTAG, the previous NameTAG will be removed from the customer's mobile number and will become available for others to reserve or purchase."
+              "description": "Unsubscribe all purchased NameTAGs."
             },
-
+            {
+              "description": "Close account request can be approved or rejected by the NameTAG admin."
+            },
+            {
+              "description": "Until the close account request is approved by NameTAG admin, customer\u2019s service will remain active."
+            },
+            {
+              "description": "Once the close account request is approved, customer profile, reserved NameTAGs, and documents will be removed permanently from the NameTAG platform."
+            }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "title": "NameTAG Change Policy",
+      "content": [
         {
-          "type": "paragraph",
-          "text": "Note: Change NameTAG feature is availale only for the Individual customers"
+          "type": "list",
+          "items": [
+            {
+              "description": "Corporate and individual customers can change their existing NameTAG by purchasing a new one."
+            },
+            {
+              "description": "The NameTAG change will take effect upon successful subscription fee payment receipt for the new NameTAG."
+            },
+            {
+              "description": "The previous NameTAG will be removed from their number upon changing."
+            },
+            {
+              "description": "The previous NameTAG will be made available for sale to other customers."
+            },
+            {
+              "description": "Recurring fee adjusts according to the new selected NameTAG plan."
+            }
+          ]
         }
       ]
     },
@@ -309,7 +421,7 @@ export const termsData = {
           "type": "list",
           "items": [
             {
-              "description": "Your personal data will be collected, processed, and protected according to Ethio Telecom's Privacy Policy."
+              "description": "Your personal data will be collected, processed, and protected according to Ethio Telecom\u2019s Privacy Policy."
             },
             {
               "description": "We implement reasonable and industry-standard security measures to safeguard your data."
@@ -336,6 +448,25 @@ export const termsData = {
             },
             {
               "description": "Non-payment of subscription fees."
+            },
+            {
+              "description": "Ethio Telecom reserves the right to cancel any NameTAG number or NameTAG account found to violate brand ownership rights."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Expiry of NameTAG Service",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "NameTAG subscriptions are valid for 5 years."
+            },
+            {
+              "description": "Ethio Telecom can extend the expiry date."
             }
           ]
         }

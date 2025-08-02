@@ -447,8 +447,8 @@ const UserForm = () => {
                                     <Input
                                         className="w-full rounded-xl px-4 py-2 bg-white outline-none"
                                         placeholder="Fayda Number"
-                                        maxLength={12}
-                                        minLength={11}
+                                        maxLength={16}
+                                        minLength={16}
                                         style={
                                             errors?.cnic
                                                 ? { border: "1px solid red" }
@@ -456,10 +456,10 @@ const UserForm = () => {
                                         }
                                         {...register("cnic", {
                                             required: "Fayda number is required",
-                                            minLength: { value: 11, message: "Fayda  Number must be at least 11 digits" },
-                                            maxLength: { value: 12, message: "Fayda  Number cannot exceed 12 digits" },
+                                            minLength: { value: 16, message: "Fayda  Number must be at least 16 digits" },
+                                            maxLength: { value: 16, message: "Fayda  Number cannot exceed 16 digits" },
                                             pattern: {
-                                                value: /^\d{11,12}$/,
+                                                value: /^\d{16,16}$/,
                                                 message: "Fayda  Number must contain only digits"
                                             }
                                         })}
@@ -511,6 +511,7 @@ const UserForm = () => {
                                                         countryCallingCodeEditable={false}
                                                         value={field.value}
                                                         limitMaxLength={true}
+                                                        flagUrl={`https://flagcdn.com/w40/et.png`}
                                                         disabled={registerData?.expirationTime}
                                                         countries={["ET"]}
                                                         onChange={(value) => {

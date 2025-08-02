@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Typography } from "@material-tailwind/react";
 import { IoMdCloseCircle } from "react-icons/io";
 
-const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumber, businessType,isLoading, onConfirm, isCustomer = false, type, isExchangeFlow = false }) => {
+const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumber, businessType, isLoading, onConfirm, isChangeNumber = false, type, isExchangeFlow = false }) => {
   if (!isOpen) return null;
 
   const formatPrice = (price) => {
@@ -14,8 +14,6 @@ const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumbe
   // Get the recurring fee amount and label
   const recurringFeeAmount = state?.service_fee || state?.recurring_fee_amount || 0;
   const recurringFeeLabel = state?.service_id || state?.recurring_fee_label || "Monthly";
-
-  console.log({ state })
 
   return (
     <div className="fixed p-2 inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm">
@@ -35,90 +33,125 @@ const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumbe
           <Typography className="mt-2 text-sm text-gray-600">
             Confirm your NameTAG {type === "reserve" ? "reservation" : "payment"} details to continue
           </Typography>
+          {isExchangeFlow &&
+            <Typography className="text-lg font-medium mt-2">
+              You are about to change your NameTAG
+            </Typography>}
         </div>
 
         <div className="mt-6">
-
-          {isExchangeFlow ? (
-            <div className="text-center">
-              <Typography className="text-lg font-medium">
-                You are about to change your TAG
-              </Typography>
-              <Typography className="font-bold my-2">
-                Current NameTAG : #{state?.currentTagData?.length ? state?.currentTagData?.[0]?.tag_no : state?.currentTagData?.tag_no}
-              </Typography>
-              <Typography className="font-bold my-2">
-                New NameTAG : #{state?.tag_no}
-              </Typography>
-              <Typography className="text-sm text-gray-600">
-                This action will replace your current TAG number. Do you want to proceed?
-              </Typography>
-            </div>
-          ) : (
-            <div className="rounded-xl bg-gray-50 p-4">
-              {/* NameTAG Row */}
+          <div className="rounded-xl bg-gray-50 p-4">
+            {/* NameTAG Row */}
+            {!isExchangeFlow &&
               <div className="mb-3">
                 <Typography className="text-sm text-gray-500">NameTAG</Typography>
                 <Typography className="text-base font-medium">
                   {state.tag_name}
                 </Typography>
               </div>
+            }
 
-              {/* Tag Number Row */}
+            {/* Tag Number Row */}
+            {!isExchangeFlow &&
               <div className="mb-3">
                 <Typography className="text-sm text-gray-500">NameTAG Number</Typography>
                 <Typography className="text-base font-medium">
                   #{state.tag_no}
                 </Typography>
               </div>
-
-              {/* Mobile Number Row */}
+            }
+            {isExchangeFlow &&
+              <>
+                <div className="mb-3">
+                  <Typography className="text-sm text-gray-500">NameTAG Number</Typography>
+                  <Typography className="text-base font-medium">
+                    #{state?.currentTagData?.length ? state?.currentTagData?.[0]?.tag_no : state?.currentTagData?.tag_no}
+                  </Typography>
+                </div>
+                <div className="mb-3">
+                  <Typography className="text-sm text-gray-500">New NameTAG</Typography>
+                  <Typography className="text-base font-medium">
+                    {state.tag_name}
+                  </Typography>
+                </div>
+                <div className="mb-3">
+                  <Typography className="text-sm text-gray-500">New NameTAG Number</Typography>
+                  <Typography className="text-base font-medium">
+                    #{state.tag_no}
+                  </Typography>
+                </div>
+              </>
+            }
+            {/* Mobile Number Row */}
+            <div className="mb-3">
+              <Typography className="text-sm text-gray-500">Mobile Number</Typography>
+              <Typography className="text-base font-medium">
+                {phoneNumber}
+              </Typography>
+            </div>
+            {isChangeNumber &&
               <div className="mb-3">
-                <Typography className="text-sm text-gray-500">Mobile Number</Typography>
+                <Typography className="text-sm text-gray-500">New Mobile Number</Typography>
                 <Typography className="text-base font-medium">
-                  {phoneNumber}
+                  +{state?.newNumber}
                 </Typography>
               </div>
-
+            }
+            {/* Payment Method Row */}
+            <div className="mb-3">
+              <Typography className="text-sm text-gray-500">Payment Method</Typography>
+              <Typography className="text-base font-medium">
+                telebirr
+              </Typography>
+            </div>
+            <div className="mb-3">
+              <Typography className="text-sm text-gray-500">{recurringFeeLabel} Recurring Fee</Typography>
+              <Typography className="text-base font-medium">
+                {formatPrice(state?.monthly_fee || state?.service_fee)} ETB
+              </Typography>
+            </div>
+            {!isChangeNumber &&
               <div className="mb-3">
                 <Typography className="text-sm text-gray-500">Subscription Fee</Typography>
                 <Typography className="text-base font-medium">
                   {Number(state?.tag_price).toFixed(2)} ETB
                 </Typography>
               </div>
-
-              <div className='mb-3'>
-                <Typography className="text-sm text-gray-500 font-bold">Total Amount</Typography>
-                <Typography className="text-base font-bold">
-                  {formatPrice(state.total_amount)} ETB
-                </Typography>
-              </div>
+            }
+            {isChangeNumber &&
               <div className="mb-3">
-                <Typography className="text-sm text-gray-500">{recurringFeeLabel} Recurring Fee</Typography>
+                <Typography className="text-sm text-gray-500">Outstanding Recurring Fee  (Previous Plan)</Typography>
                 <Typography className="text-base font-medium">
-                  {formatPrice(state?.monthly_fee)} ETB
+                  {Math.abs(state?.dues).toFixed(2)} ETB
                 </Typography>
               </div>
+            }
 
-              {/* Payment Method Row */}
-              <div className="mb-3">
-                <Typography className="text-sm text-gray-500">Payment Method</Typography>
-                <Typography className="text-base font-medium">
-                  telebirr
-                </Typography>
-              </div>
-
-
-
-              {/* Monthly Recurring Fee Row - Display only for reservation */}
-              {/* {type === "reserve" && ( */}
-
-              {/* )} */}
-
-              {/* Amount Row */}
-
+            <div className='mb-3'>
+              <Typography className="text-sm text-gray-500 font-bold">Total Amount</Typography>
+              <Typography className="text-base font-bold">
+                {formatPrice(state.total_amount)} ETB
+              </Typography>
             </div>
-          )}
+
+
+
+
+
+
+            {/* Monthly Recurring Fee Row - Display only for reservation */}
+            {/* {type === "reserve" && ( */}
+
+            {/* )} */}
+
+            {/* Amount Row */}
+
+          </div>
+          {isExchangeFlow &&
+            <Typography className="text-sm mt-3 text-gray-600">
+              This action will replace your current NameTAG. Do you want to proceed?
+            </Typography>
+          }
         </div>
 
         <div className="mt-6 flex gap-4">

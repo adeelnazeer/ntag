@@ -73,25 +73,31 @@ const PaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumber, busines
             </div> */}
 
             {/* Amount Row */}
-            <div>
-              <Typography className="text-sm text-gray-500 font-bold">Total Amount</Typography>
-              <Typography className="text-base font-bold">
-                {formatPrice(state.totalPrice)} ETB
-              </Typography>
-            </div>
+
             <div className="mt-3">
               <Typography className="text-sm text-gray-500">Service Plan</Typography>
               <Typography className="text-base font-medium">
                 {state?.service_id}
               </Typography>
             </div>
-            <div className="mt-3">
+            <div className="mt-3 ">
               <Typography className="text-sm text-gray-500">Recurring Fee</Typography>
               <Typography className="text-base font-medium">
                 {Number(state?.recurring_fee_amount)?.toFixed(2)} ETB
               </Typography>
             </div>
-
+              <div className="mt-3 ">
+              <Typography className="text-sm text-gray-500">Subscription  Fee</Typography>
+              <Typography className="text-base font-medium">
+                {Number(state?.tag_price)?.toFixed(2)} ETB
+              </Typography>
+            </div>
+            <div>
+              <Typography className="text-sm mt-3 text-gray-500 font-bold">Total Amount</Typography>
+              <Typography className="text-base font-bold">
+                {formatPrice(state.totalPrice)} ETB
+              </Typography>
+            </div>
           </div>
         </div>
 

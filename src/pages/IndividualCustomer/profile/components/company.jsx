@@ -171,7 +171,7 @@ const CompanyInfo = ({ profileData }) => {
           </label>
           <input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none"
-            maxLength={12}
+            maxLength={16}
             readOnly
             style={
               errors.cnic
@@ -180,10 +180,10 @@ const CompanyInfo = ({ profileData }) => {
             }
             {...register("cnic", {
               required: "Fayda number is required",
-              minLength: { value: 11, message: "Fayda  Number must be at least 11 digits" },
-              maxLength: { value: 12, message: "Fayda  Number cannot exceed 12 digits" },
+              minLength: { value: 16, message: "Fayda  Number must be at least 16 digits" },
+              maxLength: { value: 16, message: "Fayda  Number cannot exceed 16 digits" },
               pattern: {
-                value: /^\d{11,12}$/,
+                value: /^\d{16,16}$/,
                 message: "Fayda  Number must contain only digits"
               }
             })}
