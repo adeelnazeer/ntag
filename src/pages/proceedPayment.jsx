@@ -592,7 +592,8 @@ const ProceedPayment = () => {
           <div className="mt-4">
             <Typography className="text-[14px] flex align-middle mb-0">
               <span className="text-red-500 me-3 align-top m-0 font-bold text-3xl">*</span>
-              After 30 days from your subscription date, the subscription fee will be charged to your telebirr account according to the selected plan            </Typography>
+              The recurring fee will be charged to your telebirr account according to the selected plan
+            </Typography>
           </div>
           {actionType === "buy" && docStatus?.status !== 0 && (
             <PaymentConfirmationModal

@@ -9,11 +9,13 @@ export const ConstentRoutes = {
    blockUnblockTag: "/manage-tag/block",
    UnSUBblockTag: "/manage-tag/unsubscribe",
    closeAccount: "/manage-tag/close-account",
+   changeNumber: "/manage-tag/change-number",
    buyTag: "/dashboard",
    buyTagCustomer: "/customer/dashboard",
    tagDetail: "/dashboard/tag-detail",
    processPayment: "/dashboard/process-payment",
    nameTagDetail: "/name-tag-detail",
+   changeNumberDetailPage: "/change-number-detail",
    profilePage: "/profile",
    voiceMail: "/voicemail",
    termofuse: "/Terms",
@@ -27,7 +29,7 @@ export const ConstentRoutes = {
    processPaymentcustomer: "/customer/dashboard/process-payment",
    changeMyTAG: "/individual/change-my-tag",
    changeMyTAGCorporate: "/change-my-tag",
-
+   closeAccountCustomer: "/customer/manage-tag/close-account",
    // New customer routes for Manage NameTAG
    manageTagNameCustomer: "/customer/manage-tag",
    blockUnblockTagCustomer: "/customer/manage-tag/block",
@@ -85,13 +87,17 @@ export const getTagStatusDashboard = (status) => {
       case 3:
          return "Expired"
       case 4:
-         return "Churn out monthly fee pending"
+         return "Active - Recurrging fee pending"
       case 5:
          return "Blocked"
       case 6:
          return "Unsubscribed"
+      case 7:
+         return "Suspended- Calls blocked due to Pending Recurring Fee"
       case 8:
          return "TAG Reserved"
+      case 9:
+         return "Suspended - Recurrging fee pending"
       default:
          return ""
    }
@@ -132,3 +138,25 @@ export const getDocStatus = (status) => {
    }
 }
 
+export const getPriceBreakDown = ({ tagPrice, packageFee = 0 }) => {
+   const total_price = Number(tagPrice) + Number(packageFee);
+   const total_base_price = (total_price / 1.15)
+   const total_VAT = total_price - total_base_price;
+   const excisetax = 0;
+   const stamp_duty = 0
+   return {
+      totalPrice: total_price.toFixed(2),
+      totalBasePrice: total_base_price.toFixed(2),
+      totalVAT: total_VAT.toFixed(2),
+      excisetax: excisetax.toFixed(2),
+      stampDuty: stamp_duty.toFixed(2),
+   }
+}
+
+
+export const adjustableDays = ({ dues = 0, plan, service_fee }) => {
+   const plandays = plan == "Monthly" ? 30 : plan == "Quarterly" ? 90 : plan == "Semi-Annually" ? 180 : plan == "Annually" ? 360 : 0;    //month=30, quarter =90 , semi=  180, annul =360 
+   const plan_adddays = dues / plandays;
+   const roundedDays = plan_adddays > 0 && plan_adddays < 1 ? 1 : Math.round(plan_adddays)
+   return roundedDays;
+}

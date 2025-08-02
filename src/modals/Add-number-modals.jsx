@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { toast } from "react-toastify";
 import PhoneInput from "react-phone-number-input";
@@ -8,8 +9,10 @@ import EndPoints from '../network/EndPoints';
 import { useRegisterHook } from '../pages/hooks/useRegisterHook';
 import TickIcon from '../assets/images/tick.png';
 import { Checkbox } from '@material-tailwind/react';
+import { formatPhoneNumberCustom } from '../utilities/formatMobileNumber';
+import { ConstentRoutes } from '../utilities/routesConst';
 
-const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId }) => {
+const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumberFlow = false, selectedTag = null }) => {
   const registerData = useRegisterHook();
   const [phoneError, setPhoneError] = useState("");
   const [isValidPhone, setIsValidPhone] = useState(false);
@@ -141,26 +144,52 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId }) => {
 
     setProcessingAction(true);
 
-    try {
-      const payload = {
-        corp_customer_account_id: customerId,
-        msisdn: value.replace(/^\+/, '')
-      };
+    if (isChangeNumberFlow) {
+      try {
+        const payload = {
+          account_id: customerId,
+          existing_msisdn: selectedTag?.msisdn,
+          new_msisdn: value.replace(/^\+/, ''),
+          msisdn_type: "Primary"
+        };
 
-      const response = await APICall("post", payload, EndPoints.customer.CreateNumber);
+        const response = await APICall("post", payload, EndPoints.customer.ChangeNumber);
 
-      if (response?.success) {
-        toast.success("Mobile Number added successfully");
-        onAddNumber();
-        onClose();
-      } else {
-        toast.error(response?.message || "Failed to add Mobile Number");
+        if (response?.success) {
+          toast.success(response?.message || "");
+          onAddNumber();
+          onClose();
+        } else {
+          toast.error(response?.message || "Failed to Change Mobile Number");
+        }
+      } catch (error) {
+        toast.error(error || "Error change Mobile Number");
+      } finally {
+        // setProcessingAction(false);
       }
-    } catch (error) {
-      console.error("Error adding Mobile Number:", error);
-      toast.error("Error adding Mobile Number");
-    } finally {
-      setProcessingAction(false);
+    } else {
+
+      try {
+        const payload = {
+          corp_customer_account_id: customerId,
+          msisdn: value.replace(/^\+/, '')
+        };
+
+        const response = await APICall("post", payload, EndPoints.customer.CreateNumber);
+
+        if (response?.success) {
+          toast.success("Mobile Number added successfully");
+          onAddNumber();
+          onClose();
+        } else {
+          toast.error(response?.message || "Failed to add Mobile Number");
+        }
+      } catch (error) {
+        console.error("Error adding Mobile Number:", error);
+        toast.error("Error adding Mobile Number");
+      } finally {
+        setProcessingAction(false);
+      }
     }
   };
 
@@ -175,9 +204,10 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId }) => {
 
   if (!isOpen) return null;
 
+
   return (
     <div className="fixed inset-0 p-2 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm">
-      <div className="relative w-full max-w-lg rounded-2xl bg-white p-6">
+      <div className="relative w-full max-w-xl rounded-2xl bg-white p-6">
         <div
           className="absolute right-4 top-4 cursor-pointer text-xl text-gray-400 hover:text-gray-600"
           onClick={onClose}
@@ -186,15 +216,31 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId }) => {
         </div>
 
         <div className="mt-2 mb-4">
-          <h5 className="font-bold text-gray-900 text-lg">
-            Add New Mobile Number
-          </h5>
+          {isChangeNumberFlow ?
+            <h5 className="font-bold text-gray-900 text-lg">
+              Change Mobile Number
+            </h5>
+            :
+            <h5 className="font-bold text-gray-900 text-lg">
+              Add New Mobile Number
+            </h5>
+          }
+          {isChangeNumberFlow &&
+            <>
+              <p className=' text-sm mt-2 text-gray-600'>
+                By changing your mobile number, your current number will be replaced, and the new mobile number will be linked to your NameTAG.
+              </p>
+              <p className=' text-sm mt-3 text-gray-600'>Current Mobile Number:<span className='font-medium text-gray-900'> +{selectedTag?.msisdn || "N/A"}</span>
+              </p>
+              <p className=' text-sm mt-1 text-gray-600'>NameTAG: <span className='font-medium text-gray-900'>#{selectedTag?.tag_no || ""}</span></p>
+            </>
+          }
         </div>
 
         <div className="border-t border-gray-200 py-4">
           <div className="mb-4">
             <label className="block text-sm text-gray-600 mb-1">
-              Mobile Number <span className="text-red-500">*</span>
+              {isChangeNumberFlow ? "New" : ""}  Mobile Number <span className="text-red-500">*</span>
             </label>
             <div className="relative flex items-center w-full">
               <PhoneInput
@@ -261,7 +307,7 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId }) => {
               <div className="relative flex items-center w-full">
                 <input
                   type="text"
-                  placeholder="Phone verification code"
+                  placeholder=" Enter OTP for verification"
                   maxLength={4}
                   className="w-full rounded-xl border border-gray-200 px-4 py-2.5 bg-white outline-none focus:border-secondary"
                   value={stateNewNumber?.verification_code}
@@ -292,7 +338,7 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId }) => {
           )}
 
           <div className="rounded-xl mt-3 text-gray-600">
-            <div className="flex items-start">
+            <div className={`flex ${isChangeNumberFlow ? " items-center" : "items-start"}`}>
               {/* <div className="flex items-center h-5 mt-1"> */}
               <Checkbox
                 checked={stateNewNumber?.term}
@@ -309,9 +355,19 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId }) => {
                   className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-secondary"
                 /> */}
               {/* </div> */}
-              <label htmlFor="terms" className="ml-2 text-sm cursor-pointer">
-                I confirm this Mobile Number belongs to me and consent to its use for NameTAG services
-              </label>
+              {isChangeNumberFlow ?
+                <label htmlFor="terms" className="ml-2 text-sm cursor-pointer">
+                  <span className="text-[#008fd5] hover:underline"
+                    onClick={() => {
+                      window.open(ConstentRoutes.termofuse, "_blank")
+                    }}
+                  >Terms and Conditions </span>
+                </label>
+                :
+                <label htmlFor="terms" className="ml-2 text-sm cursor-pointer">
+                  I confirm this Mobile Number belongs to me and consent to its use for NameTAG services
+                </label>
+              }
             </div>
           </div>
         </div>
@@ -329,7 +385,7 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId }) => {
             onClick={handleSubmit}
             disabled={!(registerData.verified || otpVerified) || !stateNewNumber?.term || processingAction}
           >
-            {processingAction ? "Adding..." : "Add Number"}
+            {processingAction ? "Processing..." : isChangeNumberFlow ? "Change Number" : "Add Number"}
           </button>
         </div>
       </div>

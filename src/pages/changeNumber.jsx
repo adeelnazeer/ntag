@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Spinner } from "@material-tailwind/react";
+import { Button, Typography, Spinner, Chip, Tooltip } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import APICall from "../network/APICall";
 import { toast } from "react-toastify";
@@ -8,17 +8,19 @@ import moment from "moment";
 import BuyTagConfirmationModal from "../modals/buy-tag-modals";
 import EndPoints from '../network/EndPoints';
 import { formatPhoneNumberCustom } from '../utilities/formatMobileNumber';
+import AddNumberModal from '../modals/Add-number-modals';
+import { useAppSelector } from '../redux/hooks';
 
-function ChangeMyTag() {
+function ChangeNumber() {
     const navigate = useNavigate();
     const [tagData, setTagData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [unsubscribing, setUnsubscribing] = useState(false);
-
+    const [openAddDialog, setOpenAddDialog] = useState({ show: false });
+    const [selectedTag, setSelectedTag] = useState(null)
+    const userData = useAppSelector(state => state.user.userData);
+    const customerId = userData?.id;
     // Modal state
-    const [openModal, setOpenModal] = useState(false);
-    const [selectedTagId, setSelectedTagId] = useState(null);
-    const [selectedTagNumber, setSelectedTagNumber] = useState(null);
 
     useEffect(() => {
         fetchTagData();
@@ -54,59 +56,6 @@ function ChangeMyTag() {
                 setLoading(false);
             });
     };
-
-    // Show confirmation modal
-    const confirmUnsubscribe = (tagId) => {
-        setSelectedTagId(tagId);
-        setOpenModal(true);
-    };
-
-    // Close modal and reset state
-    const handleCloseModal = () => {
-        setOpenModal(false);
-        setSelectedTagId(null);
-    };
-
-    const handleChangeTag = (single) => {
-        // Instead of showing the confirm dialog immediately, navigate to the buy tag page
-        navigate(ConstentRoutes.buyTag, {
-            state: {
-                isExchangeFlow: true,
-                currentTagData: single, // Pass current tag data for reference
-            }
-        });
-    };
-
-    // Process unsubscribe after confirmation
-    const handleConfirmUnsubscribe = () => {
-        processUnsubscribe(selectedTagId);
-        handleCloseModal();
-    };
-
-    const processUnsubscribe = (corp_subscriber_id) => {
-        setUnsubscribing(true);
-
-        const payload = {
-            corp_subscriber_id: corp_subscriber_id
-        };
-
-        APICall("post", payload, "customer/unsubscribe")
-            .then(res => {
-                if (res?.success) {
-                    toast.success(res?.message || "Successfully unsubscribed");
-                    // Refresh tag data after successful unsubscribe
-                    fetchTagData();
-                } else {
-                    toast.error(res?.message || "Failed to unsubscribe");
-                }
-                setUnsubscribing(false);
-            })
-            .catch(err => {
-                toast.error(err?.message || "An error occurred");
-                setUnsubscribing(false);
-            });
-    };
-
     const renderTagItem = (tag) => {
         if (!tag) return null;
 
@@ -119,26 +68,66 @@ function ChangeMyTag() {
             <tr key={tag?.id}>
                 <td className="py-4 px-4 text-sm text-gray-700">#{tagInfo?.tag_no || 'N/A'}</td>
                 <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(tag?.msisdn || 'N/A')}</td>
-                 <td className="py-4 px-4 text-sm text-gray-700">
-                                {tag?.next_charge_dt ? moment(tag.next_charge_dt).format("DD-MM-YYYY") : 'N/A'}
-                            </td>
-                            <td className="py-4 px-4 text-sm text-gray-700">
-                                {tag?.dues > 0 ? 0 : Math.abs(tag?.dues)} ETB
-                            </td>
+                <td className="py-4 px-4 text-sm text-gray-700">
+                    {userData?.phone_number == tag?.msisdn ? (
+                        <div className="w-max">
+                            <Chip
+                                size="sm"
+                                variant="ghost"
+                                value="Primary"
+                                color="green"
+                                className="rounded-full bg-green-100 text-secondary px-2 py-1 text-xs font-medium"
+                            />
+                        </div>
+                    ) : (
+                        <div className="w-max">
+                            <Chip
+                                size="sm"
+                                variant="ghost"
+                                value="Additional"
+                                color="blue"
+                                className="rounded-full bg-blue-100 text-blue-800 px-2 py-1 text-xs font-medium"
+                            />
+                        </div>
+                    )}
+                </td>
+                {/* <td className="py-4 px-4 text-sm text-gray-700">
+                    {tag?.created_date ? moment(tag.created_date).format("YYYY-MM-DD") : 'N/A'}
+                </td> */}
+                <td className="py-4 px-4 text-sm text-gray-700">
+                    {tag?.service_fee ? tag?.service_fee : ""} ETB
+                </td>
+                <td className="py-4 px-4 text-sm text-gray-700">
+                    {tag?.next_charge_dt ? moment(tag.next_charge_dt).format("DD-MM-YYYY") : 'N/A'}
+                </td>
+                <td className="py-4 px-4 text-sm text-gray-700">
+                    {tag?.dues > 0 ? 0 : Math.abs(tag?.dues)} ETB
+                </td>
+
                 <td className="py-4 px-4 text-sm text-gray-700">
                     {getTagStatusDashboard(tag?.status)}
                 </td>
-                <td className="py-4 px-4 text-sm text-gray-700">
+                <td className="py-4 px-4 text-sm text-gray-700 flex gap-2">
                     <Button
                         size={'sm'}
                         className="bg-secondary text-white text-[14px]"
                         onClick={() => {
-                            handleChangeTag(tag)
+                            if (tag?.dues < 0) {
+                                navigate(ConstentRoutes.changeNumberDetailPage, { state: { ...tag } });
+                            } else {
+                                setOpenAddDialog(st => ({
+                                    ...st,
+                                    show: true,
+                                }));
+                                setSelectedTag(tag)
+                            }
 
                         }}
+                        disabled={unsubscribing}
                     >
-                        {unsubscribing && selectedTagId === tag?.reserve_tag_id ? "Processing..." : "Change NameTAG"}
+                        {"Change Mobile Number"}
                     </Button>
+
                 </td>
             </tr>
         );
@@ -147,7 +136,7 @@ function ChangeMyTag() {
     return (
         <div className="shadow bg-white rounded-xl">
             <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-md font-bold">
-                Change NameTAG Service
+                Change Mobile Number
             </Typography>
 
             <div className="p-8">
@@ -156,11 +145,10 @@ function ChangeMyTag() {
                         <Spinner className="h-12 w-12" color="green" />
                     </div>
                 ) : (
-              
                     <>
                         {tagData.length === 0 ? (
                             <Typography className="text-center py-8">
-                                No active NameTAG services found to unsubscribe.
+                                No active NameTAG services found.
                             </Typography>
                         ) : (
                             <div className="overflow-x-auto">
@@ -169,9 +157,15 @@ function ChangeMyTag() {
                                         <tr>
                                             <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">TAG Number</th>
                                             <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Mobile Number</th>
-    {/* <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Registration Date</th> */}
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Mobile Number Type</th>
+
+                                            {/* <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Registration Date</th> */}
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Recurring Fee</th>
+
                                             <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Recurring Fee Due Date</th>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Outstanding Recurring Fee</th>                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Status</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Outstanding Recurring Fee</th>
+
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Status</th>
                                             <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Action</th>
                                         </tr>
                                     </thead>
@@ -185,16 +179,20 @@ function ChangeMyTag() {
                 )}
             </div>
 
-            {/* Confirmation Modal */}
-            <BuyTagConfirmationModal
-                isOpen={openModal}
-                onClose={handleCloseModal}
-                modalAction="unsubscribe"
-                onConfirm={handleConfirmUnsubscribe}
-                tagNo={selectedTagNumber?.tag_no || ''}
-            />
+            {openAddDialog?.show &&
+                <AddNumberModal
+                    isOpen={openAddDialog?.show}
+                    onClose={() => setOpenAddDialog({ show: false })}
+                    onAddNumber={fetchTagData}
+                    customerId={customerId}
+                    isChangeNumberFlow={true}
+                    selectedTag={selectedTag}
+                />
+            }
+
+
         </div>
     );
 }
 
-export default ChangeMyTag;
+export default ChangeNumber;

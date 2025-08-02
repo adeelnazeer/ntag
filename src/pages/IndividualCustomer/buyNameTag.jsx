@@ -47,7 +47,8 @@ const TagNamesIndividual = () => {
         APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${user?.id}`)
             .then((res) => {
                 if (res?.success) {
-                    setState(res?.data || [])
+                    const filterData = res?.data?.filter((item) => item?.type == "subscriber");
+                    setState(filterData || [])
                 } else {
                     toast.error(res?.message);
                     setState([])
@@ -226,7 +227,7 @@ const TagNamesIndividual = () => {
                         <span>Action Required: Authorize Recurring Payment </span>
                         <br />
                         <span className=" md:block hidden text-blue-600">
-                            To keep your NameTAG number active, authorize recurring payments via telebirr. You’ll get a PIN prompt via push notification. No charges apply for the first 30 days. Without authorization, your number will be deactivated after 30 days.
+                            To keep your NameTAG number active, authorize recurring payments via telebirr. You’ll get a PIN prompt via push notification. Without authorization, your NameTAG number will be suspened after 30 days.
                             <Button className=" ml-1 cursor-pointer text-white px-2 py-2 bg-secondary"
                                 onClick={() => {
                                     handleConfirmStatusChange(single)
@@ -407,7 +408,6 @@ const TagNamesIndividual = () => {
                                             ...(isPremium ? single.corp_premium_tag_list : single?.premium_tag_list),
                                             reserve_tag_id: single?.reserve_tag_id,
                                             msisdn: single?.msisdn,
-                                            isReserve: true,
                                             tax: single.tax,
                                             service_id: single.service_id, // Pass the service_id for correct fee selection
                                             // For premium tags, add these fields

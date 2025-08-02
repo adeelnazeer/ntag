@@ -105,7 +105,7 @@ const NameTagReceipt = ({ paymentData }) => {
               </tr>
 
               <tr>
-                <td className="font-bold py-0.5">CNIC:</td>
+                <td className="font-bold py-0.5">Fayda Number:</td>
                 <td className="py-0.5">{userData.cnic}</td>
               </tr>
             </tbody>
@@ -130,7 +130,7 @@ const NameTagReceipt = ({ paymentData }) => {
               <td className="border border-gray-300 p-1">#{actualTagNo}</td>
               <td className="border border-gray-300 p-1">
                 NameTAG Service - #{actualTagNo}
-                {actualTagName ? ` (${actualTagName})` : ""}
+                {actualTagName && actualTagNo != actualTagName ? ` (${actualTagName})` : ""}
                 {actualTagType ? ` - ${actualTagType} Package` : ""}
               </td>
             </tr>
@@ -141,7 +141,7 @@ const NameTagReceipt = ({ paymentData }) => {
         <div className="w-full">
           <div className="flex justify-end border-x border-gray-300">
             <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Sub Total</div>
-            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(total_amount) - Number(vat)} {'ETB'}</div>
+            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(Number(total_amount) - Number(vat))?.toFixed(2)} {'ETB'}</div>
           </div>
           <div className="flex justify-end border-x border-gray-300">
             <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">VAT (15%)</div>

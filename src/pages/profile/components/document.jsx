@@ -8,8 +8,10 @@ import EndPoints from "../../../network/EndPoints";
 import { toast } from "react-toastify";
 import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
 import { setCorporateDocuments } from "../../../redux/userSlice";
+import UploadSingleDocument from "../../../components/uploadSingleDocument";
 
 const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
 
 const DocumentInfo = ({ profileData }) => {
   const dispatch = useAppDispatch();
@@ -27,6 +29,8 @@ const DocumentInfo = ({ profileData }) => {
   const [error, setError] = useState(null);
   const [showImagePreview, setShowImagePreview] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
+
+  const [showModal, setShowModal] = useState({ show: false })
 
   // Update local state when Redux state changes
   useEffect(() => {
@@ -164,7 +168,15 @@ const DocumentInfo = ({ profileData }) => {
       toast.error("Failed to refresh document status");
     }
   };
-
+  // Map index to field name
+  const getFieldName = (index) => {
+    switch (index) {
+      case 0: return "application_letter";
+      case 1: return "trade_license";
+      case 2: return "registration_license";
+      default: return `document_${index}`;
+    }
+  };
   const handleUpdate = () => {
     // Check if editing is allowed
     if (!isEditingAllowed()) {
@@ -182,15 +194,7 @@ const DocumentInfo = ({ profileData }) => {
 
     const formData = new FormData();
 
-    // Map index to field name
-    const getFieldName = (index) => {
-      switch (index) {
-        case 0: return "application_letter";
-        case 1: return "trade_license";
-        case 2: return "registration_license";
-        default: return `document_${index}`;
-      }
-    };
+
 
     changedDocuments.forEach(index => {
       if (data[index]?.doc_url) {
@@ -227,39 +231,6 @@ const DocumentInfo = ({ profileData }) => {
     }
   };
 
-  const DocumentPreview = ({ docData }) => {
-    if (!docData?.doc_url) return null;
-
-    const containerClass = "w-full h-full cursor-pointer";
-
-    if (isPdfFile(docData)) {
-      return (
-        <div
-          className={`${containerClass} flex flex-col items-center justify-center relative z-20`}
-          onClick={() => handleDocumentClick(docData)}
-        >
-          <FiFileText className="w-16 h-16 text-white mb-2" />
-          <p className="text-white text-sm font-medium">PDF Document</p>
-          <p className="text-white/80 text-xs mt-1 max-w-[90%] truncate">
-            {docData.doc_name || 'Document'}
-          </p>
-        </div>
-      );
-    }
-
-    return (
-      <div
-        className={containerClass}
-        onClick={() => handleDocumentClick(docData)}
-      >
-        <img
-          className="h-44 w-full object-contain relative z-20"
-          src={typeof docData.doc_url === 'string' ? docData.doc_url : URL.createObjectURL(docData.doc_url)}
-          alt="Document"
-        />
-      </div>
-    );
-  };
 
   const ImagePreviewModal = () => {
     if (!showImagePreview) return null;
@@ -289,88 +260,141 @@ const DocumentInfo = ({ profileData }) => {
 
   // Document type labels
   const getDocumentLabel = (index) => {
+
     switch (index) {
-      case 0: return "Application Letter";
-      case 1: return "Trade License";
-      case 2: return "Registration License";
+      case "application_letter_url": return "Application Letter";
+      case "trade_license_url": return "Trade License";
+      case "registration_license_url": return "Registration License";
       default: return "Document";
     }
   };
 
+  const applicationDocs = data.filter((item) => item?.doc_type === "application_letter_url");
+  const tradeDocs = data.filter((item) => item?.doc_type === "trade_license_url");
+  const registrationDocs = data.filter((item) => item?.doc_type === "registration_license_url");
+
+  const TableComponent = (title, docArray) => {
+    return (
+      <div className="overflow-x-auto mt-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3">{title}</h2>
+        <table className="min-w-full table-auto text-sm text-gray-800 border-gray-200">
+          <thead className="">
+            <tr className="bg-[#80808014]">
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">Document Preview</th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">Version</th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">Status</th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">Uploaded Date</th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">Approval/Rejection Date</th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC] ">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {docArray.map((item, index) => (
+              <tr key={`${item?.doc_type}-${index}`} className=" border-gray-200 hover:bg-gray-50">
+                <td className="px-4 py-2 max-w-40 min-w-40">
+                  <div className="w-24 h-28 bg-gray-100 rounded overflow-hidden relative cursor-pointer" onClick={() => handleDocumentClick(item)}>
+                    {item?.doc_url ? (
+                      <img
+                        src={typeof item?.doc_url === 'string' ? item?.doc_url : URL.createObjectURL(item?.doc_url)}
+                        alt="Preview"
+                        className="object-contain h-full w-full"
+                      />
+                    ) : (
+                      <FiFileText className="text-gray-400 w-full h-full p-5" />
+                    )}
+                  </div>
+                </td>
+                <td className="px-4 py-2 max-w-40 min-w-40">{item?.corp_document_id == null & item?.is_reuploaded == 0 ? "Orignal" : "Re-uploaded"}</td>
+                <td className="px-4 py-2 max-w-40 min-w-40">
+                  {getDocStatus(item?.doc_status)}
+                  <br />
+                  {item?.comment != null &&
+                    <span> Comments: ({item?.comment})</span>
+                  }
+                </td>
+                <td className="px-4 max-w-40 min-w-40 py-2">{item?.created_at || '-'}</td>
+                <td className="px-4 max-w-40 min-w-40 py-2">{item?.status_update_date || '-'}</td>
+                <td className="px-4 max-w-40 min-w-40 py-2 text-center">
+                  {item?.corp_document_id == null &&
+                    <>
+                      {(item?.doc_status == "1" && item?.corp_document_id == null) ? (
+                        <label
+                          className="inline-block px-4 py-3 rounded-xl text-white text-xs cursor-pointer bg-secondary hover:bg-green-600"
+                          onClick={() => setShowModal({
+                            show: true,
+                            label: getDocumentLabel(item?.doc_type),
+                            name: item?.doc_type?.slice(0, -4),
+                            id: item?.id
+                          })}
+                        >
+                          Re-upload Document
+                        </label>
+                      ) : (
+                        <label
+                          className="inline-block px-4 py-3 rounded-xl text-white text-xs cursor-pointer bg-secondary hover:bg-green-600"
+                          onClick={() => setShowModal({
+                            show: true,
+                            label: getDocumentLabel(item?.doc_type),
+                            name: item?.doc_type?.slice(0, -4),
+                            id: item?.id
+                          })}
+                        >
+                          Upload Document
+                        </label>
+                        // <label
+                        //   className={`inline-block px-4 py-3 rounded-xl text-white text-xs cursor-pointer ${isEditingAllowed(item?.doc_status)
+                        //     ? 'bg-secondary hover:bg-green-600'
+                        //     : 'bg-gray-400 cursor-not-allowed'
+                        //     }`}
+                        // >
+                        //   Upload Document
+                        //   <input
+                        //     type="file"
+                        //     className="hidden"
+                        //     onChange={(e) => handleChange(e, index)}
+                        //     accept=".jpg,.jpeg,.png,.pdf"
+                        //     disabled={item?.doc_status === "1"}
+                        //   />
+                        // </label>
+                      )}
+                    </>
+                  }
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
+
   return (
     <>
-      {/* Notification for approved documents */}
-      {areDocumentsApproved && (
-        <div className="mt-5 max-w-4xl bg-green-50 border border-green-200 p-4 rounded-lg">
-          <p className="text-green-800 text-sm font-medium">
-            Your documents have been approved. Document uploads are now locked.
-          </p>
-        </div>
-      )}
+      <div className="overflow-x-auto mt-6">
+        {TableComponent("Registration License", registrationDocs)}
+        {TableComponent("Application Letter", applicationDocs)}
+        {TableComponent("Trade License", tradeDocs)}
 
-      {/* Document Sections - Map through all 3 documents */}
-      {[0, 1, 2].map(index => (
-        <div key={index} className="mt-10 flex flex-col md:flex-row items-center max-w-5xl gap-6">
-          <div className="relative h-44 w-40 min-w-40 bg-gray-100 rounded-lg overflow-hidden">
-            <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
-            <DocumentPreview docData={data?.[index]} />
-          </div>
-          <div>
-            <div className="flex items-center flex-col md:flex-row gap-4">
-              <label className={`flex  h-fit items-center md:min-w-[260px] text-sm md:text-base justify-center shadow-xl ${isEditingAllowed(data[index]?.doc_status) ? 'bg-secondary hover:bg-secondary' : 'bg-gray-400 cursor-not-allowed'} rounded-lg text-white text-base px-5 py-3 outline-none w-max`}>
-                Upload {getDocumentLabel(index)}
-                <input
-                  type="file"
-                  className="hidden"
-                  onChange={(e) => handleChange(e, index)}
-                  accept=".jpg,.jpeg,.png,.pdf"
-                  disabled={data[index]?.doc_status == "1" || !isEditingAllowed()}
-                />
-              </label>
-              <div>
-                <p> Document: {getDocumentLabel(index)}</p>
-                { <span className=" font-semibold  text-primary">
-                  Approval Status: {getDocStatus(data?.[index]?.doc_status)}
-                  <br />
-                  <span className=" font-semibold  text-primary">
-                    Approval Time:
-                    <span className="font-medium ">  Within 48 hours of registration</span></span>
-                </span>
-                }
-                {data?.[index]?.doc_status == 2 &&
-                  <p className={`mb-2 font-bold ${data?.[index]?.doc_status == '1' ? 'text-secondary' : 'text-red-700'}`}>
-                    {getDocStatus(data?.[index]?.doc_status)} {data?.[index]?.doc_status == 2 && <span className=" font-semibold  text-primary">(Reason for Rejection : <span className="font-medium ">{data?.[index]?.comment}</span>)</span>
-                    }
-                  </p>
-                }
-                {!isEditingAllowed() && (
-                  <p className="mt-1 text-xs text-red-600">
-                    Document uploads are locked after approval
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-      <p className=" mt-10 text-sm text-[#555]">
-        Only JPG, JPEG, PNG, or PDF files can be uploaded, and each file must not exceed 3MB.
-      </p>
-         <p className=" mt-1 text-sm text-[#555]">
-        Once documents are approved, they cannot be edited.
-      </p>
-      <div className="mt-4 max-w-5xl text-center">
-
-        <button
-          className={`${isEditingAllowed() ? 'bg-secondary' : 'bg-gray-400 cursor-not-allowed'} text-white font-medium px-10 py-3 rounded-lg`}
-          onClick={handleUpdate}
-          disabled={changedDocuments.length === 0 || !isEditingAllowed()}
-        >
-          Update Document
-        </button>
+        <p className="mt-8 text-xs text-gray-600 italic">
+          Note: Documents Approval Time - within 48 hours of Registration
+        </p>
       </div>
 
+      {/* Notification for approved documents */}
+      {/* {areDocumentsApproved && (
+        <div className="mt-5 max-w-4xl bg-green-50 border border-green-200 p-4 rounded-lg">
+          <p className="text-green-800 text-sm font-medium">
+            Your documents have been approved. You can reupload the latest document.
+          </p>
+        </div>
+      )} */}
       <ImagePreviewModal />
+      <UploadSingleDocument
+        open={showModal}
+        setOpen={setShowModal}
+        checkDocument={checkDocument}
+      />
     </>
   );
 };

@@ -60,7 +60,8 @@ export const useRegisterHook = () => {
       });
   };
 
-  const handleVerifyOtp = (code, setNewNumber, newNumber) => {
+// ...existing code...
+const handleVerifyOtp = (code, setNewNumber, newNumber) => {
     const data = {
       otp_id: otpId,
       otp_code: code,
@@ -70,10 +71,11 @@ export const useRegisterHook = () => {
       .then((res) => {
         if (res?.success) {
           toast.success(res?.message || "");
+          setVerified(true);
+          setExpirationTime(null); // <-- Stop the timer after OTP is verified
           if (newNumber) {
             setNewNumber(false);
           }
-          setVerified(true);
         } else {
           toast.error(res?.message);
           setVerified(false);
@@ -86,6 +88,7 @@ export const useRegisterHook = () => {
         setVerified(false);
       });
   };
+// ...existing code...
 
   const handleRegister = (data, setActiveStep, reset) => {
     const otp = localStorage.getItem("otp");

@@ -6,6 +6,7 @@ import { Button, Checkbox } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { ConstentRoutes } from "../../../utilities/routesConst";
 
 const LoginForm = () => {
   const registerHook = useRegisterHook();
@@ -29,6 +30,24 @@ const LoginForm = () => {
       setRememberMe(true);
     }
   }, []);
+
+  useEffect(() => {
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  if (token && user) {
+       if (user?.customer_type == 'individual') {
+                 navigate(ConstentRoutes.dashboardCustomer);
+              }
+              else {
+              
+                  navigate(ConstentRoutes.dashboard);
+               }
+    // User already logged in, redirect or block re-login
+    alert('Already logged in. Please log out before logging in with a different account.');
+    window.location.href = '/dashboard'; // or wherever the user should go
+  }
+}, []);
 
 
   const onSubmit = (data) => {
