@@ -110,7 +110,7 @@ const ChangeNumberDetailPage = () => {
             .then((res) => {
 
                 if (res?.success) {
-                    window.open(res?.data, "_blank");
+                    window.location.replace(res?.data);
                     setIsPaymentDisable(true)
                     toast.success(res?.message || "Failed to change number");
                     // setIsOpen(true);

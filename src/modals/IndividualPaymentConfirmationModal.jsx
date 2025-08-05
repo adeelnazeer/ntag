@@ -15,6 +15,8 @@ const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumbe
   const recurringFeeAmount = state?.service_fee || state?.recurring_fee_amount || 0;
   const recurringFeeLabel = state?.service_id || state?.recurring_fee_label || "Monthly";
 
+  console.log({ state })
+
   return (
     <div className="fixed p-2 inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm">
       <div className="relative w-full max-w-md max-h-[92%] overflow-auto rounded-2xl bg-white p-6">
@@ -105,9 +107,9 @@ const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumbe
               </Typography>
             </div>
             <div className="mb-3">
-              <Typography className="text-sm text-gray-500">{recurringFeeLabel} Recurring Fee</Typography>
+              <Typography className="text-sm text-gray-500">{state?.selectedFeeLabel ?? recurringFeeLabel} Recurring Fee</Typography>
               <Typography className="text-base font-medium">
-                {formatPrice(state?.monthly_fee || state?.service_fee)} ETB
+                {formatPrice(state?.selectedAmount || state?.monthly_fee || state?.service_fee)} ETB
               </Typography>
             </div>
             {!isChangeNumber &&

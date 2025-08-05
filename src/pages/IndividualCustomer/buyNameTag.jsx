@@ -227,15 +227,18 @@ const TagNamesIndividual = () => {
                         <span>Action Required: Authorize Recurring Payment </span>
                         <br />
                         <span className=" md:block hidden text-blue-600">
-                            To keep your NameTAG number active, authorize recurring payments via telebirr. You’ll get a PIN prompt via push notification. Without authorization, your NameTAG number will be suspened after 30 days.
+                            To keep your NameTAG number active, please authorize recurring payments via telebirr.
+                            You will receive a PIN prompt via push notification.
+                            If not authorized, your NameTAG number will be suspended 30 days after the recurring fee due date.
                             <Button className=" ml-1 cursor-pointer text-white px-2 py-2 bg-secondary"
                                 onClick={() => {
                                     handleConfirmStatusChange(single)
                                 }}
                             > Accept</Button></span>
                         <span className="md:hidden block text-blue-600">
-                            Keep your NameTAG active! Authorize recurring subscription fee via telebirr (push notification with PIN required). No charge for 1st month. Failure to authorize will deactivate your number in 30 days.
-                            <Button className=" ml-1 cursor-pointer text-white px-2 py-2 bg-secondary"
+                            To keep your NameTAG number active, please authorize recurring payments via telebirr.
+                            You will receive a PIN prompt via push notification.
+                            If not authorized, your NameTAG number will be suspended 30 days after the recurring fee due date.                            <Button className=" ml-1 cursor-pointer text-white px-2 py-2 bg-secondary"
                                 onClick={() => {
                                     handleConfirmStatusChange(single)
                                 }}

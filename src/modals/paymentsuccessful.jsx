@@ -59,6 +59,9 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
     state?.total_amount || state?.totalPrice || (vatableTotalAmount + vatAmount + stampDuty)
   );
 
+
+  console.log("payment success", { state })
+
   return (
     <>
       {isOpen && (
@@ -122,14 +125,75 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
                 </div>
 
                 {/* {state?.tag_list_type == "vip_tag_list" && ( */}
-                  <div className="flex justify-between mt-3 items-center">
-                    <h1 className="text-[#7A798A] text-xs md:text-sm">NameTAG Category</h1>
-                    <p className="text-xs md:text-sm  text-secondary">{state?.tag_type}</p>
-                  </div>
+                <div className="flex justify-between mt-3 items-center">
+                  <h1 className="text-[#7A798A] text-xs md:text-sm">NameTAG Category</h1>
+                  <p className="text-xs md:text-sm  text-secondary">{state?.tag_type}</p>
+                </div>
                 {/* )} */}
 
+                
+                <div className="flex justify-between mt-3 items-center border-t">
+                  <h1 className="text-[#7A798A] text-xs md:text-sm">Subscription Fee</h1>
+                  <p className="text-xs md:text-sm ">                    {Number(state?.tag_price)?.toFixed(2) || ""} ETB
+                  </p>
+                </div>
+                <div className="flex justify-between mt-3 items-center border-t">
+                  <h1 className="text-[#7A798A] text-xs md:text-sm">{recurringFeeLabel} Recurring Fee</h1>
+                  <p className="text-xs md:text-sm ">{recurringFeeAmount.toFixed(2)} ETB</p>
+                </div>
                 {/* Detailed Price Breakdown with tax components */}
-                <div className="mt-3 border-t pt-3">
+                <div className=" rounded-xl mt-4">
+                  <Typography className="text-[16px] font-medium mb-2 border-b">
+                    Price Breakdown
+                  </Typography>
+
+                  <div className="flex justify-between">
+                    <Typography className="text-[14px]">Sub Total </Typography>
+                    <Typography className="text-[14px] ">
+                      {(state?.base_price || "")} ETB
+                    </Typography>
+                  </div>
+                  <div className="flex justify-between mt-2">
+                    <Typography className="text-[14px]">VAT (15%)</Typography>
+                    <Typography className="text-[14px] ">
+                      {state?.VAT || ""} ETB
+                    </Typography>
+                  </div>
+                  <div className="flex justify-between mt-2">
+                    <Typography className="text-[14px]">Excise Tax</Typography>
+                    <Typography className="text-[14px] ">
+                      {state.excisetax || ""} ETB
+                    </Typography>
+                  </div>
+
+                  {/* <div className="flex justify-between mt-2">
+             <Typography className="text-[14px] font-bold">Vatable Total</Typography>
+             <Typography className="text-[14px] font-bold">
+               {vatableTotalAmount.toFixed(2)} ETB
+             </Typography>
+           </div> */}
+
+
+
+                  <div className="flex justify-between mt-2">
+                    <Typography className="text-[14px]">Stamp Duty</Typography>
+                    <Typography className="text-[14px] ">
+                      {state?.stamp_duty || ""} ETB
+                    </Typography>
+                  </div>
+
+                  <div className="flex justify-between mt-3 border-t py-2 font-medium">
+                    <div className="flex items-center gap-2">
+                      <Typography className="text-[14px] font-bold">Total Amount </Typography>
+
+                    </div>
+                    <Typography className="text-[14px] font-bold">
+                      {state?.total_amount || ""} ETB
+                    </Typography>
+                  </div>
+                </div>
+
+                {/* <div className="mt-3 border-t pt-3">
                   <h1 className="text-[#000000] text-xs md:text-sm font-medium mb-2">Price Breakdown</h1>
 
                   <div className="flex justify-between mt-2 items-center">
@@ -146,10 +210,7 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
                     <p className="text-xs md:text-sm ">{exciseTax.toFixed(2)} ETB</p>
                   </div>
 
-                  {/* <div className="flex justify-between mt-2 items-center">
-                    <h1 className="text-[#7A798A] text-xs md:text-sm ">Vatable Total</h1>
-                    <p className="text-xs md:text-sm ">{vatableTotalAmount.toFixed(2)} ETB</p>
-                  </div> */}
+              
 
 
                   <div className="flex justify-between mt-2 items-center">
@@ -166,7 +227,7 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
                 <div className="flex justify-between mt-3 items-center border-t pt-3">
                   <h1 className="text-[#7A798A] text-xs md:text-sm">{recurringFeeLabel} Recurring Fee</h1>
                   <p className="text-xs md:text-sm ">{recurringFeeAmount.toFixed(2)} ETB</p>
-                </div>
+                </div> */}
 
 
               </div>

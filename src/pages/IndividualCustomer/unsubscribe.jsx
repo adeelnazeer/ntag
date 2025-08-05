@@ -16,6 +16,7 @@ import { formatPhoneNumberCustom } from '../../utilities/formatMobileNumber';
 function UnsubscribeCustomer() {
   const navigate = useNavigate();
   const [tagData, setTagData] = useState([]);
+  const [tagNo, setTagNo] = useState("")
   const [loading, setLoading] = useState(true);
   const [unsubscribing, setUnsubscribing] = useState(false);
 
@@ -121,7 +122,11 @@ function UnsubscribeCustomer() {
           <Button
             size={'sm'}
             className="bg-red-500 text-white text-[14px]"
-            onClick={() => confirmUnsubscribe(tag?.reserve_tag_id)}
+            onClick={() => {
+              confirmUnsubscribe(tag?.reserve_tag_id)
+              setTagNo(tagInfo?.tag_no)
+
+            }}
             disabled={unsubscribing}
           >
             {unsubscribing && selectedTagId === tag?.reserve_tag_id ? "Processing..." : "Unsubscribe"}
@@ -177,6 +182,7 @@ function UnsubscribeCustomer() {
         modalAction="unsubscribe"
         onConfirm={handleConfirmUnsubscribe}
         isIndividual={true}
+        tagNo={tagNo}
       />
     </div>
   );

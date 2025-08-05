@@ -72,9 +72,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
     }, []);
 
     // Update dropdown state when routes change
-    useEffect(() => {
-        setOpenManageMenu(activeThree);
-    }, [activeThree]);
+ 
 
     // Listen for changes in localStorage from other components
     useEffect(() => {

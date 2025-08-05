@@ -820,7 +820,8 @@ const TagDetails = () => {
       vat: priceBreakdown?.totalVAT,
       stamp_duty: priceBreakdown?.stampDuty,
       total_amount: priceBreakdown?.totalPrice,
-      exchange_days_adjust: adjustableday,
+      // exchange_days_adjust: adjustableday, this will be used in future
+      exchange_days_adjust: "0",
       dues: stateData?.currentTagData?.dues || 0,
       next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null
     };
@@ -851,7 +852,7 @@ const TagDetails = () => {
           VAT: priceBreakdown?.totalVAT,
           stamp_duty: priceBreakdown?.stampDuty,
           total_amount: priceBreakdown?.totalPrice,
-          exchange_days_adjust: adjustableday,
+          exchange_days_adjust: "0",
           next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null
         };
       } else if (state?.tag_list_type === "corp_tag_list") {
@@ -876,7 +877,7 @@ const TagDetails = () => {
           VAT: priceBreakdown?.totalVAT,
           stamp_duty: priceBreakdown?.stampDuty,
           total_amount: priceBreakdown?.totalBasePrice,
-          exchange_days_adjust: adjustableday,
+          exchange_days_adjust: "0",
           next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null
         };
       } else {
@@ -902,7 +903,7 @@ const TagDetails = () => {
           VAT: priceBreakdown?.totalVAT,
           stamp_duty: priceBreakdown?.stampDuty,
           total_amount: priceBreakdown?.totalPrice,
-          exchange_days_adjust: adjustableday,
+          exchange_days_adjust: "0",
           next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null
         };
       }
@@ -924,7 +925,7 @@ const TagDetails = () => {
             }, 5 * 60 * 1000);
             if (!res?.data?.corp_reserved_tag_id) {
               localStorage.setItem('merchId', payload?.corp_reserve_tag_id || null);
-              window.open(res?.data, "_blank");
+              window.location.replace(res?.data);
             } else {
               toast.success(res?.message || "");
               setIsOpen(true);
@@ -960,7 +961,7 @@ const TagDetails = () => {
       tag_list_type: tagListType, // Set the correct tag list type
       is_premium: isPremium, // Set is_premium flag
       action_type: currentAction, // Add action type (buy or reserve)
-      exchange_days_adjust: adjustableday,
+      exchange_days_adjust: "0",
       next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null
     }
     setStateValue(payLoad)
@@ -1001,7 +1002,7 @@ const TagDetails = () => {
         recurring_fee_label: selectedFeeLabel,
         recurring_fee_amount: selectedFeeAmount,
         service_id: selectedFeeLabel,
-        exchange_days_adjust: adjustableday,
+        exchange_days_adjust: "0",
         dues: stateData?.currentTagData?.dues || 0,
         next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null,
         // Include is_premium flag if it exists
@@ -1361,17 +1362,17 @@ const TagDetails = () => {
                   {Number(selectedFeeAmount)?.toFixed(2)} ETB
                 </Typography>
               </div>
-              {isExchangeFlow &&
+              {(isExchangeFlow && stateData?.currentTagData?.dues < 0) &&
                 <div className="flex justify-between mt-2">
                   <Typography className="text-[14px]">
-                    {stateData?.currentTagData?.dues < 0 ? "Outstanding" : "Adjustable"} Recurring Fee (Previous Plan)
+                    {"Outstanding"} Recurring Fee (Previous Plan)
                   </Typography>
                   <Typography className="text-[14px] ">
                     {Math.abs(stateData?.currentTagData?.dues)?.toFixed(2) || ""} ETB
                   </Typography>
                 </div>
               }
-              {(stateData?.currentTagData?.dues > 0 && isExchangeFlow) &&
+              {/* {(stateData?.currentTagData?.dues > 0 && isExchangeFlow) &&
                 <div className="flex justify-between mt-2">
                   <Typography className="text-[14px]">
                     Adjustable Days (Previous Plan)
@@ -1379,7 +1380,7 @@ const TagDetails = () => {
                   <Typography className="text-[14px] ">
                     {adjustableday} Day(s)
                   </Typography>
-                </div>}
+                </div>} */}
             </div>
           </div>
 
@@ -1516,7 +1517,8 @@ const TagDetails = () => {
           stamp_duty: priceBreakdown?.stampDuty,
           base_price: priceBreakdown?.totalBasePrice,
           total_amount: priceBreakdown?.totalPrice,
-          selectedAmount: selectedFeeAmount
+          selectedAmount: selectedFeeAmount,
+          selectedFeeLabel:selectedFeeLabel
         }} // Use enhanced state data
         phoneNumber={`+${stateData?.currentTagData?.msisdn}`}
         reserve_tag_id={stateData?.reserve_tag_id}
@@ -1530,7 +1532,17 @@ const TagDetails = () => {
         <Paymentsuccessful
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          state={stateData} // Use enhanced state data
+           state={{
+          ...stateData,
+          excisetax: priceBreakdown?.excisetax,
+          vatable_total: priceBreakdown?.totalPrice,
+          VAT: priceBreakdown?.totalVAT,
+          stamp_duty: priceBreakdown?.stampDuty,
+          base_price: priceBreakdown?.totalBasePrice,
+          total_amount: priceBreakdown?.totalPrice,
+          selectedAmount: selectedFeeAmount,
+          selectedFeeLabel:selectedFeeLabel
+        }}
           user={`+${stateData?.currentTagData?.msisdn}`}
           isCustomer={true}
           isExchangeFlow={isExchangeFlow}

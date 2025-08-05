@@ -339,7 +339,7 @@ const ProceedPayment = () => {
             }, 5 * 60 * 1000);
             if (!res?.data?.corp_reserved_tag_id) {
               localStorage.setItem('merchId', payload?.corp_reserve_tag_id || null);
-              window.open(res?.data, "_blank");
+              window.location.replace(res?.data);
             } else {
               toast.success(res?.message || "");
               setIsOpen(true);

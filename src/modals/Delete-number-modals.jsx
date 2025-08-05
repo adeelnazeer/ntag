@@ -20,10 +20,10 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onDelete, selectedNumber, pr
           </h5>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-3">
           <div className="rounded-xl bg-gray-50 p-4">
             <p className="text-sm text-gray-700">
-              Are you sure you want to delete the mobile number {selectedNumber?.msisdn}?
+              Are you sure you want to delete the mobile number +{selectedNumber?.msisdn}?
             </p>
           </div>
         </div>
