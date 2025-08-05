@@ -162,14 +162,32 @@ const Schedulecall = () => {
         </DialogHeader>
         <DialogBody divider>
           <Typography className="text-[14px]">
-            Are you sure you want to {selectedSchedule?.incoming_call_status ? 'activate' : 'deactivate'} incoming calls
-            {selectedSchedule?.incoming_call_status && selectedSchedule?.incall_start_dt ?
+            {selectedSchedule?.incoming_call_status ?
+              <span>
+                Are you sure you want to schedule incoming calls between {selectedSchedule?.incoming_call_status && selectedSchedule?.incall_start_dt ?
+                  (() => {
+                    const start = formatDateTime(selectedSchedule?.incall_start_dt);
+                    const end = formatDateTime(selectedSchedule?.incall_end_dt);
+                    return ` from ${start.time} ${start.date} to ${end.time} ${end.date}`;
+                  })() :
+                  ''}?
+
+              </span>
+              :
+              <span>
+                Are you sure you want to turn off incoming call scheduling?
+                <br />
+                Once disabled, you will receive calls 24/7 on your NameTAG.
+              </span>
+            }
+            {/* Are you sure you want to {selectedSchedule?.incoming_call_status ? 'activate' : 'deactivate'} incoming calls */}
+            {/* {selectedSchedule?.incoming_call_status && selectedSchedule?.incall_start_dt ?
               (() => {
                 const start = formatDateTime(selectedSchedule?.incall_start_dt);
                 const end = formatDateTime(selectedSchedule?.incall_end_dt);
                 return ` from ${start.time} ${start.date} to ${end.time} ${end.date}`;
               })() :
-              ''}?
+              ''}? */}
           </Typography>
         </DialogBody>
         <DialogFooter className="space-x-2">
@@ -357,7 +375,7 @@ const Schedulecall = () => {
                               selected={getDateTime(single?.incall_start_dt, true)}
                               onChange={(date) => handleDateChange(date, 'start', index)}
                               showTimeSelect
-                              timeIntervals={15}
+                              timeIntervals={1}
                               timeCaption="Time"
                               dateFormat="h:mm aa d MMMM yyyy"
                               minDate={new Date()}
@@ -383,7 +401,7 @@ const Schedulecall = () => {
                               showTimeSelect
                               dateFormat="h:mm aa d MMMM yyyy"
                               minDate={single?.incall_start_dt ? new Date(single?.incall_start_dt) : new Date()}
-                              timeIntervals={15}
+                              timeIntervals={1}
                               timeCaption="Time"
                               filterTime={(time) => filterPassedTime(time, single?.incall_start_dt)}
                               customInput={

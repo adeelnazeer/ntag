@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import moment from 'moment';
 import logo from '../assets/images/logo.png';
@@ -103,11 +104,16 @@ const NameTagReceipt = ({ paymentData }) => {
                 <td className="font-bold py-0.5">Invoice Date:</td>
                 <td className="py-0.5">{formattedDate}</td>
               </tr>
-
-              <tr>
-                <td className="font-bold py-0.5">Fayda Number:</td>
-                <td className="py-0.5">{userData.cnic}</td>
-              </tr>
+              {userData?.customer_type == "corporate" ?
+                <tr>
+                  <td className="font-bold py-0.5">TIN Number:</td>
+                  <td className="py-0.5">{userData.ntn}</td>
+                </tr> :
+                <tr>
+                  <td className="font-bold py-0.5">Fayda Number:</td>
+                  <td className="py-0.5">{userData.cnic}</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>
@@ -121,7 +127,7 @@ const NameTagReceipt = ({ paymentData }) => {
         <table className="w-full border-collapse border border-gray-300 text-sm">
           <thead>
             <tr>
-              <th className="border border-gray-300 p-1 text-left font-medium w-24">TAG No</th>
+              <th className="border border-gray-300 p-1 text-left font-medium w-24">NameTAG No</th>
               <th className="border border-gray-300 p-1 text-left font-medium">Description</th>
             </tr>
           </thead>
@@ -139,19 +145,33 @@ const NameTagReceipt = ({ paymentData }) => {
 
         {/* Summary info - separate table with right-aligned headers */}
         <div className="w-full">
+          {paymentData?.outstanding_recurring_fee > 0 &&
+            <div className="flex justify-end border-x border-gray-300">
+              <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Outstanding Recurring Fee (Previous Plan)</div>
+              <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(paymentData?.outstanding_recurring_fee || 0)?.toFixed(2)} {'ETB'}</div>
+            </div>
+          }
+          <div className="flex justify-end border-x border-gray-300">
+            <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Recurring Fee</div>
+            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(paymentData?.recurring_fee || 0)?.toFixed(2)} {'ETB'}</div>
+          </div>
+          <div className="flex justify-end border-x border-gray-300">
+            <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Subscription Fee</div>
+            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(paymentData?.subscription_fee || 0)?.toFixed(2)} {'ETB'}</div>
+          </div>
           <div className="flex justify-end border-x border-gray-300">
             <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Sub Total</div>
-            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(Number(total_amount) - Number(vat))?.toFixed(2)} {'ETB'}</div>
+            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(Number(total_amount || 0) - Number(vat || 0))?.toFixed(2)} {'ETB'}</div>
           </div>
           <div className="flex justify-end border-x border-gray-300">
             <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">VAT (15%)</div>
-            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{vat} {'ETB'}</div>
+            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(vat)?.toFixed(2) || 0} {'ETB'}</div>
           </div>
           {/* Only show excise tax if it exists in data and is greater than 0 */}
           {/* {excisetax && Number(excisetax) > 0 && ( */}
           <div className="flex justify-end border-x border-gray-300">
             <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Excise Tax</div>
-            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{excisetax} {'ETB'}</div>
+            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(excisetax || 0)?.toFixed(2)} {'ETB'}</div>
           </div>
           {/* )} */}
 
@@ -172,7 +192,7 @@ const NameTagReceipt = ({ paymentData }) => {
           {/* {stamp_duty && Number(stamp_duty) > 0 && ( */}
           <div className="flex justify-end border-x border-gray-300">
             <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Stamp Duty</div>
-            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{stamp_duty} {'ETB'}</div>
+            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(stamp_duty)?.toFixed(2)} {'ETB'}</div>
           </div>
           {/* )} */}
 

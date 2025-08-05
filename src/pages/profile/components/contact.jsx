@@ -74,13 +74,13 @@ const ContactInfo = ({ profileData }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Notification for approved documents */}
-      {areDocumentsApproved && (
+      {/* {areDocumentsApproved && (
         <div className="mt-5 max-w-3xl bg-green-50 border border-green-200 p-4 rounded-lg">
           <p className="text-green-800 text-sm font-medium">
             Your documents have been approved. Contact information is now locked.
           </p>
         </div>
-      )}
+      )} */}
 
       <div className="mt-10 grid max-w-3xl md:grid-cols-2 grid-cols-1 gap-6">
         <div>
@@ -88,7 +88,7 @@ const ContactInfo = ({ profileData }) => {
             First Name
           </label>
           <Input
-            className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none ${formDisabled ? 'bg-gray-100' : ''}`}
+            className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none `}
             placeholder="First Name"
             maxLength={15}
             style={
@@ -97,7 +97,7 @@ const ContactInfo = ({ profileData }) => {
                 : { border: "1px solid #8A8AA033" }
             }
             {...register("contact_fname", { required: true })}
-            disabled={formDisabled}
+            // disabled={formDisabled}
           />
         </div>
         <div>
@@ -105,7 +105,7 @@ const ContactInfo = ({ profileData }) => {
             Father Name
           </label>
           <Input
-            className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none ${formDisabled ? 'bg-gray-100' : ''}`}
+            className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none `}
             placeholder="Father Name"
             maxLength={15}
             style={
@@ -114,7 +114,7 @@ const ContactInfo = ({ profileData }) => {
                 : { border: "1px solid #8A8AA033" }
             }
             {...register("contact_lname", { required: true })}
-            disabled={formDisabled}
+            // disabled={formDisabled}
           />
         </div>
         <div>
@@ -122,7 +122,7 @@ const ContactInfo = ({ profileData }) => {
             Email
           </label>
           <Input
-            className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none ${formDisabled ? 'bg-gray-100' : ''}`}
+            className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none `}
             placeholder="Email"
             maxLength={30}
             style={
@@ -137,7 +137,7 @@ const ContactInfo = ({ profileData }) => {
                 message: "Email must end with a domain of 2 to 4 letters (e.g., .com, .info)",
               }
             })}
-            disabled={formDisabled}
+            // disabled={formDisabled}
           />
         </div>
         <div>
@@ -180,7 +180,7 @@ const ContactInfo = ({ profileData }) => {
                 message: "Number must start with 2519 and be 12 digits long",
               },
             })}
-            disabled={formDisabled}
+            // disabled={formDisabled}
           />
           {(errors.contact_no) && (
             <p className="text-left mt-1 text-sm text-[#FF0000]">
@@ -207,8 +207,8 @@ const ContactInfo = ({ profileData }) => {
       </div>
       <div className="mt-10 max-w-3xl text-center">
         <button
-          className={`${!formDisabled ? 'bg-secondary' : 'bg-gray-400 cursor-not-allowed'} text-white font-medium px-10 py-3 rounded-lg`}
-          disabled={formDisabled}
+          className={` text-white font-medium px-10 py-3 rounded-lg`}
+          // disabled={formDisabled}
         >
           Update Contact Information
         </button>

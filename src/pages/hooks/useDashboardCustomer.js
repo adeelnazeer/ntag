@@ -123,7 +123,7 @@ export const useTagListCustomer = () => {
                     if (tagData?.type == "buy") {
                         setPaymentType(false)
                         localStorage.setItem('merchId', payload?.corp_reserve_tag_id || null);
-                        window.open(res?.data, "_blank");
+                        window.location.replace(res?.data);
                     } else {
                         toast.success(res?.message || "");
                         // navigate(ConstentRoutes.dashboardCustomer);
@@ -148,7 +148,7 @@ export const useTagListCustomer = () => {
             .then((res) => {
                 setLoadingPayment(false);
                 if (res?.success) {
-                    window.open(res?.data, "_blank");
+                    window.location.replace(res?.data);
                     toast.success(res?.message || "TAG changed successfully");
                     setPaymentType(false)
                     //   setIsOpen(true);

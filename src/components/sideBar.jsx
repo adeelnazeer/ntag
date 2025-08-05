@@ -43,9 +43,9 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
   const [openManageMenu, setOpenManageMenu] = useState(activeThree);
 
   // Update dropdown state when routes change
-  useEffect(() => {
-    setOpenManageMenu(activeThree);
-  }, [activeThree]);
+  // useEffect(() => {
+  //   setOpenManageMenu(activeThree);
+  // }, [activeThree]);
 
   const handleLogOut = () => {
     dispatch(clearUserData());

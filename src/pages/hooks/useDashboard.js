@@ -140,7 +140,7 @@ export const useTagList = () => {
           }, 5 * 60 * 1000);
           if (!res?.data?.corp_reserved_tag_id) {
             localStorage.setItem('merchId', payload?.corp_reserve_tag_id || null);
-            window.open(res?.data, "_blank");
+            window.location.replace(res?.data);
           } else {
             toast.success(res?.message || "");
             setOpenModal(true);
@@ -163,7 +163,7 @@ export const useTagList = () => {
       .then((res) => {
         setLoadingPayment(false);
         if (res?.success) {
-          window.open(res?.data, "_blank");
+          window.location.replace(res?.data);
           toast.success(res?.message || "TAG changed successfully");
           setPaymentType(false)
           //   setIsOpen(true);

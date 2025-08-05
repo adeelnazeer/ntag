@@ -155,7 +155,7 @@ function ChangeNumber() {
                                 <table className="min-w-full bg-white">
                                     <thead className="bg-[#F6F7FB]">
                                         <tr>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">TAG Number</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">NameTAG Number</th>
                                             <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Mobile Number</th>
                                             <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Mobile Number Type</th>
 

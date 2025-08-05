@@ -59,13 +59,13 @@ const CompanyInfo = ({ profileData }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Notification for approved documents */}
-      {!isEditingAllowed && (
+      {/* {!isEditingAllowed && (
         <div className="mt-5 max-w-3xl bg-green-50 border border-green-200 p-4 rounded-lg">
           <p className="text-green-800 text-sm font-medium">
             Your documents have been approved. Company information cannot be modified.
           </p>
         </div>
-      )}
+      )} */}
 
       <div className="mt-10 grid max-w-3xl md:grid-cols-2 grid-cols-1 gap-6">
         <div>
@@ -93,8 +93,7 @@ const CompanyInfo = ({ profileData }) => {
             Email
           </label>
           <Input
-            {...getInputStyle(errors.email)}
-            readOnly={true} // Always read-only
+            className={`mt-2 w-full rounded-xl px-4 py-2  bg-white outline-none border border-[#8A8AA033]`}
             {...register("email", { required: true })}
           />
         </div>
@@ -103,7 +102,7 @@ const CompanyInfo = ({ profileData }) => {
             Industry
           </label>
           <Input
-            {...getInputStyle(errors.comp_industry)}
+            className={`mt-2 w-full rounded-xl px-4 py-2  bg-white outline-none border border-[#8A8AA033]`}
             maxLength={20}
             {...register("comp_industry", { required: true })}
           />
@@ -126,9 +125,11 @@ const CompanyInfo = ({ profileData }) => {
             City
           </label>
           <Input
-            {...getInputStyle(errors.comp_city)}
-            maxLength={20}
-            {...register("comp_city", { required: true })}
+            className={`mt-2 w-full rounded-xl px-4 py-2  bg-white outline-none border border-[#8A8AA033]`}
+
+            // {...getInputStyle(errors.comp_city)}
+          maxLength={20}
+          {...register("comp_city", { required: true })}
           />
         </div>
         <div>
@@ -136,7 +137,7 @@ const CompanyInfo = ({ profileData }) => {
             Specific Address
           </label>
           <Input
-            {...getInputStyle(errors.comp_addr)}
+            className={`mt-2 w-full rounded-xl px-4 py-2  bg-white outline-none border border-[#8A8AA033]`}
             maxLength={100}
             {...register("comp_addr", { required: true })}
           />
@@ -172,8 +173,8 @@ const CompanyInfo = ({ profileData }) => {
       </div>
       <div className="mt-10 max-w-3xl text-center">
         <button
-          className={`${isEditingAllowed ? 'bg-secondary' : 'bg-gray-400 cursor-not-allowed'} text-white font-medium px-10 py-3 rounded-lg`}
-          disabled={!isEditingAllowed}
+          className={` text-white font-medium px-10 py-3 rounded-lg`}
+        // disabled={!isEditingAllowed}
         >
           Update Company Information
         </button>

@@ -154,9 +154,9 @@ const TagDetailsCustomer = () => {
             recurring_fee_label: selectedFeeLabel,
             recurring_fee_amount: selectedFeeAmount,
             service_id: selectedFeeLabel,
-            exchange_days_adjust: adjustableday,
+            exchange_days_adjust: "0",
             next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null,
-            dues:stateData?.currentTagData?.[0]?.dues || 0,
+            dues: stateData?.currentTagData?.[0]?.dues || 0,
             // Include is_premium flag if it exists
             is_premium: isPremium,
             is_exchange_number: isExchangeFlow,
@@ -238,11 +238,11 @@ const TagDetailsCustomer = () => {
                 {isExchangeFlow && (
                     <div className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 mb-4">
                         <Typography className=" font-bold">
-                            TAG Exchange Mode
+                            NameTAG Exchange Mode
                         </Typography>
                         <Typography className="text-sm mt-1">
-                            You are about to change your current TAG #{currentTagData?.[0]?.tag_no + " " || ""}
-                            to TAG #{tagData?.tag_no}. This action cannot be undone.
+                            You are about to change your current NameTAG #{currentTagData?.[0]?.tag_no + " " || ""}
+                            to NameTAG #{tagData?.tag_no}. This action cannot be undone.
                         </Typography>
                     </div>
                 )}
@@ -339,17 +339,17 @@ const TagDetailsCustomer = () => {
                                     {formatPrice(selectedFeeAmount)} ETB
                                 </Typography>
                             </div>
-                            {isExchangeFlow &&
+                            {isExchangeFlow && (stateData?.currentTagData?.[0]?.dues < 0) &&
                                 <div className="flex justify-between mt-2">
                                     <Typography className="text-[14px]">
-                                        {stateData?.currentTagData?.[0]?.dues < 0 ? "Outstanding" : "Adjustable"} Recurring Fee (Previous Plan)
+                                        {"Outstanding"} Recurring Fee (Previous Plan)
                                     </Typography>
                                     <Typography className="text-[14px] ">
                                         {Math.abs(stateData?.currentTagData?.[0]?.dues)?.toFixed(2) || ""} ETB
                                     </Typography>
                                 </div>
                             }
-                            {(stateData?.currentTagData?.[0]?.dues > 0 && isExchangeFlow) &&
+                            {/* {(stateData?.currentTagData?.[0]?.dues > 0 && isExchangeFlow) &&
                                 <div className="flex justify-between mt-2">
                                     <Typography className="text-[14px]">
                                         Adjustable Days (Previous Plan)
@@ -357,7 +357,7 @@ const TagDetailsCustomer = () => {
                                     <Typography className="text-[14px] ">
                                         {adjustableday} Day(s)
                                     </Typography>
-                                </div>}
+                                </div>} */}
                         </div>
                     </div>
                     {/* Detailed Price Breakdown with tax components */}
@@ -482,7 +482,7 @@ const TagDetailsCustomer = () => {
                                 setType("buy")
                             }}
                         >
-                            {isExchangeFlow ? "Change TAG" : "Buy NameTAG"}
+                            {isExchangeFlow ? "Change NameTAG" : "Buy NameTAG"}
                         </Button>
                         {(!stateData.isReserve && !isExchangeFlow) && (
                             <Button
@@ -533,7 +533,27 @@ const TagDetailsCustomer = () => {
                 <Paymentsuccessful
                     isOpen={isOpen}
                     setIsOpen={setIsOpen}
-                    state={successData || stateData} // Use enhanced state data
+                    state={{
+                        ...successData,
+                        excisetax: priceBreakdown?.excisetax,
+                        vatable_total: priceBreakdown?.totalPrice,
+                        VAT: priceBreakdown?.totalVAT,
+                        stamp_duty: priceBreakdown?.stampDuty,
+                        base_price: priceBreakdown?.totalBasePrice,
+                        total_amount: priceBreakdown?.totalPrice,
+                        selectedAmount: selectedFeeAmount,
+                        selectedFeeLabel: selectedFeeLabel
+                    } || {
+                        ...stateData,
+                        excisetax: priceBreakdown?.excisetax,
+                        vatable_total: priceBreakdown?.totalPrice,
+                        VAT: priceBreakdown?.totalVAT,
+                        stamp_duty: priceBreakdown?.stampDuty,
+                        base_price: priceBreakdown?.totalBasePrice,
+                        total_amount: priceBreakdown?.totalPrice,
+                        selectedAmount: selectedFeeAmount,
+                        selectedFeeLabel: selectedFeeLabel
+                    }}
                     user={`+${userData?.phone_number}`}
                     isCustomer={true}
                     isExchangeFlow={isExchangeFlow}
