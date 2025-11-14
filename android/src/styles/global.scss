@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "fonts.css";
+
+button {
+  outline: none;
+  font-size: 14px !important;
+  text-transform: none !important;
+  &:hover {
+    outline: none;
+    border: 1px solid #8dc63f;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+// /* width */
+// ::-webkit-scrollbar {
+//   width: 10px;
+//   // display: none;
+// }
+
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   background: #f1f1f1;
+// }
+
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   background: #8dc63f;
+// }
+
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   background: #555;
+// }
+
+.react-datepicker__time-container {
+  width: 160px;
+  .react-datepicker__time-box {
+    width: 160px !important;
+  }
+  .react-datepicker__time-list-item {
+    height: 35px !important;
+    padding: 10px !important;
+  }
+}
+
+.react-datepicker__time-list-item--selected {
+  background: #8dc63f !important;
+}
+
+.forgot-phone {
+  .PhoneInputInput {
+    background: transparent !important;
+  }
+}
+.react-datepicker__navigation--next--with-time:not(
+    .react-datepicker__navigation--next--with-today-button
+  ) {
+  right: 42% !important;
+}
+.a-href {
+  &:hover {
+    color: #000;
+  }
+}
+
+@media (max-width: 768px) {
+  .PhoneInputCountry {
+    display: none;
+  }
+}
+
+.login-bg-img {
+  background-image: url("../assets/images/img3.webp");
+  background-size: cover; /* ensures it fills the space */
+  background-position: top; /* centers the image */
+  background-repeat: no-repeat; /* prevents tiling */
+
+   top: 0;
+  left: 0;
+ }
+ .select-payment-option{
+  button{
+    @apply hover:border-[#b0bec5]
+  }
+ }

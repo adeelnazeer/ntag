@@ -1,0 +1,193 @@
+{
+  "title": "የታገዱ ቁጥሮች ያስተዳድሩ",
+  "labels": {
+    "selectRegistered": "የተመዘገበ የሞባይል ቁጥርዎን ይምረጡ",
+    "noMobiles": "ምንም የሞባይል ቁጥሮች አልተገኙም",
+    "yourRegistered": "የተመዘገበ የሞባይል ቁጥርዎ"
+  },
+  "buttons": {
+    "addToBlocklist": "ወደ ማገጃ ዝርዝር አክል",
+    "unblock": "እገዳ አንሳ",
+    "cancel": "ይቅር",
+    "confirm": "ያረጋግጡ",
+    "removing": "በማስወገድ ላይ...",
+    "adding": "በማከል ላይ..."
+  },
+  "table": {
+    "sr": "ተ.ቁ",
+    "blocked": "የታገደ ቁጥር/መለያ",
+    "type": "የቁጥር ዓይነት",
+    "registered": "የተመዘገበ የሞባይል ቁጥር",
+    "channel": "ቻናል",
+    "action": "እርምጃ",
+    "empty": "ምንም የታገዱ ቁጥሮች አልተገኙም"
+  },
+  "confirmDialog": {
+    "title": "ማስወገድን ያረጋግጡ",
+    "desc1": "ይህንን ቁጥር ከማገጃ ዝርዝር ማስወገድ እርግጠኛ ኖት?",
+    "desc2": "ይህ ቁጥር ወደ መለያ ቁጥርዎ (TAG) ጥሪ ማድረግ ይችላል"
+  },
+  "addDialog": {
+    "title": "ወደ ማገጃ ዝርዝር አክል",
+    "subtitle": "እባክዎ ማገድ የሚፈልጉትን ይምረጡ",
+    "mobileOption": "የሞባይል ቁጥር",
+    "tagOption": "መለያ ቁጥር",
+    "mobileLabel": "ለማገድ የሞባይል ቁጥር",
+    "tagLabel": "ለማገድ የመለያ ቁጥር",
+    "formatHint": "ቅርጸት: +251xxxxxxxxx",
+    "tagPlaceholder": "የመለያ ቁጥር ያስገቡ (ለምሳሌ 4642)"
+  },
+  "errors": {
+    "fetchMobiles": "የሞባይል ቁጥሮችን ማምጣት አልተሳካም",
+    "loadMobiles": "የሞባይል ቁጥሮችን በመጫን ላይ ስህተት",
+    "fetchBlocked": "የታገዱ ቁጥሮችን ማምጣት አልተሳካም",
+    "loadBlocked": "የታገዱ ቁጥሮችን በመጫን ላይ ስህተት",
+    "fetchWhitelist": "የነጭ ዝርዝር ቁጥሮችን ማምጣት አልተሳካም",
+    "loadWhitelist": "የነጭ ዝርዝር ቁጥሮችን በመጫን ላይ ስህተት",
+    "removeWhitelist": "ቁጥሩን ከነጭ ዝርዝር በማስወገድ ላይ ስህተት",
+    "addWhitelist": "የነጭ ዝርዝር ቁጥር ማከል አልተሳካም",
+    "required": "የሞባይል ቁጥር ያስፈልጋል",
+    "mustStartCountry": "የሞባይል ቁጥር በ +251 መጀመር አለበት",
+    "mustStart9": "የሞባይል ቁጥሮች ከሀገር ኮድ በኋላ በ 9 መጀመር አለባቸው",
+    "length": "የሞባይል ቁጥር ከሀገር ኮድ በኋላ 9 አሃዞች መሆን አለበት",
+    "tagRequired": "የመለያ ቁጥር ያስፈልጋል",
+    "tagMinLength": "የመለያ ቁጥር ቢያንስ 2 ፊደላት መሆን አለበት",
+    "tagMaxLength": "የመለያ ቁጥር ከ 8 ፊደላት መብለጥ የለበትም",
+    "enterTag": "እባክዎ ለማገድ የመለያ ቁጥር ያስገቡ",
+    "blockOwnTag": "የራስዎን የስም መለያ ማገድ አይችሉም"
+  },
+  "success": {
+    "added": "ቁጥሩ ወደ ማገጃ ዝርዝር በተሳካ ሁኔታ ታክሏል",
+    "removed": "ቁጥሩ ከማገጃ ዝርዝር በተሳካ ሁኔታ ተወግዷል"
+  },
+  "callPinPage": {
+    "title": "የገቢ ጥሪ ሚስጥራዊ ቁጥር (PIN) እና የነጭ ዝርዝር ቁጥሮች ያስተዳድሩ",
+    "labels": {
+      "mobileNumber": "የሞባይል ቁጥር:",
+      "currentPin": "የአሁኑ የጥሪ ሚስጥራዊ ቁጥር:"
+    },
+    "buttons": {
+      "setPin": "ሚስጥራዊ ቁጥር አዘጋጅ",
+      "removePin": "ሚስጥራዊ ቁጥር አስወግድ",
+      "addWhitelist": "ወደ ነጭ ዝርዝር አክል",
+      "cancel": "ይቅር",
+      "confirm": "ያረጋግጡ",
+      "processing": "በማስኬድ ላይ...",
+      "adding": "በማከል ላይ...",
+      "removing": "በማስወገድ ላይ..."
+    },
+    "table": {
+      "headers": {
+        "sr": "ተ.ቁ",
+        "nameTag": "የስም መለያ",
+        "whitelistNumber": "የነጭ ዝርዝር ቁጥር",
+        "whitelistDate": "የነጭ ዝርዝር ቀን",
+        "pin": "ሚስጥራዊ ቁጥር",
+        "action": "እርምጃ"
+      },
+      "empty": {
+        "noPin": "በአሁኑ ጊዜ ለገቢ ጥሪዎች ምንም ሚስጥራዊ ቁጥር አልተዘጋጀም። ቁጥሮችን ወደ ነጭ ዝርዝር ለማከል ሚስጥራዊ ቁጥር ያዘጋጁ።",
+        "noActiveLinked": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም ንቁ የስም መለያ የለም።",
+        "noWhitelist": "ምንም የነጭ ዝርዝር ቁጥር አልተገኘም!"
+      },
+      "actions": {
+        "delete": "ሰርዝ"
+      }
+    },
+    "confirmRemoval": {
+      "title": "ማስወገድን ያረጋግጡ",
+      "description": "የሞባይል ቁጥር +{{number}}ን ከነጭ ዝርዝር ማስወገድ እርግጠኛ ኖት?",
+      "hint": "በነጭ ዝርዝርዎ ላይ ያልሆኑ ደዋዮች ወደ ስም መለያዎ ለመድረስ ትክክለኛውን ሚስጥራዊ ቁጥር ማስገባት አለባቸው።"
+    },
+    "modalPin": {
+      "removeTitle": "ለገቢ ጥሪዎችዎ ሚስጥራዊ ቁጥር ያስወግዱ",
+      "setTitle": "ለገቢ ጥሪዎችዎ ሚስጥራዊ ቁጥር ያዘጋጁ",
+      "descRemove": "ሚስጥራዊ ቁጥሩ አንዴ ከተወገደ፣ ሁሉም ደዋዮች ሚስጥራዊ ቁጥር ሳያስገቡ ወደ ስም መለያዎ መድረስ ይችላሉ።",
+      "descSet": "ለገቢ ጥሪዎች ሚስጥራዊ ቁጥር ማዘጋጀት እርግጠኛ ኖት? ደዋዮችዎ ከስም መለያ ቁጥርዎ ጋር ከመገናኘታቸው በፊት ሚስጥራዊ ቁጥሩን እንዲያስገቡ ይጠበቅባቸዋል።",
+      "nameTag": "የስም መለያ = #{{tag}}",
+      "mobileNumber": "የሞባይል ቁጥር = +{{number}}",
+      "currentPin": "የአሁኑ የጥሪ ሚስጥራዊ ቁጥር = {{pin}}",
+      "notDefined": "አልተገለጸም",
+      "noteNoPin": "ምንም ሚስጥራዊ ቁጥር አያስፈልግም—ደዋዮች ሚስጥራዊ ቁጥሩን ሳያስገቡ ወደ ስም መለያዎ መድረስ ይችላሉ።",
+      "selectSingleDigit": "እባክዎ ነጠላ አሃዝ ሚስጥራዊ ቁጥር ይምረጡ",
+      "selectPinPlaceholder": "ሚስጥራዊ ቁጥር ይምረጡ"
+    },
+    "modalAddWhitelist": {
+      "title": "ወደ ነጭ ዝርዝር አክል",
+      "subtitle": "በነጭ ዝርዝር ውስጥ ያሉ ደዋዮች ያለ ሚስጥራዊ ቁጥር ወደ ስም መለያዎ መደወል ይችላሉ።",
+      "enterMobileLabel": "ወደ ነጭ ዝርዝር ለማከል የሞባይል ቁጥር ያስገቡ",
+      "formatHint": "ቅርጸት: +251xxxxxxxxx",
+      "registeredMobileLabel": "የተመዘገበ የሞባይል ቁጥርዎ"
+    },
+    "toast": {
+      "fetchWhitelistFailed": "የነጭ ዝርዝር ቁጥሮችን ማምጣት አልተሳካም",
+      "loadWhitelistFailed": "የነጭ ዝርዝር ቁጥሮችን በመጫን ላይ ስህተት",
+      "removeWhitelistError": "ቁጥሩን ከነጭ ዝርዝር በማስወገድ ላይ ስህተት",
+      "addWhitelistError": "የነጭ ዝርዝር ቁጥር ማከል አልተሳካም"
+    },
+    "states": {
+      "loading": "በመጫን ላይ..."
+    },
+    "common": {
+      "na": "የለም",
+      "etb": "ብር"
+    }
+  },
+  "blockNumbersPage": {
+    "title": "የታገዱ ቁጥሮች",
+    "statusMessages": {
+      "reserveTitle": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም ንቁ የስም መለያ የለም።",
+      "reserveSubtitle": "እገዳ/እገዳ ማንሳት ባህሪን ለመጠቀም እባክዎ ያስያዙትን መለያ ይግዙ።",
+      "inactiveTitle": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም ንቁ የስም መለያ የለም።",
+      "noneTitle": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም መለያ የለዎትም።",
+      "noneSubtitle": "እገዳ/እገዳ ማንሳት ባህሪን ለመጠቀም እባክዎ መለያ ይግዙ።"
+    },
+    "buttons": {
+      "addToBlocklist": "ወደ ማገጃ ዝርዝር አክል",
+      "unblockNumber": "እገዳ አንሳ",
+      "cancel": "ይቅር",
+      "confirm": "ያረጋግጡ",
+      "adding": "በማከል ላይ...",
+      "removing": "በማስወገድ ላይ..."
+    },
+    "table": {
+      "headers": {
+        "sr": "ተ.ቁ",
+        "blocked": "የታገደ ቁጥር/መለያ",
+        "type": "የቁጥር ዓይነት",
+        "registered": "የተመዘገበ የሞባይል ቁጥር",
+        "channel": "ቻናል",
+        "action": "እርምጃ"
+      },
+      "empty": "ምንም የታገዱ ቁጥሮች አልተገኙም"
+    },
+    "confirmDialog": {
+      "title": "ማስወገድን ያረጋግጡ",
+      "desc1": "ይህንን ቁጥር ከማገጃ ዝርዝር ማስወገድ እርግጠኛ ኖት?",
+      "desc2": "ይህ ቁጥር ወደ መለያ ቁጥርዎ (TAG) ጥሪ ማድረግ ይችላል"
+    },
+    "addDialog": {
+      "title": "ወደ ማገጃ ዝርዝር አክል",
+      "subtitle": "እባክዎ ማገድ የሚፈልጉትን ይምረጡ",
+      "mobileOption": "የሞባይል ቁጥር",
+      "tagOption": "መለያ ቁጥር",
+      "mobileLabel": "ለማገድ የሞባይል ቁጥር",
+      "tagLabel": "ለማገድ የመለያ ቁጥር",
+      "formatHint": "ቅርጸት: +251xxxxxxxxx",
+      "tagPlaceholder": "ለማገድ የመለያ ቁጥር ያስገቡ",
+      "tagHint": "የመለያ ቁጥር ከ 2-8 ፊደላት መሆን አለበት"
+    },
+    "toast": {
+      "fetchBlockedFailed": "የታገዱ ቁጥሮችን ማምጣት አልተሳካም",
+      "removeBlockedSuccess": "ቁጥሩ ከማገጃ ዝርዝር በተሳካ ሁኔታ ተወግዷል",
+      "removeBlockedFailed": "ቁጥሩን ከማገጃ ዝርዝር ማስወገድ አልተሳካም",
+      "removeBlockedError": "ቁጥሩን ከማገጃ ዝርዝር በማስወገድ ላይ ስህተት",
+      "addBlockedSuccess": "{{type}} ወደ ማገጃ ዝርዝር በተሳካ ሁኔታ ታክሏል",
+      "addBlockedFailed": " {{type}} ወደ ማገጃ ዝርዝር ማከል አልተሳካም",
+      "addBlockedError": " {{type}} ወደ ማገጃ ዝርዝር በማከል ላይ ስህተት"
+    },
+    "states": {
+      "loading": "በመጫን ላይ..."
+    }
+  }
+}

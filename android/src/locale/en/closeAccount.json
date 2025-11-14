@@ -1,0 +1,45 @@
+{
+  "title": "Manage Account Closure",
+
+  "table": {
+    "headers": {
+      "name": "Name",
+      "companyName": "Company Name",
+      "mobileNumber": "Mobile Number",
+      "createdDate": "Created Date",
+      "status": "Status",
+      "action": "Action"
+    }
+  },
+
+  "note": "You have the following active NameTAGs. To close your account, please unsubscribe from each NameTAG.",
+
+  "buttons": {
+    "closeAccount": "Close Account",
+    "processing": "Processing..."
+  },
+
+  "messages": {
+    "fetchError": "Failed to load NameTAG data",
+    "noAccountId": "No customer account ID found",
+    "closeSuccess": "Successfully Closed Account",
+    "closeFailed": "Failed to Close Account",
+    "errorOccurred": "An error occurred",
+    "commentRequired": "Please enter a reason before closing your account."
+  },
+
+  "modal": {
+    "title": "Confirm Account Closure",
+    "message": "Are you sure you want to close your corporate account? This action cannot be undone.",
+    "commentLabel": "Reason for closing your account",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+
+  "loading": {
+    "spinner": "Loading..."
+  },
+  "common": {
+    "na": "N/A"
+  }
+}

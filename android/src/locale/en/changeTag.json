@@ -1,0 +1,61 @@
+{
+  "title": "Manage Change NameTAG",
+
+  "note": "Note: Once you change your NameTAG, any payments made for the previous NameTAG will not be carried forward. We recommend changing your NameTAG at the end of your current plan.",
+
+  "table": {
+    "headers": {
+      "nameTagNumber": "NameTAG Number",
+      "mobileNumber": "Mobile Number",
+      "recurringFeeDueDate": "Recurring Fee Due Date",
+      "outstandingFee": "Outstanding Recurring Fee",
+      "status": "Status",
+      "action": "Action"
+    },
+    "noActive": "No active NameTAG services found to unsubscribe.",
+    "noActiveLinked": "You don't have any active NameTAG linked to your mobile number, and no NameTAG is available to change.",
+    "noTagLinked": "You don't have any TAG linked to your mobile number."
+  },
+
+  "buttons": {
+    "changeNameTag": "Change NameTAG",
+    "processing": "Processing..."
+  },
+
+  "messages": {
+    "fetchError": "Failed to load NameTAG data",
+    "changeSuccess": "Your TAG has been changed successfully",
+    "changeFailed": "Failed to change your TAG",
+    "noAccountId": "No customer account ID found",
+    "unsubscribeSuccess": "Successfully unsubscribed",
+    "unsubscribeFailed": "Failed to unsubscribe",
+    "errorOccurred": "An error occurred"
+  },
+
+  "modals": {
+    "unsubscribeTitle": "Unsubscribe Confirmation",
+    "unsubscribeMessage": "Are you sure you want to unsubscribe from this NameTAG service?",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+
+  "confirmDialog": {
+    "title": "Change NameTAG",
+    "description": "Are you sure you want to change your NameTAG?",
+    "remaining": "You have {{count}} changes remaining.",
+    "buttons": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "processing": "Processing..."
+    }
+  },
+
+  "loading": {
+    "spinner": "Loading..."
+  },
+
+  "common": {
+    "na": "N/A",
+    "etb": "ETB"
+  }
+}
