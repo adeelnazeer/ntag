@@ -1,0 +1,123 @@
+{
+    "headers": {
+      "corporateNameTag": "የድርጅት ስም መለያ",
+      "welcomeToNameTag": "ወደ ስም መለያ (NameTAG) አገልግሎት እንኳን ደህና መጡ!",
+      "nameTagService": "የስም መለያ አገልግሎት"
+    },
+    "actionRequired": {
+      "title": "እርምጃ ያስፈልጋል: ተደጋጋሚ ክፍያን ያረጋግጡ",
+      "message": "የስም መለያ ቁጥርዎ ንቁ ሆኖ እንዲቀጥል፣ እባክዎ ተደጋጋሚ ክፍያዎችን በቴሌብር በኩል ያረጋግጡ።",
+      "pinPrompt": "በፑሽ ማሳወቂያ በኩል ሚስጥራዊ ቁጥር (PIN) ጥያቄ ይደርስዎታል።",
+      "suspensionWarning": "ካልተፈቀደ፣ የስም መለያ ቁጥርዎ ተደጋጋሚ ክፍያ ከሚጠበቅበት ቀን በኋላ በ30 ቀናት ውስጥ ይታገዳል።",
+      "accept": "እቀበላለሁ"
+    },
+    "notices": {
+      "notice": "ማሳሰቢያ:",
+      "unsubscribed": "የእርስዎ የስም መለያ አገልግሎት ተሰርዟል"
+    },
+    "tagInfo": {
+      "tagType": "የመለያ ዓይነት",
+      "premium": "ፕሪሚየም",
+      "corporate": "ድርጅት",
+      "nameTagCategory": "የስም መለያ ምድብ",
+      "registeredMobileNumber": "የተመዘገበ የሞባይል ቁጥር",
+      "subscriptionFee": "የምዝገባ ክፍያ",
+      "subscriptionPaymentStatus": "የምዝገባ ክፍያ ሁኔታ",
+      "reservationDate": "የማስያዣ ቀን",
+      "subscriptionDate": "የምዝገባ ቀን",
+      "serviceStatus": "የአገልግሎት ሁኔታ",
+      "servicePackage": "የአገልግሎት ፓኬጅ",
+      "recurringFee": "ተደጋጋሚ ክፍያ",
+      "monthly": "ወርሃዊ",
+      "quarterly": "ሩብ ዓመት",
+      "semiAnnually": "ግማሽ ዓመት",
+      "annually": "ዓመታዊ",
+      "recurringFeeLastChargeDate": "የተደጋጋሚ ክፍያ የመጨረሻ የተከፈለበት ቀን",
+      "recurringFeeDueDate": "የተደጋጋሚ ክፍያ የሚጠበቅበት ቀን",
+      "recurringFeeNextDueDate": "የተደጋጋሚ ክፍያ ቀጣይ የሚጠበቅበት ቀን",
+      "unsubscribeDate": "ምዝገባ የተሰረዘበት ቀን",
+      "resubscribeMessage": "ይህንን መለያ ቁጥር ምዝገባ ከተሰረዘበት ቀን ጀምሮ በ 7 ቀናት ውስጥ እንደገና መመዝገብ ይችላሉ።",
+      "incomingCallsStatus": "የገቢ ጥሪዎች ሁኔታ",
+      "serviceFeeLastChargeDate": "የአገልግሎት ክፍያ የመጨረሻ የተከፈለበት ቀን",
+      "notAvailable": "የለም",
+      "on": "በርቷል",
+      "off": "ጠፍቷል",
+      "reserved": "ተይዟል"
+    },
+    "buttons": {
+      "resubmitDocuments": "ሰነዶችን እንደገና አስገባ",
+      "buyTagNumber": "መለያ ቁጥር ግዛ",
+      "processing": "በማስኬድ ላይ...",
+      "cancelReservation": "ማስያዝ ሰርዝ",
+      "resubscribeTagNumber": "መለያ ቁጥር እንደገና ተመዝገብ",
+      "buyNameTag": "ስም መለያ ግዛ",
+      "reserveNameTag": "ስም መለያ አስይዝ"
+    },
+    "accountStatus": {
+      "blocked": "የእርስዎ የስም መለያ አካውንት ታግዷል። ለተጨማሪ እገዛ እባክዎ የስም መለያ ድጋፍ ሰጪን ያነጋግሩ።"
+    },
+    "registrationInfo": {
+      "registeredCount": "ከፍተኛው {{max}} ከሚፈቀደው የስም መለያዎች ውስጥ {{total}} ተመዝግበዋል።"
+    },
+    "documentStatus": {
+      "underReview": "ሰነድዎ በአሁኑ ጊዜ እየተገመገመ ነው። እባክዎ በትዕግስት ይጠብቁ።",
+      "reviewTime": "የግምገማው ሂደት እስከ 48 ሰዓታት ሊወስድ ይችላል። ሰነድዎ አንዴ ከተገመገመ በኋላ የኤስኤምኤስ ማሳወቂያ ይደርስዎታል።",
+      "rejected": "ሰነዶችዎ ውድቅ ተደርገዋል። እባክዎ ዝርዝሮችን ያረጋግጡ እና እንደገና ያስገቡ"
+    },
+    "emptyStates": {
+      "canReserveWhileProcessing": "ይህ በእንዲህ እንዳለ፣ ሰነድዎ እየተሰራ ባለበት ጊዜ የስም መለያ ቁጥሮችን ማስያዝ ይችላሉ።",
+      "noTagReserved": "ምንም የስም መለያ ቁጥር ገና አልተያዘም ወይም አልተመዘገበም።"
+    },
+    "toastMessages": {
+      "errorProcessing": "ይቅርታ፣ ጥያቄዎን በአሁኑ ጊዜ ማካሄድ አልቻልንም። እባክዎ ቆይተው እንደገና ይሞክሩ።",
+      "mandateSent": "የቴሌብር ማዘዣውን ለመጀመር የጠየቁት ጥያቄ ተልኳል። እባክዎ የሞባይል መሳሪያዎን ያረጋግጡ እና በቴሌብር ሚስጥራዊ ቁጥርዎ (PIN) ያጽድቁት።",
+      "successfullyUnsubscribed": "በተሳካ ሁኔታ ምዝገባ ተሰርዟል",
+      "failedToUnsubscribe": "ምዝገባ መሰረዝ አልተሳካም",
+      "successfullyResubscribed": "በተሳካ ሁኔታ እንደገና ተመዝግቧል",
+      "failedToResubscribe": "እንደገና መመዝገብ አልተሳካም",
+      "anErrorOccurred": "ስህተት ተፈጥሯል",
+      "reservationCanceled": "ማስያዝ ተሰርዟል",
+      "failedToCancelReservation": "ማስያዝ መሰረዝ አልተሳካም"
+    },
+    "common": {
+      "na": "የለም",
+      "etb": "ብር"
+    },
+    "modal": {
+      "titles": {
+        "unsubscribe": "ምዝገባ መሰረዝ ያረጋግጡ",
+        "resubscribe": "እንደገና መመዝገብ ያረጋግጡ",
+        "cancel": "ስረዛን ያረጋግጡ",
+        "close": "አካውንት መዝጋት ያረጋግጡ",
+        "default": "እርምጃውን ያረጋግጡ"
+      },
+      "messages": {
+        "unsubscribe": "የስም መለያ ቁጥር #{{tagNo}} ምዝገባ መሰረዝ እርግጠኛ ኖት?",
+        "resubscribe": "ይህንን የስም መለያ አገልግሎት እንደገና ለመመዝገብ እርግጠኛ ኖት?",
+        "cancel": "የስም መለያ ማስያዝዎን መሰረዝ እርግጠኛ ኖት?",
+        "close": "የስም መለያ አካውንት መዝጊያ ጥያቄን ለማጽደቅ እርግጠኛ ኖት?",
+        "default": "በዚህ እርምጃ ለመቀጠል እርግጠኛ ኖት?"
+      },
+      "descriptions": {
+        "unsubscribeIndividual": "የተከፈሉ ሁሉም ክፍያዎች ተመላሽ አይሆኑም። ይህ የስም መለያ በቋሚነት ይወገዳል እና እንደገና መጠየቅ አይቻልም።",
+        "unsubscribeCorporate": "የተከፈሉ ሁሉም ክፍያዎች ተመላሽ አይሆኑም።"
+      },
+      "warnings": {
+        "unsubscribe": "ማሳሰቢያ: በቀጣዮቹ 7 ቀናት ውስጥ በማንኛውም ጊዜ እንደገና መመዝገብ ይችላሉ። ከዚያ በኋላ ይህ የስም መለያ ለሌሎች ለመግዛት ዝግጁ ይሆናል።",
+        "cancel": "ከቀጠሉ፣ ማስያዝዎ ይሰረዛል፣ እና ይህ የስም መለያ ለሌሎች ለመግዛት ይለቀቃል።"
+      },
+      "actionButtons": {
+        "unsubscribe": "ምዝገባ ሰርዝ",
+        "resubscribe": "እንደገና ተመዝገብ",
+        "cancel": "አዎ፣ ማስያዝ ሰርዝ",
+        "default": "ያረጋግጡ"
+      },
+      "cancelButtons": {
+        "cancel": "አይ፣ ማስያዙን አቆይ",
+        "default": "ይቅር"
+      },
+      "placeholders": {
+        "closeAccountReason": "አካውንት ለመዝጋት ምክንያት ያስገቡ"
+      }
+    }
+  }

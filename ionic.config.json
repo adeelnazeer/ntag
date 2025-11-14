@@ -1,0 +1,5 @@
+{
+  "name": "NTag-portal",
+  "type": "react",
+  "integrations": { "capacitor": {} }
+}
