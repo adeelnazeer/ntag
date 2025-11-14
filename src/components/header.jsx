@@ -21,8 +21,12 @@ import "../App.css";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { clearUserData } from "../redux/userSlice";
 import { removeToken } from "../utilities/auth";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
+  const { t } = useTranslation(["common"]);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const location = useLocation();
@@ -72,15 +76,20 @@ const Header = () => {
     >
       <div className="bg-white">
         <div className="flex justify-between items-center h-16 md:mx-4 mx-0 bg-secondary">
-          <div className="h-full flex items-center">
+          <div className="h-full flex items-center"
+            onClick={() => {
+              window.open("https://ethiotelecom.et/", "_blank")
+            }}
+          >
             <img
               className="rounded-tr-[50px] w-[190px] md:w-full h-full pr-6 bg-white cursor-pointer"
               src={Logo}
               alt="logo"
             />
           </div>
+
           <div>
-            <p className="text-white font-medium text-sm md:text-lg flex gap-1">{getCorporate()} NameTAG  <span className=" text-white font-medium text-sm md:text-lg hidden md:block"> Service</span></p>
+            <p className="text-white font-medium text-sm md:text-lg flex gap-1">{getCorporate()} {t("nameTag")}  <span className=" text-white font-medium text-sm md:text-lg hidden md:block"> {t("service")}</span></p>
           </div>
           <div className="md:hidden flex min-w-3" />
           <div className="hidden md:flex lg:flex h-full items-center gap-8">
@@ -89,10 +98,10 @@ const Header = () => {
                 className="text-primaryLight font-medium py-1 px-2"
                 onClick={() => navigate(ConstentRoutes.home)}
               >
-                Home
+                {t("home")}
               </Button>
               <Button className="text-primaryLight font-medium py-1 px-2">
-                Service Overview
+                {t("sectorOverview")}
               </Button>
 
             </div>
@@ -111,7 +120,7 @@ const Header = () => {
                           className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
                           onClick={() => userData.customer_type == 'individual' ? navigate(ConstentRoutes.profilePageCustomer) : navigate(ConstentRoutes.profilePage)}
                         >
-                          Profile
+                          {t("profile")}
                         </MenuItem>
                         <MenuItem
                           className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
@@ -123,13 +132,13 @@ const Header = () => {
                             }
                           }}
                         >
-                          Change Password
+                          {t("changePassword")}
                         </MenuItem>
                         <MenuItem
                           className="focus:border-none border-none transition-none hover:border-none"
                           onClick={handleLogout}
                         >
-                          Logout
+                          {t("logout")}
                         </MenuItem>
                       </MenuList>
                     </Menu>
@@ -140,18 +149,18 @@ const Header = () => {
                       className="bg-secondary text-base font-medium text-white border border-white py-1 px-2"
                       onClick={() => navigate(ConstentRoutes.login)}
                     >
-                      Login
+                      {t("login.login")}
                     </Button>
                     <div className="relative">
                       <Menu>
                         <MenuHandler>
                           <Button className="bg-white text-base font-medium text-secondary py-1 px-2">
-                            Register
+                            {t("register")}
                           </Button>
                         </MenuHandler>
                         <MenuList>
                           <p className="text-[13px] outline-none text-[#555555] font-[400]">
-                            Select Account Type
+                            {t("accountType")}
                           </p>
                           <MenuItem
                             className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
@@ -176,7 +185,7 @@ const Header = () => {
                                 />
                               </ListItemPrefix>
                               <Typography className="text-secondary font-normal text-sm">
-                                Corporate Customer
+                                {t("corpCustomer")}
                               </Typography>
                             </label>
                           </MenuItem>
@@ -203,7 +212,7 @@ const Header = () => {
                                 />
                               </ListItemPrefix>
                               <Typography className="text-secondary font-normal text-sm">
-                                Individual Customer
+                                {t("indCustomer")}
                               </Typography>
                             </label>
                           </MenuItem>
@@ -212,11 +221,15 @@ const Header = () => {
                     </div>
                   </div>
                 )}
+                <LanguageSwitcher />
+
               </>
             }
             <div
               className="flex h-full font-semibold gap-2 items-center pl-6 rounded-tl-[50px] cursor-pointer lg:bg-white md:bg-transparent"
-
+              onClick={() => {
+                window.open("https://ethiotelecom.et/", "_blank")
+              }}
             >
               <img src={TagName} alt="teleber" className="lg:block w-[7rem] md:hidden" />
             </div>
@@ -253,7 +266,7 @@ const Header = () => {
                 setMenuOpen(false)
               }}
             >
-              Home
+              {t("home")}
             </Button>
 
 
@@ -263,13 +276,13 @@ const Header = () => {
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
                   onClick={() => navigate(ConstentRoutes.profilePage)}
                 >
-                  Profile
+                  {t("profile")}
                 </Button>
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
                   onClick={handleLogout}
                 >
-                  Logout
+                  {t("logout")}
                 </Button>
               </>
             ) : (
@@ -281,7 +294,7 @@ const Header = () => {
                     setMenuOpen(false)
                   }}
                 >
-                  Login
+                  {t("login.login")}
                 </Button>
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
@@ -290,7 +303,7 @@ const Header = () => {
                     setMenuOpen(false)
                   }}
                 >
-                  Register as Corporate
+                  {t("login.link1")}
                 </Button>
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
@@ -299,7 +312,7 @@ const Header = () => {
                     setMenuOpen(false)
                   }}
                 >
-                  Register as Customer
+                  {t("login.link2")}
                 </Button>
               </>
             )}

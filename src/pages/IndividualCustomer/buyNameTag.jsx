@@ -12,8 +12,11 @@ import { setUserData, setCorporateDocuments } from "../../redux/userSlice";
 import { toast } from "react-toastify";
 import EndPoints from "../../network/EndPoints";
 import BuyTagConfirmationModal from "../../modals/buy-tag-modals";
+import { useTranslation } from "react-i18next";
+import { formatPhoneNumberCustom } from "../../utilities/formatMobileNumber";
 
 const TagNamesIndividual = () => {
+    const { t } = useTranslation(["buyTag"]);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [docStatus, setDocStatus] = useState({});
@@ -41,16 +44,20 @@ const TagNamesIndividual = () => {
         if (!price) return "0.00";
         return Number(price).toFixed(2);
     };
+    const formatCurrency = (price) => `${formatPrice(price)} ${t("common.etb")}`;
+    const formatDate = (value) => (value ? moment(value).format("DD-MM-YYYY") : t("tagInfo.notAvailable"));
+    const displayValue = (value) =>
+        value !== undefined && value !== null && value !== "" ? value : t("common.na");
 
     const getData = () => {
         setLoading(true)
         APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${user?.id}`)
             .then((res) => {
                 if (res?.success) {
-                    const filterData = res?.data?.filter((item) => item?.type == "subscriber");
-                    setState(filterData || [])
+                    // const filterData = res?.data?.filter((item) => item?.type == "subscriber");
+                    setState(res?.data || [])
                 } else {
-                    toast.error(res?.message);
+                    toast.error(res?.message || t("toastMessages.errorProcessing"));
                     setState([])
                 }
                 setLoading(false)
@@ -58,6 +65,7 @@ const TagNamesIndividual = () => {
             .catch((err) => {
                 setLoading(false)
                 setState([])
+                toast.error(err?.message || t("toastMessages.errorProcessing"));
             })
     }
 
@@ -108,16 +116,16 @@ const TagNamesIndividual = () => {
         APICall("post", payload, "individual/unsubscribe")
             .then(res => {
                 if (res?.success) {
-                    toast.success(res?.message || "Successfully unsubscribed");
+                    toast.success(res?.message || t("toastMessages.successfullyUnsubscribed"));
                     // Refresh tag data after successful unsubscribe
                     refreshTagData();
                 } else {
-                    toast.error(res?.message || "Failed to unsubscribe");
+                    toast.error(res?.message || t("toastMessages.failedToUnsubscribe"));
                 }
                 setUnsubscribing(false);
             })
             .catch(err => {
-                toast.error(err?.message || "An error occurred");
+                toast.error(err?.message || t("toastMessages.anErrorOccurred"));
                 setUnsubscribing(false);
             });
     };
@@ -132,16 +140,16 @@ const TagNamesIndividual = () => {
         APICall("post", payload, "/individual/re-subscribe")
             .then(res => {
                 if (res?.success) {
-                    toast.success(res?.message || "Successfully resubscribed");
+                    toast.success(res?.message || t("toastMessages.successfullyResubscribed"));
                     // Refresh tag data after successful resubscribe
                     refreshTagData();
                 } else {
-                    toast.error(res?.message || "Failed to resubscribe");
+                    toast.error(res?.message || t("toastMessages.failedToResubscribe"));
                 }
                 setResubscribing(false);
             })
             .catch(err => {
-                toast.error(err?.message || "An error occurred");
+                toast.error(err?.message || t("toastMessages.anErrorOccurred"));
                 setResubscribing(false);
             });
     };
@@ -151,16 +159,16 @@ const TagNamesIndividual = () => {
         APICall("post", {}, `/individual/cancel-reservation/${reserve_tag_id}`)
             .then((res) => {
                 if (res?.success) {
-                    toast.success(res?.message || "Reservation is canceled");
+                    toast.success(res?.message || t("toastMessages.reservationCanceled"));
                     // Refresh tag data after successful cancellation
                     refreshTagData();
                 } else {
-                    toast.error(res?.message || "Failed to cancel reservation");
+                    toast.error(res?.message || t("toastMessages.failedToCancelReservation"));
                 }
                 setCancelling(false);
             })
             .catch((err) => {
-                toast.error(err?.message || "An error occurred");
+                toast.error(err?.message || t("toastMessages.anErrorOccurred"));
                 setCancelling(false);
             });
     };
@@ -189,7 +197,7 @@ const TagNamesIndividual = () => {
                 // Update service status
                 getData()
                 setShowMessage(true)
-                toast.error("Sorry, we’re unable to process your request right now. Please try again later.", toastStyle);
+                toast.error(t("toastMessages.errorProcessing"), toastStyle);
 
                 // Update localStorage for sidebar
                 localStorage.setItem('serviceStatus', 1);
@@ -199,11 +207,11 @@ const TagNamesIndividual = () => {
 
             } else {
                 setShowMessage(true)
-                toast.success('Your request to initiate the telebirr mandate has been sent. Please check your mobile device and approve it using your telebirr PIN.', toastStyle);
+                toast.success(t("toastMessages.mandateSent"), toastStyle);
             }
         } catch (error) {
             console.error("Error updating service status:", error);
-            toast.error("Sorry, we’re unable to process your request right now. Please try again later.", toastStyle);
+            toast.error(t("toastMessages.errorProcessing"), toastStyle);
         } finally {
             setLoading(false);
         }
@@ -219,58 +227,89 @@ const TagNamesIndividual = () => {
         const isUnsub = single.status == 6;
         const isActive = single.status == 1;
         const isNotPremium = single?.premium_tag_list_id == null
+        const displayTagName = displayValue(isNotPremium ? single?.tag_name : single?.premium_tag_list?.tag_name);
+        const rawTagNumber = displayValue(isNotPremium ? single?.tag_no : single?.premium_tag_list?.tag_no);
+        const displayTagNumber = rawTagNumber === t("common.na") ? rawTagNumber : `#${rawTagNumber}`;
+        const registeredMobile = single?.msisdn ? formatPhoneNumberCustom(single?.msisdn) : t("common.na");
+        const subscriptionLabel = isReserved ? t("tagInfo.reservationDate") : t("tagInfo.subscriptionDate");
+        const subscriptionDate = formatDate(isReserved ? single?.created_date : single?.sub_date);
+        const subscriptionFeeValue = formatCurrency(isNotPremium ? single?.tagnoprice : single?.premium_tag_list?.tag_price || single?.tagnoprice);
+        const serviceStatusLabel = single?.type === "reserve" ? t("tagInfo.reserved") : (getTagStatusDashboard(single?.status) || t("tagInfo.notAvailable"));
+        const incomingStatus = single?.service_status == 1 ? t("tagInfo.on") : t("tagInfo.off");
+        const recurringFeePlanMap = {
+            Monthly: "monthly",
+            Quarterly: "quarterly",
+            "Semi-Annually": "semiAnnually",
+            Annually: "annually"
+        };
+        const recurringPlanKey = recurringFeePlanMap[single?.service_id] || "monthly";
+        const recurringPlanLabel = t(`tagInfo.${recurringPlanKey}`, { defaultValue: single?.service_id || "" });
+        const recurringFeeAmount = formatCurrency(
+            single?.service_id === "Monthly" ? tagInfo?.monthly_fee || single?.service_fee :
+                single?.service_id === "Quarterly" ? tagInfo?.quarterly_fee || single?.service_fee :
+                    single?.service_id === "Semi-Annually" ? tagInfo?.semiannually_fee || single?.service_fee :
+                        single?.service_id === "Annually" ? tagInfo?.annually_fee || single?.service_fee :
+                            tagInfo?.service_fee || single?.service_fee
+        );
+        const serviceFeeLastChargeDate = formatDate(single?.fee_charge_date);
+        const recurringNextDueDate = formatDate(single?.next_charge_dt);
 
         return (
             <div className="md:p-4 p-1 rounded-xl shadow pb-6 md:mt-6 mt-2" key={single?.id}>
-                {(single?.is_recurring_acceptance == 0 && showMessage == false && single?.status != 6) &&
+                {(single?.is_recurring_acceptance === 0 && !showMessage && single?.status !== 6) && (
                     <Typography className="text-[14px] font-bold mb-3">
-                        <span>Action Required: Authorize Recurring Payment </span>
+                        <span>{t("actionRequired.title")}</span>
                         <br />
-                        <span className=" md:block hidden text-blue-600">
-                            To keep your NameTAG number active, please authorize recurring payments via telebirr.
-                            You will receive a PIN prompt via push notification.
-                            If not authorized, your NameTAG number will be suspended 30 days after the recurring fee due date.
-                            <Button className=" ml-1 cursor-pointer text-white px-2 py-2 bg-secondary"
-                                onClick={() => {
-                                    handleConfirmStatusChange(single)
-                                }}
-                            > Accept</Button></span>
+                        <span className="md:block hidden text-blue-600">
+                            {t("actionRequired.message")}{" "}
+                            {t("actionRequired.pinPrompt")}{" "}
+                            {t("actionRequired.suspensionWarning")}
+                            <Button
+                                className="ml-1 cursor-pointer text-white px-2 py-2 bg-secondary"
+                                onClick={() => handleConfirmStatusChange(single)}
+                            >
+                                {t("actionRequired.accept")}
+                            </Button>
+                        </span>
                         <span className="md:hidden block text-blue-600">
-                            To keep your NameTAG number active, please authorize recurring payments via telebirr.
-                            You will receive a PIN prompt via push notification.
-                            If not authorized, your NameTAG number will be suspended 30 days after the recurring fee due date.                            <Button className=" ml-1 cursor-pointer text-white px-2 py-2 bg-secondary"
-                                onClick={() => {
-                                    handleConfirmStatusChange(single)
-                                }}
-                            > Accept</Button></span>
-                    </Typography>
-                }
-                {(single?.status == 6) &&
-                    <Typography className="text-[14px] font-bold mb-3">
-                        <span>Notice: </span>
-                        <br />
-                        <span className=" text-blue-600">
-                            Your NameTAG service is unsubscribed
+                            {t("actionRequired.message")}{" "}
+                            {t("actionRequired.pinPrompt")}{" "}
+                            {t("actionRequired.suspensionWarning")}
+                            <Button
+                                className="ml-1 cursor-pointer text-white px-2 py-2 bg-secondary"
+                                onClick={() => handleConfirmStatusChange(single)}
+                            >
+                                {t("actionRequired.accept")}
+                            </Button>
                         </span>
                     </Typography>
-                }
+                )}
+                {(single?.status === 6) && (
+                    <Typography className="text-[14px] font-bold mb-3">
+                        <span>{t("notices.notice")}</span>
+                        <br />
+                        <span className="text-blue-600">
+                            {t("notices.unsubscribed")}
+                        </span>
+                    </Typography>
+                )}
 
                 <div className="flex justify-between bg-[#F6F7FB] md:px-3 px-2 py-3 rounded-xl items-center">
                     <div className="flex items-center gap-3">
                         <Typography className="md:text-[14px] text-[12px]">
-                            {isNotPremium ? single?.tag_name : single?.premium_tag_list?.tag_name || 'N/A'}
+                            {displayTagName}
                         </Typography>
                     </div>
                     <div>
                         <Typography className="text-[14px] bg-secondary py-1 px-4 rounded-lg text-white">
-                            #{isNotPremium ? single?.tag_no : single?.premium_tag_list?.tag_no || 'N/A'}
+                            {displayTagNumber}
                         </Typography>
                     </div>
                 </div>
                 <div className="flex justify-between border border-blue-200 bg-blue-50 md:px-5 px-2 py-3 rounded-xl mt-3">
-                    <Typography className="text-[14px]">NameTAG Category</Typography>
+                    <Typography className="text-[14px]">{t("tagInfo.nameTagCategory")}</Typography>
                     <Typography className="text-[14px] font-bold text-blue-600">
-                        {isNotPremium ? single?.tag_type : single?.premium_tag_list?.tag_type || "N/A"}
+                        {isNotPremium ? displayValue(single?.tag_type) : displayValue(single?.premium_tag_list?.tag_type)}
                     </Typography>
                 </div>
                 {/* Premium tag indicator */}
@@ -293,26 +332,26 @@ const TagNamesIndividual = () => {
                 </div> */}
                 <div className="flex justify-between text-[#232323] md:px-5 px-2 py-3 rounded-xl mt-1">
                     <Typography className="md:text-[14px] text-[12px]">
-                        Registered Mobile Number
+                        {t("tagInfo.registeredMobileNumber")}
                     </Typography>
                     <Typography className="md:text-[14px] text-[12px]">
-                        {`+${single?.msisdn}` || 'N/A'}
+                        {registeredMobile}
                     </Typography>
                 </div>
 
                 <div className="md:px-5 px-2 py-3 rounded-xl mt-1">
                     <div className="flex justify-between">
-                        <Typography className="text-[14px]">{isReserved ? "Reservation Date" : "Subscription Date"} </Typography>
+                        <Typography className="text-[14px]">{subscriptionLabel} </Typography>
                         <Typography className="md:text-[14px] text-[12px]">
-                            {single?.created_date ? moment(single.created_date).format('DD-MM-YYYY') : 'N/A'}
+                            {subscriptionDate}
                         </Typography>
                     </div>
                 </div>
 
                 <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
-                    <Typography className="text-[14px]">Subscription Fee</Typography>
+                    <Typography className="text-[14px]">{t("tagInfo.subscriptionFee")}</Typography>
                     <Typography className="md:text-[14px] text-[12px]">
-                        {formatPrice(isNotPremium ? single?.tagnoprice : single?.premium_tag_list?.tag_price || '0')} ETB
+                        {subscriptionFeeValue}
                     </Typography>
                 </div>
 
@@ -326,7 +365,7 @@ const TagNamesIndividual = () => {
 
 
                 <div className="flex justify-between gap-1 md:px-5 px-2 py-3 rounded-xl mt-1">
-                    <Typography className="text-[14px]"> Subscription Payment Status</Typography>
+                    <Typography className="text-[14px]"> {t("tagInfo.subscriptionPaymentStatus")}</Typography>
                     <Typography className="md:text-[14px] text-[12px]">
                         {getPaymentStatus(single?.payment_status)}
                     </Typography>
@@ -334,9 +373,9 @@ const TagNamesIndividual = () => {
 
                 <div className="md:px-5 px-2 py-3 rounded-xl mt-1">
                     <div className="flex justify-between">
-                        <Typography className="text-[14px]">Service Status </Typography>
+                        <Typography className="text-[14px]">{t("tagInfo.serviceStatus")} </Typography>
                         <Typography className="md:text-[14px] text-[12px] capitalize">
-                            {single?.type == "reserve" ? "Reserved" : getTagStatusDashboard(single?.status) || ""}
+                            {serviceStatusLabel}
                         </Typography>
                     </div>
                 </div>
@@ -344,25 +383,19 @@ const TagNamesIndividual = () => {
                 {/* Incoming Calls Status */}
                 {!isReserved && isPaid && (
                     <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
-                        <Typography className="text-[14px]">Incoming Calls Status</Typography>
+                        <Typography className="text-[14px]">{t("tagInfo.incomingCallsStatus")}</Typography>
                         <Typography className={`md:text-[14px] text-[12px] font-medium `}>
-                            {single?.service_status == 1 ? "ON" : "OFF"}
+                            {incomingStatus}
                         </Typography>
                     </div>
                 )}
 
                 <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
                     <Typography className="text-[14px]">
-                        {"Monthly"} Recurring Fee
+                        {`${recurringPlanLabel} ${t("tagInfo.recurringFee")}`}
                     </Typography>
                     <Typography className="md:text-[14px] text-[12px]">
-                        {formatPrice(
-                            single?.service_id === "Monthly" ? tagInfo?.monthly_fee || single?.service_fee || '0' :
-                                single?.service_id === "Quarterly" ? tagInfo?.quarterly_fee || single?.service_fee || '0' :
-                                    single?.service_id === "Semi-Annually" ? tagInfo?.semiannually_fee || single?.service_fee || '0' :
-                                        single?.service_id === "Annually" ? tagInfo?.annually_fee || single?.service_fee || '0' :
-                                            tagInfo?.service_fee || single?.service_fee || '0'
-                        )} ETB
+                        {recurringFeeAmount}
                     </Typography>
                 </div>
 
@@ -370,9 +403,9 @@ const TagNamesIndividual = () => {
                     <>
                         {single?.fee_charge_date && (
                             <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
-                                <Typography className="text-[14px]">Service Fee Last Charge Date</Typography>
+                                <Typography className="text-[14px]">{t("tagInfo.serviceFeeLastChargeDate")}</Typography>
                                 <Typography className="md:text-[14px] text-[12px]">
-                                    {single?.fee_charge_date || "Not Available"}
+                                    {serviceFeeLastChargeDate}
                                 </Typography>
                             </div>
                         )}
@@ -381,9 +414,9 @@ const TagNamesIndividual = () => {
 
                 {(!isReserved && isPaid && !isUnsub) ? (
                     <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
-                        <Typography className="text-[14px]">Recurring Fee Next Due Date:</Typography>
+                        <Typography className="text-[14px]">{t("tagInfo.recurringFeeNextDueDate")}</Typography>
                         <Typography className="md:text-[14px] text-[12px]">
-                            {single?.next_charge_dt ? moment(single.next_charge_dt).format("DD-MM-YYYY") : "Not Available"}
+                            {recurringNextDueDate}
                         </Typography>
                     </div>
                 ) : null}
@@ -398,7 +431,7 @@ const TagNamesIndividual = () => {
                                     className="bg-secondary text-white text-[14px]"
                                     onClick={() => navigate(ConstentRoutes.profilePage)}
                                 >
-                                    ReSubmit Documents
+                                    {t("buttons.resubmitDocuments")}
                                 </Button>
                             ) : (
                                 <Button
@@ -420,7 +453,7 @@ const TagNamesIndividual = () => {
                                         }
                                     })}
                                 >
-                                    Buy TAG Number
+                                    {t("buttons.buyTagNumber")}
                                 </Button>
                             )}
 
@@ -429,7 +462,7 @@ const TagNamesIndividual = () => {
                                 onClick={() => confirmAction('cancel', single?.reserve_tag_id)}
                                 disabled={cancelling}
                             >
-                                {cancelling ? "Processing..." : "Cancel Reservation"}
+                                {cancelling ? t("buttons.processing") : t("buttons.cancelReservation")}
                             </Button>
                         </>
                     )}
@@ -441,7 +474,7 @@ const TagNamesIndividual = () => {
                             onClick={() => confirmAction('resubscribe', single?.reserve_tag_id)}
                             disabled={resubscribing}
                         >
-                            {resubscribing ? "Processing..." : "Resubscribe TAG Number"}
+                            {resubscribing ? t("buttons.processing") : t("buttons.resubscribeTagNumber")}
                         </Button>
                     )}
                 </div>
@@ -452,7 +485,7 @@ const TagNamesIndividual = () => {
     return (
         <div className="shadow bg-white rounded-xl">
             <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-lg font-bold">
-                NameTAG Service
+                {t("headers.nameTagService")}
             </Typography>
             <div className="md:p-8 p-4">
                 {loading ? (
@@ -463,7 +496,7 @@ const TagNamesIndividual = () => {
                     <>
                         {(!Array.isArray(state) || state.length === 0) && (
                             <Typography className="mt-2 font-normal text-base text-center">
-                                No NameTAG number has been reserved or subscribed yet.
+                                {t("emptyStates.noTagReserved")}
                             </Typography>
                         )}
 
@@ -477,7 +510,7 @@ const TagNamesIndividual = () => {
                                     className="mt-8 bg-secondary text-white text-[14px] md:w-[400px] w-full"
                                     onClick={() => navigate(ConstentRoutes.buyTagCustomer)}
                                 >
-                                    BUY NameTAG
+                                    {t("buttons.buyNameTag")}
                                 </Button>
                             </div>
                         )}

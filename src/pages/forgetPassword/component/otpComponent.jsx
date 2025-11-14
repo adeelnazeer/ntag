@@ -8,8 +8,10 @@ import { useRegisterHook } from "../../hooks/useRegisterHook";
 import { Button } from "@material-tailwind/react";
 import { useAppSelector } from "../../../redux/hooks";
 import { FiRefreshCw } from "react-icons/fi"; // Import refresh icon
+import { useTranslation } from "react-i18next";
 
 const OtpVerification = ({ otpId, setStep }) => {
+    const { t } = useTranslation(["auth"]);
     const { handleSubmit, control, reset, formState: { errors } } = useForm();
     const [timeLeft, setTimeLeft] = useState(120); // Countdown timer in seconds
     const [loading, setLoading] = useState(false);
@@ -43,7 +45,7 @@ const OtpVerification = ({ otpId, setStep }) => {
                 inputRefs.current[0].focus(); // Focus on the first field
             })
             .catch((err) => {
-                toast.error(err?.message || "Failed to resend OTP");
+                toast.error(err?.message || t("otpVerification.toastMessages.failedToResendOtp"));
             })
             .finally(() => {
                 setResending(false);
@@ -58,7 +60,7 @@ const OtpVerification = ({ otpId, setStep }) => {
         const otpIdValue = reduxOtpId || (otpId?.otp_id || localStorage.getItem("otp"));
 
         if (!otpIdValue) {
-            toast.error("OTP ID not found. Please request a new OTP.");
+            toast.error(t("otpVerification.toastMessages.otpIdNotFound"));
             setLoading(false);
             return;
         }
@@ -80,7 +82,7 @@ const OtpVerification = ({ otpId, setStep }) => {
             })
             .catch((err) => {
                 toast.error(
-                    err || "Something went wrong try again!"
+                    err || t("otpVerification.toastMessages.somethingWentWrong")
                 );
             })
             .finally(() => {
@@ -90,24 +92,23 @@ const OtpVerification = ({ otpId, setStep }) => {
 
     return (
         <div className="py-6 px-6">
-            <h2 className="text-2xl  font-semibold md:text-[38px] text-[25px]  mb-4">OTP Verification</h2>
+            <h2 className="text-2xl  font-semibold md:text-[38px] text-[25px]  mb-4">{t("otpVerification.title")}</h2>
             <p className="text-gray-900  md:text-base text-[16px] mb-6">
-
-                Please enter the OTP sent to the mobile number +{otpId?.phone_number}
+                {t("otpVerification.description", { phoneNumber: otpId?.phone_number })}
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex justify-between mb-6">
-                    {[0, 1, 2, 3].map((index) => (
+                    {[0, 1, 2, 3,4,5].map((index) => (
                         <Controller
                             key={index}
                             name={`otp_${index}`}
                             control={control}
                             rules={{
-                                required: "This field is required",
+                                required: t("otpVerification.validation.fieldRequired"),
                                 maxLength: 1,
                                 pattern: {
                                     value: /^[0-9]$/,
-                                    message: "Must be a number"
+                                    message: t("otpVerification.validation.mustBeNumber")
                                 }
                             }}
                             render={({ field }) => (
@@ -120,7 +121,7 @@ const OtpVerification = ({ otpId, setStep }) => {
                                         if (/^[0-9]$/.test(e.target.value) || e.target.value === '') {
                                             field.onChange(e.target.value);
                                             // Move to the next field if a digit is entered
-                                            if (e.target.value && index < 3) {
+                                            if (e.target.value && index < 5) {
                                                 inputRefs.current[index + 1].focus();
                                             }
                                         }
@@ -134,7 +135,7 @@ const OtpVerification = ({ otpId, setStep }) => {
                                     className={`mt-2 w-[60px] h-[60px] text-center rounded-xl font-semibold text-xl px-3 py-2 bg-[#F6F7FB] outline-none ${errors[`otp_${index}`] ? "border border-red-500" : "border border-[#8A8AA033]"
                                         }`}
                                     maxLength="1"
-                                    placeholder="-"
+                                    placeholder={t("otpVerification.placeholders.otpField")}
                                 />
                             )}
                         />
@@ -146,13 +147,13 @@ const OtpVerification = ({ otpId, setStep }) => {
                     <div className="text-gray-600 text-sm">
                         {timeLeft > 0 ? (
                             <span>
-  Time remaining:{" "}
+  {t("otpVerification.timer.timeRemaining")}{" "}
   <span className="text-secondary font-medium">
     {`${String(Math.floor(timeLeft / 60)).padStart(2, "0")}:${String(timeLeft % 60).padStart(2, "0")}`}
   </span>
 </span>
                         ) : (
-                            <span className="text-red-500">OTP expired</span>
+                            <span className="text-red-500">{t("otpVerification.timer.otpExpired")}</span>
                         )}
                     </div>
 
@@ -168,7 +169,7 @@ const OtpVerification = ({ otpId, setStep }) => {
                         size="sm"
                     >
                         <FiRefreshCw className={`${resending ? "animate-spin" : ""}`} />
-                        {resending ? "Sending..." : "Resend OTP"}
+                        {resending ? t("otpVerification.buttons.sending") : t("otpVerification.buttons.resendOtp")}
                     </Button>
                 </div>
 
@@ -177,7 +178,7 @@ const OtpVerification = ({ otpId, setStep }) => {
                     type="submit"
                     disabled={loading}
                 >
-                    {loading ? "Verifying..." : "Verify OTP"}
+                    {loading ? t("otpVerification.buttons.verifying") : t("otpVerification.buttons.verifyOtp")}
                 </Button>
             </form>
         </div>

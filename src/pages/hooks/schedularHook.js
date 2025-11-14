@@ -12,7 +12,7 @@ const useSchedularHook = (value) => {
     const [loading, setLoading] = useState(true)
     const [serverStatus, setServiceStatus] = useState([])
     const docStatus = JSON.parse(localStorage.getItem('data'))
-    useEffect(() => {
+    const getData = () => {
         const user = JSON.parse(localStorage.getItem("user"))
         setLoading(true)
         APICall("get", null, `${EndPoints.customer.getReserve}/${user?.customer_account_id}`)
@@ -32,7 +32,7 @@ const useSchedularHook = (value) => {
         APICall("get", null, `${EndPoints.customer.getSchedular}?account_id=${user?.id}`)
             .then((res) => {
                 if (res?.success) {
-                    
+
                     setincommingCallStatus(res.data[0].incoming_call_status)
                     setBuyData(res?.data);
                     setServiceStatus(res?.data)
@@ -45,19 +45,23 @@ const useSchedularHook = (value) => {
                 setBuyData([])
                 setLoading(false)
             });
+    }
+    useEffect(() => {
+        getData()
     }, [])
 
     const handleSchedular = (item) => {
         const payload = {
             incoming_call_status: item?.incoming_call_status,
-            incall_start_dt: moment(item?.incall_start_dt).format("YYYY-MM-DD HH:mm:ss"), 
-            incall_end_dt: moment(item?.incall_end_dt).format("YYYY-MM-DD HH:mm:ss"),
+            incall_start_dt:item?.incoming_call_status==0?"0000-00-00 00:00:00": moment(item?.incall_start_dt).format("YYYY-MM-DD HH:mm:ss"),
+            incall_end_dt:item?.incoming_call_status==0?"0000-00-00 00:00:00": moment(item?.incall_end_dt).format("YYYY-MM-DD HH:mm:ss"),
             voic_email: item?.voic_email,
             service_status: item?.service_status
         }
         APICall("put", payload, `${EndPoints.customer.getSchedular}/${item?.corp_subscriber_id}`)
             .then((res) => {
                 toast.success(res?.message)
+                getData()
                 console.log(res, "res")
                 // if (res?.success) {
 
@@ -73,7 +77,7 @@ const useSchedularHook = (value) => {
             });
     }
 
-    return { data, loading, setData,CompleteResponse,setCompleteResponse, handleSchedular, buyData, serverStatus ,incommingCallStatus }
+    return { data, loading, setData, CompleteResponse, setCompleteResponse, handleSchedular, buyData, serverStatus, incommingCallStatus }
 }
 
 export default useSchedularHook

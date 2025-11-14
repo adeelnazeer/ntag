@@ -1,7 +1,16 @@
-import React from 'react';
+import React from "react";
+import { useTranslation } from "react-i18next";
 import { IoMdCloseCircle } from "react-icons/io";
 
-const DeleteConfirmationModal = ({ isOpen, onClose, onDelete, selectedNumber, processingAction }) => {
+const DeleteConfirmationModal = ({
+  isOpen,
+  onClose,
+  onDelete,
+  selectedNumber,
+  processingAction,
+}) => {
+  const { t } = useTranslation(["profile"]);
+
   if (!isOpen) return null;
 
   return (
@@ -16,14 +25,14 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onDelete, selectedNumber, pr
 
         <div className="mt-4">
           <h5 className="font-bold text-gray-900 text-lg">
-            Confirm Deletion?
+            {t("profile.deleteModal.title")}
           </h5>
         </div>
 
         <div className="mt-3">
           <div className="rounded-xl bg-gray-50 p-4">
             <p className="text-sm text-gray-700">
-              Are you sure you want to delete the mobile number +{selectedNumber?.msisdn}?
+              {t("profile.deleteModal.desc")} +{selectedNumber?.msisdn}?
             </p>
           </div>
         </div>
@@ -34,14 +43,16 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onDelete, selectedNumber, pr
             onClick={onClose}
             disabled={processingAction}
           >
-            Cancel
+            {t("profile.deleteModal.cancelBtn")}
           </button>
           <button
             className="flex-1 py-2.5 bg-red-500 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={onDelete}
             disabled={processingAction}
           >
-            {processingAction ? "Deleting..." : "Delete"}
+            {processingAction
+              ? t("profile.deleteModal.process")
+              : t("profile.deleteModal.delete")}
           </button>
         </div>
       </div>

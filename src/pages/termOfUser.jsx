@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useLocation } from "react-router-dom";
 import Header from "../components/header";
-
-import React from 'react';
-import { termsData } from "../utilities/termAndCondition";
+import { useTranslation } from "react-i18next";
 
 const TermOfUse = () => {
+  const { t } = useTranslation(["termAndCondition"]);
 
+  const documentTitle = t("documentTitle");
+  const sections = t("sections", { returnObjects: true });
 
   const renderContent = (content) => {
     return content.map((item, idx) => {
@@ -49,11 +49,11 @@ const TermOfUse = () => {
       <Header />
       <div className="max-w-4xl mx-auto p-4 my-6 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center mb-6 text-secondary pb-2 border-b">
-          {termsData.documentTitle}
+          {documentTitle}
         </h1>
         
         <div className="mb-6">
-          {termsData.sections.map((section, index) => (
+          {sections?.map((section, index) => (
             <div key={index} className="mb-6">
               <div className="bg-gray-100 py-2 px-4 rounded-t-lg ">
                 <h3 className="text-lg font-medium text-gray-800">

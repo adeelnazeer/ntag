@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Typography, Spinner, Chip, Tooltip } from "@material-tailwind/react";
+import { useState, useEffect } from 'react';
+import { Button, Typography, Spinner, Chip } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import APICall from "../network/APICall";
 import { toast } from "react-toastify";
-import { getTagStatusDashboard, getPaymentStatus, ConstentRoutes } from "../utilities/routesConst";
+import { getTagStatusDashboard, ConstentRoutes } from "../utilities/routesConst";
 import moment from "moment";
-import BuyTagConfirmationModal from "../modals/buy-tag-modals";
 import EndPoints from '../network/EndPoints';
 import { formatPhoneNumberCustom } from '../utilities/formatMobileNumber';
 import AddNumberModal from '../modals/Add-number-modals';
 import { useAppSelector } from '../redux/hooks';
+import { useTranslation } from "react-i18next";
 
 function ChangeNumber() {
+    const { t } = useTranslation(["schedule"]);
     const navigate = useNavigate();
     const [tagData, setTagData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [unsubscribing, setUnsubscribing] = useState(false);
     const [openAddDialog, setOpenAddDialog] = useState({ show: false });
     const [selectedTag, setSelectedTag] = useState(null)
     const userData = useAppSelector(state => state.user.userData);
@@ -52,7 +52,7 @@ function ChangeNumber() {
             })
             .catch((err) => {
                 console.error("Error fetching tag data:", err);
-                toast.error("Failed to load NameTAG data");
+                toast.error(t("changeNumber.toastMessages.failedToLoad"));
                 setLoading(false);
             });
     };
@@ -66,15 +66,15 @@ function ChangeNumber() {
 
         return (
             <tr key={tag?.id}>
-                <td className="py-4 px-4 text-sm text-gray-700">#{tagInfo?.tag_no || 'N/A'}</td>
-                <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(tag?.msisdn || 'N/A')}</td>
+                <td className="py-4 px-4 text-sm text-gray-700">#{tagInfo?.tag_no || t("changeNumber.common.na")}</td>
+                <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(tag?.msisdn || t("changeNumber.common.na"))}</td>
                 <td className="py-4 px-4 text-sm text-gray-700">
                     {userData?.phone_number == tag?.msisdn ? (
                         <div className="w-max">
                             <Chip
                                 size="sm"
                                 variant="ghost"
-                                value="Primary"
+                                value={t("changeNumber.mobileNumberTypes.primary")}
                                 color="green"
                                 className="rounded-full bg-green-100 text-secondary px-2 py-1 text-xs font-medium"
                             />
@@ -84,7 +84,7 @@ function ChangeNumber() {
                             <Chip
                                 size="sm"
                                 variant="ghost"
-                                value="Additional"
+                                value={t("changeNumber.mobileNumberTypes.additional")}
                                 color="blue"
                                 className="rounded-full bg-blue-100 text-blue-800 px-2 py-1 text-xs font-medium"
                             />
@@ -95,13 +95,13 @@ function ChangeNumber() {
                     {tag?.created_date ? moment(tag.created_date).format("YYYY-MM-DD") : 'N/A'}
                 </td> */}
                 <td className="py-4 px-4 text-sm text-gray-700">
-                    {tag?.service_fee ? tag?.service_fee : ""} ETB
+                    {tag?.service_fee ? tag?.service_fee : ""} {t("changeNumber.common.etb")}
                 </td>
                 <td className="py-4 px-4 text-sm text-gray-700">
-                    {tag?.next_charge_dt ? moment(tag.next_charge_dt).format("DD-MM-YYYY") : 'N/A'}
+                    {tag?.next_charge_dt ? moment(tag.next_charge_dt).format("DD-MM-YYYY") : t("changeNumber.common.na")}
                 </td>
                 <td className="py-4 px-4 text-sm text-gray-700">
-                    {tag?.dues > 0 ? 0 : Math.abs(tag?.dues)} ETB
+                    {tag?.dues > 0 ? 0 : Math.abs(tag?.dues)} {t("changeNumber.common.etb")}
                 </td>
 
                 <td className="py-4 px-4 text-sm text-gray-700">
@@ -123,9 +123,9 @@ function ChangeNumber() {
                             }
 
                         }}
-                        disabled={unsubscribing}
+                        disabled={false}
                     >
-                        {"Change Mobile Number"}
+                        {t("changeNumber.buttons.changeMobileNumber")}
                     </Button>
 
                 </td>
@@ -135,8 +135,8 @@ function ChangeNumber() {
 
     return (
         <div className="shadow bg-white rounded-xl">
-            <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-md font-bold">
-                Change Mobile Number
+            <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-md font-medium">
+                {t("changeNumber.title")}
             </Typography>
 
             <div className="p-8">
@@ -148,25 +148,25 @@ function ChangeNumber() {
                     <>
                         {tagData.length === 0 ? (
                             <Typography className="text-center py-8">
-                                No active NameTAG services found.
+                                {t("changeNumber.emptyState")}
                             </Typography>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="min-w-full bg-white">
                                     <thead className="bg-[#F6F7FB]">
                                         <tr>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">NameTAG Number</th>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Mobile Number</th>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Mobile Number Type</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeNumber.table.nameTagNumber")}</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeNumber.table.mobileNumber")}</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeNumber.table.mobileNumberType")}</th>
 
                                             {/* <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Registration Date</th> */}
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Recurring Fee</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeNumber.table.recurringFee")}</th>
 
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Recurring Fee Due Date</th>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Outstanding Recurring Fee</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeNumber.table.recurringFeeDueDate")}</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeNumber.table.outstandingRecurringFee")}</th>
 
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Status</th>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Action</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeNumber.table.status")}</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeNumber.table.action")}</th>
                                         </tr>
                                     </thead>
                                     <tbody>

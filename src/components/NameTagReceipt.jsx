@@ -35,7 +35,7 @@ const NameTagReceipt = ({ paymentData }) => {
   } = paymentData;
 
   // Format date for better readability
-  const formattedDate = trans_end_time ? moment(trans_end_time).format("DD-MM-YYYY HH:mm") : "";
+  const formattedDate = paymentData?.created_at ? moment(paymentData?.created_at).format("DD-MM-YYYY HH:mm") : "";
 
   // Determine the actual tag number and name
   const actualTagNo = corp_tag_list?.tag_no || tag_no;
@@ -97,7 +97,7 @@ const NameTagReceipt = ({ paymentData }) => {
                 <td className="font-bold py-0.5">Order No:</td>
                 <td className="py-0.5 break-words"
                   style={{ wordBreak: "break-all" }}
-                >{merch_order_id}</td>
+                >{paymentData?.id}</td>
               </tr>
 
               <tr>
@@ -127,7 +127,7 @@ const NameTagReceipt = ({ paymentData }) => {
         <table className="w-full border-collapse border border-gray-300 text-sm">
           <thead>
             <tr>
-              <th className="border border-gray-300 p-1 text-left font-medium w-24">NameTAG No</th>
+              <th className="border border-gray-300 p-1 text-left font-medium w-24">NameTAG</th>
               <th className="border border-gray-300 p-1 text-left font-medium">Description</th>
             </tr>
           </thead>
@@ -135,7 +135,7 @@ const NameTagReceipt = ({ paymentData }) => {
             <tr>
               <td className="border border-gray-300 p-1">#{actualTagNo}</td>
               <td className="border border-gray-300 p-1">
-                NameTAG Service - #{actualTagNo}
+                NameTAG - #{actualTagNo}
                 {actualTagName && actualTagNo != actualTagName ? ` (${actualTagName})` : ""}
                 {actualTagType ? ` - ${actualTagType} Package` : ""}
               </td>
@@ -145,7 +145,7 @@ const NameTagReceipt = ({ paymentData }) => {
 
         {/* Summary info - separate table with right-aligned headers */}
         <div className="w-full">
-          {paymentData?.outstanding_recurring_fee > 0 &&
+          {paymentData?.outstanding_recurring_fee < 0 &&
             <div className="flex justify-end border-x border-gray-300">
               <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Outstanding Recurring Fee (Previous Plan)</div>
               <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(paymentData?.outstanding_recurring_fee || 0)?.toFixed(2)} {'ETB'}</div>
@@ -155,10 +155,12 @@ const NameTagReceipt = ({ paymentData }) => {
             <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Recurring Fee</div>
             <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(paymentData?.recurring_fee || 0)?.toFixed(2)} {'ETB'}</div>
           </div>
-          <div className="flex justify-end border-x border-gray-300">
-            <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Subscription Fee</div>
-            <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(paymentData?.subscription_fee || 0)?.toFixed(2)} {'ETB'}</div>
-          </div>
+          {paymentData?.payment_type != "CHANGE_MSISDN" &&
+            <div className="flex justify-end border-x border-gray-300">
+              <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Subscription Fee</div>
+              <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(paymentData?.subscription_fee || 0)?.toFixed(2)} {'ETB'}</div>
+            </div>
+          }
           <div className="flex justify-end border-x border-gray-300">
             <div className="w-3/4 text-right pr-2 py-1 border-b border-gray-300">Sub Total</div>
             <div className="w-1/4 text-right pr-2 py-1 border-b border-gray-300">{Number(Number(total_amount || 0) - Number(vat || 0))?.toFixed(2)} {'ETB'}</div>

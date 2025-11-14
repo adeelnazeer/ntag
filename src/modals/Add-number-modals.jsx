@@ -1,18 +1,26 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import PhoneInput from "react-phone-number-input";
 import { IoMdCloseCircle } from "react-icons/io";
-import CountdownTimer from '../components/counter';
-import APICall from '../network/APICall';
-import EndPoints from '../network/EndPoints';
-import { useRegisterHook } from '../pages/hooks/useRegisterHook';
-import TickIcon from '../assets/images/tick.png';
-import { Checkbox } from '@material-tailwind/react';
-import { formatPhoneNumberCustom } from '../utilities/formatMobileNumber';
-import { ConstentRoutes } from '../utilities/routesConst';
+import CountdownTimer from "../components/counter";
+import APICall from "../network/APICall";
+import EndPoints from "../network/EndPoints";
+import { useRegisterHook } from "../pages/hooks/useRegisterHook";
+import TickIcon from "../assets/images/tick.png";
+import { Checkbox } from "@material-tailwind/react";
+import { formatPhoneNumberCustom } from "../utilities/formatMobileNumber";
+import { ConstentRoutes } from "../utilities/routesConst";
+import { useTranslation } from "react-i18next";
 
-const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumberFlow = false, selectedTag = null }) => {
+const AddNumberModal = ({
+  isOpen,
+  onClose,
+  onAddNumber,
+  customerId,
+  isChangeNumberFlow = false,
+  selectedTag = null,
+}) => {
   const registerData = useRegisterHook();
   const [phoneError, setPhoneError] = useState("");
   const [isValidPhone, setIsValidPhone] = useState(false);
@@ -21,8 +29,10 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
   const [value, setValue] = useState("+2519");
   const [stateNewNumber, setStateNewNumber] = useState({
     term: false,
-    verification_code: ""
+    verification_code: "",
   });
+  const { t } = useTranslation(["profile"]);
+
   const [processingAction, setProcessingAction] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [otpRequested, setOtpRequested] = useState(false);
@@ -39,7 +49,7 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
     setOtpRequested(false);
     setStateNewNumber({
       term: false,
-      verification_code: ""
+      verification_code: "",
     });
     registerData.setExpirationTime(null);
   };
@@ -49,7 +59,6 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
     }
   }, [isOpen]);
 
-
   const validatePhoneNumber = (phone) => {
     if (!phone) {
       setPhoneError("Mobile Number is required");
@@ -57,9 +66,9 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
       return false;
     }
 
-    const cleanNumber = phone.replace('+251', '').replace(/\s/g, '');
+    const cleanNumber = phone.replace("+251", "").replace(/\s/g, "");
 
-    if (!cleanNumber.startsWith('9')) {
+    if (!cleanNumber.startsWith("9")) {
       setPhoneError("Mobile Numbers must start with 9");
       setIsValidPhone(false);
       return false;
@@ -84,7 +93,11 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
 
     try {
       // Check if Mobile Number is unique
-      const response = await APICall("post", { phone_number: cleanedPhone }, EndPoints.customer.verifyAccount);
+      const response = await APICall(
+        "post",
+        { phone_number: cleanedPhone },
+        EndPoints.customer.verifyAccount
+      );
 
       if (response?.success) {
         setPhoneVerified(true);
@@ -149,11 +162,15 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
         const payload = {
           account_id: customerId,
           existing_msisdn: selectedTag?.msisdn,
-          new_msisdn: value.replace(/^\+/, ''),
-          msisdn_type: "Primary"
+          new_msisdn: value.replace(/^\+/, ""),
+          msisdn_type: "Primary",
         };
 
-        const response = await APICall("post", payload, EndPoints.customer.ChangeNumber);
+        const response = await APICall(
+          "post",
+          payload,
+          EndPoints.customer.ChangeNumber
+        );
 
         if (response?.success) {
           toast.success(response?.message || "");
@@ -168,25 +185,28 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
         // setProcessingAction(false);
       }
     } else {
-
       try {
         const payload = {
           corp_customer_account_id: customerId,
-          msisdn: value.replace(/^\+/, '')
+          msisdn: value.replace(/^\+/, ""),
         };
 
-        const response = await APICall("post", payload, EndPoints.customer.CreateNumber);
+        const response = await APICall(
+          "post",
+          payload,
+          EndPoints.customer.CreateNumber
+        );
 
         if (response?.success) {
-          toast.success("Mobile Number added successfully");
+          toast.success(t("profile.addNumberModal.successMsg"));
           onAddNumber();
           onClose();
         } else {
-          toast.error(response?.message || "Failed to add Mobile Number");
+          toast.error(response?.message || t("profile.addNumberModal.failedMsg"));
         }
       } catch (error) {
-        console.error("Error adding Mobile Number:", error);
-        toast.error("Error adding Mobile Number");
+        console.error(t("profile.addNumberModal.failedMsg"), error);
+        toast.error(t("profile.addNumberModal.failedMsg"));
       } finally {
         setProcessingAction(false);
       }
@@ -198,12 +218,11 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
     if (registerData?.handleExipre) {
       registerData.handleExipre();
     }
-    setOtpVerified(false)
-    registerData.setVerified(false)
+    setOtpVerified(false);
+    registerData.setVerified(false);
   };
 
   if (!isOpen) return null;
-
 
   return (
     <div className="fixed inset-0 p-2 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm">
@@ -216,31 +235,42 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
         </div>
 
         <div className="mt-2 mb-4">
-          {isChangeNumberFlow ?
+          {isChangeNumberFlow ? (
             <h5 className="font-bold text-gray-900 text-lg">
-              Change Mobile Number
+              {t("profile.addNumberModal.addNew")}
             </h5>
-            :
+          ) : (
             <h5 className="font-bold text-gray-900 text-lg">
-              Add New Mobile Number
+              {t("profile.addNumberModal.changeNumber")}
             </h5>
-          }
-          {isChangeNumberFlow &&
+          )}
+          {isChangeNumberFlow && (
             <>
-              <p className=' text-sm mt-2 text-gray-600'>
-                By changing your mobile number, your current number will be replaced, and the new mobile number will be linked to your NameTAG.
+              <p className=" text-sm mt-2 text-gray-600">
+               {t("profile.addNumberModal.desc")}
               </p>
-              <p className=' text-sm mt-3 text-gray-600'>Current Mobile Number:<span className='font-medium text-gray-900'> +{selectedTag?.msisdn || "N/A"}</span>
+              <p className=" text-sm mt-3 text-gray-600">
+                {t("profile.addNumberModal.currentNumber")}
+                <span className="font-medium text-gray-900">
+                  {" "}
+                  +{selectedTag?.msisdn || "N/A"}
+                </span>
               </p>
-              <p className=' text-sm mt-1 text-gray-600'>NameTAG: <span className='font-medium text-gray-900'>#{selectedTag?.tag_no || ""}</span></p>
+              <p className=" text-sm mt-1 text-gray-600">
+                {t("profile.addNumberModal.nameTag")}{" "}
+                <span className="font-medium text-gray-900">
+                  #{selectedTag?.tag_no || ""}
+                </span>
+              </p>
             </>
-          }
+          )}
         </div>
 
         <div className="border-t border-gray-200 py-4">
           <div className="mb-4">
             <label className="block text-sm text-gray-600 mb-1">
-              {isChangeNumberFlow ? "New" : ""}  Mobile Number <span className="text-red-500">*</span>
+              {isChangeNumberFlow ? "New" : ""} {t("profile.addNumberModal.mobileNumber")}{" "}
+              <span className="text-red-500">*</span>
             </label>
             <div className="relative flex items-center w-full">
               <PhoneInput
@@ -254,7 +284,7 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
                   setValue(phone);
                   setPhoneVerified(false);
                   validatePhoneNumber(phone);
-                  setOtpVerified(false)
+                  setOtpVerified(false);
                   // If complete number entered (including +251 and 9 digits)
                   if (phone && phone.length === 13) {
                     verifyPhoneNumber(phone);
@@ -273,22 +303,31 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
                   onExpire={handleOtpExpired}
                 />
               ) : (
-                value && !registerData?.expirationTime && (
+                value &&
+                !registerData?.expirationTime && (
                   <div className="flex items-center">
                     {phoneVerified && (
                       <div className="absolute right-16 p-2">
-                        <img src={TickIcon} alt="Verified" className="h-5 w-5" />
+                        <img
+                          src={TickIcon}
+                          alt="Verified"
+                          className="h-5 w-5"
+                        />
                       </div>
                     )}
                     <button
                       type="button"
                       className={`absolute right-3 bg-gray-100 p-2 shadow-sm border border-gray-200 
-                      ${!isValidPhone || !phoneVerified ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-200'} 
+                      ${
+                        !isValidPhone || !phoneVerified
+                          ? "opacity-50 cursor-not-allowed"
+                          : "cursor-pointer hover:bg-gray-200"
+                      } 
                       text-xs font-medium rounded-lg`}
                       onClick={handleGetOtp}
                       disabled={!isValidPhone || !phoneVerified}
                     >
-                      {otpRequested ? "Resend OTP" : "Get OTP"}
+                      {otpRequested ? t("profile.addNumberModal.resendOtp") : t("profile.addNumberModal.getOtp")}
                     </button>
                   </div>
                 )
@@ -302,30 +341,37 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
           {registerData?.expirationTime && (
             <div className="mb-4">
               <label className="block text-sm text-gray-600 mb-1">
-                Verification Code <span className="text-red-500">*</span>
+                {t("profile.addNumberModal.verificationCode")} <span className="text-red-500">*</span>
               </label>
               <div className="relative flex items-center w-full">
                 <input
                   type="text"
-                  placeholder=" Enter OTP for verification"
-                  maxLength={4}
+                  placeholder={t("profile.addNumberModal.otpMsg")}
+                  maxLength={6}
                   className="w-full rounded-xl border border-gray-200 px-4 py-2.5 bg-white outline-none focus:border-secondary"
                   value={stateNewNumber?.verification_code}
-                  onChange={(e) => setStateNewNumber(st => ({
-                    ...st, verification_code: e.target.value
-                  }))}
+                  onChange={(e) =>
+                    setStateNewNumber((st) => ({
+                      ...st,
+                      verification_code: e.target.value,
+                    }))
+                  }
                   disabled={otpVerified || registerData.verified}
                 />
                 {!otpVerified && !registerData.verified && (
                   <button
                     type="button"
                     className={`absolute right-3 bg-gray-100 p-2 shadow-sm border border-gray-200 
-                    ${stateNewNumber.verification_code.length !== 4 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-200'} 
+                    ${
+                      stateNewNumber.verification_code.length !== 4
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer hover:bg-gray-200"
+                    } 
                     text-xs font-medium rounded-lg`}
                     onClick={handleVerifyOtp}
                     disabled={stateNewNumber.verification_code.length !== 4}
                   >
-                    Verify OTP
+                    {t("profile.addNumberModal.verifyOtp")}
                   </button>
                 )}
                 {(otpVerified || registerData.verified) && (
@@ -338,13 +384,21 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
           )}
 
           <div className="rounded-xl mt-3 text-gray-600">
-            <div className={`flex ${isChangeNumberFlow ? " items-center" : "items-start"}`}>
+            <div
+              className={`flex ${
+                isChangeNumberFlow ? " items-center" : "items-start"
+              }`}
+            >
               {/* <div className="flex items-center h-5 mt-1"> */}
               <Checkbox
                 checked={stateNewNumber?.term}
-                onChange={(e) => setStateNewNumber(st => ({
-                  ...st, term: e.target.checked
-                }))} />
+                onChange={(e) =>
+                  setStateNewNumber((st) => ({
+                    ...st,
+                    term: e.target.checked,
+                  }))
+                }
+              />
               {/* <input
                   id="terms"
                   type="checkbox"
@@ -355,19 +409,22 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
                   className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-secondary"
                 /> */}
               {/* </div> */}
-              {isChangeNumberFlow ?
+              {isChangeNumberFlow ? (
                 <label htmlFor="terms" className="ml-2 text-sm cursor-pointer">
-                  <span className="text-[#008fd5] hover:underline"
+                  <span
+                    className="text-[#008fd5] hover:underline"
                     onClick={() => {
-                      window.open(ConstentRoutes.termofuse, "_blank")
+                      window.open(ConstentRoutes.termofuse, "_blank");
                     }}
-                  >Terms and Conditions </span>
+                  >
+                    {t("profile.addNumberModal.term")}{" "}
+                  </span>
                 </label>
-                :
+              ) : (
                 <label htmlFor="terms" className="ml-2 text-sm cursor-pointer">
-                  I confirm this Mobile Number belongs to me and consent to its use for NameTAG services
+                {t("profile.addNumberModal.termMsg")}
                 </label>
-              }
+              )}
             </div>
           </div>
         </div>
@@ -378,14 +435,22 @@ const AddNumberModal = ({ isOpen, onClose, onAddNumber, customerId, isChangeNumb
             onClick={onClose}
             disabled={processingAction}
           >
-            Cancel
+            {t("profile.addNumberModal.cancelBtn")}
           </button>
           <button
             className="flex-1 py-2.5 bg-secondary text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-colors"
             onClick={handleSubmit}
-            disabled={!(registerData.verified || otpVerified) || !stateNewNumber?.term || processingAction}
+            disabled={
+              !(registerData.verified || otpVerified) ||
+              !stateNewNumber?.term ||
+              processingAction
+            }
           >
-            {processingAction ? "Processing..." : isChangeNumberFlow ? "Change Number" : "Add Number"}
+            {processingAction
+              ? t("profile.addNumberModal.process")
+              : isChangeNumberFlow
+              ? t("profile.addNumberModal.changeBtn")
+              : t("profile.addNumberModal.addBtn")}
           </button>
         </div>
       </div>

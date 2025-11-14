@@ -1,9 +1,11 @@
 import { Button } from "@headlessui/react";
 import { Typography } from "@material-tailwind/react";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
 /* eslint-disable react/prop-types */
 const AccountConfirmation = ({ isOpen, handleSubmit, setIsOpen }) => {
+    const { t } = useTranslation(["common"]);
     return (
         <>
             {isOpen && (
@@ -22,7 +24,7 @@ const AccountConfirmation = ({ isOpen, handleSubmit, setIsOpen }) => {
                             <div className="flex justify-center items-center mt-2">
                                 <div className="shadow rounded-xl p-4 sm:p-6 md:p-8 lg:p-12 w-full">
                                     <Typography className="text-center">
-                                        Are You Sure You Want to Submit the Account Information to Complete Registeration Process?
+                                        {t("accountConfirmation.message")}
                                     </Typography>
                                 </div>
                             </div>
@@ -32,13 +34,13 @@ const AccountConfirmation = ({ isOpen, handleSubmit, setIsOpen }) => {
                                         className="bg-white text-[#757575] border border-secondary py-2 px-6 sm:px-6"
                                         onClick={() => setIsOpen(false)}
                                     >
-                                        Cancel
+                                        {t("accountConfirmation.cancel")}
                                     </Button>
                                     <Button
                                         className="bg-secondary py-2 px-6 text-white sm:px-6"
                                         onClick={() => handleSubmit()}
                                     >
-                                        Submit
+                                        {t("accountConfirmation.submit")}
                                     </Button>
                                 </div>
                             </div>

@@ -1,9 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation(["common"]);
   const token = localStorage.getItem("token")
  let  userData = JSON.parse(localStorage.getItem("user"));
 
@@ -36,24 +38,24 @@ const Footer = () => {
         <div className="flex md:gap-4 gap-2 items-center flex-wrap mb-2 md:mb-0">
           <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
             onClick={() => {
-              window.open(ConstentRoutes.termofuse, '_blank');
+              navigate(ConstentRoutes.termofuse);
             }}
           >
-            Terms & Conditions
+            {t("footer.terms")}
           </p>
           <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
             onClick={() => {
-              window.open(ConstentRoutes.privacyPolicy, '_blank');
+              navigate(ConstentRoutes.privacyPolicy);
             }}
           >
-            Privacy Policy
+            {t("footer.privacy")}
           </p>
           <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
             onClick={() => {
               navigate("/faq", { state: { isIndividual: location?.pathname?.includes("customer") ? true : false } });
             }}
           >
-            FAQs
+            {t("footer.faqs")}
           </p>
           <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
             onClick={() => {
@@ -71,11 +73,11 @@ const Footer = () => {
               }
             }}
           >
-            Contact Us
+            {t("footer.contact")}
           </p>
         </div>
         <p className="text-center font-medium text-xs md:text-base text-[#008fd5]">
-          ©{new Date()?.getFullYear()} All rights reserved.
+          ©{new Date()?.getFullYear()} {t("footer.rights")}
         </p>
       </div>
     </div>

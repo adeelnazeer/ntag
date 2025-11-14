@@ -56,32 +56,18 @@ import { Carousel } from "@material-tailwind/react";
 import Card from "../../../assets/images/img1.webp";
 import img2 from "../../../assets/images/img3.webp";
 import img3 from "../../../assets/images/img5.webp";
+import { useTranslation } from "react-i18next";
 
 
 const CarouselCustomNavigation = () => {
-  const slides = [
-    {
-      title: "NameTAG",
-      para1: "Be More Than a Number",
-      para2: "Show your name, not your number, when making calls.",
-      description: "With NameTAG, your phone number transforms into a unique, memorable name that reflects who you are. Whether you're an individual or a business,this lets you display your chosen name instead of a standard number when making calls—making every interaction more personal, professional, and easy to remember.",
-      image: Card
-    },
-    {
-      title: "NameTAG",
-      para1: "Boost Your Brand Identity",
-      para2: "Use a custom name for your customers calls to reflect your brand.",
-      description: "NameTAG helps you strengthen your brand presence by replacing your regular phone number with a custom NameTAG. Perfect for businesses and influencers, this service allows customers and contacts to recognize and remember you instantly—helping to build trust, brand loyalty, and better communication experiences.",
-      image: img2
-    },
-    {
-      title: "NameTAG",
-      para1: "Memorable Calls, Made Easy",
-      para2: "Create a catchy NameTAG linked to your number.",
-      description: "Stand out in every call with a NameTAG—your personalized calling identity. Whether it's a nickname, brand name, or phrase, NameTAG links your selected name to your real number, ensuring that whoever you contact sees your identity first. It’s simple to set up, easy to manage, and available for both prepaid and postpaid users.",
-      image: img3
-    }
-  ]
+  const { t } = useTranslation(["home"]);
+  const slidesData = t("carousel.slides", { returnObjects: true });
+  const images = [Card, img2, img3];
+  
+  const slides = slidesData.map((slide, index) => ({
+    ...slide,
+    image: images[index]
+  }));
   return (
     <div id="home">
       <Carousel

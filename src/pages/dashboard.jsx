@@ -4,12 +4,14 @@ import Dashboardtable from "../components/dashboardtable";
 import PremiumTagsTable from "../components/premiumTagsTable.jsx";
 import { useTagList } from "./hooks/useDashboard";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const DashboardPage = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState("corporate");
   const isExchangeFlow = location.state?.isExchangeFlow || false;
   const currentTagData = location.state?.currentTagData || null;
+  const { t } = useTranslation(["common"]);
 
   const {
     data,
@@ -24,18 +26,19 @@ const DashboardPage = () => {
     suggestedNumbers,
     handleTagDetails,
     loadingPayment,
-    Catfilters
+    Catfilters,
   } = useTagList();
 
   return (
     <div className=" mx-auto">
       <div className=" flex md:gap-6 gap-1 mb-5 items-center">
         <div
-          className={`py-3 text-sm md:text-base px-3 md:min-w-60 text-center cursor-pointer shadow-lg  text-white rounded-xl font-bolder ${activeTab === "corporate" ? "bg-secondary" : "bg-gray-500"}`}
+          className={`py-3 text-sm md:text-base px-3 md:min-w-60 text-center cursor-pointer shadow-lg  text-white rounded-xl font-bolder ${
+            activeTab === "corporate" ? "bg-secondary" : "bg-gray-500"
+          }`}
           onClick={() => setActiveTab("corporate")}
         >
-          Corporate NameTAG
-
+          {t("dashboard.corpNameTag")}
         </div>
         {/* <div
           className={`py-3 text-sm md:text-base px-3 md:min-w-60 text-center cursor-pointer shadow-lg  text-white rounded-xl font-bolder ${activeTab === "premium" ? "bg-secondary" : "bg-gray-500"}`}
@@ -45,7 +48,6 @@ const DashboardPage = () => {
 
         </div> */}
       </div>
-
 
       {activeTab === "corporate" && (
         <Dashboardtable

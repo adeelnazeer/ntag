@@ -20,12 +20,15 @@ export const useForgotPassword = () => {
   
     const handleForgotPassword = (data, setStep) => {
         setLoading(true);
-        
+        const payload={
+            username: data?.username,
+            phone_number: data?.phone_number?.replace(/^\+/, '')
+        }        
         let endpoint = userData?.customer_type === 'individual' 
             ? EndPoints.customer.IndividualforgotPassword 
             : EndPoints.customer.forgotPassword;
       
-        APICall("post", data, endpoint)
+        APICall("post", payload, endpoint)
             .then((res) => {
                 if (res?.success) {
                     setData(res?.data);

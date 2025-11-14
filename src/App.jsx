@@ -44,6 +44,8 @@ import ChangeMyTag from "./pages/changeMyTag.jsx";
 import CloseAccountCustomer from "./pages/IndividualCustomer/closeAccount.jsx";
 import ChangeNumber from "./pages/changeNumber.jsx";
 import ChangeNumberDetailPage from "./pages/changeNumberDetailPage.jsx";
+import CallPinPage from "./pages/callPin.jsx";
+import CallPinPageIndividual from "./pages/IndividualCustomer/callPinIndividual.jsx";
 
 function App() {
   return (
@@ -123,6 +125,14 @@ function App() {
           }
         />
         <Route
+          path={ConstentRoutes.incomingCallPin}
+          element={
+            <DashboardLayoutCustomer>
+              <CallPinPageIndividual />
+            </DashboardLayoutCustomer>
+          }
+        />
+        <Route
           path={ConstentRoutes.blockUnblockTagCustomer}
           element={
             <DashboardLayoutCustomer>
@@ -183,6 +193,14 @@ function App() {
           element={
             <DashboardLayout>
               <BlockUnblock />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.corporateCallPin}
+          element={
+            <DashboardLayout>
+              <CallPinPage />
             </DashboardLayout>
           }
         />

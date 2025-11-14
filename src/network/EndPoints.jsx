@@ -17,6 +17,7 @@ const EndPoints = {
     forgotPassword: "/customer/auth/forgot/password",
     IndividualforgotPassword: "/individual/auth/forgot/password",
     createOrder: "/customer/order",
+    getProfileDetail: "/customer/detail",
     newPassword: "/customer/auth/update/password",
     uploadDocument: "/customer/document/save",
     updateDocument: "/customer/document/update",
@@ -32,9 +33,13 @@ const EndPoints = {
     buytagsCustomer: "/individual/reserve/buy",
     getReserveTagsCustomer: "/individual/reserve/tags",
     getBlockNumber: "/customer/block-numbers",
+    getWhiteListNumber: "/customer/whitelist",
+    addWhiteList: "/customer/add-whitelist",
+    deleteWhiteList: (id) => `/customer/remove-whitelist/${id}`,
     saveIndividualBlockNumber: "/individual/block-number",
     getIndividualBlockNumber: "/individual/block-number",
     saveBlockNumber: "/customer/block-numbers",
+    setCallpin: "/customer/setcallpin",
     individualUnSun: "/individual/unsubscribe",
     changePasswordCustomer: "/individual/change-password",
     updateProfileCustomer: "/individual/update-profile",
@@ -47,7 +52,14 @@ const EndPoints = {
     updateStatus: `/customer/close-account`,
     individualCloseAccount: `/individual/close-account`,
     createMandate: "/individual/create-mandate",
-    createMandateCorp: "/customer/create-mandate"
+    addWhiteListIndividual: "/individual/add-whitelist",
+    getWhiteListNumberIndividual: "/individual/whitelist",
+    deleteWhiteListIndividual: (id) => `/individual/remove-whitelist/${id}`,
+    setCallpinIndividual: "/individual/setcallpin",
+    createMandateCorp: "/customer/create-mandate",
+    getIndustries: "/customer/industries",
+    getRegions: "/customer/regions"
+
   },
 };
 

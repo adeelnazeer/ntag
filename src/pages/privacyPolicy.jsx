@@ -1,120 +1,122 @@
-import React from 'react';
 import Header from "../components/header";
 import { Typography } from "@material-tailwind/react";
+import { useTranslation } from "react-i18next";
 
 const PrivacyPolicy = () => {
+  const { t } = useTranslation(["privacyPolicy"]);
+
   return (
     <>
       <Header />
       <div className="max-w-4xl mx-auto p-6 my-6 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center mb-6 text-secondary pb-2 border-b">
-          NameTAG Privacy Policy
+          {t("title")}
         </h1>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">Introduction</h2>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("introduction.heading")}</h2>
           <Typography className="text-gray-700 mb-4">
-            At Ethio Telecom ("we", "us", "our"), your privacy matters. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you use the NameTAG service and related platforms.
+            {t("introduction.text")}
           </Typography>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">Definitions</h2>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("definitions.heading")}</h2>
           <ul className="list-disc pl-6 mb-3 text-gray-700">
-            <li className="mb-2"><span className="font-medium">Personal Information:</span> Any information that identifies, relates to, or can be used to identify an individual.</li>
-            <li className="mb-2"><span className="font-medium">Service:</span> The NameTAG virtual number service, including associated websites, apps, and platforms.</li>
+            <li className="mb-2"><span className="font-medium">{t("definitions.personalInformation.label")}</span> {t("definitions.personalInformation.text")}</li>
+            <li className="mb-2"><span className="font-medium">{t("definitions.service.label")}</span> {t("definitions.service.text")}</li>
           </ul>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">Information We Collect</h2>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("informationWeCollect.heading")}</h2>
           <ul className="list-disc pl-6 mb-3 text-gray-700">
-            <li className="mb-2"><span className="font-medium">Personal Information:</span> Such as your name, email address, mobile number, and other identifiers provided during registration.</li>
-            <li className="mb-2"><span className="font-medium">Usage Data:</span> Information on how you interact with the Service, including browsing history, search queries, and communication patterns.</li>
-            <li className="mb-2"><span className="font-medium">Device Information:</span> Details like your IP address, device type, operating system, and browser type.</li>
+            <li className="mb-2"><span className="font-medium">{t("informationWeCollect.personalInformation.label")}</span> {t("informationWeCollect.personalInformation.text")}</li>
+            <li className="mb-2"><span className="font-medium">{t("informationWeCollect.usageData.label")}</span> {t("informationWeCollect.usageData.text")}</li>
+            <li className="mb-2"><span className="font-medium">{t("informationWeCollect.deviceInformation.label")}</span> {t("informationWeCollect.deviceInformation.text")}</li>
           </ul>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">How We Collect Information</h2>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("howWeCollect.heading")}</h2>
           <ul className="list-disc pl-6 mb-3 text-gray-700">
-            <li className="mb-2"><span className="font-medium">Directly from you:</span> When you register, contact support, or interact with the Service.</li>
-            <li className="mb-2"><span className="font-medium">Automatically:</span> Using cookies and tracking technologies as you use our Service.</li>
-            <li className="mb-2"><span className="font-medium">From third parties:</span> Including our partners, affiliates, social media and publicly available sources.</li>
+            <li className="mb-2"><span className="font-medium">{t("howWeCollect.directly.label")}</span> {t("howWeCollect.directly.text")}</li>
+            <li className="mb-2"><span className="font-medium">{t("howWeCollect.automatically.label")}</span> {t("howWeCollect.automatically.text")}</li>
+            <li className="mb-2"><span className="font-medium">{t("howWeCollect.thirdParties.label")}</span> {t("howWeCollect.thirdParties.text")}</li>
           </ul>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">How We Use Information</h2>
-          <Typography className="text-gray-700 mb-2">We use your information to:</Typography>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("howWeUse.heading")}</h2>
+          <Typography className="text-gray-700 mb-2">{t("howWeUse.intro")}</Typography>
           <ul className="list-disc pl-6 mb-3 text-gray-700">
-            <li className="mb-2">Provide, operate, and maintain the NameTAG Service.</li>
-            <li className="mb-2">Improve and personalize your user experience.</li>
-            <li className="mb-2">Communicate important information, updates, and promotional offers (with your consent).</li>
-            <li className="mb-2">Fulfill legal and regulatory requirements.</li>
+            <li className="mb-2">{t("howWeUse.items.provide")}</li>
+            <li className="mb-2">{t("howWeUse.items.improve")}</li>
+            <li className="mb-2">{t("howWeUse.items.communicate")}</li>
+            <li className="mb-2">{t("howWeUse.items.fulfill")}</li>
           </ul>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">Disclosure of Information</h2>
-          <Typography className="text-gray-700 mb-2">We may share your Personal Information with:</Typography>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("disclosure.heading")}</h2>
+          <Typography className="text-gray-700 mb-2">{t("disclosure.intro")}</Typography>
           <ul className="list-disc pl-6 mb-3 text-gray-700">
-            <li className="mb-2"><span className="font-medium">Service Providers:</span> Who assist in delivering and improving our services.</li>
-            <li className="mb-2"><span className="font-medium">Partners and Affiliates:</span> For service expansion and customer support.</li>
-            <li className="mb-2"><span className="font-medium">Law Enforcement or Regulatory Authorities:</span> When required to comply with legal obligations or protect rights and safety.</li>
+            <li className="mb-2"><span className="font-medium">{t("disclosure.serviceProviders.label")}</span> {t("disclosure.serviceProviders.text")}</li>
+            <li className="mb-2"><span className="font-medium">{t("disclosure.partners.label")}</span> {t("disclosure.partners.text")}</li>
+            <li className="mb-2"><span className="font-medium">{t("disclosure.lawEnforcement.label")}</span> {t("disclosure.lawEnforcement.text")}</li>
           </ul>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">Cookies and Tracking Technologies</h2>
-          <Typography className="text-gray-700 mb-2">We use cookies and similar technologies to:</Typography>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("cookies.heading")}</h2>
+          <Typography className="text-gray-700 mb-2">{t("cookies.intro")}</Typography>
           <ul className="list-disc pl-6 mb-3 text-gray-700">
-            <li className="mb-2">Analyze and understand how our Service is used.</li>
-            <li className="mb-2">Personalize your experience and content.</li>
-            <li className="mb-2">Enhance Service functionality and security.</li>
+            <li className="mb-2">{t("cookies.items.analyze")}</li>
+            <li className="mb-2">{t("cookies.items.personalize")}</li>
+            <li className="mb-2">{t("cookies.items.enhance")}</li>
           </ul>
           <Typography className="text-gray-700 mb-2">
-            You can manage your cookie preferences through your device or browser settings.
+            {t("cookies.note")}
           </Typography>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">Your Rights</h2>
-          <Typography className="text-gray-700 mb-2">You have the right to:</Typography>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("yourRights.heading")}</h2>
+          <Typography className="text-gray-700 mb-2">{t("yourRights.intro")}</Typography>
           <ul className="list-disc pl-6 mb-3 text-gray-700">
-            <li className="mb-2">Access and review your Personal Information.</li>
-            <li className="mb-2">Request corrections or updates.</li>
-            <li className="mb-2">Object to the processing of your information in certain circumstances.</li>
-            <li className="mb-2">Request deletion of your Personal Information (subject to legal obligations).</li>
-            <li className="mb-2">Opt out of receiving marketing communications at any time.</li>
+            <li className="mb-2">{t("yourRights.items.access")}</li>
+            <li className="mb-2">{t("yourRights.items.requestCorrections")}</li>
+            <li className="mb-2">{t("yourRights.items.object")}</li>
+            <li className="mb-2">{t("yourRights.items.requestDeletion")}</li>
+            <li className="mb-2">{t("yourRights.items.optOut")}</li>
           </ul>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">Security</h2>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("security.heading")}</h2>
           <Typography className="text-gray-700 mb-4">
-            We implement appropriate technical and organizational security measures to protect your Personal Information from unauthorized access, disclosure, alteration, and destruction.
+            {t("security.text")}
           </Typography>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">Data Retention</h2>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("dataRetention.heading")}</h2>
           <Typography className="text-gray-700 mb-4">
-            We retain your Personal Information only as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law.
+            {t("dataRetention.text")}
           </Typography>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">Changes to This Privacy Policy</h2>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("changes.heading")}</h2>
           <Typography className="text-gray-700 mb-4">
-            We may update this Privacy Policy from time to time. Changes will be posted on our website, and we encourage you to review it periodically.
+            {t("changes.text")}
           </Typography>
         </section>
 
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3 text-gray-800">Acceptance of the Privacy Policy</h2>
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">{t("acceptance.heading")}</h2>
           <Typography className="text-gray-700 mb-4">
-            By using the NameTAG Service, you confirm that you have read, understood, and agreed to the terms of this Privacy Policy.
+            {t("acceptance.text")}
           </Typography>
         </section>
       </div>

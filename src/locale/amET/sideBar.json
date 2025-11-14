@@ -1,0 +1,17 @@
+{
+  "sideBar": {
+    "dashboard": "ዋና መቆጣጠሪያ",
+    "buyTag": "ስም መለያ (NameTAG) ይግዙ",
+    "reserveTag": "ስም መለያ (NameTAG) ይያዙ",
+    "manageTag": "ስም መለያ ያስተዳድሩ",
+    "callScheduling": "የጥሪ ጊዜ መወሰኛ",
+    "incomingCallPin": "ገቢ ጥሪ ሚስጥር ቁጥር (PIN)",
+    "BlockUnblock": "እግድ/እግድ ማንሳት",
+    "changeNameTag": "ስም መለያ ይቀይሩ",
+    "changeMobileNo": "የሞባይል ቁጥር ይቀይሩ",
+    "unsubscribe": "የደንበኝነት ምዝገባ ይውጡ",
+    "closeAccount": "አካውንት ይዝጉ",
+    "profile": "የግል ገጽ",
+    "logout": "ውጣ"
+  }
+}

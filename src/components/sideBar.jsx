@@ -10,15 +10,17 @@ import { ConstentRoutes } from "../utilities/routesConst";
 import { removeToken } from "../utilities/auth";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { clearUserData } from "../redux/userSlice";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const sidebarRef = useRef(null);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation(["sideBar"]);
 
-  let userData = {}
-  userData = useAppSelector(state => state.user.userData);
+  let userData = {};
+  userData = useAppSelector((state) => state.user.userData);
   if (userData == null || userData == undefined) {
     localStorage.getItem("user");
     userData = JSON.parse(localStorage.getItem("user"));
@@ -26,18 +28,22 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
 
   const activeDashboard = location?.pathname === ConstentRoutes.dashboard;
   const activeTwo = location?.pathname?.includes("dashboard");
-  const activeThree = location?.pathname === ConstentRoutes.manageTagName ||
+  const activeThree =
+    location?.pathname === ConstentRoutes.manageTagName ||
     location?.pathname === ConstentRoutes.blockUnblockTag ||
     location?.pathname === ConstentRoutes.UnSUBblockTag;
   const activeProfile = location?.pathname === ConstentRoutes.profilePage;
 
   // For child menu active states
-  const activeCallSchedule = location?.pathname === ConstentRoutes.manageTagName;
+  const activeCallSchedule =
+    location?.pathname === ConstentRoutes.manageTagName;
   const activeBlock = location?.pathname === ConstentRoutes.blockUnblockTag;
+  const activeCallPin = location?.pathname === ConstentRoutes.corporateCallPin;
   const activeUnsubscribe = location?.pathname === ConstentRoutes.UnSUBblockTag;
   const closeAccount = location?.pathname === ConstentRoutes.closeAccount;
   const changeNumber = location?.pathname === ConstentRoutes.changeNumber;
-  const activeChangeMyTag = location?.pathname === ConstentRoutes.changeMyTAGCorporate;
+  const activeChangeMyTag =
+    location?.pathname === ConstentRoutes.changeMyTAGCorporate;
 
   // State to manage dropdown open/closed
   const [openManageMenu, setOpenManageMenu] = useState(activeThree);
@@ -59,36 +65,44 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
   const sidebarData = [
     {
       icon: <MdHomeFilled className="h-5 w-5" />,
-      text: "Dashboard",
+      text: t("sideBar.dashboard"),
       active: activeDashboard,
-      route: ConstentRoutes.dashboard
+      route: ConstentRoutes.dashboard,
     },
     {
       icon: <FaHashtag className="h-4 w-4" />,
-      text: (data?.[0]?.doc_status == 1 && data?.[1]?.doc_status == 1 && data?.[2]?.doc_status == 1) ? "Buy NameTAG" : "Reserve NameTAG",
+      text:
+        data?.[0]?.doc_status == 1 &&
+        data?.[1]?.doc_status == 1 &&
+        data?.[2]?.doc_status == 1
+          ? t("sideBar.buyTag")
+          : t("sideBar.reserveTag"),
       active: activeTwo,
       route: ConstentRoutes.buyTag,
-      disabled: userData?.status == 5
+      disabled: userData?.status == 5,
     },
     {
       icon: <FaUser className="h-4 w-4" />,
-      text: "Profile",
+      text: t("sideBar.profile"),
       active: activeProfile,
       route: ConstentRoutes.profilePage,
-      disabled: userData?.status == 5
+      disabled: userData?.status == 5,
     },
     {
       icon: <IoLogOutSharp className="h-4 w-4" />,
-      text: "Log Out",
+      text: t("sideBar.logout"),
       className: "text-[#FF4842]",
-      onClick: handleLogOut
-    }
+      onClick: handleLogOut,
+    },
   ];
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target) &&
-        !event.target.closest('button')) {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target) &&
+        !event.target.closest("button")
+      ) {
         setIsSidebarOpen(false);
       }
     };
@@ -99,7 +113,10 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [isSidebarOpen]);
 
-  const isDocumentDisabled = data?.[0]?.doc_status == 0 || data?.[1]?.doc_status == 0 || data?.[2]?.doc_status == 0
+  const isDocumentDisabled =
+    data?.[0]?.doc_status == 0 ||
+    data?.[1]?.doc_status == 0 ||
+    data?.[2]?.doc_status == 0;
 
   return (
     <div className="w-full h-full">
@@ -126,7 +143,11 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
               {/* Standard menu items */}
               {sidebarData.slice(0, 2).map((item, index) => (
                 <div key={index} className="flex md:gap-6 gap-1">
-                  <div className={`${item.active ? "bg-secondary" : "bg-white"} w-2 h-full rounded-tr-[10px] rounded-br-[10px]`} />
+                  <div
+                    className={`${
+                      item.active ? "bg-secondary" : "bg-white"
+                    } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                  />
                   <ListItem
                     disabled={item.disabled}
                     onClick={() => {
@@ -138,13 +159,27 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       setIsSidebarOpen(false);
                     }}
                     className={`py-4 
-                      ${item.active ? "bg-secondary text-white hover:text-white hover:bg-secondary" : ""} 
+                      ${
+                        item.active
+                          ? "bg-secondary text-white hover:text-white hover:bg-secondary"
+                          : ""
+                      } 
                       ${item.className || ""}
                       focus:bg-secondary focus:text-white
-                      ${item.disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                      ${
+                        item.disabled
+                          ? "opacity-50 cursor-not-allowed"
+                          : "cursor-pointer"
+                      }`}
                   >
-                    <ListItemPrefix className="md:mr-4 mr-2">{item.icon}</ListItemPrefix>
-                    <span className={`${item.active ? "text-white" : "text-[#8A8AA0]"} font-medium`}>
+                    <ListItemPrefix className="md:mr-4 mr-2">
+                      {item.icon}
+                    </ListItemPrefix>
+                    <span
+                      className={`${
+                        item.active ? "text-white" : "text-[#8A8AA0]"
+                      } font-medium`}
+                    >
                       {item.text}
                     </span>
                   </ListItem>
@@ -154,9 +189,13 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
               {/* Manage NameTAG with dropdown */}
               <div className="flex flex-col">
                 <div className="flex md:gap-6 gap-1">
-                  <div className={`${activeThree ? "bg-secondary" : "bg-white"} w-2 h-full rounded-tr-[10px] rounded-br-[10px]`} />
+                  <div
+                    className={`${
+                      activeThree ? "bg-secondary" : "bg-white"
+                    } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                  />
                   <ListItem
-                    disabled={(userData?.status == 5)}
+                    disabled={userData?.status == 5}
                     onClick={() => {
                       setOpenManageMenu(!openManageMenu);
                       // if (!(data?.[0]?.doc_status != 1 && data?.[1]?.doc_status != 1)) {
@@ -164,13 +203,23 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       // }
                     }}
                     className={`py-4 
-                      ${activeThree ? "bg-secondary text-white hover:text-white hover:bg-secondary" : ""} 
+                      ${
+                        activeThree
+                          ? "bg-secondary text-white hover:text-white hover:bg-secondary"
+                          : ""
+                      } 
                       focus:bg-secondary focus:text-white
                       ${"cursor-pointer"}`}
                   >
-                    <ListItemPrefix className="md:mr-4 mr-2"><BsFire className="h-4 w-4" /></ListItemPrefix>
-                    <span className={`${activeThree ? "text-white" : "text-[#8A8AA0]"} font-medium`}>
-                      Manage NameTAG
+                    <ListItemPrefix className="md:mr-4 mr-2">
+                      <BsFire className="h-4 w-4" />
+                    </ListItemPrefix>
+                    <span
+                      className={`${
+                        activeThree ? "text-white" : "text-[#8A8AA0]"
+                      } font-medium`}
+                    >
+                     {t("sideBar.manageTag")}
                     </span>
                   </ListItem>
                 </div>
@@ -180,72 +229,122 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                   <div className="ml-8 pl-4 mt-1 flex flex-col gap-1 mb-2">
                     <button
                       onClick={() => {
-                        navigate(ConstentRoutes.manageTagName)
+                        navigate(ConstentRoutes.manageTagName);
                         setIsSidebarOpen(false);
                       }}
                       disabled={isDocumentDisabled}
                       className={`py-2 px-3 text-left text-sm rounded-md cursor-pointer 
-                        ${activeCallSchedule ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"} ${isDocumentDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                        ${
+                          activeCallSchedule
+                            ? "bg-secondary text-white"
+                            : "text-[#8A8AA0] hover:bg-gray-100"
+                        } ${
+                        isDocumentDisabled
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
+                      }`}
                     >
-                      Call Scheduling
+                      {t("sideBar.callScheduling")}
                     </button>
                     <button
                       onClick={() => {
-                        navigate(ConstentRoutes.blockUnblockTag)
+                        navigate(ConstentRoutes.corporateCallPin);
                         setIsSidebarOpen(false);
-
                       }}
                       disabled={isDocumentDisabled}
                       className={`py-2 px-3 text-sm text-left rounded-md cursor-pointer 
-                        ${activeBlock ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"} ${isDocumentDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                        ${
+                          activeCallPin
+                            ? "bg-secondary text-white"
+                            : "text-[#8A8AA0] hover:bg-gray-100"
+                        } ${
+                        isDocumentDisabled
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
+                      }`}
                     >
-                      Block/Unblock
+                     {t("sideBar.incomingCallPin")}
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate(ConstentRoutes.blockUnblockTag);
+                        setIsSidebarOpen(false);
+                      }}
+                      disabled={isDocumentDisabled}
+                      className={`py-2 px-3 text-sm text-left rounded-md cursor-pointer 
+                        ${
+                          activeBlock
+                            ? "bg-secondary text-white"
+                            : "text-[#8A8AA0] hover:bg-gray-100"
+                        } ${
+                        isDocumentDisabled
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
+                      }`}
+                    >
+                     {t("sideBar.BlockUnblock")}
                     </button>
                     <div
                       onClick={() => {
-                        navigate(ConstentRoutes.changeMyTAGCorporate)
+                        navigate(ConstentRoutes.changeMyTAGCorporate);
                         setIsSidebarOpen(false);
-
                       }}
                       className={`py-2 px-3 text-sm rounded-md cursor-pointer 
-                        ${activeChangeMyTag ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
+                        ${
+                          activeChangeMyTag
+                            ? "bg-secondary text-white"
+                            : "text-[#8A8AA0] hover:bg-gray-100"
+                        }`}
                     >
-                      Change NameTAG
+                      {t("sideBar.changeNameTag")}
                     </div>
                     <div
                       onClick={() => {
-                        navigate(ConstentRoutes.changeNumber)
+                        navigate(ConstentRoutes.changeNumber);
                         setIsSidebarOpen(false);
-
                       }}
                       className={`py-2 px-3 text-sm rounded-md cursor-pointer 
-                        ${changeNumber ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
+                        ${
+                          changeNumber
+                            ? "bg-secondary text-white"
+                            : "text-[#8A8AA0] hover:bg-gray-100"
+                        }`}
                     >
-                      Change Mobile Number
+                      {t("sideBar.changeMobileNo")}
                     </div>
                     <button
                       onClick={() => {
-                        navigate(ConstentRoutes.UnSUBblockTag)
+                        navigate(ConstentRoutes.UnSUBblockTag);
                         setIsSidebarOpen(false);
-
                       }}
                       disabled={isDocumentDisabled}
                       className={`py-2 px-3 text-left text-sm rounded-md cursor-pointer 
-                        ${activeUnsubscribe ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"} ${isDocumentDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                        ${
+                          activeUnsubscribe
+                            ? "bg-secondary text-white"
+                            : "text-[#8A8AA0] hover:bg-gray-100"
+                        } ${
+                        isDocumentDisabled
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
+                      }`}
                     >
-                      Unsubscribe
+                      {t("sideBar.unsubscribe")}
                     </button>
 
                     <div
                       onClick={() => {
-                        navigate(ConstentRoutes.closeAccount)
+                        navigate(ConstentRoutes.closeAccount);
                         setIsSidebarOpen(false);
-
                       }}
                       className={`py-2 px-3 text-sm rounded-md cursor-pointer 
-                        ${closeAccount ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
+                        ${
+                          closeAccount
+                            ? "bg-secondary text-white"
+                            : "text-[#8A8AA0] hover:bg-gray-100"
+                        }`}
                     >
-                      Close Account
+                      {t("sideBar.closeAccount")}
                     </div>
                   </div>
                 )}
@@ -254,7 +353,11 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
               {/* Remaining menu items */}
               {sidebarData.slice(2).map((item, index) => (
                 <div key={index + 2} className="flex md:gap-6 gap-1">
-                  <div className={`${item.active ? "bg-secondary" : "bg-white"} w-2 h-full rounded-tr-[10px] rounded-br-[10px]`} />
+                  <div
+                    className={`${
+                      item.active ? "bg-secondary" : "bg-white"
+                    } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                  />
                   <ListItem
                     disabled={item.disabled}
                     onClick={() => {
@@ -266,13 +369,27 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       setIsSidebarOpen(false);
                     }}
                     className={`py-4 
-                      ${item.active ? "bg-secondary text-white hover:text-white hover:bg-secondary" : ""} 
+                      ${
+                        item.active
+                          ? "bg-secondary text-white hover:text-white hover:bg-secondary"
+                          : ""
+                      } 
                       ${item.className || ""}
                       focus:bg-secondary focus:text-white
-                      ${item.disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                      ${
+                        item.disabled
+                          ? "opacity-50 cursor-not-allowed"
+                          : "cursor-pointer"
+                      }`}
                   >
-                    <ListItemPrefix className="md:mr-4 mr-2">{item.icon}</ListItemPrefix>
-                    <span className={`${item.active ? "text-white" : "text-[#8A8AA0]"} font-medium`}>
+                    <ListItemPrefix className="md:mr-4 mr-2">
+                      {item.icon}
+                    </ListItemPrefix>
+                    <span
+                      className={`${
+                        item.active ? "text-white" : "text-[#8A8AA0]"
+                      } font-medium`}
+                    >
                       {item.text}
                     </span>
                   </ListItem>

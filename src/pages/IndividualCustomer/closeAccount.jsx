@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Typography, Spinner } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,8 +11,10 @@ import APICall from '../../network/APICall';
 import { ConstentRoutes, getTagStatusDashboard } from '../../utilities/routesConst';
 import { removeToken } from '../../utilities/auth';
 import { clearUserData } from '../../redux/userSlice';
+import { useTranslation } from "react-i18next";
 
 function CloseAccountCustomer() {
+    const { t } = useTranslation(["closeAccount"]);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
@@ -36,10 +38,9 @@ function CloseAccountCustomer() {
         userData = JSON.parse(localStorage.getItem("user"));
     }
 
-    console.log({ userData })
-
     useEffect(() => {
         fetchTagData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const fetchTagData = () => {
@@ -47,7 +48,7 @@ function CloseAccountCustomer() {
         const user = JSON.parse(localStorage.getItem("user"));
 
         if (!user?.id) {
-            console.error("No customer account ID found");
+            console.error(t("messages.noAccountId"));
             setLoading(false);
             return;
         }
@@ -67,7 +68,7 @@ function CloseAccountCustomer() {
             })
             .catch((err) => {
                 console.error("Error fetching tag data:", err);
-                toast.error("Failed to load NameTAG data");
+                toast.error(t("messages.fetchError"));
                 setLoading(false);
             });
     };
@@ -92,6 +93,7 @@ function CloseAccountCustomer() {
                 ...st,
                 error: true
             }))
+            toast.error(t("messages.commentRequired"));
             return
         }
         setUnsubscribing(true);
@@ -105,7 +107,7 @@ function CloseAccountCustomer() {
         APICall("post", payload, EndPoints.customer.individualCloseAccount)
             .then(res => {
                 if (res?.success) {
-                    toast.success(res?.message || "Successfully Closed Account");
+                    toast.success(res?.message || t("messages.closeSuccess"));
                     handleCloseModal()
                     dispatch(clearUserData());
                     removeToken();
@@ -115,31 +117,25 @@ function CloseAccountCustomer() {
                     navigate(ConstentRoutes.login);
                     // Refresh tag data after successful unsubscribe
                 } else {
-                    toast.error(res?.message || "Failed to Close Account");
+                    toast.error(res?.message || t("messages.closeFailed"));
 
                 }
                 setUnsubscribing(false);
             })
             .catch(err => {
                 console.log({ err })
-                toast.error(err || "An error occurred");
+                toast.error(err?.message || t("messages.errorOccurred"));
                 setUnsubscribing(false);
             });
     };
 
     const renderTagItem = (tag) => {
-
-        // Check if premium tag
-        const isPremium = tag?.tag_list_premium_id == 1;
-        // Use the premium tag data if it exists, otherwise use the regular tag data
-        const tagInfo = isPremium && tag?.corp_premium_tag_list ? tag?.corp_premium_tag_list : (tag?.corp_tag_list || {});
-
         return (
             <tr key={tag?.id}>
                 <td className="py-4 px-4 text-sm text-gray-700">{userData?.first_name || ''} {userData?.last_name || ""}</td>
-                <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(userData?.phone_number || 'N/A')}</td>
+                <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(userData?.phone_number || t("common.na"))}</td>
                 <td className="py-4 px-4 text-sm text-gray-700">
-                    {moment(userData?.created_date).format("YYYY-MM-DD") || 'N/A'}
+                    {moment(userData?.created_date).format("YYYY-MM-DD") || t("common.na")}
                 </td>
                 <td className="py-4 px-4 text-sm text-gray-700">
                     {getTagStatusDashboard(userData?.status)}
@@ -155,20 +151,18 @@ function CloseAccountCustomer() {
                         }}
                         disabled={tagData?.length > 0}
                     >
-                        {unsubscribing && selectedTagId === tag?.reserve_tag_id ? "Processing..." : "Close Account"}
+                        {unsubscribing && selectedTagId === tag?.reserve_tag_id ? t("buttons.processing") : t("buttons.closeAccount")}
                     </Button>
                 </td>
             </tr>
         );
     };
 
-    console.log({ tagData })
-
     return (
         <div className="shadow bg-white rounded-xl">
             <div className=' border-b flex justify-between items-center'>
                 <Typography className="text-[#1F1F2C] p-3 px-6 text-md font-bold">
-                    Manage Account Closure
+                    {t("title")}
                 </Typography>
                 {/* <Button
                     size={'sm'}
@@ -188,18 +182,18 @@ function CloseAccountCustomer() {
                     <>
                         {tagData?.length > 0 && (
                             <p className="block text-blue-600 antialiased font-sans text-[14px] mb-3">
-                                You have the following active NameTAGs. To close your account, please unsubscribe from each NameTAG.
+                                {t("note")}
                             </p>
                         )}
                         <div className="overflow-x-auto">
                             <table className="min-w-full bg-white">
                                 <thead className="bg-[#F6F7FB]">
                                     <tr>
-                                        <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Name</th>
-                                        <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Mobile Number</th>
-                                        <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Created Date</th>
-                                        <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Status</th>
-                                        <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Action</th>
+                                        <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("table.headers.name")}</th>
+                                        <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("table.headers.mobileNumber")}</th>
+                                        <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("table.headers.createdDate")}</th>
+                                        <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("table.headers.status")}</th>
+                                        <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("table.headers.action")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

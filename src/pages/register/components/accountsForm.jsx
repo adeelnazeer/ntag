@@ -6,11 +6,12 @@ import { useRegisterHook } from "../../hooks/useRegisterHook";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import TickIcon from '../../../assets/images/tick.png';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ConstentRoutes } from "../../../utilities/routesConst";
 import { useNavigate } from "react-router-dom";
 import { validateEthiopianPhone } from "../../../utilities/validateEthiopianPhone";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
 
 // Apply CSS fix for autofill styling
 const autofillStyle = `
@@ -57,6 +58,7 @@ const CompanyForm = ({
 }) => {
   const watchAllFields = watch();
   const navigate = useNavigate();
+  const { t } = useTranslation()
   const [phone, setPhone] = useState();
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [isGetCodeDisabled, setIsGetCodeDisabled] = useState(false);
@@ -165,6 +167,7 @@ const CompanyForm = ({
     'company_name',
     'account_id',
     'password',
+    "phone_number",
     'confirm_password',
   ];
 
@@ -172,6 +175,16 @@ const CompanyForm = ({
     const value = getValues(field);
     return value && !errors[field];
   });
+
+  const hasBackendError = useMemo(() => {
+    const e = registerData?.state?.error || registerData?.error;
+    if (!e) return false;
+    // If it's an object with any truthy value/message, treat as error
+    if (typeof e === "object") return Object.values(e).some(Boolean);
+    // If it’s a string or boolean
+    return Boolean(e);
+  }, [registerData]);
+
 
   return (
     <div className="flex flex-col gap-4">
@@ -184,25 +197,25 @@ const CompanyForm = ({
       </div>
       <div className="flex justify-between flex-col md:flex-row items-center py-3 md:gap-0 gap-6">
         <Button className=" bg-secondary text-white">
-          NameTAG Registration for Corporate
+          {t("corpAccountTitle")}
         </Button>
       </div>
       <hr></hr>
       <div className=" md:w-5/6 w-full mx-auto">
         <div className="py-3">
           <Typography className="text-[#555] md:text-base text-[16px]  font-semibold">
-            Account Information
+            {t("common.accountInfo")}
           </Typography>
         </div>
         <hr className="mt-3 mb-5"></hr>
 
         {/* Company Name Field */}
         <div>
-          <GetLabel name="Company Name" />
+          <GetLabel name={t("common.form.companyName")} />
           <div className="mt-2  flex items-center gap-2">
             <Input
               className="w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder="Company name"
+              placeholder={t("common.form.companyName")}
               style={
                 errors?.company_name
                   ? { border: "1px solid red" }
@@ -232,11 +245,11 @@ const CompanyForm = ({
 
         {/* Username Field */}
         <div>
-          <GetLabel name="User Name" />
+          <GetLabel name={t("common.form.userName")} />
           <div className="mt-2  flex items-center gap-2">
             <Input
               className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder="User name"
+              placeholder={t("common.form.userName")}
               maxLength={50}
               style={
                 errors?.account_id
@@ -244,7 +257,7 @@ const CompanyForm = ({
                   : { border: "1px solid #8A8AA033" }
               }
               {...register("account_id", {
-                required: "Username is required",
+                required: t("common.form.errors.userName"),
                 validate: value => value.length > 1 || "Username must be at least 2 characters"
               })}
               onChange={(e) => handleChange(e, "account_id")}
@@ -268,15 +281,15 @@ const CompanyForm = ({
 
         {/* Password Field */}
         <div>
-          <GetLabel name="Password" />
+          <GetLabel name={t("common.form.password")} />
           <div className=" mt-2 relative">
             <Input
               className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder="Password"
+              placeholder={t("common.form.password")}
               maxLength={15}
               type={showPassword ? "text" : "password"}
               {...register("password", {
-                required: "Password is required",
+                required: t("common.form.errors.password"),
                 minLength: {
                   value: 5,
                   message: "Password must be at least 5 characters",
@@ -311,10 +324,7 @@ const CompanyForm = ({
             <p className="text-left mt-1 text-sm text-[#FF0000]">{errors.password.message}</p>
           )}
           <p className="text-xs text-gray-600 mt-1">
-            • Length 5-15
-            • one uppercase letter
-            • one lowercase letter
-            • one special character (!@#$%^&*)
+            {t("common.form.passwordLength")}
           </p>
         </div>
 
@@ -362,11 +372,11 @@ const CompanyForm = ({
 
         {/* Email Field */}
         <div>
-          <label className="text-[14px] text-[#555] font-[500]">Email</label>
+          <label className="text-[14px] text-[#555] font-[500]">{t("common.form.email")}</label>
           <div className="mt-2  flex items-center gap-2">
             <Input
               className="w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder="Email"
+              placeholder={t("common.form.email")}
               maxLength={50}
               style={
                 errors?.email
@@ -376,7 +386,7 @@ const CompanyForm = ({
               {...register("email", {
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address"
+                  message: t("common.form.errors.email")
                 }
               })}
               onChange={(e) => handleChange(e, "email")}
@@ -398,7 +408,7 @@ const CompanyForm = ({
 
         {/* Phone Number Field */}
         <div>
-          <GetLabel name="Mobile Number" />
+          <GetLabel name={t("common.form.mobileNo")} />
           <div className="mt-2 flex items-center gap-2">
             <div className="relative items-center flex w-full">
               <Controller
@@ -463,25 +473,27 @@ const CompanyForm = ({
                 <button
                   type="button"
                   disabled={
+                    hasBackendError ||
                     !isValidPhone ||
                     !areRequiredFieldsValid ||
                     (isGetCodeDisabled && !otpExpired)
                   }
                   className={`!absolute right-3 bg-[#f5f5f5] p-2 shadow-sm border border-[#8A8AA033] 
-    ${(!isValidPhone || !areRequiredFieldsValid || (isGetCodeDisabled && !otpExpired))
+    ${(hasBackendError || !isValidPhone || !areRequiredFieldsValid || (isGetCodeDisabled && !otpExpired))
                       ? "opacity-50 cursor-not-allowed"
                       : "cursor-pointer hover:bg-gray-100"
                     } text-xs font-medium rounded`}
                   onClick={() =>
                     !isGetCodeDisabled &&
+                    !hasBackendError &&
                     isValidPhone &&
                     areRequiredFieldsValid &&
                     handleOtpRequest(phone)
                   }
                 >
                   {otpExpired ? "Resend OTP" :
-                    isGetCodeDisabled ? "Please wait..." :
-                      registerData?.isResend ? "Resend OTP" : "Send OTP"}
+                    isGetCodeDisabled ? t("common.form.pleaseWait") :
+                      registerData?.isResend ? t("common.form.resendOtp") : t("common.form.sendOtp")}
                 </button>
 
               )}
@@ -494,7 +506,7 @@ const CompanyForm = ({
           </div>
           {phone && !isValidPhone && (
             <p className="text-left text-sm mt-1  text-[#FF0000]">
-              Enter a 9-digit mobile number starting with 9.
+              {t("common.form.mobileError")}
             </p>
           )}
           {(errors.phone_number || registerData?.state?.error?.phone_number) && (
@@ -506,13 +518,13 @@ const CompanyForm = ({
 
         {/* Verification Code Field */}
         <div>
-          <GetLabel name="Verification Code" />
+          <GetLabel name={t("common.form.verificationCode")} />
           <div className="relative mt-2  items-center flex w-full">
             <Input
               valueAsNumber
               className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder="Verification code"
-              maxLength={4}
+              placeholder={t("common.form.verificationCode")}
+              maxLength={6}
               {...register("verification_code", {
                 required: "Verification code is required",
                 validate: (val) => {
@@ -553,7 +565,7 @@ const CompanyForm = ({
                   onClick={() => {
                     window.open(ConstentRoutes.termofuse, '_blank');
                   }}
-                >Terms & Conditions </span>
+                >{t("common.form.errors.termAndCondition")} </span>
               </Typography>
             </div>
             {errors.term && (

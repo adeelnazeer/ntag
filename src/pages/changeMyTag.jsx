@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Typography, Spinner } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import APICall from "../network/APICall";
 import { toast } from "react-toastify";
-import { getTagStatusDashboard, getPaymentStatus, ConstentRoutes } from "../utilities/routesConst";
+import { getTagStatusDashboard, ConstentRoutes } from "../utilities/routesConst";
 import moment from "moment";
 import BuyTagConfirmationModal from "../modals/buy-tag-modals";
 import EndPoints from '../network/EndPoints';
 import { formatPhoneNumberCustom } from '../utilities/formatMobileNumber';
+import { useTranslation } from "react-i18next";
 
 function ChangeMyTag() {
+    const { t } = useTranslation(["schedule"]);
     const navigate = useNavigate();
     const [tagData, setTagData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,7 +20,6 @@ function ChangeMyTag() {
     // Modal state
     const [openModal, setOpenModal] = useState(false);
     const [selectedTagId, setSelectedTagId] = useState(null);
-    const [selectedTagNumber, setSelectedTagNumber] = useState(null);
 
     useEffect(() => {
         fetchTagData();
@@ -50,15 +51,9 @@ function ChangeMyTag() {
             })
             .catch((err) => {
                 console.error("Error fetching tag data:", err);
-                toast.error("Failed to load NameTAG data");
+                toast.error(t("changeTag.toastMessages.failedToLoad"));
                 setLoading(false);
             });
-    };
-
-    // Show confirmation modal
-    const confirmUnsubscribe = (tagId) => {
-        setSelectedTagId(tagId);
-        setOpenModal(true);
     };
 
     // Close modal and reset state
@@ -93,16 +88,16 @@ function ChangeMyTag() {
         APICall("post", payload, "customer/unsubscribe")
             .then(res => {
                 if (res?.success) {
-                    toast.success(res?.message || "Successfully unsubscribed");
+                    toast.success(res?.message || t("changeTag.toastMessages.successfullyUnsubscribed"));
                     // Refresh tag data after successful unsubscribe
                     fetchTagData();
                 } else {
-                    toast.error(res?.message || "Failed to unsubscribe");
+                    toast.error(res?.message || t("changeTag.toastMessages.failedToUnsubscribe"));
                 }
                 setUnsubscribing(false);
             })
             .catch(err => {
-                toast.error(err?.message || "An error occurred");
+                toast.error(err?.message || t("changeTag.toastMessages.anErrorOccurred"));
                 setUnsubscribing(false);
             });
     };
@@ -117,14 +112,14 @@ function ChangeMyTag() {
 
         return (
             <tr key={tag?.id}>
-                <td className="py-4 px-4 text-sm text-gray-700">#{tagInfo?.tag_no || 'N/A'}</td>
-                <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(tag?.msisdn || 'N/A')}</td>
-                 <td className="py-4 px-4 text-sm text-gray-700">
-                                {tag?.next_charge_dt ? moment(tag.next_charge_dt).format("DD-MM-YYYY") : 'N/A'}
-                            </td>
-                            <td className="py-4 px-4 text-sm text-gray-700">
-                                {tag?.dues > 0 ? 0 : Math.abs(tag?.dues)} ETB
-                            </td>
+                <td className="py-4 px-4 text-sm text-gray-700">#{tagInfo?.tag_no || t("changeTag.common.na")}</td>
+                <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(tag?.msisdn || t("changeTag.common.na"))}</td>
+                <td className="py-4 px-4 text-sm text-gray-700">
+                    {tag?.next_charge_dt ? moment(tag.next_charge_dt).format("DD-MM-YYYY") : t("changeTag.common.na")}
+                </td>
+                <td className="py-4 px-4 text-sm text-gray-700">
+                    {tag?.dues > 0 ? 0 : Math.abs(tag?.dues)} {t("changeTag.common.etb")}
+                </td>
                 <td className="py-4 px-4 text-sm text-gray-700">
                     {getTagStatusDashboard(tag?.status)}
                 </td>
@@ -137,7 +132,7 @@ function ChangeMyTag() {
 
                         }}
                     >
-                        {unsubscribing && selectedTagId === tag?.reserve_tag_id ? "Processing..." : "Change NameTAG"}
+                        {unsubscribing && selectedTagId === tag?.reserve_tag_id ? t("changeTag.buttons.processing") : t("changeTag.buttons.changeNameTag")}
                     </Button>
                 </td>
             </tr>
@@ -147,32 +142,35 @@ function ChangeMyTag() {
     return (
         <div className="shadow bg-white rounded-xl">
             <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-md font-bold">
-                Change NameTAG Service
+                {t("changeTag.title")}
             </Typography>
+            {tagData.length > 0 &&
+                <p className="flex justify-between border border-blue-200 bg-blue-50 mx-8 px-4 text-sm text-blue-800 py-3 rounded-lg mt-3">{t("changeTag.note")}</p>
 
+            }
             <div className="p-8">
                 {loading ? (
                     <div className="min-h-44 flex justify-center items-center">
                         <Spinner className="h-12 w-12" color="green" />
                     </div>
                 ) : (
-              
+
                     <>
                         {tagData.length === 0 ? (
                             <Typography className="text-center py-8">
-                                No active NameTAG services found to unsubscribe.
+                                {t("changeTag.emptyState")}
                             </Typography>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="min-w-full bg-white">
                                     <thead className="bg-[#F6F7FB]">
                                         <tr>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">NameTAG Number</th>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Mobile Number</th>
-    {/* <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Registration Date</th> */}
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Recurring Fee Due Date</th>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Outstanding Recurring Fee</th>                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Status</th>
-                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Action</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeTag.table.nameTagNumber")}</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeTag.table.mobileNumber")}</th>
+                                            {/* <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">Registration Date</th> */}
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeTag.table.recurringFeeDueDate")}</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeTag.table.outstandingRecurringFee")}</th>                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeTag.table.status")}</th>
+                                            <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">{t("changeTag.table.action")}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -191,7 +189,7 @@ function ChangeMyTag() {
                 onClose={handleCloseModal}
                 modalAction="unsubscribe"
                 onConfirm={handleConfirmUnsubscribe}
-                tagNo={selectedTagNumber?.tag_no || ''}
+                tagNo={''}
             />
         </div>
     );

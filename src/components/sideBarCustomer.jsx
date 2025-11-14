@@ -23,7 +23,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const [loading, setLoading] = useState(true);
 
     const activeDashboard = location?.pathname === ConstentRoutes.dashboardCustomer;
-    const activeTwo = location?.pathname?.includes("dashboard");
+    const activeTwo = location?.pathname?.includes("buy-tag");
     const activeThree = location?.pathname === ConstentRoutes.manageTagNameCustomer ||
         location?.pathname === ConstentRoutes.blockUnblockTagCustomer ||
         location?.pathname === ConstentRoutes.unsubTagCustomer ||
@@ -36,6 +36,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const activeUnsubscribe = location?.pathname === ConstentRoutes.unsubTagCustomer;
     const activeChangeMyTag = location?.pathname === ConstentRoutes.changeMyTAG;
     const closeAccount = location?.pathname === ConstentRoutes.closeAccountCustomer;
+    const activeCallPin = location?.pathname === ConstentRoutes.incomingCallPin;
 
     // State to manage dropdown open/closed
     const [openManageMenu, setOpenManageMenu] = useState(activeThree);
@@ -72,7 +73,6 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
     }, []);
 
     // Update dropdown state when routes change
- 
 
     // Listen for changes in localStorage from other components
     useEffect(() => {
@@ -243,7 +243,17 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                             {/* {callManagement.icon} */}
                                             {callManagement.text}
                                         </div>
+                                        <div
+                                            onClick={() => {
+                                                navigate(ConstentRoutes.incomingCallPin)
+                                                setIsSidebarOpen(false);
 
+                                            }}
+                                            className={`py-2 px-3 text-sm rounded-md cursor-pointer 
+                                                ${activeCallPin ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
+                                        >
+                                            Incoming Call PIN
+                                        </div>
                                         <div
                                             onClick={() => {
                                                 navigate(ConstentRoutes.blockUnblockTagCustomer)

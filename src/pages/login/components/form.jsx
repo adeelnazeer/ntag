@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Input } from "@headlessui/react";
 import LoginImg from "../../../assets/images/login.png";
 import { useForm } from "react-hook-form";
@@ -7,12 +8,17 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ConstentRoutes } from "../../../utilities/routesConst";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const LoginForm = () => {
+  const { t } = useTranslation(['common']);
+
   const registerHook = useRegisterHook();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [loginMessage, setLoginMessage] = useState(false)
 
   const {
     register,
@@ -31,26 +37,14 @@ const LoginForm = () => {
     }
   }, []);
 
-  useEffect(() => {
-  const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user'));
-
-  if (token && user) {
-       if (user?.customer_type == 'individual') {
-                 navigate(ConstentRoutes.dashboardCustomer);
-              }
-              else {
-              
-                  navigate(ConstentRoutes.dashboard);
-               }
-    // User already logged in, redirect or block re-login
-    alert('Already logged in. Please log out before logging in with a different account.');
-    window.location.href = '/dashboard'; // or wherever the user should go
-  }
-}, []);
-
 
   const onSubmit = (data) => {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (token && user) {
+      return setLoginMessage(true)
+    }
     if (rememberMe) {
       sessionStorage.setItem("rememberedUser", JSON.stringify(data));
     } else {
@@ -66,20 +60,20 @@ const LoginForm = () => {
           <div className=" md:col-span-2 h-full">
             <div className=" text-white pt-10">
               <h2 className=" md:text-5ev
-              xl text-2xl"> Name<span className=" font-semibold">TAG</span></h2>
-              <p className="mt-5 md:text-xl text-lg">Your Identity, Simplified</p>
+              xl text-2xl">{t("nameTag")}</h2>
+              <p className="mt-5 md:text-xl text-lg">{t("identity")}</p>
             </div>
           </div>
 
           <div className="bg-white flex-[.5] h-fit rounded-[15px] md:p-10 p-5">
-            <h2 className="font-semibold md:text-[38px] text-[25px]">Login</h2>
+            <h2 className="font-semibold md:text-[38px] text-[25px]">{t("login.login")}</h2>
             <p className="md:text-base text-[16px] mt-6">
-              Please enter your username and password to log in to your NameTAG account.
+              {t("login.desc")}
             </p>
 
             <Input
               className="mt-6 w-full rounded-xl p-4 bg-[#F6F7FB] outline-none"
-              placeholder="Enter Username"
+              placeholder={t("login.enterUserName")}
               style={
                 errors.username
                   ? { border: "1px solid red" }
@@ -88,12 +82,15 @@ const LoginForm = () => {
               {...register("username", { required: true })}
             />
 
+
+
+
             {/* Password Field with Eye Toggle */}
             <div className="relative mt-6">
               <Input
                 className="w-full rounded-xl p-4 bg-[#F6F7FB] outline-none pr-12"
-                placeholder="Enter Password"
-                maxLength={15}
+              placeholder={t("login.enterPassword")}
+                maxLength={30}
                 min={4}
                 type={showPassword ? "text" : "password"}
                 style={
@@ -101,6 +98,9 @@ const LoginForm = () => {
                     ? { border: "1px solid red" }
                     : { border: "1px solid #8A8AA033" }
                 }
+
+
+
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -108,14 +108,14 @@ const LoginForm = () => {
                     message: "Password must be at least 5 characters",
                   },
                   maxLength: {
-                    value: 15,
+                    value: 30,
                     message: "Password must not exceed 15 characters",
                   },
                 })}
-                onContextMenu={(e) => e.preventDefault()} // disable right-click
-                onCopy={(e) => e.preventDefault()}        // disable copy
-                onCut={(e) => e.preventDefault()}         // disable cut
-                onPaste={(e) => e.preventDefault()}
+              // onContextMenu={(e) => e.preventDefault()} // disable right-click
+              // onCopy={(e) => e.preventDefault()}        // disable copy
+              // onCut={(e) => e.preventDefault()}         // disable cut
+              // onPaste={(e) => e.preventDefault()}
               />
               <div
                 className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer text-gray-500"
@@ -132,40 +132,59 @@ const LoginForm = () => {
                 />
 
                 <label htmlFor="rememberMe" className="text-sm">
-                  Remember Me
+                  {t("login.remember")}
                 </label>
               </div>
 
             </div>
+            {loginMessage &&
+              <div>
+                <p className="text-sm text-red-500">You're already signed in on another tab or device. Only one session is allowed at a time. Please log out from other sessions to continue.</p>
+              </div>
+            }
 
             <Button
-              className="w-full mt-10 px-4 py-2 justify-center bg-secondary text-white text-[22px] font-semibold"
+              className="w-full mt-10 px-4 py-2 justify-center !uppercase bg-secondary text-white text-[22px] font-semibold"
               type="submit"
               loading={registerHook.loading}
             >
-              LOGIN
+              {t("login.login")}
             </Button>
 
             <div className="mt-6 flex justify-center flex-col md:flex-row gap-4">
               <p
                 className=" text-center text-base cursor-pointer hover:font-semibold"
-                onClick={() => navigate("/register")}
+                onClick={() => {
+                  const token = localStorage.getItem('token');
+                  const user = JSON.parse(localStorage.getItem('user'));
+                  if (token && user) {
+                    return setLoginMessage(true)
+                  }
+                  navigate("/register")
+                }}
               >
-                Register as Corporate
+                {t("login.link1")}
               </p>
               <div className="w-[2px] hidden md:block bg-[#8A8AA033]" />
               <p
                 className="  text-center text-base cursor-pointer hover:font-semibold"
-                onClick={() => navigate("/register-customer")}
+                onClick={() => {
+                  const token = localStorage.getItem('token');
+                  const user = JSON.parse(localStorage.getItem('user'));
+                  if (token && user) {
+                    return setLoginMessage(true)
+                  }
+                  navigate("/register-customer")
+                }}
               >
-                Register as Customer
+                {t("login.link2")}
               </p>
               <div className="w-[2px] hidden md:block bg-[#8A8AA033]" />
               <p
                 className=" text-center text-base cursor-pointer hover:font-semibold"
                 onClick={() => navigate("/resetpassword")}
               >
-                Forgot Password
+               {t("login.link3")}
               </p>
             </div>
           </div>

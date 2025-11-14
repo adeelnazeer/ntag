@@ -1,22 +1,18 @@
 /* eslint-disable react/prop-types */
-import { Button, Checkbox, Typography, Select, Option, Tooltip } from "@material-tailwind/react";
-import Img from "../../assets/images/wallet (2).png";
-import { useLocation, useNavigate } from "react-router-dom";
-import { adjustableDays, ConstentRoutes, getPriceBreakDown } from "../../utilities/routesConst";
+import { Button, Checkbox, Typography, Tooltip } from "@material-tailwind/react";
+import { useLocation } from "react-router-dom";
+import { ConstentRoutes, getPriceBreakDown } from "../../utilities/routesConst";
 import { useForm } from "react-hook-form";
-import { useAppSelector } from "../../redux/hooks";
 import { useState, useEffect } from "react";
-import TagName from "../../assets/images/Telebirr.png";
-import { GiVibratingSmartphone } from "react-icons/gi";
-import PaymentConfirmationModal from "../../modals/ConfirmPayment";
 import { useTagListCustomer } from "../hooks/useDashboardCustomer";
 import Paymentsuccessful from "../../modals/paymentsuccessful";
 import IndividualPaymentConfirmationModal from "../../modals/IndividualPaymentConfirmationModal";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 const TagDetailsCustomer = () => {
+    const { t } = useTranslation(["common"]);
     const location = useLocation();
-    const navigate = useNavigate();
     const stateData = location.state;
     const [type, setType] = useState("")
     const [paymentType, setPaymentType] = useState(false)
@@ -70,28 +66,22 @@ const TagDetailsCustomer = () => {
         return "monthly_fee";
     };
 
-    const [selectedRecurringFee, setSelectedRecurringFee] = useState(getInitialRecurringFeeType());
+    const [selectedRecurringFee] = useState(getInitialRecurringFeeType());
     const [selectedFeeAmount, setSelectedFeeAmount] = useState(
         stateData.service_fee || tagData.service_fee || 0
     );
-    console.log({ stateData })
-    const priceBreakdown = getPriceBreakDown({ tagPrice: stateData?.tag_price, packageFee: Number(stateData.monthly_fee) });
+    const priceBreakdown = getPriceBreakDown({ tagPrice: stateData?.tag_price, packageFee: Number(stateData.monthly_fee), dues: stateData?.currentTagData?.[0]?.dues < 0 ? Math.abs(stateData?.currentTagData?.[0]?.dues || 0) : 0 });
 
-    const [selectedFeeLabel, setSelectedFeeLabel] = useState(stateData.service_id || "Monthly");
+    const [selectedFeeLabel, setSelectedFeeLabel] = useState(stateData.service_id || t("common.monthly"));
 
     // Define recurring fee options
     const recurringFeeOptions = [
-        { value: "monthly_fee", label: "Monthly", amount: tagData.monthly_fee || 0 },
+        { value: "monthly_fee", label: t("common.monthly"), amount: tagData.monthly_fee || 0 },
         // { value: "weekly_fee", label: "Weekly", amount: tagData.weekly_fee || 0 },
-        { value: "quarterly_fee", label: "Quarterly", amount: tagData.quarterly_fee || 0 },
-        { value: "semiannually_fee", label: "Semi-Annually", amount: tagData.semiannually_fee || 0 },
-        { value: "annually_fee", label: "Annually", amount: tagData.annually_fee || 0 },
+        { value: "quarterly_fee", label: t("common.quartely"), amount: tagData.quarterly_fee || 0 },
+        { value: "semiannually_fee", label: t("common.semi"), amount: tagData.semiannually_fee || 0 },
+        { value: "annually_fee", label: t("common.annual"), amount: tagData.annually_fee || 0 },
     ];
-
-    // Filter to show only available options (those with amount > 0 or currently selected)
-    const availableOptions = recurringFeeOptions.filter(
-        option => option.value === selectedRecurringFee || parseFloat(option.amount) > 0
-    );
 
     // Update selected fee amount and label when recurring fee type changes
     useEffect(() => {
@@ -100,20 +90,10 @@ const TagDetailsCustomer = () => {
             setSelectedFeeAmount(selectedOption.amount);
             setSelectedFeeLabel(selectedOption.label);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedRecurringFee]);
 
-    const vat = Number(stateData.VAT || 0);
-    const exciseTax = Number(stateData.excisetax || 0);
-    const stampDuty = Number(stateData.stamp_duty || 0);
-    const vatableTotal = Number(stateData.vatable_total || 0);
-
-    const totalAmount = stateData.total_amount
-        ? Number(stateData.total_amount)
-        : (Number(stateData.price || 0) + vat + exciseTax + stampDuty);
-    const adjustableday = adjustableDays({ dues: stateData?.currentTagData?.[0]?.dues, plan: selectedFeeLabel })
-
-
-    const onSubmit = (data) => {
+    const onSubmit = () => {
         // Create enhanced state data with the correct recurring fee information
         const enhancedStateData = {
             ...stateData,
@@ -167,7 +147,7 @@ const TagDetailsCustomer = () => {
                 tag_name: stateData?.tag_name || "",
                 tag_price: (stateData?.tag_price || "0").toString(),
                 service_fee: (selectedFeeAmount || "0").toString(),
-                service_id: selectedFeeLabel || "Monthly",
+                service_id: selectedFeeLabel || t("common.monthly"),
                 tag_type: stateData?.tag_type || "",
                 tag_digits: stateData?.tag_digits || 0,
                 created_date: stateData?.created_date || "",
@@ -230,49 +210,49 @@ const TagDetailsCustomer = () => {
 
     const nextChargeDate = getNextChargeDate(selectedRecurringFee, stateData?.currentTagData?.[0]?.current_date || new Date());
 
-    console.log({ stateData })
-
     return (
         <>
             <form onSubmit={handleSubmit(handleFormSubmit)} className="bg-white max-w-[800px]">
                 {isExchangeFlow && (
                     <div className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 mb-4">
                         <Typography className=" font-bold">
-                            NameTAG Exchange Mode
+                            {t("dashboard.nameTagExchangeMode")}
                         </Typography>
                         <Typography className="text-sm mt-1">
-                            You are about to change your current NameTAG #{currentTagData?.[0]?.tag_no + " " || ""}
-                            to NameTAG #{tagData?.tag_no}. This action cannot be undone.
+                            {t("dashboard.exchangeModeDescription", {
+                                currentTagNo: currentTagData?.[0]?.tag_no || "",
+                                newTagNo: tagData?.tag_no || ""
+                            })}
                         </Typography>
                     </div>
                 )}
                 <div className="p-4 rounded-xl shadow md:mt-6">
                     <Typography className="text-[#1F1F2C] pb-3 px-6 border-b text-lg font-bold ">
-                        {isExchangeFlow ? "Change NameTAG" : "Buy NameTAG"}
+                        {isExchangeFlow ? t("buttons.changeNameTag") : t("dashboard.buyTag")}
                     </Typography>
 
                     <div className="flex justify-between mt-3 border bg-[#F6F7FB] border-[#77777733] px-5 py-3 rounded-xl">
-                        <Typography className="text-[14px]">NameTAG</Typography>
+                        <Typography className="text-[14px]">{t("dashboard.nameTag")}</Typography>
                         <Typography className="text-[14px] ">
                             {tagData.tag_name}
                         </Typography>
                     </div>
                     <div className="flex justify-between border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
-                        <Typography className="text-[14px]">NameTAG Number</Typography>
+                        <Typography className="text-[14px]">{t("dashboard.nameTagNumber")}</Typography>
                         <Typography className="text-[14px] ">
                             #{tagData.tag_no}
                         </Typography>
                     </div>
 
                     <div className="flex justify-between border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
-                        <Typography className="text-[14px]">NameTAG Category</Typography>
+                        <Typography className="text-[14px]">{t("dashboard.nameTagCategory")}</Typography>
                         <Typography className="text-[14px] ">
                             {tagData.tag_type}
                         </Typography>
                     </div>
                     {userData?.phone_number &&
                         <div className="flex justify-between border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
-                            <Typography className="text-[14px]">Registered Mobile Number</Typography>
+                            <Typography className="text-[14px]">{t("dashboard.registeredMobileNumber")}</Typography>
                             <Typography className="text-[14px] ">
                                 +{userData?.phone_number}
                             </Typography>
@@ -316,36 +296,36 @@ const TagDetailsCustomer = () => {
                         </div>
                     </div> */}
                     <div className="flex justify-between border px-5 border-[#77777733] bg-[#F6F7FB] py-3 rounded-xl mt-3">
-                        <Typography className="text-[14px]">Subscription Fee</Typography>
+                        <Typography className="text-[14px]">{t("dashboard.subscriptionFee")}</Typography>
                         <Typography className="text-[14px] font-bold ">
-                            {Number(stateData?.tag_price)?.toFixed(2) || ""} ETB
+                            {Number(stateData?.tag_price)?.toFixed(2) || ""} {t("dashboard.etb")}
                         </Typography>
                     </div>
                     <div className="border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
                         {/* Recurring Fee Package Selection */}
                         <div className="">
                             <div className="flex justify-between">
-                                <Typography className="text-[14px]">Service Plan</Typography>
+                                <Typography className="text-[14px]">{t("dashboard.servicePlan")}</Typography>
                                 <Typography className="text-[14px] ">
-                                    Monthly
+                                    {t("common.monthly")}
                                 </Typography>
                             </div>
 
                             <div className="flex justify-between mt-2">
                                 <Typography className="text-[14px]">
-                                    {selectedFeeLabel} Recurring Fee
+                                    {selectedFeeLabel} {t("dashboard.recurringFee")}
                                 </Typography>
                                 <Typography className="text-[14px] ">
-                                    {formatPrice(selectedFeeAmount)} ETB
+                                    {formatPrice(selectedFeeAmount)} {t("dashboard.etb")}
                                 </Typography>
                             </div>
                             {isExchangeFlow && (stateData?.currentTagData?.[0]?.dues < 0) &&
                                 <div className="flex justify-between mt-2">
                                     <Typography className="text-[14px]">
-                                        {"Outstanding"} Recurring Fee (Previous Plan)
+                                        {t("dashboard.outstandingRecurringFee")}
                                     </Typography>
                                     <Typography className="text-[14px] ">
-                                        {Math.abs(stateData?.currentTagData?.[0]?.dues)?.toFixed(2) || ""} ETB
+                                        {Math.abs(stateData?.currentTagData?.[0]?.dues)?.toFixed(2) || ""} {t("dashboard.etb")}
                                     </Typography>
                                 </div>
                             }
@@ -363,25 +343,25 @@ const TagDetailsCustomer = () => {
                     {/* Detailed Price Breakdown with tax components */}
                     <div className="border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
                         <Typography className="text-[16px] font-medium mb-2 border-b pb-2">
-                            Price Breakdown
+                            {t("dashboard.priceBreakDown")}
                         </Typography>
 
                         <div className="flex justify-between">
-                            <Typography className="text-[14px]">Sub Total </Typography>
+                            <Typography className="text-[14px]">{t("dashboard.subTotal")} </Typography>
                             <Typography className="text-[14px] ">
-                                {(priceBreakdown?.totalBasePrice || "")} ETB
+                                {(priceBreakdown?.totalBasePrice || "")} {t("dashboard.etb")}
                             </Typography>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <Typography className="text-[14px]">VAT (15%)</Typography>
+                            <Typography className="text-[14px]">{t("dashboard.vat15")}</Typography>
                             <Typography className="text-[14px] ">
-                                {priceBreakdown?.totalVAT || ""} ETB
+                                {priceBreakdown?.totalVAT || ""} {t("dashboard.etb")}
                             </Typography>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <Typography className="text-[14px]">Excise Tax</Typography>
+                            <Typography className="text-[14px]">{t("dashboard.exciseTax")}</Typography>
                             <Typography className="text-[14px] ">
-                                {priceBreakdown.excisetax || ""} ETB
+                                {priceBreakdown.excisetax || ""} {t("dashboard.etb")}
                             </Typography>
                         </div>
 
@@ -395,15 +375,15 @@ const TagDetailsCustomer = () => {
 
 
                         <div className="flex justify-between mt-2">
-                            <Typography className="text-[14px]">Stamp Duty</Typography>
+                            <Typography className="text-[14px]">{t("dashboard.stampDuty")}</Typography>
                             <Typography className="text-[14px] ">
-                                {priceBreakdown?.stampDuty || ""} ETB
+                                {priceBreakdown?.stampDuty || ""} {t("dashboard.etb")}
                             </Typography>
                         </div>
 
                         <div className="flex justify-between mt-3 border-t py-2 font-medium">
                             <div className="flex items-center gap-2">
-                                <Typography className="text-[14px] font-bold">Total Amount </Typography>
+                                <Typography className="text-[14px] font-bold">{t("dashboard.total")} </Typography>
                                 {selectedRecurringFee && (
 
                                     <Tooltip
@@ -415,7 +395,7 @@ const TagDetailsCustomer = () => {
                                                     color="white"
                                                     className="font-normal opacity-80 text-primary"
                                                 >
-                                                    Total Amount: This includes both the one-time subscription fee and all applicable recurring fees up to {moment(nextChargeDate).format("DD-MM-YYYY")}.
+                                                    {t("dashboard.totalInfo")} {moment(nextChargeDate).format("DD-MM-YYYY")}.
                                                 </Typography>
                                             </div>
                                         }
@@ -438,7 +418,7 @@ const TagDetailsCustomer = () => {
                                 )}
                             </div>
                             <Typography className="text-[14px] font-bold">
-                                {priceBreakdown?.totalPrice || ""} ETB
+                                {priceBreakdown?.totalPrice || ""} {t("dashboard.etb")}
                             </Typography>
                         </div>
                     </div>
@@ -464,13 +444,13 @@ const TagDetailsCustomer = () => {
                                     onClick={() => {
                                         window.open(ConstentRoutes.termofuse, "_blank")
                                     }}
-                                >Terms and Conditions </span>
+                                >{t("dashboard.termAndCondition")} </span>
                             </Typography>
                         </div>
                         {/* Display error message when terms not accepted */}
                         {(termsError || errors.term) && (
                             <Typography className="text-red-500 text-sm ml-6 mt-1 font-bold">
-                                You must accept the Terms & Conditions to continue
+                                {t("dashboard.termError")}
                             </Typography>
                         )}
                     </div>
@@ -482,7 +462,7 @@ const TagDetailsCustomer = () => {
                                 setType("buy")
                             }}
                         >
-                            {isExchangeFlow ? "Change NameTAG" : "Buy NameTAG"}
+                            {isExchangeFlow ? t("buttons.changeNameTag") : t("dashboard.buyTag")}
                         </Button>
                         {(!stateData.isReserve && !isExchangeFlow) && (
                             <Button
@@ -492,7 +472,7 @@ const TagDetailsCustomer = () => {
                                     setType("reserve")
                                 }}
                             >
-                                Reserve NameTAG
+                                {t("buttons.reserveNameTag")}
                             </Button>
                         )}
 
@@ -510,7 +490,8 @@ const TagDetailsCustomer = () => {
                     stamp_duty: priceBreakdown?.stampDuty,
                     base_price: priceBreakdown?.totalBasePrice,
                     total_amount: priceBreakdown?.totalPrice,
-                    selectedAmount: selectedFeeAmount
+                    selectedAmount: selectedFeeAmount,
+                    outstanding_dues:stateData?.currentTagData?.[0]?.dues
                 } || {
                     ...stateData,
                     excisetax: priceBreakdown?.excisetax,

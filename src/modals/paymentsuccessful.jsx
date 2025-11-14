@@ -4,16 +4,35 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
 import { useAppSelector } from "../redux/hooks";
+import { useTranslation } from "react-i18next";
 
-const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false, type, isExchangeFlow = false }) => {
+const Paymentsuccessful = ({
+  isOpen,
+  setIsOpen,
+  state,
+  user,
+  isCustomer = false,
+  type,
+  isExchangeFlow = false,
+}) => {
   const navigate = useNavigate();
-
-  const corporateDocuments = useAppSelector(state => state.user.corporateDocuments);
+  const { t } = useTranslation(["common"]);
+  const corporateDocuments = useAppSelector(
+    (state) => state.user.corporateDocuments
+  );
 
   const docStatus = {
-    status: (corporateDocuments?.[0]?.doc_status == "1" && corporateDocuments?.[1]?.doc_status == "1") ? 1 : 0,
-    doc_approval_status: (corporateDocuments?.[0]?.doc_status == "1" && corporateDocuments?.[1]?.doc_status == "1") ? 1 : 0,
-    corp_document: corporateDocuments
+    status:
+      corporateDocuments?.[0]?.doc_status == "1" &&
+      corporateDocuments?.[1]?.doc_status == "1"
+        ? 1
+        : 0,
+    doc_approval_status:
+      corporateDocuments?.[0]?.doc_status == "1" &&
+      corporateDocuments?.[1]?.doc_status == "1"
+        ? 1
+        : 0,
+    corp_document: corporateDocuments,
   };
 
   // Helper function to safely parse numbers
@@ -26,41 +45,49 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
   const getRecurringFeeLabel = (type) => {
     switch (type) {
       case "service_fee":
-        return "Monthly";
+        return t("common.monthly");
       case "monthly_fee":
-        return "Monthly";
+        return t("common.monthly");
       case "quarterly_fee":
-        return "Quarterly";
+        return t("common.quartely");
       case "semiannually_fee":
-        return "Semi-Annually";
+        return t("common.semi");
       case "annually_fee":
-        return "Annually";
+        return t("common.annual");
       default:
-        return "Monthly";
+        return t("common.monthly");
     }
   };
 
   // First try to get value from recurring_fee_label, then fall back to determining from recurring_fee_type
-  const recurringFeeLabel = state?.recurring_fee_label || getRecurringFeeLabel(state?.recurring_fee_type) || "Monthly";
+  const recurringFeeLabel =
+    state?.recurring_fee_label ||
+    getRecurringFeeLabel(state?.recurring_fee_type) ||
+    "Monthly";
 
   // Try all possible sources for the recurring fee amount
   const recurringFeeAmount = safeParseNumber(
-    state?.recurring_fee_amount !== undefined ? state.recurring_fee_amount :
-      state?.service_fee !== undefined ? state.service_fee :
-        0
+    state?.recurring_fee_amount !== undefined
+      ? state.recurring_fee_amount
+      : state?.service_fee !== undefined
+      ? state.service_fee
+      : 0
   );
 
-  const tagPrice = safeParseNumber(state?.tag_price || state?.tag_name_price || 0);
+  const tagPrice = safeParseNumber(
+    state?.tag_price || state?.tag_name_price || 0
+  );
   const exciseTax = safeParseNumber(state?.excisetax || 0);
   const vatableTotalAmount = safeParseNumber(state?.vatable_total || 0);
   const vatAmount = safeParseNumber(state?.VAT || 0);
   const stampDuty = safeParseNumber(state?.stamp_duty || 0); // Default to 5 if not available
   const totalAmount = safeParseNumber(
-    state?.total_amount || state?.totalPrice || (vatableTotalAmount + vatAmount + stampDuty)
+    state?.total_amount ||
+      state?.totalPrice ||
+      vatableTotalAmount + vatAmount + stampDuty
   );
 
-
-  console.log("payment success", { state })
+  console.log("payment success", { state });
 
   return (
     <>
@@ -71,7 +98,8 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-3 md:p-4">
-              <div className="flex text-secondary justify-end text-2xl font-snormal cursor-pointer"
+              <div
+                className="flex text-secondary justify-end text-2xl font-snormal cursor-pointer"
                 onClick={() => {
                   if (isCustomer) {
                     navigate(ConstentRoutes.dashboardCustomer);
@@ -85,84 +113,116 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
               </div>
               <div className="text-center">
                 <Typography variant="h5" className="text-lg md:text-xl">
-                  {docStatus?.status == 0 || type == "reserve" ? "Reservation" : "Transaction"} Successful
+                  {docStatus?.status == 0 || type == "reserve"
+                    ? t("dashboard.reservation")
+                    : t("dashboard.transaction")}{" "}
+                  {t("dashboard.successful")}
                 </Typography>
                 {docStatus?.status == 0 ? (
                   <Typography className="text-xs md:text-[14px] mt-3 md:mt-4">
-                    Your NameTAG is successfully Reserved for 24 hours.
+                    {t("dashboard.reserveMsg24")}
                   </Typography>
                 ) : (
                   <Typography className="text-xs md:text-[14px] mt-3 md:mt-4">
-                    Your NameTAG number has been successfully reserved with <br /> your mobile number.
+                    {t("dashboard.successReserveMsg1")} <br />{" "}
+                    {t("dashboard.successReserveMsg2")}
                   </Typography>
                 )}
               </div>
               <div className="p-3 md:p-4 shadow rounded-xl mt-2 border bg-[#80808021] border-[#80808038]">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 md:gap-0">
-                  <h1 className="text-sm md:text-base">Status</h1>
-                  {isCustomer ?
+                  <h1 className="text-sm md:text-base">
+                    {t("dashboard.status")}
+                  </h1>
+                  {isCustomer ? (
                     <p className=" text-primary text-xs md:text-sm">
-                      {"Pending for Payment"}
+                      {t("dashboard.pendingForPayment")}
                     </p>
-                    :
+                  ) : (
                     <p className=" text-primary text-xs md:text-sm">
-                      {docStatus?.doc_approval_status === 0 ? "Document Approval in Progress" : "Pending for Payment"}
+                      {docStatus?.doc_approval_status === 0
+                        ? t("dashboard.documentApprovalProcess")
+                        : t("dashboard.pendingForPayment")}
                     </p>
-                  }
+                  )}
                 </div>
 
                 <div className="flex justify-between mt-3 items-center">
-                  <h1 className="text-[#7A798A] text-xs md:text-sm">Registered Mobile Number</h1>
+                  <h1 className="text-[#7A798A] text-xs md:text-sm">
+                    {t("dashboard.regMobileNumber")}
+                  </h1>
                   <p className="text-xs md:text-sm ">{user}</p>
                 </div>
                 <div className="flex justify-between mt-3 items-center">
-                  <h1 className="text-[#7A798A] text-xs md:text-sm">NameTAG</h1>
+                  <h1 className="text-[#7A798A] text-xs md:text-sm">
+                    {t("nameTag")}
+                  </h1>
                   <p className="text-xs md:text-sm ">{state?.tag_name}</p>
                 </div>
                 <div className="flex justify-between mt-3 items-center">
-                  <h1 className="text-[#7A798A] text-xs md:text-sm">NameTAG Number</h1>
+                  <h1 className="text-[#7A798A] text-xs md:text-sm">
+                    {t("nameTag")} {t("dashboard.number")}
+                  </h1>
                   <p className="text-xs md:text-sm ">#{state?.tag_no}</p>
                 </div>
 
                 {/* {state?.tag_list_type == "vip_tag_list" && ( */}
                 <div className="flex justify-between mt-3 items-center">
-                  <h1 className="text-[#7A798A] text-xs md:text-sm">NameTAG Category</h1>
-                  <p className="text-xs md:text-sm  text-secondary">{state?.tag_type}</p>
+                  <h1 className="text-[#7A798A] text-xs md:text-sm">
+                    {t("nameTag")} {t("dashboard.category")}
+                  </h1>
+                  <p className="text-xs md:text-sm  text-secondary">
+                    {state?.tag_type}
+                  </p>
                 </div>
                 {/* )} */}
 
-                
                 <div className="flex justify-between mt-3 items-center border-t">
-                  <h1 className="text-[#7A798A] text-xs md:text-sm">Subscription Fee</h1>
-                  <p className="text-xs md:text-sm ">                    {Number(state?.tag_price)?.toFixed(2) || ""} ETB
+                  <h1 className="text-[#7A798A] text-xs md:text-sm">
+                    {t("dashboard.subscriptionFee")}
+                  </h1>
+                  <p className="text-xs md:text-sm ">
+                    {" "}
+                    {Number(state?.tag_price)?.toFixed(2) || ""}{" "}
+                    {t("dashboard.etb")}
                   </p>
                 </div>
                 <div className="flex justify-between mt-3 items-center border-t">
-                  <h1 className="text-[#7A798A] text-xs md:text-sm">{recurringFeeLabel} Recurring Fee</h1>
-                  <p className="text-xs md:text-sm ">{recurringFeeAmount.toFixed(2)} ETB</p>
+                  <h1 className="text-[#7A798A] text-xs md:text-sm">
+                    {recurringFeeLabel} {t("dashboard.recurringFee")}
+                  </h1>
+                  <p className="text-xs md:text-sm ">
+                    {recurringFeeAmount.toFixed(2)} {t("dashboard.etb")}
+                  </p>
                 </div>
                 {/* Detailed Price Breakdown with tax components */}
                 <div className=" rounded-xl mt-4">
                   <Typography className="text-[16px] font-medium mb-2 border-b">
-                    Price Breakdown
+                    {t("dashboard.priceBreakDown")}
                   </Typography>
 
                   <div className="flex justify-between">
-                    <Typography className="text-[14px]">Sub Total </Typography>
+                    <Typography className="text-[14px]">
+                      {t("dashboard.subTotal")}{" "}
+                    </Typography>
                     <Typography className="text-[14px] ">
-                      {(state?.base_price || "")} ETB
+                      {state?.base_price || ""} {t("dashboard.etb")}
                     </Typography>
                   </div>
                   <div className="flex justify-between mt-2">
-                    <Typography className="text-[14px]">VAT (15%)</Typography>
+                    <Typography className="text-[14px]">
+                      {t("dashboard.vat")} (15%)
+                    </Typography>
                     <Typography className="text-[14px] ">
-                      {state?.VAT || ""} ETB
+                      {state?.VAT || ""} {t("dashboard.etb")}
                     </Typography>
                   </div>
                   <div className="flex justify-between mt-2">
-                    <Typography className="text-[14px]">Excise Tax</Typography>
+                    <Typography className="text-[14px]">
+                      {t("dashboard.exciseTax")}
+                    </Typography>
                     <Typography className="text-[14px] ">
-                      {state.excisetax || ""} ETB
+                      {state.excisetax || ""} {t("dashboard.etb")}
                     </Typography>
                   </div>
 
@@ -173,22 +233,23 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
              </Typography>
            </div> */}
 
-
-
                   <div className="flex justify-between mt-2">
-                    <Typography className="text-[14px]">Stamp Duty</Typography>
+                    <Typography className="text-[14px]">
+                      {t("dashboard.stampDuty")}
+                    </Typography>
                     <Typography className="text-[14px] ">
-                      {state?.stamp_duty || ""} ETB
+                      {state?.stamp_duty || ""} {t("dashboard.etb")}
                     </Typography>
                   </div>
 
                   <div className="flex justify-between mt-3 border-t py-2 font-medium">
                     <div className="flex items-center gap-2">
-                      <Typography className="text-[14px] font-bold">Total Amount </Typography>
-
+                      <Typography className="text-[14px] font-bold">
+                        {t("dashboard.total")}{" "}
+                      </Typography>
                     </div>
                     <Typography className="text-[14px] font-bold">
-                      {state?.total_amount || ""} ETB
+                      {state?.total_amount || ""} {t("dashboard.etb")}
                     </Typography>
                   </div>
                 </div>
@@ -228,8 +289,6 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
                   <h1 className="text-[#7A798A] text-xs md:text-sm">{recurringFeeLabel} Recurring Fee</h1>
                   <p className="text-xs md:text-sm ">{recurringFeeAmount.toFixed(2)} ETB</p>
                 </div> */}
-
-
               </div>
               <div className="flex items-center justify-center mt-4">
                 <Button
@@ -243,7 +302,7 @@ const Paymentsuccessful = ({ isOpen, setIsOpen, state, user, isCustomer = false,
                     setIsOpen(false);
                   }}
                 >
-                  {"OK"}
+                  {t("buttons.ok")}
                 </Button>
               </div>
             </div>

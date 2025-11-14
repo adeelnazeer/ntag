@@ -1,0 +1,35 @@
+{
+  "title": "Change Mobile Number",
+
+  "table": {
+    "headers": {
+      "nameTagNumber": "NameTAG Number",
+      "mobileNumber": "Mobile Number",
+      "mobileNumberType": "Mobile Number Type",
+      "recurringFee": "Recurring Fee",
+      "recurringFeeDueDate": "Recurring Fee Due Date",
+      "outstandingRecurringFee": "Outstanding Recurring Fee",
+      "status": "Status",
+      "action": "Action"
+    },
+    "empty": "No active NameTAG services found."
+  },
+
+  "chips": {
+    "primary": "Primary",
+    "additional": "Additional"
+  },
+
+  "buttons": {
+    "changeMobileNumber": "Change Mobile Number"
+  },
+
+  "messages": {
+    "fetchError": "Failed to load NameTAG data",
+    "noAccountId": "No customer account ID found"
+  },
+
+  "loading": {
+    "spinner": "Loading..."
+  }
+}

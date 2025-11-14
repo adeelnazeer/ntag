@@ -7,11 +7,12 @@ export const ConstentRoutes = {
    dashboard: "/buy-tag",
    manageTagName: "/manage-tag",
    blockUnblockTag: "/manage-tag/block",
+   corporateCallPin: "/manage-tag/call-pin",
    UnSUBblockTag: "/manage-tag/unsubscribe",
    closeAccount: "/manage-tag/close-account",
    changeNumber: "/manage-tag/change-number",
    buyTag: "/dashboard",
-   buyTagCustomer: "/customer/dashboard",
+   buyTagCustomer: "/customer/buy-tag",
    tagDetail: "/dashboard/tag-detail",
    processPayment: "/dashboard/process-payment",
    nameTagDetail: "/name-tag-detail",
@@ -22,17 +23,18 @@ export const ConstentRoutes = {
    privacyPolicy: "/privacy-policy",
    FrequentlyAskedQuestions: "/faq",
    registerNormalUser: "/register-customer",
-   dashboardCustomer: "/customer/buy-tag",
-   tagDetailCustomer: "/customer/dashboard/tag-detail",
+   dashboardCustomer: "/customer/dashboard",
+   tagDetailCustomer: "/customer/buy-tag/tag-detail",
    profilePageCustomer: "/customer/profile",
    changePasswordCustomer: "/customer/change-password",
-   processPaymentcustomer: "/customer/dashboard/process-payment",
+   processPaymentcustomer: "/customer/buy-tag/process-payment",
    changeMyTAG: "/individual/change-my-tag",
    changeMyTAGCorporate: "/change-my-tag",
    closeAccountCustomer: "/customer/manage-tag/close-account",
    // New customer routes for Manage NameTAG
    manageTagNameCustomer: "/customer/manage-tag",
    blockUnblockTagCustomer: "/customer/manage-tag/block",
+   incomingCallPin: "/customer/manage-tag/call-pin",
    unsubTagCustomer: "/customer/manage-tag/unsubscribe",
 };
 
@@ -138,8 +140,8 @@ export const getDocStatus = (status) => {
    }
 }
 
-export const getPriceBreakDown = ({ tagPrice, packageFee = 0 }) => {
-   const total_price = Number(tagPrice) + Number(packageFee);
+export const getPriceBreakDown = ({ tagPrice, packageFee = 0, dues = 0 }) => {
+   const total_price = Number(tagPrice) + Number(packageFee) + Number(dues);
    const total_base_price = (total_price / 1.15)
    const total_VAT = total_price - total_base_price;
    const excisetax = 0;

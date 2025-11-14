@@ -1,18 +1,29 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import EndPoints from "../../../../network/EndPoints";
 import APICall from "../../../../network/APICall";
+import { useTranslation } from "react-i18next";
 
-const CompanyInfo = ({ profileData }) => {
+const formatPhone = (v) => {
+  if (v == null) return "";
+  const s = String(v).trim();
+  return s.startsWith("+") ? s : `+${s}`;
+};
+const normalize = (p = {}) => ({
+  ...p,
+  phone_number: formatPhone(p.phone_number),
+});
+const CompanyInfo = ({ profileData, userProfileData }) => {
+  const { t } = useTranslation(["common", "profile"]);
   const [updating, setUpdating] = useState(false);
-  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    reset,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -21,16 +32,25 @@ const CompanyInfo = ({ profileData }) => {
     }
   });
 
+  useEffect(() => {
+    if (!userProfileData) return;
+
+    const base = normalize(userProfileData);
+
+    // Re-apply the full payload now that options exist
+    reset(base, { keepDirty: false, keepTouched: false });
+
+  }, [userProfileData, reset, setValue]);
+
   const handleUpdateUserInfo = async (data) => {
     try {
-      const id = localStorage.getItem("id");
       const payload = { ...data };
       payload.channel = "WEB";
 
       const response = await APICall("post", payload, EndPoints.customer.updateProfileCustomer);
 
       if (response?.success) {
-        toast.success(response?.message || "Profile updated successfully");
+        toast.success(response?.message || t("profile.companyInfo.toastMessages.profileUpdatedSuccessfully"));
 
         // Update localStorage with new user data
         localStorage.setItem("user", JSON.stringify(response?.data));
@@ -49,7 +69,7 @@ const CompanyInfo = ({ profileData }) => {
 
         return true;
       } else {
-        toast.error(response?.message || "Update failed");
+        toast.error(response?.message || t("profile.companyInfo.toastMessages.updateFailed"));
         setUpdating(false);
 
         return false;
@@ -57,7 +77,7 @@ const CompanyInfo = ({ profileData }) => {
 
     } catch (error) {
       console.error("Error updating profile:", error);
-      toast.error("Something went wrong. Please try again.");
+      toast.error(t("profile.companyInfo.toastMessages.somethingWentWrong"));
       setUpdating(false);
       return false;
     }
@@ -90,7 +110,7 @@ const CompanyInfo = ({ profileData }) => {
       <div className="mt-10 grid max-w-3xl mx-auto md:grid-cols-2 grid-cols-1 gap-6">
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-            First Name
+            {t("common.form.firstName")}
           </label>
           <input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none"
@@ -100,15 +120,15 @@ const CompanyInfo = ({ profileData }) => {
                 : { border: "1px solid #8A8AA033" }
             }
             maxLength={30}
-            {...register("first_name", { required: true })}
+            {...register("first_name", { required: t("common.form.errors.firstName") })}
           />
           {errors.first_name && (
-            <p className="text-red-500 text-xs mt-1">First name is required</p>
+            <p className="text-red-500 text-xs mt-1">{errors.first_name.message || t("common.form.errors.firstName")}</p>
           )}
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-            Father Name
+            {t("common.form.fatherName")}
           </label>
           <input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none"
@@ -119,15 +139,15 @@ const CompanyInfo = ({ profileData }) => {
             }
             maxLength={30}
 
-            {...register("last_name", { required: true })}
+            {...register("last_name", { required: t("common.form.errors.fatherName") })}
           />
           {errors.last_name && (
-            <p className="text-red-500 text-xs mt-1">Father name is required</p>
+            <p className="text-red-500 text-xs mt-1">{errors.last_name.message || t("common.form.errors.fatherName")}</p>
           )}
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-            User Name
+            {t("common.form.userName")}
           </label>
           <input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-[#8080801f] outline-none"
@@ -136,11 +156,11 @@ const CompanyInfo = ({ profileData }) => {
             style={{ border: "1px solid #8A8AA033" }}
             {...register("username")}
           />
-          <p className="text-xs text-gray-500 mt-1">Username cannot be changed</p>
+          <p className="text-xs text-gray-500 mt-1">{t("common.form.usernameCannotBeChanged")}</p>
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-            Email
+            {t("common.form.email")}
           </label>
           <input
             className="mt-2 w-full bg-white rounded-xl px-4 py-2 outline-none"
@@ -150,53 +170,67 @@ const CompanyInfo = ({ profileData }) => {
                 : { border: "1px solid #8A8AA033" }
             }
             maxLength={50}
-            {...register("email", {
-              required: true,
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address"
-              }
-            })}
+            {...register("email", { required: t("common.form.errors.email") })}
           />
           {errors.email && (
             <p className="text-red-500 text-xs mt-1">
-              {errors.email.message || "Email is required"}
+              {errors.email.message || t("common.form.errors.email")}
             </p>
           )}
         </div>
 
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-            Fayda Number
+            {t("common.form.faydaNumber")}
           </label>
           <input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none"
+            type="tel"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            placeholder={t("common.form.faydaNumberPlaceholder")}
             maxLength={16}
-            readOnly
-            style={
-              errors.cnic
-                ? { border: "1px solid red" }
-                : { border: "1px solid #8A8AA033" }
-            }
+            style={errors?.cnic ? { border: "1px solid red" } : { border: "1px solid #8A8AA033" }}
+            onKeyDown={(e) => {
+              const key = e.key;
+              const ctrl = e.ctrlKey || e.metaKey;
+              const allowed = ["Backspace", "Delete", "Tab", "Enter", "Escape", "ArrowLeft", "ArrowRight", "Home", "End"];
+              if (allowed.includes(key) || ctrl) return;
+              if (!/^\d$/.test(key)) e.preventDefault(); // digits only
+            }}
+            onPaste={(e) => {
+              e.preventDefault();
+              const el = e.currentTarget;
+              const pasted = (e.clipboardData || window.clipboardData).getData("text") || "";
+              const digits = pasted.replace(/\D/g, "");
+              const s = el.selectionStart ?? el.value.length;
+              const epos = el.selectionEnd ?? el.value.length;
+              const next = (el.value.slice(0, s) + digits + el.value.slice(epos)).slice(0, 16);
+              el.value = next;
+              el.dispatchEvent(new Event("input", { bubbles: true }));
+            }}
             {...register("cnic", {
-              required: "Fayda number is required",
-              minLength: { value: 16, message: "Fayda  Number must be at least 16 digits" },
-              maxLength: { value: 16, message: "Fayda  Number cannot exceed 16 digits" },
-              pattern: {
-                value: /^\d{16,16}$/,
-                message: "Fayda  Number must contain only digits"
-              }
+              // Optional; if filled, must be exactly 16 digits
+              validate: (v) => v === "" || v == null || /^\d{16}$/.test(v) || t("common.form.errors.faydaExactDigits"),
+              onChange: (e) => {
+                const clean = e.target.value.replace(/\D/g, "").slice(0, 16);
+                if (clean !== e.target.value) e.target.value = clean;
+              },
             })}
+          //     value: /^\d{16,16}$/,
+          //     message: "Fayda  Number must contain only digits"
+          //   }
+          // })}
           />
           {errors.cnic && (
             <p className="text-red-500 text-xs mt-1">
-              {errors.cnic.message || "Fayda Number must be 12 digits"}
+              {errors.cnic.message || t("common.form.errors.faydaDigits")}
             </p>
           )}
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-            Registered Mobile Number
+            {t("profile.regMobileNo")}
           </label>
           <input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-[#8080801f] outline-none"
@@ -204,7 +238,7 @@ const CompanyInfo = ({ profileData }) => {
             style={{ border: "1px solid #8A8AA033" }}
             {...register("phone_number")}
           />
-          <p className="text-xs text-gray-500 mt-1">Mobile number cannot be changed</p>
+          <p className="text-xs text-gray-500 mt-1">{t("common.form.mobileNumberCannotBeChanged")}</p>
         </div>
       </div>
       <div className="mt-10 text-center">
@@ -212,7 +246,7 @@ const CompanyInfo = ({ profileData }) => {
           className="bg-secondary text-white font-medium px-10 py-3 rounded-md hover:bg-opacity-90 transition-all duration-300 disabled:opacity-70"
           disabled={updating}
         >
-          {updating ? "Updating..." : "Update Account Information"}
+          {updating ? t("profile.companyInfo.updating") : t("profile.companyInfo.updateAccountInfo")}
         </button>
       </div>
     </form>

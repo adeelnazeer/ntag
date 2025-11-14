@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
-  Switch,
   Typography,
   Spinner,
   Dialog,
@@ -14,8 +13,10 @@ import { useAppSelector } from "../../redux/hooks";
 import { toast } from "react-toastify";
 import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
+import { useTranslation } from "react-i18next";
 
 const SchedulecallCustomer = () => {
+  const { t } = useTranslation(["schedule"]);
   const [serviceStatus, setServiceStatus] = useState(false);
   const [statusNew, setStatusNew] = useState("")
   const [loading, setLoading] = useState(false);
@@ -32,6 +33,7 @@ const SchedulecallCustomer = () => {
 
   useEffect(() => {
     fetchTagInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchTagInfo = async () => {
@@ -58,7 +60,7 @@ const SchedulecallCustomer = () => {
       }
     } catch (error) {
       console.error("Error fetching TAG info:", error);
-      toast.error("Error loading TAG information");
+      toast.error(t("manageIncomingCalls.toastMessages.errorLoading"));
     } finally {
       setFetchingData(false);
     }
@@ -94,13 +96,13 @@ const SchedulecallCustomer = () => {
         // Trigger storage event to notify other components
         window.dispatchEvent(new Event('storage'));
 
-        toast.success(response?.message || `Service ${desiredStatus ? "activated" : "deactivated"} successfully`);
+        toast.success(response?.message || (desiredStatus ? t("manageIncomingCalls.toastMessages.serviceActivated") : t("manageIncomingCalls.toastMessages.serviceDeactivated")));
       } else {
-        toast.error(response?.message || "Failed to update service status");
+        toast.error(response?.message || t("manageIncomingCalls.toastMessages.failedToUpdate"));
       }
     } catch (error) {
       console.error("Error updating service status:", error);
-      toast.error("Error updating service status. Please try again.");
+      toast.error(t("manageIncomingCalls.toastMessages.errorUpdating"));
     } finally {
       setLoading(false);
     }
@@ -114,7 +116,7 @@ const SchedulecallCustomer = () => {
     return (
       <div className="grid rounded-xl bg-white shadow grid-cols-1 gap-x-6 gap-y-6 pb-6 max-w-4xl mx-auto">
         <Typography className="text-gray-800 p-3 px-6 border-b text-lg font-bold">
-          Manage Incoming Calls
+          {t("manageIncomingCalls.title")}
         </Typography>
         <div className="flex justify-center items-center p-12">
           <Spinner className="h-12 w-12" color="green" />
@@ -123,17 +125,15 @@ const SchedulecallCustomer = () => {
     );
   }
 
-  console.log({ tagData })
-
   return (
     <div className="grid rounded-xl bg-white shadow grid-cols-1 gap-x-6 gap-y-6 pb-6 max-w-4xl">
       <Typography className="text-gray-800 p-3 px-6 border-b text-lg font-bold">
-        Manage Incoming Calls
+        {t("manageIncomingCalls.title")}
       </Typography>
 
       {(tagData?.[0]?.type == "reserve" || tagData?.[0]?.status != 1) ? (
         <div className="container px-6 pt-4 max-w-full">
-          <p>No active NameTAG is linked to your mobile number.</p>
+          <p>{t("manageIncomingCalls.emptyState")}</p>
         </div>
       ) : (
         <div className="container px-6 max-w-full">
@@ -142,7 +142,7 @@ const SchedulecallCustomer = () => {
               <div className="flex flex-wrap gap-4 pb-6">
                 <div className="flex gap-4 p-3 rounded-lg shadow border border-gray-100">
                   <Typography className="font-medium text-sm md:text-base text-gray-700">
-                    NameTAG:
+                    {t("manageIncomingCalls.labels.nameTag")}
                   </Typography>
                   <Typography className="text-sm md:text-base font-medium text-gray-800">
                     #{tagData[0]?.tag_no}
@@ -150,7 +150,7 @@ const SchedulecallCustomer = () => {
                 </div>
                 <div className="flex gap-4 p-3 rounded-lg shadow border border-gray-100">
                   <Typography className="text-sm md:text-base font-medium text-gray-700">
-                    Mobile Number:
+                    {t("manageIncomingCalls.labels.mobileNumber")}
                   </Typography>
                   <Typography className="text-sm md:text-base font-medium text-gray-800">
                     {formatPhoneNumberCustom(userData?.phone_number)}
@@ -161,12 +161,12 @@ const SchedulecallCustomer = () => {
               <div className="my-6">
                 {statusNew == 1 ?
                   <Typography className="text-xs text-gray-700">
-                    Your current incoming call status is:<b className="font-semibold"> ON</b><br />
-                    If you choose to stop incoming calls, you will not receive any incoming calls for the next 15 days.
+                    {t("manageIncomingCalls.status.currentStatus")}<b className="font-semibold"> {t("manageIncomingCalls.status.on")}</b><br />
+                    {t("manageIncomingCalls.status.stopInfo")}
                   </Typography>
                   :
                   <Typography className="text-xs text-gray-700">
-                    Your current incoming call status is: <b className="font-semibold">Stopped</b> <br />You will not receive any incoming calls for 15 days from the date the service was stopped
+                    {t("manageIncomingCalls.status.currentStatus")} <b className="font-semibold">{t("manageIncomingCalls.status.stopped")}</b> <br />{t("manageIncomingCalls.status.stoppedInfo")}
                   </Typography>
                 }
                 {/* <Typography className="text-xs text-gray-700 mt-2">
@@ -195,22 +195,22 @@ const SchedulecallCustomer = () => {
 
               <div className="mt-6">
                 <Button
-                  className="bg-secondary text-white px-8 py-2 capitalize font-normal text-sm"
+                  className={`${statusNew==1?" bg-red-500":"bg-secondary"} text-white px-8 py-2 capitalize font-normal text-sm`}
                   onClick={handleApply}
                   disabled={loading}
                 >
                   {loading ? (
                     <div className="flex items-center justify-center gap-2">
-                      <Spinner size="sm" className="h-4 w-4" /> Processing...
+                      <Spinner size="sm" className="h-4 w-4" /> {t("manageIncomingCalls.buttons.processing")}
                     </div>
-                  ) : statusNew == 1 ? "Stop Calls" : "Start Calls"}
+                  ) : statusNew == 1 ? t("manageIncomingCalls.buttons.stopCalls") : t("manageIncomingCalls.buttons.startCalls")}
                 </Button>
               </div>
             </div>
           ) : (
             <div className="p-6 border border-gray-200 rounded-2xl bg-white shadow pb-6 mt-1">
               <Typography className="text-center text-gray-700">
-                No active NameTAG is linked to your mobile number.
+                {t("manageIncomingCalls.emptyState")}
               </Typography>
             </div>
           )}
@@ -220,16 +220,16 @@ const SchedulecallCustomer = () => {
       {/* Confirmation Dialog */}
       <Dialog open={openConfirmation} size="sm" handler={setOpenConfirmation}>
         <DialogHeader className=" text-xl">
-          { "Confirmation?"}
+          {t("manageIncomingCalls.modal.title")}
         </DialogHeader>
         <DialogBody>
           {serviceStatus ? (
             <Typography className="text-gray-700">
-              Please confirm to Stop your incoming calls.
+              {t("manageIncomingCalls.modal.confirmStop")}
             </Typography>
           ) : (
             <Typography className="text-gray-700">
-              Please confirm to Start receiving incoming calls.
+              {t("manageIncomingCalls.modal.confirmStart")}
             </Typography>
           )}
         </DialogBody>
@@ -238,13 +238,13 @@ const SchedulecallCustomer = () => {
             className="py-2.5 bg-gray-300  w-fit text-gray-800 shadow-none hover:shadow-none"
             onClick={handleCancelStatusChange}
           >
-            Cancel
+            {t("manageIncomingCalls.buttons.cancel")}
           </Button>
           <Button
             className="py-2.5 bg-secondary  w-fit text-white shadow-none hover:shadow-none"
             onClick={handleConfirmStatusChange}
           >
-            {"Confirm"}
+            {t("manageIncomingCalls.buttons.confirm")}
           </Button>
 
         </DialogFooter>

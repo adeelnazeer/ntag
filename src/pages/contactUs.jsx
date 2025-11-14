@@ -20,8 +20,8 @@ const ContactUs = () => {
             </h2>
             <div className="flex items-center mb-6 space-x-2">
               <IoIosCall size={24} className=' text-[#0072AB]' />
-              <a href="tel:+251991071051" className="text-[#008FD5] hover:underline hover:text-[#008FD5]">
-                +251991071051
+              <a href="tel:+9234" className="text-[#008FD5] hover:underline hover:text-[#008FD5]">
+                9234
               </a>
             </div>
 

@@ -1,9 +1,23 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React from "react";
 import { Button, Typography } from "@material-tailwind/react";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
-const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumber, businessType, isLoading, onConfirm, isChangeNumber = false, type, isExchangeFlow = false }) => {
+const IndividualPaymentConfirmationModal = ({
+  isOpen,
+  onClose,
+  state,
+  phoneNumber,
+  businessType,
+  isLoading,
+  onConfirm,
+  isChangeNumber = false,
+  type,
+  isExchangeFlow = false,
+}) => {
+  const { t } = useTranslation(["common"]);
+
   if (!isOpen) return null;
 
   const formatPrice = (price) => {
@@ -12,10 +26,12 @@ const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumbe
   };
 
   // Get the recurring fee amount and label
-  const recurringFeeAmount = state?.service_fee || state?.recurring_fee_amount || 0;
-  const recurringFeeLabel = state?.service_id || state?.recurring_fee_label || "Monthly";
+  const recurringFeeAmount =
+    state?.service_fee || state?.recurring_fee_amount || 0;
+  const recurringFeeLabel =
+    state?.service_id || state?.recurring_fee_label || "Monthly";
 
-  console.log({ state })
+  console.log({ state });
 
   return (
     <div className="fixed p-2 inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm">
@@ -29,117 +45,161 @@ const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumbe
 
         <div className="mt-4 text-center">
           <Typography variant="h5" className="font-bold text-gray-900">
-            Confirm {type === "reserve" ? "Reservation" : "Payment"}
+            {t("dashboard.confirm")}{" "}
+            {type === "reserve"
+              ? t("dashboard.reservation")
+              : t("dashboard.payment")}
           </Typography>
 
-          <Typography className="mt-2 text-sm text-gray-600">
-            Confirm your NameTAG {type === "reserve" ? "reservation" : "payment"} details to continue
+          <Typography className="mt-2 text-sm lowercase text-gray-600">
+            {t("dashboard.confirmNameTag")}{" "}
+            {type === "reserve"
+              ? t("dashboard.reservation")
+              : t("dashboard.payment")}{" "}
+            {t("dashboard.detailToContinue")}
           </Typography>
-          {isExchangeFlow &&
+          {isExchangeFlow && (
             <Typography className="text-lg font-medium mt-2">
-              You are about to change your NameTAG
-            </Typography>}
+              {t("dashboard.changeMsg")}
+            </Typography>
+          )}
+          {isExchangeFlow && (
+            <p className='className="flex justify-between border border-blue-200 bg-blue-50 px-4 text-sm text-blue-800 py-3 rounded-lg mt-3'>
+              {t("dashboard.exchangeMsg")}
+            </p>
+          )}
         </div>
 
         <div className="mt-6">
           <div className="rounded-xl bg-gray-50 p-4">
             {/* NameTAG Row */}
-            {!isExchangeFlow &&
+            {!isExchangeFlow && (
               <div className="mb-3">
-                <Typography className="text-sm text-gray-500">NameTAG</Typography>
+                <Typography className="text-sm text-gray-500">
+                  {t("nameTag")}
+                </Typography>
                 <Typography className="text-base font-medium">
                   {state.tag_name}
                 </Typography>
               </div>
-            }
+            )}
 
             {/* Tag Number Row */}
-            {!isExchangeFlow &&
+            {!isExchangeFlow && (
               <div className="mb-3">
-                <Typography className="text-sm text-gray-500">NameTAG Number</Typography>
+                <Typography className="text-sm text-gray-500">
+                  {t("dashboard.nameTag")} {t("dashboard.number")}
+                </Typography>
                 <Typography className="text-base font-medium">
                   #{state.tag_no}
                 </Typography>
               </div>
-            }
-            {isExchangeFlow &&
+            )}
+            {isExchangeFlow && (
               <>
                 <div className="mb-3">
-                  <Typography className="text-sm text-gray-500">NameTAG Number</Typography>
+                  <Typography className="text-sm text-gray-500">
+                    {t("dashboard.nameTag")} {t("dashboard.number")}
+                  </Typography>
                   <Typography className="text-base font-medium">
-                    #{state?.currentTagData?.length ? state?.currentTagData?.[0]?.tag_no : state?.currentTagData?.tag_no}
+                    #
+                    {state?.currentTagData?.length
+                      ? state?.currentTagData?.[0]?.tag_no
+                      : state?.currentTagData?.tag_no}
                   </Typography>
                 </div>
                 <div className="mb-3">
-                  <Typography className="text-sm text-gray-500">New NameTAG</Typography>
+                  <Typography className="text-sm text-gray-500">
+                    {t("dashboard.new")} {t("dashboard.nameTag")}
+                  </Typography>
                   <Typography className="text-base font-medium">
                     {state.tag_name}
                   </Typography>
                 </div>
                 <div className="mb-3">
-                  <Typography className="text-sm text-gray-500">New NameTAG Number</Typography>
+                  <Typography className="text-sm text-gray-500">
+                    {t("dashboard.new")} {t("dashboard.nameTag")}{" "}
+                    {t("dashboard.number")}
+                  </Typography>
                   <Typography className="text-base font-medium">
                     #{state.tag_no}
                   </Typography>
                 </div>
               </>
-            }
+            )}
             {/* Mobile Number Row */}
             <div className="mb-3">
-              <Typography className="text-sm text-gray-500">Mobile Number</Typography>
+              <Typography className="text-sm text-gray-500">
+                {t("dashboard.mobileNo")}
+              </Typography>
               <Typography className="text-base font-medium">
                 {phoneNumber}
               </Typography>
             </div>
-            {isChangeNumber &&
+            {isChangeNumber && (
               <div className="mb-3">
-                <Typography className="text-sm text-gray-500">New Mobile Number</Typography>
+                <Typography className="text-sm text-gray-500">
+                  {t("dashboard.new")} {t("dashboard.mobileNo")}
+                </Typography>
                 <Typography className="text-base font-medium">
                   +{state?.newNumber}
                 </Typography>
               </div>
-            }
+            )}
             {/* Payment Method Row */}
             <div className="mb-3">
-              <Typography className="text-sm text-gray-500">Payment Method</Typography>
+              <Typography className="text-sm text-gray-500">
+                {t("dashboard.paymentMethod")}
+              </Typography>
               <Typography className="text-base font-medium">
-                telebirr
+                {t("dashboard.telebirr")}
               </Typography>
             </div>
             <div className="mb-3">
-              <Typography className="text-sm text-gray-500">{state?.selectedFeeLabel ?? recurringFeeLabel} Recurring Fee</Typography>
+              <Typography className="text-sm text-gray-500">
+                {state?.selectedFeeLabel ?? recurringFeeLabel}{" "}
+                {t("dashboard.recurringFee")}
+              </Typography>
               <Typography className="text-base font-medium">
-                {formatPrice(state?.selectedAmount || state?.monthly_fee || state?.service_fee)} ETB
+                {formatPrice(
+                  state?.selectedAmount ||
+                    state?.monthly_fee ||
+                    state?.service_fee
+                )}{" "}
+                {t("dashboard.etb")}
               </Typography>
             </div>
-            {!isChangeNumber &&
+            {!isChangeNumber && (
               <div className="mb-3">
-                <Typography className="text-sm text-gray-500">Subscription Fee</Typography>
+                <Typography className="text-sm text-gray-500">
+                  {t("dashboard.subscriptionFee")}
+                </Typography>
                 <Typography className="text-base font-medium">
-                  {Number(state?.tag_price).toFixed(2)} ETB
+                  {Number(state?.tag_price).toFixed(2)} {t("dashboard.etb")}
                 </Typography>
               </div>
-            }
-            {isChangeNumber &&
+            )}
+            {isExchangeFlow && state?.state?.outstanding_dues < 0 && (
               <div className="mb-3">
-                <Typography className="text-sm text-gray-500">Outstanding Recurring Fee  (Previous Plan)</Typography>
+                <Typography className="text-sm text-gray-500">
+                  {t("dashboard.outstanding")} {t("dashboard.recurringFee")}{" "}
+                  {t("dashboard.previousPlan")}
+                </Typography>
                 <Typography className="text-base font-medium">
-                  {Math.abs(state?.dues).toFixed(2)} ETB
+                  {Math.abs(state?.outstanding_dues).toFixed(2)}{" "}
+                  {t("dashboard.etb")}
                 </Typography>
               </div>
-            }
+            )}
 
-            <div className='mb-3'>
-              <Typography className="text-sm text-gray-500 font-bold">Total Amount</Typography>
+            <div className="mb-3">
+              <Typography className="text-sm text-gray-500 font-bold">
+                {t("dashboard.total")}
+              </Typography>
               <Typography className="text-base font-bold">
-                {formatPrice(state.total_amount)} ETB
+                {formatPrice(state.total_amount)} {t("dashboard.etb")}
               </Typography>
             </div>
-
-
-
-
-
 
             {/* Monthly Recurring Fee Row - Display only for reservation */}
             {/* {type === "reserve" && ( */}
@@ -147,13 +207,12 @@ const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumbe
             {/* )} */}
 
             {/* Amount Row */}
-
           </div>
-          {isExchangeFlow &&
+          {isExchangeFlow && (
             <Typography className="text-sm mt-3 text-gray-600">
-              This action will replace your current NameTAG. Do you want to proceed?
+              {t("dashboard.exchnageMsg1")}
             </Typography>
-          }
+          )}
         </div>
 
         <div className="mt-6 flex gap-4">
@@ -161,7 +220,7 @@ const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumbe
             className="flex-1 py-2.5 bg-gray-300 text-gray-800 shadow-none hover:shadow-none"
             onClick={onClose}
           >
-            Cancel
+            {t("buttons.cancel")}
           </Button>
           <Button
             className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
@@ -169,7 +228,11 @@ const IndividualPaymentConfirmationModal = ({ isOpen, onClose, state, phoneNumbe
             loading={isLoading}
             disabled={isLoading}
           >
-            {isExchangeFlow ? "Confirm To Buy" : (type === "reserve" ? "Confirm" : "Confirm")}
+            {isExchangeFlow
+              ? t("dashboard.confirmBuy")
+              : type === "reserve"
+              ? t("dashboard.confirm")
+              : t("dashboard.confirm")}
           </Button>
         </div>
       </div>

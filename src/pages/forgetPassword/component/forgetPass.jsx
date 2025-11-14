@@ -12,6 +12,7 @@ import PasswordReset from "./newPassword";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../../../utilities/routesConst";
 import { BiArrowBack } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 
 // Apply CSS fix for autofill styling
 const autofillStyle = `
@@ -26,6 +27,7 @@ const autofillStyle = `
 `;
 
 const ForgetPass = () => {
+  const { t } = useTranslation(["auth"]);
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
   const { handleForgotPassword, data, loading } = useForgotPassword();
@@ -80,7 +82,7 @@ const ForgetPass = () => {
       <div className="image relative lg:h-[90vh] md:h-[100vh] h-[92vh] flex items-center justify-center md:pb-12 pb-0 lg:pb-0">
         <div>
           <p className="text-center font-medium text-[18px] text-[#757575] absolute lg:left-[40%] md:left-[30%] left-[12%] md:bottom-0 bottom-32">
-            ©{new Date().getFullYear()} All rights reserved.
+            ©{new Date().getFullYear()} {t("forgotPassword.footer")}
           </p>
           <img
             className="absolute left-0 bottom-0 lg:h-[300px] md:h-[150px] h-[100px]"
@@ -111,14 +113,15 @@ const ForgetPass = () => {
           </div>
             {step === 1 ? (
               <>
-                <h2 className=" font-semibold md:text-[38px] text-[25px]  mb-4">{userData ? "Update" : "Forgot"} Password</h2>
+                <h2 className=" font-semibold md:text-[38px] text-[25px]  mb-4">{userData ? t("forgotPassword.title.update") : t("forgotPassword.title.forgot")}</h2>
                 <p className="text-gray-900 mb-6  md:text-base text-[16px] ">
-                  Please enter your registered username and Mobile number to reset your password.                </p>
+                  {t("forgotPassword.description")}
+                </p>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="mb-2">
                     <Input
                       className="mt-2 w-full rounded-xl px-4 py-3 bg-[#F6F7FB] outline-none"
-                      placeholder="User Name"
+                      placeholder={t("forgotPassword.placeholders.userName")}
                       type="text"
                       style={
                         errors?.username
@@ -146,7 +149,7 @@ const ForgetPass = () => {
                       name="phone_number"
                       control={control}
                       rules={{
-                        required: "Phone number is required",
+                        required: t("forgotPassword.validation.phoneNumberRequired"),
                         validate: (value) => validatePhoneNumber(value)
                       }}
                       render={({ field }) => {
@@ -199,7 +202,7 @@ const ForgetPass = () => {
                     type="submit"
                     disabled={loading}
                   >
-                    {loading ? "Sending..." : "Send OTP"}
+                    {loading ? t("forgotPassword.buttons.sending") : t("forgotPassword.buttons.sendOtp")}
                   </Button>
                 </form>
               </>
@@ -209,16 +212,15 @@ const ForgetPass = () => {
               <PasswordReset setStep={setStep} data={data} />
             ) : (
               <>
-                <h2 className="text-2xl font-bold mb-1">Password Reset</h2>
+                <h2 className="text-2xl font-bold mb-1">{t("forgotPassword.passwordReset.title")}</h2>
                 <p className="text-gray-900 mb-6 text-xs font-medium">
-                  Your password has been successfully reset. Click below to
-                  login.
+                  {t("forgotPassword.passwordReset.description")}
                 </p>
                 <Button
                   className="w-full mt-10 px-4 py-2 justify-center bg-secondary text-white text-[22px] font-semibold"
                   onClick={handleLogin}
                 >
-                  Login
+                  {t("forgotPassword.buttons.login")}
                 </Button>
               </>
             )}

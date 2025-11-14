@@ -1,0 +1,202 @@
+{
+  "title": "Manage Block Numbers",
+
+  "labels": {
+    "selectRegistered": "Select Your Registered Mobile Number",
+    "noMobiles": "No mobile numbers found",
+    "yourRegistered": "Your Registered Mobile Number"
+  },
+
+  "buttons": {
+    "addToBlocklist": "Add to Blocklist",
+    "unblock": "Unblock",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "removing": "Removing...",
+    "adding": "Adding..."
+  },
+
+  "table": {
+    "sr": "Sr#",
+    "blocked": "Blocked Number/TAG",
+    "type": "Number Type",
+    "registered": "Registered Mobile Number",
+    "channel": "Channel",
+    "action": "Action",
+    "empty": "No blocked numbers found"
+  },
+
+  "confirmDialog": {
+    "title": "Confirm Removal",
+    "desc1": "Are you sure you want to remove this number from blocklist?",
+    "desc2": "This number will be able to make calls on your TAG number"
+  },
+
+  "addDialog": {
+    "title": "Add to Blocklist",
+    "subtitle": "Please select what you want to block",
+    "mobileOption": "Mobile Number",
+    "tagOption": "TAG Number",
+    "mobileLabel": "Mobile Number to Block",
+    "tagLabel": "TAG Number to Block",
+    "formatHint": "Format: +251xxxxxxxxx",
+    "tagPlaceholder": "Enter TAG number (e.g. 4642)"
+  },
+
+  "errors": {
+    "fetchMobiles": "Failed to fetch Mobile numbers",
+    "loadMobiles": "Error loading Mobile numbers",
+    "fetchBlocked": "Failed to fetch blocked numbers",
+    "loadBlocked": "Error loading blocked numbers",
+    "fetchWhitelist": "Failed to fetch whitelist numbers",
+    "loadWhitelist": "Error loading whitelist numbers",
+    "removeWhitelist": "Error removing number from whitelist",
+    "addWhitelist": "Failed to add whitelist number",
+    "required": "Mobile Number is required",
+    "mustStartCountry": "Mobile Number must start with +251",
+    "mustStart9": "Mobile Numbers must start with 9 after country code",
+    "length": "Mobile Number must be 9 digits after country code",
+    "tagRequired": "TAG Number is required",
+    "tagMinLength": "TAG Number must be at least 2 characters",
+    "tagMaxLength": "TAG Number must not exceed 8 characters",
+    "enterTag": "Please enter a TAG number to block",
+    "blockOwnTag": "You cannot block your own NameTAG"
+  },
+
+  "success": {
+    "added": "Number added to blocklist successfully",
+    "removed": "Number removed from blocklist successfully"
+  },
+
+  "callPinPage": {
+    "title": "Manage incoming Call PIN and Whitelist Numbers",
+    "labels": {
+      "mobileNumber": "Mobile Number:",
+      "currentPin": "Current Call PIN:"
+    },
+    "buttons": {
+      "setPin": "Set PIN",
+      "removePin": "Remove PIN",
+      "addWhitelist": "Add to Whitelist",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "processing": "Processing...",
+      "adding": "Adding...",
+      "removing": "Removing..."
+    },
+    "table": {
+      "headers": {
+        "sr": "Sr#",
+        "nameTag": "NameTAG",
+        "whitelistNumber": "Whitelist Number",
+        "whitelistDate": "Whitelist Date",
+        "pin": "PIN",
+        "action": "Action"
+      },
+      "empty": {
+        "noPin": "Currently no PIN is set for incoming calls. Please set a PIN to add numbers to whitelist.",
+        "noActiveLinked": "No active NameTAG is linked to your mobile number.",
+        "noWhitelist": "No whitelist number found!"
+      },
+      "actions": {
+        "delete": "Delete"
+      }
+    },
+    "confirmRemoval": {
+      "title": "Confirm Removal",
+      "description": "Are you sure you want to remove mobile number +{{number}} from whitelist?",
+      "hint": "Callers not on your whitelist must enter the correct PIN to reach your NameTAG."
+    },
+    "modalPin": {
+      "removeTitle": "Remove Call PIN for your incoming calls",
+      "setTitle": "Set Call PIN for your incoming Calls",
+      "descRemove": "Once the PIN is removed, all callers will be able to reach your NameTAG without entering a PIN.",
+      "descSet": "Are you sure you want to set a PIN for incoming calls? Your callers will be required to enter the PIN before connecting to your NameTAG number.",
+      "nameTag": "NameTAG = #{{tag}}",
+      "mobileNumber": "Mobile Number = +{{number}}",
+      "currentPin": "Current Call PIN = {{pin}}",
+      "notDefined": "Not Defined",
+      "noteNoPin": "No PIN is required — callers can reach your NameTAG without entering the PIN.",
+      "selectSingleDigit": "Please select Single Digit PIN",
+      "selectPinPlaceholder": "Select PIN"
+    },
+    "modalAddWhitelist": {
+      "title": "Add to Whitelist",
+      "subtitle": "Whitelisted callers can call your NameTAG without a PIN.",
+      "enterMobileLabel": "Enter Mobile Number to add Whitelist",
+      "formatHint": "Format: +251xxxxxxxxx",
+      "registeredMobileLabel": "Your Registered Mobile Number"
+    },
+    "toast": {
+      "fetchWhitelistFailed": "Failed to fetch whitelist numbers",
+      "loadWhitelistFailed": "Error loading whitelist numbers",
+      "removeWhitelistError": "Error removing number from whitelist",
+      "addWhitelistError": "Failed to add whitelist number"
+    },
+    "states": {
+      "loading": "Loading..."
+    },
+    "common": {
+      "na": "N/A",
+      "etb": "ETB"
+    }
+  },
+
+  "blockNumbersPage": {
+    "title": "Blocked Numbers",
+    "statusMessages": {
+      "reserveTitle": "No active NameTAG is linked to your mobile number.",
+      "reserveSubtitle": "Please purchase your reserved TAG to use the Block/Unblock feature.",
+      "inactiveTitle": "No active NameTAG is linked to your mobile number.",
+      "noneTitle": "You don't have any TAG linked to your mobile number.",
+      "noneSubtitle": "Please purchase a TAG to use the Block/Unblock feature."
+    },
+    "buttons": {
+      "addToBlocklist": "Add to Blocklist",
+      "unblockNumber": "Unblock Number",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "adding": "Adding...",
+      "removing": "Removing..."
+    },
+    "table": {
+      "headers": {
+        "sr": "Sr#",
+        "blocked": "Blocked Number/TAG",
+        "type": "Number Type",
+        "registered": "Registered Mobile Number",
+        "channel": "Channel",
+        "action": "Action"
+      },
+      "empty": "No blocked numbers found"
+    },
+    "confirmDialog": {
+      "title": "Confirm Removal",
+      "desc1": "Are you sure you want to remove this number from blocklist?",
+      "desc2": "This number will be able to make calls on your TAG number"
+    },
+    "addDialog": {
+      "title": "Add to Blocklist",
+      "subtitle": "Please select what you want to block",
+      "mobileOption": "Mobile Number",
+      "tagOption": "TAG Number",
+      "mobileLabel": "Mobile Number to Block",
+      "tagLabel": "TAG Number to Block",
+      "formatHint": "Format: +251xxxxxxxxx",
+      "tagPlaceholder": "Enter TAG number to block",
+      "tagHint": "TAG Number must be between 2-8 characters"
+    },
+    "toast": {
+      "fetchBlockedFailed": "Failed to fetch blocked numbers",
+      "removeBlockedSuccess": "Number removed from blocklist successfully",
+      "removeBlockedFailed": "Failed to remove number from blocklist",
+      "removeBlockedError": "Error removing number from blocklist",
+      "addBlockedSuccess": "{{type}} added to blocklist successfully",
+      "addBlockedFailed": "Failed to add {{type}} to blocklist",
+      "addBlockedError": "Error adding {{type}} to blocklist"
+    },
+    "states": {
+      "loading": "Loading..."
+    }
+  }
+}

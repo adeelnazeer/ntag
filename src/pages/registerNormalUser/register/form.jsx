@@ -6,13 +6,14 @@ import { useRegisterHook } from "../../hooks/useRegisterHook";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import TickIcon from "../../../assets/images/tick.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ConstentRoutes } from "../../../utilities/routesConst";
 import { useNavigate } from "react-router-dom";
 import { validateEthiopianPhone } from "../../../utilities/validateEthiopianPhone";
 import { Controller, useForm } from "react-hook-form";
 import AccountConfirmation from "../../../modals/account-confirmation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
 
 
 // Apply CSS fix for autofill styling
@@ -61,6 +62,7 @@ const UserForm = () => {
     } = useForm({
         msisdn: "", mode: "onChange", // ✅ Real-time validation on typing
     });
+    const { t } = useTranslation()
     const registerData = useRegisterHook();
     const [data, setData] = useState(null);
     const watchAllFields = watch();
@@ -174,14 +176,23 @@ const UserForm = () => {
         'last_name',
         'username',
         'password',
+        "phone_number",
         'confirm_password',
-        'cnic'
     ];
 
     const areRequiredFieldsValid = requiredFields.every((field) => {
         const value = getValues(field);
         return value && !errors[field];
     });
+
+    const hasBackendError = useMemo(() => {
+        const e = registerData?.state?.error || registerData?.error;
+        if (!e) return false;
+        // If it's an object with any truthy value/message, treat as error
+        if (typeof e === "object") return Object.values(e).some(Boolean);
+        // If it’s a string or boolean
+        return Boolean(e);
+    }, [registerData]);
 
     return (
         <>
@@ -196,7 +207,7 @@ const UserForm = () => {
                     <div className="flex flex-col gap-4">
                         <div className="flex justify-between flex-col md:flex-row items-center py-3 md:gap-0 gap-6">
                             <Button className="bg-secondary px-2 md:px-4 text-white">
-                                Individual Customer Account Registration
+                                {t("indAccountTitle")}
                             </Button>
 
                         </div>
@@ -204,24 +215,24 @@ const UserForm = () => {
                         <div className="md:w-5/6 w-full mx-auto">
                             <div className="py-3">
                                 <Typography className="text-[#555] md:text-base text-[16px] font-semibold">
-                                    Account Information
+                                    {t("common.accountInfo")}
                                 </Typography>
                             </div>
                             <hr className="mt-3 mb-5"></hr>
 
                             <div>
-                                <GetLabel name="First Name" />
+                                <GetLabel name={t("common.form.firstName")} />
                                 <div className="mt-2 flex items-center gap-2">
                                     <Input
                                         className="w-full rounded-xl px-4 py-2 bg-white outline-none"
-                                        placeholder="First name"
+                                        placeholder={t("common.form.firstName")}
                                         style={
                                             errors?.first_name
                                                 ? { border: "1px solid red" }
                                                 : { border: "1px solid #8A8AA033" }
                                         }
                                         {...register("first_name", {
-                                            required: "First name is required",
+                                            required: t("common.form.errors.firstName"),
                                             validate: value => !/^\d+$/.test(value) || "First name cannot consist of only digits"
                                         })}
                                         onChange={(e) => handleChange(e, "first_name")}
@@ -243,18 +254,18 @@ const UserForm = () => {
                             </div>
 
                             <div>
-                                <GetLabel name="Father Name" />
+                                <GetLabel name={t("common.form.fatherName")} />
                                 <div className="mt-2 flex items-center gap-2">
                                     <Input
                                         className="w-full rounded-xl px-4 py-2 bg-white outline-none"
-                                        placeholder="Father name"
+                                        placeholder={t("common.form.fatherName")}
                                         style={
                                             errors?.last_name
                                                 ? { border: "1px solid red" }
                                                 : { border: "1px solid #8A8AA033" }
                                         }
                                         {...register("last_name", {
-                                            required: "Father name is required",
+                                            required: t("common.form.errors.fatherName"),
                                             validate: value => !/^\d+$/.test(value) || "Father name cannot consist of only digits"
                                         })}
                                         onChange={(e) => handleChange(e, "last_name")}
@@ -276,11 +287,11 @@ const UserForm = () => {
                             </div>
 
                             <div>
-                                <GetLabel name="User Name" />
+                                <GetLabel name={t("common.form.userName")} />
                                 <div className="mt-2 flex items-center gap-2">
                                     <Input
                                         className="w-full rounded-xl px-4 py-2 bg-white outline-none"
-                                        placeholder="User name"
+                                        placeholder={t("common.form.userName")}
                                         maxLength={30}
                                         style={
                                             errors?.username
@@ -288,7 +299,7 @@ const UserForm = () => {
                                                 : { border: "1px solid #8A8AA033" }
                                         }
                                         {...register("username", {
-                                            required: "Username is required",
+                                            required: t("common.form.errors.userName"),
                                             validate: value => value.length > 1 || "Username must be at least 2 characters"
                                         })}
                                         onChange={(e) => handleChange(e, "username")}
@@ -309,15 +320,15 @@ const UserForm = () => {
                             </div>
 
                             <div>
-                                <GetLabel name="Password" />
+                                <GetLabel name={t("common.form.password")} />
                                 <div className="relative mt-2 ">
                                     <Input
                                         className="w-full rounded-xl px-4 py-2 bg-white outline-none"
-                                        placeholder="Password"
+                                        placeholder={t("common.form.password")}
                                         maxLength={15}
                                         type={showPassword ? "text" : "password"}
                                         {...register("password", {
-                                            required: "Password is required",
+                                            required: t("common.form.errors.password"),
                                             minLength: {
                                                 value: 5,
                                                 message: "Password must be at least 5 characters",
@@ -356,18 +367,16 @@ const UserForm = () => {
                                     </p>
                                 )}
                                 <p className="text-xs text-gray-600 mt-1">
-                                    • Length 5-15 • one
-                                    uppercase letter •one lowercase letter • one
-                                    special character (!@#$%^&*)
+                                    {t("common.form.passwordLength")}
                                 </p>
                             </div>
 
                             <div>
-                                <GetLabel name="Confirm Password" />
+                                <GetLabel name={t("common.form.confirmPassword")} />
                                 <div className="mt-2 relative">
                                     <Input
                                         className=" w-full rounded-xl px-4 py-2 bg-white outline-none"
-                                        placeholder="Confirm Password"
+                                        placeholder={t("common.form.confirmPassword")}
                                         type={showConfirmPassword ? "text" : "password"}
                                         maxLength={15}
                                         style={
@@ -377,7 +386,7 @@ const UserForm = () => {
                                                 : { border: "1px solid #8A8AA033" }
                                         }
                                         {...register("confirm_password", {
-                                            required: "Confirm password is required",
+                                            required:t("common.form.errors.confirmPassword"),
                                             validate: (val) => {
                                                 if (watch("password") != val) {
                                                     return "passwords do not match";
@@ -406,12 +415,12 @@ const UserForm = () => {
 
                             <div>
                                 <label className="text-[14px] text-[#555] font-[500]">
-                                    Email
+                                    {t("common.form.email")}
                                 </label>
                                 <div className="mt-2 flex items-center gap-2">
                                     <Input
                                         className="w-full rounded-xl px-4 py-2 bg-white outline-none"
-                                        placeholder="Email"
+                                        placeholder={t("common.form.email")}
                                         maxLength={50}
                                         style={
                                             errors?.email
@@ -442,31 +451,47 @@ const UserForm = () => {
                             </div>
 
                             <div>
-                                <GetLabel name="Fayda Number" />
+                                <label className="text-[14px] text-[#555] font-[500]">
+                                    {t("common.form.faydaNo")}
+                                </label>
                                 <div className="mt-2 flex items-center gap-2">
                                     <Input
+                                        type="tel"
+                                        inputMode="numeric"
+                                        pattern="[0-9]*"
                                         className="w-full rounded-xl px-4 py-2 bg-white outline-none"
-                                        placeholder="Fayda Number"
+                                        placeholder={t("common.form.faydaNo")}
                                         maxLength={16}
-                                        minLength={16}
-                                        style={
-                                            errors?.cnic
-                                                ? { border: "1px solid red" }
-                                                : { border: "1px solid #8A8AA033" }
-                                        }
+                                        style={errors?.cnic ? { border: "1px solid red" } : { border: "1px solid #8A8AA033" }}
+                                        onKeyDown={(e) => {
+                                            const key = e.key;
+                                            const ctrl = e.ctrlKey || e.metaKey;
+                                            const allowed = ["Backspace", "Delete", "Tab", "Enter", "Escape", "ArrowLeft", "ArrowRight", "Home", "End"];
+                                            if (allowed.includes(key) || ctrl) return;
+                                            if (!/^\d$/.test(key)) e.preventDefault(); // digits only
+                                        }}
+                                        onPaste={(e) => {
+                                            e.preventDefault();
+                                            const el = e.currentTarget;
+                                            const pasted = (e.clipboardData || window.clipboardData).getData("text") || "";
+                                            const digits = pasted.replace(/\D/g, "");
+                                            const s = el.selectionStart ?? el.value.length;
+                                            const epos = el.selectionEnd ?? el.value.length;
+                                            const next = (el.value.slice(0, s) + digits + el.value.slice(epos)).slice(0, 16);
+                                            el.value = next;
+                                            el.dispatchEvent(new Event("input", { bubbles: true }));
+                                        }}
                                         {...register("cnic", {
-                                            required: "Fayda number is required",
-                                            minLength: { value: 16, message: "Fayda  Number must be at least 16 digits" },
-                                            maxLength: { value: 16, message: "Fayda  Number cannot exceed 16 digits" },
-                                            pattern: {
-                                                value: /^\d{16,16}$/,
-                                                message: "Fayda  Number must contain only digits"
-                                            }
+                                            // Optional; if filled, must be exactly 16 digits
+                                            validate: (v) => v === "" || v == null || /^\d{16}$/.test(v) || "Fayda Number must be exactly 16 digits",
+                                            onChange: (e) => {
+                                                const clean = e.target.value.replace(/\D/g, "").slice(0, 16);
+                                                if (clean !== e.target.value) e.target.value = clean;
+                                            },
+                                            onBlur: (e) => handleBlur(e.target.value, "cnic"),
                                         })}
-                                        onChange={(e) => handleChange(e, "cnic")}
-                                        onBlur={(e) => handleBlur(e.target.value, "cnic")}
-                                        onKeyDown={(e) => handleKeyPress(e, e.target.value, "cnic")}
                                     />
+
                                     {registerData?.state?.success?.cnic && !errors.cnic && (
                                         <div>
                                             <img className="w-5" src={TickIcon} alt="" />
@@ -481,7 +506,7 @@ const UserForm = () => {
                             </div>
 
                             <div>
-                                <GetLabel name="Mobile Number" />
+                                <GetLabel name={t("common.form.mobileNo")} />
                                 <div className="mt-2 flex items-center gap-2">
                                     <div className="relative items-center flex w-full">
                                         <Controller
@@ -568,25 +593,27 @@ const UserForm = () => {
                                             <button
                                                 type="button"
                                                 disabled={
+                                                    hasBackendError ||
                                                     !isValidPhone ||
                                                     !areRequiredFieldsValid ||
                                                     (isGetCodeDisabled && !otpExpired)
                                                 }
                                                 className={`!absolute right-3 bg-[#f5f5f5] p-2 shadow-sm border border-[#8A8AA033] 
-                                                     ${(!isValidPhone || !areRequiredFieldsValid || (isGetCodeDisabled && !otpExpired))
+                                                     ${(hasBackendError || !isValidPhone || !areRequiredFieldsValid || (isGetCodeDisabled && !otpExpired))
                                                         ? "opacity-50 cursor-not-allowed"
                                                         : "cursor-pointer hover:bg-gray-100"
                                                     } text-xs font-medium rounded`}
                                                 onClick={() =>
                                                     !isGetCodeDisabled &&
                                                     isValidPhone &&
+                                                    !hasBackendError &&
                                                     areRequiredFieldsValid &&
                                                     handleOtpRequest(phone)
                                                 }
                                             >
                                                 {otpExpired ? "Resend OTP" :
-                                                    isGetCodeDisabled ? "Please wait..." :
-                                                        registerData?.isResend ? "Resend OTP" : "Send OTP"}
+                                                    isGetCodeDisabled ? t("common.form.pleaseWait") :
+                                                        registerData?.isResend ? t("common.form.resendOtp") : t("common.form.sentOtp")}
                                             </button>
 
                                         )}
@@ -599,8 +626,7 @@ const UserForm = () => {
                                 </div>
                                 {phone && !isValidPhone && (
                                     <p className="text-left text-sm mt-1 text-sm text-[#FF0000]">
-                                        Phone number must start with 9 and be 9 digits long (excluding
-                                        country code)
+                                        {t("common.form.mobileError")}
                                     </p>
                                 )}
                                 {(errors.phone_number || registerData?.state?.error?.phone_number) && (
@@ -611,15 +637,15 @@ const UserForm = () => {
                             </div>
 
                             <div>
-                                <GetLabel name="Verification Code" />
+                                <GetLabel name={t("common.form.verificationCode")} />
                                 <div className="relative mt-2 items-center flex w-full">
                                     <Input
                                         valueAsNumber
                                         className="w-full rounded-xl px-4 py-2 bg-white outline-none"
-                                        placeholder="Verification code"
-                                        maxLength={4}
+                                        placeholder={t("common.form.verificationCode")}
+                                        maxLength={6}
                                         {...register("verification_code", {
-                                            required: "Verification code is required",
+                                            required: t("common.form.errors.verificationCode"),
                                             validate: (val) => {
                                                 if (watch("verification_code") != val) {
                                                     return "Your OTP does not match";
@@ -646,7 +672,7 @@ const UserForm = () => {
                                     <div className="flex items-center">
                                         <Checkbox
                                             {...register("term", {
-                                                required: "You must accept the Terms & Conditions to continue",
+                                                required: t("common.form.errors.termAndCondition"),
                                             })}
                                             style={
                                                 errors.term
@@ -661,7 +687,7 @@ const UserForm = () => {
                                                     window.open(ConstentRoutes.termofuse, "_blank");
                                                 }}
                                             >
-                                                Terms & Conditions{" "}
+                                                {t("common.termAndCondition")}{" "}
                                             </span>
                                         </Typography>
                                     </div>
@@ -678,17 +704,17 @@ const UserForm = () => {
                         <Button className=" bg-secondary" type="submit"
                             disabled={Object.entries(registerData?.state?.error)?.length > 0}
                         >
-                            Submit
+                            {t("common.form.submit")}
                         </Button>
                     </div>
                     <div className="mt-3">
                         <Typography className="text-[#555] text-center md:text-base text-[16px] font-semibold">
-                            Already have an account?{" "}
+                           {t("common.form.alreadyAccount")}{" "}
                             <span
                                 className="text-secondary cursor-pointer"
                                 onClick={() => navigate(ConstentRoutes.login)}
                             >
-                                Log in
+                                {t("login.login")}
                             </span>
                         </Typography>
                     </div>

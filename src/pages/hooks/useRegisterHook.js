@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../../utilities/routesConst";
+import { get } from "react-hook-form";
 
 export const useRegisterHook = () => {
   const navigate = useNavigate();
@@ -13,9 +14,28 @@ export const useRegisterHook = () => {
   const [otpId, setOtpId] = useState("");
   const [state, setState] = useState({
     success: {},
-    error: {}
+    error: {},
   });
+  const [data, setData] = useState(null);
   const [isResend, setIsResend] = useState(false);
+
+  const getProfileDetail = () => {
+    const reduxUserData = JSON.parse(localStorage.getItem("user"));
+    if (!reduxUserData) return;
+    APICall(
+      "get",
+      null,
+      `${EndPoints?.customer?.getProfileDetail}/${reduxUserData?.customer_account_id}`,
+      null,
+      true
+    )
+      .then((res) => {
+        setData(res?.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
 
   const handleExipre = () => {
     setExpirationTime(null);
@@ -27,12 +47,12 @@ export const useRegisterHook = () => {
       ...prevState,
       success: {
         ...prevState.success,
-        [fieldName]: false
+        [fieldName]: false,
       },
       error: {
         ...prevState.error,
-        [fieldName]: ""
-      }
+        [fieldName]: "",
+      },
     }));
   };
 
@@ -60,8 +80,8 @@ export const useRegisterHook = () => {
       });
   };
 
-// ...existing code...
-const handleVerifyOtp = (code, setNewNumber, newNumber) => {
+  // ...existing code...
+  const handleVerifyOtp = (code, setNewNumber, newNumber) => {
     const data = {
       otp_id: otpId,
       otp_code: code,
@@ -88,7 +108,7 @@ const handleVerifyOtp = (code, setNewNumber, newNumber) => {
         setVerified(false);
       });
   };
-// ...existing code...
+  // ...existing code...
 
   const handleRegister = (data, setActiveStep, reset) => {
     const otp = localStorage.getItem("otp");
@@ -126,15 +146,27 @@ const handleVerifyOtp = (code, setNewNumber, newNumber) => {
     const formData = new FormData();
 
     if (data?.registration_license_url) {
-      formData.append("registration_license_url", data.registration_license_url);
-      formData.append("registration_license_name", data.registration_license_name);
-      formData.append("registration_license_type", data.registration_license_type || "Registration");
+      formData.append(
+        "registration_license_url",
+        data.registration_license_url
+      );
+      formData.append(
+        "registration_license_name",
+        data.registration_license_name
+      );
+      formData.append(
+        "registration_license_type",
+        data.registration_license_type || "Registration"
+      );
     }
 
     if (data?.application_letter_url) {
       formData.append("application_letter_url", data.application_letter_url);
       formData.append("application_letter_name", data.application_letter_name);
-      formData.append("application_letter_type", data.application_letter_type || "Application");
+      formData.append(
+        "application_letter_type",
+        data.application_letter_type || "Application"
+      );
     }
 
     // Add trade license document
@@ -148,9 +180,10 @@ const handleVerifyOtp = (code, setNewNumber, newNumber) => {
       "post",
       formData,
       `${EndPoints?.customer?.uploadDocument}/${id}`,
-      null, true
+      null,
+      true
     )
-      .then(() => { })
+      .then(() => {})
       .catch((err) => {
         console.log("err", err);
       })
@@ -182,6 +215,7 @@ const handleVerifyOtp = (code, setNewNumber, newNumber) => {
         if (res?.success) {
           toast.success(res?.message || "");
           localStorage.setItem("user", JSON.stringify(res?.data));
+          getProfileDetail();
         } else {
           toast.error(res?.message);
         }
@@ -207,27 +241,28 @@ const handleVerifyOtp = (code, setNewNumber, newNumber) => {
           localStorage.setItem("id", res?.data?.customer_account_id);
           localStorage.setItem("number", res?.data?.phone_number);
           localStorage.setItem("user", JSON.stringify(res?.data));
-          localStorage.setItem("customer_type", JSON.stringify(res?.data.customer_type));
+          localStorage.setItem(
+            "customer_type",
+            JSON.stringify(res?.data.customer_type)
+          );
 
-          if (res?.data?.customer_type == 'individual') {
+          if (res?.data?.customer_type == "individual") {
             toast.success(res?.message || "");
             navigate(ConstentRoutes.dashboardCustomer);
-          }
-          else {
+          } else {
             if (res?.data?.comp_reg_no == null) {
-              toast.info("Please complete you registration process")
+              toast.info("Please complete you registration process");
               navigate(ConstentRoutes.register, {
                 state: {
                   ...res?.data,
-                  step: 1
-                }
+                  step: 1,
+                },
               });
             } else {
               toast.success(res?.message || "");
               navigate(ConstentRoutes.dashboard);
             }
           }
-
         } else {
           toast.error(res?.message);
         }
@@ -279,7 +314,7 @@ const handleVerifyOtp = (code, setNewNumber, newNumber) => {
     payload.channel = "WEB";
     payload.otp_id = otp;
     payload.otp_code = data?.verification_code;
-    payload.phone_number = data?.phone_number?.replace(/^\+/, '')
+    payload.phone_number = data?.phone_number?.replace(/^\+/, "");
     APICall("post", payload, EndPoints.customer.individualRegister)
       .then((res) => {
         if (res?.success) {
@@ -290,7 +325,7 @@ const handleVerifyOtp = (code, setNewNumber, newNumber) => {
           localStorage.setItem("user", JSON.stringify(res?.data));
           navigate(ConstentRoutes.dashboardCustomer);
           reset();
-          setConfirmModal(false)
+          setConfirmModal(false);
         } else {
           toast.error(res?.message);
         }
@@ -305,6 +340,8 @@ const handleVerifyOtp = (code, setNewNumber, newNumber) => {
     expirationTime,
     state,
     verified,
+    data,
+    getProfileDetail,
     loading,
     handleVerifyOtp,
     handleExipre,
@@ -317,6 +354,6 @@ const handleVerifyOtp = (code, setNewNumber, newNumber) => {
     setExpirationTime,
     resetFieldValidation,
     handleIndividualRegister,
-    isResend
+    isResend,
   };
 };

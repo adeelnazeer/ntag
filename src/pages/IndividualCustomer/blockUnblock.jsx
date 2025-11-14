@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BiPlusCircle } from 'react-icons/bi';
 import { Typography, Button, Spinner } from "@material-tailwind/react";
 import { toast } from 'react-toastify';
@@ -9,8 +9,11 @@ import APICall from '../../network/APICall';
 import { useAppSelector } from '../../redux/hooks';
 import { IoMdCloseCircle } from "react-icons/io";
 import PhoneInput from "react-phone-number-input";
+import Pagination from '../../components/pagination';
+import { useTranslation } from "react-i18next";
 
 const BlockUnblockCustomer = () => {
+  const { t } = useTranslation(["blockPage"]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState(null);
@@ -19,17 +22,21 @@ const BlockUnblockCustomer = () => {
   const [addingNumber, setAddingNumber] = useState(false);
   const [deletingNumber, setDeletingNumber] = useState(false);
   const [tagStatus, setTagStatus] = useState("loading"); // "active", "reserve", "none"
+  const [pagination, setPagination] = useState({ page: 1 });
 
   // New state variables for corporate-like modal
   const [blockType, setBlockType] = useState('mobileNumber'); // 'mobileNumber' or 'tagNumber'
   const [valueToBlock, setValueToBlock] = useState('+2519'); // Initialize with country code
-  const [newTagNumber, setNewTagNumber] = useState('');
   const [phoneError, setPhoneError] = useState("");
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [tagError, setTagError] = useState("");
   const [isValidTag, setIsValidTag] = useState(false);
   const [status, setStatus] = useState(null)
+  const [metaData, setMetaData] = useState(null);
 
+  const handlePageChange = (selected) => {
+    setPagination((st) => ({ ...st, page: selected }));
+  };
   // Get user info
   let userData = useAppSelector(state => state?.user?.userData);
   if (!userData) {
@@ -38,9 +45,14 @@ const BlockUnblockCustomer = () => {
   // const customerId = userData?.id;
 
   useEffect(() => {
-    fetchBlockedNumbers();
     checkTagStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    fetchBlockedNumbers(pagination)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagination])
 
   // Check if user has an active TAG or only a reserved TAG
   const checkTagStatus = async () => {
@@ -99,10 +111,10 @@ const BlockUnblockCustomer = () => {
     }
   }, [blockType]);
 
-  const fetchBlockedNumbers = async () => {
+  const fetchBlockedNumbers = async (params) => {
     try {
       setLoading(true);
-      const response = await APICall("get", null, EndPoints.customer.getIndividualBlockNumber);
+      const response = await APICall("get", params, EndPoints.customer.getIndividualBlockNumber);
 
       if (response?.success && response?.data) {
         const blockedNumbers = Array.isArray(response.data)
@@ -110,12 +122,21 @@ const BlockUnblockCustomer = () => {
           : [response.data];
 
         setNumbers(blockedNumbers);
+
+        console.log({ response })
+        // Set pagination metadata directly from the corp_tag_list
+        setMetaData({
+          total: response?.meta?.total || 0,
+          current_page: response?.meta?.current_page || 1,
+          per_page: response?.meta?.per_page || 15,
+          last_page: response?.meta?.last_page || 1
+        });
       } else {
-        toast.error("Failed to fetch blocked numbers");
+        toast.error(response?.message || t("blockNumbersPage.toast.fetchBlockedFailed"));
       }
     } catch (error) {
       console.error("Error fetching blocked numbers:", error);
-      toast.error("Error loading blocked numbers");
+      toast.error(t("blockNumbersPage.toast.fetchBlockedFailed"));
     } finally {
       setLoading(false);
     }
@@ -137,14 +158,15 @@ const BlockUnblockCustomer = () => {
       );
 
       if (deleteResponse?.success) {
-        toast.success("Number removed from blocklist successfully");
+        toast.success(deleteResponse?.message || t("blockNumbersPage.toast.removeBlockedSuccess"));
         setNumbers(numbers.filter(num => num.id !== selectedNumber.id));
+        fetchBlockedNumbers()
       } else {
-        toast.error("Failed to remove number from blocklist");
+        toast.error(deleteResponse?.message || t("blockNumbersPage.toast.removeBlockedFailed"));
       }
     } catch (error) {
       console.error("Error deleting blocked number:", error);
-      toast.error("Error removing number from blocklist");
+    toast.error(t("blockNumbersPage.toast.removeBlockedError"));
     } finally {
       setDeletingNumber(false);
       setShowConfirmDialog(false);
@@ -155,7 +177,6 @@ const BlockUnblockCustomer = () => {
     setShowAddDialog(true);
     setBlockType('mobileNumber');
     setValueToBlock('+2519'); // Set default country code when opening modal
-    setNewTagNumber('');
     setIsValidPhone(false); // Reset validation state
     setPhoneError(""); // Clear any error messages
     setTagError("");
@@ -165,14 +186,14 @@ const BlockUnblockCustomer = () => {
   // Function to validate phone number
   const validatePhoneNumber = (phone) => {
     if (!phone) {
-      setPhoneError("Mobile Number is required");
+      setPhoneError(t("errors.required"));
       setIsValidPhone(false);
       return false;
     }
 
     // Check if the number starts with +251
     if (!phone.startsWith('+251')) {
-      setPhoneError("Mobile Number must start with +251");
+      setPhoneError(t("errors.mustStartCountry"));
       setIsValidPhone(false);
       return false;
     }
@@ -180,13 +201,13 @@ const BlockUnblockCustomer = () => {
     const cleanNumber = phone.replace('+251', '').replace(/\s/g, '');
 
     if (!cleanNumber.startsWith('9')) {
-      setPhoneError("Mobile Numbers must start with 9 after country code");
+      setPhoneError(t("errors.mustStart9"));
       setIsValidPhone(false);
       return false;
     }
 
     if (cleanNumber.length !== 9) {
-      setPhoneError("Mobile Number must be 9 digits after country code");
+      setPhoneError(t("errors.length"));
       setIsValidPhone(false);
       return false;
     }
@@ -200,7 +221,7 @@ const BlockUnblockCustomer = () => {
   // Function to validate TAG number
   const validateTagNumber = (tagNumber) => {
     if (!tagNumber) {
-      setTagError("TAG Number is required");
+      setTagError(t("errors.tagRequired"));
       setIsValidTag(false);
       return false;
     }
@@ -210,13 +231,13 @@ const BlockUnblockCustomer = () => {
 
     // Check length between 2 and 8 characters
     if (cleanTag.length < 2) {
-      setTagError("TAG Number must be at least 2 characters");
+      setTagError(t("errors.tagMinLength"));
       setIsValidTag(false);
       return false;
     }
 
     if (cleanTag.length > 8) {
-      setTagError("TAG Number must not exceed 8 characters");
+      setTagError(t("errors.tagMaxLength"));
       setIsValidTag(false);
       return false;
     }
@@ -237,13 +258,9 @@ const BlockUnblockCustomer = () => {
         return;
       }
 
-      // // For mobile numbers, also validate the user's TAG number
-      // if (!validateTagNumber(newTagNumber)) {
-      //   return;
-      // }
     } else { // TAG number
       if (!valueToBlock) {
-        setTagError("Please enter a TAG number to block");
+        setTagError(t("errors.enterTag"));
         return;
       }
 
@@ -251,7 +268,7 @@ const BlockUnblockCustomer = () => {
         return;
       }
       if (isBlockingOwnTag) {
-        toast.error("You can not block your own NameTAG")
+        toast.error(t("errors.blockOwnTag"))
         return
       }
     }
@@ -279,17 +296,25 @@ const BlockUnblockCustomer = () => {
       );
 
       if (response?.success) {
-        toast.success(`${blockType === 'mobileNumber' ? 'Mobile number' : 'TAG number'} added to blocklist successfully`);
+        const typeLabel = blockType === 'mobileNumber'
+          ? t("blockNumbersPage.addDialog.mobileOption").toLowerCase()
+          : t("blockNumbersPage.addDialog.tagOption").toLowerCase();
+        toast.success(response?.message || t("blockNumbersPage.toast.addBlockedSuccess", { type: typeLabel }));
         fetchBlockedNumbers(); // Refresh the list
         setValueToBlock(blockType === 'mobileNumber' ? '+2519' : '');
-        setNewTagNumber('');
         setShowAddDialog(false);
       } else {
-        toast.error(response?.message || `Failed to add ${blockType === 'mobileNumber' ? 'mobile number' : 'TAG number'} to blocklist`);
+        const typeLabel = blockType === 'mobileNumber'
+          ? t("blockNumbersPage.addDialog.mobileOption").toLowerCase()
+          : t("blockNumbersPage.addDialog.tagOption").toLowerCase();
+        toast.error(response?.message || t("blockNumbersPage.toast.addBlockedFailed", { type: typeLabel }));
       }
     } catch (error) {
       console.error("Error adding blocked number:", error);
-      toast.error(`Error adding ${blockType === 'mobileNumber' ? 'mobile number' : 'TAG number'} to blocklist`);
+      const typeLabel = blockType === 'mobileNumber'
+        ? t("blockNumbersPage.addDialog.mobileOption").toLowerCase()
+        : t("blockNumbersPage.addDialog.tagOption").toLowerCase();
+      toast.error(t("blockNumbersPage.toast.addBlockedError", { type: typeLabel }));
     } finally {
       setAddingNumber(false);
     }
@@ -307,12 +332,12 @@ const BlockUnblockCustomer = () => {
 
     if (tagStatus === "reserve") {
       return (
-        <div className="flex flex-col items-center justify-center py-16 px-4">
-          <Typography className="text-lg font-medium text-gray-700 text-center">
-            No active NameTAG is linked to your mobile number.
+        <div className="flex flex-col items-center justify-center py-8 px-4">
+          <Typography className=" text-center">
+          {t("blockNumbersPage.statusMessages.reserveTitle")}
           </Typography>
           <Typography className="text-sm text-gray-500 mt-2 text-center">
-            Please purchase your reserved TAG to use the Block/Unblock feature.
+          {t("blockNumbersPage.statusMessages.reserveSubtitle")}
           </Typography>
         </div>
       );
@@ -320,9 +345,9 @@ const BlockUnblockCustomer = () => {
 
     if (status != 1) {
       return (
-        <div className="flex flex-col items-center justify-center py-16 px-4">
-          <Typography className="text-lg font-medium text-gray-700 text-center">
-            No active NameTAG is linked to your mobile number.
+        <div className="flex flex-col items-center justify-center py-8 px-4">
+          <Typography className=" text-center">
+          {t("blockNumbersPage.statusMessages.inactiveTitle")}
           </Typography>
         </div>
       );
@@ -331,12 +356,12 @@ const BlockUnblockCustomer = () => {
 
     if (tagStatus === "none") {
       return (
-        <div className="flex flex-col items-center justify-center py-16 px-4">
-          <Typography className="text-lg font-medium text-gray-700 text-center">
-            You don't have any TAG linked to your mobile number.
+        <div className="flex flex-col items-center justify-center py-8 px-4">
+          <Typography className=" text-center">
+          {t("blockNumbersPage.statusMessages.noneTitle")}
           </Typography>
           <Typography className="text-sm text-gray-500 mt-2 text-center">
-            Please purchase a TAG to use the Block/Unblock feature.
+          {t("blockNumbersPage.statusMessages.noneSubtitle")}
           </Typography>
         </div>
       );
@@ -352,7 +377,7 @@ const BlockUnblockCustomer = () => {
             className="bg-secondary flex items-center gap-1 py-2 px-4 text-sm"
           >
             <BiPlusCircle className="w-4 h-4" />
-            Add to Blocklist
+            {t("blockNumbersPage.buttons.addToBlocklist")}
           </Button>
         </div>
 
@@ -365,29 +390,39 @@ const BlockUnblockCustomer = () => {
             <table className="min-w-full bg-white">
               <thead className="bg-[#F6F7FB]">
                 <tr>
-                  <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                    TAG Number
+                  <th className="py-3 px-4 text-left text-sm font-medium text-[#7A798A]">
+                    {t("blockNumbersPage.table.headers.sr")}
                   </th>
                   <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                    Blocked Number
+                    {t("blockNumbersPage.table.headers.blocked")}
                   </th>
                   <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                    Regestered Mobile Number
+                    {t("blockNumbersPage.table.headers.type")}
                   </th>
                   <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                    Channel
+                    {t("blockNumbersPage.table.headers.registered")}
+                  </th>
+                  <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
+                    {t("blockNumbersPage.table.headers.channel")}
                   </th>
                   <th className="py-3 px-4 text-center text-xs font-medium text-[#7A798A]">
-                    Action
+                    {t("blockNumbersPage.table.headers.action")}
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {numbers.length > 0 ? numbers.map((number) => {
+                {numbers.length > 0 ? numbers.map((number, index) => {
                   return (
                     <tr key={number.id}>
-                      <td className="py-4 px-4 text-sm text-gray-700">#{number?.blocked_tag}</td>
-                      <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(number?.blocked_no)}</td>
+                      <td className="py-4 px-4 text-xs text-gray-700">{index + 1}</td>
+                      <td className="py-4 px-4 text-sm text-gray-700"> {number.blocked_tag ? (
+                        `#${number.blocked_tag}`
+                      ) : (
+                        formatPhoneNumberCustom(number.blocked_no)
+                      )}</td>
+                      <td className="py-4 px-4 text-sm text-gray-700">
+                        {number.blocked_tag ? t("blockNumbersPage.addDialog.tagOption") : t("blockNumbersPage.addDialog.mobileOption")}
+                      </td>
                       <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(number?.msisdn)}</td>
                       <td className="py-4 px-4 text-sm text-gray-700">{number?.channel}</td>
                       <td className="py-4 px-4">
@@ -397,7 +432,7 @@ const BlockUnblockCustomer = () => {
                             onClick={() => handleDelete(number)}
                             className="bg-secondary"
                           >
-                            Unblock Number
+                            {t("blockNumbersPage.buttons.unblockNumber")}
                           </Button>
                         </div>
                       </td>
@@ -406,25 +441,33 @@ const BlockUnblockCustomer = () => {
                 }) : (
                   <tr>
                     <td colSpan="5" className="py-6 px-4 text-center text-sm text-[#7A798A]">
-                      No blocked numbers found
+                      {t("blockNumbersPage.table.empty")}
                     </td>
                   </tr>
                 )}
               </tbody>
             </table>
           )}
+          {/* Only show pagination when needed */}
+          {metaData && metaData.last_page > 1 && (
+            <div className="flex justify-center mt-4">
+              <Pagination
+                currentPage={metaData?.current_page || pagination?.page}
+                totalPages={metaData?.last_page || 0}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
         </div>
       </>
     );
   };
 
-  console.log({ numbers })
-
   return (
     <div className="bg-white rounded-xl shadow pb-6">
       <div className="flex flex-col">
         <Typography className="block antialiased  text-[#1F1F2C] p-3 px-6 border-b text-md font-medium">
-          Blocked Numbers
+          {t("blockNumbersPage.title")}
         </Typography>
 
         {renderContent()}
@@ -443,14 +486,14 @@ const BlockUnblockCustomer = () => {
 
             <div className="mt-4 text-center">
               <Typography variant="h5" className="font-bold text-gray-900">
-                Confirm Removal
+                {t("blockNumbersPage.confirmDialog.title")}
               </Typography>
 
               <Typography className="mt-2 text-sm text-gray-600">
-                Are you sure you want to remove this number from blocklist?
+                {t("blockNumbersPage.confirmDialog.desc1")}
               </Typography>
               <Typography className="mt-2 text-sm text-gray-600">
-                This number will be able to make calls on your TAG number
+                {t("blockNumbersPage.confirmDialog.desc2")}
               </Typography>
             </div>
 
@@ -460,7 +503,7 @@ const BlockUnblockCustomer = () => {
                 onClick={() => setShowConfirmDialog(false)}
                 disabled={deletingNumber}
               >
-                Cancel
+                {t("blockNumbersPage.buttons.cancel")}
               </Button>
               <Button
                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
@@ -469,9 +512,9 @@ const BlockUnblockCustomer = () => {
               >
                 {deletingNumber ? (
                   <div className="flex items-center gap-2">
-                    <Spinner size="sm" className="h-3 w-3" /> Removing...
+                    <Spinner size="sm" className="h-3 w-3" /> {t("blockNumbersPage.buttons.removing")}
                   </div>
-                ) : "Confirm"}
+                ) : t("blockNumbersPage.buttons.confirm")}
               </Button>
             </div>
           </div>
@@ -491,11 +534,11 @@ const BlockUnblockCustomer = () => {
 
             <div className="mt-4 text-center">
               <Typography variant="h5" className="font-bold text-gray-900">
-                Add to Blocklist
+                {t("blockNumbersPage.addDialog.title")}
               </Typography>
 
               <Typography className="mt-2 text-sm text-gray-600">
-                Please select what you want to block
+                {t("blockNumbersPage.addDialog.subtitle")}
               </Typography>
             </div>
 
@@ -507,7 +550,7 @@ const BlockUnblockCustomer = () => {
                     onClick={() => setBlockType('mobileNumber')}
                   >
                     <Typography className="text-center font-medium">
-                      Mobile Number
+                      {t("blockNumbersPage.addDialog.mobileOption")}
                     </Typography>
                   </div>
                   <div
@@ -515,7 +558,7 @@ const BlockUnblockCustomer = () => {
                     onClick={() => setBlockType('tagNumber')}
                   >
                     <Typography className="text-center font-medium">
-                      TAG Number
+                      {t("blockNumbersPage.addDialog.tagOption")}
                     </Typography>
                   </div>
                 </div>
@@ -524,7 +567,7 @@ const BlockUnblockCustomer = () => {
                   // Mobile Number to Block section
                   <div className="mb-4">
                     <label className="block text-xs font-medium text-[#7A798A] mb-1">
-                      Mobile Number to Block
+                      {t("blockNumbersPage.addDialog.mobileLabel")}
                     </label>
                     <PhoneInput
                       defaultCountry="ET"
@@ -538,7 +581,7 @@ const BlockUnblockCustomer = () => {
                       }}
                       limitMaxLength={13}
                     />
-                    <p className="text-xs text-gray-500 mt-1">Format: +251xxxxxxxxx</p>
+                    <p className="text-xs text-gray-500 mt-1">{t("blockNumbersPage.addDialog.formatHint")}</p>
                     {phoneError && (
                       <p className="text-xs text-red-500 mt-1">{phoneError}</p>
                     )}
@@ -549,7 +592,7 @@ const BlockUnblockCustomer = () => {
                   // TAG Number to Block section - single field only
                   <div className="mb-4">
                     <label className="block text-xs font-medium text-[#7A798A] mb-1">
-                      TAG Number to Block
+                      {t("blockNumbersPage.addDialog.tagLabel")}
                     </label>
                     <div>
                       <input
@@ -561,13 +604,13 @@ const BlockUnblockCustomer = () => {
                           setValueToBlock(e.target.value);
                           validateTagNumber(e.target.value);
                         }}
-                        placeholder="Enter TAG number to block"
+                        placeholder={t("blockNumbersPage.addDialog.tagPlaceholder")}
                         className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none text-sm"
                       />
                       {tagError && (
                         <p className="text-xs text-red-500 mt-1">{tagError}</p>
                       )}
-                      <p className="text-xs text-gray-500 mt-1">TAG Number must be between 2-8 characters</p>
+                      <p className="text-xs text-gray-500 mt-1">{t("blockNumbersPage.addDialog.tagHint")}</p>
                     </div>
                   </div>
                 )}
@@ -580,7 +623,7 @@ const BlockUnblockCustomer = () => {
                 onClick={() => setShowAddDialog(false)}
                 disabled={addingNumber}
               >
-                Cancel
+                {t("blockNumbersPage.buttons.cancel")}
               </Button>
               <Button
                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
@@ -591,9 +634,9 @@ const BlockUnblockCustomer = () => {
               >
                 {addingNumber ? (
                   <div className="flex items-center gap-2">
-                    <Spinner size="sm" className="h-3 w-3" /> Adding...
+                    <Spinner size="sm" className="h-3 w-3" /> {t("blockNumbersPage.buttons.adding")}
                   </div>
-                ) : "Confirm"}
+                ) : t("blockNumbersPage.buttons.confirm")}
               </Button>
             </div>
           </div>

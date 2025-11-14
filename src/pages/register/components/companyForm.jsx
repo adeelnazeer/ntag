@@ -10,6 +10,9 @@ import { useLocation } from "react-router-dom";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 import { Controller } from "react-hook-form";
 import TickIcon from '../../../assets/images/tick.png';
+import APICall from "../../../network/APICall";
+import EndPoints from "../../../network/EndPoints";
+import { useTranslation } from "react-i18next";
 
 // Apply CSS fix for autofill styling
 const autofillStyle = `
@@ -34,8 +37,11 @@ const GetLabel = ({ name }) => {
 const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, control, setValue, setActiveStep }) => {
   const watchAll = watch();
   const location = useLocation()
+  const { t } = useTranslation()
   const registerData = useRegisterHook();
   const [isValidPhone, setIsValidPhone] = useState(false);
+  const [industries, setIndustries] = useState([])
+  const [regions, setRegions] = useState([])
 
   const handleValidation = (value, fieldName) => {
     // Only validate username, email, and phone_number
@@ -44,6 +50,29 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
       registerData.verifyAccount({ [fieldName]: cleanValue }, fieldName);
     }
   };
+  const getIndustries = () => {
+    APICall("get", null, EndPoints.customer.getIndustries)
+      .then(res => {
+        if (res?.success) {
+          setIndustries(res?.data)
+        } else {
+          setIndustries([])
+        }
+      })
+      .catch(err => console.log("err", err));
+  }
+  const getRegions = () => {
+    APICall("get", null, EndPoints.customer.getRegions)
+      .then(res => {
+        if (res?.success) {
+          setRegions(res?.data)
+        }
+        else {
+          setRegions([])
+        }
+      })
+      .catch(err => console.log("err", err));
+  }
 
   const handleKeyPress = (e, value, fieldName) => {
     if (e.key === 'Enter' || e.key === 'Tab') {
@@ -75,6 +104,8 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
       }));
       setValue("company_name", location.state.comp_name);
     }
+    getIndustries()
+    getRegions()
   }, []);
 
   const validatePhoneNumber = (phoneNumber) => {
@@ -83,13 +114,15 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
     return cleanNumber.startsWith('9') && cleanNumber.length === 9;
   };
 
+  console.log({ watchAll })
+
   return (
     <>
       <style>{autofillStyle}</style>
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center py-3 md:gap-0 gap-6">
           <Button className=" bg-secondary text-white">
-            Company Information for NameTAG Registration
+            {t("compInfo")}
           </Button>
           <Typography className="text-[#555] md:text-base text-[16px]  font-semibold">
             <span className="text-secondary">Step 2 of 2</span>
@@ -101,16 +134,16 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
 
           <div className="mb-3">
             <Typography className="text-[#555] md:text-base text-[16px]  font-semibold">
-              Contact Information
+              {t("contactInfo")}
             </Typography>
           </div>
 
           {/* First Name Field */}
           <div className="mb-3">
-            <GetLabel name="First Name" />
+            <GetLabel name={t("common.form.firstName")} />
             <Input
               className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder="First Name"
+              placeholder={t("common.form.firstName")}
               maxLength={15}
               style={
                 errors.contactf_name
@@ -118,7 +151,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                   : { border: "1px solid #8A8AA033" }
               }
               {...register("contactf_name", {
-                required: "First Name is required"
+                required: t("common.form.errors.firstName")
               })}
             />
             {errors.contactf_name && (
@@ -128,10 +161,10 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
 
           {/* Father's Name Field (replaced Last Name) */}
           <div className="mb-3">
-            <GetLabel name="Father's Name" />
+            <GetLabel name={t("common.form.fatherName")} />
             <Input
               className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder="Father's Name"
+              placeholder={t("common.form.fatherName")}
               maxLength={15}
               style={
                 errors.contactl_name
@@ -139,7 +172,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                   : { border: "1px solid #8A8AA033" }
               }
               {...register("contactl_name", {
-                required: "Father's Name is required"
+                required: t("common.form.errors.fatherName")
               })}
             />
             {errors.contactl_name && (
@@ -150,16 +183,16 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
           {/* Contact Number Field */}
           <div className="mb-3">
             <label className="md:text-base text-[16px] text-[#232323]">
-              Contact Number <span className="text-red-500">*</span>
+              {t("common.form.contactNo")} <span className="text-red-500">*</span>
             </label>
             <Controller
               name="contact_no"
               control={control}
               defaultValue=""
               rules={{
-                required: "Enter a 9-digit mobile number starting with 9.",
+                required: t("common.form.mobileError"),
                 validate: (value) =>
-                  validatePhoneNumber(value) || "Enter a 9-digit mobile number starting with 9.",
+                  validatePhoneNumber(value) || t("common.form.mobileError"),
               }}
               render={({ field }) => {
                 useEffect(() => {
@@ -234,16 +267,16 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
           <div className="flex flex-col gap-4 max-w-3xl mx-auto mt-8">
             <div>
               <Typography className="text-[#555] md:text-base text-[16px]   font-semibold">
-                Company Basic Information
+                {t("common.compBasicInfo")}
               </Typography>
             </div>
 
             {/* Company Name Field (read-only) */}
             <div>
-              <GetLabel name="Company Name" />
+              <GetLabel name={t("common.form.companyName")} />
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-                placeholder="Company Name"
+                placeholder={t("common.form.companyName")}
                 maxLength={20}
                 value={location?.state?.company_name || data?.company_name}
                 disabled
@@ -257,67 +290,66 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
 
             {/* Industry Field */}
             <div>
-              <GetLabel name="Industry" />
-              <Input
-                className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-                placeholder="Industry"
-                maxLength={20}
+              <GetLabel name={t("common.form.industry")} />
+              <select
+                className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none border border-[#8A8AA033]"
                 style={
-                  errors.comp_industry
+                  errors.corp_industry_id
                     ? { border: "1px solid red" }
                     : { border: "1px solid #8A8AA033" }
                 }
-                {...register("comp_industry", {
+                {...register("corp_industry_id", {
                   required: "Industry is required"
                 })}
-              />
-              {errors.comp_industry && (
-                <p className="text-left mt-1 text-sm text-[#FF0000]">{errors.comp_industry.message}</p>
+                onChange={(e) => {
+                  const filterInd = industries?.find(x => x?.id == e.target.value)
+                  setValue("comp_industry", filterInd?.industry);
+                }}
+              >
+                <option value="">{t("common.form.selectIndustry")}</option>
+                {industries?.map(single =>
+                  <option key={single?.id} value={single?.id}>{single?.industry || ""}</option>
+                )}
+              </select>
+              {errors.corp_industry_id && (
+                <p className="text-left mt-1 text-sm text-[#FF0000]">{errors.corp_industry_id.message}</p>
               )}
             </div>
 
             {/* Region Dropdown (replaced State/Province) */}
             <div>
-              <GetLabel name="Region" />
+              <GetLabel name={t("common.form.region")} />
               <select
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none border border-[#8A8AA033]"
                 style={
-                  errors.comp_state
+                  errors.corp_region_id
                     ? { border: "1px solid red" }
                     : { border: "1px solid #8A8AA033" }
                 }
-                {...register("comp_state", {
-                  required: "Region is required"
+                {...register("corp_region_id", {
+                  required: t("common.form.errors.region")
                 })}
+                onChange={(e) => {
+                  const filterReg = regions?.find(x => x?.id == e.target.value)
+                  setValue("comp_state", filterReg?.region);
+                }}
               >
-                <option value="">Select a region</option>
-                <option value="Addis Ababa">Addis Ababa</option>
-                <option value="Afar Region">Afar Region</option>
-                <option value="Amhara Region">Amhara Region</option>
-                <option value="Benishangul-Gumuz Region">Benishangul-Gumuz Region</option>
-                <option value="Central Ethiopia Regional State">Central Ethiopia Regional State</option>
-                <option value="Diredawa">Diredawa</option>
-
-                <option value="Gambela Region">Gambela Region</option>
-                <option value="Harari Region">Harari Region</option>
-                <option value="Oromia Region">Oromia Region</option>
-                <option value="Sidama Region">Sidama Region</option>
-                <option value="Somali Region">Somali Region</option>
-                <option value="South Ethiopia Regional State">South Ethiopia Regional State</option>
-                <option value="South West Ethiopia Peoples' Region">South West Ethiopia Peoples' Region</option>
-                <option value="Tigray Region">Tigray Region</option>
+                <option value="">{t("common.form.selectRegion")}</option>
+                {regions?.map(single =>
+                  <option key={single?.id} value={single?.id}>{single?.region || ""}</option>
+                )}
               </select>
-              {errors.comp_state && (
-                <p className="text-left mt-1 text-sm text-[#FF0000]">{errors.comp_state.message}</p>
+              {errors.corp_region_id && (
+                <p className="text-left mt-1 text-sm text-[#FF0000]">{errors.corp_region_id.message}</p>
               )}
             </div>
 
             {/* City Field */}
             <div>
-              <GetLabel name="City" />
+              <GetLabel name={t("common.form.city")} />
               <Input
                 className="mt-2 w-full rounded-xl text-black px-4 py-2 bg-white outline-none "
-                placeholder="City"
+                placeholder={t("common.form.city")}
                 maxLength={20}
                 style={
                   errors.comp_city
@@ -331,10 +363,10 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                   }
                 }}
                 {...register("comp_city", {
-                  required: "City is required",
+                  required: t("common.form.errors.city"),
                   pattern: {
                     value: /^[A-Za-z\s]+$/, // Only letters and spaces
-                    message: "Only letters are allowed"
+                    message: t("common.form.errors.numberOnly")
                   }
                 })}
               />
@@ -345,10 +377,10 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
 
             {/* Specific Address Field */}
             <div>
-              <GetLabel name="Specific Address" />
+              <GetLabel name={t("common.form.address")} />
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-                placeholder="Address"
+                placeholder={t("common.form.address")}
                 maxLength={100}
                 style={
                   errors.comp_addr
@@ -356,7 +388,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                     : { border: "1px solid #8A8AA033" }
                 }
                 {...register("comp_addr", {
-                  required: "Address is required"
+                  required: t("common.form.errors.address")
                 })}
               />
               {errors.comp_addr && (
@@ -367,30 +399,60 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
             {/* TIN Number Field with improved validation - Ensure error message shows */}
             <div className="text-base text-[#555]">
 
-              <GetLabel name="Business Registration/TIN Number" />
+              <GetLabel name={t("common.form.tinNumber")} />
               <div className=" flex items-center gap-2">
                 <div className="w-full">
                   <Input
-                    className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-                    placeholder="Business Registration/TIN Number"
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none"
+                    placeholder={t("common.form.tinNumber")}
                     maxLength={10}
                     style={
                       errors.comp_reg_no
                         ? { border: "1px solid red" }
                         : { border: "1px solid #8A8AA033" }
                     }
-                    onBlur={(e) => handleBlur(e.target.value, "comp_reg_no")}
-                    onKeyDown={(e) => handleKeyPress(e, e.target.value, "comp_reg_no")}
+                    onKeyDown={(e) => {
+                      const key = e.key;
+                      const ctrl = e.ctrlKey || e.metaKey;
+                      const allowed = [
+                        "Backspace", "Delete", "Tab", "Enter", "Escape",
+                        "ArrowLeft", "ArrowRight", "Home", "End"
+                      ];
+                      if (allowed.includes(key) || ctrl) return; // allow nav/shortcuts
+                      if (!/^\d$/.test(key)) e.preventDefault(); // only digits
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault();
+                      const el = e.currentTarget;
+                      const pasted = (e.clipboardData || window.clipboardData).getData("text") || "";
+                      const digits = pasted.replace(/\D/g, "");
+                      const start = el.selectionStart ?? el.value.length;
+                      const end = el.selectionEnd ?? el.value.length;
+                      const next = (el.value.slice(0, start) + digits + el.value.slice(end)).slice(0, 10);
+                      el.value = next;
+                      // Notify RHF about the programmatic change
+                      el.dispatchEvent(new Event("input", { bubbles: true }));
+                    }}
                     {...register("comp_reg_no", {
                       required: "Business Registration/TIN Number is required",
                       minLength: { value: 10, message: "TIN Number must be at least 10 digits" },
                       maxLength: { value: 10, message: "TIN Number cannot exceed 10 digits" },
                       pattern: {
-                        value: /^\d{10,10}$/,
+                        value: /^\d{10}$/,
                         message: "TIN Number must contain only digits"
+                      },
+                      onBlur: (e) => handleBlur(e.target.value, "comp_reg_no"),
+                      onChange: (e) => {
+                        // sanitize any non-digit and enforce length on every change
+                        const clean = e.target.value.replace(/\D/g, "").slice(0, 10);
+                        if (clean !== e.target.value) e.target.value = clean;
                       }
                     })}
                   />
+
                 </div>
                 {registerData?.state?.success?.comp_reg_no && !errors.comp_reg_no &&
                   <div>
