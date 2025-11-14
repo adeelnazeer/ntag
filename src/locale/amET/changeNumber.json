@@ -1,0 +1,30 @@
+{
+    "title": "የሞባይል ቁጥር ይቀይሩ",
+    "table": {
+      "headers": {
+        "nameTagNumber": "የስም መለያ ቁጥር",
+        "mobileNumber": "የሞባይል ቁጥር",
+        "mobileNumberType": "የሞባይል ቁጥር ዓይነት",
+        "recurringFee": "ተደጋጋሚ ክፍያ",
+        "recurringFeeDueDate": "የተደጋጋሚ ክፍያ የሚጠበቅበት ቀን",
+        "outstandingRecurringFee": "የቀረው ተደጋጋሚ ክፍያ",
+        "status": "ሁኔታ",
+        "action": "እርምጃ"
+      },
+      "empty": "ምንም ንቁ የስም መለያ አገልግሎቶች አልተገኙም።"
+    },
+    "chips": {
+      "primary": "ዋና",
+      "additional": "ተጨማሪ"
+    },
+    "buttons": {
+      "changeMobileNumber": "የሞባይል ቁጥር ቀይር"
+    },
+    "messages": {
+      "fetchError": "የስም መለያ መረጃ ማምጣት አልተሳካም",
+      "noAccountId": "ምንም የደንበኛ አካውንት መለያ አልተገኘም"
+    },
+    "loading": {
+      "spinner": "በመጫን ላይ..."
+    }
+  }

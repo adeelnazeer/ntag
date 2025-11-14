@@ -1,17 +1,16 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+/* eslint-disable no-undef */
+
+const withMT = require("@material-tailwind/react/utils/withMT");
+ 
+module.exports = withMT({
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
         primary: "#000",
-        secondary: "#88C140",
-        primaryLight: "#4D4D4D",
-      },
-      text: {
-        20: "20px",
+        secondary:"#8dc63f"
       },
     },
   },
   plugins: [],
-};
+});

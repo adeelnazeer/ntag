@@ -1,0 +1,241 @@
+{
+  "manage": {
+    "confirmIncommingCall": "Confirm Incoming Call Schedule?",
+    "confirmMsg1": "Are you sure you want to turn off incoming call scheduling?",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "manageIncommingCall": "Manage Incoming Call",
+    "currentCallScheduling": "Current Incoming Call Scheduling=",
+    "on": "ON",
+    "off": "OFF",
+    "info1": "If incoming call scheduling is OFF you will receive    incoming calls 24/7",
+    "info2": " Current Incoming Calls Schedule=",
+    "info3": " Your Service will be",
+    "scheduleCall": " Schedule Incoming Calls",
+    "applyBtn": " Apply Schedule",
+    "info4": "Currently no NameTAG is register against your account",
+    "desc1": " Are you sure you want to",
+    "enable": "enable",
+    "desc2": "incoming call scheduling from",
+    "to": "to",
+    "from": "FROM"
+  },
+  "callPin": {
+    "title": "Manage incoming Call PIN and White List  Numbers",
+    "selectNumber": "Select Your Registered Mobile Number",
+    "noNumber": "No mobile numbers found",
+    "currentPin": "Current PIN",
+    "notDefined": "Not Defined",
+    "removePin": "Remove PIN",
+    "setPin": "Set PIN",
+    "changePin": "Change PIN",
+    "addWhiteList": "Add to Whitelist",
+    "table": {
+      "sr": "Sr#",
+      "nametag": "NameTAG",
+      "whitelistNumber": "Whitelist Number",
+      "whitelistDate": "Whitelist Datde",
+      "pin": "PIN",
+      "action": "Action"
+    },
+
+    "empty": {
+      "noPin": "Currently no PIN is set for incoming calls. Please set a PIN to add numbers to whitelist.",
+      "noActive": "No active NameTAG is linked to your mobile number.",
+      "noWhitelist": "No whitelist number found!"
+    },
+
+    "confirmRemoval": {
+      "title": "Confirm Removal",
+      "desc": "Are you sure you want to remove mobile number +{{number}} from whitelist?"
+    },
+
+    "modalPin": {
+      "removeTitle": "Remove Call PIN for your incoming calls",
+      "setTitle": "Set Call PIN for your incoming Calls",
+      "changeTitle": "Change Call PIN for your incoming Calls",
+
+      "descRemove": "Once the PIN is removed, all callers will be able to reach your NameTAG without entering a PIN.",
+      "descSet": "Are you sure you want to {{action}} a PIN for incoming calls? Your callers will be required to enter the PIN before connecting to your NameTAG number.",
+
+      "nameTag": "NameTAG",
+      "mobileNumber": "Mobile Number",
+      "callPin": "Call PIN",
+      "noPin": "Not Defined",
+
+      "noteNoPin": "No PIN is required — callers can reach your NameTAG without entering the PIN.",
+      "selectSingleDigit": "Please select Single Digit PIN",
+      "selectPinPlaceholder": "Select PIN"
+    },
+
+    "modalWhitelist": {
+      "title": "Add to Whitelist",
+      "subtitle": "Whitelisted callers can call your NameTAG without a PIN.",
+      "enterMobileLabel": "Enter Mobile Number to add Whitelist",
+      "formatHint": "Format: +251xxxxxxxxx",
+      "yourRegistered": "Your Registered Mobile Number"
+    },
+
+    "buttons": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "processing": "Processing...",
+      "removing": "Removing..."
+    }
+  },
+
+  "errors": {
+    "mobile": {
+      "required": "Mobile Number is required",
+      "mustStartCountry": "Mobile Number must start with +251",
+      "mustStart9": "Mobile Numbers must start with 9 after country code",
+      "length": "Mobile Number must be 9 digits after country code"
+    },
+    "whitelistFetch": "Failed to fetch whitelist numbers",
+    "mobileFetch": "Failed to fetch Mobile numbers",
+    "mobileLoad": "Error loading Mobile numbers",
+    "whitelistLoad": "Error loading whitelist numbers",
+    "removeWhitelist": "Error removing number from whitelist"
+  },
+
+  "states": {
+    "loading": "Loading..."
+  },
+  "changeTag": {
+    "title": "Manage Change NameTAG",
+    "note": "Note: Once you change your NameTAG, any payments made for the previous NameTAG will not be carried forward. We recommend changing your NameTAG at the end of your current plan.",
+    "emptyState": "No active NameTAG services found to unsubscribe.",
+    "table": {
+      "nameTagNumber": "NameTAG Number",
+      "mobileNumber": "Mobile Number",
+      "recurringFeeDueDate": "Recurring Fee Due Date",
+      "outstandingRecurringFee": "Outstanding Recurring Fee",
+      "status": "Status",
+      "action": "Action"
+    },
+    "buttons": {
+      "changeNameTag": "Change NameTAG",
+      "processing": "Processing..."
+    },
+    "toastMessages": {
+      "failedToLoad": "Failed to load NameTAG data",
+      "successfullyUnsubscribed": "Successfully unsubscribed",
+      "failedToUnsubscribe": "Failed to unsubscribe",
+      "anErrorOccurred": "An error occurred"
+    },
+    "common": {
+      "na": "N/A",
+      "etb": "ETB"
+    }
+  },
+  "changeNumber": {
+    "title": "Change Mobile Number",
+    "emptyState": "No active NameTAG services found.",
+    "table": {
+      "nameTagNumber": "NameTAG Number",
+      "mobileNumber": "Mobile Number",
+      "mobileNumberType": "Mobile Number Type",
+      "recurringFee": "Recurring Fee",
+      "recurringFeeDueDate": "Recurring Fee Due Date",
+      "outstandingRecurringFee": "Outstanding Recurring Fee",
+      "status": "Status",
+      "action": "Action"
+    },
+    "mobileNumberTypes": {
+      "primary": "Primary",
+      "additional": "Additional"
+    },
+    "buttons": {
+      "changeMobileNumber": "Change Mobile Number"
+    },
+    "toastMessages": {
+      "failedToLoad": "Failed to load NameTAG data"
+    },
+    "common": {
+      "na": "N/A",
+      "etb": "ETB"
+    }
+  },
+  "unsubscribe": {
+    "title": "Manage NameTAG Unsubscription",
+    "emptyState": "No active NameTAG services found to unsubscribe.",
+    "table": {
+      "tagNumber": "TAG Number",
+      "mobileNumber": "Mobile Number",
+      "registrationDate": "Registration Date",
+      "status": "Status",
+      "action": "Action"
+    },
+    "buttons": {
+      "unsubscribe": "Unsubscribe",
+      "processing": "Processing..."
+    },
+    "toastMessages": {
+      "failedToLoad": "Failed to load NameTAG data",
+      "successfullyUnsubscribed": "Successfully unsubscribed",
+      "failedToUnsubscribe": "Failed to unsubscribe",
+      "anErrorOccurred": "An error occurred"
+    },
+    "common": {
+      "na": "N/A"
+    }
+  },
+  "closeAccount": {
+    "title": "Manage Corporate Account Closure",
+    "warningMessage": "You have the following active NameTAGs. To close your account, please unsubscribe from each NameTAG.",
+    "table": {
+      "companyName": "Company Name",
+      "mobileNumber": "Mobile Number",
+      "createdDate": "Created Date",
+      "status": "Status",
+      "action": "Action"
+    },
+    "buttons": {
+      "closeAccount": "Close Account",
+      "processing": "Processing..."
+    },
+    "toastMessages": {
+      "failedToLoad": "Failed to load NameTAG data",
+      "successfullyClosedAccount": "Successfully Closed Account",
+      "failedToCloseAccount": "Failed to Close Account",
+      "anErrorOccurred": "An error occurred"
+    },
+    "common": {
+      "na": "N/A"
+    }
+  },
+  "manageIncomingCalls": {
+    "title": "Manage Incoming Calls",
+    "emptyState": "No active NameTAG is linked to your mobile number.",
+    "labels": {
+      "nameTag": "NameTAG:",
+      "mobileNumber": "Mobile Number:"
+    },
+    "status": {
+      "on": "ON",
+      "stopped": "Stopped",
+      "currentStatus": "Your current incoming call status is:",
+      "stopInfo": "If you choose to stop incoming calls, you will not receive any incoming calls for the next 10 days.",
+      "stoppedInfo": "You will not receive any incoming calls for 10 days from the date the service was stopped"
+    },
+    "buttons": {
+      "stopCalls": "Stop Calls",
+      "startCalls": "Start Calls",
+      "processing": "Processing...",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "modal": {
+      "title": "Confirmation?",
+      "confirmStop": "Please confirm to Stop your incoming calls.",
+      "confirmStart": "Please confirm to Start receiving incoming calls."
+    },
+    "toastMessages": {
+      "errorLoading": "Error loading TAG information",
+      "serviceActivated": "Service activated successfully",
+      "serviceDeactivated": "Service deactivated successfully",
+      "failedToUpdate": "Failed to update service status",
+      "errorUpdating": "Error updating service status. Please try again."
+    }
+  }
+}
