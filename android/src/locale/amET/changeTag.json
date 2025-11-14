@@ -1,0 +1,53 @@
+{
+    "title": "የስም መለያ (NameTAG) ለውጥ ያስተዳድሩ",
+    "note": "ማሳሰቢያ: አንዴ የስም መለያዎን ከቀየሩ በኋላ፣ ለቀድሞው የስም መለያ የተከፈሉ ማናቸውም ክፍያዎች ወደፊት አይተላለፉም። የስም መለያዎን አሁን ባለው ዕቅድዎ መጨረሻ ላይ እንዲቀይሩ እንመክራለን።",
+    "table": {
+      "headers": {
+        "nameTagNumber": "የስም መለያ ቁጥር",
+        "mobileNumber": "የሞባይል ቁጥር",
+        "recurringFeeDueDate": "የተደጋጋሚ ክፍያ የሚጠበቅበት ቀን",
+        "outstandingFee": "የቀረው ተደጋጋሚ ክፍያ",
+        "status": "ሁኔታ",
+        "action": "እርምጃ"
+      },
+      "noActive": "ምዝገባውን ለመሰረዝ ምንም ንቁ የስም መለያ አገልግሎቶች አልተገኙም።",
+      "noActiveLinked": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም ንቁ የስም መለያ የለዎትም፣ እና የሚቀየር የስም መለያ የለም።",
+      "noTagLinked": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም መለያ የለዎትም።"
+    },
+    "buttons": {
+      "changeNameTag": "የስም መለያ ቀይር",
+      "processing": "በማስኬድ ላይ..."
+    },
+    "messages": {
+      "fetchError": "የስም መለያ መረጃ ማምጣት አልተሳካም",
+      "changeSuccess": "የእርስዎ መለያ በተሳካ ሁኔታ ተቀይሯል",
+      "changeFailed": "መለያዎን መቀየር አልተሳካም",
+      "noAccountId": "ምንም የደንበኛ አካውንት መለያ አልተገኘም",
+      "unsubscribeSuccess": "በተሳካ ሁኔታ ምዝገባ ተሰርዟል",
+      "unsubscribeFailed": "ምዝገባ መሰረዝ አልተሳካም",
+      "errorOccurred": "ስህተት ተፈጥሯል"
+    },
+    "modals": {
+      "unsubscribeTitle": "ምዝገባ መሰረዝ ማረጋገጫ",
+      "unsubscribeMessage": "ከዚህ የስም መለያ አገልግሎት ምዝገባ መሰረዝ እርግጠኛ ኖት?",
+      "confirm": "ያረጋግጡ",
+      "cancel": "ይቅር"
+    },
+    "confirmDialog": {
+      "title": "የስም መለያ ቀይር",
+      "description": "የስም መለያዎን መቀየር እርግጠኛ ኖት?",
+      "remaining": "{{count}} ያህል ለውጦች ቀርተውዎታል (መቀየር ይችላሉ)።",
+      "buttons": {
+        "cancel": "ይቅር",
+        "confirm": "ያረጋግጡ",
+        "processing": "በማስኬድ ላይ..."
+      }
+    },
+    "loading": {
+      "spinner": "በመጫን ላይ..."
+    },
+    "common": {
+      "na": "የለም",
+      "etb": "ብር"
+    }
+  }

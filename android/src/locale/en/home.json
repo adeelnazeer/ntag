@@ -1,0 +1,56 @@
+{
+  "services": {
+    "title": "Service introduction",
+    "introduction": {
+      "heading": "Introducing NameTAG: Your Identity, Evolved",
+      "description": "In today's fast-paced world, creating exceptional customer experiences is essential. At Ethio Telecom, we're committed to innovation and convenience. That's why we're excited to introduce NameTAG—a service that lets you assign a unique, memorable name to your mobile number."
+    },
+    "whatIsNameTag": {
+      "heading": "What is NameTAG?",
+      "description": "NameTAG is a virtual number service that allows you to choose a short, catchy name, nickname, or phrase linked to your primary mobile number. This gives you the freedom to make calls with an identity that reflects your personality, brand, or business."
+    },
+    "howItWorks": {
+      "heading": "How does it work?",
+      "steps": {
+        "step1": "Create a free account at nametag.et (individual or corporate).",
+        "step2": "Subscribe to NameTAG and choose your desired number (Platinum, --Golden, Silver, or Bronze).",
+        "step3": "Pay the subscription and recurring fees.",
+        "step4": "Use your NameTAG number when making calls— Dials call with prefix # before receiving party number. receivers will see your chosen NameTAG as CLI instead of your primary number."
+      }
+    },
+    "keyFeatures": {
+      "heading": "Key Features:",
+      "features": {
+        "feature1": "Instantly get a short and catchy virtual number on your existing SIM without visiting an Ethio Telecom franchise or office",
+        "feature2": "A unique virtual number (2 to 8 digits ) linked to your primary mobile number",
+        "feature3": "Available for prepaid and post-paid customers, including -Available for prepaid, postpaid numbers and individual accounts",
+        "feature4": "NameTAG numbers for individual, and corporate customers as per their choice",
+        "feature5": "Easy management via web portal, USSD, or mobile app",
+        "feature6": "Complete control on your new number. Manage incoming calls rules, schedule and set PIN",
+        "feature7": "Flexible pricing options: monthly, quarterly, semi-annual, and annual plans"
+      }
+    }
+  },
+  "carousel": {
+    "slides": [
+      {
+        "title": "NameTAG",
+        "para1": "Be More Than a Number",
+        "para2": "Show your name, not your number, when making calls.",
+        "description": "With NameTAG, your phone number transforms into a unique, memorable name that reflects who you are. Whether you're an individual or a business,this lets you display your chosen name instead of a standard number when making calls—making every interaction more personal, professional, and easy to remember."
+      },
+      {
+        "title": "NameTAG",
+        "para1": "Boost Your Brand Identity",
+        "para2": "Use a custom name for your customers calls to reflect your brand.",
+        "description": "NameTAG helps you strengthen your brand presence by replacing your regular phone number with a custom NameTAG. Perfect for businesses and influencers, this service allows customers and contacts to recognize and remember you instantly—helping to build trust, brand loyalty, and better communication experiences."
+      },
+      {
+        "title": "NameTAG",
+        "para1": "Memorable Calls, Made Easy",
+        "para2": "Create a catchy NameTAG linked to your number.",
+        "description": "Stand out in every call with a NameTAG—your personalized calling identity. Whether it's a nickname, brand name, or phrase, NameTAG links your selected name to your real number, ensuring that whoever you contact sees your identity first. It's simple to set up, easy to manage, and available for both prepaid and postpaid users."
+      }
+    ]
+  }
+}
