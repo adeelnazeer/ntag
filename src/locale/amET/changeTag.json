@@ -1,53 +1,53 @@
 {
-    "title": "የስም መለያ (NameTAG) ለውጥ ያስተዳድሩ",
-    "note": "ማሳሰቢያ: አንዴ የስም መለያዎን ከቀየሩ በኋላ፣ ለቀድሞው የስም መለያ የተከፈሉ ማናቸውም ክፍያዎች ወደፊት አይተላለፉም። የስም መለያዎን አሁን ባለው ዕቅድዎ መጨረሻ ላይ እንዲቀይሩ እንመክራለን።",
-    "table": {
-      "headers": {
-        "nameTagNumber": "የስም መለያ ቁጥር",
-        "mobileNumber": "የሞባይል ቁጥር",
-        "recurringFeeDueDate": "የተደጋጋሚ ክፍያ የሚጠበቅበት ቀን",
-        "outstandingFee": "የቀረው ተደጋጋሚ ክፍያ",
-        "status": "ሁኔታ",
-        "action": "እርምጃ"
-      },
-      "noActive": "ምዝገባውን ለመሰረዝ ምንም ንቁ የስም መለያ አገልግሎቶች አልተገኙም።",
-      "noActiveLinked": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም ንቁ የስም መለያ የለዎትም፣ እና የሚቀየር የስም መለያ የለም።",
-      "noTagLinked": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም መለያ የለዎትም።"
+  "title": "የ NameTAG መቀየሪያ መቆጣጠሪያ",
+  "note": "ማስታወሻ፡ አንዴ NameTAG ዎን ከቀየሩ በኋላ ለቀድሞው NameTAG የተደረጉ ማንኛቸውም ክፍያዎች አይተላለፉም። አሁን ባለው እቅድዎ መጨረሻ ላይ የእርስዎን NameTAG እንዲቀይሩ እንመክራለን።",
+  "table": {
+    "headers": {
+      "nameTagNumber": "የ NameTAG ቁጥር",
+      "mobileNumber": "የሞባይል ቁጥር",
+      "recurringFeeDueDate": "የተደጋጋሚ ክፍያ የሚከፈልበት ቀን",
+      "outstandingFee": "ያልተከፈለ የመደበኛ አገልግሎት ክፍያ",
+      "status": "ሁኔታ",
+      "action": "እርምጃ"
     },
+    "noActive": "ከደንበኝነት ምዝገባ ለመውጣት ምንም ንቁ የ NameTAG አገልግሎቶች አልተገኙም።",
+    "noActiveLinked": "ከተንቀሳቃሽ ስልክ ቁጥርዎ ጋር የተገናኘ ምንም ንቁ NameTAG የለዎትም፣ እና ምንም የሚለወጥ NameTAG የለም።",
+    "noTagLinked": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም TAG የለም።"
+  },
+  "buttons": {
+    "changeNameTag": "የ NameTAG ይቀይሩ",
+    "processing": "በማካሄድ ላይ..."
+  },
+  "messages": {
+    "fetchError": "የNameTAG መረጃ ማምጣት አልተሳካም።",
+    "changeSuccess": "የእርሶ TAG በተሳካ ሁኔታ ተለውጧል",
+    "changeFailed": "የተሰጠውን TAG መቀየር አልተቻለም",
+    "noAccountId": "ምንም የደንበኛ መለያ መታወቂያ አልተገኘም።",
+    "unsubscribeSuccess": "በተሳካ ሁኔታ ከምዝገባው ወጥቷል",
+    "unsubscribeFailed": "ከምዝገባው መውጣት አልተሳካም",
+    "errorOccurred": "ስህተት ተፈጥሯል"
+  },
+  "modals": {
+    "unsubscribeTitle": "ከደንበኝነት ምዝገባ መውጫ ማረጋገጫ",
+    "unsubscribeMessage": "እርግጠኛ ነዎት ከዚህ የ NameTAG አገልግሎት ደንበኝነት ምዝገባ መውጣት ይፈልጋሉ?",
+    "confirm": "ያረጋግጡ",
+    "cancel": "ሰርዝ"
+  },
+  "confirmDialog": {
+    "title": "የ NameTAG መቀየሪያ",
+    "description": "እርግጠኛ ነዎት የ NameTAG መቀየር ይፈልጋሉ?",
+    "remaining": "{{count}} የቀሩ ለውጦች ብዛት አለዎት",
     "buttons": {
-      "changeNameTag": "የስም መለያ ቀይር",
-      "processing": "በማስኬድ ላይ..."
-    },
-    "messages": {
-      "fetchError": "የስም መለያ መረጃ ማምጣት አልተሳካም",
-      "changeSuccess": "የእርስዎ መለያ በተሳካ ሁኔታ ተቀይሯል",
-      "changeFailed": "መለያዎን መቀየር አልተሳካም",
-      "noAccountId": "ምንም የደንበኛ አካውንት መለያ አልተገኘም",
-      "unsubscribeSuccess": "በተሳካ ሁኔታ ምዝገባ ተሰርዟል",
-      "unsubscribeFailed": "ምዝገባ መሰረዝ አልተሳካም",
-      "errorOccurred": "ስህተት ተፈጥሯል"
-    },
-    "modals": {
-      "unsubscribeTitle": "ምዝገባ መሰረዝ ማረጋገጫ",
-      "unsubscribeMessage": "ከዚህ የስም መለያ አገልግሎት ምዝገባ መሰረዝ እርግጠኛ ኖት?",
-      "confirm": "ያረጋግጡ",
-      "cancel": "ይቅር"
-    },
-    "confirmDialog": {
-      "title": "የስም መለያ ቀይር",
-      "description": "የስም መለያዎን መቀየር እርግጠኛ ኖት?",
-      "remaining": "{{count}} ያህል ለውጦች ቀርተውዎታል (መቀየር ይችላሉ)።",
-      "buttons": {
-        "cancel": "ይቅር",
-        "confirm": "ያረጋግጡ",
-        "processing": "በማስኬድ ላይ..."
-      }
-    },
-    "loading": {
-      "spinner": "በመጫን ላይ..."
-    },
-    "common": {
-      "na": "የለም",
-      "etb": "ብር"
+      "cancel": "ሰርዝ",
+      "confirm": " ያረጋግጡ",
+      "processing": "በማካሄድ ላይ..."
     }
+  },
+  "loading": {
+    "spinner": "በመጫን ላይ..."
+  },
+  "common": {
+    "na": "N/A",
+    "etb": "ETB"
   }
+}
