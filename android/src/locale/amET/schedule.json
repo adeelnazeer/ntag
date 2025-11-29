@@ -1,231 +1,231 @@
 {
-    "manage": {
-      "confirmIncommingCall": "የገቢ ጥሪ መርሐግብር ያረጋግጡ?",
-      "confirmMsg1": "የገቢ ጥሪ መርሐግብር ማጥፋት እርግጠኛ ኖት?",
-      "confirm": "ያረጋግጡ",
+  "manage": {
+    "confirmIncommingCall": "የገቢ ጥሪ መርሐግብር ያረጋግጡ?",
+    "confirmMsg1": "የገቢ ጥሪ መርሐግብር ማጥፋት እርግጠኛ ኖት?",
+    "confirm": "ያረጋግጡ",
+    "cancel": "ይቅር",
+    "manageIncommingCall": "የገቢ ጥሪ ያስተዳድሩ",
+    "currentCallScheduling": "የአሁኑ የገቢ ጥሪ መርሐግብር=",
+    "on": "በርቷል",
+    "off": "ጠፍቷል",
+    "info1": "የገቢ ጥሪ መርሐግብር ከጠፋ፣ በቀን 24 ሰዓት/በሳምንት 7 ቀን ገቢ ጥሪዎችን ይቀበላሉ",
+    "info2": "የአሁኑ የገቢ ጥሪ መርሐግብር=",
+    "info3": "የእርስዎ አገልግሎት ይሆናል",
+    "scheduleCall": "የገቢ ጥሪዎች መርሐግብር ያዘጋጁ",
+    "applyBtn": "መርሐግብር ተግብር",
+    "info4": "በአሁኑ ጊዜ ምንም የስም መለያ በእርስዎ አካውንት ላይ አልተመዘገበም",
+    "desc1": "የገቢ ጥሪ መርሐግብር ከ",
+    "enable": "ማንቃት",
+    "desc2": "እስከ",
+    "to": "እስከ",
+    "from": "ከ"
+  },
+  "callPin": {
+    "title": "የገቢ ጥሪ ሚስጥራዊ ቁጥር (PIN) እና የነጭ ዝርዝር ቁጥሮች ያስተዳድሩ",
+    "selectNumber": "የተመዘገበ የሞባይል ቁጥርዎን ይምረጡ",
+    "noNumber": "ምንም የሞባይል ቁጥሮች አልተገኙም",
+    "currentPin": "የአሁኑ ሚስጥራዊ ቁጥር",
+    "notDefined": "አልተገለጸም",
+    "removePin": "ሚስጥራዊ ቁጥር አስወግድ",
+    "setPin": "ሚስጥራዊ ቁጥር አዘጋጅ",
+    "changePin": "ሚስጥራዊ ቁጥር ቀይር",
+    "addWhiteList": "ወደ ነጭ ዝርዝር አክል",
+    "table": {
+      "sr": "ተ.ቁ",
+      "nametag": "የስም መለያ",
+      "whitelistNumber": "የነጭ ዝርዝር ቁጥር",
+      "whitelistDate": "የነጭ ዝርዝር ቀን",
+      "pin": "ሚስጥራዊ ቁጥር",
+      "action": "እርምጃ"
+    },
+    "empty": {
+      "noPin": "በአሁኑ ጊዜ ለገቢ ጥሪዎች ምንም ሚስጥራዊ ቁጥር አልተዘጋጀም። ቁጥሮችን ወደ ነጭ ዝርዝር ለማከል ሚስጥራዊ ቁጥር ያዘጋጁ።",
+      "noActive": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም ንቁ የስም መለያ የለም።",
+      "noWhitelist": "ምንም የነጭ ዝርዝር ቁጥር አልተገኘም!"
+    },
+    "confirmRemoval": {
+      "title": "ማስወገድን ያረጋግጡ",
+      "desc": "የሞባይል ቁጥር +{{number}}ን ከነጭ ዝርዝር ማስወገድ እርግጠኛ ኖት?"
+    },
+    "modalPin": {
+      "removeTitle": "ለገቢ ጥሪዎችዎ ሚስጥራዊ ቁጥር ያስወግዱ",
+      "setTitle": "ለገቢ ጥሪዎችዎ ሚስጥራዊ ቁጥር ያዘጋጁ",
+      "changeTitle": "ለገቢ ጥሪዎችዎ ሚስጥራዊ ቁጥር ይቀይሩ",
+      "descRemove": "ሚስጥራዊ ቁጥሩ አንዴ ከተወገደ፣ ሁሉም ደዋዮች ሚስጥራዊ ቁጥር ሳያስገቡ ወደ ስም መለያዎ መድረስ ይችላሉ።",
+      "descSet": "ለገቢ ጥሪዎች ሚስጥራዊ ቁጥር {{action}} እርግጠኛ ኖት? ደዋዮችዎ ከስም መለያ ቁጥርዎ ጋር ከመገናኘታቸው በፊት ሚስጥራዊ ቁጥሩን እንዲያስገቡ ይጠበቅባቸዋል።",
+      "nameTag": "የስም መለያ",
+      "mobileNumber": "የሞባይል ቁጥር",
+      "callPin": "የጥሪ ሚስጥራዊ ቁጥር",
+      "noPin": "አልተገለጸም",
+      "noteNoPin": "ምንም ሚስጥራዊ ቁጥር አያስፈልግም—ደዋዮች ሚስጥራዊ ቁጥሩን ሳያስገቡ ወደ ስም መለያዎ መድረስ ይችላሉ።",
+      "selectSingleDigit": "እባክዎ ነጠላ አሃዝ ሚስጥራዊ ቁጥር ይምረጡ",
+      "selectPinPlaceholder": "ሚስጥራዊ ቁጥር ይምረጡ"
+    },
+    "modalWhitelist": {
+      "title": "ወደ ነጭ ዝርዝር አክል",
+      "subtitle": "በነጭ ዝርዝር ውስጥ ያሉ ደዋዮች ያለ ሚስጥራዊ ቁጥር ወደ ስም መለያዎ መደወል ይችላሉ።",
+      "enterMobileLabel": "ወደ ነጭ ዝርዝር ለማከል የሞባይል ቁጥር ያስገቡ",
+      "formatHint": "ቅርጸት: +251xxxxxxxxx",
+      "yourRegistered": "የተመዘገበ የሞባይል ቁጥርዎ"
+    },
+    "buttons": {
       "cancel": "ይቅር",
-      "manageIncommingCall": "የገቢ ጥሪ ያስተዳድሩ",
-      "currentCallScheduling": "የአሁኑ የገቢ ጥሪ መርሐግብር=",
+      "confirm": "ያረጋግጡ",
+      "processing": "በማስኬድ ላይ...",
+      "removing": "በማስወገድ ላይ..."
+    }
+  },
+  "errors": {
+    "mobile": {
+      "required": "የሞባይል ቁጥር ያስፈልጋል",
+      "mustStartCountry": "የሞባይል ቁጥር በ +251 መጀመር አለበት",
+      "mustStart9": "የሞባይል ቁጥሮች ከሀገር ኮድ በኋላ በ 9 መጀመር አለባቸው",
+      "length": "የሞባይል ቁጥር ከሀገር ኮድ በኋላ 9 አሃዞች መሆን አለበት"
+    },
+    "whitelistFetch": "የነጭ ዝርዝር ቁጥሮችን ማምጣት አልተሳካም",
+    "mobileFetch": "የሞባይል ቁጥሮችን ማምጣት አልተሳካም",
+    "mobileLoad": "የሞባይል ቁጥሮችን በመጫን ላይ ስህተት",
+    "whitelistLoad": "የነጭ ዝርዝር ቁጥሮችን በመጫን ላይ ስህተት",
+    "removeWhitelist": "ቁጥሩን ከነጭ ዝርዝር በማስወገድ ላይ ስህተት"
+  },
+  "states": {
+    "loading": "በመጫን ላይ..."
+  },
+  "changeTag": {
+    "title": "የስም መለያ (NameTAG) ለውጥ ያስተዳድሩ",
+    "note": "ማሳሰቢያ: አንዴ የስም መለያዎን ከቀየሩ በኋላ፣ ለቀድሞው የስም መለያ የተከፈሉ ማናቸውም ክፍያዎች ወደፊት አይተላለፉም። የስም መለያዎን አሁን ባለው ዕቅድዎ መጨረሻ ላይ እንዲቀይሩ እንመክራለን።",
+    "emptyState": "ምዝገባውን ለመሰረዝ ምንም ንቁ የስም መለያ አገልግሎቶች አልተገኙም።",
+    "table": {
+      "nameTagNumber": "የስም መለያ ቁጥር",
+      "mobileNumber": "የሞባይል ቁጥር",
+      "recurringFeeDueDate": "የተደጋጋሚ ክፍያ የሚጠበቅበት ቀን",
+      "outstandingRecurringFee": "የቀረው ተደጋጋሚ ክፍያ",
+      "status": "ሁኔታ",
+      "action": "እርምጃ"
+    },
+    "buttons": {
+      "changeNameTag": "የስም መለያ ቀይር",
+      "processing": "በማስኬድ ላይ..."
+    },
+    "toastMessages": {
+      "failedToLoad": "የስም መለያ መረጃ ማምጣት አልተሳካም",
+      "successfullyUnsubscribed": "በተሳካ ሁኔታ ምዝገባ ተሰርዟል",
+      "failedToUnsubscribe": "ምዝገባ መሰረዝ አልተሳካም",
+      "anErrorOccurred": "ስህተት ተፈጥሯል"
+    },
+    "common": {
+      "na": "የለም",
+      "etb": "ብር"
+    }
+  },
+  "changeNumber": {
+    "title": "የሞባይል ቁጥር ይቀይሩ",
+    "emptyState": "ምንም ንቁ የስም መለያ አገልግሎቶች አልተገኙም።",
+    "table": {
+      "nameTagNumber": "የስም መለያ ቁጥር",
+      "mobileNumber": "የሞባይል ቁጥር",
+      "mobileNumberType": "የሞባይል ቁጥር ዓይነት",
+      "recurringFee": "ተደጋጋሚ ክፍያ",
+      "recurringFeeDueDate": "የተደጋጋሚ ክፍያ የሚጠበቅበት ቀን",
+      "outstandingRecurringFee": "የቀረው ተደጋጋሚ ክፍያ",
+      "status": "ሁኔታ",
+      "action": "እርምጃ"
+    },
+    "mobileNumberTypes": {
+      "primary": "ዋና",
+      "additional": "ተጨማሪ"
+    },
+    "buttons": {
+      "changeMobileNumber": "የሞባይል ቁጥር ቀይር"
+    },
+    "toastMessages": {
+      "failedToLoad": "የስም መለያ መረጃ ማምጣት አልተሳካም"
+    },
+    "common": {
+      "na": "የለም",
+      "etb": "ብር"
+    }
+  },
+  "unsubscribe": {
+    "title": "የስም መለያ ምዝገባ መሰረዝን ያስተዳድሩ",
+    "emptyState": "ምዝገባውን ለመሰረዝ ምንም ንቁ የስም መለያ አገልግሎቶች አልተገኙም።",
+    "table": {
+      "tagNumber": "የመለያ ቁጥር",
+      "mobileNumber": "የሞባይል ቁጥር",
+      "registrationDate": "የምዝገባ ቀን",
+      "status": "ሁኔታ",
+      "action": "እርምጃ"
+    },
+    "buttons": {
+      "unsubscribe": "ምዝገባ ሰርዝ",
+      "processing": "በማስኬድ ላይ..."
+    },
+    "toastMessages": {
+      "failedToLoad": "የስም መለያ መረጃ ማምጣት አልተሳካም",
+      "successfullyUnsubscribed": "በተሳካ ሁኔታ ምዝገባ ተሰርዟል",
+      "failedToUnsubscribe": "ምዝገባ መሰረዝ አልተሳካም",
+      "anErrorOccurred": "ስህተት ተፈጥሯል"
+    },
+    "common": {
+      "na": "የለም"
+    }
+  },
+  "closeAccount": {
+    "title": "የድርጅት አካውንት መዘጋት አስተዳደር",
+    "warningMessage": "የሚከተሉት ንቁ የስም መለያዎች አሉዎት። አካውንትዎን ለመዝጋት፣ እባክዎ ከእያንዳንዱ የስም መለያ ምዝገባ ይሰርዙ።",
+    "table": {
+      "companyName": "የድርጅት ስም",
+      "mobileNumber": "የሞባይል ቁጥር",
+      "createdDate": "የተፈጠረበት ቀን",
+      "status": "ሁኔታ",
+      "action": "እርምጃ"
+    },
+    "buttons": {
+      "closeAccount": "አካውንት ዝጋ",
+      "processing": "በማስኬድ ላይ..."
+    },
+    "toastMessages": {
+      "failedToLoad": "የስም መለያ መረጃ ማምጣት አልተሳካም",
+      "successfullyClosedAccount": "በተሳካ ሁኔታ አካውንት ተዘግቷል",
+      "failedToCloseAccount": "አካውንት መዝጋት አልተሳካም",
+      "anErrorOccurred": "ስህተት ተፈጥሯል"
+    },
+    "common": {
+      "na": "የለም"
+    }
+  },
+  "manageIncomingCalls": {
+    "title": "የገቢ ጥሪዎች ያስተዳድሩ",
+    "emptyState": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም ንቁ የስም መለያ የለም።",
+    "labels": {
+      "nameTag": "የስም መለያ:",
+      "mobileNumber": "የሞባይል ቁጥር:"
+    },
+    "status": {
       "on": "በርቷል",
-      "off": "ጠፍቷል",
-      "info1": "የገቢ ጥሪ መርሐግብር ከጠፋ፣ በቀን 24 ሰዓት/በሳምንት 7 ቀን ገቢ ጥሪዎችን ይቀበላሉ",
-      "info2": "የአሁኑ የገቢ ጥሪ መርሐግብር=",
-      "info3": "የእርስዎ አገልግሎት ይሆናል",
-      "scheduleCall": "የገቢ ጥሪዎች መርሐግብር ያዘጋጁ",
-      "applyBtn": "መርሐግብር ተግብር",
-      "info4": "በአሁኑ ጊዜ ምንም የስም መለያ በእርስዎ አካውንት ላይ አልተመዘገበም",
-      "desc1": "የገቢ ጥሪ መርሐግብር ከ",
-      "enable": "ማንቃት",
-      "desc2": "እስከ",
-      "to": "እስከ",
-      "from": "ከ"
+      "stopped": "ቆሟል",
+      "currentStatus": "የአሁኑ የገቢ ጥሪ ሁኔታዎ:",
+      "stopInfo": "ገቢ ጥሪዎችን ለማቆም ከመረጡ፣ ለሚቀጥሉት 10 ቀናት ምንም ገቢ ጥሪዎች አይቀበሉም።",
+      "stoppedInfo": "አገልግሎቱ ከቆመበት ቀን ጀምሮ ለ 10 ቀናት ምንም ገቢ ጥሪዎች አይቀበሉም"
     },
-    "callPin": {
-      "title": "የገቢ ጥሪ ሚስጥራዊ ቁጥር (PIN) እና የነጭ ዝርዝር ቁጥሮች ያስተዳድሩ",
-      "selectNumber": "የተመዘገበ የሞባይል ቁጥርዎን ይምረጡ",
-      "noNumber": "ምንም የሞባይል ቁጥሮች አልተገኙም",
-      "currentPin": "የአሁኑ ሚስጥራዊ ቁጥር",
-      "notDefined": "አልተገለጸም",
-      "removePin": "ሚስጥራዊ ቁጥር አስወግድ",
-      "setPin": "ሚስጥራዊ ቁጥር አዘጋጅ",
-      "changePin": "ሚስጥራዊ ቁጥር ቀይር",
-      "addWhiteList": "ወደ ነጭ ዝርዝር አክል",
-      "table": {
-        "sr": "ተ.ቁ",
-        "nametag": "የስም መለያ",
-        "whitelistNumber": "የነጭ ዝርዝር ቁጥር",
-        "whitelistDate": "የነጭ ዝርዝር ቀን",
-        "pin": "ሚስጥራዊ ቁጥር",
-        "action": "እርምጃ"
-      },
-      "empty": {
-        "noPin": "በአሁኑ ጊዜ ለገቢ ጥሪዎች ምንም ሚስጥራዊ ቁጥር አልተዘጋጀም። ቁጥሮችን ወደ ነጭ ዝርዝር ለማከል ሚስጥራዊ ቁጥር ያዘጋጁ።",
-        "noActive": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም ንቁ የስም መለያ የለም።",
-        "noWhitelist": "ምንም የነጭ ዝርዝር ቁጥር አልተገኘም!"
-      },
-      "confirmRemoval": {
-        "title": "ማስወገድን ያረጋግጡ",
-        "desc": "የሞባይል ቁጥር +{{number}}ን ከነጭ ዝርዝር ማስወገድ እርግጠኛ ኖት?"
-      },
-      "modalPin": {
-        "removeTitle": "ለገቢ ጥሪዎችዎ ሚስጥራዊ ቁጥር ያስወግዱ",
-        "setTitle": "ለገቢ ጥሪዎችዎ ሚስጥራዊ ቁጥር ያዘጋጁ",
-        "changeTitle": "ለገቢ ጥሪዎችዎ ሚስጥራዊ ቁጥር ይቀይሩ",
-        "descRemove": "ሚስጥራዊ ቁጥሩ አንዴ ከተወገደ፣ ሁሉም ደዋዮች ሚስጥራዊ ቁጥር ሳያስገቡ ወደ ስም መለያዎ መድረስ ይችላሉ።",
-        "descSet": "ለገቢ ጥሪዎች ሚስጥራዊ ቁጥር {{action}} እርግጠኛ ኖት? ደዋዮችዎ ከስም መለያ ቁጥርዎ ጋር ከመገናኘታቸው በፊት ሚስጥራዊ ቁጥሩን እንዲያስገቡ ይጠበቅባቸዋል።",
-        "nameTag": "የስም መለያ",
-        "mobileNumber": "የሞባይል ቁጥር",
-        "callPin": "የጥሪ ሚስጥራዊ ቁጥር",
-        "noPin": "አልተገለጸም",
-        "noteNoPin": "ምንም ሚስጥራዊ ቁጥር አያስፈልግም—ደዋዮች ሚስጥራዊ ቁጥሩን ሳያስገቡ ወደ ስም መለያዎ መድረስ ይችላሉ።",
-        "selectSingleDigit": "እባክዎ ነጠላ አሃዝ ሚስጥራዊ ቁጥር ይምረጡ",
-        "selectPinPlaceholder": "ሚስጥራዊ ቁጥር ይምረጡ"
-      },
-      "modalWhitelist": {
-        "title": "ወደ ነጭ ዝርዝር አክል",
-        "subtitle": "በነጭ ዝርዝር ውስጥ ያሉ ደዋዮች ያለ ሚስጥራዊ ቁጥር ወደ ስም መለያዎ መደወል ይችላሉ።",
-        "enterMobileLabel": "ወደ ነጭ ዝርዝር ለማከል የሞባይል ቁጥር ያስገቡ",
-        "formatHint": "ቅርጸት: +251xxxxxxxxx",
-        "yourRegistered": "የተመዘገበ የሞባይል ቁጥርዎ"
-      },
-      "buttons": {
-        "cancel": "ይቅር",
-        "confirm": "ያረጋግጡ",
-        "processing": "በማስኬድ ላይ...",
-        "removing": "በማስወገድ ላይ..."
-      }
+    "buttons": {
+      "stopCalls": "ጥሪዎችን አቁም",
+      "startCalls": "ጥሪዎችን ጀምር",
+      "processing": "በማስኬድ ላይ...",
+      "cancel": "ይቅር",
+      "confirm": "ያረጋግጡ"
     },
-    "errors": {
-      "mobile": {
-        "required": "የሞባይል ቁጥር ያስፈልጋል",
-        "mustStartCountry": "የሞባይል ቁጥር በ +251 መጀመር አለበት",
-        "mustStart9": "የሞባይል ቁጥሮች ከሀገር ኮድ በኋላ በ 9 መጀመር አለባቸው",
-        "length": "የሞባይል ቁጥር ከሀገር ኮድ በኋላ 9 አሃዞች መሆን አለበት"
-      },
-      "whitelistFetch": "የነጭ ዝርዝር ቁጥሮችን ማምጣት አልተሳካም",
-      "mobileFetch": "የሞባይል ቁጥሮችን ማምጣት አልተሳካም",
-      "mobileLoad": "የሞባይል ቁጥሮችን በመጫን ላይ ስህተት",
-      "whitelistLoad": "የነጭ ዝርዝር ቁጥሮችን በመጫን ላይ ስህተት",
-      "removeWhitelist": "ቁጥሩን ከነጭ ዝርዝር በማስወገድ ላይ ስህተት"
+    "modal": {
+      "title": "ማረጋገጫ?",
+      "confirmStop": "ገቢ ጥሪዎችዎን ለማቆም እባክዎ ያረጋግጡ።",
+      "confirmStart": "ገቢ ጥሪዎችን መቀበል ለመጀመር እባክዎ ያረጋግጡ።"
     },
-    "states": {
-      "loading": "በመጫን ላይ..."
-    },
-    "changeTag": {
-      "title": "የስም መለያ (NameTAG) ለውጥ ያስተዳድሩ",
-      "note": "ማሳሰቢያ: አንዴ የስም መለያዎን ከቀየሩ በኋላ፣ ለቀድሞው የስም መለያ የተከፈሉ ማናቸውም ክፍያዎች ወደፊት አይተላለፉም። የስም መለያዎን አሁን ባለው ዕቅድዎ መጨረሻ ላይ እንዲቀይሩ እንመክራለን።",
-      "emptyState": "ምዝገባውን ለመሰረዝ ምንም ንቁ የስም መለያ አገልግሎቶች አልተገኙም።",
-      "table": {
-        "nameTagNumber": "የስም መለያ ቁጥር",
-        "mobileNumber": "የሞባይል ቁጥር",
-        "recurringFeeDueDate": "የተደጋጋሚ ክፍያ የሚጠበቅበት ቀን",
-        "outstandingRecurringFee": "የቀረው ተደጋጋሚ ክፍያ",
-        "status": "ሁኔታ",
-        "action": "እርምጃ"
-      },
-      "buttons": {
-        "changeNameTag": "የስም መለያ ቀይር",
-        "processing": "በማስኬድ ላይ..."
-      },
-      "toastMessages": {
-        "failedToLoad": "የስም መለያ መረጃ ማምጣት አልተሳካም",
-        "successfullyUnsubscribed": "በተሳካ ሁኔታ ምዝገባ ተሰርዟል",
-        "failedToUnsubscribe": "ምዝገባ መሰረዝ አልተሳካም",
-        "anErrorOccurred": "ስህተት ተፈጥሯል"
-      },
-      "common": {
-        "na": "የለም",
-        "etb": "ብር"
-      }
-    },
-    "changeNumber": {
-      "title": "የሞባይል ቁጥር ይቀይሩ",
-      "emptyState": "ምንም ንቁ የስም መለያ አገልግሎቶች አልተገኙም።",
-      "table": {
-        "nameTagNumber": "የስም መለያ ቁጥር",
-        "mobileNumber": "የሞባይል ቁጥር",
-        "mobileNumberType": "የሞባይል ቁጥር ዓይነት",
-        "recurringFee": "ተደጋጋሚ ክፍያ",
-        "recurringFeeDueDate": "የተደጋጋሚ ክፍያ የሚጠበቅበት ቀን",
-        "outstandingRecurringFee": "የቀረው ተደጋጋሚ ክፍያ",
-        "status": "ሁኔታ",
-        "action": "እርምጃ"
-      },
-      "mobileNumberTypes": {
-        "primary": "ዋና",
-        "additional": "ተጨማሪ"
-      },
-      "buttons": {
-        "changeMobileNumber": "የሞባይል ቁጥር ቀይር"
-      },
-      "toastMessages": {
-        "failedToLoad": "የስም መለያ መረጃ ማምጣት አልተሳካም"
-      },
-      "common": {
-        "na": "የለም",
-        "etb": "ብር"
-      }
-    },
-    "unsubscribe": {
-      "title": "የስም መለያ ምዝገባ መሰረዝን ያስተዳድሩ",
-      "emptyState": "ምዝገባውን ለመሰረዝ ምንም ንቁ የስም መለያ አገልግሎቶች አልተገኙም።",
-      "table": {
-        "tagNumber": "የመለያ ቁጥር",
-        "mobileNumber": "የሞባይል ቁጥር",
-        "registrationDate": "የምዝገባ ቀን",
-        "status": "ሁኔታ",
-        "action": "እርምጃ"
-      },
-      "buttons": {
-        "unsubscribe": "ምዝገባ ሰርዝ",
-        "processing": "በማስኬድ ላይ..."
-      },
-      "toastMessages": {
-        "failedToLoad": "የስም መለያ መረጃ ማምጣት አልተሳካም",
-        "successfullyUnsubscribed": "በተሳካ ሁኔታ ምዝገባ ተሰርዟል",
-        "failedToUnsubscribe": "ምዝገባ መሰረዝ አልተሳካም",
-        "anErrorOccurred": "ስህተት ተፈጥሯል"
-      },
-      "common": {
-        "na": "የለም"
-      }
-    },
-    "closeAccount": {
-      "title": "የድርጅት አካውንት መዘጋት አስተዳደር",
-      "warningMessage": "የሚከተሉት ንቁ የስም መለያዎች አሉዎት። አካውንትዎን ለመዝጋት፣ እባክዎ ከእያንዳንዱ የስም መለያ ምዝገባ ይሰርዙ።",
-      "table": {
-        "companyName": "የድርጅት ስም",
-        "mobileNumber": "የሞባይል ቁጥር",
-        "createdDate": "የተፈጠረበት ቀን",
-        "status": "ሁኔታ",
-        "action": "እርምጃ"
-      },
-      "buttons": {
-        "closeAccount": "አካውንት ዝጋ",
-        "processing": "በማስኬድ ላይ..."
-      },
-      "toastMessages": {
-        "failedToLoad": "የስም መለያ መረጃ ማምጣት አልተሳካም",
-        "successfullyClosedAccount": "በተሳካ ሁኔታ አካውንት ተዘግቷል",
-        "failedToCloseAccount": "አካውንት መዝጋት አልተሳካም",
-        "anErrorOccurred": "ስህተት ተፈጥሯል"
-      },
-      "common": {
-        "na": "የለም"
-      }
-    },
-    "manageIncomingCalls": {
-      "title": "የገቢ ጥሪዎች ያስተዳድሩ",
-      "emptyState": "ከሞባይል ቁጥርዎ ጋር የተገናኘ ምንም ንቁ የስም መለያ የለም።",
-      "labels": {
-        "nameTag": "የስም መለያ:",
-        "mobileNumber": "የሞባይል ቁጥር:"
-      },
-      "status": {
-        "on": "በርቷል",
-        "stopped": "ቆሟል",
-        "currentStatus": "የአሁኑ የገቢ ጥሪ ሁኔታዎ:",
-        "stopInfo": "ገቢ ጥሪዎችን ለማቆም ከመረጡ፣ ለሚቀጥሉት 10 ቀናት ምንም ገቢ ጥሪዎች አይቀበሉም።",
-        "stoppedInfo": "አገልግሎቱ ከቆመበት ቀን ጀምሮ ለ 10 ቀናት ምንም ገቢ ጥሪዎች አይቀበሉም"
-      },
-      "buttons": {
-        "stopCalls": "ጥሪዎችን አቁም",
-        "startCalls": "ጥሪዎችን ጀምር",
-        "processing": "በማስኬድ ላይ...",
-        "cancel": "ይቅር",
-        "confirm": "ያረጋግጡ"
-      },
-      "modal": {
-        "title": "ማረጋገጫ?",
-        "confirmStop": "ገቢ ጥሪዎችዎን ለማቆም እባክዎ ያረጋግጡ።",
-        "confirmStart": "ገቢ ጥሪዎችን መቀበል ለመጀመር እባክዎ ያረጋግጡ።"
-      },
-      "toastMessages": {
-        "errorLoading": "የመለያ መረጃ በመጫን ላይ ስህተት",
-        "serviceActivated": "አገልግሎቱ በተሳካ ሁኔታ ነቅቷል",
-        "serviceDeactivated": "አገልግሎቱ በተሳካ ሁኔታ ታግዷል",
-        "failedToUpdate": "የአገልግሎት ሁኔታ ማዘመን አልተሳካም",
-        "errorUpdating": "የአገልግሎት ሁኔታን በማዘመን ላይ ስህተት። እባክዎ እንደገና ይሞክሩ።"
-      }
+    "toastMessages": {
+      "errorLoading": "የመለያ መረጃ በመጫን ላይ ስህተት",
+      "serviceActivated": "አገልግሎቱ በተሳካ ሁኔታ ነቅቷል",
+      "serviceDeactivated": "አገልግሎቱ በተሳካ ሁኔታ ታግዷል",
+      "failedToUpdate": "የአገልግሎት ሁኔታ ማዘመን አልተሳካም",
+      "errorUpdating": "የአገልግሎት ሁኔታን በማዘመን ላይ ስህተት። እባክዎ እንደገና ይሞክሩ።"
     }
   }
+}
