@@ -10,7 +10,7 @@
   "service": "Service",
   "profile": "Profile",
   "logout": "Logout",
-  "register": "Register",
+  "registerText": "Register",
   "premium": "premium",
   "changePassword":"Change Password",
   "accountType": "Select Account Type",
@@ -61,6 +61,7 @@
       "registerBtn": "Register",
       "previousBtn": "Previous",
       "finish": "Finish",
+      "stepIndicator": "Step {{current}} of {{total}}",
       "address": "Specific Address",
       "tinNumber": "Business Registration/TIN Number",
       "faydaNumber": "Fayda Number",
@@ -86,7 +87,16 @@
         "tinMaxLength": "Cannot exceed 10 digits",
         "tinPattern": "Digits only (9–10)",
         "faydaExactDigits": "Fayda Number must be exactly 16 digits",
-        "faydaDigits": "Fayda Number must be 12 digits"
+        "faydaDigits": "Fayda Number must be 12 digits",
+        "companyNameRequired": "Company name is required",
+        "companyNameNoDigits": "Company name cannot consist of only digits",
+        "usernameMinLength": "Username must be at least 2 characters",
+        "passwordMinLength": "Password must be at least 5 characters",
+        "passwordMaxLength": "Password cannot exceed 15 characters",
+        "passwordPattern": "Password must contain one uppercase letter, one lowercase letter, and one special character",
+        "passwordsDoNotMatch": "Passwords do not match",
+        "mobileNumberRequired": "Mobile number is required",
+        "otpDoesNotMatch": "Your OTP does not match"
       }
     },
     "monthly": "Monthly",
@@ -205,6 +215,9 @@
     "message": "Are You Sure You Want to Submit the Account Information to Complete Registeration Process?",
     "cancel": "Cancel",
     "submit": "Submit"
+  },
+  "register": {
+    "uploadDocumentsRequired": "Please upload all required documents to complete your registration."
   },
   "footer": {
     "terms": "Terms & Conditions",
