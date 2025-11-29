@@ -155,7 +155,7 @@ const Header = () => {
                       <Menu>
                         <MenuHandler>
                           <Button className="bg-white text-base font-medium text-secondary py-1 px-2">
-                            {t("register")}
+                            {t("registerText")}
                           </Button>
                         </MenuHandler>
                         <MenuList>

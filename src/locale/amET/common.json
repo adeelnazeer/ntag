@@ -10,7 +10,7 @@
   "service": "አገልግሎት",
   "profile": "መገለጫ",
   "logout": "ውጣ",
-  "register": "ይመዝገቡ",
+  "registerText": "ይመዝገቡ",
   "premium": "ፕሪሚየም",
   "changePassword": "የይለፍ ቃል ይቀይሩ",
   "accountType": "የአካውንት አይነት ይምረጡ",
@@ -61,6 +61,7 @@
       "registerBtn": "ይመዝገቡ",
       "previousBtn": "ይመለሱ",
       "finish": "ጨርስ",
+      "stepIndicator": "ደረጃ {{current}} ከ {{total}}",
       "address": "ዝርዝር አድራሻ",
       "tinNumber": "የንግድ ምዝገባ/ቲን (TIN) ቁጥር",
       "faydaNumber": "ፋይዳ ቁጥር",
@@ -86,7 +87,16 @@
         "tinMaxLength": "ከ10 አሃዞች መብለጥ የለበትም",
         "tinPattern": "(9–10) አሃዞች ብቻ ",
         "faydaExactDigits": "የፋይዳ ቁጥር በትክክል 16 አሃዞች መሆን አለበት",
-        "faydaDigits": "የፋይዳ ቁጥር 12 አሃዞች መሆን አለበት"
+        "faydaDigits": "የፋይዳ ቁጥር 12 አሃዞች መሆን አለበት",
+        "companyNameRequired": "የኩባንያ ስም ያስፈልጋል",
+        "companyNameNoDigits": "የኩባንያ ስም ከአሃዞች ብቻ ሊሆን አይችልም",
+        "usernameMinLength": "የተጠቃሚ ስም ቢያንስ 2 ቁምፊዎች መሆን አለበት",
+        "passwordMinLength": "የይለፍ ቃል ቢያንስ 5 ቁምፊዎች መሆን አለበት",
+        "passwordMaxLength": "የይለፍ ቃል ከ15 ቁምፊዎች መብለጥ የለበትም",
+        "passwordPattern": "የይለፍ ቃል አንድ ትልቅ የእንግሊዝኛ ፊደል፣ አንድ ትንሽ የእንግሊዝኛ ፊደል እና አንድ ልዩ ምልክት መያዝ አለበት",
+        "passwordsDoNotMatch": "የይለፍ ቃሎች አይዛመዱም",
+        "mobileNumberRequired": "የሞባይል ቁጥር ያስፈልጋል",
+        "otpDoesNotMatch": "የእርስዎ OTP አይዛመድም"
       }
     },
     "monthly": "ወርሃዊ",
@@ -205,6 +215,9 @@
     "message": "የምዝገባ ሂደቱን ለማጠናቀቅ የአካውንት መረጃውን ለማስገባት እርግጠኛ ነዎት?",
     "cancel": "ይቅር",
     "submit": "አስገባ"
+  },
+  "register": {
+    "uploadDocumentsRequired": "እባክዎ ምዝገባዎን ለማጠናቀቅ ሁሉንም የሚያስፈልጉ ሰነዶችን ይስቀሉ።"
   },
   "footer": {
     "terms": "ውሎች እና ሁኔታዎች",

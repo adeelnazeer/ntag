@@ -44,7 +44,7 @@ export function MultiStepForm() {
     if (activeStep == 1) {
       setData(st => ({ ...st, data: values }));
       if (!data?.trade_license_url || !data?.application_letter_url || !data?.registration_license_url) {
-        toast.error("Please upload all required documents to complete your registration.")
+        toast.error(t("register.uploadDocumentsRequired"))
         return
       }
       setOpen(true);
