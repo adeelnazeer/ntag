@@ -1,38 +1,38 @@
 {
-    "title": "የስም መለያ ምዝገባ ያስተዳድሩ",
-    "titleUnsubscription": "የስም መለያ ምዝገባ መሰረዝን ያስተዳድሩ",
-    "table": {
-      "headers": {
-        "tagNumber": "የመለያ ቁጥር",
-        "mobileNumber": "የሞባይል ቁጥር",
-        "registrationDate": "የምዝገባ ቀን",
-        "status": "ሁኔታ",
-        "action": "እርምጃ"
-      },
-      "noActive": "ምዝገባውን ለመሰረዝ ምንም ንቁ የስም መለያ አገልግሎቶች አልተገኙም።",
-      "noActiveRegistered": "ቁጥሩ ከሞባይል ቁጥሩ ጋር የተመዘገበ ንቁ የስም መለያ የለውም።"
+  "title": "የNameTAG ምዝገባን አስተዳድር",
+  "titleUnsubscription": " የNameTAG ከደንበኝነት ምዝገባ መውጣትን አስተዳድር",
+  "table": {
+    "headers": {
+      "tagNumber": " የTAG ቁጥር",
+      "mobileNumber": "የሞባይል ቁጥር",
+      "registrationDate": "የምዝገባ ቀን",
+      "status": "ሁኔታ",
+      "action": "ድርጊት"
     },
-    "buttons": {
-      "unsubscribe": "ምዝገባ ሰርዝ",
-      "processing": "በማስኬድ ላይ..."
-    },
-    "messages": {
-      "fetchError": "የስም መለያ መረጃ ማምጣት አልተሳካም",
-      "noAccountId": "ምንም የደንበኛ አካውንት መለያ አልተገኘም",
-      "unsubscribeSuccess": "በተሳካ ሁኔታ ምዝገባ ተሰርዟል",
-      "unsubscribeFailed": "ምዝገባ መሰረዝ አልተሳካም",
-      "errorOccurred": "ስህተት ተፈጥሯል"
-    },
-    "common": {
-      "na": "የለም"
-    },
-    "loading": {
-      "spinner": "በመጫን ላይ..."
-    },
-    "modal": {
-      "unsubscribeTitle": "ምዝገባ መሰረዝ ማረጋገጫ",
-      "unsubscribeMessage": "ከዚህ የስም መለያ አገልግሎት ምዝገባ መሰረዝ እርግጠኛ ኖት?",
-      "confirm": "ያረጋግጡ",
-      "cancel": "ይቅር"
-    }
+    "noActive": "ከደንበኝነት ምዝገባ ለመውጣት ምንም ንቁ የ NameTAG አገልግሎቶች አልተገኙም።",
+    "noActiveRegistered": "ከሞባይል ቁጥሮ ጋር የተመዘገበ ንቁ የNameTag ቁጥር የለውም።"
+  },
+  "buttons": {
+    "unsubscribe": "ከደንበኝነት ምዝገባ ውጣ",
+    "processing": "በማካሄድ ላይ..."
+  },
+  "messages": {
+    "fetchError": "የNameTAG መረጃ ማምጣት አልተሳካም",
+    "noAccountId": "ምንም የደንበኛ መለያ መታወቂያ አልተገኘም።",
+    "unsubscribeSuccess": "በተሳካ ሁኔታ ከደንበኝነት ምዝገባ ወጥቷል።",
+    "unsubscribeFailed": "ከደንበኝነት ምዝገባ መውጣት አልተሳካም",
+    "errorOccurred": "ስህተት ተፈጥሯል"
+  },
+  "common": {
+    "na": "N/A"
+  },
+  "loading": {
+    "spinner": "በመጫን ላይ..."
+  },
+  "modal": {
+    "unsubscribeTitle": "ከደንበኝነት ምዝገባ መውጣትን አረጋግጥ",
+    "unsubscribeMessage": "እርግጠኛ ነዎት ከዚህ የNameTAG አገልግሎት ከደንበኝነት ምዝገባ መውጣት ይፈልጋሉ?",
+    "confirm": "አረጋግጥ",
+    "cancel": "ሰርዝ"
   }
+}
