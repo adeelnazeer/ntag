@@ -26,8 +26,10 @@
         "feature3": "Yaadatama mallattoo fi amantaa maamilaa ni fooyyessa.",
         "feature4": "Waamicha dhufaa fi ba'aa lamaan isaanis ni hayyama."
       }
-    },
-    "benefits": [
+    }
+  },
+  "carousel": {
+    "slides": [
       {
         "title": "NameTAG",
         "para1": "Lakkoofsa Irra Dabalata Ta'i",
