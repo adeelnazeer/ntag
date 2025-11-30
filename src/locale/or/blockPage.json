@@ -1,0 +1,196 @@
+{
+  "title": "Lakkoofsota Dhaabamoo Bulchu",
+  "labels": {
+    "selectRegistered": "Lakkoofsa Bilbilaa Keessan Galmeeffate Filadhu",
+    "noMobiles": "Lakkoofsa Bilbilaa hin argamne",
+    "yourRegistered": "Lakkoofsa Bilbilaa Keessan Galmeeffate"
+  },
+  "buttons": {
+    "addToBlocklist": "Liistii Dhaabamoo Keessatti Dabal",
+    "unblock": "Dhaabamoo Hin Taasisin",
+    "cancel": "Haqi",
+    "confirm": "Mirkaneeffadhu",
+    "removing": "Haquu jira...",
+    "adding": "Dabalchuu jira..."
+  },
+  "table": {
+    "sr": "Lak.#",
+    "blocked": "Lakkoofsa/TAG Dhaabamoo",
+    "type": "Gosa Lakkoofsaa",
+    "registered": "Lakkoofsa Bilbilaa Galmeeffate",
+    "channel": "Kuufama",
+    "action": "Hojiin",
+    "empty": "Lakkoofsaa dhaabamoo hin argamne"
+  },
+  "confirmDialog": {
+    "title": "Haquu Mirkaneeffachuu",
+    "desc1": "Mirkaneeffatta lakkoofsa kana liistii dhaabamoo irraa haquu barbaaddaa?",
+    "desc2": "Lakkoofsi kun lakkoofsa TAG keessan irratti waamu danda'a"
+  },
+  "addDialog": {
+    "title": "Liistii Dhaabamoo Keessatti Dabal",
+    "subtitle": "Maaloo maal dhaabuu barbaaddan filadhaa",
+    "mobileOption": "Lakkoofsa Bilbila",
+    "tagOption": "Lakkoofsa TAG",
+    "mobileLabel": "Lakkoofsa Bilbila Dhaabuuf",
+    "tagLabel": "Lakkoofsa TAG Dhaabuuf",
+    "formatHint": "Saala: +251xxxxxxxxx",
+    "tagPlaceholder": "Lakkoofsa TAG galchi (fakkeenyaaf 4642)"
+  },
+  "errors": {
+    "fetchMobiles": "Lakkoofsota bilbilaa fiduun hin milkoofne",
+    "loadMobiles": "Dogoggora lakkoofsota bilbilaa buufachuu",
+    "fetchBlocked": "Lakkoofsota dhaabamoo fiduun hin milkoofne",
+    "loadBlocked": "Dogoggora lakkoofsota dhaabamoo buufachuu",
+    "fetchWhitelist": "Lakkoofsota liistii adii fiduun hin milkoofne",
+    "loadWhitelist": "Dogoggora lakkoofsota liistii adii buufachuu",
+    "removeWhitelist": "Dogoggora lakkoofsaa liistii adii irraa haquu",
+    "addWhitelist": "Lakkoofsa liistii adii dabalchuu hin milkoofne",
+    "required": "Lakkoofsa Bilbilaa barbaachisaa dha",
+    "mustStartCountry": "Lakkoofsa Bilbilaa +251 irraa eegaluu qaba",
+    "mustStart9": "Lakkoofsota Bilbilaa koodii biyyaa booda 9 irraa eegaluu qabu",
+    "length": "Lakkoofsa Bilbilaa koodii biyyaa booda Qaama Lakkoofsaa 9 ta'uu qaba",
+    "tagRequired": "Lakkoofsa TAG barbaachisaa dha",
+    "tagMinLength": "Lakkoofsa TAG Qubee 2 ta'uu qaba",
+    "tagMaxLength": "Lakkoofsa TAG Qubee 8 irra hin darbu",
+    "enterTag": "Maaloo lakkoofsa TAG dhaabuuf galchi",
+    "blockOwnTag": "NameTAG keessan dhaabuu hin danda'anu"
+  },
+  "success": {
+    "added": "Lakkoofsi liistii dhaabamoo keessatti milkaa'inaan dabalame",
+    "removed": "Lakkoofsi liistii dhaabamoo irraa milkaa'inaan haqame"
+  },
+  "callPinPage": {
+    "title": "PIN Waamicha Dhufaa fi Lakkoofsa Liistii Adii Bulchu",
+    "labels": {
+      "mobileNumber": "Lakkoofsa Bilbila:",
+      "currentPin": "PIN Waamicha Ammaa:"
+    },
+    "buttons": {
+      "setPin": "PIN Sirreessi",
+      "removePin": "PIN Haaqu",
+      "addWhitelist": "Liistii Adii Keessatti Dabal",
+      "cancel": "Haqi",
+      "confirm": "Mirkaneeffadhu",
+      "processing": "Hojiirra jira...",
+      "adding": "Dabalchuu jira...",
+      "removing": "Haquu jira..."
+    },
+    "table": {
+      "headers": {
+        "sr": "Lak.#",
+        "nameTag": "MaqaaTAG",
+        "whitelistNumber": "Lakkoofsa Liistii Adii",
+        "whitelistDate": "Guyyaa Liistii Adii",
+        "pin": "PIN",
+        "action": "Hojiin"
+      },
+      "empty": {
+        "noPin": "Amma waamicha dhufaaf PIN hin sirreessine. Maaloo lakkoofsota liistii adii keessatti dabalchuu fi PIN sirreessaa.",
+        "noActiveLinked": "Maqaa TAGn dhaaban lakkoofsa bilbilaa keessan waliin hin hidhamne.",
+        "noWhitelist": "Lakkoofsa Liistii Adii hin argamne!",
+        "actions": {
+          "delete": "Haqi"
+        }
+      },
+      "actions": {
+        "delete": "Haqi"
+      }
+    },
+    "confirmRemoval": {
+      "title": "Haquu Mirkaneeffachuu",
+      "description": "Mirkaneeffatta lakkoofsa bilbilaa +{{number}} liistii adii irraa haquu barbaaddaa?",
+      "hint": "Waamtoonni liistii adii keessan irraa hin ta'in NameTAG keessan argachuuf PIN sirrii galchuu qabu."
+    },
+    "modalPin": {
+      "removeTitle": "PIN Waamicha Dhufaa Keessan Haaqu",
+      "setTitle": "PIN Waamicha Dhufaa Keessan Sirreessi",
+      "descRemove": "Yeroo PIN haqame, waamtoonni hundi maqaa TAGn keessan PIN galchuu malee argachuu danda'u.",
+      "descSet": "Mirkaneeffatta waamicha dhufaaf PIN sirreessuu barbaaddaa? Waamtoonni keessan lakkoofsa maqaa TAGn keessan waliin hidhuu dura PIN galchuu irraa eegamu.",
+      "nameTag": "MaqaaTAG = #{{tag}}",
+      "mobileNumber": "Lakkoofsa Bilbila = +{{number}}",
+      "currentPin": "PIN Waamicha Ammaa = {{pin}}",
+      "notDefined": "Kan Himamme Hin Jiru",
+      "noteNoPin": "PIN hin barbaachisu — waamtoonni PIN galchuu malee maqaa TAGn keessan argachuu danda'u.",
+      "selectSingleDigit": "Maaloo Qaama Lakkoofsaa Tokko FILADHU",
+      "selectPinPlaceholder": "PIN Filadhu"
+    },
+    "modalAddWhitelist": {
+      "title": "Liistii Adii Keessatti Dabal",
+      "subtitle": "Waamtoonni liistii adii keessaa maqaa TAGn keessan PIN malee waamu.",
+      "enterMobileLabel": "Liistii Adii Dabalchuu Fi Lakkoofsa Bilbila Galchi",
+      "formatHint": "Saala: +251xxxxxxxxx",
+      "registeredMobileLabel": "Lakkoofsa Bilbilaa Keessan Galmeeffate"
+    },
+    "toast": {
+      "fetchWhitelistFailed": "Lakkoofsota liistii adii fiduun hin milkoofne",
+      "loadWhitelistFailed": "Dogoggora lakkoofsota liistii adii buufachuu",
+      "removeWhitelistError": "Dogoggora lakkoofsaa liistii adii irraa haquu",
+      "addWhitelistError": "Lakkoofsa liistii adii dabalchuu hin milkoofne"
+    },
+    "states": {
+      "loading": "Bufuraa jira..."
+    },
+    "common": {
+      "na": "N/A",
+      "etb": "ETB"
+    }
+  },
+  "blockNumbersPage": {
+    "title": "Lakkoofsota Dhaabamoo",
+    "statusMessages": {
+      "reserveTitle": "Maqaa TAGn dhaaban lakkoofsa bilbilaa keessan waliin hin hidhamne.",
+      "reserveSubtitle": "Maaloo TAG dhaammatte bitaa fi mala Dhaabuu/Dhaabamoo Hin Taasisin fayyadamuu.",
+      "inactiveTitle": "Maqaa TAGn dhaaban lakkoofsa bilbilaa keessan waliin hin hidhamne.",
+      "noneTitle": "TAGn lakkoofsa bilbilaa keessan waliin hin hidhamne.",
+      "noneSubtitle": "Maaloo mala Dhaabuu/Dhaabamoo Hin Taasisin fayyadamuu fi TAG bitaa."
+    },
+    "buttons": {
+      "addToBlocklist": "Liistii Dhaabamoo Keessatti Dabal",
+      "unblockNumber": "Lakkoofsa Dhaabamoo Hin Taasisin",
+      "cancel": "Haqi",
+      "confirm": "Mirkaneeffadhu",
+      "adding": "Dabalchuu jira...",
+      "removing": "Haquu jira..."
+    },
+    "table": {
+      "headers": {
+        "sr": "Lak.#",
+        "blocked": "Lakkoofsa/TAG Dhaabamoo",
+        "type": "Gosa Lakkoofsaa",
+        "registered": "Lakkoofsa Bilbilaa Galmeeffate",
+        "channel": "Kuufama",
+        "action": "Hojiin"
+      },
+      "empty": "Lakkoofsaa dhaabamoo hin argamne"
+    },
+    "confirmDialog": {
+      "title": "Haquu Mirkaneeffachuu",
+      "desc1": "Mirkaneeffatta lakkoofsa kana liistii dhaabamoo irraa haquu barbaaddaa?",
+      "desc2": "Lakkoofsi kun lakkoofsa TAG keessan irratti waamu danda'a"
+    },
+    "addDialog": {
+      "title": "Liistii Dhaabamoo Keessatti Dabal",
+      "subtitle": "Maaloo maal dhaabuu barbaaddan filadhaa",
+      "mobileOption": "Lakkoofsa Bilbila",
+      "tagOption": "Lakkoofsa TAG",
+      "mobileLabel": "Lakkoofsa Bilbila Dhaabuuf",
+      "tagLabel": "Lakkoofsa TAG Dhaabuuf",
+      "formatHint": "Saala: +251xxxxxxxxx",
+      "tagPlaceholder": "Lakkoofsa TAG dhaabuuf galchi",
+      "tagHint": "Lakkoofsa TAG Qubee 2-8 gidduu ta'uu qaba"
+    },
+    "toast": {
+      "fetchBlockedFailed": "Lakkoofsota dhaabamoo fiduun hin milkoofne",
+      "removeBlockedSuccess": "Lakkoofsi liistii dhaabamoo irraa milkaa'inaan haqame",
+      "removeBlockedFailed": "Lakkoofsaa liistii dhaabamoo irraa haquu hin milkoofne",
+      "removeBlockedError": "Dogoggora lakkoofsaa liistii dhaabamoo irraa haquu",
+      "addBlockedSuccess": "{{type}} liistii dhaabamoo keessatti milkaa'inaan dabalame",
+      "addBlockedFailed": "{{type}} liistii dhaabamoo keessatti dabalchuu hin milkoofne",
+      "addBlockedError": "Dogoggora {{type}} liistii dhaabamoo keessatti dabalchuu"
+    },
+    "states": {
+      "loading": "Bufuraa jira..."
+    }
+  }
+}

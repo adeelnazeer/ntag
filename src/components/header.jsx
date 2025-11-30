@@ -1,10 +1,9 @@
 import Logo from "../assets/images/logo.png";
-import EthioLogo from "../assets/images/wallet (2).png";
 import TagName from "../assets/images/Telebirr.png";
 import MenuBar from "./menuBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Menu,
   MenuHandler,
@@ -24,14 +23,19 @@ import { removeToken } from "../utilities/auth";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 
+const LANGS = [
+  { code: "en", label: "EN", native: "EN", flag: "🇬🇧" },
+  { code: "amET", label: "AM", native: "AM", flag: "et" },
+  { code: "or", label: "OR", native: "OR", flag: "or" },
+
+];
+
 const Header = () => {
-  const { t } = useTranslation(["common"]);
+  const { t, i18n } = useTranslation(["common"]);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 
   let userData = {}
@@ -51,6 +55,15 @@ const Header = () => {
     localStorage.clear();
 
     navigate(ConstentRoutes.login);
+  };
+
+  const handleLanguageChange = (code) => {
+    i18n.changeLanguage(code);
+    try { 
+      localStorage.setItem("i18nextLng", code); 
+    } catch (e) {
+      // Handle error silently
+    }
   };
 
   const classes = location?.pathname !== ConstentRoutes.home ? "mb-8" : "";
@@ -134,6 +147,21 @@ const Header = () => {
                         >
                           {t("changePassword")}
                         </MenuItem>
+                        <div className="px-3 py-2 border-t border-gray-200">
+                          <p className="text-xs text-gray-500 mb-1">{t("language")}</p>
+                          {LANGS.map((lang) => {
+                            const active = lang.code === i18n.resolvedLanguage;
+                            return (
+                              <MenuItem
+                                key={lang.code}
+                                onClick={() => handleLanguageChange(lang.code)}
+                                className={`focus:border-none border-none transition-none hover:border-none focus-within:border-none text-sm ${active ? "bg-gray-50 font-medium" : ""}`}
+                              >
+                                {lang.native}
+                              </MenuItem>
+                            );
+                          })}
+                        </div>
                         <MenuItem
                           className="focus:border-none border-none transition-none hover:border-none"
                           onClick={handleLogout}
@@ -166,7 +194,6 @@ const Header = () => {
                             className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
                             onClick={() => {
                               navigate(ConstentRoutes.register);
-                              setIsOpen(false);
                             }}
                           >
                             <label className="flex w-full cursor-pointer items-center">
@@ -177,7 +204,6 @@ const Header = () => {
                                   name="color"
                                   value="corporate"
                                   color="green"
-                                  checked={selectedValue === "corporate"}
                                   className="h-3 w-3 p-0 hover:before:opacity-0"
                                   containerProps={{
                                     className: "p-0",
@@ -193,7 +219,6 @@ const Header = () => {
                             className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
                             onClick={() => {
                               navigate(ConstentRoutes.registerNormalUser);
-                              setIsOpen(false);
                             }}
                           >
                             <label className="flex w-full cursor-pointer items-center">
@@ -204,7 +229,6 @@ const Header = () => {
                                   name="color"
                                   value="corporate"
                                   color="green"
-                                  checked={selectedValue === "corporate"}
                                   className="h-3 w-3 p-0 hover:before:opacity-0"
                                   containerProps={{
                                     className: "p-0",
@@ -221,7 +245,7 @@ const Header = () => {
                     </div>
                   </div>
                 )}
-                <LanguageSwitcher />
+                {!token && <LanguageSwitcher />}
 
               </>
             }
@@ -278,6 +302,37 @@ const Header = () => {
                 >
                   {t("profile")}
                 </Button>
+                <Button
+                  className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
+                  onClick={() => {
+                    if (location?.pathname?.includes("customer")) {
+                      navigate(ConstentRoutes.changePasswordCustomer)
+                    } else {
+                      navigate(ConstentRoutes.changePassword)
+                    }
+                    setMenuOpen(false);
+                  }}
+                >
+                  {t("changePassword")}
+                </Button>
+                <div className="w-full">
+                  <p className="text-white text-sm font-medium mb-2 px-2">{t("language")}</p>
+                  {LANGS.map((lang) => {
+                    const active = lang.code === i18n.resolvedLanguage;
+                    return (
+                      <Button
+                        key={lang.code}
+                        className={`bg-white text-base font-medium text-secondary py-1 px-2 w-full mb-1 ${active ? "bg-gray-100" : ""}`}
+                        onClick={() => {
+                          handleLanguageChange(lang.code);
+                          setMenuOpen(false);
+                        }}
+                      >
+                        {lang.native}
+                      </Button>
+                    );
+                  })}
+                </div>
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
                   onClick={handleLogout}

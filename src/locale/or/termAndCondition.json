@@ -1,0 +1,640 @@
+{
+  "documentTitle": "Waa'ee NameTAG Deemmii",
+  "sections": [
+    {
+      "title": "Seensa",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Deemmiin kun (\"Deemmii\") fayyadama tajaajila NameTAG (\"Tajaajila\") kan Ethio Telecom (\"Nuti,\" \"Nu,\" \"Keenya\") kennamu ni to'ata. Tajaajilicha galmeessuun ykn fayyadamuun, ati (\"Ati,\" \"Keessan\" — dhuunfaa ykn dhaabbata ta'uu dandeessa) Deemmii kanaaf bitamuu ni fudhatta."
+        }
+      ]
+    },
+    {
+      "title": "Ibsa Tajaajilaa",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "NameTAG'n tajaajila lakkoofsa yaadaa kan maamiltoonni Ethio Telecom NameTAG addaa fi dagatamuu hin dandeenye kan lakkoofsa bilbila harkaa isaanii isa ijoo wajjin hidhame filachuu danda'aniidha. Nama dhuunfaafis ta'e daldaltootaaf, eenyummaa dhuunfaa fi beekamtii brandii dabaluudhaan, beekamummaa salphaa fi qunnamtii guutuu ta'e ni dandeessisa."
+        },
+        {
+          "type": "paragraph",
+          "text": "Lakkoofsi NameTAG qabeenya Ethio Telecom ta'ee jiraata. Maamiltoonni, NameTAG filataniifii fi karoora tajaajilaa irratti hundaa'uun, kaffaltii tajaajilaa deddeebi'ee kaffaluudhaan hamma yeroon galmee isaanii xumuramuutti, mirga lakkoofsota NameTAG galmeessuu fi fayyadamuu ni argatu."
+        }
+      ]
+    },
+    {
+      "title": "Ga'umsa Qabaachuu",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "title": "Maamiltoota Dhaabbataa",
+              "description": "Sanada dhaabbataa sirrii fayyadamuun, karaa web portal: www.nametag.et irratti galmeessuu qabu."
+            },
+            {
+              "title": "Maamiltoota Dhuunfaa",
+              "description": "Karaa USSD (*883#), web portal ykn mobile application irratti galmeessuu danda'u."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Galmee fi Fayyadama",
+      "content": [
+        {
+          "type": "subtitle",
+          "text": "Maamiltoota Dhaabbataatiif:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Karaa www.nametag.et irratti galmeessuun, odeeffannoo fi sanada dhaabbata sirrii ta'e ol kaasuun."
+            },
+            {
+              "description": "Profaayilii dhaabbatichaa erga xumuranii booda, sanadoonni qulqulleeffamuuf lakkoofsa NameTAG guyyaa 48f ni qabatu."
+            },
+            {
+              "description": "Sanadoonni bulchaa NameTAGn erga hayyamamanii booda, kaffaltiin sa'aatii 24 keessatti xumuramuu qaba, yoo kana ta'uu baate NameTAG qabame gara gabaatti deebi'a."
+            },
+            {
+              "description": "Lakkoofsi bilbila harkaa tokko galmee maamila dhaabbataa jalatti yoo galmaa'e, NameTAG dhuunfaa irraatti fayyadamuu hin danda'u, yookiin faallaa kanaatiin."
+            },
+            {
+              "description": "Kaffaltii galmee tokko yeroo tokkoon hin deebineefi kaffaltii deddeebi'aa isa jalqabaa telebirr fayyadamuun NameTAG bitaa."
+            },
+            {
+              "description": "Maamiltoonni gaaffii hayyama kaffaltii telebirr, kan lakkoofsa bilbila harkaa galmaa'e irratti argatan, PIN koodii telebirr isaaniitiin mirkaneessuu qabu."
+            },
+            {
+              "description": "Lakkoofsota NameTAG kan kennaman karaa 'namni dura dhufe dura argata' (first-come, first-served) tiin."
+            },
+            {
+              "description": "Yoo NameTAG tokko maqaa brandii biroo wajjin walfakkaatu ta'e, maamila dura gaafateef dursa ni kenna."
+            },
+            {
+              "description": "Maamiltoonni dhaabbataa NameTAG kan brandii, dhaabbata ykn koodii gabaabaa dursee galmaa'e wajjin hidhame qabachuu ykn bitachuu hin danda'an."
+            },
+            {
+              "description": "Lakkoofsi NameTAG ykn akaawuntii NameTAG kamiinuu mirga abbaa brandii cabse yoo argame, Ethio Telecom haquuf mirga qaba."
+            },
+            {
+              "description": "Yoo NameTAGn bilbila gowwoomsaa, sirrii hin taane ykn dogoggorsiisuuf fayyadamame, Ethio Telecom mirga NameTAG fi tajaajila walqabate dhaabuu ykn addaan kutuuf qaba."
+            },
+            {
+              "description": "Lakkoofsi NameTAG bilbila sagalee (on-net) Ethio Telecom Network keessatti qofa raawwatama."
+            },
+            {
+              "description": "Bilbila addunyaalessaa (galii fi baasii) lakkoofsota NameTAG irratti fayyadamuun hin hayyamamu."
+            },
+            {
+              "description": "Akaawuntiin dhaabbataa tokko hamma NameTAG shan (5) qabachuu ykn bitachuu danda'a, akkasumas lakkoofsota dhaabbataa garaagaraa irratti galmaa'uu danda'a."
+            },
+            {
+              "description": "Lakkoofsi bilbila harkaa akaawuntiin yeroo uumamu galmaa'e lakkoofsa bilbila harkaa dhaabbataa isa ijoo ta'ee, mirkaneessaaf fi deebisanii icciitii argachuuf ni tajaajila."
+            }
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Maamiltoota Dhuunfaa USSD Short Code Fayyadaman:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Maamiltoonni dhuunfaa karaa USSD (*883#) NameTAG galmeessuu fi kaffaltii balance Ethio airtime irratti gochuu danda'u."
+            },
+            {
+              "description": "Maamiltoota NameTAG karaa USSD irratti galmaa'aniif, kaffaltiin tajaajilaa deddeebi'aa ji'aa balance airtime irraa ni kaffalama."
+            },
+            {
+              "description": "Karaa USSD irratti, lakkoofsotni NameTAG gartuu garaagaraa keessatti lakkoofsota 7-8 qabaachuu qabu, fi dheerinni NameTAG'n Ethion jijjiiramuu danda'a."
+            },
+            {
+              "description": "Maamiltoonni lakkoofsota NameTAG USSD fayyadamuun barbaadanii fi bitachuu danda'u, akkasumas karaa airtime akaawuntii pre-paid ykn post-paid isaanii irraa kaffaluu danda'u."
+            },
+            {
+              "description": "Kaffaltiin galmee fi kaffaltiin deddeebi'aa ji'a jalqabaa erga milkaa'inaan kaffalamee booda, lakkoofsi NameTAG gaafatame lakkoofsa maamilaatiif ni kennama."
+            },
+            {
+              "description": "Yoo kaffaltiin hin milkaa'in, NameTAG filatame ni deebi'a fi maamiltoota biroof ni argama."
+            },
+            {
+              "description": "Maamiltoonni dhuunfaa NameTAG kan brandii dhaabbataa, dhaabbilee ykn koodii gabaabaa galmaa'e wajjin walqabatu bitachuu hin qaban."
+            },
+            {
+              "description": "Yoo NameTAGn bilbila gowwoomsaa, sirrii hin taane ykn dogoggorsiisuuf fayyadamame, Ethio Telecom mirga NameTAG fi tajaajila walqabate dhaabuu ykn addaan kutuuf qaba."
+            }
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Maamiltoota Dhuunfaa Web Portal ykn Mobile Application Fayyadaman:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Maamiltoonni dhuunfaa web portal ykn mobile application fayyadamuun NameTAG galmeessuu fi bitachuu danda'u, kaffaltii isaanii akaawuntii telebirr isaaniitiin ni raawwatu."
+            },
+            {
+              "description": "Maamiltoonni dhuunfaa kaffaltii galmee fi kaffaltii deddeebi'aa ji'aa jalqabaa akaawuntii telebirr isaaniitiin kaffaluun bitachuu danda'u."
+            },
+            {
+              "description": "Dheerinni lakkoofsota NameTAG idilee portal ykn mobile application irratti argamummaa irratti hundaa'uun, gartuu Platinum, Gold, Silver fi Bronze jalatti jiraachuu danda'a."
+            },
+            {
+              "description": "Dhuunfaan tajaajila NameTAG web portal ykn mobile application irratti bulchuu danda'u."
+            },
+            {
+              "description": "Dhuunfaan NameTAG kan brandii dhaabbataa, dhaabbilee ykn koodii gabaabaa galmaa'e wajjin walqabatu bitachuu hin qaban."
+            },
+            {
+              "description": "Maamiltoonni dhuunfaa bilbila galii NameTAG irratti dhaabuu danda'u, kunis guyyaa 10 booda ofumaan deebi'ee ni banama."
+            },
+            {
+              "description": "Maamiltoonni dhuunfaa lakkoofsa bilbila harkaa isa ijoo tokkoof NameTAG tokko (1) qofa galmeessuu danda'u."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kaffaltii Tajaajilaa Deddeebi'aa",
+      "content": [
+        {
+          "type": "subtitle",
+          "text": "Kaffaltii Deddeebi'aa Telebirrtiin Godhamu"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Kaffaltiin deddeebi'aa jalqabaa kaffaltii galmee tajaajila NameTAG wajjin walqabatee kaffalama."
+            },
+            {
+              "description": "Marsaa kaffaltii lammaffaa irraa eegalee, kaffaltiin deddeebi'aa karaa hayyama debit telebirr kennameen ni raawwatama."
+            },
+            {
+              "description": "Tajaajila NameTAG galmeessuun, maamiltoonni kaffaltii deddeebi'aa hayyama telebirr kaffaluuf ni waliigalau. Kun yoo hin ta'iin akka isaan tajaajilicha irraa ofumaan haqaman taasisa."
+            },
+            {
+              "description": "Kaffaltii deddeebi'aa karoora filatame irratti hundaa'uun ofumaan hir'isuuf hayyama kennuuf, maamiltoonni hayyama kaffaltii PIN koodii telebirr isaaniitiin mirkaneessu."
+            },
+            {
+              "description": "Yeroo tajaajila galmeessan maamiltoonni gaaffii debit fudhachuu yoo hin dandeenye, akaawuntii isaanii seenanii booda web portal irraa jalqabuu danda'u."
+            }
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Kaffaltii Deddeebi'aa Airtime (USSD Channel) Irraatti Godhamu"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Maamiltoonni karaa USSD NameTAG yeroo galmeessan fi kaffaltii galmee airtime balance irraa yeroo kaffalan, kaffaltiin deddeebi'aan lakkoofsa bilbila harkaa galmaa'e airtime balance irraa ofumaan ni hir'ifama."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Baasii fi Kaffaltii",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Kaffaltiin galmee dheerina NameTAG fi gartuu irratti hundaa'uun garaagara ta'a."
+            },
+            {
+              "title": "Karoorota Galmee",
+              "description": "",
+              "subItems": [
+                "Maamiltoota Dhaabbataa: Karoorota Ji'aa, Qaru-waggaa, Walakkaa Waggaa ykn Waggaa.",
+                "Maamiltoota Dhuunfaa: Karoora Ji'aa Qofa."
+              ]
+            },
+            {
+              "description": "Kaffaltiin hundi, gosa maamilaa fi karaa filatame irratti hundaa'uun, karaa hayyamame (telebirr ykn airtime balance) kaffalamuu qabu."
+            },
+            {
+              "description": "Kaffaltiin galmee erga milkaa'inaan kaffalamee booda, lakkoofsi NameTAG lakkoofsa bilbila harkaa wajjin hidhamuu danda'a."
+            },
+            {
+              "description": "Kaffaltiin galmee fi kaffaltiin deddeebi'aa jalqabaa yeroo tajaajila galmeessan dursanii kaffalamu."
+            },
+            {
+              "description": "Kaffaltiin deddeebi'aa dhugaa kan jalqabu marsaan kaffaltii deddeebi'aa jalqabaa erga xumuramee booda."
+            },
+            {
+              "description": "Kaffaltii tajaajilaa deddeebi'aa kaffaluu dhabuun tajaajilli NameTAG hanga kaffaltiin raawwatamutti akka dhaabatu ni taasisa."
+            },
+            {
+              "description": "Warri galmaa'an NameTAG isaanii durii NameTAG haaraa wajjin jijjiiruu ni danda'u."
+            },
+            {
+              "description": "Maamiltoonni yeroo lakkoofsa NameTAG isaanii jijjiiran mara kaffaltiin galmee fi deddeebi'aa haaraa ni raawwatama."
+            },
+            {
+              "description": "Ethio Telecom kaffaltii galmee ykn kaffaltii deddeebi'aa beeksisa duraa malee jijjiiruuf mirga qaba."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Bulchiinsa Tajaajilaa",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Warri galmaa'an tajaajila fi bilbila galii NameTAG kan akka karoora bilbilaa qopheessuu, PIN qopheessuu, lakkoofsota bilbila harkaa ykn lakkoofsota NameTAG dhaabuu fi kaasuufi kkf dandeettiiwwan birootiin bulchuu danda'u."
+            },
+            {
+              "description": "Maamiltoonni dhaabbataa tajaajila NameTAG isaanii web portal irratti bulchuu danda'u."
+            },
+            {
+              "description": "Maamiltoonni dhuunfaa tajaajila isaanii karaa USSD, web portal ykn mobile application irratti bulchuu danda'u."
+            },
+            {
+              "description": "Maamiltoonni dhuunfaa bilbila galii yeroo gabaabaaf dhaabuu danda'u. Tajaajilli guyyaa 10 booda ofumaan ni deebi'ee ni banama."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Bilbila Sagalee Tajaajila NameTAG Irratti",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Warri galmaa'an Ethio Telecom network keessatti lakkoofsa NameTAG isaanii fayyadamuun bilbila baasii bilbiluu danda'u."
+            },
+            {
+              "description": "Tajaajilli bilbila sagalee network keessa jiru (on-net) irratti qofa raawwatama."
+            },
+            {
+              "description": "Bilbilli Addunyaalessaa (galii fi baasii) lakkoofsota NameTAGf hin deeggaramu."
+            },
+            {
+              "description": "Bilbilli P2P network keessaa (on-net) qofa, karoora paakeejii lakkoofsa bilbila harkaa isa ijoo irratti hundaa'uun ni hayyamama."
+            },
+            {
+              "description": "Kaffaltiin bilbila baasii lakkoofsota NameTAG irraa godhamu airtime balance irraa, karoora paakeejii lakkoofsa bilbila harkaa isa ijoo irratti hundaa'uun ni hir'ifama."
+            },
+            {
+              "description": "Bilbilaa fi bilbila fudhatan lamaan isaanii iyyuu warra Ethio Telecom galmaa'an ta'uu qabu; maamiltoonni roaming lakkoofsota NameTAG irratti bilbiluuf ga'umsa hin qaban."
+            },
+            {
+              "description": "Fayyadamtoonni NameTAG warra NameTAG biroo galmeessan ykn warra hin galmoofne irraa bilbila fudhachuu danda'u."
+            },
+            {
+              "description": "Warri NameTAG galmeessan hundaaf, NameTAG fayyadamaa yoo ta'an ykn ta'uu baatan iyyuu, maamiltoota Ethio Telecom hundaaf bilbiluu danda'u."
+            },
+            {
+              "description": "Lakkoofsotni bilbila harkaa ykn lakkoofsotni NameTAG warra maamilichi dhaabe, hanga dhaabbiin irraa ka'amuutti, NameTAG maamilichaa wajjin qunnamuu hin danda'an."
+            },
+            {
+              "description": "Maamiltoonni bilbila galii lakkoofsa bilbila harkaa bilbilaa jalatti mallattoo (#) agarsiisuun ni argu (fakkeenyaaf #0910561147 ykn #4545)."
+            },
+            {
+              "description": "Namoonni hin galmoofne lakkoofsota NameTAG warra galmaa'an bilbiluu danda'u."
+            },
+            {
+              "description": "Yoo NameTAG galmeessaan dandeettii PIN bilbila galii lakkoofsa NameTAG isaa bilbila hin barbaachifne irraa eeguuf yoo bane, bilbilaan PIN koodii galchuu qaba."
+            },
+            {
+              "description": "Maamiltoonni lakkoofsota NameTAG lakkoofsota bilbila harkaa idilee wajjin bilbila walitti qabamaaf (conference calls) fayyadamuu danda'u."
+            },
+            {
+              "description": "NameTAG'n guyyaa 90f yoo hin fayyadamne (bilbila galii ykn baasii NameTAG irraa) booda, tajaajilli NameTAG lakkoofsa bilbila harkaa maamilichaa irraa ni haqaama."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Karoora Bilbilaa (Call Scheduling)",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Dandeettiin karoora bilbilaa akaawuntii maamiltoota dhaabbataatiif qofa kan argamu yoo ta'u, maamilichi hanga sirreessuutti dhimma filannoo ti."
+            },
+            {
+              "description": "Warri dhaabbata galmaa'an bilbila galii guyyoota fi sa'aatii jalqabaa fi xumuraa murteessuun karoora qopheessuu danda'u."
+            },
+            {
+              "description": "Yeroo karoora bilbilaa baname, warri bilbilan lakkoofsa NameTAG sana yeroo fi guyyaa murtaa'e irratti qofa qunnamuu danda'u."
+            },
+            {
+              "description": "Bilbilli yeroo murtaa'e ala dhufan lakkoofsa NameTAG wajjin hin qunnaman."
+            },
+            {
+              "description": "Yoo galmeessaan karoora bilbilaa dhaabuu yoo dagate, warri bilbilan yeroo fi guyyaa murtaa'e ala lakkoofsa NameTAG wajjin qunnamuu hin danda'an."
+            },
+            {
+              "description": "Warri galmaa'an web portal NameTAG seenaanii karoora bilbilaa yeroo barbaadanitti jijjiiruu ykn dhaabuu danda'u."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "PIN Bilbila Galii (Incoming Calls PIN)",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Dandeettiin PIN bilbila galii dhimma filannoo ti. Dheeraa dursee, hanga maamilichi uumutti PIN hin qophaa'u."
+            },
+            {
+              "description": "Warri galmaa'an NameTAG irratti bilbila hin barbaachifne dhaabuuf lakkoofsa NameTAG isaanii irratti PIN tokko-lakkoofsa qopheessuu danda'u."
+            },
+            {
+              "description": "Yeroo dandeettiin PIN bilbila galii baname, warri bilbilan lakkoofsa NameTAG wajjin qunnamuuf PIN sirrii galchuu qabu."
+            },
+            {
+              "description": "Warri galmaa'an lakkoofsota white-list irratti dabaluu danda'u. Bilbilli lakkoofsota white-list irraa dhufan ulaagaa PIN ni darbu."
+            },
+            {
+              "description": "Warri galmaa'an yeroo barbaadanitti lakkoofsota white-list irraa dabaluu ykn haquu danda'u."
+            },
+            {
+              "description": "Warri galmaa'an web portal NameTAG seenaanii PIN bilbila galii yeroo barbaadanitti kaafuu danda'u."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Haquu Galmee (Unsubscription)",
+      "content": [
+        {
+          "type": "subtitle",
+          "text": "Maamiltoota Dhaabbataatiif:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Maamiltoonni dhaabbataa karaa web portal irraa galmee NameTAG haquu danda'u."
+            },
+            {
+              "description": "Erga haxamanii booda, maamiltoonni guyyaa 7 NameTAG sana irratti galmeessuu danda'u, hanga namoota biroof argamutti."
+            },
+            {
+              "description": "Yoo maamilichi guyyaa 7 keessatti deebi'ee galmaa'e, kaffaltii galmee raawwatamu deebi'ee kaffaluu qaba."
+            },
+            {
+              "description": "Guyyaa 7 booda, lakkoofsi NameTAG haqame namoota biroof bitachuuf bifa ifa ta'een ni argama."
+            },
+            {
+              "description": "Erga haqamee booda, maamilichi lakkoofsa NameTAG lakkoofsa bilbila harkaa isaanii wajjin hidhame deebisanii argachuu hin danda'an."
+            }
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Maamiltoota Dhuunfaatiif:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Maamiltoonni dhuunfaa USSD, web portal ykn mobile application fayyadamuun tajaajila NameTAG irraa galmee haquu danda'u."
+            },
+            {
+              "description": "Erga haqamee booda, NameTAG battalumatti lakkoofsa bilbila harkaa maamilichaa irraa ni ka'a fi maamiltoota biroof gurguramuuf ni argama."
+            },
+            {
+              "description": "Erga haqamee booda, maamiltoonni NameTAG walfakkaatu deebi'anii gaafachuu hin danda'an, ykn kaffaltii galmee ykn kaffaltii deddeebi'aa dursanii kaffalaniif maallaqa deebisuuf (refund) gaafachuu hin danda'an."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Imaammata Cufiinsa Akaawuntii",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Maamiltoonni dhaabbataa akaawuntii NameTAG isaanii yeroo hundaa cufuu gaafachuu danda'u."
+            },
+            {
+              "description": "Kaffaltii hin kaffalamne yoo jiraate qulqulleessuu."
+            },
+            {
+              "description": "NameTAG bitame hunda haquu."
+            },
+            {
+              "description": "Gaaffiin cufiinsa akaawuntii bulchaa NameTAGn hayyamamuu ykn didamuu danda'a."
+            },
+            {
+              "description": "Hanga gaaffiin cufiinsaa bulchaa NameTAGn hayyamamutti, tajaajilli maamilichaa hojii irra ni tura."
+            },
+            {
+              "description": "Gaaffiin cufiinsaa erga hayyamamee booda, profaayiliin maamilichaa, NameTAG qabamee fi sanadoonni platform NameTAG irraa yeroo hundaa ni ka'u."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Imaammata Jijjiirraa NameTAG",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Maamiltoonni dhaabbataa fi dhuunfaa NameTAG haaraa bitachuun NameTAG isaanii durii jijjiiruu danda'u."
+            },
+            {
+              "description": "NameTAG haaraa kaffaltii galmee fi kaffaltii deddeebi'aa milkaa'e argachuu irratti ni raawwatama."
+            },
+            {
+              "description": "NameTAG durii erga jijjiiramee booda lakkoofsa isaanii irraa ni ka'a."
+            },
+            {
+              "description": "NameTAG durii maamiltoota biroof gurguramuuf ni argama."
+            },
+            {
+              "description": "Kaffaltiin deddeebi'aa karoora NameTAG haaraa filatame irratti hundaa'uun ni raawwatama."
+            },
+            {
+              "description": "Erga NameTAG keessan jijjiirtanii booda, kaffaltii NameTAG duriif kaffalame kamuu gara fuula duraatti hin dabalamu. NameTAG keessan xumura karoora ammaa irratti akka jijjiirtan gorfama."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Jijjiirraa Lakkoofsa Bilbila Harkaa NameTAG Dhaabbataa",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Maamiltoonni dhaabbataa lakkoofsa bilbila harkaa isa ijoo NameTAG wajjin hidhame jijjiiruu danda'u."
+            },
+            {
+              "description": "Maamilichi dhaabbataa lakkoofsa bilbila harkaa haaraa filatee NameTAG durii wajjin hidhachuu danda'a."
+            },
+            {
+              "description": "Lakkoofsi bilbila harkaa durii NameTAG irraa ni ka'a, bakka bu'iinsi yoo milkaa'e."
+            },
+            {
+              "description": "Lakkoofsi bilbila harkaa durii NameTAG bilbilaaf fayyadamuu hin danda'u."
+            },
+            {
+              "description": "Yoo kaffaltiin deddeebi'aa lakkoofsa bilbila harkaa amma jiru irratti kaffalamuu qabu yoo jiraate, maamilichi lakkoofsa bilbila harkaa isaa jijjiiruu dura qabeentaa hafaa kaffaluu qaba."
+            },
+            {
+              "description": "Kaffaltiin deddeebi'aa karoora filatame irratti hundaa'uun lakkoofsa bilbila harkaa haaraa irratti ni raawwatama."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Itti Gaafatamummaa Fayyadamtootaa",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Yeroo hundumaa odeeffannoo sirrii, guutuu fi haaromfame kennuu."
+            },
+            {
+              "description": "Seerotaa fi qajeelfamoota naannoo raawwataman hunda eeguu."
+            },
+            {
+              "description": "Fayyadamuu dogoggora tajaajilichaa dhabamsiisuu, kan gocha seeraan ala, gowwoomsaa ykn dogoggorsiisuu dabalatu."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Iccitii fi Eegumsa Odeeffannoo",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Odeeffannoon keessan dhuunfaa Imaammata Iccitii Ethio Telecom irratti hundaa'uun ni sassaabama, ni hojjetama fi ni eegama."
+            },
+            {
+              "description": "Odeeffannoo keessan eeguuf tarkaanfiilee nageenyaa sirrii fi sadarkaa indaastirii ni fudhanna."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dhaabuu fi Addaan Kutuu",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Haalota armaan gadii keessatti fayyadama keessan tajaajila irratti dhaabuu ykn addaan kutuun ni danda'ama:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Deemmii kana cabsuu."
+            },
+            {
+              "description": "Tajaajilicha dogoggoraan fayyadamuu."
+            },
+            {
+              "description": "Kaffaltiin deddeebi'aa guyyaa 30f yoo hin milkaa'in, bilbilli baasii lakkoofsa NameTAG irraa ni dhaabama. Tajaajilli erga kaffaltiin deddeebi'aa kaffalamee booda itti fufuu danda'a."
+            },
+            {
+              "description": "Kaffaltiin deddeebi'aa guyyaa 60f yoo hin milkaa'in, tajaajilli bilbila galii fi baasii lakkoofsa NameTAG dhaaba. Tajaajilli erga kaffaltiin deddeebi'aa kaffalamee booda itti fufuu danda'a."
+            },
+            {
+              "description": "Kaffaltiin deddeebi'aa guyyaa 90f yoo hin milkaa'in, tajaajilli lakkoofsa NameTAG maamilichaa ni haqa (terminate), fi maamilichi deebisee argachuu hin danda'u."
+            },
+            {
+              "description": "Lakkoofsi NameTAG ykn akaawuntii NameTAG kamiinuu mirga abbaa brandii cabse yoo argame, Ethio Telecom haquuf mirga qaba."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Xumura Yeroo Tajaajila NameTAG",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Galmeewwan NameTAG waggaa 10f tajaajilu."
+            },
+            {
+              "description": "Ethio Telecom yeroo xumuraa beeksisa duraa malee dheeressuu danda'a."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Daangaa Itti Gaafatamummaa",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Tajaajilli 'akka jirutti' fi 'akka argamutti' ni kennama."
+            },
+            {
+              "description": "Ethio Telecom badii kallattii hin taane, tasaa ykn boodaa kan fayyadama tajaajila irraa dhufaniif itti gaafatamaa hin ta'u."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Jijjiirraa Deemmii Irratti Godhamu",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Ethio Telecom yeroo kamittiyyuu Deemmii kana jijjiiruuf mirga qaba. Haaromfni www.nametag.et ykn karaa qunnamtii maamilaa idilee irratti ni dabarfamu."
+        }
+      ]
+    },
+    {
+      "title": "Seera Bitamuu",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Deemmiin kun seera Rippabiliika Dimookiraatawaa Fedaraalaa Itoophiyaatiin ni to'atama."
+        }
+      ]
+    },
+    {
+      "title": "Odeeffannoo Qunnamtii",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Gargaarsa, gaaffii ykn komiiwwan fudhachuuf, maaloo www.nametag.et daawwadhaa ykn giddugala tajaajila maamilaa keenya qunnamaa."
+        }
+      ]
+    }
+  ]
+}

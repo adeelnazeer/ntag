@@ -5,8 +5,9 @@ import { Button, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwin
 import { useTranslation } from "react-i18next";
 
 const LANGS = [
-    { code: "en", label: "English", native: "English", flag: "🇬🇧" },
-    { code: "amET", label: "Amharic", native: "Amharic", flag: "et" },
+    { code: "en", label: "EN", native: "EN", flag: "🇬🇧" },
+    { code: "amET", label: "AM", native: "AM", flag: "et" },
+    { code: "or", label: "OR", native: "OR", flag: "or" },
 
 ];
 
