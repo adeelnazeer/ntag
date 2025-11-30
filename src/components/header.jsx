@@ -66,6 +66,10 @@ const Header = () => {
     }
   };
 
+  const getCurrentLanguage = () => {
+    return i18n.resolvedLanguage || i18n.language || "en";
+  };
+
   const classes = location?.pathname !== ConstentRoutes.home ? "mb-8" : "";
   userData = JSON.parse(localStorage.getItem('user'))
   //  customer_type
@@ -85,7 +89,7 @@ const Header = () => {
   };
   return (
     <div
-      className={`sticky top-0 z-50 bg-[#f5f5f5] md:${classes} `}
+      className={`sticky top-0 z-[9999] bg-[#f5f5f5] md:${classes} `}
     >
       <div className="bg-white">
         <div className="flex justify-between items-center h-16 md:mx-4 mx-0 bg-secondary">
@@ -258,12 +262,12 @@ const Header = () => {
               <img src={TagName} alt="teleber" className="lg:block w-[7rem] md:hidden" />
             </div>
           </div>
-          {location.pathname == ConstentRoutes.login ||
+          {(location.pathname == ConstentRoutes.login ||
             location.pathname == ConstentRoutes.registerNormalUser ||
             location.pathname == ConstentRoutes.register ||
             location.pathname == ConstentRoutes.home ||
-            location.pathname == ConstentRoutes.forgetPassword
-            ? (
+            location.pathname == ConstentRoutes.forgetPassword ||
+            token) ? (
               <div className="md:hidden flex items-center bg-secondary">
                 <IconButton
                   onClick={() => setMenuOpen(!menuOpen)}
@@ -280,7 +284,7 @@ const Header = () => {
         </div>
       </div>
       {menuOpen && (
-        <div className="md:hidden bg-secondary p-4">
+        <div className="md:hidden bg-secondary p-4 max-h-[80vh] overflow-y-auto relative z-[9999]">
           <div className="flex flex-col items-start gap-6">
             <Button
               variant="outlined"
@@ -315,26 +319,28 @@ const Header = () => {
                 >
                   {t("changePassword")}
                 </Button>
-                <div className="w-full">
-                  <p className="text-white text-sm font-medium mb-2 px-2">{t("language")}</p>
-                  {LANGS.map((lang) => {
-                    const active = lang.code === i18n.resolvedLanguage;
-                    return (
-                      <Button
-                        key={lang.code}
-                        className={`bg-white text-base font-medium text-secondary py-1 px-2 w-full mb-1 ${active ? "bg-gray-100" : ""}`}
-                        onClick={() => {
-                          handleLanguageChange(lang.code);
-                          setMenuOpen(false);
-                        }}
-                      >
-                        {lang.native}
-                      </Button>
-                    );
-                  })}
+                <div className="w-full border-t border-white/20 pt-4 mt-4">
+                  <p className="text-white text-sm font-medium mb-3 px-2">{t("language")}</p>
+                  <div className="flex flex-row gap-2">
+                    {LANGS.map((lang) => {
+                      const active = lang.code === getCurrentLanguage();
+                      return (
+                        <Button
+                          key={lang.code}
+                          className={`bg-white text-base font-medium text-secondary py-2 px-4 flex-1 ${active ? "bg-gray-200 border-2 border-secondary" : ""}`}
+                          onClick={() => {
+                            handleLanguageChange(lang.code);
+                            setMenuOpen(false);
+                          }}
+                        >
+                          {lang.native}
+                        </Button>
+                      );
+                    })}
+                  </div>
                 </div>
                 <Button
-                  className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
+                  className="bg-white text-base font-medium text-secondary py-1 px-2 w-full mt-4"
                   onClick={handleLogout}
                 >
                   {t("logout")}
@@ -369,6 +375,26 @@ const Header = () => {
                 >
                   {t("login.link2")}
                 </Button>
+                <div className="w-full border-t border-white/20 pt-4 mt-4">
+                  <p className="text-white text-sm font-medium mb-3 px-2">{t("language")}</p>
+                  <div className="flex flex-row gap-2">
+                    {LANGS.map((lang) => {
+                      const active = lang.code === getCurrentLanguage();
+                      return (
+                        <Button
+                          key={lang.code}
+                          className={`bg-white text-base font-medium text-secondary py-2 px-4 flex-1 ${active ? "bg-gray-200 border-2 border-secondary" : ""}`}
+                          onClick={() => {
+                            handleLanguageChange(lang.code);
+                            setMenuOpen(false);
+                          }}
+                        >
+                          {lang.native}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
               </>
             )}
           </div>
