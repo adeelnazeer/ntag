@@ -1,0 +1,51 @@
+{
+  "services": {
+    "title": "Seensa Tajaajilaa",
+    "introduction": {
+      "heading": "NameTAG Daaqiinsa: Garaan Keessan, Fooyya'e",
+      "description": "Bara ammaa yeroo ariifatuu keessatti, yaalaa maatiiwwan gaarii uumuu barbaachisaa dha. Ethio Telecom keessatti, amantaa fi owwaannoo irrattis dhaabbannaa qabna. Kun maqaa NameTAG daaqiinsa kan gammadnu - tajaajilaa lakkoofsa bilbilaa keessan maqaa addaa fi yaadatamaa kennuu dandeessu."
+    },
+    "whatIsNameTag": {
+      "heading": "NameTAG Maali?",
+      "description": "NameTAG tajaajilaa lakkoofsa virtualii lakkoofsa bilbilaa ijoo keessan waliin hidhamte maqaa gabaabaa, hawwataa, maqaa dhuunfaa, yookiin jecha filachuu dandeessu. Kun bilisummaa waamicha garee keessan, mallattoo, yookiin daldalaa keessan calaqqisuun hojjechuuf isiniif kenna."
+    },
+    "howItWorks": {
+      "heading": "Akkamitti Hojjeta?",
+      "steps": {
+        "step1": "Akaawuntii bilisaa nametag.et irratti uumi (dhuunfaa yookiin walta'aa).",
+        "step2": "NameTAG dhaabbadhu fi lakkoofsa barbaaddu filadhu (Pilaatinum, Gooldan, Silvar, yookiin Biroonzii).",
+        "step3": "Kaffaltii dhaabbannaa fi kaffaltii itti fufaa kaffali.",
+        "step4": "Lakkoofsa NameTAG keessan yeroo waamicha hojjettu fayyadami— Lakkoofsa NameTAG keessan duratti # jechuun waamicha hojjedha. Warri fudhatan NameTAG keessan akka CLI'tti lakkoofsa ijoo keessan irraa bakka bu'ee argatu."
+      }
+    },
+    "keyFeatures": {
+      "heading": "Qabxiilee Murteessoo:",
+      "features": {
+        "feature1": "Lakkoofsa virtualii addaa (Qaama Lakkoofsaa 2 hanga 8) lakkoofsa bilbilaa ijoo keessan waliin hidhamte hatattamaan argadhu.",
+        "feature2": "Maamiloota dura kaffalaa fi booda kaffalaa, lakkoofsa dura kaffalaa, booda kaffalaa fi akaawuntii dhuunfaa dabalatee argama.",
+        "feature3": "Yaadatama mallattoo fi amantaa maamilaa ni fooyyessa.",
+        "feature4": "Waamicha dhufaa fi ba'aa lamaan isaanis ni hayyama."
+      }
+    },
+    "benefits": [
+      {
+        "title": "NameTAG",
+        "para1": "Lakkoofsa Irra Dabalata Ta'i",
+        "para2": "Yeroo waamicha hojjettu maqaa keessan, lakkoofsa keessan osoo hin taane, agarsiisi.",
+        "description": "NameTAG waliin, lakkoofsi bilbilaa keessan maqaa addaa fi yaadatamaa isin calaqqisuutti jijjiirama. Dhuunfaa yookiin daldalaa yoo ta'e, kun maqaa filatame lakkoofsa yeroo hunda bakka bu'ee yeroo waamicha hojjettu agarsiisuu si hayyama—waliigaltee hunda dhuunfaa, ogummaa qabeessa, fi yaadachuuf salphaa taasisa."
+      },
+      {
+        "title": "NameTAG",
+        "para1": "Garee Mallattoo Keessan Cimsi",
+        "para2": "Maqaa sirrii yeroo waamicha maatii keessaniif hojjettu mallattoo keessan calaqqisuuf fayyadami.",
+        "description": "NameTAG garaa mallattoo keessan cimsuu lakkoofsa bilbilaa yeroo hunda NameTAG sirrii waliin jijjiiramaa si gargaara. Gaarii daldalaa fi dhiibbaa qabaniif, tajaajilaan kun maatii fi hidhamtoota si dhaqaa fi si yaadachuu dandeessu—amantaa, amantaa mallattoo, fi yaalaa waliita'aa gaarii uumuu keessatti si gargaara."
+      },
+      {
+        "title": "NameTAG",
+        "para1": "Waamicha Yaadatamaa, Laaffaa Ta'e",
+        "para2": "NameTAG yaadatamaa lakkoofsa keessan waliin hidhamte uumi.",
+        "description": "NameTAG waliin waamicha hunda keessatti adda ta'i—garaan waamicha dhuunfaa keessan. Maqaa dhuunfaa, maqaa mallattoo, ykn jecha yoo ta'u, NameTAG maqaa filataman lakkoofsa dhugaa keessan waliin ni hidha, namni waamicha gootan hundinuu dura garummaa keessan akka argan mirkaneessa. Sirreessuuf salphaa dha, bulchuuf salphaa dha, fi maamiloota dura kaffalaa fi booda kaffalaa lamaan isaanif argama."
+      }
+    ]
+  }
+}

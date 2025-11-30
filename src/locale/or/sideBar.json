@@ -1,0 +1,17 @@
+{
+  "sideBar": {
+    "dashboard": "Daashboordii",
+    "buyTag": "NameTAG Bituu",
+    "reserveTag": "NameTAG Sirreessuu",
+    "manageTag": "NameTAG Bulchu",
+    "callScheduling": "Call Ajendaa Gochuu",
+    "incomingCallPin": "PIN Call Dhufaa",
+    "BlockUnblock": "Cufuu/Cufuu Bahuu",
+    "changeNameTag": "NameTAG Jijjiiraa",
+    "changeMobileNo": "Lakkoofsa Bilbila Jijjiiraa",
+    "unsubscribe": "Galmaa'aa Cufuu",
+    "closeAccount": "Akkaawuntii Cittuu",
+    "profile": "Piroofayilii",
+    "logout": "Ba'i"
+  }
+}
