@@ -68,6 +68,8 @@ const normalizeLang = (lng) => {
   if (lng.toLowerCase() === "amet" || lng.toLowerCase() === "am-et") return "am-ET";
   if (lng === "ar") return "ar";
   if (lng === "en") return "en";
+  if (lng === "or") return "or";
+
   return lng;
 };
 
