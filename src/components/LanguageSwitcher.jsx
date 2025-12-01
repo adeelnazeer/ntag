@@ -5,9 +5,9 @@ import { Button, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwin
 import { useTranslation } from "react-i18next";
 
 const LANGS = [
-    { code: "en", label: "EN", native: "EN", flag: "🇬🇧" },
-    { code: "amET", label: "AM", native: "AM", flag: "et" },
-    { code: "or", label: "OR", native: "OR", flag: "or" },
+    { code: "en", label: "English", native: "English", flag: "🇬🇧" },
+    { code: "ar", label: "Arabic", native: "العربية", flag: "🇸🇦" },
+    { code: "amET", label: "Amharic", native: "Amharic", flag: "et" },
 
 ];
 
@@ -59,8 +59,10 @@ export default function LanguageSwitcher({ className = "" }) {
                                     }`}
                             >
                                 <div className="flex items-center gap-3">
+                                    <span className="text-base">{l.flag}</span>
                                     <div className="leading-tight">
                                         <div className="text-sm font-medium">{l.native}</div>
+                                        <div className="text-[11px] text-gray-500 uppercase">{l.label} ({l.code})</div>
                                     </div>
                                 </div>
                                 {/* {active && <Check size={16} className="text-emerald-600" />} */}

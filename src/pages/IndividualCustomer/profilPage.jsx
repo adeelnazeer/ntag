@@ -3,10 +3,8 @@ import CompanyInfo from './profile/components/company.jsx'
 import TagDetails from "./profile/components/tagDetail.jsx";
 import { useAppSelector } from "../../redux/hooks.js";
 import APICall from "../../network/APICall.jsx";
-import { useTranslation } from "react-i18next";
 
 const ProfilePageCustomer = () => {
-    const { t } = useTranslation(["profile"]);
     const [component, setComponent] = useState("company");
     let userData = {}
     const [data, setData] = useState(null)
@@ -62,7 +60,7 @@ const ProfilePageCustomer = () => {
                             setComponent("company")
                         }}
                     >
-                        {t("profile.profilePage.accountInformation")}
+                        Account Information
                     </p>
                     <div className={`w-1/3 h-[3px] mx-auto rounded-tr-md rounded-tl-md ${component == "company" ? "bg-secondary" : ""}`}></div>
                 </div>
@@ -72,7 +70,7 @@ const ProfilePageCustomer = () => {
                             setComponent("detail")
                         }}
                     >
-                        {t("profile.profilePage.nameTagDetails")}
+                        NameTAG Details
                     </p>
                     <div className={`w-1/3 h-[3px] mx-auto rounded-tr-md rounded-tl-md ${component == "detail" ? "bg-secondary" : ""}`}></div>
                 </div>

@@ -7,7 +7,6 @@ import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
 import { toast } from "react-toastify";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useTranslation } from "react-i18next";
 
 // Apply CSS fix for autofill styling
 const autofillStyle = `
@@ -22,7 +21,6 @@ const autofillStyle = `
 `;
 
 const ChangePassword = ({ isCustomer = false }) => {
-    const { t } = useTranslation(["auth"]);
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState({
         password1: false,
@@ -58,13 +56,13 @@ const ChangePassword = ({ isCustomer = false }) => {
             .then((res) => {
                 if (res?.success) {
                     reset()
-                    toast.success(res?.message || t("changePassword.toastMessages.passwordUpdateSuccessfully"));
+                    toast.success(res?.message || "Password update successfully");
                 } else {
-                    toast.error(res?.message || t("changePassword.toastMessages.failedToUpdatePassword"));
+                    toast.error(res?.message || "Failed to update password");
                 }
             })
             .catch((err) => {
-                toast.error(err?.message || t("changePassword.toastMessages.anErrorOccurred"));
+                toast.error(err?.message || "An error occurred");
             })
             .finally(() => {
                 setLoading(false)
@@ -79,19 +77,19 @@ const ChangePassword = ({ isCustomer = false }) => {
                 <div className="flex items-center justify-center mx-6 md:mx-0">
                     <div className="bg-white p-10 rounded-2xl shadow-md max-w-xl w-full min-h-[400px]">
                         <>
-                            <h2 className=" font-semibold text-center md:text-[38px] text-[25px]  mb-4">{t("changePassword.title")}</h2>
+                            <h2 className=" font-semibold text-center md:text-[38px] text-[25px]  mb-4">Change Password</h2>
                             <p className="text-gray-900 mb-6  md:text-base text-[16px] ">
-                                {t("changePassword.description")}
+                                Please enter your current password and new password.
                             </p>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="mb-4">
                                     <label className="md:text-base text-[16px] text-[#232323]">
-                                        {t("changePassword.labels.currentPassword")}
+                                        Current Password
                                     </label>
                                     <div className="relative">
                                         <Input
                                             className="w-full rounded-xl p-4 bg-[#F6F7FB] outline-none pr-12"
-                                            placeholder={t("changePassword.placeholders.currentPassword")}
+                                            placeholder="Current password"
                                             maxLength={15}
                                             min={4}
                                             type={showPassword?.password1 ? "text" : "password"}
@@ -101,14 +99,14 @@ const ChangePassword = ({ isCustomer = false }) => {
                                                     : { border: "1px solid #8A8AA033" }
                                             }
                                             {...register("old_password", {
-                                                required: t("changePassword.validation.passwordRequired"),
+                                                required: "Password is required",
                                                 minLength: {
                                                     value: 5,
-                                                    message: t("changePassword.validation.passwordMinLength"),
+                                                    message: "Password must be at least 5 characters",
                                                 },
                                                 maxLength: {
                                                     value: 15,
-                                                    message: t("changePassword.validation.passwordMaxLength"),
+                                                    message: "Password must not exceed 15 characters",
                                                 },
                                             })}
                                             onContextMenu={(e) => e.preventDefault()} // disable right-click
@@ -130,12 +128,12 @@ const ChangePassword = ({ isCustomer = false }) => {
 
                                 <div className="mb-4">
                                     <label className="md:text-base text-[16px] text-[#232323]">
-                                        {t("changePassword.labels.newPassword")}
+                                        New Password
                                     </label>
                                     <div className=" relative">
                                         <Input
                                             className="w-full rounded-xl p-4 bg-[#F6F7FB] outline-none pr-12"
-                                            placeholder={t("changePassword.placeholders.newPassword")}
+                                            placeholder="Enter new password"
                                             maxLength={15}
                                             min={4}
                                             type={showPassword?.password2 ? "text" : "password"}
@@ -145,19 +143,19 @@ const ChangePassword = ({ isCustomer = false }) => {
                                                     : { border: "1px solid #8A8AA033" }
                                             }
                                             {...register("password", {
-                                                required: t("changePassword.validation.passwordRequired"),
+                                                required: "Password is required",
                                                 minLength: {
                                                     value: 5,
-                                                    message: t("changePassword.validation.passwordMinLength"),
+                                                    message: "Password must be at least 5 characters",
                                                 },
                                                 maxLength: {
                                                     value: 15,
-                                                    message: t("changePassword.validation.passwordMaxLength"),
+                                                    message: "Password must not exceed 15 characters",
                                                 },
                                                 validate: (value) => {
                                                     const oldPassword = getValues("old_password");
                                                     if (value === oldPassword) {
-                                                        return t("changePassword.validation.newPasswordSameAsCurrent");
+                                                        return "New password cannot be the same as current password";
                                                     }
                                                     return true;
                                                 },
@@ -180,12 +178,12 @@ const ChangePassword = ({ isCustomer = false }) => {
                                 </div>
                                 <div className="mb-4">
                                     <label className="md:text-base text-[16px] text-[#232323]">
-                                        {t("changePassword.labels.confirmNewPassword")}
+                                        Confirm New Password
                                     </label>
                                     <div className=" relative">
                                         <Input
                                             className="w-full rounded-xl p-4 bg-[#F6F7FB] outline-none pr-12"
-                                            placeholder={t("changePassword.placeholders.confirmNewPassword")}
+                                            placeholder="Confirm new passwprd"
                                             maxLength={15}
                                             min={4}
                                             type={showPassword?.password3 ? "text" : "password"}
@@ -196,18 +194,18 @@ const ChangePassword = ({ isCustomer = false }) => {
                                                     : { border: "1px solid #8A8AA033" }
                                             }
                                             {...register("password_confirmation", {
-                                                required: t("changePassword.validation.passwordRequired"),
+                                                required: "Password is required",
                                                 minLength: {
                                                     value: 5,
-                                                    message: t("changePassword.validation.passwordMinLength"),
+                                                    message: "Password must be at least 5 characters",
                                                 },
                                                 maxLength: {
                                                     value: 15,
-                                                    message: t("changePassword.validation.passwordMaxLength"),
+                                                    message: "Password must not exceed 15 characters",
                                                 },
                                                 validate: (val) => {
                                                     if (watch("password") != val) {
-                                                        return t("changePassword.validation.passwordsDoNotMatch");
+                                                        return "passwords do not match";
                                                     }
                                                     return true;
                                                 },
@@ -235,7 +233,7 @@ const ChangePassword = ({ isCustomer = false }) => {
                                         disabled={loading}
                                         loading={loading}
                                     >
-                                        {t("changePassword.buttons.submit")}
+                                        {"Submit"}
                                     </Button>
                                 </div>
                             </form>

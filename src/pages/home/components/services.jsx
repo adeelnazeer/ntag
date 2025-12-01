@@ -1,7 +1,4 @@
-import { useTranslation } from "react-i18next";
-
 const Services = () => {
-  const { t } = useTranslation(["home"]);
   return (
     <div
       className=" rounded-[15px] md:px-10 px-2 py-6 mt-8"
@@ -9,52 +6,52 @@ const Services = () => {
       id="service"
     >
       <h2 className=" md:text-[50px] text-[25px] text-secondary mb-6  font-semibold text-center">
-        {t("services.title")}
+        Service introduction
       </h2>
-      <p className=" md:text-[18px] text-[16px]  font-medium">{t("services.introduction.heading")}</p>
+      <p className=" md:text-[18px] text-[16px]  font-medium">Introducing NameTAG: Your Identity, Evolved</p>
       <p className=" md:text-[18px] text-[16px] my-2">
-        {t("services.introduction.description")}
+        In today’s fast-paced world, creating exceptional customer experiences is essential.
+        At Ethio Telecom, we’re committed to innovation and convenience. That’s why we’re excited to introduce NameTAG—a service that lets you assign a unique, memorable name to your mobile number.
       </p>
-      <p className=" md:text-[18px] text-[16px]  font-medium pt-3">{t("services.whatIsNameTag.heading")}</p>
+      <p className=" md:text-[18px] text-[16px]  font-medium pt-3">What is NameTAG?</p>
       <p className=" md:text-[18px] text-[16px] my-2">
-        {t("services.whatIsNameTag.description")}
+        NameTAG is a virtual number service that allows you to choose a short, catchy name, nickname, or phrase linked to your primary mobile number. This gives you the freedom to make calls with an identity that reflects your personality, brand, or business.
       </p>
-      <p className=" md:text-[18px] text-[16px]  font-medium pt-3">{t("services.howItWorks.heading")}</p>
+      <p className=" md:text-[18px] text-[16px]  font-medium pt-3">How does it work?</p>
       <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.howItWorks.steps.step1")}
-      </p>
-      <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.howItWorks.steps.step2")}
+        - Create a free account at nametag.et (individual or corporate).
       </p>
       <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.howItWorks.steps.step3")}
+        - Subscribe to NameTAG and choose your desired number (Platinum, --Golden, Silver, or Bronze).
       </p>
       <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.howItWorks.steps.step4")}
-      </p>
-      <p className=" md:text-[18px] text-[16px]  font-medium pt-3">{t("services.keyFeatures.heading")}</p>
-      <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.keyFeatures.features.feature1")}
+        - Pay the subscription and recurring fees.
       </p>
       <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.keyFeatures.features.feature2")}
+        - Use your NameTAG number when making calls— Dials call with prefix # before receiving party number. receivers will see your chosen NameTAG as CLI instead of your primary number.
+      </p>
+      <p className=" md:text-[18px] text-[16px]  font-medium pt-3">Key Features:</p>
+      <p className=" md:text-[18px] text-[16px] my-2">
+        - Instantly get a short and catchy virtual number on your existing SIM without visiting an Ethio Telecom franchise or office      </p>
+      <p className=" md:text-[18px] text-[16px] my-2">
+        - A unique virtual number (2 to 8 digits ) linked to your primary mobile number
       </p>
       <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.keyFeatures.features.feature3")}
+        - Available for prepaid and post-paid customers, including -Available for prepaid, postpaid numbers
+        and individual accounts
       </p>
       <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.keyFeatures.features.feature4")}
+        - NameTAG numbers for individual, and corporate customers as per their choice
       </p>
       <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.keyFeatures.features.feature5")}
+        - Easy management via web portal, USSD, or mobile app
       </p>
 
       <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.keyFeatures.features.feature6")}
+        - Complete control on your new number. Manage incoming calls rules, schedule and set PIN
       </p>
       <p className=" md:text-[18px] text-[16px] my-2">
-        - {t("services.keyFeatures.features.feature7")}
-      </p>
+        - Flexible pricing options: monthly, quarterly, semi-annual, and annual plans      </p>
     </div>
   );
 };

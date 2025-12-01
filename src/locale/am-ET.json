@@ -1,0 +1,20 @@
+{
+  "brand": "የእኔ መተግበሪያ",
+  "welcome": "እንኳን ደህና መጡ",
+  "tagline": "በፍጥነት ይገንቡ፣ በፍጥነት ይልኩ።",
+  "language": "ቋንቋ",
+  "home": "መነሻ",
+  "sectorOverview": "የክፍል እይታ",
+  "nameTag": "NameTAG",
+  "identity": "መታወቂያዎን ያቀላጥፉ",
+  "login": {
+    "login": "መግቢያ",
+    "desc": "እባክዎ የተጠቃሚ ስምን እና የሚስጥር ቃልን ያስገቡ ወደ የእርስዎ የNameTAG መለያ ለመግባት።",
+    "enterUserName": "የተጠቃሚ ስም ያስገቡ",
+    "enterPassword": "የሚስጥር ቃል ያስገቡ",
+    "remember": "አስታውሰኝ",
+    "link1": "እንደ ኩባንያ ይመዝገቡ",
+    "link2": "እንደ ግለሰብ ይመዝገቡ",
+    "link3": "የይለፍ ቃልን ረሱኝ"
+  }
+}

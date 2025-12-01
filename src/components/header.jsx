@@ -1,9 +1,10 @@
 import Logo from "../assets/images/logo.png";
+import EthioLogo from "../assets/images/wallet (2).png";
 import TagName from "../assets/images/Telebirr.png";
 import MenuBar from "./menuBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Menu,
   MenuHandler,
@@ -23,19 +24,14 @@ import { removeToken } from "../utilities/auth";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 
-const LANGS = [
-  { code: "en", label: "EN", native: "EN", flag: "🇬🇧" },
-  { code: "amET", label: "AM", native: "AM", flag: "et" },
-  { code: "or", label: "OR", native: "OR", flag: "or" },
-
-];
-
 const Header = () => {
-  const { t, i18n } = useTranslation(["common", "sideBar"]);
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 
   let userData = {}
@@ -57,19 +53,6 @@ const Header = () => {
     navigate(ConstentRoutes.login);
   };
 
-  const handleLanguageChange = (code) => {
-    i18n.changeLanguage(code);
-    try { 
-      localStorage.setItem("i18nextLng", code); 
-    } catch (e) {
-      // Handle error silently
-    }
-  };
-
-  const getCurrentLanguage = () => {
-    return i18n.resolvedLanguage || i18n.language || "en";
-  };
-
   const classes = location?.pathname !== ConstentRoutes.home ? "mb-8" : "";
   userData = JSON.parse(localStorage.getItem('user'))
   //  customer_type
@@ -89,7 +72,7 @@ const Header = () => {
   };
   return (
     <div
-      className={`sticky top-0 z-[0] bg-[#f5f5f5] md:${classes} `}
+      className={`sticky top-0 z-50 bg-[#f5f5f5] md:${classes} `}
     >
       <div className="bg-white">
         <div className="flex justify-between items-center h-16 md:mx-4 mx-0 bg-secondary">
@@ -151,21 +134,6 @@ const Header = () => {
                         >
                           {t("changePassword")}
                         </MenuItem>
-                        <div className="px-3 py-2 border-t border-gray-200">
-                          <p className="text-xs text-gray-500 mb-1">{t("language")}</p>
-                          {LANGS.map((lang) => {
-                            const active = lang.code === i18n.resolvedLanguage;
-                            return (
-                              <MenuItem
-                                key={lang.code}
-                                onClick={() => handleLanguageChange(lang.code)}
-                                className={`focus:border-none border-none transition-none hover:border-none focus-within:border-none text-sm ${active ? "bg-gray-50 font-medium" : ""}`}
-                              >
-                                {lang.native}
-                              </MenuItem>
-                            );
-                          })}
-                        </div>
                         <MenuItem
                           className="focus:border-none border-none transition-none hover:border-none"
                           onClick={handleLogout}
@@ -187,7 +155,7 @@ const Header = () => {
                       <Menu>
                         <MenuHandler>
                           <Button className="bg-white text-base font-medium text-secondary py-1 px-2">
-                            {t("registerText")}
+                            {t("register")}
                           </Button>
                         </MenuHandler>
                         <MenuList>
@@ -198,6 +166,7 @@ const Header = () => {
                             className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
                             onClick={() => {
                               navigate(ConstentRoutes.register);
+                              setIsOpen(false);
                             }}
                           >
                             <label className="flex w-full cursor-pointer items-center">
@@ -208,6 +177,7 @@ const Header = () => {
                                   name="color"
                                   value="corporate"
                                   color="green"
+                                  checked={selectedValue === "corporate"}
                                   className="h-3 w-3 p-0 hover:before:opacity-0"
                                   containerProps={{
                                     className: "p-0",
@@ -223,6 +193,7 @@ const Header = () => {
                             className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
                             onClick={() => {
                               navigate(ConstentRoutes.registerNormalUser);
+                              setIsOpen(false);
                             }}
                           >
                             <label className="flex w-full cursor-pointer items-center">
@@ -233,6 +204,7 @@ const Header = () => {
                                   name="color"
                                   value="corporate"
                                   color="green"
+                                  checked={selectedValue === "corporate"}
                                   className="h-3 w-3 p-0 hover:before:opacity-0"
                                   containerProps={{
                                     className: "p-0",
@@ -249,7 +221,7 @@ const Header = () => {
                     </div>
                   </div>
                 )}
-                {!token && <LanguageSwitcher />}
+                {/* <LanguageSwitcher /> */}
 
               </>
             }
@@ -262,12 +234,12 @@ const Header = () => {
               <img src={TagName} alt="teleber" className="lg:block w-[7rem] md:hidden" />
             </div>
           </div>
-          {(location.pathname == ConstentRoutes.login ||
+          {location.pathname == ConstentRoutes.login ||
             location.pathname == ConstentRoutes.registerNormalUser ||
             location.pathname == ConstentRoutes.register ||
             location.pathname == ConstentRoutes.home ||
-            location.pathname == ConstentRoutes.forgetPassword ||
-            token) ? (
+            location.pathname == ConstentRoutes.forgetPassword
+            ? (
               <div className="md:hidden flex items-center bg-secondary">
                 <IconButton
                   onClick={() => setMenuOpen(!menuOpen)}
@@ -284,7 +256,7 @@ const Header = () => {
         </div>
       </div>
       {menuOpen && (
-        <div className="md:hidden bg-secondary p-4 max-h-[80vh] overflow-y-auto relative z-[9999]">
+        <div className="md:hidden bg-secondary p-4">
           <div className="flex flex-col items-start gap-6">
             <Button
               variant="outlined"
@@ -296,153 +268,18 @@ const Header = () => {
             >
               {t("home")}
             </Button>
-            <Button
-              variant="outlined"
-              className="text-white font-medium py-1 px-2 w-full border-white md:hidden"
-              onClick={() => {
-                navigate(ConstentRoutes.home)
-                setMenuOpen(false)
-              }}
-            >
-              {t("sectorOverview")}
-            </Button>
+
 
             {token ? (
               <>
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
-                  onClick={() => {
-                    navigate(ConstentRoutes.dashboard);
-                    setMenuOpen(false);
-                  }}
-                >
-                  {t("sideBar.dashboard")}
-                </Button>
-                <Button
-                  className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
-                  onClick={() => {
-                    navigate(ConstentRoutes.buyTag);
-                    setMenuOpen(false);
-                  }}
-                >
-                  {t("sideBar.buyTag")}
-                </Button>
-                <div className="w-full border-t border-white/20 pt-4 mt-2">
-                  <p className="text-white text-sm font-medium mb-2 px-2">{t("sideBar.manageTag")}</p>
-                  <div className="flex flex-col gap-2">
-                    <Button
-                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
-                      onClick={() => {
-                        navigate(ConstentRoutes.manageTagName);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      {t("sideBar.callScheduling")}
-                    </Button>
-                    <Button
-                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
-                      onClick={() => {
-                        navigate(ConstentRoutes.corporateCallPin);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      {t("sideBar.incomingCallPin")}
-                    </Button>
-                    <Button
-                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
-                      onClick={() => {
-                        navigate(ConstentRoutes.blockUnblockTag);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      {t("sideBar.BlockUnblock")}
-                    </Button>
-                    <Button
-                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
-                      onClick={() => {
-                        navigate(ConstentRoutes.changeMyTAGCorporate);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      {t("sideBar.changeNameTag")}
-                    </Button>
-                    <Button
-                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
-                      onClick={() => {
-                        navigate(ConstentRoutes.changeNumber);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      {t("sideBar.changeMobileNo")}
-                    </Button>
-                    <Button
-                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
-                      onClick={() => {
-                        navigate(ConstentRoutes.UnSUBblockTag);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      {t("sideBar.unsubscribe")}
-                    </Button>
-                    <Button
-                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
-                      onClick={() => {
-                        navigate(ConstentRoutes.closeAccount);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      {t("sideBar.closeAccount")}
-                    </Button>
-                  </div>
-                </div>
-                <Button
-                  className="bg-white text-base font-medium text-secondary py-1 px-2 w-full mt-4"
-                  onClick={() => {
-                    if (location?.pathname?.includes("customer")) {
-                      navigate(ConstentRoutes.profilePageCustomer)
-                    } else {
-                      navigate(ConstentRoutes.profilePage)
-                    }
-                    setMenuOpen(false);
-                  }}
+                  onClick={() => navigate(ConstentRoutes.profilePage)}
                 >
                   {t("profile")}
                 </Button>
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
-                  onClick={() => {
-                    if (location?.pathname?.includes("customer")) {
-                      navigate(ConstentRoutes.changePasswordCustomer)
-                    } else {
-                      navigate(ConstentRoutes.changePassword)
-                    }
-                    setMenuOpen(false);
-                  }}
-                >
-                  {t("changePassword")}
-                </Button>
-                <div className="w-full border-t border-white/20 pt-4 mt-4">
-                  <p className="text-white text-sm font-medium mb-3 px-2">{t("language")}</p>
-                  <div className="flex flex-row gap-2">
-                    {LANGS.map((lang) => {
-                      const active = lang.code === getCurrentLanguage();
-                      return (
-                        <Button
-                          key={lang.code}
-                          className={`bg-white text-base font-medium text-secondary py-2 px-4 flex-1 ${active ? "bg-gray-200 border-2 border-secondary" : ""}`}
-                          onClick={() => {
-                            handleLanguageChange(lang.code);
-                            setMenuOpen(false);
-                          }}
-                        >
-                          {lang.native}
-                        </Button>
-                      );
-                    })}
-                  </div>
-                </div>
-                <Button
-                  className="bg-white text-base font-medium text-secondary py-1 px-2 w-full mt-4"
                   onClick={handleLogout}
                 >
                   {t("logout")}
@@ -477,26 +314,6 @@ const Header = () => {
                 >
                   {t("login.link2")}
                 </Button>
-                <div className="w-full border-t border-white/20 pt-4 mt-4">
-                  <p className="text-white text-sm font-medium mb-3 px-2">{t("language")}</p>
-                  <div className="flex flex-row gap-2">
-                    {LANGS.map((lang) => {
-                      const active = lang.code === getCurrentLanguage();
-                      return (
-                        <Button
-                          key={lang.code}
-                          className={`bg-white text-base font-medium text-secondary py-2 px-4 flex-1 ${active ? "bg-gray-200 border-2 border-secondary" : ""}`}
-                          onClick={() => {
-                            handleLanguageChange(lang.code);
-                            setMenuOpen(false);
-                          }}
-                        >
-                          {lang.native}
-                        </Button>
-                      );
-                    })}
-                  </div>
-                </div>
               </>
             )}
           </div>

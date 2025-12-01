@@ -9,23 +9,20 @@ import { toast } from "react-toastify";
 import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
 import { setCorporateDocuments } from "../../../redux/userSlice";
 import UploadSingleDocument from "../../../components/uploadSingleDocument";
-import { useTranslation } from "react-i18next";
 
-const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
 
 const DocumentInfo = ({ profileData }) => {
   const dispatch = useAppDispatch();
-  let userData = {};
-  userData = useAppSelector((state) => state.user.userData);
+  let userData = {}
+  userData = useAppSelector(state => state.user.userData);
   if (userData == null || userData == undefined) {
     localStorage.getItem("user");
     userData = JSON.parse(localStorage.getItem("user"));
   }
-  const corporateDocuments = useAppSelector(
-    (state) => state.user.corporateDocuments
-  );
-  const customerId = useAppSelector((state) => state.user.customerId);
-  const { t } = useTranslation(["profile"]);
+  const corporateDocuments = useAppSelector(state => state.user.corporateDocuments);
+  const customerId = useAppSelector(state => state.user.customerId);
 
   const [data, setData] = useState(() => corporateDocuments || []);
   const [changedDocuments, setChangedDocuments] = useState([]);
@@ -33,7 +30,7 @@ const DocumentInfo = ({ profileData }) => {
   const [showImagePreview, setShowImagePreview] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
 
-  const [showModal, setShowModal] = useState({ show: false });
+  const [showModal, setShowModal] = useState({ show: false })
 
   // Update local state when Redux state changes
   useEffect(() => {
@@ -48,13 +45,13 @@ const DocumentInfo = ({ profileData }) => {
     return value != "1";
   };
 
-  console.log({ data });
+  console.log({ data })
 
   const isPdfFile = (docData) => {
-    if (docData?.doc_url?.type === "application/pdf") {
+    if (docData?.doc_url?.type === 'application/pdf') {
       return true;
     }
-    if (docData?.doc_name?.toLowerCase().endsWith(".pdf")) {
+    if (docData?.doc_name?.toLowerCase().endsWith('.pdf')) {
       return true;
     }
     return false;
@@ -64,15 +61,12 @@ const DocumentInfo = ({ profileData }) => {
     if (!docData?.doc_url) return;
 
     if (isPdfFile(docData)) {
-      if (
-        typeof docData.doc_url === "string" &&
-        docData.doc_url.startsWith("http")
-      ) {
-        window.open(docData.doc_url, "_blank");
+      if (typeof docData.doc_url === 'string' && docData.doc_url.startsWith('http')) {
+        window.open(docData.doc_url, '_blank');
       } else if (docData.doc_url instanceof File) {
-        const blob = new Blob([docData.doc_url], { type: "application/pdf" });
+        const blob = new Blob([docData.doc_url], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
-        window.open(url, "_blank");
+        window.open(url, '_blank');
         URL.revokeObjectURL(url);
       }
     } else {
@@ -82,15 +76,15 @@ const DocumentInfo = ({ profileData }) => {
   };
 
   const validateFile = (file) => {
-    const validTypes = ["image/jpeg", "image/png", "application/pdf"];
+    const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
     const maxSize = 3 * 1024 * 1024; // 3MB (increased from 2MB)
 
     if (!validTypes.includes(file.type)) {
-      return "Only JPG, JPEG, PNG, and PDF files are allowed";
+      return 'Only JPG, JPEG, PNG, and PDF files are allowed';
     }
 
     if (file.size > maxSize) {
-      return "File size exceeds 3MB";
+      return 'File size exceeds 3MB';
     }
 
     return null;
@@ -105,7 +99,7 @@ const DocumentInfo = ({ profileData }) => {
     const file = event.target.files[0];
     if (!allowedTypes?.includes(file?.type)) {
       alert("Invalid file type. Only JPG, PNG, and PDF files are allowed.");
-      event.target.value = ""; // clear the input
+      event.target.value = ''; // clear the input
       return;
     }
 
@@ -137,7 +131,7 @@ const DocumentInfo = ({ profileData }) => {
         ...duplicate[index],
         doc_url: file,
         doc_name: file.name,
-        docType,
+        docType
       };
       setData(duplicate);
 
@@ -177,14 +171,10 @@ const DocumentInfo = ({ profileData }) => {
   // Map index to field name
   const getFieldName = (index) => {
     switch (index) {
-      case 0:
-        return "application_letter";
-      case 1:
-        return "trade_license";
-      case 2:
-        return "registration_license";
-      default:
-        return `document_${index}`;
+      case 0: return "application_letter";
+      case 1: return "trade_license";
+      case 2: return "registration_license";
+      default: return `document_${index}`;
     }
   };
   const handleUpdate = () => {
@@ -204,7 +194,9 @@ const DocumentInfo = ({ profileData }) => {
 
     const formData = new FormData();
 
-    changedDocuments.forEach((index) => {
+
+
+    changedDocuments.forEach(index => {
       if (data[index]?.doc_url) {
         const fieldName = getFieldName(index);
         formData.append(`${fieldName}_url`, data[index].doc_url);
@@ -239,6 +231,7 @@ const DocumentInfo = ({ profileData }) => {
     }
   };
 
+
   const ImagePreviewModal = () => {
     if (!showImagePreview) return null;
 
@@ -262,32 +255,23 @@ const DocumentInfo = ({ profileData }) => {
   };
 
   // Check if documents are approved (all have status 1)
-  const areDocumentsApproved =
-    data?.length >= 3 && data.every((doc) => doc?.doc_status === "1");
+  const areDocumentsApproved = data?.length >= 3 &&
+    data.every(doc => doc?.doc_status === "1");
 
   // Document type labels
   const getDocumentLabel = (index) => {
+
     switch (index) {
-      case "application_letter_url":
-        return t("profile.appLetter");
-      case "trade_license_url":
-        return t("profile.trade");
-      case "registration_license_url":
-        return t("profile.regLicense");
-      default:
-        return "Document";
+      case "application_letter_url": return "Application Letter";
+      case "trade_license_url": return "Trade License";
+      case "registration_license_url": return "Registration License";
+      default: return "Document";
     }
   };
 
-  const applicationDocs = data.filter(
-    (item) => item?.doc_type === "application_letter_url"
-  );
-  const tradeDocs = data.filter(
-    (item) => item?.doc_type === "trade_license_url"
-  );
-  const registrationDocs = data.filter(
-    (item) => item?.doc_type === "registration_license_url"
-  );
+  const applicationDocs = data.filter((item) => item?.doc_type === "application_letter_url");
+  const tradeDocs = data.filter((item) => item?.doc_type === "trade_license_url");
+  const registrationDocs = data.filter((item) => item?.doc_type === "registration_license_url");
 
   const TableComponent = (title, docArray) => {
     return (
@@ -296,44 +280,22 @@ const DocumentInfo = ({ profileData }) => {
         <table className="min-w-full table-auto text-sm text-gray-800 border-gray-200">
           <thead className="">
             <tr className="bg-[#80808014]">
-              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">
-                {t("profile.preview")}
-              </th>
-              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">
-                {t("profile.version")}
-              </th>
-              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">
-                {t("profile.version")}
-              </th>
-              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">
-                {t("profile.uploadDate")}
-              </th>
-              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">
-                {t("profile.date")}
-              </th>
-              <th className="px-4 py-3 font-medium text-left text-[#555555CC] ">
-                {t("profile.action")}
-              </th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">Document Preview</th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">Version</th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">Status</th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">Uploaded Date</th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC]">Approval/Rejection Date</th>
+              <th className="px-4 py-3 font-medium text-left text-[#555555CC] ">Action</th>
             </tr>
           </thead>
           <tbody>
             {docArray.map((item, index) => (
-              <tr
-                key={`${item?.doc_type}-${index}`}
-                className=" border-gray-200 hover:bg-gray-50"
-              >
+              <tr key={`${item?.doc_type}-${index}`} className=" border-gray-200 hover:bg-gray-50">
                 <td className="px-4 py-2 max-w-40 min-w-40">
-                  <div
-                    className="w-24 h-28 bg-gray-100 rounded overflow-hidden relative cursor-pointer"
-                    onClick={() => handleDocumentClick(item)}
-                  >
+                  <div className="w-24 h-28 bg-gray-100 rounded overflow-hidden relative cursor-pointer" onClick={() => handleDocumentClick(item)}>
                     {item?.doc_url ? (
                       <img
-                        src={
-                          typeof item?.doc_url === "string"
-                            ? item?.doc_url
-                            : URL.createObjectURL(item?.doc_url)
-                        }
+                        src={typeof item?.doc_url === 'string' ? item?.doc_url : URL.createObjectURL(item?.doc_url)}
                         alt="Preview"
                         className="object-contain h-full w-full"
                       />
@@ -342,58 +304,42 @@ const DocumentInfo = ({ profileData }) => {
                     )}
                   </div>
                 </td>
-                <td className="px-4 py-2 max-w-40 min-w-40">
-                  {(item?.corp_document_id == null) & (item?.is_reuploaded == 0)
-                    ? t("profile.orignal")
-                    : t("profile.reuploaded")}
-                </td>
+                <td className="px-4 py-2 max-w-40 min-w-40">{item?.corp_document_id == null & item?.is_reuploaded == 0 ? "Orignal" : "Re-uploaded"}</td>
                 <td className="px-4 py-2 max-w-40 min-w-40">
                   {getDocStatus(item?.doc_status)}
                   <br />
-                  {item?.comment != null && (
-                    <span>
-                      {" "}
-                      {t("profile.comment")}: ({item?.comment})
-                    </span>
-                  )}
+                  {item?.comment != null &&
+                    <span> Comments: ({item?.comment})</span>
+                  }
                 </td>
-                <td className="px-4 max-w-40 min-w-40 py-2">
-                  {item?.created_at || "-"}
-                </td>
-                <td className="px-4 max-w-40 min-w-40 py-2">
-                  {item?.status_update_date || "-"}
-                </td>
+                <td className="px-4 max-w-40 min-w-40 py-2">{item?.created_at || '-'}</td>
+                <td className="px-4 max-w-40 min-w-40 py-2">{item?.status_update_date || '-'}</td>
                 <td className="px-4 max-w-40 min-w-40 py-2 text-center">
-                  {item?.corp_document_id == null && (
+                  {item?.corp_document_id == null &&
                     <>
-                      {item?.doc_status == "1" &&
-                      item?.corp_document_id == null ? (
+                      {(item?.doc_status == "1" && item?.corp_document_id == null) ? (
                         <label
                           className="inline-block px-4 py-3 rounded-xl text-white text-xs cursor-pointer bg-secondary hover:bg-green-600"
-                          onClick={() =>
-                            setShowModal({
-                              show: true,
-                              label: getDocumentLabel(item?.doc_type),
-                              name: item?.doc_type?.slice(0, -4),
-                              id: item?.id,
-                            })
-                          }
+                          onClick={() => setShowModal({
+                            show: true,
+                            label: getDocumentLabel(item?.doc_type),
+                            name: item?.doc_type?.slice(0, -4),
+                            id: item?.id
+                          })}
                         >
-                          {t("profile.reuploaded")}
+                          Re-upload Document
                         </label>
                       ) : (
                         <label
                           className="inline-block px-4 py-3 rounded-xl text-white text-xs cursor-pointer bg-secondary hover:bg-green-600"
-                          onClick={() =>
-                            setShowModal({
-                              show: true,
-                              label: getDocumentLabel(item?.doc_type),
-                              name: item?.doc_type?.slice(0, -4),
-                              id: item?.id,
-                            })
-                          }
+                          onClick={() => setShowModal({
+                            show: true,
+                            label: getDocumentLabel(item?.doc_type),
+                            name: item?.doc_type?.slice(0, -4),
+                            id: item?.id
+                          })}
                         >
-                          {t("profile.uploadBtn")}
+                          Upload Document
                         </label>
                         // <label
                         //   className={`inline-block px-4 py-3 rounded-xl text-white text-xs cursor-pointer ${isEditingAllowed(item?.doc_status)
@@ -412,7 +358,7 @@ const DocumentInfo = ({ profileData }) => {
                         // </label>
                       )}
                     </>
-                  )}
+                  }
                 </td>
               </tr>
             ))}
@@ -422,14 +368,17 @@ const DocumentInfo = ({ profileData }) => {
     );
   };
 
+
   return (
     <>
       <div className="overflow-x-auto mt-6">
-        {TableComponent(t("profile.regLicense"), registrationDocs)}
-        {TableComponent(t("profile.appLetter"), applicationDocs)}
-        {TableComponent(t("profile.trade"), tradeDocs)}
+        {TableComponent("Registration License", registrationDocs)}
+        {TableComponent("Application Letter", applicationDocs)}
+        {TableComponent("Trade License", tradeDocs)}
 
-        <p className="mt-8 text-xs text-gray-600 italic">{t("profile.note")}</p>
+        <p className="mt-8 text-xs text-gray-600 italic">
+          Note: Documents Approval Time - within 48 hours of Registration
+        </p>
       </div>
 
       {/* Notification for approved documents */}

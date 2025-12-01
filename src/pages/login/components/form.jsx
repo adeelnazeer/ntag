@@ -12,7 +12,7 @@ import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 
 const LoginForm = () => {
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation();
 
   const registerHook = useRegisterHook();
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import axios from "axios";
-import i18n from "../i18n";
+import { toast } from "react-toastify";
 
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
@@ -12,11 +12,6 @@ axiosInstance.interceptors.request.use(
     if (token) {
       tempConfig.headers.Authorization = `Bearer ${token || ""}`;
     }
-    
-    // Add current language to all API requests
-    const currentLanguage = i18n.language || i18n.resolvedLanguage || "en";
-    tempConfig.headers["x-language"] = currentLanguage;
-    
     return tempConfig;
   },
   (error) => {

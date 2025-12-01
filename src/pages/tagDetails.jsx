@@ -296,6 +296,7 @@
 //     }
 //   }
 
+
 //   const priceBreakdown = getPriceBreakDown({ tagPrice: stateData?.tag_price, packageFee: Number(selectedFeeAmount) });
 
 //   console.log({ location, selectedFeeAmount, priceBreakdown })
@@ -385,6 +386,8 @@
 //             </Typography>
 //           </div>
 
+
+
 //           <div className="border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
 //             {/* Recurring Fee Package Selection */}
 //             <div className="mt-3">
@@ -452,6 +455,8 @@
 //               {vatableTotalAmount.toFixed(2)} ETB
 //             </Typography>
 //           </div> */}
+
+
 
 //             <div className="flex justify-between mt-2">
 //               <Typography className="text-[14px]">Stamp Duty</Typography>
@@ -535,22 +540,12 @@
 
 // export default TagDetails;
 
+
 /* eslint-disable react/prop-types */
-import {
-  Button,
-  Checkbox,
-  Typography,
-  Select,
-  Option,
-  Tooltip,
-} from "@material-tailwind/react";
+import { Button, Checkbox, Typography, Select, Option, Tooltip } from "@material-tailwind/react";
 import TagName from "../assets/images/Telebirr.png";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  adjustableDays,
-  ConstentRoutes,
-  getPriceBreakDown,
-} from "../utilities/routesConst";
+import { adjustableDays, ConstentRoutes, getPriceBreakDown } from "../utilities/routesConst";
 import { useForm } from "react-hook-form";
 import { useAppSelector } from "../redux/hooks";
 import { useState, useEffect } from "react";
@@ -565,55 +560,49 @@ import { toast } from "react-toastify";
 import PaymentConfirmationModal from "../modals/ConfirmPayment";
 import { IoMdInformation } from "react-icons/io";
 import moment from "moment/moment";
-import { useTranslation } from "react-i18next";
 
 const TagDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const dashboard = useTagList();
+  const dashboard = useTagList()
   const stateData = location.state;
-  console.log({ stateData });
-  const { t } = useTranslation(["common"]);
-
+  console.log({ stateData })
   const isExchangeFlow = stateData?.isExchangeFlow || false;
   const currentTagData = stateData?.currentTagData || null;
-  const [type, setType] = useState("");
-  const [data, setData] = useState(null);
-  const [paymentType, setPaymentType] = useState(false);
-  const corporateDocuments = useAppSelector(
-    (state) => state.user.corporateDocuments
-  );
+  const [type, setType] = useState("")
+  const [data, setData] = useState(null)
+  const [paymentType, setPaymentType] = useState(false)
+  const corporateDocuments = useAppSelector(state => state.user.corporateDocuments);
   const [isOpen, setIsOpen] = useState(false);
+  const [businessType, setBusinessType] = useState("BuyGoods");
 
   const [availablePhoneNumbers, setAvailablePhoneNumbers] = useState([]);
   const [loadingPhoneNumbers, setLoadingPhoneNumbers] = useState(false);
-  const [selectedPhoneNumberId, setSelectedPhoneNumberId] = useState("");
-  const [selectedPhoneNumber, setSelectedPhoneNumber] = useState("");
+  const [selectedPhoneNumberId, setSelectedPhoneNumberId] = useState('');
+  const [selectedPhoneNumber, setSelectedPhoneNumber] = useState('');
   const hasMsisdn = !!stateData?.msisdn;
   const [isOpenPayment, setIsOpenPayment] = useState(false);
-  const [disableBtn, setDisableBtn] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
+
   const [phoneNumber, setPhoneNumber] = useState({
-    selectedFromList: !hasMsisdn,
+    selectedFromList: !hasMsisdn
   });
   const docStatus = {
-    status:
-      corporateDocuments?.[0]?.doc_status == "1" &&
-      corporateDocuments?.[1]?.doc_status == "1" &&
-      corporateDocuments?.[2]?.doc_status == "1"
-        ? 1
-        : 0,
-    corp_document: corporateDocuments,
+    status: (corporateDocuments?.[0]?.doc_status == "1" && corporateDocuments?.[1]?.doc_status == "1") && corporateDocuments?.[2]?.doc_status == "1" ? 1 : 0,
+    corp_document: corporateDocuments
   };
-  let userData = {};
+  let userData = {}
   userData = JSON.parse(localStorage.getItem("user"));
 
   const isReserved = stateData.isReserve === true;
 
   const [actionType, setActionType] = useState(
-    isReserved ? "buy" : docStatus.status != 1 ? "reserve" : null
+    isReserved ? "buy" : (docStatus.status != 1 ? "reserve" : null)
   );
+
+
 
   const {
     register,
@@ -621,20 +610,16 @@ const TagDetails = () => {
     handleSubmit,
     formState: { errors },
     setError,
-    clearErrors,
+    clearErrors
   } = useForm();
-  const watchAllField = watch();
+  const watchAllField = watch()
 
   const fetchAvailablePhoneNumbers = async () => {
     if (!userData?.id) return;
 
     try {
       setLoadingPhoneNumbers(true);
-      const response = await APICall(
-        "get",
-        null,
-        EndPoints.customer.GetAllNumbers(userData.id)
-      );
+      const response = await APICall("get", null, EndPoints.customer.GetAllNumbers(userData.id));
 
       if (response?.success && response?.data) {
         const phoneNumbers = Array.isArray(response.data)
@@ -645,10 +630,10 @@ const TagDetails = () => {
 
         // Don't auto-select the first number
         setPhoneNumber({
-          selectedFromList: true,
+          selectedFromList: true
         });
         // Set selectedPhoneNumberId to empty string instead of auto-selecting
-        setSelectedPhoneNumberId("");
+        setSelectedPhoneNumberId('');
       }
     } catch (error) {
       console.error("Error fetching phone numbers:", error);
@@ -669,122 +654,74 @@ const TagDetails = () => {
 
   const stripPlusFromPhone = (phoneNumber) => {
     if (!phoneNumber) return "";
-    return phoneNumber.replace(/^\+/, "");
+    return phoneNumber.replace(/^\+/, '');
   };
 
-  const isPremium =
-    stateData?.tag_list_premium_id == 1 ||
-    stateData?.tag_type === "VIP" ||
-    stateData?.is_premium;
+  const isPremium = stateData?.tag_list_premium_id == 1 || stateData?.tag_type === "VIP" || stateData?.is_premium;
 
-  const tagData =
-    isPremium && stateData?.corp_premium_tag_list
-      ? stateData?.corp_premium_tag_list
-      : stateData;
+  const tagData = isPremium && stateData?.corp_premium_tag_list ? stateData?.corp_premium_tag_list : stateData;
 
   const getInitialRecurringFeeType = () => {
     if (stateData?.service_id) {
       switch (stateData?.service_id) {
-        case "Monthly":
-          return "monthly_fee";
-        case "Weekly":
-          return "weekly_fee";
-        case "Quarterly":
-          return "quarterly_fee";
-        case "Semi-Annually":
-          return "semiannually_fee";
-        case "Annually":
-          return "annually_fee";
-        default:
-          return "";
+        case "Monthly": return "monthly_fee";
+        case "Weekly": return "weekly_fee";
+        case "Quarterly": return "quarterly_fee";
+        case "Semi-Annually": return "semiannually_fee";
+        case "Annually": return "annually_fee";
+        default: return "";
       }
     }
     return "";
   };
 
-  const [selectedRecurringFee, setSelectedRecurringFee] = useState(
-    getInitialRecurringFeeType()
+  const [selectedRecurringFee, setSelectedRecurringFee] = useState(getInitialRecurringFeeType());
+  const [selectedFeeAmount, setSelectedFeeAmount] = useState(
+    0
   );
-  const [selectedFeeAmount, setSelectedFeeAmount] = useState(0);
-  const [selectedFeeLabel, setSelectedFeeLabel] = useState(
-    stateData.service_id || ""
-  );
+  const [selectedFeeLabel, setSelectedFeeLabel] = useState(stateData.service_id || "");
 
   const recurringFeeOptions = [
-    {
-      value: "monthly_fee",
-      label: "Monthly",
-      amount: tagData.monthly_fee || 0,
-    },
+    { value: "monthly_fee", label: "Monthly", amount: tagData.monthly_fee || 0 },
     // { value: "weekly_fee", label: "Weekly", amount: tagData.weekly_fee || 0 },
-    {
-      value: "quarterly_fee",
-      label: "Quarterly",
-      amount: tagData.quarterly_fee || 0,
-    },
-    {
-      value: "semiannually_fee",
-      label: "Semi-Annually",
-      amount: tagData.semiannually_fee || 0,
-    },
-    {
-      value: "annually_fee",
-      label: "Annually",
-      amount: tagData.annually_fee || 0,
-    },
+    { value: "quarterly_fee", label: "Quarterly", amount: tagData.quarterly_fee || 0 },
+    { value: "semiannually_fee", label: "Semi-Annually", amount: tagData.semiannually_fee || 0 },
+    { value: "annually_fee", label: "Annually", amount: tagData.annually_fee || 0 },
   ];
 
   const availableOptions = recurringFeeOptions.filter(
-    (option) =>
-      option.value === selectedRecurringFee || parseFloat(option.amount) > 0
+    option => option.value === selectedRecurringFee || parseFloat(option.amount) > 0
   );
 
   useEffect(() => {
-    const selectedOption = recurringFeeOptions.find(
-      (option) => option.value === selectedRecurringFee
-    );
+    const selectedOption = recurringFeeOptions.find(option => option.value === selectedRecurringFee);
     if (selectedOption) {
       setSelectedFeeAmount(selectedOption.amount);
       setSelectedFeeLabel(selectedOption.label);
     }
   }, [selectedRecurringFee]);
 
-  const tagPrice =
-    tagData.tag_name_price !== undefined
-      ? Number(tagData.tag_name_price)
-      : Number(tagData.tag_price || 0);
+  const tagPrice = tagData.tag_name_price !== undefined
+    ? Number(tagData.tag_name_price)
+    : Number(tagData.tag_price || 0);
 
   const exciseTax = Number(stateData?.excisetax ?? tagData?.excisetax ?? 0);
   const vatAmount = Number(stateData?.VAT ?? tagData?.VAT ?? 0);
   const stampDuty = Number(stateData?.stamp_duty ?? tagData?.stamp_duty ?? 0); // Default to 5 if not available
   const totalAmount = Number(stateData?.total_amount ?? tagData?.total_amount);
-  const vatableTotalAmount =
-    stateData?.vatable_total || Number(tagPrice) + Number(exciseTax);
+  const vatableTotalAmount = stateData?.vatable_total || (Number(tagPrice) + Number(exciseTax));
 
-  const [stateValue, setStateValue] = useState(null);
-  const priceBreakdown = getPriceBreakDown({
-    tagPrice: stateData?.tag_price,
-    packageFee: Number(selectedFeeAmount),
-    dues:
-      stateData?.currentTagData?.dues < 0
-        ? Math.abs(stateData?.currentTagData?.dues || 0)
-        : 0,
-  });
+  const [stateValue, setStateValue] = useState(null)
+  const priceBreakdown = getPriceBreakDown({ tagPrice: stateData?.tag_price, packageFee: Number(selectedFeeAmount), dues: stateData?.currentTagData?.dues < 0 ? Math.abs(stateData?.currentTagData?.dues || 0) : 0 });
 
   const getServiceId = (feeType) => {
     switch (feeType) {
-      case "monthly_fee":
-        return "Monthly";
-      case "weekly_fee":
-        return "Weekly";
-      case "quarterly_fee":
-        return "Quarterly";
-      case "semiannually_fee":
-        return "Semi-Annually";
-      case "annually_fee":
-        return "Annually";
-      default:
-        return "Monthly";
+      case "monthly_fee": return "Monthly";
+      case "weekly_fee": return "Weekly";
+      case "quarterly_fee": return "Quarterly";
+      case "semiannually_fee": return "Semi-Annually";
+      case "annually_fee": return "Annually";
+      default: return "Monthly";
     }
   };
 
@@ -794,6 +731,7 @@ const TagDetails = () => {
       toast.error("Please select a mobile number");
       return;
     }
+
 
     if (docStatus?.status !== 0 && state?.action_type === "buy") {
       setShowConfirmModal(true);
@@ -808,26 +746,20 @@ const TagDetails = () => {
       selectedRecurringFee === "monthly_fee"
         ? 30
         : selectedRecurringFee === "quarterly_fee"
-        ? 90
-        : selectedRecurringFee === "semiannually_fee"
-        ? 180
-        : selectedRecurringFee === "annually_fee"
-        ? 365
-        : null;
+          ? 90
+          : selectedRecurringFee === "semiannually_fee"
+            ? 180
+            : selectedRecurringFee === "annually_fee"
+              ? 365
+              : null;
 
     if (daysToAdd === null) return null;
 
     return new Date(now.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
   };
 
-  const nextChargeDate = getNextChargeDate(
-    selectedRecurringFee,
-    stateData?.currentTagData?.current_date || new Date()
-  );
-  const adjustableday = adjustableDays({
-    dues: stateData?.currentTagData?.dues,
-    plan: selectedFeeLabel,
-  });
+  const nextChargeDate = getNextChargeDate(selectedRecurringFee, stateData?.currentTagData?.current_date || new Date());
+  const adjustableday = adjustableDays({ dues: stateData?.currentTagData?.dues, plan: selectedFeeLabel })
   const handleConfirmPaymentLastPage = (state) => {
     setShowConfirmModal(false);
 
@@ -855,9 +787,9 @@ const TagDetails = () => {
     let reserveType;
     if (state?.action_type === "buy") {
       if (isReserved) {
-        reserveType = "existing";
+        reserveType = 'existing';
       } else {
-        reserveType = "new";
+        reserveType = 'new';
       }
     } else {
       reserveType = "new";
@@ -875,10 +807,10 @@ const TagDetails = () => {
       // Use the selected phone number for both fields
       phone_number: stripPlusFromPhone(userData.phone_number),
       amount: priceBreakdown?.totalPrice?.toString(),
-      payment_method: "telebirr",
+      payment_method: businessType == "BuyGoods" ? "telebirr" : "telebirr_partnerapp",
       reserve_type: reserveType,
       msisdn: formattedMsisdn,
-      business_type: "BuyGoods",
+      business_type: businessType,
       service_fee: state?.service_fee,
       recurring_fee_type: state?.recurring_fee_type,
       recurring_fee_amount: state?.recurring_fee_amount,
@@ -892,27 +824,20 @@ const TagDetails = () => {
       // exchange_days_adjust: adjustableday, this will be used in future
       exchange_days_adjust: "0",
       dues: stateData?.currentTagData?.dues || 0,
-      next_charge_date: nextChargeDate
-        ? moment(nextChargeDate).format("YYYY-MM-DD")
-        : null,
+      next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null
     };
 
     if (state?.tag_list_type) {
       values.tag_list_type = state.tag_list_type;
 
-      const serviceId =
-        state?.recurring_fee_label || getServiceId(state?.recurring_fee_type);
+      const serviceId = state?.recurring_fee_label || getServiceId(state?.recurring_fee_type);
 
       if (state?.tag_list_type === "premium_tag_list") {
         values.tag_list = {
           id: state?.id,
           tag_no: state?.tag_no || "",
           tag_name: state?.tag_name || "",
-          tag_price: (
-            state?.tag_price ||
-            state?.tag_name_price ||
-            "0"
-          ).toString(),
+          tag_price: (state?.tag_price || state?.tag_name_price || "0").toString(),
           service_fee: (state?.service_fee || "0").toString(),
           service_id: serviceId,
           tag_type: state?.tag_type || "VIP",
@@ -929,9 +854,7 @@ const TagDetails = () => {
           stamp_duty: priceBreakdown?.stampDuty,
           total_amount: priceBreakdown?.totalPrice,
           exchange_days_adjust: "0",
-          next_charge_date: nextChargeDate
-            ? moment(nextChargeDate).format("YYYY-MM-DD")
-            : null,
+          next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null
         };
       } else if (state?.tag_list_type === "corp_tag_list") {
         // Handle corporate tags
@@ -956,9 +879,7 @@ const TagDetails = () => {
           stamp_duty: priceBreakdown?.stampDuty,
           total_amount: priceBreakdown?.totalBasePrice,
           exchange_days_adjust: "0",
-          next_charge_date: nextChargeDate
-            ? moment(nextChargeDate).format("YYYY-MM-DD")
-            : null,
+          next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null
         };
       } else {
         values.tag_id = state?.tag_id !== undefined ? state?.tag_id : null;
@@ -968,11 +889,7 @@ const TagDetails = () => {
           tag_no: state?.tag_no || "",
           tag_name: state?.tag_name || "",
           tag_price: (state?.tag_price || "0").toString(),
-          service_fee: (
-            state?.recurring_fee_amount ||
-            state?.service_fee ||
-            "0"
-          ).toString(),
+          service_fee: (state?.recurring_fee_amount || state?.service_fee || "0").toString(),
           service_id: serviceId,
           tag_type: state?.tag_type || "",
           tag_digits: state?.tag_digits || 0,
@@ -980,7 +897,7 @@ const TagDetails = () => {
           status: state?.status || 1,
           comments: state?.comments || "",
           tax: (state?.tax || "0").toString(),
-          is_premium: state?.tag_list_type === "vip_tag_list" ? true : false,
+          is_premium: state?.tag_list_type === 'vip_tag_list' ? true : false,
           // Add tax related values
           excisetax: priceBreakdown?.excisetax,
           vatable_total: priceBreakdown?.totalPrice,
@@ -988,31 +905,27 @@ const TagDetails = () => {
           stamp_duty: priceBreakdown?.stampDuty,
           total_amount: priceBreakdown?.totalPrice,
           exchange_days_adjust: "0",
-          next_charge_date: nextChargeDate
-            ? moment(nextChargeDate).format("YYYY-MM-DD")
-            : null,
+          next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null
         };
       }
     }
 
     // For debugging
     if (state.mode == "resubscribe") {
+
       const payload = {
-        corp_subscriber_id: state?.reserve_tag_id,
+        corp_subscriber_id: state?.reserve_tag_id
       };
 
       APICall("post", payload, "customer/re-subscribe")
-        .then((res) => {
+        .then(res => {
           if (res?.success) {
-            setDisableBtn(true);
+            setDisableBtn(true)
             setTimeout(() => {
               setDisableBtn(false);
             }, 5 * 60 * 1000);
             if (!res?.data?.corp_reserved_tag_id) {
-              localStorage.setItem(
-                "merchId",
-                payload?.corp_reserve_tag_id || null
-              );
+              localStorage.setItem('merchId', payload?.corp_reserve_tag_id || null);
               window.location.replace(res?.data);
             } else {
               toast.success(res?.message || "");
@@ -1022,7 +935,7 @@ const TagDetails = () => {
             toast.error(res?.message || "Failed to process request");
           }
         })
-        .catch((err) => {
+        .catch(err => {
           toast.error(err?.message || "An error occurred");
         });
     } else {
@@ -1036,9 +949,7 @@ const TagDetails = () => {
 
     let payLoad = {
       ...stateData,
-      ...(isPremium && stateData.corp_premium_tag_list
-        ? stateData.corp_premium_tag_list
-        : {}),
+      ...(isPremium && stateData.corp_premium_tag_list ? stateData.corp_premium_tag_list : {}),
       totalPrice: priceBreakdown?.totalPrice,
       terms: data.term,
       service_fee: stateData.service_fee,
@@ -1052,18 +963,16 @@ const TagDetails = () => {
       is_premium: isPremium, // Set is_premium flag
       action_type: currentAction, // Add action type (buy or reserve)
       exchange_days_adjust: "0",
-      next_charge_date: nextChargeDate
-        ? moment(nextChargeDate).format("YYYY-MM-DD")
-        : null,
-    };
-    setStateValue(payLoad);
-    onSubmitPayment(payLoad);
+      next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null
+    }
+    setStateValue(payLoad)
+    onSubmitPayment(payLoad)
     // navigate(ConstentRoutes.processPayment, { state: payLoad })
   };
-  const [error, setErrors] = useState(false);
+  const [error, setErrors] = useState(false)
   const handleBuyClick = () => {
     if (selectedRecurringFee == "") {
-      return setErrors(true);
+      return setErrors(true)
     }
     if (watchAllField?.term == false) {
       setError("term", {
@@ -1082,15 +991,11 @@ const TagDetails = () => {
         corp_reserve_tag_id: stateData?.reserve_tag_id || null,
         title: `#${stateData?.tag_name}` || `#${stateData?.tittle}` || "",
         customer_tag_no: stateData?.tag_no || "",
-        phone_number: stateData?.currentTagData?.msisdn?.replace(/^\+/, ""),
-        amount: (
-          priceBreakdown?.totalPrice ||
-          stateData?.price ||
-          "0"
-        ).toString(),
+        phone_number: stateData?.currentTagData?.msisdn?.replace(/^\+/, ''),
+        amount: (priceBreakdown?.totalPrice || stateData?.price || "0").toString(),
         payment_method: "telebir",
         reserve_type: "existing",
-        msisdn: stateData?.currentTagData?.msisdn?.replace(/^\+/, ""),
+        msisdn: stateData?.currentTagData?.msisdn?.replace(/^\+/, ''),
         business_type: userData?.business_type || "BuyGoods",
         service_fee: selectedFeeAmount, // Use selected fee amount
         // Add recurring fee information
@@ -1100,9 +1005,7 @@ const TagDetails = () => {
         service_id: selectedFeeLabel,
         exchange_days_adjust: "0",
         dues: stateData?.currentTagData?.dues || 0,
-        next_charge_date: nextChargeDate
-          ? moment(nextChargeDate).format("YYYY-MM-DD")
-          : null,
+        next_charge_date: nextChargeDate ? moment(nextChargeDate).format("YYYY-MM-DD") : null,
         // Include is_premium flag if it exists
         is_premium: isPremium,
         is_exchange_number: isExchangeFlow,
@@ -1124,22 +1027,22 @@ const TagDetails = () => {
           stamp_duty: priceBreakdown?.stampDuty || 0,
           vatable_total: priceBreakdown?.totalPrice || 0,
           is_premium: isPremium,
-        },
+        }
       };
       setData(payload);
-      setPaymentType(true);
-      return;
+      setPaymentType(true)
+      return
     }
-    setActionType("buy");
-    handleSubmit((data) => onSubmit(data, "buy"))();
+    setActionType('buy');
+    handleSubmit((data) => onSubmit(data, 'buy'))();
   };
 
   const handleReserveClick = () => {
     if (selectedRecurringFee == "") {
-      return setErrors(true);
+      return setErrors(true)
     }
-    setActionType("reserve");
-    handleSubmit((data) => onSubmit(data, "reserve"))();
+    setActionType('reserve');
+    handleSubmit((data) => onSubmit(data, 'reserve'))();
   };
 
   const renderActionButtons = () => {
@@ -1149,12 +1052,10 @@ const TagDetails = () => {
           <Button
             className="py-5 px-4 bg-secondary text-white"
             onClick={handleBuyClick}
-            disabled={
-              (!hasMsisdn && !selectedPhoneNumberId && !isExchangeFlow) ||
-              disableBtn
-            }
+            disabled={(!hasMsisdn && !selectedPhoneNumberId && !isExchangeFlow) || disableBtn}
+
           >
-            {t("buttons.buyTag")}
+            Buy NameTAG
           </Button>
         </div>
       );
@@ -1167,8 +1068,9 @@ const TagDetails = () => {
             className="py-4 px-4 bg-secondary text-white"
             onClick={handleReserveClick}
             disabled={!hasMsisdn && !selectedPhoneNumberId}
+
           >
-            {t("buttons.reserveNameTag")}
+            Reserve NameTAG
           </Button>
         </div>
       );
@@ -1180,22 +1082,24 @@ const TagDetails = () => {
           className="py-4 px-4 bg-secondary text-white"
           onClick={handleBuyClick}
           disabled={
-            !isExchangeFlow &&
-            ((!hasMsisdn && !selectedPhoneNumberId) || disableBtn)
+            !isExchangeFlow && (
+              (!hasMsisdn && !selectedPhoneNumberId) || disableBtn
+            )
           }
         >
-          {isExchangeFlow ? t("buttons.changeNameTag") : t("buttons.buyTag")}
+          {isExchangeFlow ? "Change NameTAG" : "Buy NameTAG"}
         </Button>
 
-        {!isExchangeFlow && (
+        {!isExchangeFlow &&
           <Button
             className="py-4 px-4 bg-secondary text-white"
             onClick={handleReserveClick}
-            disabled={(!hasMsisdn && !selectedPhoneNumberId) || disableBtn}
+            disabled={!hasMsisdn && !selectedPhoneNumberId || disableBtn}
+
           >
-            {t("buttons.reserveNameTag")}
+            Reserve NameTAG
           </Button>
-        )}
+        }
       </div>
     );
   };
@@ -1203,13 +1107,13 @@ const TagDetails = () => {
   const formatPhoneNumber = (phoneNumber) => {
     if (!phoneNumber) return "";
 
-    const digitsOnly = phoneNumber.replace(/\D/g, "");
+    const digitsOnly = phoneNumber.replace(/\D/g, '');
 
-    if (digitsOnly.startsWith("251") && digitsOnly.length >= 12) {
+    if (digitsOnly.startsWith('251') && digitsOnly.length >= 12) {
       return `+251 ${digitsOnly.substring(3, 4)}${digitsOnly.substring(4)}`;
-    } else if (digitsOnly.startsWith("09") && digitsOnly.length >= 10) {
+    } else if (digitsOnly.startsWith('09') && digitsOnly.length >= 10) {
       return `+251 ${digitsOnly.substring(1)}`;
-    } else if (digitsOnly.startsWith("9") && digitsOnly.length >= 9) {
+    } else if (digitsOnly.startsWith('9') && digitsOnly.length >= 9) {
       return `+251 ${digitsOnly}`;
     }
 
@@ -1223,7 +1127,7 @@ const TagDetails = () => {
     } else {
       // Regular flow - call the buy tag API
     }
-  };
+  }
 
   const getCurrentPhoneNumber = () => {
     if (hasMsisdn) {
@@ -1231,9 +1135,7 @@ const TagDetails = () => {
     } else if (selectedPhoneNumber) {
       return selectedPhoneNumber;
     } else if (selectedPhoneNumberId) {
-      const selectedPhone = availablePhoneNumbers.find(
-        (p) => p.id === selectedPhoneNumberId
-      );
+      const selectedPhone = availablePhoneNumbers.find(p => p.id === selectedPhoneNumberId);
       return selectedPhone ? selectedPhone.msisdn : "";
     } else {
       return userData?.phone_number || "";
@@ -1249,16 +1151,18 @@ const TagDetails = () => {
     const phoneId = e.target.value;
     setSelectedPhoneNumberId(phoneId);
     if (phoneId) {
-      const selectedPhone = availablePhoneNumbers.find((p) => p.id == phoneId);
+      const selectedPhone = availablePhoneNumbers.find(p => p.id == phoneId);
       if (selectedPhone) {
         setSelectedPhoneNumber(selectedPhone.msisdn);
       }
     } else {
-      setSelectedPhoneNumber("");
+      setSelectedPhoneNumber('');
     }
   };
 
-  console.log(stateData);
+
+
+  console.log(stateData)
 
   return (
     <>
@@ -1269,78 +1173,61 @@ const TagDetails = () => {
               NameTAG Exchange Mode
             </Typography>
             <Typography className="text-sm mt-1">
-              You are about to change your current NameTAG #
-              {currentTagData?.tag_no + " " || ""}
+              You are about to change your current NameTAG #{currentTagData?.tag_no + " " || ""}
               to NameTAG #{tagData?.tag_no}. This action cannot be undone.
             </Typography>
           </div>
         )}
         <div className="p-4 rounded-xl shadow md:mt-6">
-          {stateData?.mode == "resubscribe" ? (
+          {stateData?.mode == "resubscribe" ?
             <Typography className="text-[#1F1F2C] pb-3 px-6 border-b text-lg font-semibold">
-              {isReserved
-                ? t("dashboard.resubTag")
-                : docStatus.status !== 1
-                ? t("dashboard.reserveTag")
-                : actionType
-                ? actionType === "buy"
-                  ? t("dashboard.buyTag")
-                  : t("dashboard.reserveTag")
-                : t("dashboard.tagDetail")}{" "}
-              {isPremium ? t("dashboard.premium") : ""}
+              {isReserved ? "Resubscribe NameTAG" :
+                (docStatus.status !== 1 ? "Reserve NameTAG" :
+                  (actionType ? (actionType === 'buy' ? "Buy NameTAG" : "Reserve NameTAG") : "NameTAG Details"))} {isPremium ? "- Premium" : ""}
             </Typography>
-          ) : (
+            :
             <Typography className="text-[#1F1F2C] pb-3 px-6 border-b text-lg font-semibold">
-              {isReserved
-                ? t("dashboard.buyTag")
-                : docStatus.status !== 1
-                ? t("dashboard.reserveTag")
-                : actionType
-                ? actionType === "buy"
-                  ? t("dashboard.buyTag")
-                  : t("dashboard.reserveTag")
-                : t("dashboard.tagDetail")}{" "}
-              {isPremium ? t("dashboard.premium") : ""}
+              {isReserved ? "Buy NameTAG" :
+                (docStatus.status !== 1 ? "Reserve NameTAG" :
+                  (actionType ? (actionType === 'buy' ? "Buy NameTAG" : "Reserve NameTAG") : "NameTAG Details"))} {isPremium ? "- Premium" : ""}
             </Typography>
-          )}
+          }
 
           <div className="flex justify-between mt-3 border bg-[#F6F7FB] border-[#77777733] px-5 py-3 rounded-xl">
-            <Typography className="text-[14px]">{t("nameTag")}</Typography>
-            <Typography className="text-[14px] ">{tagData.tag_name}</Typography>
+            <Typography className="text-[14px]">NameTAG</Typography>
+            <Typography className="text-[14px] ">
+              {tagData.tag_name}
+            </Typography>
           </div>
 
           <div className="flex justify-between border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
-            <Typography className="text-[14px]">
-              {t("nameTag")} {t("dashboard.number")}
+            <Typography className="text-[14px]">NameTAG Number</Typography>
+            <Typography className="text-[14px] ">
+              #{tagData.tag_no}
             </Typography>
-            <Typography className="text-[14px] ">#{tagData.tag_no}</Typography>
           </div>
 
           <div className="flex justify-between mt-3 border bg-[#F6F7FB] border-[#77777733] px-5 py-3 rounded-xl">
-            <Typography className="text-[14px]">
-              {t("nameTag")} {t("dashboard.category")}
+            <Typography className="text-[14px]">NameTAG Category</Typography>
+            <Typography className="text-[14px] ">
+              {tagData.tag_type}
             </Typography>
-            <Typography className="text-[14px] ">{tagData.tag_type}</Typography>
           </div>
-          {stateData.msisdn && (
+          {stateData.msisdn &&
             <div className="flex justify-between border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
-              <Typography className="text-[14px]">
-                {t("dashboard.regMobileNumber")}
-              </Typography>
+              <Typography className="text-[14px]">Registered Mobile Number</Typography>
               <Typography className="text-[14px] ">
                 {formatPhoneNumberCustom(stateData.msisdn)}
               </Typography>
             </div>
-          )}
+          }
 
           {/* Reserved tag indicator if applicable */}
-          {isReserved && stateData?.mode != "resubscribe" && (
+          {(isReserved && stateData?.mode != "resubscribe") && (
             <div className="flex justify-between border border-blue-300 bg-blue-50 px-5 py-3 rounded-xl mt-3">
-              <Typography className="text-[14px]">
-                {t("dashboard.serviceStatus")}
-              </Typography>
+              <Typography className="text-[14px]">Service Status</Typography>
               <Typography className="text-[14px] font-bold text-blue-600">
-                {t("dashboard.reserved")}
+                Reserved
               </Typography>
             </div>
           )}
@@ -1348,26 +1235,23 @@ const TagDetails = () => {
           {/* Display Premium Tag notice if applicable */}
           {/* {isPremium && ( */}
           <div className="flex justify-between border bg-[#008fd547] px-5 py-3 rounded-xl mt-3">
-            <Typography className="text-[14px]">
-              {t("nameTag")} {t("dashboard.type")}
-            </Typography>
+            <Typography className="text-[14px]">NameTAG Type</Typography>
             <Typography className="text-[14px] font-bold ">
-              {isPremium ? t("premium") : t("dashboard.Corporate")}
+              {isPremium ? "Premium" : "Corporate"}
             </Typography>
           </div>
           {/* )} */}
 
-          {!hasMsisdn && !isExchangeFlow && (
+
+
+          {(!hasMsisdn && !isExchangeFlow) && (
             <div className="px-5 py-4 mt-3">
               <Typography className="text-[#1F1F2C] text-sm font-medium bg-[#F8F9FA] p-3 rounded-lg border border-[#E9ECEF]">
-                {t("dashboard.pleaseSelectNumberInfo")}{" "}
-                <button
+                Please select Mobile Number from the dropdown below to map with selected NameTAG Number or to add a new Mobile Number <button
                   onClick={goToNumberManagement}
                   className="text-secondary hover:underline font-medium"
                   type="button"
-                >
-                  {t("dashboard.clickHere")}
-                </button>
+                >Click Here</button>
               </Typography>
             </div>
           )}
@@ -1377,15 +1261,13 @@ const TagDetails = () => {
               <div className="flex justify-between">
                 <div className="flex gap-2 items-center">
                   <Typography className="text-[14px]">
-                    {t("dashboard.regMobileNumber")}
+                    Registered Mobile Number
                   </Typography>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <Typography className="text-[14px] md:min-w-[200px] border border-[#8dc63f] p-2 rounded-lg text-[#0000008F]">
-                    {isExchangeFlow
-                      ? formatPhoneNumber(stateData?.currentTagData?.msisdn)
-                      : formatPhoneNumber(stateData.msisdn)}
+                    {isExchangeFlow ? formatPhoneNumber(stateData?.currentTagData?.msisdn) : formatPhoneNumber(stateData.msisdn)}
                   </Typography>
                 </div>
               </div>
@@ -1395,17 +1277,14 @@ const TagDetails = () => {
               <div className="flex justify-between flex-wrap">
                 <div className="flex gap-2 items-center">
                   <Typography className="text-[14px]">
-                    {t("dashboard.mobileNo")}
+                    Mobile Number
                   </Typography>
                 </div>
 
                 <div className="flex items-center gap-2">
                   {loadingPhoneNumbers ? (
-                    <Typography className="text-sm text-gray-500">
-                      {t("dashboard.loading")}
-                    </Typography>
-                  ) : availablePhoneNumbers &&
-                    availablePhoneNumbers.length > 0 ? (
+                    <Typography className="text-sm text-gray-500">Loading...</Typography>
+                  ) : availablePhoneNumbers && availablePhoneNumbers.length > 0 ? (
                     <div className="flex gap-2 items-center">
                       <select
                         value={selectedPhoneNumberId}
@@ -1413,13 +1292,11 @@ const TagDetails = () => {
                         className="min-w-[200px] w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none text-sm bg-white"
                       >
                         {/* Default option */}
-                        <option disabled value="">
-                          {t("dashboard.selectMobileNo")}
-                        </option>
+                        <option disabled value="">Select Mobile Number</option>
 
                         {availablePhoneNumbers
-                          .filter((number) => number.tag_status !== 1)
-                          .map((number) => (
+                          .filter(number => number.tag_status !== 1)
+                          .map(number => (
                             <option key={number.id} value={number.id}>
                               {formatPhoneNumber(number.msisdn)}
                             </option>
@@ -1436,17 +1313,14 @@ const TagDetails = () => {
                     </div>
                   ) : (
                     <div className="flex gap-2 items-center">
-                      <Typography className="text-sm text-gray-500">
-                        {t("dashboard.noNumberMsg")}{" "}
-                      </Typography>
+                      <Typography className="text-sm text-gray-500">No Numbers to Buy </Typography>
                       <Button
                         size="sm"
                         className="bg-secondary flex items-center gap-1"
                         onClick={goToNumberManagement}
                         type="button"
                       >
-                        <FaPlusCircle className="h-3 w-3" />{" "}
-                        {t("dashboard.add")}
+                        <FaPlusCircle className="h-3 w-3" /> Add
                       </Button>
                     </div>
                   )}
@@ -1455,29 +1329,22 @@ const TagDetails = () => {
             </div>
           )}
           <div className="flex justify-between border px-5 border-[#77777733] bg-[#F6F7FB] py-3 rounded-xl mt-3">
-            <Typography className="text-[14px]">
-              {t("dashboard.subscriptionFee")}
-            </Typography>
+            <Typography className="text-[14px]">Subscription Fee</Typography>
             <Typography className="text-[14px] font-bold ">
-              {Number(stateData?.tag_price)?.toFixed(2) || ""}{" "}
-              {t("dashboard.etb")}
+              {Number(stateData?.tag_price)?.toFixed(2) || ""} ETB
             </Typography>
           </div>
           <div className="border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
             {/* Recurring Fee Package Selection */}
             <div className="mt-3">
               <div className="flex justify-between flex-wrap select-payment-option gap-2 ">
-                <Typography className="text-[14px]">
-                  {stateData?.mode == "resubscribe"
-                    ? t("dashboard.servicePlan")
-                    : t("dashboard.selectServicePlan")}{" "}
-                </Typography>
+                <Typography className="text-[14px]">{stateData?.mode == "resubscribe" ? "" : "Select"} Service Plan</Typography>
                 <div className="w-64">
                   <Select
                     value={selectedRecurringFee || ""}
                     onChange={(value) => {
-                      setSelectedRecurringFee(value);
-                      setErrors(false);
+                      setSelectedRecurringFee(value)
+                      setErrors(false)
                     }}
                     disabled={stateData?.mode == "resubscribe"}
                     label="Select Plan"
@@ -1486,7 +1353,7 @@ const TagDetails = () => {
                   >
                     {availableOptions.map((option) => (
                       <Option key={option.value} value={option.value}>
-                        {option.label} ({option.amount} {t("dashboard.etb")})
+                        {option.label} ({option.amount} ETB)
                       </Option>
                     ))}
                   </Select>
@@ -1495,25 +1362,22 @@ const TagDetails = () => {
 
               <div className="flex justify-between mt-2">
                 <Typography className="text-[14px]">
-                  {selectedFeeLabel} {t("dashboard.recurringFee")}
+                  {selectedFeeLabel} Recurring Fee
                 </Typography>
                 <Typography className="text-[14px] ">
-                  {Number(selectedFeeAmount)?.toFixed(2)} {t("dashboard.etb")}
+                  {Number(selectedFeeAmount)?.toFixed(2)} ETB
                 </Typography>
               </div>
-              {isExchangeFlow && stateData?.currentTagData?.dues < 0 && (
+              {(isExchangeFlow && stateData?.currentTagData?.dues < 0) &&
                 <div className="flex justify-between mt-2">
                   <Typography className="text-[14px]">
-                    {t("dashboard.outstanding")} {t("dashboard.recurringFee")}{" "}
-                    {t("dashboard.previousPlan")}
+                    {"Outstanding"} Recurring Fee (Previous Plan)
                   </Typography>
                   <Typography className="text-[14px] ">
-                    {Math.abs(stateData?.currentTagData?.dues)?.toFixed(2) ||
-                      ""}{" "}
-                    {t("dashboard.etb")}
+                    {Math.abs(stateData?.currentTagData?.dues)?.toFixed(2) || ""} ETB
                   </Typography>
                 </div>
-              )}
+              }
               {/* {(stateData?.currentTagData?.dues > 0 && isExchangeFlow) &&
                 <div className="flex justify-between mt-2">
                   <Typography className="text-[14px]">
@@ -1538,56 +1402,39 @@ const TagDetails = () => {
           {/* Detailed Price Breakdown with tax components */}
           <div className="border border-[#77777733] bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
             <Typography className="text-[16px] font-medium mb-2 border-b pb-2">
-              {t("dashboard.priceBreakDown")}
+              Price Breakdown
             </Typography>
 
             <div className="flex justify-between">
-              <Typography className="text-[14px]">
-                {t("dashboard.subTotal")}{" "}
-              </Typography>
+              <Typography className="text-[14px]">Sub Total </Typography>
               <Typography className="text-[14px] ">
-                {priceBreakdown?.totalBasePrice || ""} {t("dashboard.etb")}
+                {(priceBreakdown?.totalBasePrice || "")} ETB
               </Typography>
             </div>
             <div className="flex justify-between mt-2">
-              <Typography className="text-[14px]">
-                {t("dashboard.vat")} (15%)
-              </Typography>
+              <Typography className="text-[14px]">VAT (15%)</Typography>
               <Typography className="text-[14px] ">
-                {priceBreakdown?.totalVAT || ""} {t("dashboard.etb")}
+                {priceBreakdown?.totalVAT || ""} ETB
               </Typography>
             </div>
             <div className="flex justify-between mt-2">
-              <Typography className="text-[14px]">
-                {t("dashboard.exciseTax")}
-              </Typography>
+              <Typography className="text-[14px]">Excise Tax</Typography>
               <Typography className="text-[14px] ">
-                {priceBreakdown.excisetax || ""} {t("dashboard.etb")}
+                {priceBreakdown.excisetax || ""} ETB
               </Typography>
             </div>
-
-            {/* <div className="flex justify-between mt-2">
-             <Typography className="text-[14px] font-bold">Vatable Total</Typography>
-             <Typography className="text-[14px] font-bold">
-               {vatableTotalAmount.toFixed(2)} ETB
-             </Typography>
-           </div> */}
-
             <div className="flex justify-between mt-2">
-              <Typography className="text-[14px]">
-                {t("dashboard.stampDuty")}
-              </Typography>
+              <Typography className="text-[14px]">Stamp Duty</Typography>
               <Typography className="text-[14px] ">
-                {priceBreakdown?.stampDuty || ""} {t("dashboard.etb")}
+                {priceBreakdown?.stampDuty || ""} ETB
               </Typography>
             </div>
 
             <div className="flex justify-between mt-3 border-t py-2 font-medium">
               <div className="flex items-center gap-2">
-                <Typography className="text-[14px] font-bold">
-                  {t("dashboard.total")}{" "}
-                </Typography>
+                <Typography className="text-[14px] font-bold">Total Amount </Typography>
                 {selectedRecurringFee && (
+
                   <Tooltip
                     className="cursor-pointer bg-[#f6f7fb] shadow-xl border border-[#77777733]"
                     content={
@@ -1597,8 +1444,7 @@ const TagDetails = () => {
                           color="white"
                           className="font-normal opacity-80 text-primary"
                         >
-                          {t("dashboard.totalInfo")}{" "}
-                          {moment(nextChargeDate).format("DD-MM-YYYY")}.
+                          Total Amount: This includes both the one-time subscription fee and all applicable recurring fees up to {moment(nextChargeDate).format("DD-MM-YYYY")}.
                         </Typography>
                       </div>
                     }
@@ -1621,17 +1467,35 @@ const TagDetails = () => {
                 )}
               </div>
               <Typography className="text-[14px] font-bold">
-                {priceBreakdown?.totalPrice || ""} {t("dashboard.etb")}
+                {priceBreakdown?.totalPrice || ""} ETB
               </Typography>
             </div>
           </div>
+
+          {/* {actionType === "buy" && docStatus?.status !== 0 && ( */}
+          <div className="border-[#77777733] border bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
+            <div className="flex justify-between items-center">
+              <Typography className="text-[14px]">Payment Option</Typography>
+              <div className="w-80">
+                <Select
+                  value={businessType}
+                  onChange={(value) => setBusinessType(value)}
+                  className="border border-[#8dc63f] rounded-lg"
+                >
+                  <Option value="TransferToOtherOrg">Payment via telebirr partner App</Option>
+                  <Option value="BuyGoods">Payment via telebirr super App</Option>
+                </Select>
+              </div>
+            </div>
+          </div>
+          {/* )} */}
 
           <div className="px-5 rounded-xl mt-3 text-[#555]">
             <div className="flex items-center">
               <span className="text-red-800 ">*</span>{" "}
               <Checkbox
                 {...register("term", {
-                  required: t("dashboard.termError"),
+                  required: "You must accept the Terms & Conditions to continue",
                 })}
                 style={
                   errors.term
@@ -1641,20 +1505,16 @@ const TagDetails = () => {
                 onClick={() => clearErrors()}
               />
               <Typography className="text-sm cursor-pointer leading-[40px] ">
-                <span
-                  className="text-[#008fd5] hover:underline"
+                <span className="text-[#008fd5] hover:underline"
                   onClick={() => {
-                    window.open(ConstentRoutes.termofuse, "_blank");
+                    window.open(ConstentRoutes.termofuse, "_blank")
                   }}
-                >
-                  {t("dashboard.termAndCondition")}{" "}
-                </span>
+                >Terms and Conditions </span>
+
               </Typography>
             </div>
             {errors.term && (
-              <p className="text-left mt-1 text-sm text-[#FF0000]">
-                {errors.term.message}
-              </p>
+              <p className="text-left mt-1 text-sm text-[#FF0000]">{errors.term.message}</p>
             )}
           </div>
           {renderActionButtons()}
@@ -1694,14 +1554,16 @@ const TagDetails = () => {
             stamp_duty: priceBreakdown?.stampDuty,
             base_price: priceBreakdown?.totalBasePrice,
             total_amount: priceBreakdown?.totalPrice,
+            businessType: businessType,
             selectedAmount: selectedFeeAmount,
-            selectedFeeLabel: selectedFeeLabel,
+            selectedFeeLabel: selectedFeeLabel
           }}
           user={`+${stateData?.currentTagData?.msisdn}`}
           isCustomer={true}
           isExchangeFlow={isExchangeFlow}
         />
       )}
+
 
       {/* for corporate user */}
       {actionType === "buy" && docStatus?.status !== 0 && (
@@ -1715,7 +1577,8 @@ const TagDetails = () => {
             VAT: priceBreakdown?.totalVAT,
             stamp_duty: priceBreakdown?.stampDuty,
             base_price: priceBreakdown?.totalBasePrice,
-            total_amount: priceBreakdown?.totalPrice,
+            businessType: businessType,
+            total_amount: priceBreakdown?.totalPrice
           }}
           phoneNumber={formatPhoneNumber(getCurrentPhoneNumber())}
           businessType={"BuyGoods"}
@@ -1736,9 +1599,11 @@ const TagDetails = () => {
             VAT: priceBreakdown?.totalVAT,
             stamp_duty: priceBreakdown?.stampDuty,
             base_price: priceBreakdown?.totalBasePrice,
-            total_amount: priceBreakdown?.totalPrice,
+            businessType: businessType,
+            total_amount: priceBreakdown?.totalPrice
           }}
           type={actionType}
+
           user={formatPhoneNumber(getCurrentPhoneNumber())}
         />
       )}

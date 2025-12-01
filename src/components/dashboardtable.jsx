@@ -3,13 +3,12 @@ import { Button, Chip, Spinner, Typography } from "@material-tailwind/react";
 import { FaHashtag, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "./pagination";
 import APICall from "../network/APICall";
 import EndPoints from "../network/EndPoints";
 import { toast } from "react-toastify";
-import { useAppSelector } from "../redux/hooks";
-import { useTranslation } from "react-i18next";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 
 const Dashboardtable = (props) => {
   const {
@@ -31,17 +30,18 @@ const Dashboardtable = (props) => {
 
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [search, setSearch] = useState("");
+  const [loadingPayment, setLoadingPayment] = useState(false);
   const [reserveData, setReserveData] = useState(null);
   const [hasReservedOrBought, setHasReservedOrBought] = useState(false);
-  const { t } = useTranslation()
 
-  const reduxUserData = useAppSelector(state => state.user.userData);
-  const userData = useMemo(() => {
-    if (reduxUserData) return reduxUserData;
-    const stored = localStorage.getItem("user");
-    return stored ? JSON.parse(stored) : {};
-  }, [reduxUserData]);
+  let userData = {}
+  userData = useAppSelector(state => state.user.userData);
+  if (userData == null || userData == undefined) {
+    localStorage.getItem("user");
+    userData = JSON.parse(localStorage.getItem("user"));
+  }
   const customerId = useAppSelector(state => state.user.customerId);
   const corporateDocuments = useAppSelector(state => state.user.corporateDocuments);
 
@@ -258,22 +258,21 @@ const Dashboardtable = (props) => {
   return (
     <div className="rounded-xl shadow pb-7 bg-white">
       <Typography className="block antialiased  text-[#1F1F2C] p-3 px-6 border-b text-lg font-medium">
-        {isCustomer ? t("dashboard.nameTagList") : t("dashboard.corpNameTagList")}
+        {isCustomer ? "NameTAG List" : "Corporate NameTAG List"}
       </Typography>
 
       {isCustomer && hasReservedOrBought && !isExchangeFlow && (
         <div className="bg-blue-50 border border-blue-200 p-3 m-3 rounded-md">
           <Typography className="text-sm text-blue-800">
-            {t("dashboard.reservedNotice")}
+            You have already reserved or purchased a TAG. You can only have one TAG per account.
           </Typography>
         </div>
       )}
       {isExchangeFlow && (
         <div className="bg-blue-50 border border-blue-300 p-3 m-3 rounded-md">
           <Typography className="text-sm text-blue-800">
-            {t("dashboard.changeTagModePrefix")}{" "}
-            <strong>{t("dashboard.changeTagModeHighlight")}</strong>{" "}
-            {t("dashboard.changeTagModeSuffix")}
+            You’re currently in <strong>Change TAG</strong> mode.
+            Select a new TAG to replace your existing one.
           </Typography>
         </div>
       )}
@@ -289,7 +288,7 @@ const Dashboardtable = (props) => {
                 variant="outlined"
                 onClick={() => handleDigitFilter(single?.tag_digits)}
               >
-                {single?.tag_digits}-{t("dashboard.digit")}
+                {single?.tag_digits}-Digit
               </Button>
             ))}
             <Button
@@ -298,7 +297,7 @@ const Dashboardtable = (props) => {
               variant="outlined"
               onClick={handleResetFilters}
             >
-              {t("dashboard.all")}
+              All
             </Button>
           </div>
         ) : (
@@ -311,7 +310,7 @@ const Dashboardtable = (props) => {
                 variant="outlined"
                 onClick={() => handleDigitFilter(single?.tag_digits)}
               >
-                {single?.tag_digits}-{t("dashboard.digit")}
+                {single?.tag_digits}-Digit
               </Button>
             ))}
             <Button
@@ -320,7 +319,7 @@ const Dashboardtable = (props) => {
               variant="outlined"
               onClick={handleResetFilters}
             >
-              {t("dashboard.all")}
+              All
             </Button>
           </div>
         )}
@@ -345,7 +344,7 @@ const Dashboardtable = (props) => {
               variant="outlined"
               onClick={() => setPagination(st => ({ ...st, tag_type: undefined, page: 1 }))}
             >
-              {t("dashboard.all")}
+              All
             </Button>
           </div>
         )}
@@ -381,7 +380,7 @@ const Dashboardtable = (props) => {
                 setPagination((st) => ({ ...st, tag_type: undefined, page: 1 }));
               }}
             >
-              {t("dashboard.allCategories")}
+              All Categories
             </Button>
           </div>
         )}
@@ -390,7 +389,7 @@ const Dashboardtable = (props) => {
         <div className="sm:w-full lg:w-[40%] relative">
           <input
             type="text"
-            placeholder={t("dashboard.searchTag")}
+            placeholder="Search NameTAG by name or number"
             value={search}
             maxLength={search?.startsWith("#") ? 9 : 8}
             onChange={(e) => {
@@ -458,15 +457,15 @@ const Dashboardtable = (props) => {
                 {/* Added Tag Type */}
                 <div className="col-span-1 sm:col-span-1">
                   <Typography className="md:bg-[#F5F5F5] text-center  text-[14px]  rounded-md px-2 py-1">
-                    {single?.tag_type || t("dashboard.tagTypes.standard")}
+                    {single?.tag_type || "Standard"}
                   </Typography>
                 </div>
 
                 <div className=" sm:col-span-1 flex ">
                   <div className="flex items-center md:block gap-1">
-                    <p className="text-[#7A798A] text-[14px]">{t("dashboard.price")}</p>
+                    <p className="text-[#7A798A] text-[14px]">Price</p>
                     <p className="text-secondary text-sm font-bold">
-                      {formatPrice(single?.tag_price)} {t("dashboard.etb")}
+                      {formatPrice(single?.tag_price)} ETB
                     </p>
                   </div>
                 </div>
@@ -475,7 +474,7 @@ const Dashboardtable = (props) => {
                   {single?.status == 1 && (
                     <div className="flex gap-2">
                       <Button className="bg-[#edf6eb] hidden md:block min-w-[100px] py-1 px-3 text-[14px] text-secondary">
-                        {t("buttons.available")}
+                        Available
                       </Button>
                       <Button
                         className="bg-secondary py-1 min-w-[100px] px-3 text-[14px] text-white"
@@ -502,14 +501,14 @@ const Dashboardtable = (props) => {
                         }}
                         disabled={shouldDisableSelectButton}
                       >
-                        {(isCustomer || docStatus?.status == 1) ? t("buttons.available") : ("buttons.reserve")}
+                        {(isCustomer || docStatus?.status == 1) ? "Select" : "Reserve"}
                       </Button>
                     </div>
                   )}
                   {single?.status == 2 && (
                     <div className="flex gap-2">
                       <Button className="bg-gray-100 min-w-[100px] text-red-800 rounded-lg fw-bolder px-3 py-1">
-                        {t("buttons.sold")}
+                        SOLD
                       </Button>
                       <div className="min-w-[100px]" />
                     </div>
@@ -520,7 +519,7 @@ const Dashboardtable = (props) => {
                         variant="ghost"
                         color="red"
                         size="sm"
-                        value={t("buttons.reserved")}
+                        value="Reserved"
                         className="min-w-[100px] text-center"
                       />
                       <div className="min-w-[100px]" />
@@ -535,14 +534,14 @@ const Dashboardtable = (props) => {
 
           {shouldShowNoAvailableTagsMessage && (
             <div className="mt-4 mb-2 text-center text-sm">
-              <p>{t("dashboard.noAvailableTags")}</p>
+              <p>All requested NameTAGs are already sold or reserved. Please consider the options below.</p>
             </div>
           )}
 
           {subscriberTags.length > 0 && (
             <div className="mt-4">
               <Typography className="font-medium text-sm mb-2">
-                {t("dashboard.sections.subscriber")}
+                Subscriber NameTAGs
               </Typography>
               {subscriberTags.map((tag, index) => (
                 <div key={index} className="grid grid-cols-2 sm:grid-cols-7 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
@@ -566,15 +565,15 @@ const Dashboardtable = (props) => {
                   {/* Added Tag Type */}
                   <div className="col-span-1 sm:col-span-1">
                     <Typography className="md:bg-[#F5F5F5] text-center text-xs rounded-md px-2 py-1">
-                      {tag?.tag_type || t("dashboard.tagTypes.standard")}
+                      {tag?.tag_type || "Standard"}
                     </Typography>
                   </div>
 
                   <div className=" sm:col-span-1 flex ">
                     <div className="flex items-center md:block gap-1">
-                      <p className="text-[#7A798A] text-[14px]">{t("dashboard.price")}</p>
+                      <p className="text-[#7A798A] text-[14px]">Price</p>
                       <p className="text-secondary text-sm font-bold">
-                        {formatPrice(tag?.tag_price)} {t("dashboard.etb")}
+                        {formatPrice(tag?.tag_price)} ETB
                       </p>
                     </div>
                   </div>
@@ -609,12 +608,12 @@ const Dashboardtable = (props) => {
                         (isReserveDisabled && docStatus?.status == 0) ||
                         (isCustomer && hasReservedOrBought)}
                     >
-                      {(isCustomer || docStatus?.status == 1) ? t("buttons.select") : t("buttons.reserve")}
+                      {(isCustomer || docStatus?.status == 1) ? "Select" : "Reserve"}
                     </Button>}
 
                     {tag?.status == 2 && (
                       <Button className="bg-gray-100 text-red-800 rounded-lg fw-bolder px-3 py-1">
-                        {t("buttons.sold")}
+                        SOLD
                       </Button>
                     )}
                     {tag?.status == 3 && (
@@ -622,7 +621,7 @@ const Dashboardtable = (props) => {
                         variant="ghost"
                         color="red"
                         size="sm"
-                        value={t("buttons.reserved")}
+                        value="Reserved"
                       />
                     )}
                   </div>
@@ -634,7 +633,7 @@ const Dashboardtable = (props) => {
           {vipTags.length > 0 && (
             <div className="mt-4">
               <Typography className="font-medium text-sm mb-2">
-                {t("dashboard.sections.premium")}
+                Premium NameTAGs
               </Typography>
               {vipTags.map((tag, index) => (
                 <div key={index} className="grid grid-cols-2 items-center sm:grid-cols-7 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
@@ -658,15 +657,15 @@ const Dashboardtable = (props) => {
                   {/* Added Tag Type */}
                   <div className="col-span-1 sm:col-span-1">
                     <Typography className="md:bg-[#F5F5F5] text-center text-[14px] rounded-md px-2 py-1">
-                      {tag?.tag_type || t("dashboard.tagTypes.premium")}
+                      {tag?.tag_type || "Premium"}
                     </Typography>
                   </div>
 
                   <div className="col-span-1 sm:col-span-1">
                     <div className="flex items-center md:block gap-1">
-                      <p className="text-[#7A798A] text-[14px]">{t("dashboard.price")}</p>
+                      <p className="text-[#7A798A] text-[14px]">Price</p>
                       <p className="text-secondary text-sm font-bold">
-                        {formatPrice(tag?.tag_price)} {t("dashboard.etb")}
+                        {formatPrice(tag?.tag_price)} ETB
                       </p>
                     </div>
                   </div>
@@ -674,7 +673,7 @@ const Dashboardtable = (props) => {
                   <div className="col-span-2 sm:col-span-2 flex justify-end gap-2 mt-2 sm:mt-0">
                     {tag.status == 1 && (<div className="flex gap-2">
                       <Button className="bg-[#edf6eb] py-1 px-3 text-[14px] text-secondary">
-                        {t("buttons.available")}
+                        Available
                       </Button>
                       <Button
                         className="bg-secondary py-1 px-3 text-[14px] text-white"
@@ -701,13 +700,13 @@ const Dashboardtable = (props) => {
                         disabled={(isReserveDisabled && docStatus?.status == 0) ||
                           (isCustomer && hasReservedOrBought && isExchangeFlow == false)}
                       >
-                        {(docStatus?.status == 1 || isExchangeFlow || isCustomer) ? t("buttons.select") : t("buttons.reserve")}
+                        {(docStatus?.status == 1 || isExchangeFlow||isCustomer) ? "Select" : "Reserve"}
                       </Button>
                     </div>)}
 
                     {tag?.status == 2 && (
                       <Button className="bg-gray-100 text-red-800 rounded-lg fw-bolder px-3 py-1">
-                        {t("buttons.sold")}
+                        SOLD
                       </Button>
                     )}
                     {tag?.status == 3 && (
@@ -715,7 +714,7 @@ const Dashboardtable = (props) => {
                         variant="ghost"
                         color="red"
                         size="sm"
-                        value={t("buttons.reserved")}
+                        value="Reserved"
                       />
                     )}
                   </div>
@@ -728,7 +727,7 @@ const Dashboardtable = (props) => {
           {suggestedNumbers.length > 0 && (
             <div className="mt-4">
               <Typography className="font-medium text-sm mb-2">
-                {t("dashboard.sections.suggested")}
+                Suggested NameTAGs
               </Typography>
               {suggestedNumbers.map((tag, index) => (
                 <div key={index} className="grid grid-cols-2 sm:grid-cols-7 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
@@ -752,15 +751,15 @@ const Dashboardtable = (props) => {
                   {/* Added Tag Type */}
                   <div className="col-span-1 sm:col-span-1">
                     <Typography className="md:bg-[#F5F5F5] text-center text-xs rounded-md px-2 py-1">
-                      {tag?.tag_type || t("dashboard.tagTypes.suggested")}
+                      {tag?.tag_type || "Suggested"}
                     </Typography>
                   </div>
 
                   <div className=" sm:col-span-1 flex ">
                     <div className="flex items-center md:block gap-1">
-                      <p className="text-[#7A798A] text-[14px]">{t("dashboard.price")}</p>
+                      <p className="text-[#7A798A] text-[14px]">Price</p>
                       <p className="text-secondary text-sm font-bold">
-                        {formatPrice(tag?.tag_price)} {t("dashboard.etb")}
+                        {formatPrice(tag?.tag_price)} ETB
                       </p>
                     </div>
                   </div>
@@ -768,7 +767,7 @@ const Dashboardtable = (props) => {
                   <div className="col-span-2 sm:col-span-2 flex justify-end gap-2 mt-2 sm:mt-0">
                     <div className="flex gap-2">
                       <Button className="bg-[#edf6eb] py-1 px-3 text-xs text-secondary">
-                        {t("buttons.available")}
+                        Available
                       </Button>
                       <Button
                         className="bg-secondary py-1 px-3 text-xs text-white"
@@ -792,7 +791,7 @@ const Dashboardtable = (props) => {
                         disabled={(isReserveDisabled && docStatus?.status == 0) ||
                           (isCustomer && hasReservedOrBought)}
                       >
-                        {(isCustomer || docStatus?.status == 1) ? t("buttons.select") : t("buttons.reserve")}
+                        {(isCustomer || docStatus?.status == 1) ? "Select" : "Reserve"}
                       </Button>
                     </div>
                   </div>
@@ -805,7 +804,7 @@ const Dashboardtable = (props) => {
           {!loading && data?.length == 0 && subscriberTags.length == 0 &&
             vipTags.length == 0 && suggestedNumbers.length == 0 && (
               <p className="min-h-32 flex justify-center items-center font-medium text-sm">
-                {t("dashboard.noSearchResults")}
+                No NameTAGs found for your search criteria.
               </p>
             )}
         </div>

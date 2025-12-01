@@ -1,0 +1,60 @@
+{
+  "brand": "My App",
+  "welcome": "Welcome",
+  "tagline": "Build fast, ship faster.",
+  "language": "Language",
+  "home": "Home",
+  "sectorOverview": "Sector Overview",
+  "nameTag": "NameTAG",
+  "identity": "Your Identity, Simplified",
+  "service": "Service",
+  "profile": "Profile",
+  "changePassword": "Change Password",
+  "logout": "Logout",
+  "register": "Register",
+  "accountType": "Select Account Type",
+  "corpCustomer": "Corporate Customer",
+  "indCustomer": "Individual Customer",
+  "indAccountTitle": "Individual Customer Account Registration",
+  "login": {
+    "login": "Login",
+    "desc": "Please enter your username and password to log in to your NameTAG account.",
+    "enterUserName": "Enter username",
+    "enterPassword": "Enter password",
+    "remember": "Remember Me",
+    "link1": "Register as Corporate",
+    "link2": "Register as individual",
+    "link3": "Forgot Password"
+  },
+  "common": {
+    "accountInfo": "Account Information",
+    "termAndCondition": "Terms & Conditions",
+    "form": {
+      "firstName": "First Name",
+      "fatherName": "Father Name",
+      "userName": "User Name",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "email": "Email",
+      "faydaNo": "Fayda Number",
+      "mobileNo": "Mobile Number",
+      "verificationCode": "Verification Code",
+      "submit": "Submit",
+      "passwordLength": "• Length 5-15 • one uppercase letter •one lowercase letter • one special character (!@#$%^&*)",
+      "mobileError": "Phone number must start with 9 and be 9 digits long (excluding country code)",
+      "sentOtp": "Send OTP",
+      "resendOtp": "Resend OTP",
+      "pleaseWait": "Please wait...",
+      "alreadyAccount": "Already have an account?",
+      "errors": {
+        "firstName": "First name is required",
+        "fatherName": "Father name is required",
+        "userName": "Username is required",
+        "password": "Password is required",
+        "confirmPassword": "Confirm Password is required",
+        "verificationCode": "Verification code is required",
+        "termAndCondition": "You must accept the Terms & Conditions to continue"
+      }
+    }
+  }
+}

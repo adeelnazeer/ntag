@@ -9,10 +9,8 @@ import { toast } from 'react-toastify';
 import { formatPhoneNumberCustom } from '../../utilities/formatMobileNumber';
 import { IoMdCloseCircle } from "react-icons/io";
 import PhoneInput from "react-phone-number-input"; // Import PhoneInput
-import { useTranslation } from "react-i18next";
 
 const CallPinPageIndividual = () => {
-    const { t } = useTranslation(["blockPage"]);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [showAddDialog, setShowAddDialog] = useState({ show: false });
     const [selectedNumber, setSelectedNumber] = useState(null);
@@ -23,6 +21,7 @@ const CallPinPageIndividual = () => {
     const [blockType, setBlockType] = useState('mobileNumber'); // 'mobileNumber' or 'tagNumber'
     const [valueToBlock, setValueToBlock] = useState('+2519'); // Initialize with country code
     const [phoneError, setPhoneError] = useState(""); // For validation errors
+    const [isValidPhone, setIsValidPhone] = useState(false); // Track validation state
     const [tagStatus, setTagStatus] = useState("loading"); // "active", "reserve", "none"
     const [reserveData, setReserveData] = useState([])
     const [showAddWhiteList, setShowAddWhiteList] = useState(false)
@@ -55,11 +54,11 @@ const CallPinPageIndividual = () => {
 
                 setNumbers(blockedNumbers);
             } else {
-                toast.error(response?.message || t("errors.fetchWhitelist"));
+                toast.error(response?.message || "Failed to fetch whitelist numbers");
                 setNumbers([]);
             }
         } catch (error) {
-            toast.error(error?.message || t("errors.loadWhitelist"));
+            toast.error(error || error?.message);
             setNumbers([]);
         } finally {
             setLoading(false);
@@ -120,13 +119,13 @@ const CallPinPageIndividual = () => {
     useEffect(() => {
         // Fetch mobile numbers first
         checkTagStatus()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Reset valueToBlock and validation states when changing block type
     useEffect(() => {
         if (blockType === 'mobileNumber') {
             setValueToBlock('+2519'); // Set default country code for mobile numbers
+            setIsValidPhone(false); // Reset validation state
             setPhoneError(""); // Clear any error messages
         } else {
             setValueToBlock(''); // Clear for TAG numbers
@@ -157,7 +156,7 @@ const CallPinPageIndividual = () => {
             }
         } catch (error) {
             console.error("Error deleting blocked number:", error);
-            toast.error(error?.message || t("errors.removeWhitelist"));
+            toast.error(error || error?.message || "Error removing number from whitelist");
         } finally {
             setDeletingNumber(false);
             setShowConfirmDialog(false);
@@ -172,36 +171,42 @@ const CallPinPageIndividual = () => {
         }));
         setBlockType('mobileNumber');
         setValueToBlock('+2519'); // Set default country code when opening modal
+        setIsValidPhone(false); // Reset validation state
         setPhoneError(""); // Clear any error messages
     };
 
     // Function to validate phone number
     const validatePhoneNumber = (phone) => {
         if (!phone) {
-            setPhoneError(t("errors.required"));
+            setPhoneError("Mobile Number is required");
+            setIsValidPhone(false);
             return false;
         }
 
         // Check if the number starts with +251
         if (!phone.startsWith('+251')) {
-            setPhoneError(t("errors.mustStartCountry"));
+            setPhoneError("Mobile Number must start with +251");
+            setIsValidPhone(false);
             return false;
         }
 
         const cleanNumber = phone.replace('+251', '').replace(/\s/g, '');
 
         if (!cleanNumber.startsWith('9')) {
-            setPhoneError(t("errors.mustStart9"));
+            setPhoneError("Mobile Numbers must start with 9 after country code");
+            setIsValidPhone(false);
             return false;
         }
 
         if (cleanNumber.length !== 9) {
-            setPhoneError(t("errors.length"));
+            setPhoneError("Mobile Number must be 9 digits after country code");
+            setIsValidPhone(false);
             return false;
         }
 
         // All validations passed
         setPhoneError("");
+        setIsValidPhone(true);
         return true;
     };
 
@@ -231,7 +236,7 @@ const CallPinPageIndividual = () => {
                 toast.error(response?.message);
             }
         } catch (error) {
-            toast.error(error?.message || t("errors.loadWhitelist"));
+            toast.error(error || error?.message);
         } finally {
             setAddingNumber(false);
         }
@@ -262,7 +267,7 @@ const CallPinPageIndividual = () => {
                 toast.error(response?.message);
             }
         } catch (error) {
-            toast.error(error?.message || t("errors.addWhitelist"));
+            toast.error(error || error?.message);
         } finally {
             setAddingNumber(false);
         }
@@ -282,17 +287,17 @@ const CallPinPageIndividual = () => {
         <div className="bg-white rounded-xl shadow pb-6">
             <div className="flex flex-col">
                 <Typography className="block antialiased text-[#1F1F2C] p-3 px-6 border-b text-md font-medium">
-                    {t("callPinPage.title")}
+                    Manage incoming Call PIN and White List  Numbers
                 </Typography>
 
                 <div className="p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                     <div>
                         <Typography className="block  text-[#1F1F2C] text-xs ">
-                            {t("callPinPage.labels.mobileNumber")} {formatPhoneNumberCustom(userData?.phone_number)}
+                            Mobile Number: {formatPhoneNumberCustom(userData?.phone_number)}
                         </Typography>
                         {reserveData?.[0]?.callpin > 0 &&
                             <Typography className="block mt-2  text-[#1F1F2C] text-xs ">
-                                {t("callPinPage.labels.currentPin")} {reserveData?.[0]?.callpin}
+                                Current Call PIN: {reserveData?.[0]?.callpin}
                             </Typography>
                         }
                     </div>
@@ -303,7 +308,7 @@ const CallPinPageIndividual = () => {
                             disabled={tagStatus != "active"}
                             className="bg-secondary flex items-center gap-1 py-2 px-4 text-sm"
                         >
-                            {t("callPinPage.buttons.setPin")}
+                            Set PIN
                         </Button>
                         {reserveData?.[0]?.callpin > 0 &&
                             <Button
@@ -312,7 +317,7 @@ const CallPinPageIndividual = () => {
                                 disabled={tagStatus != "active"}
                                 className="bg-secondary flex items-center gap-1 py-2 px-4 text-sm"
                             >
-                                {t("callPinPage.buttons.removePin")}
+                                Remove PIN
                             </Button>
                         }
                         <Button
@@ -324,7 +329,7 @@ const CallPinPageIndividual = () => {
                             className="bg-secondary flex items-center gap-1 py-2 px-4 text-sm"
                         >
                             <BiPlusCircle className="w-4 h-4" />
-                            {t("callPinPage.buttons.addWhitelist")}
+                            Add to Whitelist
                         </Button>
                     </div>
                 </div>
@@ -339,22 +344,22 @@ const CallPinPageIndividual = () => {
                             <thead className="bg-[#F6F7FB]">
                                 <tr>
                                     <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                                        {t("callPinPage.table.headers.sr")}
+                                        Sr#
                                     </th>
                                     <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                                        {t("callPinPage.table.headers.nameTag")}
+                                        NameTAG
                                     </th>
                                     <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                                        {t("callPinPage.table.headers.whitelistNumber")}
+                                        Whitelist Number
                                     </th>
                                     <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                                        {t("callPinPage.table.headers.whitelistDate")}
+                                        Whitelist Date
                                     </th>
                                     <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                                        {t("callPinPage.table.headers.pin")}
+                                        PIN
                                     </th>
                                     <th className="py-3 px-4 text-center text-xs font-medium text-[#7A798A]">
-                                        {t("callPinPage.table.headers.action")}
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
@@ -379,7 +384,7 @@ const CallPinPageIndividual = () => {
                                                     onClick={() => handleDelete(number)}
                                                     className=" bg-red-500"
                                                 >
-                                                    {t("callPinPage.table.actions.delete")}
+                                                    Delete
                                                 </Button>
                                             </div>
                                         </td>
@@ -388,15 +393,15 @@ const CallPinPageIndividual = () => {
                                     <tr>
                                         {reserveData?.[0]?.callpin < 1 ?
                                             <td colSpan="6" className="py-6 px-4 text-center text-sm text-[#7A798A]">
-                                                {t("callPinPage.table.empty.noPin")}
+                                                Currently No PIN is set for Incoming Calls. Please set a PIN to Add numbers to whitelist
                                             </td>
                                             : reserveData?.length == 0 ?
                                                 <td colSpan="6" className="py-6 px-4 text-center text-sm text-[#7A798A]">
-                                                    {t("callPinPage.table.empty.noActiveLinked")}
+                                                    No active NameTAG is linked to your mobile number.
                                                 </td>
                                                 :
                                                 <td colSpan="6" className="py-6 px-4 text-center text-sm text-[#7A798A]">
-                                                        {t("callPinPage.table.empty.noWhitelist")}
+                                                    No whitelist number found!
                                                 </td>
                                         }
                                     </tr>
@@ -420,14 +425,14 @@ const CallPinPageIndividual = () => {
 
                         <div className="mt-4 text-center">
                             <Typography variant="h5" className="font-bold text-gray-900">
-                                {t("callPinPage.confirmRemoval.title")}
+                                Confirm Removal
                             </Typography>
 
                             <Typography className="mt-2 text-sm text-gray-600">
-                                {t("callPinPage.confirmRemoval.description", { number: selectedNumber?.aparty_no || "" })}
+                                Are you sure you want to remove mobile number +{selectedNumber?.aparty_no || ""} from whitelist?
                             </Typography>
                             <Typography className="mt-2 text-sm text-gray-600">
-                                {t("callPinPage.confirmRemoval.hint")}
+                                Callers not on your whitelist must enter the correct PIN to reach your NameTAG.
                             </Typography>
                         </div>
 
@@ -437,7 +442,7 @@ const CallPinPageIndividual = () => {
                                 onClick={() => setShowConfirmDialog(false)}
                                 disabled={deletingNumber}
                             >
-                                {t("callPinPage.buttons.cancel")}
+                                Cancel
                             </Button>
                             <Button
                                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
@@ -446,9 +451,9 @@ const CallPinPageIndividual = () => {
                             >
                                 {deletingNumber ? (
                                     <div className="flex items-center gap-2">
-                                        <Spinner size="sm" className="h-3 w-3" /> {t("callPinPage.buttons.removing")}
+                                        <Spinner size="sm" className="h-3 w-3" /> Removing...
                                     </div>
-                                ) : t("callPinPage.buttons.confirm")}
+                                ) : "Confirm"}
                             </Button>
                         </div>
                     </div>
@@ -468,40 +473,37 @@ const CallPinPageIndividual = () => {
 
                         <div className="mt-4 text-center">
                             <Typography variant="h5" className="font-bold text-gray-900">
-                                {showAddDialog?.value === "remove"
-                                    ? t("callPinPage.modalPin.removeTitle")
-                                    : t("callPinPage.modalPin.setTitle")}
+                                {showAddDialog?.value == "remove" ? "Remove Call PIN for your incoming calls" : "Set Call PIN for your incoming Calls"}
                             </Typography>
 
                             <Typography className="mt-2 text-sm text-left text-gray-600">
-                                {showAddDialog?.value === "remove"
-                                    ? t("callPinPage.modalPin.descRemove")
-                                    : t("callPinPage.modalPin.descSet")}
+                                {showAddDialog?.value == "remove" ? <div><span>Remove Call PIN for your incoming calls?</span><br />
+                                    <span>Once the PIN is removed, all callers will be able to reach your NameTAG without entering a PIN.</span>
+                                </div>
+                                    :
+                                    <span>
+                                        Are you sure you want to set a PIN for incoming calls? Your Callers will be required to enter the PIN before connecting to your NameTAG number.                                    </span>
+                                }
                                 <br />
                                 <br />
-                                {t("callPinPage.modalPin.nameTag", { tag: reserveData?.[0]?.tag_no || t("callPinPage.common.na") })}
-                                <br />
-                                {t("callPinPage.modalPin.mobileNumber", { number: userData?.phone_number || t("callPinPage.common.na") })}
-                                <br />
+                                NameTAG =  #{reserveData?.[0]?.tag_no || ""} <br />
+                                Mobile Number = +{userData?.phone_number || ""} <br />
                                 <span>
-                                    {t("callPinPage.modalPin.currentPin", {
-                                        pin: reserveData?.[0]?.callpin > 0 ? reserveData?.[0]?.callpin : t("callPinPage.modalPin.notDefined")
-                                    })}
-                                    <br />
+                                    Current Call PIN =  {reserveData?.[0]?.callpin > 0 ? reserveData?.[0]?.callpin : "Not Defined" || ""} <br />
                                 </span>
                             </Typography>
                         </div>
 
                         <div className="mt-6">
                             <div className="mb-4">
-                                {showAddDialog?.value === "remove" ?
+                                {showAddDialog?.value == "remove" ?
                                     <Typography className="mt-2 text-sm text-left font-medium text-primary">
-                                        {t("callPinPage.modalPin.noteNoPin")}
+                                        No PIN is required - callers can reach your NameTAG without entering the PIN
                                     </Typography>
                                     :
                                     <div className="mb-4">
                                         <label className="block text-sm font-medium text-[#7A798A]">
-                                            {t("callPinPage.modalPin.selectSingleDigit")}
+                                            Please select Single Digit PIN
                                         </label>
                                         <div>
                                             <select
@@ -522,7 +524,7 @@ const CallPinPageIndividual = () => {
                                                     }))
                                                 }}
                                             >
-                                                <option value="">{t("callPinPage.modalPin.selectPinPlaceholder")}</option>
+                                                <option value="">Select PIN</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -546,7 +548,7 @@ const CallPinPageIndividual = () => {
                                 onClick={() => setShowAddDialog({ show: false })}
                                 disabled={addingNumber}
                             >
-                                {t("callPinPage.buttons.cancel")}
+                                Cancel
                             </Button>
                             <Button
                                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
@@ -555,9 +557,9 @@ const CallPinPageIndividual = () => {
                             >
                                 {addingNumber ? (
                                     <div className="flex items-center gap-2">
-                                        <Spinner size="sm" className="h-3 w-3" /> {t("callPinPage.buttons.processing")}
+                                        <Spinner size="sm" className="h-3 w-3" /> Processing...
                                     </div>
-                                ) : t("callPinPage.buttons.confirm")}
+                                ) : "Confirm"}
                             </Button>
                         </div>
                     </div>
@@ -578,10 +580,10 @@ const CallPinPageIndividual = () => {
 
                         <div className="mt-4 text-center">
                             <Typography variant="h5" className="font-bold text-gray-900">
-                                {t("callPinPage.modalAddWhitelist.title")}
+                                Add to Whitelist
                             </Typography>
                             <Typography className="mt-2 text-sm text-left text-gray-600">
-                                {t("callPinPage.modalAddWhitelist.subtitle")}
+                                Whitelisted callers can call your NameTAG without a PIN.
                             </Typography>
                         </div>
 
@@ -589,7 +591,7 @@ const CallPinPageIndividual = () => {
                             <div className="mb-4">
                                 <div className="mb-4">
                                     <label className="block text-xs font-medium text-[#7A798A] mb-1">
-                                        {t("callPinPage.modalAddWhitelist.enterMobileLabel")}
+                                        Enter Mobile Number to add Whitelist
                                     </label>
                                     <PhoneInput
                                         defaultCountry="ET"
@@ -605,7 +607,7 @@ const CallPinPageIndividual = () => {
                                     />
                                     {blockType === 'mobileNumber' && (
                                         <>
-                                            <p className="text-xs text-gray-500 mt-1">{t("callPinPage.modalAddWhitelist.formatHint")}</p>
+                                            <p className="text-xs text-gray-500 mt-1">Format: +251xxxxxxxxx</p>
                                             {phoneError && (
                                                 <p className="text-xs text-red-500 mt-1">{phoneError}</p>
                                             )}
@@ -616,7 +618,7 @@ const CallPinPageIndividual = () => {
                                 {/* Display the selected mobile number instead of the dropdown */}
                                 <div className="mb-4">
                                     <label className="block text-xs font-medium text-[#7A798A] mb-1">
-                                        {t("callPinPage.modalAddWhitelist.registeredMobileLabel")}
+                                        Your Registered Mobile Number
                                     </label>
                                     <div className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-gray-50">
                                         +{userData?.phone_number || ""}
@@ -631,7 +633,7 @@ const CallPinPageIndividual = () => {
                                 onClick={() => setShowAddWhiteList(false)}
                                 disabled={addingNumber}
                             >
-                                {t("callPinPage.buttons.cancel")}
+                                Cancel
                             </Button>
                             <Button
                                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
@@ -640,9 +642,9 @@ const CallPinPageIndividual = () => {
                             >
                                 {addingNumber ? (
                                     <div className="flex items-center gap-2">
-                                        <Spinner size="sm" className="h-3 w-3" /> {t("callPinPage.buttons.adding")}
+                                        <Spinner size="sm" className="h-3 w-3" /> Adding...
                                     </div>
-                                ) : t("callPinPage.buttons.confirm")}
+                                ) : "Confirm"}
                             </Button>
                         </div>
                     </div>

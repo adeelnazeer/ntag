@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Button, Spinner } from "@material-tailwind/react";
 import { toast } from 'react-toastify';
 import { formatPhoneNumberCustom } from '../../utilities/formatMobileNumber';
@@ -10,10 +10,8 @@ import { IoMdCloseCircle } from "react-icons/io";
 import moment from 'moment';
 import { ConstentRoutes, getTagStatus } from '../../utilities/routesConst';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from "react-i18next";
 
 const ChangeMyTAG = () => {
-  const { t } = useTranslation(["changeTag"]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false);
@@ -35,7 +33,6 @@ const ChangeMyTAG = () => {
 
   useEffect(() => {
     fetchTagInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchTagInfo = async () => {
@@ -49,7 +46,7 @@ const ChangeMyTAG = () => {
       }
     } catch (error) {
       console.error("Error fetching TAG info:", error);
-      toast.error(t("messages.fetchError"));
+      toast.error("Error loading TAG information");
 
     } finally {
       setLoading(false);
@@ -70,7 +67,7 @@ const ChangeMyTAG = () => {
     try {
       setChangingTag(true);
       setTimeout(() => {
-        toast.success(t("messages.changeSuccess"));
+        toast.success("Your TAG has been changed successfully");
         setTagData({
           ...tagData,
           change_count: tagData.change_count + 1
@@ -81,7 +78,7 @@ const ChangeMyTAG = () => {
 
     } catch (error) {
       console.error("Error changing TAG:", error);
-      toast.error(t("messages.changeFailed"));
+      toast.error("Failed to change your TAG");
       setChangingTag(false);
       setShowConfirmDialog(false);
     }
@@ -98,12 +95,10 @@ const ChangeMyTAG = () => {
   return (
     <div className="bg-white rounded-xl shadow">
       <Typography className="font-sans block antialiased text-[#1F1F2C] p-3 px-6 border-b text-md font-medium">
-        {t("title")}
+        Manage Change NameTAG
       </Typography>
       {tagData?.length > 0 &&
-        <p className="flex justify-between border border-blue-200 bg-blue-50 mx-8 px-4 text-sm text-blue-800 py-3 rounded-lg mt-3">
-          {t("note")}
-        </p>
+        <p className="flex justify-between border border-blue-200 bg-blue-50 mx-8 px-4 text-sm text-blue-800 py-3 rounded-lg mt-3">Note: Once you change your NameTAG, any payments made for the previous NameTAG will not be carried forward. We recommend changing your NameTAG at the end of your current plan.</p>
 
       }
       {loading ? (
@@ -116,29 +111,25 @@ const ChangeMyTAG = () => {
 
             {(tagData?.[0]?.type == "reserve" || tagData?.[0]?.status != 1) ?
               <div className='pt-4 text-center'>
-                <p>{t("table.noActiveLinked")}</p>
+                <p>You don't have any active NameTAG linked to your mobile number, and no NameTAG is available to change.</p>
               </div>
               :
               <table className="min-w-full bg-white">
                 <thead className="bg-[#F8FAFF]">
                   <tr>
                     <th className="py-3 px-4 text-left text-sm font-medium text-gray-700">
-                      {t("table.headers.nameTagNumber")}
+                      TAG Number
                     </th>
                     <th className="py-3 px-4 whitespace-pre text-left text-sm font-medium text-gray-700">
-                      {t("table.headers.mobileNumber")}
+                      Registered Number
                     </th>
-                    <th className="py-3 px-4 whitespace-pre text-left text-sm font-medium text-gray-700">
-                      {t("table.headers.recurringFeeDueDate")}
-                    </th>
-                    <th className="py-3 px-4 whitespace-pre text-left text-sm font-medium text-gray-700">
-                      {t("table.headers.outstandingFee")}
-                    </th>
+                    <th className="py-3 px-4 whitespace-pre text-left text-sm font-medium text-gray-700">Recurring Fee Due Date</th>
+                    <th className="py-3 px-4 whitespace-pre text-left text-sm font-medium text-gray-700">Outstanding Recurring Fee</th>
                     <th className="py-3 px-4 text-left text-sm font-medium text-gray-700">
-                      {t("table.headers.status")}
+                      Service Status
                     </th>
                     <th className="py-3 px-4 text-center text-sm font-medium text-gray-700">
-                      {t("table.headers.action")}
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -146,17 +137,14 @@ const ChangeMyTAG = () => {
 
                   <tr>
                     {tagData.length > 0 ? <>
-                      <td className="py-4 px-4 text-sm text-gray-700">#{tagData[0].tag_no || t("common.na")}</td>
+                      <td className="py-4 px-4 text-sm text-gray-700">#{tagData[0].tag_no}</td>
+                      <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(userData.phone_number)}</td>
                       <td className="py-4 px-4 text-sm text-gray-700">
-                        {formatPhoneNumberCustom(userData.phone_number || t("common.na"))}
+                        {tagData[0]?.next_charge_dt ? moment(tagData?.[0]?.next_charge_dt).format("DD-MM-YYYY") : 'N/A'}
                       </td>
                       <td className="py-4 px-4 text-sm text-gray-700">
-                        {tagData[0]?.next_charge_dt ? moment(tagData?.[0]?.next_charge_dt).format("DD-MM-YYYY") : t("common.na")}
-                      </td>
-                      <td className="py-4 px-4 text-sm text-gray-700">
-                        {(tagData?.[0]?.dues > 0 ? 0 : Math.abs(tagData?.[0]?.dues || 0))} {t("common.etb")}
-                      </td>
-                      <td className="py-4 px-4 text-sm text-gray-700 capitalize">{getTagStatus(tagData?.[0]?.status)}</td>
+                        {tagData?.[0]?.dues > 0 ? 0 : Math.abs(tagData?.[0]?.dues)} ETB
+                      </td>                      <td className="py-4 px-4 text-sm text-gray-700 capitalize">{getTagStatus(tagData?.[0]?.status)}</td>
                       <td className="py-4 px-4 text-center">
                         <Button
                           onClick={() => handleChangeTag(tagData[0].tag_no)}
@@ -164,10 +152,10 @@ const ChangeMyTAG = () => {
                           className="bg-secondary"
                           disabled={isChangeDisabled()}
                         >
-                          {t("buttons.changeNameTag")}
+                          Change NameTAG
                         </Button>
                       </td>
-                    </> : <p>{t("table.noTagLinked")}</p>}
+                    </> : <p>You don't have any TAG linked to your mobile number. </p>}
 
                   </tr>
                 </tbody>
@@ -194,14 +182,14 @@ const ChangeMyTAG = () => {
 
             <div className="mt-4 text-center">
               <Typography variant="h5" className="font-bold text-gray-900">
-                {t("confirmDialog.title")}
+                Change NameTAG
               </Typography>
 
               <Typography className="mt-2 text-sm text-gray-600">
-                {t("confirmDialog.description")}
+                Are you sure you want to change your NameTAG?
               </Typography>
               <Typography className="mt-2 text-sm text-gray-600">
-                {t("confirmDialog.remaining", { count: getRemainingChanges() })}
+                You have {getRemainingChanges()} changes remaining.
               </Typography>
             </div>
 
@@ -211,7 +199,7 @@ const ChangeMyTAG = () => {
                 onClick={() => setShowConfirmDialog(false)}
                 disabled={changingTag}
               >
-                {t("confirmDialog.buttons.cancel")}
+                Cancel
               </Button>
               <Button
                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
@@ -220,9 +208,9 @@ const ChangeMyTAG = () => {
               >
                 {changingTag ? (
                   <div className="flex items-center gap-2">
-                    <Spinner size="sm" className="h-3 w-3" /> {t("confirmDialog.buttons.processing")}
+                    <Spinner size="sm" className="h-3 w-3" /> Processing...
                   </div>
-                ) : t("confirmDialog.buttons.confirm")}
+                ) : "Confirm"}
               </Button>
             </div>
           </div>

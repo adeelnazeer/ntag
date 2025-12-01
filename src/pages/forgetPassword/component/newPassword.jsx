@@ -7,10 +7,8 @@ import { useState } from "react";
 import { Button } from "@material-tailwind/react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Input } from "@headlessui/react";
-import { useTranslation } from "react-i18next";
 
 const PasswordReset = ({ setStep, data }) => {
-    const { t } = useTranslation(["auth"]);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState({
         password1: false,
@@ -45,16 +43,16 @@ const PasswordReset = ({ setStep, data }) => {
 
     return (
         <>
-            <h2 className="text-2xl font-bold mb-1">{t("newPassword.title")}</h2>
+            <h2 className="text-2xl font-bold mb-1">Set a New Password</h2>
             <p className="text-gray-900 mb-6 text-xs font-medium">
-                {t("newPassword.description")}
+                Create a new password. Ensure it differs from previous ones for security.
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-2">
                     <div className=" relative">
                         <Input
                             className="w-full rounded-xl p-4 bg-[#F6F7FB] outline-none pr-12"
-                            placeholder={t("newPassword.placeholders.newPassword")}
+                            placeholder="New password"
                             maxLength={15}
                             min={4}
                             type={showPassword?.password1 ? "text" : "password"}
@@ -64,14 +62,14 @@ const PasswordReset = ({ setStep, data }) => {
                                     : { border: "1px solid #8A8AA033" }
                             }
                             {...register("newPassword", {
-                                required: t("newPassword.validation.passwordRequired"),
+                                required: "Password is required",
                                 minLength: {
                                     value: 5,
-                                    message: t("newPassword.validation.passwordMinLength"),
+                                    message: "Password must be at least 5 characters",
                                 },
                                 maxLength: {
                                     value: 15,
-                                    message: t("newPassword.validation.passwordMaxLength"),
+                                    message: "Password must not exceed 15 characters",
                                 },
                             })}
                             onContextMenu={(e) => e.preventDefault()} // disable right-click
@@ -95,7 +93,7 @@ const PasswordReset = ({ setStep, data }) => {
                     <div className=" relative">
                         <Input
                             className="w-full rounded-xl p-4 bg-[#F6F7FB] outline-none pr-12"
-                            placeholder={t("newPassword.placeholders.confirmNewPassword")}
+                            placeholder="Confirm new passwprd"
                             maxLength={15}
                             min={4}
                             type={showPassword?.password2 ? "text" : "password"}
@@ -106,18 +104,18 @@ const PasswordReset = ({ setStep, data }) => {
                                     : { border: "1px solid #8A8AA033" }
                             }
                             {...register("confirmPassword", {
-                                required: t("newPassword.validation.passwordRequired"),
+                                required: "Password is required",
                                 minLength: {
                                     value: 5,
-                                    message: t("newPassword.validation.passwordMinLength"),
+                                    message: "Password must be at least 5 characters",
                                 },
                                 maxLength: {
                                     value: 15,
-                                    message: t("newPassword.validation.passwordMaxLength"),
+                                    message: "Password must not exceed 15 characters",
                                 },
                                 validate: (val) => {
                                     if (watch("newPassword") != val) {
-                                        return t("newPassword.validation.passwordsDoNotMatch");
+                                        return "passwords do not match";
                                     }
                                     return true;
                                 },
@@ -144,7 +142,7 @@ const PasswordReset = ({ setStep, data }) => {
                     type="submit"
                     loading={loading}
                 >
-                    {t("newPassword.buttons.changePassword")}
+                    Change Password
                 </Button>
             </form>
         </>

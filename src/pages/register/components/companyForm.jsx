@@ -12,7 +12,6 @@ import { Controller } from "react-hook-form";
 import TickIcon from '../../../assets/images/tick.png';
 import APICall from "../../../network/APICall";
 import EndPoints from "../../../network/EndPoints";
-import { useTranslation } from "react-i18next";
 
 // Apply CSS fix for autofill styling
 const autofillStyle = `
@@ -37,7 +36,6 @@ const GetLabel = ({ name }) => {
 const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, control, setValue, setActiveStep }) => {
   const watchAll = watch();
   const location = useLocation()
-  const { t } = useTranslation()
   const registerData = useRegisterHook();
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [industries, setIndustries] = useState([])
@@ -122,7 +120,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center py-3 md:gap-0 gap-6">
           <Button className=" bg-secondary text-white">
-            {t("compInfo")}
+            Company Information for NameTAG Registration
           </Button>
           <Typography className="text-[#555] md:text-base text-[16px]  font-semibold">
             <span className="text-secondary">Step 2 of 2</span>
@@ -134,16 +132,16 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
 
           <div className="mb-3">
             <Typography className="text-[#555] md:text-base text-[16px]  font-semibold">
-              {t("contactInfo")}
+              Contact Information
             </Typography>
           </div>
 
           {/* First Name Field */}
           <div className="mb-3">
-            <GetLabel name={t("common.form.firstName")} />
+            <GetLabel name="First Name" />
             <Input
               className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder={t("common.form.firstName")}
+              placeholder="First Name"
               maxLength={15}
               style={
                 errors.contactf_name
@@ -151,7 +149,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                   : { border: "1px solid #8A8AA033" }
               }
               {...register("contactf_name", {
-                required: t("common.form.errors.firstName")
+                required: "First Name is required"
               })}
             />
             {errors.contactf_name && (
@@ -161,10 +159,10 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
 
           {/* Father's Name Field (replaced Last Name) */}
           <div className="mb-3">
-            <GetLabel name={t("common.form.fatherName")} />
+            <GetLabel name="Father's Name" />
             <Input
               className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder={t("common.form.fatherName")}
+              placeholder="Father's Name"
               maxLength={15}
               style={
                 errors.contactl_name
@@ -172,7 +170,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                   : { border: "1px solid #8A8AA033" }
               }
               {...register("contactl_name", {
-                required: t("common.form.errors.fatherName")
+                required: "Father's Name is required"
               })}
             />
             {errors.contactl_name && (
@@ -183,16 +181,16 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
           {/* Contact Number Field */}
           <div className="mb-3">
             <label className="md:text-base text-[16px] text-[#232323]">
-              {t("common.form.contactNo")} <span className="text-red-500">*</span>
+              Contact Number <span className="text-red-500">*</span>
             </label>
             <Controller
               name="contact_no"
               control={control}
               defaultValue=""
               rules={{
-                required: t("common.form.mobileError"),
+                required: "Enter a 9-digit mobile number starting with 9.",
                 validate: (value) =>
-                  validatePhoneNumber(value) || t("common.form.mobileError"),
+                  validatePhoneNumber(value) || "Enter a 9-digit mobile number starting with 9.",
               }}
               render={({ field }) => {
                 useEffect(() => {
@@ -267,16 +265,16 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
           <div className="flex flex-col gap-4 max-w-3xl mx-auto mt-8">
             <div>
               <Typography className="text-[#555] md:text-base text-[16px]   font-semibold">
-                {t("common.compBasicInfo")}
+                Company Basic Information
               </Typography>
             </div>
 
             {/* Company Name Field (read-only) */}
             <div>
-              <GetLabel name={t("common.form.companyName")} />
+              <GetLabel name="Company Name" />
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-                placeholder={t("common.form.companyName")}
+                placeholder="Company Name"
                 maxLength={20}
                 value={location?.state?.company_name || data?.company_name}
                 disabled
@@ -290,7 +288,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
 
             {/* Industry Field */}
             <div>
-              <GetLabel name={t("common.form.industry")} />
+              <GetLabel name="Industry" />
               <select
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none border border-[#8A8AA033]"
                 style={
@@ -306,7 +304,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                   setValue("comp_industry", filterInd?.industry);
                 }}
               >
-                <option value="">{t("common.form.selectIndustry")}</option>
+                <option value="">Select Industry</option>
                 {industries?.map(single =>
                   <option key={single?.id} value={single?.id}>{single?.industry || ""}</option>
                 )}
@@ -318,7 +316,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
 
             {/* Region Dropdown (replaced State/Province) */}
             <div>
-              <GetLabel name={t("common.form.region")} />
+              <GetLabel name="Region" />
               <select
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none border border-[#8A8AA033]"
                 style={
@@ -327,14 +325,14 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                     : { border: "1px solid #8A8AA033" }
                 }
                 {...register("corp_region_id", {
-                  required: t("common.form.errors.region")
+                  required: "Region is required"
                 })}
                 onChange={(e) => {
                   const filterReg = regions?.find(x => x?.id == e.target.value)
                   setValue("comp_state", filterReg?.region);
                 }}
               >
-                <option value="">{t("common.form.selectRegion")}</option>
+                <option value="">Select a region</option>
                 {regions?.map(single =>
                   <option key={single?.id} value={single?.id}>{single?.region || ""}</option>
                 )}
@@ -346,10 +344,10 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
 
             {/* City Field */}
             <div>
-              <GetLabel name={t("common.form.city")} />
+              <GetLabel name="City" />
               <Input
                 className="mt-2 w-full rounded-xl text-black px-4 py-2 bg-white outline-none "
-                placeholder={t("common.form.city")}
+                placeholder="City"
                 maxLength={20}
                 style={
                   errors.comp_city
@@ -363,10 +361,10 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                   }
                 }}
                 {...register("comp_city", {
-                  required: t("common.form.errors.city"),
+                  required: "City is required",
                   pattern: {
                     value: /^[A-Za-z\s]+$/, // Only letters and spaces
-                    message: t("common.form.errors.numberOnly")
+                    message: "Only letters are allowed"
                   }
                 })}
               />
@@ -377,10 +375,10 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
 
             {/* Specific Address Field */}
             <div>
-              <GetLabel name={t("common.form.address")} />
+              <GetLabel name="Specific Address" />
               <Input
                 className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none "
-                placeholder={t("common.form.address")}
+                placeholder="Address"
                 maxLength={100}
                 style={
                   errors.comp_addr
@@ -388,7 +386,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                     : { border: "1px solid #8A8AA033" }
                 }
                 {...register("comp_addr", {
-                  required: t("common.form.errors.address")
+                  required: "Address is required"
                 })}
               />
               {errors.comp_addr && (
@@ -399,7 +397,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
             {/* TIN Number Field with improved validation - Ensure error message shows */}
             <div className="text-base text-[#555]">
 
-              <GetLabel name={t("common.form.tinNumber")} />
+              <GetLabel name="Business Registration/TIN Number" />
               <div className=" flex items-center gap-2">
                 <div className="w-full">
                   <Input
@@ -407,7 +405,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
                     inputMode="numeric"
                     pattern="[0-9]*"
                     className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none"
-                    placeholder={t("common.form.tinNumber")}
+                    placeholder="Business Registration/TIN Number"
                     maxLength={10}
                     style={
                       errors.comp_reg_no

@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 import { useAppSelector } from "../../../redux/hooks";
 import { toast } from "react-toastify";
-import { useTranslation } from "react-i18next";
 
 const toStr = (v) => (v === 0 || v ? String(v) : "");
 
@@ -23,12 +22,9 @@ const normalize = (p = {}) => ({
 const ContactInfo = ({ profileData, userProfileData }) => {
   const registerData = useRegisterHook();
   const [formDisabled, setFormDisabled] = useState(false);
-  const { t } = useTranslation(["common"]);
 
   // Get corporate documents from Redux state to check approval status
-  const corporateDocuments = useAppSelector(
-    (state) => state.user.corporateDocuments
-  );
+  const corporateDocuments = useAppSelector(state => state.user.corporateDocuments);
 
   const {
     register,
@@ -36,7 +32,7 @@ const ContactInfo = ({ profileData, userProfileData }) => {
     watch,
     reset,
     formState: { errors },
-    setValue,
+    setValue
   } = useForm({
     defaultValues: {
       ...profileData,
@@ -52,9 +48,7 @@ const ContactInfo = ({ profileData, userProfileData }) => {
     if (!corporateDocuments || corporateDocuments.length < 2) return true;
 
     // Allow editing if any document is pending approval (status 0) or rejected (status 2)
-    return corporateDocuments.some(
-      (doc) => doc?.doc_status === "0" || doc?.doc_status === "2"
-    );
+    return corporateDocuments.some(doc => doc?.doc_status === "0" || doc?.doc_status === "2");
   };
 
   useEffect(() => {
@@ -64,6 +58,7 @@ const ContactInfo = ({ profileData, userProfileData }) => {
 
     // Re-apply the full payload now that options exist
     reset(base, { keepDirty: false, keepTouched: false });
+
   }, [userProfileData, reset, setValue]);
 
   useEffect(() => {
@@ -90,15 +85,12 @@ const ContactInfo = ({ profileData, userProfileData }) => {
       contact_fname: data?.contact_fname,
       contact_lname: data?.contact_lname,
       email: data?.email,
-      contact_no: data?.contact_no?.startsWith("+")
-        ? data?.contact_no?.slice(1)
-        : data?.contact_no,
+      contact_no: data?.contact_no?.startsWith('+') ? data?.contact_no?.slice(1) : data?.contact_no,
     });
   };
 
   // Check if documents are approved (both have status 1)
-  const areDocumentsApproved =
-    corporateDocuments?.length >= 2 &&
+  const areDocumentsApproved = corporateDocuments?.length >= 2 &&
     corporateDocuments[0]?.doc_status === "1" &&
     corporateDocuments[1]?.doc_status === "1" &&
     corporateDocuments[2]?.doc_status === "1";
@@ -117,11 +109,11 @@ const ContactInfo = ({ profileData, userProfileData }) => {
       <div className="mt-10 grid max-w-3xl md:grid-cols-2 grid-cols-1 gap-6">
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-            {t("common.form.firstName")}
+            First Name
           </label>
           <Input
             className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none `}
-            placeholder={t("common.form.firstName")}
+            placeholder="First Name"
             maxLength={15}
             style={
               errors?.contact_fname
@@ -129,16 +121,16 @@ const ContactInfo = ({ profileData, userProfileData }) => {
                 : { border: "1px solid #8A8AA033" }
             }
             {...register("contact_fname", { required: true })}
-            // disabled={formDisabled}
+          // disabled={formDisabled}
           />
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-            {t("common.form.fatherName")}
+            Father Name
           </label>
           <Input
             className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none `}
-            placeholder={t("common.form.fatherName")}
+            placeholder="Father Name"
             maxLength={15}
             style={
               errors.contact_lname
@@ -146,16 +138,16 @@ const ContactInfo = ({ profileData, userProfileData }) => {
                 : { border: "1px solid #8A8AA033" }
             }
             {...register("contact_lname", { required: true })}
-            // disabled={formDisabled}
+          // disabled={formDisabled}
           />
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-            {t("common.form.email")}
+            Email
           </label>
           <Input
             className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none `}
-            placeholder={t("common.form.email")}
+            placeholder="Email"
             maxLength={30}
             style={
               errors.email
@@ -163,22 +155,20 @@ const ContactInfo = ({ profileData, userProfileData }) => {
                 : { border: "1px solid #8A8AA033" }
             }
             {...register("email")}
-            // disabled={formDisabled}
+          // disabled={formDisabled}
           />
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-             {t("common.form.contactNo")}
+            Contact Number
           </label>
           <Input
             type="tel"
             inputMode="numeric"
             pattern="[0-9]*"
             autoComplete="off"
-            className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none ${
-              formDisabled ? "bg-gray-100" : ""
-            }`}
-            placeholder= {t("common.form.contactNo")}
+            className={`mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none ${formDisabled ? 'bg-gray-100' : ''}`}
+            placeholder="Contact No"
             maxLength={12}
             value={watch("contact_no") || "2519"}
             onKeyDown={(e) => {
@@ -188,22 +178,12 @@ const ContactInfo = ({ profileData, userProfileData }) => {
               // Allow navigation/control keys
               const ctrl = e.ctrlKey || e.metaKey;
               const allowedKeys = [
-                "Backspace",
-                "Delete",
-                "Tab",
-                "Escape",
-                "Enter",
-                "ArrowLeft",
-                "ArrowRight",
-                "Home",
-                "End",
+                "Backspace", "Delete", "Tab", "Escape", "Enter",
+                "ArrowLeft", "ArrowRight", "Home", "End"
               ];
               if (allowedKeys.includes(key) || ctrl) {
                 // Protect the fixed 2519 prefix from deletion
-                if (
-                  (key === "Backspace" && caret <= 4) ||
-                  (key === "Delete" && caret < 4)
-                ) {
+                if ((key === "Backspace" && caret <= 4) || (key === "Delete" && caret < 4)) {
                   e.preventDefault();
                 }
                 return;
@@ -222,24 +202,17 @@ const ContactInfo = ({ profileData, userProfileData }) => {
             }}
             onPaste={(e) => {
               e.preventDefault();
-              const pasted =
-                (e.clipboardData || window.clipboardData).getData("text") || "";
+              const pasted = (e.clipboardData || window.clipboardData).getData("text") || "";
               let digits = pasted.replace(/\D/g, "");
 
               // Drop any leading attempt to retype 2519
               digits = digits.replace(/^2?5?1?9?/, "");
 
-              const current = (watch("contact_no") || "2519").replace(
-                /\D/g,
-                ""
-              );
+              const current = (watch("contact_no") || "2519").replace(/\D/g, "");
               const rest = current.slice(4); // existing tail after 2519
               const newTail = (rest + digits).slice(0, 8); // max 8 after prefix
 
-              setValue("contact_no", "2519" + newTail, {
-                shouldValidate: true,
-                shouldDirty: true,
-              });
+              setValue("contact_no", "2519" + newTail, { shouldValidate: true, shouldDirty: true });
             }}
             onChange={(e) => {
               let raw = e.target.value.replace(/\D/g, "");
@@ -254,10 +227,7 @@ const ContactInfo = ({ profileData, userProfileData }) => {
               // Cap total length at 12
               if (raw.length > 12) raw = raw.slice(0, 12);
 
-              setValue("contact_no", raw, {
-                shouldValidate: true,
-                shouldDirty: true,
-              });
+              setValue("contact_no", raw, { shouldValidate: true, shouldDirty: true });
             }}
             onFocus={(e) => {
               // If somehow shorter than prefix, snap back
@@ -272,11 +242,7 @@ const ContactInfo = ({ profileData, userProfileData }) => {
                 });
               }
             }}
-            style={
-              errors.contact_no
-                ? { border: "1px solid red" }
-                : { border: "1px solid #8A8AA033" }
-            }
+            style={errors.contact_no ? { border: "1px solid red" } : { border: "1px solid #8A8AA033" }}
             {...register("contact_no", {
               required: "Contact number is required",
               pattern: {
@@ -286,7 +252,7 @@ const ContactInfo = ({ profileData, userProfileData }) => {
             })}
           />
 
-          {errors.contact_no && (
+          {(errors.contact_no) && (
             <p className="text-left mt-1 text-sm text-[#FF0000]">
               {errors.contact_no?.message}
             </p>
@@ -312,13 +278,13 @@ const ContactInfo = ({ profileData, userProfileData }) => {
       <div className="mt-10 max-w-3xl text-center">
         <button
           className={` bg-secondary text-white font-medium px-10 py-3 rounded-lg`}
-          // disabled={formDisabled}
+        // disabled={formDisabled}
         >
           Update Contact Information
         </button>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default ContactInfo;
+export default ContactInfo

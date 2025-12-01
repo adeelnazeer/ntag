@@ -1,15 +1,14 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
-import { BiPlusCircle } from "react-icons/bi";
+import { useState, useEffect } from 'react';
+import { BiPlusCircle } from 'react-icons/bi';
 import { Typography, Button, Spinner } from "@material-tailwind/react";
 import { useAppSelector } from "../redux/hooks";
 import APICall from "../network/APICall";
 import EndPoints from "../network/EndPoints";
-import { toast } from "react-toastify";
-import { formatPhoneNumberCustom } from "../utilities/formatMobileNumber";
+import { toast } from 'react-toastify';
+import { formatPhoneNumberCustom } from '../utilities/formatMobileNumber';
 import { IoMdCloseCircle } from "react-icons/io";
 import PhoneInput from "react-phone-number-input"; // Import PhoneInput
-import { useTranslation } from "react-i18next";
 
 const CallPinPage = () => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -19,24 +18,23 @@ const CallPinPage = () => {
   const [loading, setLoading] = useState(false);
   const [addingNumber, setAddingNumber] = useState(false);
   const [deletingNumber, setDeletingNumber] = useState(false);
-  const [blockType, setBlockType] = useState("mobileNumber"); // 'mobileNumber' or 'tagNumber'
-  const [valueToBlock, setValueToBlock] = useState("+2519"); // Initialize with country code
+  const [blockType, setBlockType] = useState('mobileNumber'); // 'mobileNumber' or 'tagNumber'
+  const [valueToBlock, setValueToBlock] = useState('+2519'); // Initialize with country code
   const [mobileNumbers, setMobileNumbers] = useState([]);
-  const [selectedMsisdn, setSelectedMsisdn] = useState("");
+  const [selectedMsisdn, setSelectedMsisdn] = useState('');
   const [phoneError, setPhoneError] = useState(""); // For validation errors
   const [isValidPhone, setIsValidPhone] = useState(false); // Track validation state
-  const [data, setData] = useState([]);
-  const { t } = useTranslation(["schedule"]);
+  const [data, setData] = useState([])
 
-  const [showAddWhiteList, setShowAddWhiteList] = useState(false);
+  const [showAddWhiteList, setShowAddWhiteList] = useState(false)
   const [pinState, setPinState] = useState({
     pin: "",
-    error: false,
-  });
+    error: false
+  })
 
-  let userData = useAppSelector((state) => state?.user?.user);
+  let userData = useAppSelector(state => state?.user?.user);
   if (!userData) {
-    userData = JSON.parse(localStorage.getItem("user"));
+    userData = JSON.parse(localStorage.getItem('user'))
   }
   const customerId = userData?.id;
 
@@ -54,59 +52,48 @@ const CallPinPage = () => {
 
   // Reset valueToBlock and validation states when changing block type
   useEffect(() => {
-    if (blockType === "mobileNumber") {
-      setValueToBlock("+2519"); // Set default country code for mobile numbers
+    if (blockType === 'mobileNumber') {
+      setValueToBlock('+2519'); // Set default country code for mobile numbers
       setIsValidPhone(false); // Reset validation state
       setPhoneError(""); // Clear any error messages
     } else {
-      setValueToBlock(""); // Clear for TAG numbers
+      setValueToBlock(''); // Clear for TAG numbers
       setPhoneError(""); // Clear any error messages
     }
   }, [blockType]);
 
   const fetchMobileNumbers = async () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    setLoading(true);
-    APICall(
-      "get",
-      null,
-      `${EndPoints.customer.getReserve}/${user?.customer_account_id}`
-    )
+    const user = JSON.parse(localStorage.getItem("user"))
+    setLoading(true)
+    APICall("get", null, `${EndPoints.customer.getReserve}/${user?.customer_account_id}`)
       .then((res) => {
         if (res?.success) {
-          const activeData = res?.data?.filter(
-            (x) => x?.status == 1 || x?.status == 4
-          );
+          const activeData = res?.data?.filter(x => x?.status == 1 || x?.status == 4)
           setData(activeData);
-          if (res?.data?.some((x) => x?.status == 1 || x?.status == 4)) {
+          if (res?.data?.some(x => x?.status == 1 || x?.status == 4)) {
             setSelectedMsisdn(activeData?.[0]?.msisdn);
-            fetchWhitelistNumber(activeData?.[0]?.msisdn);
+            fetchWhitelistNumber(activeData?.[0]?.msisdn)
           }
         } else {
           toast.error(res?.message);
         }
-        setLoading(false);
+        setLoading(false)
       })
       .catch((err) => {
-        setLoading(false);
+        setLoading(false)
       });
     if (!customerId) {
+      console.error("No customer account ID found");
       setLoading(false);
       return;
     }
 
     try {
       setLoading(true);
-      const response = await APICall(
-        "get",
-        null,
-        EndPoints.customer.GetAllNumbers(customerId)
-      );
+      const response = await APICall("get", null, EndPoints.customer.GetAllNumbers(customerId));
 
       if (response?.success && response?.data) {
-        const numbers = Array.isArray(response.data)
-          ? response.data
-          : [response.data];
+        const numbers = Array.isArray(response.data) ? response.data : [response.data];
         setMobileNumbers(numbers);
 
         // Pre-select the first number
@@ -114,11 +101,12 @@ const CallPinPage = () => {
         //   setSelectedMsisdn(numbers[0].msisdn);
         // }
       } else {
-        toast.error(response?.message || t("errors.mobileFetch"));
+        toast.error(response?.message || "Failed to fetch Mobile numbers");
         setMobileNumbers([]);
       }
     } catch (error) {
-       toast.error(t("errors.mobileLoad"));
+      console.error("Error fetching Mobile numbers:", error);
+      toast.error("Error loading Mobile numbers");
       setMobileNumbers([]);
     } finally {
       setLoading(false);
@@ -129,7 +117,7 @@ const CallPinPage = () => {
     try {
       setLoading(true);
       // Remove "+" from the beginning if present
-      const formattedMsisdn = msisdn.replace(/^\+/, "");
+      const formattedMsisdn = msisdn.replace(/^\+/, '');
 
       const response = await APICall(
         "get",
@@ -144,11 +132,11 @@ const CallPinPage = () => {
 
         setNumbers(blockedNumbers);
       } else {
-        toast.error(response?.message || t("errors.whitelistFetch"));
+        toast.error(response?.message || "Failed to fetch whitelist numbers");
         setNumbers([]);
       }
     } catch (error) {
-      toast.error(error || error?.message || t("errors.whitelistLoad"));
+      toast.error(error || error?.message || "Error loading whitelist numbers");
       setNumbers([]);
     } finally {
       setLoading(false);
@@ -171,14 +159,13 @@ const CallPinPage = () => {
 
       if (deleteResponse?.success) {
         toast.success(deleteResponse?.message || "");
-        fetchWhitelistNumber(selectedMsisdn);
+        fetchWhitelistNumber(selectedMsisdn)
       } else {
         toast.error(deleteResponse?.message || "");
       }
     } catch (error) {
-      toast.error(
-        error || error?.message || t("errors.removeWhitelist")
-      );
+      console.error("Error deleting blocked number:", error);
+      toast.error(error || error?.message || "Error removing number from whitelist");
     } finally {
       setDeletingNumber(false);
       setShowConfirmDialog(false);
@@ -186,13 +173,13 @@ const CallPinPage = () => {
   };
 
   const handleAddToBlocklist = (value) => {
-    setShowAddDialog((st) => ({
+    setShowAddDialog(st => ({
       ...st,
       show: true,
-      value: value,
+      value: value
     }));
-    setBlockType("mobileNumber");
-    setValueToBlock("+2519"); // Set default country code when opening modal
+    setBlockType('mobileNumber');
+    setValueToBlock('+2519'); // Set default country code when opening modal
     setIsValidPhone(false); // Reset validation state
     setPhoneError(""); // Clear any error messages
   };
@@ -200,28 +187,28 @@ const CallPinPage = () => {
   // Function to validate phone number
   const validatePhoneNumber = (phone) => {
     if (!phone) {
-      setPhoneError(t("errors.mobile.required"));
+      setPhoneError("Mobile Number is required");
       setIsValidPhone(false);
       return false;
     }
 
     // Check if the number starts with +251
-    if (!phone.startsWith("+251")) {
-      setPhoneError(t("errors.mobile.mustStartCountry"));
+    if (!phone.startsWith('+251')) {
+      setPhoneError("Mobile Number must start with +251");
       setIsValidPhone(false);
       return false;
     }
 
-    const cleanNumber = phone.replace("+251", "").replace(/\s/g, "");
+    const cleanNumber = phone.replace('+251', '').replace(/\s/g, '');
 
-    if (!cleanNumber.startsWith("9")) {
-      setPhoneError(t("errors.mobile.mustStart9"));
+    if (!cleanNumber.startsWith('9')) {
+      setPhoneError("Mobile Numbers must start with 9 after country code");
       setIsValidPhone(false);
       return false;
     }
 
     if (cleanNumber.length !== 9) {
-      setPhoneError(t("errors.mobile.length"));
+      setPhoneError("Mobile Number must be 9 digits after country code");
       setIsValidPhone(false);
       return false;
     }
@@ -235,7 +222,7 @@ const CallPinPage = () => {
   const setCallPin = async () => {
     try {
       setAddingNumber(true);
-      const msisdnFormatted = selectedMsisdn.replace(/^\+/, "");
+      const msisdnFormatted = selectedMsisdn.replace(/^\+/, '');
 
       const payload = {
         msisdn: msisdnFormatted,
@@ -250,8 +237,8 @@ const CallPinPage = () => {
         toast.success(response?.message);
         // // fetchWhitelistNumber(selectedMsisdn); // Refresh the list
         setShowAddDialog({ show: false });
-        fetchMobileNumbers();
-        setPinState({ pin: "", error: false });
+        fetchMobileNumbers()
+        setPinState({ pin: "", error: false })
       } else {
         toast.error(response?.message);
       }
@@ -265,13 +252,13 @@ const CallPinPage = () => {
   const addNumberWhiteList = async () => {
     try {
       setAddingNumber(true);
-      const msisdnFormatted = selectedMsisdn.replace(/^\+/, "");
-      const whiteListNumber = valueToBlock.replace(/^\+/, "");
+      const msisdnFormatted = selectedMsisdn.replace(/^\+/, '');
+      const whiteListNumber = valueToBlock.replace(/^\+/, '');
       const payload = {
         msisdn: msisdnFormatted,
         aparty_no: whiteListNumber,
         channel: "WEB",
-        customer_type: "Corporate",
+        customer_type: "Corporate"
       };
       const response = await APICall(
         "post",
@@ -280,10 +267,10 @@ const CallPinPage = () => {
       );
       if (response?.success) {
         toast.success(response?.message);
-        setValueToBlock("");
+        setValueToBlock("")
         // // fetchWhitelistNumber(selectedMsisdn); // Refresh the list
         setShowAddWhiteList(false);
-        fetchMobileNumbers();
+        fetchMobileNumbers()
       } else {
         toast.error(response?.message);
       }
@@ -299,33 +286,33 @@ const CallPinPage = () => {
   };
 
   // Find the selected mobile number object for display
-  const selectedMobileObject =
-    mobileNumbers.find((num) => num.msisdn === selectedMsisdn) || {};
-  const findNumber = data?.find((x) => x?.msisdn == selectedMsisdn);
+  const selectedMobileObject = mobileNumbers.find(num => num.msisdn === selectedMsisdn) || {};
+  const findNumber = data?.find(x => x?.msisdn == selectedMsisdn)
 
   useEffect(() => {
     if (findNumber?.callpin) {
-      setPinState((st) => ({
+      setPinState(st => ({
         ...st,
         pin: findNumber?.callpin?.toString(),
-        error: false,
-      }));
+        error: false
+      }))
     }
-  }, [findNumber]);
+  }, [findNumber])
 
-  console.log({ data, findNumber, pinState });
+
+  console.log({ data, findNumber, pinState })
 
   return (
     <div className="bg-white rounded-xl shadow pb-6">
       <div className="flex flex-col">
         <Typography className="block antialiased text-[#1F1F2C] p-3 px-6 border-b text-md font-medium">
-          {t("callPin.title")}
+          Manage incoming Call PIN and White List  Numbers
         </Typography>
 
         <div className="p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
           <div className="w-full md:w-64">
             <label className="block text-xs font-medium text-[#7A798A] mb-1">
-              {t("callPin.selectNumber")}
+              Select Your Registered Mobile Number
             </label>
             <select
               value={selectedMsisdn || ""}
@@ -335,7 +322,7 @@ const CallPinPage = () => {
               disabled={loading || mobileNumbers.length === 0}
             >
               {data?.length === 0 && (
-                <option value="">{t("callPin.noNumber")}</option>
+                <option value="">No mobile numbers found</option>
               )}
               {data?.map((num) => (
                 <option key={num.id} value={num.msisdn}>
@@ -343,45 +330,38 @@ const CallPinPage = () => {
                 </option>
               ))}
             </select>
-            {findNumber?.callpin > 0 && (
-              <p className=" text-xs mt-2">
-                {t("callPin.currentPin")} ={" "}
-                {findNumber?.callpin > 0
-                  ? findNumber?.callpin
-                  : t("callPin.notDefined") || ""}{" "}
-              </p>
-            )}
+            {findNumber?.callpin > 0 &&
+              <p className=' text-xs mt-2'>Current PIN =  {findNumber?.callpin > 0 ? findNumber?.callpin : "Not Defined" || ""} </p>
+            }
           </div>
-          <div className=" flex gap-2 items-center">
+          <div className=' flex gap-2 items-center'>
             <Button
               onClick={() => handleAddToBlocklist("set")}
               size="sm"
               className="bg-secondary flex items-center gap-1 py-2 px-4 text-sm"
               disabled={!selectedMsisdn}
             >
-              {findNumber?.callpin > 0
-                ? t("callPin.changePin")
-                : t("callPin.setPin")}
+              {findNumber?.callpin > 0 ? "Change PIN" : "Set PIN"}
             </Button>
-            {findNumber?.callpin > 0 && (
+            {findNumber?.callpin > 0 &&
               <Button
                 onClick={() => handleAddToBlocklist("remove")}
                 size="sm"
                 className="bg-secondary flex items-center gap-1 py-2 px-4 text-sm"
               >
-                {t("callPin.removePin")}
+                Remove PIN
               </Button>
-            )}
+            }
             <Button
               onClick={() => {
-                setShowAddWhiteList(true);
+                setShowAddWhiteList(true)
               }}
               size="sm"
               className="bg-secondary flex items-center gap-1 py-2 px-4 text-sm"
               disabled={!selectedMsisdn || findNumber?.callpin < 1}
             >
               <BiPlusCircle className="w-4 h-4" />
-              {t("callPin.addWhiteList")}
+              Add to Whitelist
             </Button>
           </div>
         </div>
@@ -396,83 +376,66 @@ const CallPinPage = () => {
               <thead className="bg-[#F6F7FB]">
                 <tr>
                   <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                    {t("callPin.table.sr")}
+                    Sr#
                   </th>
                   <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                    {t("callPin.table.nametag")}
+                    NameTAG
                   </th>
                   <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                    {t("callPin.table.whitelistNumber")}
+                    Whitelist Number
                   </th>
                   <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                    {t("callPin.table.whitelistDate")}
+                    Whitelist Date
                   </th>
                   <th className="py-3 px-4 text-left text-xs font-medium text-[#7A798A]">
-                    {t("callPin.table.pin")}
+                    PIN
                   </th>
                   <th className="py-3 px-4 text-center text-xs font-medium text-[#7A798A]">
-                    {t("callPin.table.action")}
+                    Action
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {numbers.length > 0 ? (
-                  numbers.map((number, index) => (
-                    <tr key={number.id}>
-                      <td className="py-4 px-4 text-sm text-gray-700">
-                        {index + 1}
-                      </td>
-                      <td className="py-4 px-4 text-sm text-gray-700">
-                        #{number?.subscriber?.tag_no || ""}
-                      </td>
-                      <td className="py-4 px-4 text-sm text-gray-700">
-                        {formatPhoneNumberCustom(number?.aparty_no || "")}
-                      </td>
-                      <td className="py-4 px-4 text-sm text-gray-700">
-                        {number?.created_at || ""}
-                      </td>
-                      <td className="py-4 px-4 text-sm text-gray-700">
-                        {number?.subscriber?.callpin > 0
-                          ? number?.subscriber?.callpin
-                          : "" || ""}
-                      </td>
-                      <td className="py-4 px-4">
-                        <div className="flex justify-center">
-                          <Button
-                            size="sm"
-                            onClick={() => handleDelete(number)}
-                            className=" bg-red-500"
-                          >
-                            Delete
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
+                {numbers.length > 0 ? numbers.map((number, index) => (
+                  <tr key={number.id}>
+                    <td className="py-4 px-4 text-sm text-gray-700">{index + 1}</td>
+                    <td className="py-4 px-4 text-sm text-gray-700">
+                      #{
+                        (number?.subscriber?.tag_no || "")
+                      }
+                    </td>
+                    <td className="py-4 px-4 text-sm text-gray-700">
+                      {formatPhoneNumberCustom(number?.aparty_no || "")}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-gray-700">{number?.created_at || ""}</td>
+                    <td className="py-4 px-4 text-sm text-gray-700">{number?.subscriber?.callpin > 0 ? number?.subscriber?.callpin : "" || ""}</td>
+                    <td className="py-4 px-4">
+                      <div className="flex justify-center">
+                        <Button
+                          size="sm"
+                          onClick={() => handleDelete(number)}
+                          className=" bg-red-500"
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                )) : (
                   <tr>
-                    {findNumber?.callpin < 1 ? (
-                      <td
-                        colSpan="6"
-                        className="py-6 px-4 text-center text-sm text-[#7A798A]"
-                      >
-                        {t("callPin.empty.noPin")}
+                    {findNumber?.callpin < 1 ?
+                      <td colSpan="6" className="py-6 px-4 text-center text-sm text-[#7A798A]">
+                        Currently No PIN is set for Incoming Calls. Please set a PIN to Add numbers to whitelist
                       </td>
-                    ) : data?.length == 0 ? (
-                      <td
-                        colSpan="6"
-                        className="py-6 px-4 text-center text-sm text-[#7A798A]"
-                      >
-                        {t("callPin.empty.noActive")}
-                      </td>
-                    ) : (
-                      <td
-                        colSpan="6"
-                        className="py-6 px-4 text-center text-sm text-[#7A798A]"
-                      >
-                        {t("callPin.empty.noWhitelist")}
-                      </td>
-                    )}
+                      : data?.length == 0 ?
+                        <td colSpan="6" className="py-6 px-4 text-center text-sm text-[#7A798A]">
+                          No active NameTAG is linked to your mobile number.
+                        </td>
+                        :
+                        <td colSpan="6" className="py-6 px-4 text-center text-sm text-[#7A798A]">
+                          No whitelist number found!
+                        </td>
+                    }
                   </tr>
                 )}
               </tbody>
@@ -494,13 +457,11 @@ const CallPinPage = () => {
 
             <div className="mt-4 text-center">
               <Typography variant="h5" className="font-bold text-gray-900">
-                {t("callPin.confirmRemoval.title")}
+                Confirm Removal
               </Typography>
 
               <Typography className="mt-2 text-sm text-gray-600">
-                {t("callPin.confirmRemoval.desc", {
-                  number: selectedNumber?.aparty_no,
-                })}
+                Are you sure you want to remove mobile number +{selectedNumber?.aparty_no || ""} from whitelist?
               </Typography>
             </div>
 
@@ -510,7 +471,7 @@ const CallPinPage = () => {
                 onClick={() => setShowConfirmDialog(false)}
                 disabled={deletingNumber}
               >
-                {t("callPin.buttons.cancel")}
+                Cancel
               </Button>
               <Button
                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
@@ -519,12 +480,9 @@ const CallPinPage = () => {
               >
                 {deletingNumber ? (
                   <div className="flex items-center gap-2">
-                    <Spinner size="sm" className="h-3 w-3" />{" "}
-                    {t("callPin.buttons.removing")}
+                    <Spinner size="sm" className="h-3 w-3" /> Removing...
                   </div>
-                ) : (
-                  t("callPin.buttons.confirm")
-                )}
+                ) : "Confirm"}
               </Button>
             </div>
           </div>
@@ -544,49 +502,33 @@ const CallPinPage = () => {
 
             <div className="mt-4 text-center">
               <Typography variant="h5" className="font-bold text-gray-900">
-                {showAddDialog?.value == "remove"
-                  ?  t("callPin.modalPin.removeTitle")
-                  : `${
-                      findNumber?.callpin > 0 ? t("callPin.modalPin.changeTitle"): t("callPin.modalPin.setTitle")
-                    } `}
+                {showAddDialog?.value == "remove" ? "Remove Call PIN for your incoming calls" : `${findNumber?.callpin > 0 ? "Change" : "Set"} Call PIN for your incoming Calls`}
               </Typography>
 
               <Typography className="mt-2 text-sm text-left text-gray-600">
-                {showAddDialog?.value == "remove" ? (
-                  <div>
-                    <span>
-                      {t("callPin.modalPin.descRemove")}
-                    </span>
-                  </div>
-                ) : (
+                {showAddDialog?.value == "remove" ? <div>
+                  <span>Once the PIN is removed, all callers will be able to reach your NameTAG without entering a PIN.</span>
+                </div> :
                   <span>
-                    {t("callPin.modalPin.descSet",{action:findNumber?.callpin > 0 ? "change" : "set"})}
-                    {" "}
-                  </span>
-                )}{" "}
-                <br />
-                <br /> {t("callPin.modalPin.nameTag")} = #{findNumber?.tag_no || ""} <br />
-                {t("callPin.modalPin.mobileNumber")} = +{selectedMsisdn} <br />
+                    Are you sure you want to {findNumber?.callpin > 0 ? "change" : "set a"} PIN for incoming calls? Your Callers will be required to enter the PIN before connecting to your NameTAG number.                  </span>
+                }   <br /><br />             NameTAG =  #{findNumber?.tag_no || ""} <br />
+                Mobile Number = +{selectedMsisdn} <br />
                 <span>
-                  {t("callPin.modalPin.callPin")} ={" "}
-                  {findNumber?.callpin > 0
-                    ? findNumber?.callpin
-                    : t("callPin.modalPin.noPin") || ""}{" "}
-                  <br />
+                  Call PIN =  {findNumber?.callpin > 0 ? findNumber?.callpin : "Not Defined" || ""} <br />
                 </span>
               </Typography>
             </div>
 
             <div className="mt-6">
               <div className="mb-4">
-                {showAddDialog?.value == "remove" ? (
+                {showAddDialog?.value == "remove" ?
                   <Typography className="mt-2 text-sm text-left font-medium text-primary">
-                    {t("callPin.modalPin.noteNoPin")}
+                    No PIN is required - callers can reach your NameTAG without entering the PIN
                   </Typography>
-                ) : (
+                  :
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-[#7A798A]">
-                      {t("callPin.modalPin.selectSingleDigit")}
+                      Please select Single Digit PIN
                     </label>
                     <div>
                       <select
@@ -601,13 +543,13 @@ const CallPinPage = () => {
                         // })}
                         value={pinState?.pin || ""}
                         onChange={(e) => {
-                          setPinState((st) => ({
+                          setPinState(st => ({
                             ...st,
-                            pin: e.target.value,
-                          }));
+                            pin: e.target.value
+                          }))
                         }}
                       >
-                        <option value="">{t("callPin.modalPin.selectPinPlaceholder")}</option>
+                        <option value="">Select PIN</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -621,7 +563,7 @@ const CallPinPage = () => {
                       </select>
                     </div>
                   </div>
-                )}
+                }
               </div>
             </div>
 
@@ -631,7 +573,7 @@ const CallPinPage = () => {
                 onClick={() => setShowAddDialog({ show: false })}
                 disabled={addingNumber}
               >
-                {t("callPin.buttons.cancel")}
+                Cancel
               </Button>
               <Button
                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
@@ -640,16 +582,15 @@ const CallPinPage = () => {
               >
                 {addingNumber ? (
                   <div className="flex items-center gap-2">
-                    <Spinner size="sm" className="h-3 w-3" /> {t("callPin.buttons.processing")}
+                    <Spinner size="sm" className="h-3 w-3" /> Processing...
                   </div>
-                ) : (
-                  t("callPin.buttons.confirm")
-                )}
+                ) : "Confirm"}
               </Button>
             </div>
           </div>
         </div>
       )}
+
 
       {/* {white list modals} */}
       {showAddWhiteList && (
@@ -664,10 +605,10 @@ const CallPinPage = () => {
 
             <div className="mt-4 text-center">
               <Typography variant="h5" className="font-bold text-gray-900">
-                {t("callPin.modalWhitelist.title")}
+                Add to Whitelist
               </Typography>
               <Typography className="mt-2 text-sm text-left text-gray-600">
-                {t("callPin.modalWhitelist.subtitle")}
+                Whitelisted callers can call your NameTAG without a PIN.
               </Typography>
             </div>
 
@@ -675,7 +616,7 @@ const CallPinPage = () => {
               <div className="mb-4">
                 <div className="mb-4">
                   <label className="block text-xs font-medium text-[#7A798A] mb-1">
-                    {t("callPin.modalWhitelist.enterMobileLabel")}
+                    Enter Mobile Number to add Whitelist
                   </label>
                   <PhoneInput
                     defaultCountry="ET"
@@ -684,20 +625,16 @@ const CallPinPage = () => {
                     className="w-full rounded-xl border border-gray-200 px-4 py-2.5 bg-white outline-none"
                     value={valueToBlock}
                     onChange={(phone) => {
-                      setValueToBlock(phone || "+2519");
-                      validatePhoneNumber(phone || "+2519");
+                      setValueToBlock(phone || '+2519');
+                      validatePhoneNumber(phone || '+2519');
                     }}
                     limitMaxLength={13}
                   />
-                  {blockType === "mobileNumber" && (
+                  {blockType === 'mobileNumber' && (
                     <>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {t("callPin.modalWhitelist.")}
-                      </p>
+                      <p className="text-xs text-gray-500 mt-1">Format: +251xxxxxxxxx</p>
                       {phoneError && (
-                        <p className="text-xs text-red-500 mt-1">
-                          {phoneError}
-                        </p>
+                        <p className="text-xs text-red-500 mt-1">{phoneError}</p>
                       )}
                     </>
                   )}
@@ -706,13 +643,10 @@ const CallPinPage = () => {
                 {/* Display the selected mobile number instead of the dropdown */}
                 <div className="mb-4">
                   <label className="block text-xs font-medium text-[#7A798A] mb-1">
-                    {t("callPin.modalWhitelist.yourRegistered")}
+                    Your Registered Mobile Number
                   </label>
                   <div className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-gray-50">
-                    +{selectedMsisdn}{" "}
-                    {selectedMobileObject.mobile_type
-                      ? `(${selectedMobileObject.mobile_type})`
-                      : ""}
+                    +{selectedMsisdn} {selectedMobileObject.mobile_type ? `(${selectedMobileObject.mobile_type})` : ''}
                   </div>
                 </div>
               </div>
@@ -724,7 +658,7 @@ const CallPinPage = () => {
                 onClick={() => setShowAddWhiteList(false)}
                 disabled={addingNumber}
               >
-                {t("callPin.buttons.cancel")}
+                Cancel
               </Button>
               <Button
                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
@@ -733,11 +667,9 @@ const CallPinPage = () => {
               >
                 {addingNumber ? (
                   <div className="flex items-center gap-2">
-                    <Spinner size="sm" className="h-3 w-3" /> {t("callPin.buttons.processing")}
+                    <Spinner size="sm" className="h-3 w-3" /> Processing...
                   </div>
-                ) : (
-                  t("callPin.buttons.confirm")
-                )}
+                ) : "Confirm"}
               </Button>
             </div>
           </div>

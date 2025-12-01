@@ -11,7 +11,6 @@ import EndPoints from "../../../network/EndPoints";
 import { ConstentRoutes } from "../../../utilities/routesConst";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useTranslation } from "react-i18next";
 
 export function MultiStepForm() {
   const location = useLocation()
@@ -21,7 +20,7 @@ export function MultiStepForm() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(null);
   const navigate = useNavigate()
-  const { t } = useTranslation()
+
 
   // Get customerId from Redux
   const customerId = useAppSelector(state => state.user.customerId);
@@ -44,7 +43,7 @@ export function MultiStepForm() {
     if (activeStep == 1) {
       setData(st => ({ ...st, data: values }));
       if (!data?.trade_license_url || !data?.application_letter_url || !data?.registration_license_url) {
-        toast.error(t("register.uploadDocumentsRequired"))
+        toast.error("Please upload all required documents to complete your registration.")
         return
       }
       setOpen(true);
@@ -177,7 +176,7 @@ export function MultiStepForm() {
                 type="submit"
                 disabled={Object.entries(registerHook?.state?.error)?.length > 0}
               >
-                {t("common.form.registerBtn")}
+                Register
               </Button>
             </div>
           ) : (
@@ -187,28 +186,28 @@ export function MultiStepForm() {
                   className=" bg-secondary"
                   onClick={() => setActiveStep(1)}
                 >
-                  {t("common.form.previousBtn")}
+                  Previous
                 </Button>
               )}
               <Button
                 className=" bg-secondary"
                 type="submit"
               >
-                {activeStep == 2 ? t("common.form.finish") : t("common.form.submit")}
+                {activeStep == 2 ? "Finish" : "Submit"}
               </Button>
             </div>
           )}
           {activeStep == 0 &&
             <div className="mt-3">
               <Typography className="text-[#555] text-center md:text-base text-[16px] font-semibold">
-                <span> {t("common.form.alreadyAccount")}</span>
+                <span> Already have an account?</span>
 
                 {" "}
                 <span
                   className="text-secondary cursor-pointer"
                   onClick={() => navigate(ConstentRoutes.login)}
                 >
-                  {t("login.login")}
+                  Log in
                 </span>
               </Typography>
             </div>

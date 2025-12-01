@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Typography, Spinner } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
+// import APICall from "../network/APICall";
 import { toast } from "react-toastify";
+// import { getTagStatusDashboard, getPaymentStatus } from "../utilities/routesConst";
+import moment from "moment";
 import { getTagStatusDashboard } from '../../utilities/routesConst';
 import BuyTagConfirmationModal from '../../modals/buy-tag-modals';
 import EndPoints from '../../network/EndPoints';
 import APICall from '../../network/APICall';
 import { formatPhoneNumberCustom } from '../../utilities/formatMobileNumber';
-import { useTranslation } from "react-i18next";
+// import BuyTagConfirmationModal from "../modals/buy-tag-modals";
+// import EndPoints from '../network/EndPoints';
 
 function UnsubscribeCustomer() {
-  const { t } = useTranslation(["unsubscribe"]);
+  const navigate = useNavigate();
   const [tagData, setTagData] = useState([]);
   const [tagNo, setTagNo] = useState("")
   const [loading, setLoading] = useState(true);
@@ -28,7 +33,7 @@ function UnsubscribeCustomer() {
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user?.id) {
-      console.error(t("messages.noAccountId"));
+      console.error("No customer account ID found");
       setLoading(false);
       return;
     }
@@ -48,7 +53,7 @@ function UnsubscribeCustomer() {
       })
       .catch((err) => {
         console.error("Error fetching tag data:", err);
-        toast.error(t("messages.fetchError"));
+        toast.error("Failed to load NameTAG data");
         setLoading(false);
       });
   };
@@ -81,16 +86,16 @@ function UnsubscribeCustomer() {
     APICall("post", payload, EndPoints.customer.individualUnSun)
       .then(res => {
         if (res?.success) {
-          toast.success(res?.message || t("messages.unsubscribeSuccess"));
+          toast.success(res?.message || "Successfully unsubscribed");
           // Refresh tag data after successful unsubscribe
           fetchTagData();
         } else {
-          toast.error(res?.message || t("messages.unsubscribeFailed"));
+          toast.error(res?.message || "Failed to unsubscribe");
         }
         setUnsubscribing(false);
       })
       .catch(err => {
-        toast.error(err?.message || t("messages.errorOccurred"));
+        toast.error(err?.message || "An error occurred");
         setUnsubscribing(false);
       });
   };
@@ -98,16 +103,17 @@ function UnsubscribeCustomer() {
   const renderTagItem = (tag) => {
     if (!tag) return null;
 
+    console.log("Tag data:", tag); // Debugging line
 
     const isPremium = tag?.tag_list_premium_id == 1;
     const tagInfo = isPremium && tag?.corp_premium_tag_list ? tag?.corp_premium_tag_list : (tag || {});
 
     return (
       <tr key={tag?.id} className="border-b">
-        <td className="py-4 px-6 text-sm text-center">#{tagInfo?.tag_no || t("common.na")}</td>
+        <td className="py-4 px-6 text-sm text-center">#{tagInfo?.tag_no || 'N/A'}</td>
         <td className="py-4 px-6 text-sm whitespace-pre text-center">{formatPhoneNumberCustom(tag?.msisdn)}</td>
         <td className="py-4 px-6 text-sm text-center">
-          {(tag.created_date) || t("common.na")}
+          {(tag.created_date) || 'N/A'}
         </td>
         <td className="py-4 px-6 text-sm text-center">
           {getTagStatusDashboard(tag?.status)}
@@ -123,7 +129,7 @@ function UnsubscribeCustomer() {
             }}
             disabled={unsubscribing}
           >
-            {unsubscribing && selectedTagId === tag?.reserve_tag_id ? t("buttons.processing") : t("buttons.unsubscribe")}
+            {unsubscribing && selectedTagId === tag?.reserve_tag_id ? "Processing..." : "Unsubscribe"}
           </Button>
         </td>
       </tr>
@@ -133,7 +139,7 @@ function UnsubscribeCustomer() {
   return (
     <div className="shadow bg-white rounded-xl">
       <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-md font-medium">
-        {t("title")}
+        Manage NameTAG Subscription
       </Typography>
 
       <div className="p-8">
@@ -145,18 +151,18 @@ function UnsubscribeCustomer() {
           <>
             {(tagData?.length === 0 || tagData?.[0]?.type == "reserve") ? (
               <Typography className=" text-center py-2">
-                {t("table.noActiveRegistered")}
+                Number don’t have active NameTAG registered against mobile number.
               </Typography>
             ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white">
                   <thead className="bg-gray-100">
                     <tr>
-                      <th className="py-4 px-6 text-sm">{t("table.headers.tagNumber")}</th>
-                      <th className="py-4 px-6 whitespace-pre text-sm">{t("table.headers.mobileNumber")}</th>
-                      <th className="py-4 px-6 text-sm">{t("table.headers.registrationDate")}</th>
-                      <th className="py-4 px-6 text-sm">{t("table.headers.status")}</th>
-                      <th className="py-4 px-6 text-sm">{t("table.headers.action")}</th>
+                      <th className="py-4 px-6 text-sm">TAG Number</th>
+                      <th className="py-4 px-6 whitespace-pre text-sm"> Mobile Number</th>
+                      <th className="py-4 px-6 text-sm">Registration Date</th>
+                      <th className="py-4 px-6 text-sm">Status</th>
+                      <th className="py-4 px-6 text-sm">Action</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -1,41 +1,39 @@
 /* eslint-disable react/prop-types */
+import React from 'react';
 import { Button, Typography } from "@material-tailwind/react";
 import { IoMdCloseCircle } from "react-icons/io";
-import { Textarea } from '@headlessui/react';
-import { useTranslation } from "react-i18next";
+import { Input, Textarea } from '@headlessui/react';
 
 const BuyTagConfirmationModal = ({ isOpen, onClose, modalAction, onConfirm, comment, setComment, tagNo = '', isIndividual = false }) => {
-  const { t } = useTranslation(["buyTag"]);
-
   if (!isOpen) return null;
 
   const getTitle = () => {
     switch (modalAction) {
       case 'unsubscribe':
-        return t("modal.titles.unsubscribe");
+        return 'Confirm Unsubscribe';
       case 'resubscribe':
-        return t("modal.titles.resubscribe");
+        return 'Confirm Resubscribe';
       case 'cancel':
-        return t("modal.titles.cancel");
+        return 'Confirm Cancellation';
       case 'close':
-        return t("modal.titles.close");
+        return 'Confirm Close Account';
       default:
-        return t("modal.titles.default");
+        return 'Confirm Action';
     }
   };
 
   const getMessage = () => {
     switch (modalAction) {
       case 'unsubscribe':
-        return t("modal.messages.unsubscribe", { tagNo });
+        return `Unsubscribe from NameTAG #${tagNo}?`;
       case 'resubscribe':
-        return t("modal.messages.resubscribe");
+        return 'Are you sure you want to resubscribe to this NameTAG service?';
       case 'cancel':
-        return t("modal.messages.cancel");
+        return 'Are you sure you want to cancel your NameTAG reservation?';
       case 'close':
-        return t("modal.messages.close");
+        return 'Are you sure you want to approve the NameTAG account closure request?';
       default:
-        return t("modal.messages.default");
+        return 'Are you sure you want to proceed with this action?';
     }
   };
 
@@ -43,21 +41,20 @@ const BuyTagConfirmationModal = ({ isOpen, onClose, modalAction, onConfirm, comm
     switch (modalAction) {
       case 'unsubscribe':
         if (isIndividual) {
-          return t("modal.descriptions.unsubscribeIndividual");
+          return 'All fees paid are non-refundable.This NameTAG will be permanently removed and cannot be reclaimed. ';
         } else {
-          return t("modal.descriptions.unsubscribeCorporate");
+          return 'All fees paid are non-refundable.';
+
         }
-      default:
-        return null;
     }
   };
 
   const getWarning = () => {
     switch (modalAction) {
       case 'unsubscribe':
-        return t("modal.warnings.unsubscribe");
+        return 'Note: You can resubscribe anytime within the next 7 days. After that this NameTAG will be available for others to buy.';
       case 'cancel':
-        return t("modal.warnings.cancel");
+        return 'If you proceed, your reservation will be cancelled, and this NameTAG will be released for others to buy.';
       default:
         return null;
     }
@@ -66,21 +63,14 @@ const BuyTagConfirmationModal = ({ isOpen, onClose, modalAction, onConfirm, comm
   const getActionButtonText = () => {
     switch (modalAction) {
       case 'unsubscribe':
-        return t("modal.actionButtons.unsubscribe");
+        return 'Unsubscribe';
       case 'resubscribe':
-        return t("modal.actionButtons.resubscribe");
+        return 'Resubscribe';
       case 'cancel':
-        return t("modal.actionButtons.cancel");
+        return 'Yes, Cancel Reservation';
       default:
-        return t("modal.actionButtons.default");
+        return 'Confirm';
     }
-  };
-
-  const getCancelButtonText = () => {
-    if (modalAction === 'cancel') {
-      return t("modal.cancelButtons.cancel");
-    }
-    return t("modal.cancelButtons.default");
   };
 
   const getActionButtonColor = () => {
@@ -126,7 +116,7 @@ const BuyTagConfirmationModal = ({ isOpen, onClose, modalAction, onConfirm, comm
           <div className='mt-3'>
             <Textarea
               className={`mt-2 w-full rounded-xl resize-none px-4 py-2 bg-white outline-none`}
-              placeholder={t("modal.placeholders.closeAccountReason")}
+              placeholder="Enter reason for closing your account"
               maxLength={50}
               onChange={(e) => setComment(st => ({
                 ...st,
@@ -147,7 +137,8 @@ const BuyTagConfirmationModal = ({ isOpen, onClose, modalAction, onConfirm, comm
             className="flex-1 py-2.5 bg-gray-300 text-gray-800 shadow-none hover:shadow-none"
             onClick={onClose}
           >
-            {getCancelButtonText()}
+            {modalAction == 'cancel' ? 'No, Keep Reservation' : 'Cancel'}
+
           </Button>
           <Button
             className={`flex-1 py-2.5 ${getActionButtonColor()} shadow-none hover:shadow-none`}

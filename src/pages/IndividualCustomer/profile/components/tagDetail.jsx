@@ -1,20 +1,24 @@
 /* eslint-disable react/prop-types */
-import { Button, Spinner, Typography } from "@material-tailwind/react";
+import { Button, Chip, Spinner, Typography, Dialog, DialogHeader, DialogBody, DialogFooter } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
-import { ConstentRoutes, getPaymentStatus, getTagStatusDashboard } from "../../../../utilities/routesConst";
+import { ConstentRoutes, getPaymentStatus, getStatus, getTagStatus, getTagStatusDashboard } from "../../../../utilities/routesConst";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import APICall from "../../../../network/APICall";
-import { useAppSelector } from "../../../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
+import { setUserData, setCorporateDocuments } from "../../../../redux/userSlice";
 import { toast } from "react-toastify";
 import EndPoints from "../../../../network/EndPoints";
 import BuyTagConfirmationModal from "../../../../modals/buy-tag-modals";
-import { useTranslation } from "react-i18next";
 
 const TagNamesIndividual = () => {
-    const { t } = useTranslation(["profile"]);
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const [docStatus, setDocStatus] = useState({});
     const [loading, setLoading] = useState(true);
+    const [unsubscribing, setUnsubscribing] = useState(false);
+    const [resubscribing, setResubscribing] = useState(false);
+    const [cancelling, setCancelling] = useState(false);
     const [state, setState] = useState([])
 
     // State for confirmation modal
@@ -49,7 +53,7 @@ const TagNamesIndividual = () => {
                 }
                 setLoading(false)
             })
-            .catch(() => {
+            .catch((err) => {
                 setLoading(false)
                 setState([])
             })
@@ -64,6 +68,13 @@ const TagNamesIndividual = () => {
 
     const refreshTagData = () => {
         getData()
+    };
+
+    // Show confirmation modal first
+    const confirmAction = (action, tagId) => {
+        setModalAction(action);
+        setSelectedTagId(tagId);
+        setOpenModal(true);
     };
 
     // Close modal and reset state
@@ -86,6 +97,7 @@ const TagNamesIndividual = () => {
     };
 
     const processUnsubscribe = (corp_subscriber_id) => {
+        setUnsubscribing(true);
 
         const payload = {
             corp_subscriber_id: corp_subscriber_id
@@ -94,19 +106,22 @@ const TagNamesIndividual = () => {
         APICall("post", payload, "individual/unsubscribe")
             .then(res => {
                 if (res?.success) {
-                    toast.success(res?.message || t("profile.tagDetail.toastMessages.successfullyUnsubscribed"));
+                    toast.success(res?.message || "Successfully unsubscribed");
                     // Refresh tag data after successful unsubscribe
                     refreshTagData();
                 } else {
-                    toast.error(res?.message || t("profile.tagDetail.toastMessages.failedToUnsubscribe"));
+                    toast.error(res?.message || "Failed to unsubscribe");
                 }
+                setUnsubscribing(false);
             })
             .catch(err => {
-                toast.error(err?.message || t("profile.tagDetail.toastMessages.anErrorOccurred"));
+                toast.error(err?.message || "An error occurred");
+                setUnsubscribing(false);
             });
     };
 
     const processResubscribe = (corp_subscriber_id) => {
+        setResubscribing(true);
 
         const payload = {
             corp_subscriber_id: corp_subscriber_id
@@ -115,31 +130,36 @@ const TagNamesIndividual = () => {
         APICall("post", payload, "customer/re-subscribe")
             .then(res => {
                 if (res?.success) {
-                    toast.success(res?.message || t("profile.tagDetail.toastMessages.successfullyResubscribed"));
+                    toast.success(res?.message || "Successfully resubscribed");
                     // Refresh tag data after successful resubscribe
                     refreshTagData();
                 } else {
-                    toast.error(res?.message || t("profile.tagDetail.toastMessages.failedToResubscribe"));
+                    toast.error(res?.message || "Failed to resubscribe");
                 }
+                setResubscribing(false);
             })
             .catch(err => {
-                toast.error(err?.message || t("profile.tagDetail.toastMessages.anErrorOccurred"));
+                toast.error(err?.message || "An error occurred");
+                setResubscribing(false);
             });
     };
 
     const processCancelReservation = (reserve_tag_id) => {
+        setCancelling(true);
         APICall("post", {}, `/individual/cancel-reservation/${reserve_tag_id}`)
             .then((res) => {
                 if (res?.success) {
-                    toast.success(res?.message || t("profile.tagDetail.toastMessages.reservationCanceled"));
+                    toast.success(res?.message || "Reservation is canceled");
                     // Refresh tag data after successful cancellation
                     refreshTagData();
                 } else {
-                    toast.error(res?.message || t("profile.tagDetail.toastMessages.failedToCancelReservation"));
+                    toast.error(res?.message || "Failed to cancel reservation");
                 }
+                setCancelling(false);
             })
             .catch((err) => {
-                toast.error(err?.message || t("profile.tagDetail.toastMessages.anErrorOccurred"));
+                toast.error(err?.message || "An error occurred");
+                setCancelling(false);
             });
     };
 
@@ -151,6 +171,7 @@ const TagNamesIndividual = () => {
         const isReserved = single?.type === 'reserve';
         const isPaid = single?.payment_status !== 0;
         const isUnsub = single.status == 6;
+        const isActive = single.status == 1;
         const isNotPremium = single?.premium_tag_list_id == null
 
         return (
@@ -158,10 +179,10 @@ const TagNamesIndividual = () => {
 
                 {(single?.status == 6) &&
                     <Typography className="text-[14px] font-bold mb-3">
-                        <span>{t("profile.tagDetail.notice")}</span>
+                        <span>Notice: </span>
                         <br />
                         <span className=" text-blue-600">
-                            {t("profile.tagDetail.unsubMessage")}
+                            Your NameTAG service is unsubscribed
                         </span>
                     </Typography>
                 }
@@ -169,12 +190,12 @@ const TagNamesIndividual = () => {
                 <div className="flex justify-between bg-[#F6F7FB] md:px-3 px-2 py-3 rounded-xl items-center">
                     <div className="flex items-center gap-3">
                         <Typography className="md:text-[14px] text-[12px]">
-                            {isNotPremium ? single?.tag_name : single?.premium_tag_list?.tag_name || t("profile.tagDetail.na")}
+                            {isNotPremium ? single?.tag_name : single?.premium_tag_list?.tag_name || 'N/A'}
                         </Typography>
                     </div>
                     <div>
                         <Typography className="text-[14px] bg-secondary py-1 px-4 rounded-lg text-white">
-                            #{isNotPremium ? single?.tag_no : single?.premium_tag_list?.tag_no || t("profile.tagDetail.na")}
+                            #{isNotPremium ? single?.tag_no : single?.premium_tag_list?.tag_no || 'N/A'}
                         </Typography>
                     </div>
                 </div>
@@ -186,10 +207,11 @@ const TagNamesIndividual = () => {
                 </div> */}
                 <div className="flex justify-between border border-blue-200 bg-blue-50 md:px-5 px-2 py-3 rounded-xl mt-3">
                     <Typography className="md:text-[14px] text-[12px]">
-                        {t("profile.tagDetail.tagCategory")}
+                        NameTAG Category
+
                     </Typography>
                     <Typography className="text-[14px] font-bold text-blue-600">
-                        {isNotPremium ? single?.tag_type : single?.premium_tag_list?.tag_type || t("profile.tagDetail.na")}
+                        {isNotPremium ? single?.tag_type : single?.premium_tag_list?.tag_type || "N/A"}
                     </Typography>
                 </div>
                 {/* Premium tag indicator */}
@@ -204,16 +226,16 @@ const TagNamesIndividual = () => {
 
                 <div className="flex justify-between text-[#232323] md:px-5 px-2 py-3 rounded-xl mt-1">
                     <Typography className="md:text-[14px] text-[12px]">
-                        {t("profile.tagDetail.regMobileNo")}
+                        Registered Mobile Number
                     </Typography>
                     <Typography className="md:text-[14px] text-[12px]">
-                        {`+${single?.msisdn}` || t("profile.tagDetail.na")}
+                        {`+${single?.msisdn}` || 'N/A'}
                     </Typography>
                 </div>
 
                 <div className="md:px-5 px-2 py-3 rounded-xl mt-1">
                     <div className="flex justify-between">
-                        <Typography className="text-[14px]">{isReserved ? t("profile.tagDetail.reserveDate") : t("profile.tagDetail.subDate")} </Typography>
+                        <Typography className="text-[14px]">{isReserved ? "Reservation Date" : "Subscription Date"} </Typography>
                         <Typography className="md:text-[14px] text-[12px]">
                             {moment(isReserved ? single?.created_date : single.sub_date).format('DD-MM-YYYY')}
                         </Typography>
@@ -221,9 +243,9 @@ const TagNamesIndividual = () => {
                 </div>
 
                 <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
-                    <Typography className="text-[14px]">{t("profile.tagDetail.subFee")}</Typography>
+                    <Typography className="text-[14px]">Subscription Fee</Typography>
                     <Typography className="md:text-[14px] text-[12px]">
-                        {formatPrice(isNotPremium ? single?.tagnoprice : single?.premium_tag_list?.tag_price || '0')} {t("profile.tagDetail.etb")}
+                        {formatPrice(isNotPremium ? single?.tagnoprice : single?.premium_tag_list?.tag_price || '0')} ETB
                     </Typography>
                 </div>
 
@@ -237,7 +259,7 @@ const TagNamesIndividual = () => {
 
 
                 <div className="flex justify-between gap-1 md:px-5 px-2 py-3 rounded-xl mt-1">
-                    <Typography className="text-[14px]">{t("profile.tagDetail.paymentStatus")}</Typography>
+                    <Typography className="text-[14px]"> Subscription Payment Status</Typography>
                     <Typography className="md:text-[14px] text-[12px]">
                         {getPaymentStatus(single?.payment_status)}
                     </Typography>
@@ -245,9 +267,9 @@ const TagNamesIndividual = () => {
 
                 <div className="md:px-5 px-2 py-3 rounded-xl mt-1">
                     <div className="flex justify-between">
-                        <Typography className="text-[14px]">{t("profile.tagDetail.serviceStatus")} </Typography>
+                        <Typography className="text-[14px]">Service Status </Typography>
                         <Typography className="md:text-[14px] text-[12px] capitalize">
-                            {single?.type == "reserve" ? t("profile.tagDetail.reserved") : getTagStatusDashboard(single?.status) || ""}
+                            {single?.type == "reserve" ? "Reserved" : getTagStatusDashboard(single?.status) || ""}
                         </Typography>
                     </div>
                 </div>
@@ -255,25 +277,25 @@ const TagNamesIndividual = () => {
                 {/* Incoming Calls Status */}
                 {!isReserved && isPaid && (
                     <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
-                        <Typography className="text-[14px]">{t("profile.tagDetail.incomingCallsStatus")}</Typography>
+                        <Typography className="text-[14px]">Incoming Calls Status</Typography>
                         <Typography className={`md:text-[14px] text-[12px] font-medium `}>
-                            {single?.service_status == 1 ? t("profile.tagDetail.on") : t("profile.tagDetail.off")}
+                            {single?.service_status == 1 ? "ON" : "OFF"}
                         </Typography>
                     </div>
                 )}
 
                 <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
                     <Typography className="text-[14px]">
-                        {single?.service_id || t("profile.tagDetail.monthly")} {t("profile.tagDetail.recurringFee")}
+                        {"Monthly"} Recurring Fee
                     </Typography>
                     <Typography className="md:text-[14px] text-[12px]">
                         {formatPrice(
-                            single?.service_id === t("profile.tagDetail.monthly") ? tagInfo?.monthly_fee || single?.service_fee || '0' :
-                                single?.service_id === t("profile.tagDetail.quartely") ? tagInfo?.quarterly_fee || single?.service_fee || '0' :
-                                    single?.service_id === t("profile.tagDetail.semi") ? tagInfo?.semiannually_fee || single?.service_fee || '0' :
-                                        single?.service_id === t("profile.tagDetail.annually") ? tagInfo?.annually_fee || single?.service_fee || '0' :
+                            single?.service_id === "Monthly" ? tagInfo?.monthly_fee || single?.service_fee || '0' :
+                                single?.service_id === "Quarterly" ? tagInfo?.quarterly_fee || single?.service_fee || '0' :
+                                    single?.service_id === "Semi-Annually" ? tagInfo?.semiannually_fee || single?.service_fee || '0' :
+                                        single?.service_id === "Annually" ? tagInfo?.annually_fee || single?.service_fee || '0' :
                                             tagInfo?.service_fee || single?.service_fee || '0'
-                        )} {t("profile.tagDetail.etb")}
+                        )} ETB
                     </Typography>
                 </div>
 
@@ -281,9 +303,9 @@ const TagNamesIndividual = () => {
                     <>
                         {single?.fee_charge_date && (
                             <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
-                                <Typography className="text-[14px]">{t("profile.tagDetail.serviceFeeLastChargeDate")}</Typography>
+                                <Typography className="text-[14px]">Service Fee Last Charge Date</Typography>
                                 <Typography className="md:text-[14px] text-[12px]">
-                                    {single?.fee_charge_date || t("profile.tagDetail.notAvailable")}
+                                    {single?.fee_charge_date || "Not Available"}
                                 </Typography>
                             </div>
                         )}
@@ -292,9 +314,9 @@ const TagNamesIndividual = () => {
 
                 {(!isReserved && isPaid && !isUnsub) ? (
                     <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
-                        <Typography className="text-[14px]">{t("profile.tagDetail.recurringFeeNextDueDate")}</Typography>
+                        <Typography className="text-[14px]">Recurring Fee Next Due Date:</Typography>
                         <Typography className="md:text-[14px] text-[12px]">
-                            {single?.next_charge_dt ? moment(single.next_charge_dt).format("DD-MM-YYYY") : t("profile.tagDetail.notAvailable")}
+                            {single?.next_charge_dt ? moment(single.next_charge_dt).format("DD-MM-YYYY") : "Not Available"}
                         </Typography>
                     </div>
                 ) : null}
@@ -328,7 +350,7 @@ const TagNamesIndividual = () => {
                 <div className="md:p-8 p-4">
                     {(!Array.isArray(state) || state.length === 0) && (
                         <Typography className="mt-2 font-normal text-base text-center">
-                            {t("profile.tagDetail.noTagRegistered")}
+                            Currently no NameTAG is registered against your account
                         </Typography>
                     )}
 
@@ -342,7 +364,7 @@ const TagNamesIndividual = () => {
                                 className="mt-8 bg-secondary text-white text-[14px] md:w-[400px] w-full"
                                 onClick={() => navigate(ConstentRoutes.buyTagCustomer)}
                             >
-                                {t("profile.tagDetail.buyNameTag")}
+                                BUY NameTAG
                             </Button>
                         </div>
                     )}
