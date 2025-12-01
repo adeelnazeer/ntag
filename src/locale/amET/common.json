@@ -225,5 +225,32 @@
     "faqs": "ተደጋጋሚ ጥያቄዎች (FAQs)",
     "contact": "ያግኙን",
     "rights": "ሁሉም መብቶች የተጠበቁ ናቸው።"
+  },
+  "status": {
+    "pendingForApproval": "ለማጽደቅ በመጠባበቅ ላይ",
+    "approved": "የተጸድቀ",
+    "rejected": "የተቀደደ",
+    "blockedByAdmin": "በአስተዳዳሪ የታገደ",
+    "suspendByNonPayment": "በክፍያ እጥረት የታገደ",
+    "blockDueToWrongPassword": "በስህተት የይለፍ ቃል ሙከራ የታገደ",
+    "pendingForDocumentApproval": "ለሰነድ ማጽደቅ በመጠባበቅ ላይ",
+    "pendingForPayment": "ለክፍያ በመጠባበቅ ላይ",
+    "active": "ንቁ",
+    "subscribed": "የተመዘገበ",
+    "documentsExpired": "ሰነዶች ጊዜያቸው አልፏል",
+    "paymentTimeExpired": "የክፍያ ጊዜ ጊዜያቸው አልፏል",
+    "accountBlock": "የአካውንት ማገድ",
+    "documentApprovalPending": "ለሰነድ ማጽደቅ በመጠባበቅ ላይ",
+    "expired": "ጊዜያቸው አልፏል",
+    "activeRecurringFeePending": "ንቁ - ተደጋጋሚ ክፍያ በመጠባበቅ ላይ",
+    "blocked": "የታገደ",
+    "unsubscribed": "የተሰረዘ",
+    "suspendedCallsBlocked": "የታገደ - ተደጋጋሚ ክፍያ በመጠባበቅ ላይ ምክንያት የደውሎች ማገድ",
+    "tagReserved": "TAG ተይዟል",
+    "suspendedRecurringFeePending": "የታገደ - ተደጋጋሚ ክፍያ በመጠባበቅ ላይ",
+    "pending": "በመጠባበቅ ላይ",
+    "success": "ተሳክቷል",
+    "failed": "አልተሳካም",
+    "expiredPaymentTimeline": "የክፍያ ጊዜ ጊዜያቸው አልፏል"
   }
 }

@@ -1,3 +1,5 @@
+import i18n from "../i18n";
+
 export const ConstentRoutes = {
    home: "/",
    login: "/login",
@@ -39,67 +41,70 @@ export const ConstentRoutes = {
 };
 
 export const getStatus = (status) => {
+   const t = (key) => i18n.t(`common.status.${key}`, { defaultValue: key });
    switch (status) {
       case 0:
-         return "Pending For Approval"
+         return t("pendingForApproval")
       case 1:
-         return "Approved"
+         return t("approved")
       case 2:
-         return "Rejected"
+         return t("rejected")
       case 4:
-         return "Blocked by Admin"
+         return t("blockedByAdmin")
       case 5:
-         return "Suspend by Non-Payment"
+         return t("suspendByNonPayment")
       case 6:
-         return "Block Due to Wrong Password Attempt"
+         return t("blockDueToWrongPassword")
       default:
-         return "Pending For Approval"
+         return t("pendingForApproval")
    }
 }
 
 export const getTagStatus = (status) => {
+   const t = (key) => i18n.t(`common.status.${key}`, { defaultValue: key });
    switch (Number(status)) {
       case 0:
-         return "Pending for Document Approval"
+         return t("pendingForDocumentApproval")
       case 3:
-         return "Pending for Payment"
+         return t("pendingForPayment")
       case 1:
-         return "Active"
+         return t("active")
       case 2:
-         return "Subscribed"
+         return t("subscribed")
       case 4:
-         return "Documents Expired"
+         return t("documentsExpired")
       case 5:
-         return "Payment Time Expired"
+         return t("paymentTimeExpired")
       case 6:
-         return "Acocunt Block"
+         return t("accountBlock")
       default:
          return ""
    }
 }
 
 export const getTagStatusDashboard = (status) => {
+   const t = (key) => i18n.t(`common.status.${key}`, { defaultValue: key });
    switch (Number(status)) {
       case 0:
-         return "Pending for Payment"
+         return t("pendingForPayment")
       case 1:
-         return "Active"
+         return t("active")
       case 2:
-         return "Document Approval Pending"
+         return t("documentApprovalPending")
       case 3:
-         return "Expired"
+         return t("expired")
       case 4:
-         return "Active - Recurrging fee pending"
+         return t("activeRecurringFeePending")
       case 5:
-         return "Blocked"
+         return t("blocked")
       case 6:
-         return "Unsubscribed"
+         return t("unsubscribed")
       case 7:
-         return "Suspended- Calls blocked due to Pending Recurring Fee"
+         return t("suspendedCallsBlocked")
       case 8:
-         return "TAG Reserved"
+         return t("tagReserved")
       case 9:
-         return "Suspended - Recurrging fee pending"
+         return t("suspendedRecurringFeePending")
       default:
          return ""
    }
@@ -108,33 +113,34 @@ export const getTagStatusDashboard = (status) => {
 
 
 export const getPaymentStatus = (status) => {
+   const t = (key) => i18n.t(`common.status.${key}`, { defaultValue: key });
    switch (status) {
       case 0:
-         return "Pending"
+         return t("pending")
       case 1:
-         return "Success"
+         return t("success")
       case 2:
-         return "Failed"
+         return t("failed")
       case 3:
-         return "Expired Payment Timeline"
-
+         return t("expiredPaymentTimeline")
       default:
-         return "Pending for Payment"
+         return t("pendingForPayment")
    }
 }
 
 
 export const getDocStatus = (status) => {
+   const t = (key) => i18n.t(`common.status.${key}`, { defaultValue: key });
    switch (status) {
       case 0:
       case "0":
-         return "Pending for Approval"
+         return t("pendingForApproval")
       case 1:
       case "1":
-         return "Approved"
+         return t("approved")
       case 2:
       case "2":
-         return "Rejected"
+         return t("rejected")
       default:
          return ""
    }

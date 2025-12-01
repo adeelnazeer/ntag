@@ -31,7 +31,7 @@ const LANGS = [
 ];
 
 const Header = () => {
-  const { t, i18n } = useTranslation(["common"]);
+  const { t, i18n } = useTranslation(["common", "sideBar"]);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -89,7 +89,7 @@ const Header = () => {
   };
   return (
     <div
-      className={`sticky top-0 z-[9999] bg-[#f5f5f5] md:${classes} `}
+      className={`sticky top-0 z-[0] bg-[#f5f5f5] md:${classes} `}
     >
       <div className="bg-white">
         <div className="flex justify-between items-center h-16 md:mx-4 mx-0 bg-secondary">
@@ -296,13 +296,115 @@ const Header = () => {
             >
               {t("home")}
             </Button>
-
+            <Button
+              variant="outlined"
+              className="text-white font-medium py-1 px-2 w-full border-white md:hidden"
+              onClick={() => {
+                navigate(ConstentRoutes.home)
+                setMenuOpen(false)
+              }}
+            >
+              {t("sectorOverview")}
+            </Button>
 
             {token ? (
               <>
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
-                  onClick={() => navigate(ConstentRoutes.profilePage)}
+                  onClick={() => {
+                    navigate(ConstentRoutes.dashboard);
+                    setMenuOpen(false);
+                  }}
+                >
+                  {t("sideBar.dashboard")}
+                </Button>
+                <Button
+                  className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
+                  onClick={() => {
+                    navigate(ConstentRoutes.buyTag);
+                    setMenuOpen(false);
+                  }}
+                >
+                  {t("sideBar.buyTag")}
+                </Button>
+                <div className="w-full border-t border-white/20 pt-4 mt-2">
+                  <p className="text-white text-sm font-medium mb-2 px-2">{t("sideBar.manageTag")}</p>
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
+                      onClick={() => {
+                        navigate(ConstentRoutes.manageTagName);
+                        setMenuOpen(false);
+                      }}
+                    >
+                      {t("sideBar.callScheduling")}
+                    </Button>
+                    <Button
+                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
+                      onClick={() => {
+                        navigate(ConstentRoutes.corporateCallPin);
+                        setMenuOpen(false);
+                      }}
+                    >
+                      {t("sideBar.incomingCallPin")}
+                    </Button>
+                    <Button
+                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
+                      onClick={() => {
+                        navigate(ConstentRoutes.blockUnblockTag);
+                        setMenuOpen(false);
+                      }}
+                    >
+                      {t("sideBar.BlockUnblock")}
+                    </Button>
+                    <Button
+                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
+                      onClick={() => {
+                        navigate(ConstentRoutes.changeMyTAGCorporate);
+                        setMenuOpen(false);
+                      }}
+                    >
+                      {t("sideBar.changeNameTag")}
+                    </Button>
+                    <Button
+                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
+                      onClick={() => {
+                        navigate(ConstentRoutes.changeNumber);
+                        setMenuOpen(false);
+                      }}
+                    >
+                      {t("sideBar.changeMobileNo")}
+                    </Button>
+                    <Button
+                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
+                      onClick={() => {
+                        navigate(ConstentRoutes.UnSUBblockTag);
+                        setMenuOpen(false);
+                      }}
+                    >
+                      {t("sideBar.unsubscribe")}
+                    </Button>
+                    <Button
+                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
+                      onClick={() => {
+                        navigate(ConstentRoutes.closeAccount);
+                        setMenuOpen(false);
+                      }}
+                    >
+                      {t("sideBar.closeAccount")}
+                    </Button>
+                  </div>
+                </div>
+                <Button
+                  className="bg-white text-base font-medium text-secondary py-1 px-2 w-full mt-4"
+                  onClick={() => {
+                    if (location?.pathname?.includes("customer")) {
+                      navigate(ConstentRoutes.profilePageCustomer)
+                    } else {
+                      navigate(ConstentRoutes.profilePage)
+                    }
+                    setMenuOpen(false);
+                  }}
                 >
                   {t("profile")}
                 </Button>

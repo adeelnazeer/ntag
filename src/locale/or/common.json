@@ -212,5 +212,32 @@
     "faqs": "Gaaffilee Yeroo Baay'ee Gaafataman (FAQs)",
     "contact": "Nu Qunnamaa",
     "rights": "Mirgi Hunduu Eegamaadha."
+  },
+  "status": {
+    "pendingForApproval": "Hayyamaaf Eegamaa Jira",
+    "approved": "Hayyameera",
+    "rejected": "Darbameera",
+    "blockedByAdmin": "Administraatariin Darbameera",
+    "suspendByNonPayment": "Kaffaltii Hin Kaffalneef Darbameera",
+    "blockDueToWrongPassword": "Icciitii Dogoggoraa Iccitii Darbameera",
+    "pendingForDocumentApproval": "Hayyama Sanadaa Eegamaa Jira",
+    "pendingForPayment": "Kaffaltiif Eegamaa Jira",
+    "active": "Hojii Irra Jira",
+    "subscribed": "Galmee",
+    "documentsExpired": "Sanadootni Yeroo Isaanii Darban",
+    "paymentTimeExpired": "Yeroo Kaffaltii Darbameera",
+    "accountBlock": "Darbamuu Akaawuntii",
+    "documentApprovalPending": "Hayyama Sanadaa Eegamaa Jira",
+    "expired": "Yeroo Isaa Darbameera",
+    "activeRecurringFeePending": "Hojii Irra Jira - Kaffaltii Deddeebi'aa Eegamaa Jira",
+    "blocked": "Darbameera",
+    "unsubscribed": "Galmeen Ka'ameera",
+    "suspendedCallsBlocked": "Darbameera - Kaffaltii Deddeebi'aa Eegamaa Jiraan Waan Waliin Darbame",
+    "tagReserved": "TAG Qabameera",
+    "suspendedRecurringFeePending": "Darbameera - Kaffaltii Deddeebi'aa Eegamaa Jira",
+    "pending": "Eegamaa Jira",
+    "success": "Milkaa'e",
+    "failed": "Hin Milkaa'ine",
+    "expiredPaymentTimeline": "Yeroo Kaffaltii Darbameera"
   }
 }
