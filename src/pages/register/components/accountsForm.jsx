@@ -2,14 +2,11 @@
 import { Input } from "@headlessui/react";
 import { Button, Checkbox, Typography } from "@material-tailwind/react";
 import CountdownTimer from "../../../components/counter";
-import { useRegisterHook } from "../../hooks/useRegisterHook";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import TickIcon from '../../../assets/images/tick.png';
 import { useState, useEffect, useMemo } from "react";
 import { ConstentRoutes } from "../../../utilities/routesConst";
-import { useNavigate } from "react-router-dom";
-import { validateEthiopianPhone } from "../../../utilities/validateEthiopianPhone";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 
@@ -57,7 +54,6 @@ const CompanyForm = ({
   setData
 }) => {
   const watchAllFields = watch();
-  const navigate = useNavigate();
   const { t } = useTranslation()
   const [phone, setPhone] = useState();
   const [isValidPhone, setIsValidPhone] = useState(false);
@@ -65,6 +61,23 @@ const CompanyForm = ({
   const [otpExpired, setOtpExpired] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [originalPhoneNumber, setOriginalPhoneNumber] = useState(null);
+
+
+  // Initialize phone number and track original phone number
+  useEffect(() => {
+    const phoneValue = watchAllFields?.phone_number;
+    if (phoneValue && phoneValue !== phone) {
+      setPhone(phoneValue);
+      if (!originalPhoneNumber) {
+        setOriginalPhoneNumber(phoneValue);
+      }
+    } else if (!phoneValue && !phone) {
+      setValue("phone_number", "+2519");
+      setPhone("+2519");
+      setOriginalPhoneNumber("+2519");
+    }
+  }, [watchAllFields?.phone_number, phone, originalPhoneNumber, setValue]);
 
   // Handle validation when field loses focus or on key press - only for username, email, and phone_number
   const handleValidation = (value, fieldName) => {
@@ -122,6 +135,7 @@ const CompanyForm = ({
     if ((!isGetCodeDisabled || otpExpired) && validatePhoneNumber(phoneNumber)) {
       setIsGetCodeDisabled(true);
       setOtpExpired(false);
+      setOriginalPhoneNumber(phoneNumber); // Store the phone number when OTP is requested
       registerData.handleGetOtp(phoneNumber);
       setTimeout(() => {
         setIsGetCodeDisabled(false);
@@ -420,15 +434,6 @@ const CompanyForm = ({
                   validate: (value) => validatePhoneNumber(value)
                 }}
                 render={({ field }) => {
-                  // Use useEffect to set initial value
-                  useEffect(() => {
-                    // Only set if it's empty
-                    if (!field.value) {
-                      field.onChange("+2519");
-                      setPhone("+2519");
-                    }
-                  }, []);
-
                   return (
                     <PhoneInput
                       className="w-full rounded-xl px-4 py-2 border border-[#8A8AA033] bg-white outline-none"
@@ -443,6 +448,21 @@ const CompanyForm = ({
                       onChange={(value) => {
                         field.onChange(value);
                         setPhone(value);
+
+                        // Clear OTP and verification code if phone number changes from original
+                        if (originalPhoneNumber && value !== originalPhoneNumber) {
+                          setValue("verification_code", "");
+                          localStorage.removeItem("otp");
+                          if (registerData.setVerified) {
+                            registerData.setVerified(false);
+                          }
+                          setOtpExpired(false);
+                          setIsGetCodeDisabled(false);
+                          // Reset expiration time
+                          if (registerData.setExpirationTime) {
+                            registerData.setExpirationTime(null);
+                          }
+                        }
 
                         // Reset success state when field is modified
                         if (registerData?.state?.success?.phone_number) {

@@ -80,6 +80,9 @@ const ChangeNumberDetailPage = () => {
         // Store enhanced state for success modal
         setSuccessData(enhancedStateData);
 
+        const accountId = userData?.parent_id != null && userData?.parent?.customer_account_id 
+            ? userData.parent.customer_account_id 
+            : userData?.customer_account_id;
         const payload = {
             payment_type: "CHANGE_MSISDN",
             recurring_fee: stateData?.service_fee || 0,
@@ -90,7 +93,7 @@ const ChangeNumberDetailPage = () => {
             channel: "WEB",
             msisdn: stateData?.msisdn || "",
             new_msisdn: newNumber?.replace(/^\+/, ""),
-            account_id: userData?.customer_account_id?.toString() || "",
+            account_id: accountId?.toString() || "",
             customer_type: "corporate"
         };
         setData(payload);

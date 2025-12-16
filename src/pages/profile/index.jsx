@@ -9,7 +9,6 @@ import { useAppSelector } from "../../redux/hooks.js";
 import NumberManagement from "./components/NumberManagement.jsx";
 import APICall from "../../network/APICall.jsx";
 import EndPoints from "../../network/EndPoints.jsx";
-import { useRegisterHook } from "../hooks/useRegisterHook.js";
 import { useTranslation } from "react-i18next";
 
 const RenderComponent = ({ user, component, userProfileData }) => {
@@ -78,6 +77,16 @@ const ProfilePage = () => {
     getProfileDetail();
   }, [component]);
 
+  // Check if user has parent_id (sub-account) - disable document and numberManagement sections
+  const hasParentId = userData?.parent_id != null;
+
+  // If user navigates to disabled sections, redirect to company tab
+  useEffect(() => {
+    if (hasParentId && (component === "document" || component === "number")) {
+      setComponent("company");
+    }
+  }, [hasParentId, component]);
+
   return (
     <div className="bg-white md:max-w-[90%] rounded-lg px-4 py-6 pb-10 shadow">
       <div className="flex gap-8 overflow-auto border-b">
@@ -117,18 +126,24 @@ const ProfilePage = () => {
         </div>
         <div className="w-full">
           <p
-            className={`w-full pb-2 whitespace-pre text-center text-[#000] font-medium text-base cursor-pointer ${
-              component == "document" ? "opactity-1" : "opacity-40"
+            className={`w-full pb-2 whitespace-pre text-center text-[#000] font-medium text-base ${
+              component == "document"
+                ? "opactity-1"
+                : "opacity-40"
+            } ${
+              hasParentId ? "cursor-not-allowed opacity-30" : "cursor-pointer"
             }`}
             onClick={() => {
-              setComponent("document");
+              if (!hasParentId) {
+                setComponent("document");
+              }
             }}
           >
             {t("profile.item3")}
           </p>
           <div
             className={`w-1/3 h-[3px] mx-auto rounded-tr-md rounded-tl-md ${
-              component == "document" ? "bg-secondary" : ""
+              component == "document" && !hasParentId ? "bg-secondary" : ""
             }`}
           ></div>
         </div>
@@ -151,29 +166,40 @@ const ProfilePage = () => {
         </div>
         <div className="w-full">
           <p
-            className={`w-full pb-2 whitespace-pre text-center text-[#000] font-medium text-base cursor-pointer ${
+            className={`w-full pb-2 whitespace-pre text-center text-[#000] font-medium text-base ${
               component == "number" ? "opactity-1" : "opacity-40"
+            } ${
+              hasParentId ? "cursor-not-allowed opacity-30" : "cursor-pointer"
             }`}
             onClick={() => {
-              setComponent("number");
+              if (!hasParentId) {
+                setComponent("number");
+              }
             }}
           >
             {t("profile.item5")}
           </p>
           <div
             className={`w-1/3 h-[3px] mx-auto rounded-tr-md rounded-tl-md ${
-              component == "number" ? "bg-secondary" : ""
+              component == "number" && !hasParentId ? "bg-secondary" : ""
             }`}
           ></div>
         </div>
       </div>
       {
-        <RenderComponent
-          user={userData}
-          component={component}
-          userProfileData={data}
-          key={JSON.stringify(data)} // ensures re-render on data update
-        />
+        // Don't render document or numberManagement components if parent_id != null
+        (hasParentId && (component === "document" || component === "number")) ? (
+          <div className="mt-8 text-center py-8">
+            <p className="text-gray-500">{t("profile.accessRestricted") || "This section is not available for sub-accounts."}</p>
+          </div>
+        ) : (
+          <RenderComponent
+            user={userData}
+            component={component}
+            userProfileData={data}
+            key={JSON.stringify(data)} // ensures re-render on data update
+          />
+        )
       }
     </div>
   );

@@ -120,9 +120,9 @@ const TagDetails = () => {
               {isReserved ? t("profile.tagDetail.reserveDate")  : t("profile.tagDetail.subDate") }{" "}
             </Typography>
             <Typography className="md:text-[14px] text-[12px]">
-              {moment(
+              {(
                 isReserved ? single?.created_date : single.sub_date
-              ).format("DD-MM-YYYY")}
+              )}
             </Typography>
           </div>
         </div>
@@ -192,7 +192,7 @@ const TagDetails = () => {
               </Typography>
               <Typography className="md:text-[14px] text-[12px]">
                 {single?.next_charge_dt
-                  ? moment(single.next_charge_dt).format("DD-MM-YYYY")
+                  ? (single.next_charge_dt)
                   : t("profile.tagDetail.notAvailable")}
               </Typography>
             </div>
@@ -207,7 +207,7 @@ const TagDetails = () => {
               <Typography className="text-[14px]">
                 {" "}
                 {single?.unsub_date
-                  ? moment(single.unsub_date).format("DD-MM-YYYY")
+                  ? (single.unsub_date)
                   : t("profile.tagDetail.notAvailable")}{" "}
               </Typography>
             </div>

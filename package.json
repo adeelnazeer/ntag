@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite --port 5174",
     "build": "vite build",
+    "build:miniapp": "vite build && node scripts/convert-to-miniapp.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "convert:miniapp": "node scripts/convert-to-miniapp.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.0.3",

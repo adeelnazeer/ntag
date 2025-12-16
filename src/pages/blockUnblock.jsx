@@ -783,23 +783,23 @@ const BlockUnblock = () => {
 
   const validatePhoneNumber = (phone) => {
     if (!phone) {
-      setPhoneError(t("errors.phone.required"));
+      setPhoneError(t("errors.required"));
       setIsValidPhone(false);
       return false;
     }
     if (!phone.startsWith("+251")) {
-      setPhoneError(t("errors.phone.mustStartCountry"));
+      setPhoneError(t("errors.mustStartCountry"));
       setIsValidPhone(false);
       return false;
     }
     const cleanNumber = phone.replace("+251", "").replace(/\s/g, "");
     if (!cleanNumber.startsWith("9")) {
-      setPhoneError(t("errors.phone.mustStart9"));
+      setPhoneError(t("errors.mustStart9"));
       setIsValidPhone(false);
       return false;
     }
     if (cleanNumber.length !== 9) {
-      setPhoneError(t("errors.phone.length"));
+      setPhoneError(t("errors.length"));
       setIsValidPhone(false);
       return false;
     }

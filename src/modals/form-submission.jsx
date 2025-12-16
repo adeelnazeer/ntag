@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Button, Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
-import { useRegisterHook } from "../pages/hooks/useRegisterHook";
 import DocumentChoiceDialog from "../pages/register/components/documentChoiceDialog";
 import APICall from "../network/APICall";
 import EndPoints from "../network/EndPoints";
@@ -13,92 +12,161 @@ import { useAppDispatch } from "../redux/hooks";
 import { setUserData } from "../redux/userSlice";
 
 const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
-  const registerHook = useRegisterHook();
   const [showDocumentChoice, setShowDocumentChoice] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  console.log({data})
-  
   const handleSubmit = async () => {
     setIsOpen(false);
-    const id = localStorage.getItem("id");
     
-    // Create FormData for document upload
-    const formData = new FormData();
-    
-    // Check if we have registration license document
-    if (data?.registration_license_url) {
-      formData.append("registration_license_url", data.registration_license_url);
-      formData.append("registration_license_name", data.registration_license_name);
-      formData.append("registration_license_type", data.registration_license_type || "Registration");
-    } 
-    // Fall back to old field names if new ones aren't present
-    else if (data?.doc_url_0) {
-      formData.append("registration_license_url", data.doc_url_0);
-      formData.append("registration_license_name", data.docFileName_0);
-      formData.append("registration_license_type", data.docType_0 || "Registration");
-    }
-    
-    // Check if we have application letter document
-    if (data?.application_letter_url) {
-      formData.append("application_letter_url", data.application_letter_url);
-      formData.append("application_letter_name", data.application_letter_name);
-      formData.append("application_letter_type", data.application_letter_type || "Application");
-    }
-    // Fall back to old field names if new ones aren't present
-    else if (data?.doc_url_1) {
-      formData.append("application_letter_url", data.doc_url_1);
-      formData.append("application_letter_name", data.docFileName_1);
-      formData.append("application_letter_type", data.docType_1 || "Application");
-    }
-    
-    // Check if we have trade license document
-    if (data?.trade_license_url) {
-      formData.append("trade_license_url", data.trade_license_url);
-      formData.append("trade_license_name", data.trade_license_name);
-      formData.append("trade_license_type", data.trade_license_type || "Trade");
-    }
-
     try {
-      const res = await APICall(
+      // Validate that all three documents are uploaded before proceeding
+      const step1Data = data?.step1Data || {};
+      // Check for documents (File objects or URLs)
+      const hasRegistrationLicense = (step1Data?.registration_license_url && (step1Data.registration_license_url instanceof File || typeof step1Data.registration_license_url === 'string')) || step1Data?.doc_url_0;
+      const hasApplicationLetter = (step1Data?.application_letter_url && (step1Data.application_letter_url instanceof File || typeof step1Data.application_letter_url === 'string')) || step1Data?.doc_url_1;
+      const hasTradeLicense = step1Data?.trade_license_url && (step1Data.trade_license_url instanceof File || typeof step1Data.trade_license_url === 'string');
+
+      if (!hasRegistrationLicense || !hasApplicationLetter || !hasTradeLicense) {
+        toast.error("Please upload all three required documents: Registration License, Application Letter, and Trade License");
+        setShowDocumentChoice(true);
+        return;
+      }
+
+      // Step 1: Call register API with ALL data (step0Data + step1Data profile fields, excluding documents)
+      const step0Data = data?.step0Data;
+      if (!step0Data) {
+        toast.error("Registration data is missing");
+        return;
+      }
+
+      if (!step1Data || Object.keys(step1Data).length === 0) {
+        toast.error("Company information is missing");
+        return;
+      }
+
+      const otp = localStorage.getItem("otp");
+      
+      // Combine step0Data and step1Data for register API (exclude document files)
+      const registerPayload = {
+        ...step0Data, // Registration data (phone, verification_code, etc.)
+        ...Object.keys(step1Data).reduce((acc, key) => {
+          // Include all step1Data fields except document files
+          if (!key.includes("_url") || !(step1Data[key] instanceof File)) {
+            acc[key] = step1Data[key];
+          }
+          return acc;
+        }, {}),
+      };
+      
+      registerPayload.channel = "WEB";
+      registerPayload.otp_id = otp;
+      registerPayload.otp_code = step0Data?.verification_code;
+      registerPayload.ntn = step1Data?.comp_reg_no;
+
+      const registerRes = await APICall("post", registerPayload, EndPoints.customer.register);
+      
+      if (!registerRes?.success) {
+        toast.error(registerRes?.message || "Registration failed");
+        return;
+      }
+
+      // Store token and ID from registration response
+      const id = registerRes?.data?.customer_account_id;
+      const token = registerRes?.data?.token;
+      localStorage.setItem("token", token);
+      localStorage.setItem("id", id);
+      localStorage.setItem("user", JSON.stringify(registerRes.data));
+
+      // Step 2: Upload documents with profile update data included
+      const documentFormData = new FormData();
+      
+      // Add documents (File objects)
+      if (step1Data?.registration_license_url && step1Data.registration_license_url instanceof File) {
+        documentFormData.append("registration_license_url", step1Data.registration_license_url);
+        if (step1Data.registration_license_name) {
+          documentFormData.append("registration_license_name", step1Data.registration_license_name);
+        }
+        if (step1Data.registration_license_type) {
+          documentFormData.append("registration_license_type", step1Data.registration_license_type);
+        }
+      } 
+      // Fall back to old field names if new ones aren't present
+      else if (step1Data?.doc_url_0) {
+        documentFormData.append("registration_license_url", step1Data.doc_url_0);
+        if (step1Data.docFileName_0) {
+          documentFormData.append("registration_license_name", step1Data.docFileName_0);
+        }
+        if (step1Data.docType_0) {
+          documentFormData.append("registration_license_type", step1Data.docType_0);
+        }
+      }
+      
+      if (step1Data?.application_letter_url && step1Data.application_letter_url instanceof File) {
+        documentFormData.append("application_letter_url", step1Data.application_letter_url);
+        if (step1Data.application_letter_name) {
+          documentFormData.append("application_letter_name", step1Data.application_letter_name);
+        }
+        if (step1Data.application_letter_type) {
+          documentFormData.append("application_letter_type", step1Data.application_letter_type);
+        }
+      }
+      // Fall back to old field names if new ones aren't present
+      else if (step1Data?.doc_url_1) {
+        documentFormData.append("application_letter_url", step1Data.doc_url_1);
+        if (step1Data.docFileName_1) {
+          documentFormData.append("application_letter_name", step1Data.docFileName_1);
+        }
+        if (step1Data.docType_1) {
+          documentFormData.append("application_letter_type", step1Data.docType_1);
+        }
+      }
+      
+      if (step1Data?.trade_license_url && step1Data.trade_license_url instanceof File) {
+        documentFormData.append("trade_license_url", step1Data.trade_license_url);
+        if (step1Data.trade_license_name) {
+          documentFormData.append("trade_license_name", step1Data.trade_license_name);
+        }
+        if (step1Data.trade_license_type) {
+          documentFormData.append("trade_license_type", step1Data.trade_license_type);
+        }
+      }
+
+      // Add all profile update fields to FormData (exclude document files and URLs)
+      Object.keys(step1Data).forEach((key) => {
+        // Skip document file objects and URLs
+        if (!key.includes("_url") || !(step1Data[key] instanceof File)) {
+          const value = step1Data[key];
+          // Only append if value is not null, undefined, empty string, or a File object
+          if (value !== null && value !== undefined && value !== "" && !(value instanceof File)) {
+            documentFormData.append(key, value);
+          }
+        }
+      });
+
+      // Upload documents with profile data
+      const uploadRes = await APICall(
         "post",
-        formData,
+        documentFormData,
         `${EndPoints?.customer?.uploadDocument}/${id}`,
         null,
         true
       );
-
-      if (res?.success) {
-        const profilePayload = { ...data.data };
-        profilePayload.channel = "WEB";
-        profilePayload.ntn = profilePayload.comp_reg_no;
-        
-        APICall("put", profilePayload, EndPoints.customer.updateProfile(id))
-          .then((res) => {
-            if (res?.success) {
-              console.log({res})
-              toast.success(res?.message || "");
-              
-              dispatch(setUserData(res?.data));
-              
-              localStorage.removeItem("otp");
-              
-              navigate(ConstentRoutes.dashboard);
-            } else {
-              toast.error(res?.message);
-            }
-          })
-          .catch((err) => {
-            console.error("Profile update error:", err);
-            toast.error("Failed to update profile");
-          });
+      
+      if (uploadRes?.success) {
+        toast.success(uploadRes?.message || "Registration completed successfully");
+        dispatch(setUserData(uploadRes?.data || registerRes?.data));
+        if (uploadRes?.data) {
+          localStorage.setItem("user", JSON.stringify(uploadRes.data));
+        }
+        localStorage.removeItem("otp");
+        navigate(ConstentRoutes.dashboard);
       } else {
-        setShowDocumentChoice(true);
+        toast.error(uploadRes?.message || "Document upload failed");
       }
     } catch (err) {
-      console.error("Document upload error:", err);
-      setShowDocumentChoice(true);
+      console.error("Registration error:", err);
+      toast.error(err?.message || "Registration failed. Please try again.");
     }
   };
   
@@ -153,28 +221,60 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
           setIsOpen(false);  
           setActiveStep(1);
         }}
-        onProceed={() => {
+        onProceed={async () => {
           setShowDocumentChoice(false);
-          const id = localStorage.getItem("id");
-          const profilePayload = { ...data.data };
-          profilePayload.channel = "WEB";
-          profilePayload.ntn = profilePayload.comp_reg_no;
           
-          APICall("put", profilePayload, EndPoints.customer.updateProfile(id))
-            .then((res) => {
-              if (res?.success) {
-                toast.success(res?.message || "");
-                
-                dispatch(setUserData(res?.data));
-                
-                localStorage.removeItem("otp");
-                
-                navigate(ConstentRoutes.dashboard);
-              }
-            })
-            .catch((err) => {
-              toast.error("Failed to update profile");
-            });
+          try {
+            // Call register API with ALL data (step0Data + step1Data profile fields)
+            const step0Data = data?.step0Data;
+            if (!step0Data) {
+              toast.error("Registration data is missing");
+              return;
+            }
+
+            const step1Data = data?.step1Data || {};
+            if (!step1Data || Object.keys(step1Data).length === 0) {
+              toast.error("Company information is missing");
+              return;
+            }
+
+            const otp = localStorage.getItem("otp");
+            
+            // Combine step0Data and step1Data for register API (exclude document files)
+            const registerPayload = {
+              ...step0Data, // Registration data (phone, verification_code, etc.)
+              ...Object.keys(step1Data).reduce((acc, key) => {
+                // Include all step1Data fields except document files
+                if (!key.includes("_url") || !(step1Data[key] instanceof File)) {
+                  acc[key] = step1Data[key];
+                }
+                return acc;
+              }, {}),
+            };
+            
+            registerPayload.channel = "WEB";
+            registerPayload.otp_id = otp;
+            registerPayload.otp_code = step0Data?.verification_code;
+            registerPayload.ntn = step1Data?.comp_reg_no;
+
+            const registerRes = await APICall("post", registerPayload, EndPoints.customer.register);
+            
+            if (!registerRes?.success) {
+              toast.error(registerRes?.message || "Registration failed");
+              return;
+            }
+
+            const id = registerRes?.data?.customer_account_id;
+            const token = registerRes?.data?.token;
+            localStorage.setItem("token", token);
+            localStorage.setItem("id", id);
+            localStorage.setItem("user", JSON.stringify(registerRes.data));
+            localStorage.removeItem("otp");
+            navigate(ConstentRoutes.dashboard);
+          } catch (err) {
+            console.error("Registration error:", err);
+            toast.error(err?.message || "Registration failed. Please try again.");
+          }
         }}
       />
     </>

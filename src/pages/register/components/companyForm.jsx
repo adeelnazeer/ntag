@@ -2,7 +2,6 @@
 import { Input } from "@headlessui/react";
 import UploadBtn from "../../../components/uploadBtn";
 import { Button, Typography } from "@material-tailwind/react";
-import FormSubmission from "../../../modals/form-submission";
 import PhoneInput from "react-phone-number-input";
 import { validateEthiopianPhone } from "../../../utilities/validateEthiopianPhone";
 import { useState, useEffect } from "react";
@@ -34,7 +33,7 @@ const GetLabel = ({ name }) => {
   );
 };
 
-const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, control, setValue, setActiveStep }) => {
+const AccountForm = ({ register, errors, watch, data, setOpen, setData, control, setValue }) => {
   const watchAll = watch();
   const location = useLocation()
   const { t } = useTranslation()
@@ -484,14 +483,6 @@ const AccountForm = ({ register, errors, watch, data, setOpen, open, setData, co
               />
             </div>
 
-            {/* Form Submission Modal */}
-            <FormSubmission
-              isOpen={open}
-              setActiveStep={setActiveStep}
-              setIsOpen={setOpen}
-              data={data}
-              watch={watch}
-            />
           </div>
         </div>
       </div>

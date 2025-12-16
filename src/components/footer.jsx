@@ -10,7 +10,7 @@ const Footer = () => {
  let  userData = JSON.parse(localStorage.getItem("user"));
 
   return (
-    <div className="bg-[#D7D7D7] z-[99] px-6 py-4 sticky bottom-0">
+    <div className="bg-[#D7D7D7] z-[100] px-6 py-4 sticky bottom-0">
       {(location?.pathname !== ConstentRoutes?.login &&
         location?.pathname !== ConstentRoutes?.register) && (
           <div className="flex justify-center max-w-7xl mx-auto">

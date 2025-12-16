@@ -229,10 +229,10 @@ const IndividualPaymentConfirmationModal = ({
             disabled={isLoading}
           >
             {isExchangeFlow
-              ? t("dashboard.confirmBuy")
+              ? t("buttons.confirm")
               : type === "reserve"
-              ? t("dashboard.confirm")
-              : t("dashboard.confirm")}
+              ? t("buttons.confirm")
+              : t("buttons.confirm")}
           </Button>
         </div>
       </div>

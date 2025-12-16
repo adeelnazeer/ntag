@@ -65,8 +65,8 @@
     "rejected": " ሰነዶችህ ውድቅ ሆነዋልእባክዎ ዝርዝሮቹን አጣርተው እንደገና ያስገቡ፡፡"
   },
   "emptyStates": {
-    "canReserveWhileProcessing": "In the meantime, you can reserve NameTAG numbers while your document is being processed.",
-    "noTagReserved": "No NameTAG number has been reserved or subscribed yet."
+    "canReserveWhileProcessing": "በዚህ ጊዜ ውስጥ፣ ሰነድዎ ሲመረመር የ NameTAG ቁጥሮችን ማስያዝ ይችላሉ።",
+    "noTagReserved": "እስካሁን ምንም የ NameTAG ቁጥር አልተያዘም ወይም አልተመዘገበም።"
   },
   "toastMessages": {
     "errorProcessing": "እዝናለን፣ አሁን ጥያቄዎን ማካሄድ አልቻልንም። እባክዎ ቆይተው እንደገና ይሞክሩ።",

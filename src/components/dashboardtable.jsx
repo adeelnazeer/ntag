@@ -120,7 +120,11 @@ const Dashboardtable = (props) => {
           return;
         }
 
-        const res = await APICall("get", null, `${EndPoints.customer.getReserve}/${accountId}`);
+        const actualAccountId = userData?.parent_id != null && userData?.parent?.customer_account_id 
+            ? userData.parent.customer_account_id 
+            : accountId;
+
+        const res = await APICall("get", null, `${EndPoints.customer.getReserve}/${actualAccountId}`);
 
         if (res?.success) {
           const newReserveData = Array.isArray(res?.data) ? res?.data[0] : res?.data;
@@ -502,7 +506,7 @@ const Dashboardtable = (props) => {
                         }}
                         disabled={shouldDisableSelectButton}
                       >
-                        {(isCustomer || docStatus?.status == 1) ? t("buttons.available") : ("buttons.reserve")}
+                        {(isCustomer || docStatus?.status == 1) ? t("buttons.select") : t("buttons.reserve")}
                       </Button>
                     </div>
                   )}

@@ -1,5 +1,5 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
@@ -46,6 +46,7 @@ import ChangeNumber from "./pages/changeNumber.jsx";
 import ChangeNumberDetailPage from "./pages/changeNumberDetailPage.jsx";
 import CallPinPage from "./pages/callPin.jsx";
 import CallPinPageIndividual from "./pages/IndividualCustomer/callPinIndividual.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function App() {
   return (
@@ -54,23 +55,32 @@ function App() {
         <Route path={ConstentRoutes.home} element={<HomePage />} />
         <Route path={ConstentRoutes.login} element={<Login />} />
         <Route path={ConstentRoutes.register} element={<RegisterPage />} />
-        <Route path={ConstentRoutes.forgetPassword} element={<ForgetPassword />} />
-
-        <Route path={ConstentRoutes.changePassword} element={
-          <DashboardLayout>
-            <ChangePassword isCustomer={false} />
-          </DashboardLayout>
-        }
+        <Route
+          path={ConstentRoutes.forgetPassword}
+          element={<ForgetPassword />}
         />
 
+        <Route
+          path={ConstentRoutes.changePassword}
+          element={
+            <DashboardLayout>
+              <ChangePassword isCustomer={false} />
+            </DashboardLayout>
+          }
+        />
 
         {/* Normal User Registration Route */}
-        <Route path={ConstentRoutes.registerNormalUser} element={<RegisterPageNormalUser />} />
-        <Route path={ConstentRoutes.changePasswordCustomer} element={
-          <DashboardLayoutCustomer >
-            <ChangePassword isCustomer={true} />
-          </DashboardLayoutCustomer>
-        }
+        <Route
+          path={ConstentRoutes.registerNormalUser}
+          element={<RegisterPageNormalUser />}
+        />
+        <Route
+          path={ConstentRoutes.changePasswordCustomer}
+          element={
+            <DashboardLayoutCustomer>
+              <ChangePassword isCustomer={true} />
+            </DashboardLayoutCustomer>
+          }
         />
         <Route
           path={ConstentRoutes.dashboardCustomer}
@@ -164,7 +174,6 @@ function App() {
             <DashboardLayoutCustomer>
               <ContactUsIndividual />
             </DashboardLayoutCustomer>
-
           }
         />
         {/* End of Customer Manage NameTAG Routes */}
@@ -292,17 +301,10 @@ function App() {
             </DashboardLayout>
           }
         />
-        <Route
-          path={ConstentRoutes.termofuse}
-          element={
-            <TermOfUse />
-          }
-        />
+        <Route path={ConstentRoutes.termofuse} element={<TermOfUse />} />
         <Route
           path={ConstentRoutes.FrequentlyAskedQuestions}
-          element={
-            <FAQ />
-          }
+          element={<FAQ />}
         />
 
         <Route
@@ -311,19 +313,12 @@ function App() {
             <DashboardLayout>
               <ContactUs />
             </DashboardLayout>
-
           }
         />
-        <Route
-          path={"/contact-us"}
-          element={
-            <ContactUsPublic />
-
-          }
-        />
+        <Route path={"/contact-us"} element={<ContactUsPublic />} />
 
         <Route
-          path={'/confirm-order'}
+          path={"/confirm-order"}
           element={
             <DashboardLayout>
               <CreateOrder />
@@ -333,9 +328,7 @@ function App() {
 
         <Route
           path={ConstentRoutes.privacyPolicy}
-          element={
-            <PrivacyPolicy />
-          }
+          element={<PrivacyPolicy />}
         />
       </Routes>
       <ToastContainer

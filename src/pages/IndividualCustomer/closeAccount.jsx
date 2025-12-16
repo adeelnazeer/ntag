@@ -135,7 +135,7 @@ function CloseAccountCustomer() {
                 <td className="py-4 px-4 text-sm text-gray-700">{userData?.first_name || ''} {userData?.last_name || ""}</td>
                 <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(userData?.phone_number || t("common.na"))}</td>
                 <td className="py-4 px-4 text-sm text-gray-700">
-                    {moment(userData?.created_date).format("YYYY-MM-DD") || t("common.na")}
+                    {moment(userData?.created_date).format("DD-MM-YYYY") || t("common.na")}
                 </td>
                 <td className="py-4 px-4 text-sm text-gray-700">
                     {getTagStatusDashboard(userData?.status)}
