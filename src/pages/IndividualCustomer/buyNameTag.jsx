@@ -45,7 +45,7 @@ const TagNamesIndividual = () => {
         return Number(price).toFixed(2);
     };
     const formatCurrency = (price) => `${formatPrice(price)} ${t("common.etb")}`;
-    const formatDate = (value) => (value ? moment(value).format("DD-MM-YYYY") : t("tagInfo.notAvailable"));
+    const formatDate = (value) => (value ? (value) : t("tagInfo.notAvailable"));
     const displayValue = (value) =>
         value !== undefined && value !== null && value !== "" ? value : t("common.na");
 

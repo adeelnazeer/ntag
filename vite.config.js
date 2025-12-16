@@ -16,4 +16,19 @@ export default defineConfig({
     // },
     // https: true,
   },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    minify: 'esbuild', // Use esbuild instead of terser (faster and no extra dependency)
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'redux-vendor': ['@reduxjs/toolkit', 'react-redux', 'redux-persist'],
+          'ui-vendor': ['@material-tailwind/react'],
+        },
+      },
+    },
+  },
 });

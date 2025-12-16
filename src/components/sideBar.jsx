@@ -26,6 +26,9 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
     userData = JSON.parse(localStorage.getItem("user"));
   }
 
+  // Check if user has parent_id (sub-account)
+  const hasParentId = userData?.parent_id != null;
+
   const activeDashboard = location?.pathname === ConstentRoutes.dashboard;
   const activeTwo = location?.pathname?.includes("dashboard");
   const activeThree =
@@ -219,7 +222,7 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                         activeThree ? "text-white" : "text-[#8A8AA0]"
                       } font-medium`}
                     >
-                     {t("sideBar.manageTag")}
+                      {t("sideBar.manageTag")}
                     </span>
                   </ListItem>
                 </div>
@@ -263,7 +266,7 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                           : ""
                       }`}
                     >
-                     {t("sideBar.incomingCallPin")}
+                      {t("sideBar.incomingCallPin")}
                     </button>
                     <button
                       onClick={() => {
@@ -282,14 +285,14 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                           : ""
                       }`}
                     >
-                     {t("sideBar.BlockUnblock")}
+                      {t("sideBar.BlockUnblock")}
                     </button>
                     <div
                       onClick={() => {
                         navigate(ConstentRoutes.changeMyTAGCorporate);
                         setIsSidebarOpen(false);
                       }}
-                      className={`py-2 px-3 text-sm rounded-md cursor-pointer 
+                      className={`py-2 px-3 text-sm rounded-md ${"cursor-pointer"} 
                         ${
                           activeChangeMyTag
                             ? "bg-secondary text-white"
@@ -303,7 +306,7 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                         navigate(ConstentRoutes.changeNumber);
                         setIsSidebarOpen(false);
                       }}
-                      className={`py-2 px-3 text-sm rounded-md cursor-pointer 
+                      className={`py-2 px-3 text-sm rounded-md ${"cursor-pointer"} 
                         ${
                           changeNumber
                             ? "bg-secondary text-white"
@@ -332,20 +335,23 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       {t("sideBar.unsubscribe")}
                     </button>
 
-                    <div
-                      onClick={() => {
-                        navigate(ConstentRoutes.closeAccount);
-                        setIsSidebarOpen(false);
-                      }}
-                      className={`py-2 px-3 text-sm rounded-md cursor-pointer 
-                        ${
-                          closeAccount
-                            ? "bg-secondary text-white"
-                            : "text-[#8A8AA0] hover:bg-gray-100"
-                        }`}
-                    >
-                      {t("sideBar.closeAccount")}
-                    </div>
+                    {/* Hide Close Account tab when parent_id != null */}
+                    {!hasParentId && (
+                      <div
+                        onClick={() => {
+                          navigate(ConstentRoutes.closeAccount);
+                          setIsSidebarOpen(false);
+                        }}
+                        className={`py-2 px-3 text-sm rounded-md cursor-pointer 
+                          ${
+                            closeAccount
+                              ? "bg-secondary text-white"
+                              : "text-[#8A8AA0] hover:bg-gray-100"
+                          }`}
+                      >
+                        {t("sideBar.closeAccount")}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

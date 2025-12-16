@@ -2,8 +2,17 @@ import { useEffect, useState } from "react";
 import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
 import { toast } from "react-toastify";
+import { useAppSelector } from "../../redux/hooks";
 
 export const useTagList = () => {
+  // Get userData to check for parent_id
+  let userData = useAppSelector(state => state.user.userData);
+  if (!userData) {
+    const localUser = localStorage.getItem("user");
+    if (localUser) {
+      userData = JSON.parse(localUser);
+    }
+  }
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, tag_digits: 0 });
   const [metaData, setMetaData] = useState(null);
@@ -130,6 +139,11 @@ export const useTagList = () => {
     };
 
     const payload = ensureRequiredFields(tagData);
+    
+    // Replace account_id with parent?.customer_account_id if parent_id != null
+    if (userData?.parent_id != null && userData?.parent?.customer_account_id) {
+      payload.account_id = userData.parent.customer_account_id;
+    }
 
     APICall("post", payload, EndPoints.customer.buytags)
       .then((res) => {
@@ -159,7 +173,14 @@ export const useTagList = () => {
   const handleTagExchangeCorporate = (data, setPaymentType) => {
     setLoadingPayment(true);
 
-    APICall("post", data, EndPoints.customer.corporatechangeNumberSaving)
+    const payload = { ...data };
+    
+    // Replace account_id with parent?.customer_account_id if parent_id != null
+    if (userData?.parent_id != null && userData?.parent?.customer_account_id) {
+      payload.account_id = userData.parent.customer_account_id;
+    }
+
+    APICall("post", payload, EndPoints.customer.corporatechangeNumberSaving)
       .then((res) => {
         setLoadingPayment(false);
         if (res?.success) {

@@ -76,7 +76,11 @@ const TagNames = () => {
     setLoading(true);
     const user = JSON.parse(localStorage.getItem("user"));
 
-    APICall("get", null, `${EndPoints.customer.getReserve}/${user?.customer_account_id}`)
+    const accountId = user?.parent_id != null && user?.parent?.customer_account_id 
+        ? user.parent.customer_account_id 
+        : user?.customer_account_id;
+
+    APICall("get", null, `${EndPoints.customer.getReserve}/${accountId}`)
       .then((res) => {
         if (res?.success) {
           setTagData(res?.data);
@@ -118,9 +122,9 @@ const TagNames = () => {
   const processResubscribe = (corp_subscriber_id) => {
     setResubscribing(true);
 
-    const payload = {
-      corp_subscriber_id: corp_subscriber_id
-    };
+        const payload = {
+            corp_subscriber_id: corp_subscriber_id
+        };
 
     APICall("post", payload, "customer/re-subscribe")
       .then(res => {
@@ -228,7 +232,7 @@ const TagNames = () => {
 
     return (
       <div className="md:p-4 p-1 rounded-xl shadow pb-6 md:mt-6 mt-2" key={single?.id}>
-        {(single?.is_recurring_acceptance == 0 && showMessage == false && single?.status != 6) &&
+        {(single?.is_recurring_acceptance == 0 && showMessage == false && single?.status != 6 && single?.payment_method=="telebirr") &&
           <Typography className="text-[14px] font-bold mb-3">
             <span>{t("actionRequired.title")} </span>
             <br />
@@ -322,7 +326,7 @@ const TagNames = () => {
           <div className="flex justify-between">
             <Typography className="text-[14px]">{isReserved ? t("tagInfo.reservationDate") : t("tagInfo.subscriptionDate")} </Typography>
             <Typography className="md:text-[14px] text-[12px]">
-              {moment(isReserved ? single?.created_date : single?.sub_date).format("DD-MM-YYYY")}
+              {(isReserved ? single?.created_date : single?.sub_date)}
             </Typography>
           </div>
         </div>
@@ -383,7 +387,7 @@ const TagNames = () => {
           <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
             <Typography className="text-[14px]">{t("tagInfo.recurringFeeDueDate")}</Typography>
             <Typography className="md:text-[14px] text-[12px]">
-              {single?.next_charge_dt ? moment(single.next_charge_dt).format("DD-MM-YYYY") : t("tagInfo.notAvailable")}
+              {single?.next_charge_dt ? (single.next_charge_dt): t("tagInfo.notAvailable")}
             </Typography>
           </div>
         </>) : <>
@@ -394,7 +398,7 @@ const TagNames = () => {
 
           <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
             <Typography className="text-[14px]">{t("tagInfo.unsubscribeDate")}</Typography>
-            <Typography className="text-[14px]">       {single?.unsub_date ? moment(single.unsub_date).format("DD-MM-YYYY") : t("tagInfo.notAvailable")} </Typography>
+            <Typography className="text-[14px]">       {single?.unsub_date ? (single.unsub_date) : t("tagInfo.notAvailable")} </Typography>
           </div>
           <div className="flex justify-between md:px-5 px-2 py-3 rounded-xl mt-1">
             <Typography className="text-[14px]">  {t("tagInfo.resubscribeMessage")} </Typography>

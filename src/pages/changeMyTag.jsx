@@ -39,7 +39,8 @@ function ChangeMyTag() {
             .then((res) => {
                 if (res?.success) {
                     const activeTags = res?.data.filter(tag =>
-                        tag.type !== 'reserve' &&
+                        tag.type !== 'reserve'
+                         &&
                         tag.payment_status !== 0 &&
                         (tag.status !== 6 && tag?.status != "6")
                     );

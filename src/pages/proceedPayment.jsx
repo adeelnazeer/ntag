@@ -218,10 +218,13 @@ const ProceedPayment = () => {
       reserveType = "new";
     }
 
+    const accountId = userData?.parent_id != null && userData?.parent?.customer_account_id 
+      ? userData.parent.customer_account_id 
+      : userData?.customer_account_id;
     const values = {
       transaction_type: "CORP_BUYTAG",
       channel: "WEB",
-      account_id: userData?.customer_account_id,
+      account_id: accountId,
       customer_tag_id: state?.id,
       type: actionType,
       corp_reserve_tag_id: state?.reserve_tag_id || null,

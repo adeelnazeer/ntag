@@ -692,7 +692,7 @@ const CallPinPage = () => {
                   {blockType === "mobileNumber" && (
                     <>
                       <p className="text-xs text-gray-500 mt-1">
-                        {t("callPin.modalWhitelist.")}
+                        {t("callPin.modalWhitelist.formatHint")}
                       </p>
                       {phoneError && (
                         <p className="text-xs text-red-500 mt-1">
@@ -729,7 +729,7 @@ const CallPinPage = () => {
               <Button
                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
                 onClick={addNumberWhiteList}
-                disabled={addingNumber}
+                disabled={addingNumber||phoneError}
               >
                 {addingNumber ? (
                   <div className="flex items-center gap-2">

@@ -236,17 +236,16 @@ export const useRegisterHook = () => {
     APICall("post", payLoad, EndPoints.customer.login)
       .then((res) => {
         if (res?.success) {
-          const token = res?.data?.token;
-          localStorage.setItem("token", token);
-          localStorage.setItem("id", res?.data?.customer_account_id);
-          localStorage.setItem("number", res?.data?.phone_number);
-          localStorage.setItem("user", JSON.stringify(res?.data));
-          localStorage.setItem(
-            "customer_type",
-            JSON.stringify(res?.data.customer_type)
-          );
-
           if (res?.data?.customer_type == "individual") {
+            const token = res?.data?.token;
+            localStorage.setItem("token", token);
+            localStorage.setItem("id", res?.data?.customer_account_id);
+            localStorage.setItem("number", res?.data?.phone_number);
+            localStorage.setItem("user", JSON.stringify(res?.data));
+            localStorage.setItem(
+              "customer_type",
+              JSON.stringify(res?.data.customer_type)
+            );
             toast.success(res?.message || "");
             navigate(ConstentRoutes.dashboardCustomer);
           } else {
@@ -259,6 +258,15 @@ export const useRegisterHook = () => {
                 },
               });
             } else {
+              const token = res?.data?.token;
+              localStorage.setItem("token", token);
+              localStorage.setItem("id", res?.data?.customer_account_id);
+              localStorage.setItem("number", res?.data?.phone_number);
+              localStorage.setItem("user", JSON.stringify(res?.data));
+              localStorage.setItem(
+                "customer_type",
+                JSON.stringify(res?.data.customer_type)
+              );
               toast.success(res?.message || "");
               navigate(ConstentRoutes.dashboard);
             }

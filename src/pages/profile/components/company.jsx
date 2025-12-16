@@ -124,6 +124,7 @@ export default function CompanyInfo({ userProfileData }) {
           </label>
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none border border-[#8A8AA033]"
+            maxLength={50}
             {...register("email")}
           />
         </div>
@@ -225,6 +226,16 @@ export default function CompanyInfo({ userProfileData }) {
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none border border-[#8A8AA033]"
             maxLength={10}
+            type="tel"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            onKeyDown={(e) => {
+              const key = e.key;
+              const ctrl = e.ctrlKey || e.metaKey;
+              const allowed = ["Backspace", "Delete", "Tab", "Enter", "Escape", "ArrowLeft", "ArrowRight", "Home", "End"];
+              if (allowed.includes(key) || ctrl) return;
+              if (!/^\d$/.test(key)) e.preventDefault(); // digits only
+            }}
             {...register("comp_reg_no", {
               required: t("common.form.errors.tinNumber"),
               minLength: { value: 9, message: t("common.form.errors.tinMinLength") },

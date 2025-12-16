@@ -584,6 +584,7 @@ const TagDetails = () => {
     (state) => state.user.corporateDocuments
   );
   const [isOpen, setIsOpen] = useState(false);
+  const [businessType, setBusinessType] = useState("BuyGoods");
 
   const [availablePhoneNumbers, setAvailablePhoneNumbers] = useState([]);
   const [loadingPhoneNumbers, setLoadingPhoneNumbers] = useState(false);
@@ -608,6 +609,9 @@ const TagDetails = () => {
   };
   let userData = {};
   userData = JSON.parse(localStorage.getItem("user"));
+
+  // Check if user has parent_id (sub-account)
+  const hasParentId = userData?.parent_id != null;
 
   const isReserved = stateData.isReserve === true;
 
@@ -659,13 +663,19 @@ const TagDetails = () => {
   };
 
   useEffect(() => {
+    // When parent_id != null, always use userData?.phone_number (no selection allowed)
+    if (hasParentId && userData?.phone_number) {
+      setSelectedPhoneNumber(userData.phone_number);
+      return;
+    }
+    
     if (!hasMsisdn) {
       fetchAvailablePhoneNumbers();
     } else {
       // If we have an MSISDN from state, use it
       setSelectedPhoneNumber(stateData.msisdn);
     }
-  }, [hasMsisdn]);
+  }, [hasMsisdn, hasParentId]);
 
   const stripPlusFromPhone = (phoneNumber) => {
     if (!phoneNumber) return "";
@@ -691,7 +701,7 @@ const TagDetails = () => {
           return "weekly_fee";
         case "Quarterly":
           return "quarterly_fee";
-        case "Semi-Annually":
+        case "Semi Annually":
           return "semiannually_fee";
         case "Annually":
           return "annually_fee";
@@ -789,9 +799,9 @@ const TagDetails = () => {
   };
 
   const onSubmitPayment = (state) => {
-    // Check if a phone number is selected when needed
-    if (!hasMsisdn && !selectedPhoneNumberId) {
-      toast.error("Please select a mobile number");
+    // Check if a phone number is selected when needed (skip if parent_id != null)
+    if (!hasParentId && !hasMsisdn && !selectedPhoneNumberId) {
+      toast.error(t("dashboard.pleaseSelectMobileNumber"));
       return;
     }
 
@@ -834,7 +844,10 @@ const TagDetails = () => {
     // Get the selected phone number's MSISDN
     let selectedMsisdn = "";
 
-    if (hasMsisdn) {
+    // When parent_id != null, always use userData?.phone_number
+    if (hasParentId && userData?.phone_number) {
+      selectedMsisdn = userData.phone_number;
+    } else if (hasMsisdn) {
       selectedMsisdn = state.msisdn;
     } else if (selectedPhoneNumber) {
       selectedMsisdn = selectedPhoneNumber;
@@ -845,7 +858,7 @@ const TagDetails = () => {
 
     // If no phone is selected, show error and return
     if (!selectedMsisdn) {
-      toast.error("Please select a mobile number");
+      toast.error(t("dashboard.pleaseSelectMobileNumber"));
       return;
     }
 
@@ -863,10 +876,13 @@ const TagDetails = () => {
       reserveType = "new";
     }
 
+    const accountId = userData?.parent_id != null && userData?.parent?.customer_account_id 
+      ? userData.parent.customer_account_id 
+      : userData?.customer_account_id;
     const values = {
       transaction_type: "CORP_BUYTAG",
       channel: "WEB",
-      account_id: userData?.customer_account_id,
+      account_id: accountId,
       customer_tag_id: state?.id,
       type: state?.action_type,
       corp_reserve_tag_id: state?.reserve_tag_id || null,
@@ -875,10 +891,11 @@ const TagDetails = () => {
       // Use the selected phone number for both fields
       phone_number: stripPlusFromPhone(userData.phone_number),
       amount: priceBreakdown?.totalPrice?.toString(),
-      payment_method: "telebirr",
+      payment_method:
+        businessType == "BuyGoods" ? "telebirr" : "telebirr_partnerapp",
       reserve_type: reserveType,
       msisdn: formattedMsisdn,
-      business_type: "BuyGoods",
+      business_type: businessType,
       service_fee: state?.service_fee,
       recurring_fee_type: state?.recurring_fee_type,
       recurring_fee_amount: state?.recurring_fee_amount,
@@ -959,6 +976,10 @@ const TagDetails = () => {
           next_charge_date: nextChargeDate
             ? moment(nextChargeDate).format("YYYY-MM-DD")
             : null,
+          quarterly_fee: stateData?.quarterly_fee || 0,
+          monthly_fee: stateData?.monthly_fee || 0,
+          semiannually_fee: stateData?.semiannually_fee || 0,
+          annually_fee: stateData?.annually_fee || 0,
         };
       } else {
         values.tag_id = state?.tag_id !== undefined ? state?.tag_id : null;
@@ -991,6 +1012,10 @@ const TagDetails = () => {
           next_charge_date: nextChargeDate
             ? moment(nextChargeDate).format("YYYY-MM-DD")
             : null,
+          quarterly_fee: stateData?.quarterly_fee || 0,
+          monthly_fee: stateData?.monthly_fee || 0,
+          semiannually_fee: stateData?.semiannually_fee || 0,
+          annually_fee: stateData?.annually_fee || 0,
         };
       }
     }
@@ -1068,15 +1093,18 @@ const TagDetails = () => {
     if (watchAllField?.term == false) {
       setError("term", {
         type: "manual",
-        message: "You must accept the Terms & Conditions to continue",
+        message: t("dashboard.termError"),
       });
       return; // Prevent form submission
     }
     if (isExchangeFlow) {
+      const accountId = userData?.parent_id != null && userData?.parent?.customer_account_id 
+        ? userData.parent.customer_account_id 
+        : userData?.id;
       const payload = {
         transaction_type: "CHANGE_MY_TAG",
         channel: "WEB",
-        account_id: userData?.id,
+        account_id: accountId,
         customer_tag_id: stateData?.id,
         type: "buy",
         corp_reserve_tag_id: stateData?.reserve_tag_id || null,
@@ -1150,7 +1178,7 @@ const TagDetails = () => {
             className="py-5 px-4 bg-secondary text-white"
             onClick={handleBuyClick}
             disabled={
-              (!hasMsisdn && !selectedPhoneNumberId && !isExchangeFlow) ||
+              (!hasParentId && !hasMsisdn && !selectedPhoneNumberId && !isExchangeFlow) ||
               disableBtn
             }
           >
@@ -1166,7 +1194,7 @@ const TagDetails = () => {
           <Button
             className="py-4 px-4 bg-secondary text-white"
             onClick={handleReserveClick}
-            disabled={!hasMsisdn && !selectedPhoneNumberId}
+            disabled={!hasParentId && !hasMsisdn && !selectedPhoneNumberId}
           >
             {t("buttons.reserveNameTag")}
           </Button>
@@ -1181,7 +1209,7 @@ const TagDetails = () => {
           onClick={handleBuyClick}
           disabled={
             !isExchangeFlow &&
-            ((!hasMsisdn && !selectedPhoneNumberId) || disableBtn)
+            ((!hasParentId && !hasMsisdn && !selectedPhoneNumberId) || disableBtn)
           }
         >
           {isExchangeFlow ? t("buttons.changeNameTag") : t("buttons.buyTag")}
@@ -1191,7 +1219,7 @@ const TagDetails = () => {
           <Button
             className="py-4 px-4 bg-secondary text-white"
             onClick={handleReserveClick}
-            disabled={(!hasMsisdn && !selectedPhoneNumberId) || disableBtn}
+            disabled={(!hasParentId && !hasMsisdn && !selectedPhoneNumberId) || disableBtn}
           >
             {t("buttons.reserveNameTag")}
           </Button>
@@ -1226,6 +1254,11 @@ const TagDetails = () => {
   };
 
   const getCurrentPhoneNumber = () => {
+    // When parent_id != null, always use userData?.phone_number
+    if (hasParentId && userData?.phone_number) {
+      return userData.phone_number;
+    }
+    
     if (hasMsisdn) {
       return stateData?.msisdn;
     } else if (selectedPhoneNumber) {
@@ -1266,12 +1299,13 @@ const TagDetails = () => {
         {isExchangeFlow && (
           <div className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 mb-4">
             <Typography className=" font-bold">
-              NameTAG Exchange Mode
+              {t("dashboard.nameTagExchangeMode")}
             </Typography>
             <Typography className="text-sm mt-1">
-              You are about to change your current NameTAG #
-              {currentTagData?.tag_no + " " || ""}
-              to NameTAG #{tagData?.tag_no}. This action cannot be undone.
+              {t("dashboard.exchangeModeDescription", {
+                currentTagNo: currentTagData?.tag_no || "",
+                newTagNo: tagData?.tag_no || "",
+              })}
             </Typography>
           </div>
         )}
@@ -1357,7 +1391,7 @@ const TagDetails = () => {
           </div>
           {/* )} */}
 
-          {!hasMsisdn && !isExchangeFlow && (
+          {!hasMsisdn && !isExchangeFlow && !hasParentId && (
             <div className="px-5 py-4 mt-3">
               <Typography className="text-[#1F1F2C] text-sm font-medium bg-[#F8F9FA] p-3 rounded-lg border border-[#E9ECEF]">
                 {t("dashboard.pleaseSelectNumberInfo")}{" "}
@@ -1372,7 +1406,7 @@ const TagDetails = () => {
             </div>
           )}
 
-          {hasMsisdn || isExchangeFlow ? (
+          {hasMsisdn || isExchangeFlow || hasParentId ? (
             <div className="border-[#77777733] border bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
               <div className="flex justify-between">
                 <div className="flex gap-2 items-center">
@@ -1383,7 +1417,9 @@ const TagDetails = () => {
 
                 <div className="flex items-center gap-2">
                   <Typography className="text-[14px] md:min-w-[200px] border border-[#8dc63f] p-2 rounded-lg text-[#0000008F]">
-                    {isExchangeFlow
+                    {hasParentId
+                      ? formatPhoneNumber(userData?.phone_number)
+                      : isExchangeFlow
                       ? formatPhoneNumber(stateData?.currentTagData?.msisdn)
                       : formatPhoneNumber(stateData.msisdn)}
                   </Typography>
@@ -1391,68 +1427,71 @@ const TagDetails = () => {
               </div>
             </div>
           ) : (
-            <div className="border-[#77777733] border bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
-              <div className="flex justify-between flex-wrap">
-                <div className="flex gap-2 items-center">
-                  <Typography className="text-[14px]">
-                    {t("dashboard.mobileNo")}
-                  </Typography>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  {loadingPhoneNumbers ? (
-                    <Typography className="text-sm text-gray-500">
-                      {t("dashboard.loading")}
+            // Only show dropdown when parent_id is null (not a sub-account)
+            !hasParentId && (
+              <div className="border-[#77777733] border bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
+                <div className="flex justify-between flex-wrap">
+                  <div className="flex gap-2 items-center">
+                    <Typography className="text-[14px]">
+                      {t("dashboard.mobileNo")}
                     </Typography>
-                  ) : availablePhoneNumbers &&
-                    availablePhoneNumbers.length > 0 ? (
-                    <div className="flex gap-2 items-center">
-                      <select
-                        value={selectedPhoneNumberId}
-                        onChange={handlePhoneNumberChange}
-                        className="min-w-[200px] w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none text-sm bg-white"
-                      >
-                        {/* Default option */}
-                        <option disabled value="">
-                          {t("dashboard.selectMobileNo")}
-                        </option>
+                  </div>
 
-                        {availablePhoneNumbers
-                          .filter((number) => number.tag_status !== 1)
-                          .map((number) => (
-                            <option key={number.id} value={number.id}>
-                              {formatPhoneNumber(number.msisdn)}
-                            </option>
-                          ))}
-                      </select>
-                      <Button
-                        size="sm"
-                        className="bg-secondary p-2 flex items-center justify-center"
-                        onClick={goToNumberManagement}
-                        type="button"
-                      >
-                        <FaPlusCircle />
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="flex gap-2 items-center">
+                  <div className="flex items-center gap-2">
+                    {loadingPhoneNumbers ? (
                       <Typography className="text-sm text-gray-500">
-                        {t("dashboard.noNumberMsg")}{" "}
+                        {t("dashboard.loading")}
                       </Typography>
-                      <Button
-                        size="sm"
-                        className="bg-secondary flex items-center gap-1"
-                        onClick={goToNumberManagement}
-                        type="button"
-                      >
-                        <FaPlusCircle className="h-3 w-3" />{" "}
-                        {t("dashboard.add")}
-                      </Button>
-                    </div>
-                  )}
+                    ) : availablePhoneNumbers &&
+                      availablePhoneNumbers.length > 0 ? (
+                      <div className="flex gap-2 items-center">
+                        <select
+                          value={selectedPhoneNumberId}
+                          onChange={handlePhoneNumberChange}
+                          className="min-w-[200px] w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none text-sm bg-white"
+                        >
+                          {/* Default option */}
+                          <option disabled value="">
+                            {t("dashboard.selectMobileNo")}
+                          </option>
+
+                          {availablePhoneNumbers
+                            .filter((number) => number.tag_status !== 1)
+                            .map((number) => (
+                              <option key={number.id} value={number.id}>
+                                {formatPhoneNumber(number.msisdn)}
+                              </option>
+                            ))}
+                        </select>
+                        <Button
+                          size="sm"
+                          className="bg-secondary p-2 flex items-center justify-center"
+                          onClick={goToNumberManagement}
+                          type="button"
+                        >
+                          <FaPlusCircle />
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="flex gap-2 items-center">
+                        <Typography className="text-sm text-gray-500">
+                          {t("dashboard.noNumberMsg")}{" "}
+                        </Typography>
+                        <Button
+                          size="sm"
+                          className="bg-secondary flex items-center gap-1"
+                          onClick={goToNumberManagement}
+                          type="button"
+                        >
+                          <FaPlusCircle className="h-3 w-3" />{" "}
+                          {t("dashboard.add")}
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            )
           )}
           <div className="flex justify-between border px-5 border-[#77777733] bg-[#F6F7FB] py-3 rounded-xl mt-3">
             <Typography className="text-[14px]">
@@ -1480,7 +1519,7 @@ const TagDetails = () => {
                       setErrors(false);
                     }}
                     disabled={stateData?.mode == "resubscribe"}
-                    label="Select Plan"
+                    label={t("dashboard.selectPlan")}
                     className=""
                     style={error ? { border: "1px solid red" } : {}}
                   >
@@ -1565,14 +1604,6 @@ const TagDetails = () => {
                 {priceBreakdown.excisetax || ""} {t("dashboard.etb")}
               </Typography>
             </div>
-
-            {/* <div className="flex justify-between mt-2">
-             <Typography className="text-[14px] font-bold">Vatable Total</Typography>
-             <Typography className="text-[14px] font-bold">
-               {vatableTotalAmount.toFixed(2)} ETB
-             </Typography>
-           </div> */}
-
             <div className="flex justify-between mt-2">
               <Typography className="text-[14px]">
                 {t("dashboard.stampDuty")}
@@ -1625,6 +1656,30 @@ const TagDetails = () => {
               </Typography>
             </div>
           </div>
+
+          {/* {actionType === "buy" && docStatus?.status !== 0 && ( */}
+          <div className="border-[#77777733] border bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
+            <div className="flex justify-between items-center">
+              <Typography className="text-[14px]">
+                {t("dashboard.paymentOption")}
+              </Typography>
+              <div className="w-80">
+                <Select
+                  value={businessType}
+                  onChange={(value) => setBusinessType(value)}
+                  className="border border-[#8dc63f] rounded-lg"
+                >
+                  <Option value="TransferToOtherOrg">
+                    {t("dashboard.paymentViaTelebirrPartnerApp")}
+                  </Option>
+                  <Option value="BuyGoods">
+                    {t("dashboard.paymentViaTelebirrSuperApp")}
+                  </Option>
+                </Select>
+              </div>
+            </div>
+          </div>
+          {/* )} */}
 
           <div className="px-5 rounded-xl mt-3 text-[#555]">
             <div className="flex items-center">
@@ -1694,6 +1749,7 @@ const TagDetails = () => {
             stamp_duty: priceBreakdown?.stampDuty,
             base_price: priceBreakdown?.totalBasePrice,
             total_amount: priceBreakdown?.totalPrice,
+            businessType: businessType,
             selectedAmount: selectedFeeAmount,
             selectedFeeLabel: selectedFeeLabel,
           }}
@@ -1715,6 +1771,7 @@ const TagDetails = () => {
             VAT: priceBreakdown?.totalVAT,
             stamp_duty: priceBreakdown?.stampDuty,
             base_price: priceBreakdown?.totalBasePrice,
+            businessType: businessType,
             total_amount: priceBreakdown?.totalPrice,
           }}
           phoneNumber={formatPhoneNumber(getCurrentPhoneNumber())}
@@ -1736,6 +1793,7 @@ const TagDetails = () => {
             VAT: priceBreakdown?.totalVAT,
             stamp_duty: priceBreakdown?.stampDuty,
             base_price: priceBreakdown?.totalBasePrice,
+            businessType: businessType,
             total_amount: priceBreakdown?.totalPrice,
           }}
           type={actionType}

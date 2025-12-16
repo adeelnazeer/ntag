@@ -14,13 +14,15 @@ const PaymentConfirmationModal = ({
   isCustomer = false,
   type,
 }) => {
-  const { t } = useTranslation(["profile"]);
+  const { t } = useTranslation(["common"]);
 
   if (!isOpen) return null;
   const formatPrice = (price) => {
     if (!price) return "0.00";
     return Number(price).toFixed(2);
   };
+
+  console.log("confirm",{state})
 
   return (
     <div className="fixed p-2 inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm">
@@ -86,7 +88,7 @@ const PaymentConfirmationModal = ({
                 {t("dashboard.paymentMethod")}
               </Typography>
               <Typography className="text-base font-medium">
-                {t("dashboard.telebirr")}
+                {state?.businessType=="BuyGoods"?"telebirr super App":"telebirr partner App"}
               </Typography>
             </div>
 
@@ -146,7 +148,7 @@ const PaymentConfirmationModal = ({
             className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
             onClick={onConfirm}
           >
-             {t("buttons.confirm")}
+             {t("dashboard.confirm")}
           </Button>
         </div>
       </div>

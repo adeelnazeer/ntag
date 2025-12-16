@@ -12,6 +12,7 @@ import { Checkbox } from "@material-tailwind/react";
 import { formatPhoneNumberCustom } from "../utilities/formatMobileNumber";
 import { ConstentRoutes } from "../utilities/routesConst";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "../redux/hooks";
 
 const AddNumberModal = ({
   isOpen,
@@ -22,6 +23,15 @@ const AddNumberModal = ({
   selectedTag = null,
 }) => {
   const registerData = useRegisterHook();
+  
+  // Get userData to check for parent_id
+  let userData = useAppSelector(state => state.user.userData);
+  if (!userData) {
+    const localUser = localStorage.getItem("user");
+    if (localUser) {
+      userData = JSON.parse(localUser);
+    }
+  }
   const [phoneError, setPhoneError] = useState("");
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
@@ -123,7 +133,7 @@ const AddNumberModal = ({
   };
 
   const handleVerifyOtp = () => {
-    if (stateNewNumber.verification_code.length !== 4) {
+    if (stateNewNumber.verification_code.length !== 6) {
       toast.error("Please enter a valid 4-digit OTP code");
       return;
     }
@@ -159,8 +169,11 @@ const AddNumberModal = ({
 
     if (isChangeNumberFlow) {
       try {
+        const accountId = userData?.parent_id != null && userData?.parent?.customer_account_id 
+          ? userData.parent.customer_account_id 
+          : customerId;
         const payload = {
-          account_id: customerId,
+          account_id: accountId,
           existing_msisdn: selectedTag?.msisdn,
           new_msisdn: value.replace(/^\+/, ""),
           msisdn_type: "Primary",
@@ -237,11 +250,11 @@ const AddNumberModal = ({
         <div className="mt-2 mb-4">
           {isChangeNumberFlow ? (
             <h5 className="font-bold text-gray-900 text-lg">
-              {t("profile.addNumberModal.addNew")}
+              {t("profile.addNumberModal.changeNumber")}
             </h5>
           ) : (
             <h5 className="font-bold text-gray-900 text-lg">
-              {t("profile.addNumberModal.changeNumber")}
+              {t("profile.addNumberModal.addNew")}
             </h5>
           )}
           {isChangeNumberFlow && (
@@ -362,14 +375,10 @@ const AddNumberModal = ({
                   <button
                     type="button"
                     className={`absolute right-3 bg-gray-100 p-2 shadow-sm border border-gray-200 
-                    ${
-                      stateNewNumber.verification_code.length !== 4
-                        ? "opacity-50 cursor-not-allowed"
-                        : "cursor-pointer hover:bg-gray-200"
-                    } 
+                    ${stateNewNumber.verification_code.length !== 6 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-200'} 
                     text-xs font-medium rounded-lg`}
                     onClick={handleVerifyOtp}
-                    disabled={stateNewNumber.verification_code.length !== 4}
+                    disabled={stateNewNumber.verification_code.length !== 6}
                   >
                     {t("profile.addNumberModal.verifyOtp")}
                   </button>

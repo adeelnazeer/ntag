@@ -27,12 +27,20 @@ const NumberManagement = ({ profileData }) => {
   const [processingAction, setProcessingAction] = useState(false);
   const { t } = useTranslation(["profile"]);
 
-  const userData =
-    profileData || useAppSelector((state) => state.user.userData);
-  const customerId = userData?.id;
+  // Always call hooks unconditionally
+  const reduxUserData = useAppSelector((state) => state.user.userData);
+  const userData = profileData || reduxUserData;
+  
+  // Use parent?.customer_account_id when parent_id != null, otherwise use regular id
+  const customerId = userData?.parent_id != null && userData?.parent?.customer_account_id 
+    ? userData.parent.customer_account_id 
+    : userData?.id;
 
   useEffect(() => {
-    fetchMobileNumbers();
+    if (customerId) {
+      fetchMobileNumbers();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customerId]);
 
   const fetchMobileNumbers = async () => {
@@ -51,9 +59,8 @@ const NumberManagement = ({ profileData }) => {
       );
 
       if (response?.success && response?.data) {
-        setMobileNumbers(
-          Array.isArray(response.data) ? response.data : [response.data]
-        );
+        const numbers = Array.isArray(response.data) ? response.data : [response.data];
+        setMobileNumbers(numbers);
       } else {
         toast.error(response?.message || "Failed to fetch Mobile numbers");
         setMobileNumbers([]);
@@ -105,7 +112,7 @@ const NumberManagement = ({ profileData }) => {
             <div className="flex items-center gap-1 text-gray-600">
               <FaInfoCircle className="h-4 w-4" />
               <Typography variant="small">
-                {MobileNumbers.length}/{t("profile.numberManagement.5")}{" "}
+                {MobileNumbers?.length}/{t("profile.numberManagement.5")}{" "}
                 {t("profile.numberManagement.number")}
               </Typography>
             </div>
@@ -114,7 +121,7 @@ const NumberManagement = ({ profileData }) => {
             size="sm"
             className="bg-secondary flex items-center gap-2"
             onClick={() => {
-              if (MobileNumbers.length >= 5) {
+              if (MobileNumbers?.length >= 5) {
                 toast.error(t("profile.numberManagement.maxNumber"));
               } else {
                 setOpenAddDialog(true);
@@ -140,7 +147,7 @@ const NumberManagement = ({ profileData }) => {
         </div>
       ) : (
         <div>
-          {MobileNumbers.length === 0 ? (
+          {MobileNumbers?.length === 0 ? (
             <div className="text-center py-8">
               <Typography className="text-gray-600">
                 {t("profile.numberManagement.noNumber")}
@@ -190,7 +197,7 @@ const NumberManagement = ({ profileData }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {MobileNumbers.map((number, index) => {
+                  {MobileNumbers?.map((number, index) => {
                     return (
                       <tr
                         key={number.id || index}

@@ -110,7 +110,10 @@ const PremiumTagsTable = ({ handleTagDetails, isExchangeFlow = false,
     fetchPremiumTags();
     const fetchReserveData = async () => {
       try {
-        const accountId = customerId || userData?.customer_account_id;
+        const baseAccountId = customerId || userData?.customer_account_id;
+        const accountId = userData?.parent_id != null && userData?.parent?.customer_account_id 
+          ? userData.parent.customer_account_id 
+          : baseAccountId;
 
         if (!accountId) {
           console.error("No customer account ID found");

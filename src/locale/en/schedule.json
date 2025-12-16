@@ -213,7 +213,7 @@
     },
     "status": {
       "on": "ON",
-      "stopped": "Stopped",
+      "stopped": "OFF",
       "currentStatus": "Your current incoming call status is:",
       "stopInfo": "If you choose to stop incoming calls, you will not receive any incoming calls for the next 10 days.",
       "stoppedInfo": "You will not receive any incoming calls for 10 days from the date the service was stopped"

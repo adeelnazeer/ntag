@@ -36,7 +36,11 @@ function ChangeNumber() {
             return;
         }
 
-        APICall("get", null, `${EndPoints.customer.getReserve}/${user?.customer_account_id}`)
+        const accountId = user?.parent_id != null && user?.parent?.customer_account_id 
+            ? user.parent.customer_account_id 
+            : user?.customer_account_id;
+
+        APICall("get", null, `${EndPoints.customer.getReserve}/${accountId}`)
             .then((res) => {
                 if (res?.success) {
                     const activeTags = res?.data.filter(tag =>
