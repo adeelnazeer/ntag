@@ -14,8 +14,11 @@ const useSchedularHook = (value) => {
     const docStatus = JSON.parse(localStorage.getItem('data'))
     const getData = () => {
         const user = JSON.parse(localStorage.getItem("user"))
+        const accountId = user?.parent_id != null && user?.parent?.customer_account_id 
+        ? user.parent.customer_account_id 
+        : user?.customer_account_id;
         setLoading(true)
-        APICall("get", null, `${EndPoints.customer.getReserve}/${user?.customer_account_id}`)
+        APICall("get", null, `${EndPoints.customer.getReserve}/${accountId}`)
             .then((res) => {
                 if (res?.success) {
                     setData(res?.data);
