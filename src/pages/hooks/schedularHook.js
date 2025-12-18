@@ -14,11 +14,14 @@ const useSchedularHook = (value) => {
     const docStatus = JSON.parse(localStorage.getItem('data'))
     const getData = () => {
         const user = JSON.parse(localStorage.getItem("user"))
-        const accountId = user?.parent_id != null && user?.parent?.customer_account_id 
-        ? user.parent.customer_account_id 
-        : user?.customer_account_id;
+        const accountId = user?.parent_id != null && user?.parent?.customer_account_id
+            ? user.parent.customer_account_id
+            : user?.customer_account_id;
         setLoading(true)
-        APICall("get", null, `${EndPoints.customer.getReserve}/${accountId}`)
+        const params = {
+            msidn: user?.phone_number
+        }
+        APICall("get", user?.parent_id != null ? params : null, `${EndPoints.customer.getReserve}/${accountId}`)
             .then((res) => {
                 if (res?.success) {
                     setData(res?.data);
@@ -56,8 +59,8 @@ const useSchedularHook = (value) => {
     const handleSchedular = (item) => {
         const payload = {
             incoming_call_status: item?.incoming_call_status,
-            incall_start_dt:item?.incoming_call_status==0?"0000-00-00 00:00:00": moment(item?.incall_start_dt).format("YYYY-MM-DD HH:mm:ss"),
-            incall_end_dt:item?.incoming_call_status==0?"0000-00-00 00:00:00": moment(item?.incall_end_dt).format("YYYY-MM-DD HH:mm:ss"),
+            incall_start_dt: item?.incoming_call_status == 0 ? "0000-00-00 00:00:00" : moment(item?.incall_start_dt).format("YYYY-MM-DD HH:mm:ss"),
+            incall_end_dt: item?.incoming_call_status == 0 ? "0000-00-00 00:00:00" : moment(item?.incall_end_dt).format("YYYY-MM-DD HH:mm:ss"),
             voic_email: item?.voic_email,
             service_status: item?.service_status
         }
