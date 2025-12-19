@@ -660,6 +660,7 @@ const BlockUnblock = () => {
     userData = JSON.parse(localStorage.getItem("user"));
   }
   const customerId = userData?.id;
+  const hasParentId = userData?.parent_id != null;
 
   useEffect(() => {
     fetchMobileNumbers();
@@ -683,6 +684,17 @@ const BlockUnblock = () => {
   }, [blockType]);
 
   const fetchMobileNumbers = async () => {
+    // If user has parent_id, skip fetching mobile numbers list
+    if (hasParentId) {
+      // Use user's phone number directly
+      if (userData?.phone_number) {
+        const phoneNumber = userData.phone_number.replace(/^\+/, "");
+        setSelectedMsisdn(phoneNumber);
+        fetchBlockedNumbers(phoneNumber);
+      }
+      return;
+    }
+
     const user = JSON.parse(localStorage.getItem("user"));
     setLoading(true);
     APICall("get", null, `${EndPoints.customer.getReserve}/${user?.customer_account_id}`)
@@ -824,9 +836,12 @@ const BlockUnblock = () => {
 
     try {
       setAddingNumber(true);
-      const msisdnFormatted = selectedMsisdn.replace(/^\+/, "");
+      // Use user's phone number when parent_id != null, otherwise use selectedMsisdn
+      const msisdnToUse = hasParentId 
+        ? (userData?.phone_number?.replace(/^\+/, "") || selectedMsisdn.replace(/^\+/, ""))
+        : selectedMsisdn.replace(/^\+/, "");
       const payload = {
-        msisdn: msisdnFormatted,
+        msisdn: msisdnToUse,
         channel: "WEB",
         customer_type: "CORP_CUSTOMER",
       };
@@ -875,27 +890,46 @@ const BlockUnblock = () => {
         </Typography>
 
         <div className="p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-          <div className="w-full md:w-64">
-            <label className="block text-xs font-medium text-[#7A798A] mb-1">
-              {t("labels.selectRegistered")}
-            </label>
-            <select
-              value={selectedMsisdn || ""}
-              onChange={handleChangeSelectedMsisdn}
-              placeholder={t("labels.placeholderSelect")}
-              className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md focus:outline-none text-sm"
-              disabled={loading || mobileNumbers.length === 0}
-            >
-              {data?.length === 0 && (
-                <option value="">{t("labels.noMobiles")}</option>
-              )}
-              {data?.map((num) => (
-                <option key={num.id} value={num.msisdn}>
-                  +{num.msisdn}
-                </option>
-              ))}
-            </select>
-          </div>
+          {hasParentId ? (
+            // Show phone number directly when parent_id != null
+            <div className="w-full md:w-64">
+              <label className="block text-xs font-medium text-[#7A798A] mb-1">
+                {t("labels.yourRegistered")}
+              </label>
+              <div className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-gray-50">
+                {userData?.phone_number ? (
+                  <>
+                    {userData.phone_number.startsWith("+") ? userData.phone_number : `+${userData.phone_number}`}
+                  </>
+                ) : (
+                  t("labels.noMobiles")
+                )}
+              </div>
+            </div>
+          ) : (
+            // Show dropdown when parent_id is null
+            <div className="w-full md:w-64">
+              <label className="block text-xs font-medium text-[#7A798A] mb-1">
+                {t("labels.selectRegistered")}
+              </label>
+              <select
+                value={selectedMsisdn || ""}
+                onChange={handleChangeSelectedMsisdn}
+                placeholder={t("labels.placeholderSelect")}
+                className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md focus:outline-none text-sm"
+                disabled={loading || mobileNumbers.length === 0}
+              >
+                {data?.length === 0 && (
+                  <option value="">{t("labels.noMobiles")}</option>
+                )}
+                {data?.map((num) => (
+                  <option key={num.id} value={num.msisdn}>
+                    +{num.msisdn}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <Button
             onClick={handleAddToBlocklist}
@@ -1136,8 +1170,22 @@ const BlockUnblock = () => {
                     {t("labels.yourRegistered")}
                   </label>
                   <div className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-gray-50">
-                    +{selectedMsisdn}{" "}
-                    {selectedMobileObject.mobile_type ? `(${selectedMobileObject.mobile_type})` : ""}
+                    {hasParentId ? (
+                      // Show user's phone number when parent_id != null
+                      userData?.phone_number ? (
+                        <>
+                          {userData.phone_number.startsWith("+") ? userData.phone_number : `+${userData.phone_number}`}
+                        </>
+                      ) : (
+                        t("labels.noMobiles")
+                      )
+                    ) : (
+                      // Show selected msisdn from dropdown when parent_id is null
+                      <>
+                        +{selectedMsisdn}{" "}
+                        {selectedMobileObject.mobile_type ? `(${selectedMobileObject.mobile_type})` : ""}
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

@@ -21,7 +21,7 @@
     "from": "FROM"
   },
   "callPin": {
-    "title": "Manage incoming Call PIN and White List  Numbers",
+    "title": "Manage Incoming Call PIN and White List  Numbers",
     "selectNumber": "Select Your Registered Mobile Number",
     "noNumber": "No mobile numbers found",
     "currentPin": "Current PIN",
@@ -34,7 +34,7 @@
       "sr": "Sr#",
       "nametag": "NameTAG",
       "whitelistNumber": "Whitelist Number",
-      "whitelistDate": "Whitelist Datde",
+      "whitelistDate": "Whitelist Date",
       "pin": "PIN",
       "action": "Action"
     },

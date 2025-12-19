@@ -100,8 +100,8 @@ const AddNumberComponent = ({
   };
 
   const handleVerifyOtp = () => {
-    if (stateNewNumber.verification_code.length !== 4) {
-      toast.error("Please enter a valid 4-digit OTP code");
+    if (stateNewNumber.verification_code.length !== 6) {
+      toast.error("Please enter a valid 6-digit OTP code");
       return;
     }
     registerData.handleVerifyOtp(stateNewNumber.verification_code, null, false);
@@ -227,13 +227,13 @@ const AddNumberComponent = ({
                   type="button"
                   className={`absolute right-3 bg-gray-100 p-2 shadow-sm border border-gray-200 
                     ${
-                      stateNewNumber.verification_code.length !== 4
+                      stateNewNumber.verification_code.length !== 6
                         ? "opacity-50 cursor-not-allowed"
                         : "cursor-pointer hover:bg-gray-200"
                     } 
                     text-xs font-medium rounded-lg`}
                   onClick={handleVerifyOtp}
-                  disabled={stateNewNumber.verification_code.length !== 4}
+                  disabled={stateNewNumber.verification_code.length !== 6}
                 >
                   Verify OTP
                 </button>
