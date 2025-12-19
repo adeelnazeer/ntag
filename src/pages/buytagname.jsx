@@ -95,7 +95,7 @@ const TagNames = () => {
         ? user.parent.customer_account_id
         : user?.customer_account_id;
     const params = {
-      msidn: user?.phone_number,
+      msisdn: user?.phone_number,
     };
 
     APICall(

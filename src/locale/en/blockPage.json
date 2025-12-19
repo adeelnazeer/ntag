@@ -69,7 +69,7 @@
   },
 
   "callPinPage": {
-    "title": "Manage incoming Call PIN and Whitelist Numbers",
+    "title": "Manage Incoming Call PIN and Whitelist Numbers",
     "labels": {
       "mobileNumber": "Mobile Number:",
       "currentPin": "Current Call PIN:"
