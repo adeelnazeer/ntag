@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Typography, Spinner } from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import { getTagStatusDashboard } from '../../utilities/routesConst';
@@ -33,7 +33,7 @@ function UnsubscribeCustomer() {
       return;
     }
 
-    APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${user?.id}`)
+    APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.individual.getReserveTags}`)
       .then((res) => {
         if (res?.success) {
           const activeTags = res?.data.filter(tag =>

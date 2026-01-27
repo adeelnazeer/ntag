@@ -165,11 +165,10 @@ const Dashboardtable = (props) => {
       // Fetch reserved tags from API
       const fetchUserTags = async () => {
         try {
-          const accountId = customerId || userData?.customer_account_id || userData?.id;
 
           // if (!accountId) return;
 
-          const res = await APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${accountId}`);
+          const res = await APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.individual.getReserveTags}`);
           if (res?.success && res?.data && res?.data.length > 0) {
             // User has tags - store in localStorage and update state
             localStorage.setItem('userTagsData', JSON.stringify(res.data));

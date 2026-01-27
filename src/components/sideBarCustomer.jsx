@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Card, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
 import { MdHomeFilled } from "react-icons/md";
-import { FaHashtag, FaUser, FaBars, FaPhoneSlash, FaPhone } from "react-icons/fa";
+import { FaHashtag, FaUser, FaBars } from "react-icons/fa";
 import { BsFire } from "react-icons/bs";
 import { IoLogOutSharp } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -20,7 +20,6 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const location = useLocation();
     const sidebarRef = useRef(null);
     const [callStatus, setCallStatus] = useState(null);
-    const [loading, setLoading] = useState(true);
 
     const activeDashboard = location?.pathname === ConstentRoutes.dashboardCustomer;
     const activeTwo = location?.pathname?.includes("buy-tag");
@@ -48,7 +47,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 const user = JSON.parse(localStorage.getItem("user"));
                 if (!user?.id) return;
 
-                const response = await APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${user?.id}`);
+                const response = await APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.individual.getReserveTags}`);
 
                 if (response?.success && response?.data && response?.data.length > 0) {
                     // Save the service_status in localStorage for persistence
@@ -58,9 +57,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 }
             } catch (error) {
                 console.error("Error fetching tag data:", error);
-            } finally {
-                setLoading(false);
-            }
+            } 
         };
 
         fetchTagData();

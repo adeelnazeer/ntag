@@ -4,7 +4,6 @@ import {
   getPaymentStatus,
   getTagStatusDashboard,
 } from "../../../utilities/routesConst";
-import moment from "moment";
 import useSchedularHook from "../../hooks/schedularHook";
 import { formatPhoneNumberCustom } from "../../../utilities/formatMobileNumber";
 import { useTranslation } from "react-i18next";

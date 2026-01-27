@@ -47,6 +47,10 @@ import ChangeNumberDetailPage from "./pages/changeNumberDetailPage.jsx";
 import CallPinPage from "./pages/callPin.jsx";
 import CallPinPageIndividual from "./pages/IndividualCustomer/callPinIndividual.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import GuestBlock from "./pages/guest/guestBlock.jsx";
+import Complaint from "./pages/guest/complaint.jsx";
+import Bill from "./pages/bill.jsx";
+import BillPayment from "./pages/billPayment.jsx";
 
 function App() {
   return (
@@ -329,6 +333,22 @@ function App() {
         <Route
           path={ConstentRoutes.privacyPolicy}
           element={<PrivacyPolicy />}
+        />
+        <Route
+          path={ConstentRoutes.guestBlock}
+          element={<GuestBlock />}
+        />
+        <Route
+          path={ConstentRoutes.complaint}
+          element={<Complaint />}
+        />
+        <Route
+          path="/bill/:token"
+          element={<Bill />}
+        />
+        <Route
+          path={ConstentRoutes.billPayment}
+          element={<BillPayment />}
         />
       </Routes>
       <ToastContainer

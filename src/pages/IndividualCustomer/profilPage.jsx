@@ -4,6 +4,7 @@ import TagDetails from "./profile/components/tagDetail.jsx";
 import { useAppSelector } from "../../redux/hooks.js";
 import APICall from "../../network/APICall.jsx";
 import { useTranslation } from "react-i18next";
+import EndPoints from "../../network/EndPoints.jsx";
 
 const ProfilePageCustomer = () => {
     const { t } = useTranslation(["profile"]);
@@ -18,11 +19,10 @@ const ProfilePageCustomer = () => {
 
 
     const getProfileDetail = () => {
-        const reduxUserData = JSON.parse(localStorage.getItem("user"));
         APICall(
             "get",
             null,
-            `individual/profile/${reduxUserData?.id}`,
+            `${EndPoints.customer.newSecurityEndPoints.individual.getProfile}`,
             null,
             true
         )

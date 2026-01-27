@@ -6,8 +6,16 @@ const Footer = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation(["common"]);
-  const token = localStorage.getItem("token")
- let  userData = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
+  let userData = null;
+  try {
+    const localUser = localStorage.getItem("user");
+    if (localUser) {
+      userData = JSON.parse(localUser);
+    }
+  } catch (error) {
+    console.error("Error parsing user data:", error);
+  }
 
   return (
     <div className="bg-[#D7D7D7] z-[100] px-6 py-4 sticky bottom-0">
@@ -59,7 +67,7 @@ const Footer = () => {
           </p>
           <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
             onClick={() => {
-              if (token) {
+              if (token && userData) {
                 if(userData.customer_type=='individual'){
                   navigate("/individual/contact");
                 }else{
@@ -74,6 +82,13 @@ const Footer = () => {
             }}
           >
             {t("footer.contact")}
+          </p>
+          <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
+            onClick={() => {
+              navigate(ConstentRoutes.complaint);
+            }}
+          >
+            {t("footer.complaint")}
           </p>
         </div>
         <p className="text-center font-medium text-xs md:text-base text-[#008fd5]">

@@ -58,8 +58,29 @@ const EndPoints = {
     setCallpinIndividual: "/individual/setcallpin",
     createMandateCorp: "/customer/create-mandate",
     getIndustries: "/customer/industries",
-    getRegions: "/customer/regions"
+    getRegions: "/customer/regions",
+    guestVerifyOtp: "/customer/guest/verifyotp",
+    guestBlockNumbers: "/customer/guest/block-numbers",
+    guestDeleteBlockNumber: (id) => `/customer/guest/block-numbers/${id}`,
+    validateToken: "/customer/payment-due/validate-token",
 
+    // New Security End Points 
+    newSecurityEndPoints: {
+      individual: {
+        signUp: "/individual/auth/sign-up",
+        updateProfile: "/individual/profile/update",
+        getProfile: "/individual/profile",
+        updatePassword: "/individual/password/update",
+        getReserveTags: "/individual/reserve/tags",
+      },
+      corporate: {
+        checkDocumentStatus: "/customer/verify-document-status",
+        updateProfile:"/customer/update/customer-accounts",
+        getProfile: "/customer/account-detail",
+        uploadDocument: "/customer/documents/upload",
+        updateDocument: "/customer/documents/update",
+      },
+    },
   },
 };
 

@@ -44,13 +44,7 @@ const UploadSingleDocument = ({ open, setOpen, checkDocument }) => {
   };
 
   const handleSubmit = () => {
-    // Use customer ID from Redux if available, otherwise fall back to localStorage
-    const id = localStorage.getItem("id");
 
-    if (!id) {
-      toast.error("Customer ID not found");
-      return;
-    }
     setLoading(true);
 
     // Create a FormData object for proper file uploads
@@ -74,12 +68,11 @@ const UploadSingleDocument = ({ open, setOpen, checkDocument }) => {
         formData.append(`${key}_name`, name);
       }
     });
-    formData.append("id", open?.id);
 
     APICall(
       "post",
       formData,
-      `${EndPoints?.customer?.updateDocument}/${id}`,
+      `${EndPoints?.customer?.newSecurityEndPoints?.corporate?.updateDocument}`,
       null,
       true
     )

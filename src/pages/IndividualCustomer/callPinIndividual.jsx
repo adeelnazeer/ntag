@@ -80,7 +80,7 @@ const CallPinPageIndividual = () => {
       const response = await APICall(
         "get",
         null,
-        `${EndPoints.customer.getReserveTagsCustomer}/${accountId}`
+        `${EndPoints.customer.newSecurityEndPoints.individual.getReserveTags}`
       );
 
       if (response?.success && response?.data) {

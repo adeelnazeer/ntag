@@ -45,12 +45,25 @@ const LoginForm = () => {
     if (token && user) {
       return setLoginMessage(true)
     }
+
+    // Process username: remove leading "+" if present
+    let processedUsername = data.username;
+    if (processedUsername && processedUsername.startsWith("+")) {
+      processedUsername = processedUsername.substring(1);
+    }
+
+    // Create processed data object
+    const processedData = {
+      ...data,
+      username: processedUsername,
+    };
+
     if (rememberMe) {
-      sessionStorage.setItem("rememberedUser", JSON.stringify(data));
+      sessionStorage.setItem("rememberedUser", JSON.stringify(processedData));
     } else {
       sessionStorage.removeItem("rememberedUser");
     }
-    registerHook.handleLogin(data);
+    registerHook.handleLogin(processedData);
   };
 
   return (
@@ -74,13 +87,20 @@ const LoginForm = () => {
             <Input
               className="mt-6 w-full rounded-xl p-4 bg-[#F6F7FB] outline-none"
               placeholder={t("login.enterUserName")}
+              maxLength={20}
+              minLength={3}
               style={
                 errors.username
                   ? { border: "1px solid red" }
                   : { border: "1px solid #8A8AA033" }
               }
-              {...register("username", { required: true })}
+              {...register("username", {
+                required: "Username or phone number is required",
+              })}
             />
+            {errors.username && (
+              <p className="text-sm text-red-500 mt-1">{errors.username.message}</p>
+            )}
 
 
 

@@ -150,7 +150,11 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
                   : { border: "1px solid #8A8AA033" }
               }
               {...register("contactf_name", {
-                required: t("common.form.errors.firstName")
+                required: t("common.form.errors.firstName"),
+                minLength: {
+                  value: 3,
+                  message: t("common.form.errors.firstNameMinLength") ||t("common.form.errors.firstNameMinLength") || "First name must be at least 3 characters"
+                }
               })}
             />
             {errors.contactf_name && (
@@ -171,7 +175,11 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
                   : { border: "1px solid #8A8AA033" }
               }
               {...register("contactl_name", {
-                required: t("common.form.errors.fatherName")
+                required: t("common.form.errors.fatherName"),
+                minLength: {
+                  value: 3,
+                  message: t("common.form.errors.fatherNameMinLength") || "Father name must be at least 3 characters"
+                }
               })}
             />
             {errors.contactl_name && (
@@ -266,7 +274,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
           <div className="flex flex-col gap-4 max-w-3xl mx-auto mt-8">
             <div>
               <Typography className="text-[#555] md:text-base text-[16px]   font-semibold">
-                {t("common.compBasicInfo")}
+                {t("compBasicInfo")}
               </Typography>
             </div>
 
@@ -363,6 +371,10 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
                 }}
                 {...register("comp_city", {
                   required: t("common.form.errors.city"),
+                  minLength: {
+                    value: 3,
+                    message: t("common.form.errors.cityMinLength") || "City must be at least 3 characters"
+                  },
                   pattern: {
                     value: /^[A-Za-z\s]+$/, // Only letters and spaces
                     message: t("common.form.errors.numberOnly")
@@ -387,7 +399,11 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
                     : { border: "1px solid #8A8AA033" }
                 }
                 {...register("comp_addr", {
-                  required: t("common.form.errors.address")
+                  required: t("common.form.errors.address"),
+                  minLength: {
+                    value: 3,
+                    message: t("common.form.errors.addressMinLength") || "Address must be at least 3 characters"
+                  }
                 })}
               />
               {errors.comp_addr && (

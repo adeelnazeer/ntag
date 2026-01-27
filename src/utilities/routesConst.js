@@ -38,6 +38,10 @@ export const ConstentRoutes = {
    blockUnblockTagCustomer: "/customer/manage-tag/block",
    incomingCallPin: "/customer/manage-tag/call-pin",
    unsubTagCustomer: "/customer/manage-tag/unsubscribe",
+   guestBlock: "/guest/block",
+   complaint: "/complaint",
+   bill: "/bill",
+   billPayment: "/bill/payment",
 };
 
 export const getStatus = (status) => {

@@ -32,19 +32,21 @@ export function MultiStepForm() {
     formState: { errors },
   } = useForm({ msisdn: "", mode: "onChange" });
 
-  // Handle going back to step 0 and restore form values (passwords are not saved/restored)
+  // Handle going back to step 0 and restore form values
   const handlePreviousStep = (e) => {
     e?.preventDefault();
     e?.stopPropagation();
     if (activeStep === 1) {
       // Restore step 0 form values when going back if step0Data exists
-      // step0Data already excludes passwords, so we just restore all fields
       if (step0Data) {
         Object.keys(step0Data).forEach((key) => {
-          setValue(key, step0Data[key]);
+          // Don't restore passwords for security - user needs to re-enter them
+          if (key !== 'password' && key !== 'confirm_password') {
+            setValue(key, step0Data[key]);
+          }
         });
       }
-      // Always clear passwords when going back (they're never saved)
+      // Always clear passwords when going back for security
       setValue('password', '');
       setValue('confirm_password', '');
       setActiveStep(0);
@@ -53,14 +55,35 @@ export function MultiStepForm() {
 
   const onSubmit = (values) => {
     if (activeStep == 0) {
-      // Step 0: Save registration data to state (excluding passwords), don't call API
-      // Exclude password and confirm_password from saved data
-      const step0DataWithoutPasswords = { ...values };
-      delete step0DataWithoutPasswords.password;
-      delete step0DataWithoutPasswords.confirm_password;
-      setStep0Data(step0DataWithoutPasswords);
+      // Step 0: Check if OTP is verified before proceeding
+      if (!registerHook.verified) {
+        toast.error( "Please verify the OTP code first");
+        return;
+      }
+
+      // OTP verified, proceed to save data
+      // Use getValues() to explicitly get password values to ensure they're captured
+      const currentPassword = getValues('password') || values.password;
+      const currentConfirmPassword = getValues('confirm_password') || values.confirm_password;
+      
+      // Save all form data including passwords - explicitly set password fields
+      const step0DataToSave = {
+        ...values,
+        password: currentPassword,
+        confirm_password: currentConfirmPassword
+      };
+      
+      // Verify password is not empty before saving
+      if (!currentPassword || currentPassword.trim() === '') {
+        console.error('Password is empty when saving step0Data');
+      }
+      
+      setStep0Data(step0DataToSave);
       setActiveStep(1);
+      // Clear password fields from form for security, but keep them in step0Data
       reset();
+      setValue('password', '');
+      setValue('confirm_password', '');
     }
     if (activeStep == 1) {
       // Step 1: Combine form values with document data and open modal

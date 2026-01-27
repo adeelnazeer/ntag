@@ -255,6 +255,103 @@
     "privacy": "Imaammata Iccitii",
     "faqs": "Gaaffilee Yeroo Baay'ee Gaafataman (FAQs)",
     "contact": "Nu Qunnamaa",
+    "complaint": "Dhiibbaa",
     "rights": "Mirgi Hunduu Eegamaadha."
+  },
+  "complaint": {
+    "modal": {
+      "title": "Dhiibbaa",
+      "description": "Lakkoofsi bilbilaa keessan galchaa fi lakkoofsota hordofamoo ilaaluu",
+      "mobileNumber": "Lakkoofsi Bilbilaa",
+      "phoneRequired": "Lakkoofsi bilbilaa barbaachisa",
+      "mustStart9": "Lakkoofsi bilbilaan 9'aan eegala",
+      "invalidLength": "Lakkoofsi bilbilaan koodii biyyattii booda digiitii 9 qabaachuu qaba",
+      "getOtp": "OTP Argadhuu",
+      "resendOtp": "OTP Ergasiif Ergi",
+      "otpSent": "OTP milkaa'inaan ergameera",
+      "otpFailed": "OTP erguu hin milkaa'ine",
+      "verificationCode": "Koodii Mirkaneessuu",
+      "otpPlaceholder": "OTP digiitii 6 galchaa",
+      "invalidOtp": "Maaloo koodii OTP digiitii 6 galchaa",
+      "otpIdMissing": "OTP ID hin argamne. Mee OTP haala kanaan ergasii kaasaa.",
+      "verifyOtp": "OTP Mirkaneessuu",
+      "verifying": "Mirkaneessaa jira...",
+      "otpVerified": "OTP milkaa'inaan mirkaneessaa!",
+      "verifyFailed": "OTP mirkaneessuu hin milkaa'ine",
+      "redirecting": "OTP mirkaneessaa! Deebi'aa jira...",
+      "cancelBtn": "Dhiisuu"
+    },
+    "block": {
+      "title": "Lakkoofsota Hordofamoo",
+      "subtitle": "Fayyadama lakkoofsota hordofamoo ilaaluu",
+      "phoneNumber": "Lakkoofsi Bilbilaa",
+      "noVerificationData": "Odeeffannoo mirkaneessuu hin argamne. Mee haala kanaan jalqabaa.",
+      "fetchFailed": "Lakkoofsota hordofamoo fudhachuu hin milkaa'ine",
+      "fetchError": "Lakkoofsota hordofamoo seensistuu keessatti dogoggorri jira",
+      "backButton": "Mana Deebi'u",
+      "maxLimitReached": "Iddoo 99 lakkoofsota hordofamoo maxxanfameera. Lakkoofsa haaraa dabaluuf bakka bu'aa tokko haqasiisi.",
+      "table": {
+        "sr": "Sr#",
+        "blocked": "Lakkoofsi/TAG Hordofame",
+        "type": "Gosa Lakkoofsaa",
+        "registered": "Lakkoofsi Bilbilaa Galmaan Gahame",
+        "channel": "Kanaala",
+        "action": "Tarkaanfii",
+        "delete": "Haqasuu",
+        "empty": "Lakkoofsota hordofamoo hin argamne"
+      },
+      "type": {
+        "tag": "TAG",
+        "mobile": "Lakkoofsi Bilbilaa"
+      },
+      "addButton": "Lakkoofsa Hordofamoo Dabaladhuu",
+      "addModal": {
+        "title": "Lakkoofsa Hordofamoo Dabaladhuu",
+        "subtitle": "Lakkoofsa tagii hordofachuu barbaaddan galchaa",
+        "tagLabel": "Lakkoofsa TAG",
+        "tagPlaceholder": "Lakkoofsa tag galchaa (digiitii 3-8)",
+        "tagHint": "Digiitii 3 hanga 8 qofa galchaa",
+        "tagRequired": "Lakkoofsi tag barbaachisa",
+        "tagNumbersOnly": "Lakkoofsi tag digiitoota qofa qabaachuu qaba",
+        "tagMinLength": "Lakkoofsi tag digiitii 3 ol ta'uu qaba",
+        "tagMaxLength": "Lakkoofsi tag digiitii 8 gadi ta'uu qaba",
+        "customerTypeLabel": "Sababa Hordofuu",
+        "corpCustomer": "Kustomeri Waajjiraa",
+        "normalCustomer": "Kustomeri Adda",
+        "blockMessage": "Wanti bilbila kana ergate yoo hordofame, bilbiloota dhufan hundi hanga isaan muraasa ta'an gara fuula duraanii akka hin galchan odoo hin jijjiirre.",
+        "reason": {
+          "spamCall": "Bilbila Spam",
+          "fraudOrScam": "Gowwomsi ykn Hammamuu",
+          "harassmentAndAbuse": "Uumamaa fi Badii",
+          "unwantedMarketingCall": "Bilbila Oomishaa Hin Fedhine",
+          "repeatedCalls": "Bilbiloota Irra Deebi'an",
+          "personalReasons": "Sababoota Qaamaa",
+          "offensiveOrThreateningCall": "Bilbila Jibban ykn Sodaan",
+          "unknownCaller": "Ergate Hin Bekkamne",
+          "other": "Kan Biroo"
+        },
+        "cancel": "Dhiisuu",
+        "submit": "Galchi",
+        "processing": "Tajaajilaa jira...",
+        "success": "Lakkoofsi milkaa'inaan hordofame",
+        "failed": "Lakkoofsa hordofachuu hin milkaa'ine",
+        "error": "Lakkoofsa hordofachuu keessatti dogoggorri jira"
+      },
+      "noPhoneNumber": "Lakkoofsi bilbilaa hin argamne.",
+      "unauthorized": "Hayyamaan hin dhaamne. Mee lakkoofsa bilbilaa keessan ergasii mirkaneessaa.",
+      "noToken": "Tokkeni mana dhiyoo hin argamne. Mee lakkoofsa bilbilaa keessan ergasii mirkaneessaa.",
+      "deleteModal": {
+        "title": "Haqasuu Mirkaneessuu",
+        "desc1": "Lakkoofsaan kun galtee hordofamoo irraa haquu barbaaddaa?",
+        "desc2": "Lakkoofsi kun TAG keessan irratti bilbila bilbilaa godhuu danda'a",
+        "cancel": "Dhiisuu",
+        "confirm": "Mirkaneessuu",
+        "deleting": "Haqasiisa jira...",
+        "success": "Lakkoofsi milkaa'inaan haqe",
+        "failed": "Lakkoofsa haqasuu hin milkaa'ine",
+        "error": "Lakkoofsa haqasuu keessatti dogoggorri jira",
+        "noId": "Haqasuu hin dandeenyu: ID lakkoofsaa hin jiru"
+      }
+    }
   }
 }

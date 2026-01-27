@@ -17,6 +17,8 @@ const normalize = (p = {}) => ({
 });
 const CompanyInfo = ({ profileData, userProfileData }) => {
   const { t } = useTranslation(["common", "profile"]);
+  const { t: t2 } = useTranslation(["profile"]);
+
   const [updating, setUpdating] = useState(false);
 
   const {
@@ -47,7 +49,7 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
       const payload = { ...data };
       payload.channel = "WEB";
 
-      const response = await APICall("post", payload, EndPoints.customer.updateProfileCustomer);
+      const response = await APICall("post", payload, EndPoints.customer.newSecurityEndPoints.individual.updateProfile);
 
       if (response?.success) {
         toast.success(response?.message || t("profile.companyInfo.toastMessages.profileUpdatedSuccessfully"));
@@ -85,16 +87,13 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
 
   const onSubmit = async (data) => {
     setUpdating(true);
-    const user = JSON.parse(localStorage.getItem("user"))
-
     // Create the payload with updatable fields
     const payload = {
       first_name: data?.first_name,
       last_name: data?.last_name,
       email: data?.email,
       cnic: data?.cnic,
-      user_id: user?.id,
-      // Username is not included as it's not updatable
+       // Username is not included as it's not updatable
     };
 
     // Update user profile
@@ -230,7 +229,7 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
-            {t("profile.regMobileNo")}
+            {t2("profile.regMobileNo")}
           </label>
           <input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-[#8080801f] outline-none"
@@ -246,7 +245,7 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
           className="bg-secondary text-white font-medium px-10 py-3 rounded-md hover:bg-opacity-90 transition-all duration-300 disabled:opacity-70"
           disabled={updating}
         >
-          {updating ? t("profile.companyInfo.updating") : t("profile.companyInfo.updateAccountInfo")}
+          {updating ? t2("profile.companyInfo.updating") : t2("profile.companyInfo.updateAccountInfo")}
         </button>
       </div>
     </form>

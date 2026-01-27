@@ -10,6 +10,7 @@ import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { setUserData, setCorporateDocuments } from "../redux/userSlice";
 import { getToken } from "../utilities/auth";
 import { BiArrowBack } from "react-icons/bi";
+import EndPoints from "../network/EndPoints";
 
 const DashboardLayout = ({ children }) => {
   const navigate = useNavigate();
@@ -37,14 +38,7 @@ const DashboardLayout = ({ children }) => {
       return;
     }
 
-    const customerId = userData?.customer_account_id;
-
-    if (!customerId) {
-      console.error("No customer account ID found");
-      return;
-    }
-
-    APICall("get", null, `/customer/check-documents/${customerId}`)
+    APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.corporate.checkDocumentStatus}`)
       .then((res) => {
         if (res?.data) {
           // Store user data in Redux

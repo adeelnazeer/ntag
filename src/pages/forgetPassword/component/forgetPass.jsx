@@ -81,9 +81,7 @@ const ForgetPass = () => {
       <style>{autofillStyle}</style>
       <div className="image relative lg:h-[90vh] md:h-[100vh] h-[92vh] flex items-center justify-center md:pb-12 pb-0 lg:pb-0">
         <div>
-          <p className="text-center font-medium text-[18px] text-[#757575] absolute lg:left-[40%] md:left-[30%] left-[12%] md:bottom-0 bottom-32">
-            ©{new Date().getFullYear()} {t("forgotPassword.footer")}
-          </p>
+
           <img
             className="absolute left-0 bottom-0 lg:h-[300px] md:h-[150px] h-[100px]"
             src={Img}

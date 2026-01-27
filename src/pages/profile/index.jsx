@@ -44,11 +44,10 @@ const ProfilePage = () => {
   const [userData, setUserData] = useState(reduxUserData);
 
   const getProfileDetail = () => {
-    const reduxUserData = JSON.parse(localStorage.getItem("user"));
     APICall(
       "get",
       null,
-      `${EndPoints?.customer?.getProfileDetail}/${reduxUserData?.customer_account_id}`,
+      `${EndPoints?.customer?.newSecurityEndPoints?.corporate?.getProfile}`,
       null,
       true
     )

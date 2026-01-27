@@ -17,23 +17,28 @@ const formatTime = (timeDiff) => {
 
 const CountdownTimer = ({ expirationTime, onExpire }) => {
   const [timeLeft, setTimeLeft] = useState(() => {
+    if (!expirationTime) {
+      return 0;
+    }
     const expirationDate = new Date(expirationTime).getTime();
     const currentDate = new Date().getTime();
-    return expirationDate - currentDate;
+    const diff = expirationDate - currentDate;
+    // Return 0 if the date is invalid (NaN)
+    return isNaN(diff) ? 0 : diff;
   });
   
   const [isExpired, setIsExpired] = useState(false);
 
   useEffect(() => {
-    // Check if already expired initially
-    if (timeLeft <= 0) {
+    // Check if already expired initially or invalid
+    if (timeLeft <= 0 || isNaN(timeLeft)) {
       setIsExpired(true);
       return;
     }
 
     const timer = setInterval(() => {
       setTimeLeft((prevTimeLeft) => {
-        if (prevTimeLeft <= 1000) { // Using 1000 to ensure we catch the last second
+        if (isNaN(prevTimeLeft) || prevTimeLeft <= 1000) { // Using 1000 to ensure we catch the last second
           clearInterval(timer);
           setIsExpired(true);
           onExpire();
