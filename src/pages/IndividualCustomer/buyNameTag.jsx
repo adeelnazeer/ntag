@@ -1,14 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Button, Chip, Spinner, Typography, Dialog, DialogHeader, DialogBody, DialogFooter } from "@material-tailwind/react";
+import { Button, Spinner, Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
-import { ConstentRoutes, getPaymentStatus, getStatus, getTagStatus, getTagStatusDashboard } from "../../utilities/routesConst";
-import useSchedularHook from "../hooks/schedularHook";
-import Img from "../../assets/images/wallet (2).png";
-import moment from "moment";
+import { ConstentRoutes, getPaymentStatus,  getTagStatusDashboard } from "../../utilities/routesConst";
 import { useEffect, useState } from "react";
 import APICall from "../../network/APICall";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { setUserData, setCorporateDocuments } from "../../redux/userSlice";
 import { toast } from "react-toastify";
 import EndPoints from "../../network/EndPoints";
 import BuyTagConfirmationModal from "../../modals/buy-tag-modals";
@@ -18,7 +14,6 @@ import { formatPhoneNumberCustom } from "../../utilities/formatMobileNumber";
 const TagNamesIndividual = () => {
     const { t } = useTranslation(["buyTag"]);
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
     const [docStatus, setDocStatus] = useState({});
     const [loading, setLoading] = useState(true);
     const [unsubscribing, setUnsubscribing] = useState(false);
@@ -51,7 +46,7 @@ const TagNamesIndividual = () => {
 
     const getData = () => {
         setLoading(true)
-        APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${user?.id}`)
+        APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.individual.getReserveTags}`)
             .then((res) => {
                 if (res?.success) {
                     // const filterData = res?.data?.filter((item) => item?.type == "subscriber");
@@ -225,7 +220,6 @@ const TagNamesIndividual = () => {
         const isReserved = single?.type === 'reserve';
         const isPaid = single?.payment_status !== 0;
         const isUnsub = single.status == 6;
-        const isActive = single.status == 1;
         const isNotPremium = single?.premium_tag_list_id == null
         const displayTagName = displayValue(isNotPremium ? single?.tag_name : single?.premium_tag_list?.tag_name);
         const rawTagNumber = displayValue(isNotPremium ? single?.tag_no : single?.premium_tag_list?.tag_no);

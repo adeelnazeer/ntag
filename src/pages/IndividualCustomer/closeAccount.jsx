@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Button, Typography, Spinner } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import moment from "moment";
 import BuyTagConfirmationModal from "../../modals/buy-tag-modals";
 import EndPoints from '../../network/EndPoints';
 import { formatPhoneNumberCustom } from '../../utilities/formatMobileNumber';
@@ -45,15 +44,7 @@ function CloseAccountCustomer() {
 
     const fetchTagData = () => {
         setLoading(true);
-        const user = JSON.parse(localStorage.getItem("user"));
-
-        if (!user?.id) {
-            console.error(t("messages.noAccountId"));
-            setLoading(false);
-            return;
-        }
-
-        APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${user?.id}`)
+        APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.individual.getReserveTags}`)
             .then((res) => {
                 if (res?.success) {
                     const activeTags = res?.data.filter(tag =>
@@ -135,7 +126,7 @@ function CloseAccountCustomer() {
                 <td className="py-4 px-4 text-sm text-gray-700">{userData?.first_name || ''} {userData?.last_name || ""}</td>
                 <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(userData?.phone_number || t("common.na"))}</td>
                 <td className="py-4 px-4 text-sm text-gray-700">
-                    {moment(userData?.created_date).format("DD-MM-YYYY") || t("common.na")}
+                    {(userData?.created_date)|| t("common.na")}
                 </td>
                 <td className="py-4 px-4 text-sm text-gray-700">
                     {getTagStatusDashboard(userData?.status)}

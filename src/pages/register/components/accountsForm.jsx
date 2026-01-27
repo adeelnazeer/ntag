@@ -54,7 +54,7 @@ const CompanyForm = ({
   setData
 }) => {
   const watchAllFields = watch();
-  const { t } = useTranslation()
+  const { t } = useTranslation(["common"])
   const [phone, setPhone] = useState();
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [isGetCodeDisabled, setIsGetCodeDisabled] = useState(false);
@@ -62,6 +62,8 @@ const CompanyForm = ({
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [originalPhoneNumber, setOriginalPhoneNumber] = useState(null);
+  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
+  const [lastVerifiedCode, setLastVerifiedCode] = useState(null);
 
 
   // Initialize phone number and track original phone number
@@ -78,6 +80,72 @@ const CompanyForm = ({
       setOriginalPhoneNumber("+2519");
     }
   }, [watchAllFields?.phone_number, phone, originalPhoneNumber, setValue]);
+
+  // Auto-verify OTP when 6 digits are entered
+  useEffect(() => {
+    const verificationCode = watchAllFields?.verification_code;
+    const codeString = verificationCode?.toString();
+    const expirationTime = registerData?.expirationTime;
+    const isVerified = registerData?.verified;
+    
+    // Only verify if:
+    // 1. Code is 6 digits
+    // 2. OTP is available (expirationTime exists)
+    // 3. Not currently verifying
+    // 4. Not already verified
+    // 5. This is a different code than the last one we tried to verify
+    if (
+      codeString &&
+      codeString.length === 6 &&
+      expirationTime &&
+      !isVerifyingOtp &&
+      !isVerified &&
+      codeString !== lastVerifiedCode &&
+      registerData?.handleVerifyOtp
+    ) {
+      setIsVerifyingOtp(true);
+      setLastVerifiedCode(codeString); // Track this code as attempted
+      registerData.handleVerifyOtp(codeString, null, false);
+      
+      // Reset verifying flag after a delay
+      setTimeout(() => {
+        setIsVerifyingOtp(false);
+      }, 2000);
+    }
+    
+    // Reset lastVerifiedCode if user changes the code (code length is less than 6)
+    if (codeString && codeString.length < 6) {
+      setLastVerifiedCode(null);
+    }
+    
+    // Reset lastVerifiedCode if verification succeeds
+    if (isVerified) {
+      setLastVerifiedCode(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchAllFields?.verification_code, registerData?.expirationTime, registerData?.verified, isVerifyingOtp, lastVerifiedCode]);
+
+  // Reset verification when phone number changes after OTP is verified
+  useEffect(() => {
+    const phoneValue = watchAllFields?.phone_number;
+    if (originalPhoneNumber && phoneValue && phoneValue !== originalPhoneNumber && registerData?.verified) {
+      // Phone number changed after verification, reset everything
+      setValue("verification_code", "");
+      setLastVerifiedCode(null);
+      if (registerData.setVerified) {
+        registerData.setVerified(false);
+      }
+      if (registerData.setExpirationTime) {
+        registerData.setExpirationTime(null);
+      }
+      setOtpExpired(false);
+      setIsGetCodeDisabled(false);
+      setIsVerifyingOtp(false);
+      // Update original phone number to new value
+      setOriginalPhoneNumber(phoneValue);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchAllFields?.phone_number, originalPhoneNumber, registerData?.verified, setValue]);
 
   // Handle validation when field loses focus or on key press - only for username, email, and phone_number
   const handleValidation = (value, fieldName) => {
@@ -237,6 +305,10 @@ const CompanyForm = ({
               }
               {...register("company_name", {
                 required: t("common.form.errors.companyNameRequired"),
+                minLength: {
+                  value: 3,
+                  message: t("common.form.errors.companyNameMinLength") || "Company name must be at least 3 characters"
+                },
                 validate: value => !/^\d+$/.test(value) || t("common.form.errors.companyNameNoDigits")
               })}
               onChange={(e) => handleChange(e, "company_name")}
@@ -272,7 +344,10 @@ const CompanyForm = ({
               }
               {...register("account_id", {
                 required: t("common.form.errors.userName"),
-                validate: value => value.length > 1 || t("common.form.errors.usernameMinLength")
+                minLength: {
+                  value: 3,
+                  message: t("common.form.errors.usernameMinLength") || "Username must be at least 3 characters"
+                }
               })}
               onChange={(e) => handleChange(e, "account_id")}
               onBlur={(e) => handleBlur(e.target.value, "account_id")}
@@ -452,16 +527,20 @@ const CompanyForm = ({
                         // Clear OTP and verification code if phone number changes from original
                         if (originalPhoneNumber && value !== originalPhoneNumber) {
                           setValue("verification_code", "");
+                          setLastVerifiedCode(null); // Reset last verified code
                           localStorage.removeItem("otp");
                           if (registerData.setVerified) {
                             registerData.setVerified(false);
                           }
                           setOtpExpired(false);
                           setIsGetCodeDisabled(false);
+                          setIsVerifyingOtp(false);
                           // Reset expiration time
                           if (registerData.setExpirationTime) {
                             registerData.setExpirationTime(null);
                           }
+                          // Update original phone number to new value
+                          setOriginalPhoneNumber(value);
                         }
 
                         // Reset success state when field is modified
@@ -484,7 +563,7 @@ const CompanyForm = ({
                   );
                 }}
               />
-              {registerData?.expirationTime ? (
+              {registerData?.expirationTime && !isNaN(new Date(registerData?.expirationTime).getTime()) ? (
                 <CountdownTimer
                   expirationTime={registerData?.expirationTime}
                   onExpire={handleExpire}
@@ -545,6 +624,7 @@ const CompanyForm = ({
               className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder={t("common.form.verificationCode")}
               maxLength={6}
+              disabled={registerData?.verified}
               {...register("verification_code", {
                 required: t("common.form.errors.verificationCode"),
                 validate: (val) => {
@@ -557,9 +637,21 @@ const CompanyForm = ({
               style={
                 errors?.verification_code
                   ? { border: "1px solid red" }
+                  : registerData?.verified
+                  ? { border: "1px solid #8A8AA033", backgroundColor: "#f5f5f5", cursor: "not-allowed" }
                   : { border: "1px solid #8A8AA033" }
               }
             />
+            {isVerifyingOtp && !registerData?.verified && (
+              <div className="absolute right-3 p-2">
+                <div className="h-4 w-4 border-2 border-secondary border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+            {registerData?.verified && !isVerifyingOtp && (
+              <div className="absolute right-3 p-2">
+                <img src={TickIcon} alt="Verified" className="h-5 w-5" />
+              </div>
+            )}
           </div>
           {errors.verification_code && (
             <p className="text-left mt-1 text-sm text-[#FF0000]">{errors.verification_code.message}</p>

@@ -35,7 +35,16 @@ function ChangeMyTag() {
             return;
         }
 
-        APICall("get", null, `${EndPoints.customer.getReserve}/${user?.customer_account_id}`)
+        const accountId =
+        user?.parent_id != null && user?.parent?.customer_account_id
+          ? user.parent.customer_account_id
+          : user?.customer_account_id;
+      setLoading(true);
+      const params = {
+        msisdn: user?.phone_number,
+      };    
+
+        APICall("get", user?.parent_id != null ? params : null, `${EndPoints.customer.getReserve}/${accountId}`)
             .then((res) => {
                 if (res?.success) {
                     const activeTags = res?.data.filter(tag =>
@@ -116,7 +125,7 @@ function ChangeMyTag() {
                 <td className="py-4 px-4 text-sm text-gray-700">#{tagInfo?.tag_no || t("changeTag.common.na")}</td>
                 <td className="py-4 px-4 text-sm text-gray-700">{formatPhoneNumberCustom(tag?.msisdn || t("changeTag.common.na"))}</td>
                 <td className="py-4 px-4 text-sm text-gray-700">
-                    {tag?.next_charge_dt ? moment(tag.next_charge_dt).format("DD-MM-YYYY") : t("changeTag.common.na")}
+                    {tag?.next_charge_dt ? (tag.next_charge_dt): t("changeTag.common.na")}
                 </td>
                 <td className="py-4 px-4 text-sm text-gray-700">
                     {tag?.dues > 0 ? 0 : Math.abs(tag?.dues)} {t("changeTag.common.etb")}

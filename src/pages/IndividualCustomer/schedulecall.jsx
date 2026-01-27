@@ -38,9 +38,8 @@ const SchedulecallCustomer = () => {
 
   const fetchTagInfo = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
       setFetchingData(true);
-      const response = await APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${user?.id}`);
+      const response = await APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.individual.getReserveTags}`);
       if (response?.success && response?.data) {
         setTagData(response?.data);
 

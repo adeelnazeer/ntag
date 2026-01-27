@@ -35,7 +35,7 @@ const NameTagReceipt = ({ paymentData }) => {
   } = paymentData;
 
   // Format date for better readability
-  const formattedDate = paymentData?.created_at ? moment(paymentData?.created_at).format("DD-MM-YYYY HH:mm") : "";
+  const formattedDate = paymentData?.created_at ? paymentData?.created_at : "";
 
   // Determine the actual tag number and name
   const actualTagNo = corp_tag_list?.tag_no || tag_no;

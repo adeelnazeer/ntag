@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button, Typography } from "@material-tailwind/react";
+import { Button, Typography, Spinner } from "@material-tailwind/react";
 import { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import DocumentChoiceDialog from "../pages/register/components/documentChoiceDialog";
@@ -13,11 +13,14 @@ import { setUserData } from "../redux/userSlice";
 
 const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
   const [showDocumentChoice, setShowDocumentChoice] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    setIsOpen(false);
+    if (loading) return; // Prevent multiple submissions
+    
+    setLoading(true);
     
     try {
       // Validate that all three documents are uploaded before proceeding
@@ -29,6 +32,7 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
 
       if (!hasRegistrationLicense || !hasApplicationLetter || !hasTradeLicense) {
         toast.error("Please upload all three required documents: Registration License, Application Letter, and Trade License");
+        setLoading(false);
         setShowDocumentChoice(true);
         return;
       }
@@ -37,37 +41,65 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
       const step0Data = data?.step0Data;
       if (!step0Data) {
         toast.error("Registration data is missing");
+        setLoading(false);
         return;
       }
 
       if (!step1Data || Object.keys(step1Data).length === 0) {
         toast.error("Company information is missing");
+        setLoading(false);
         return;
       }
 
       const otp = localStorage.getItem("otp");
       
+      // Preserve password from step0Data before merging step1Data
+      const passwordFromStep0 = step0Data?.password;
+      
       // Combine step0Data and step1Data for register API (exclude document files)
       const registerPayload = {
-        ...step0Data, // Registration data (phone, verification_code, etc.)
+        ...step0Data, // Registration data (phone, verification_code, password, etc.)
         ...Object.keys(step1Data).reduce((acc, key) => {
-          // Include all step1Data fields except document files
-          if (!key.includes("_url") || !(step1Data[key] instanceof File)) {
+          // Include all step1Data fields except document files and password fields
+          // Don't let step1Data overwrite password from step0Data
+          if ((!key.includes("_url") || !(step1Data[key] instanceof File)) && 
+              key !== 'password' && key !== 'confirm_password') {
             acc[key] = step1Data[key];
           }
           return acc;
         }, {}),
       };
       
+      // Explicitly set password from step0Data to ensure it's included
+      if (passwordFromStep0) {
+        registerPayload.password = passwordFromStep0;
+      } else {
+        console.warn('Password is missing from step0Data:', step0Data);
+      }
+      // Don't include confirm_password in API call, only password
+      
+      console.log('Register payload password:', registerPayload.password ? '***' : 'MISSING');
+      
       registerPayload.channel = "WEB";
       registerPayload.otp_id = otp;
       registerPayload.otp_code = step0Data?.verification_code;
       registerPayload.ntn = step1Data?.comp_reg_no;
 
+      // Remove "+" sign from start of contact_no if present
+      if (registerPayload.contact_no && typeof registerPayload.contact_no === 'string') {
+        registerPayload.contact_no = registerPayload.contact_no.replace(/^\+/, '');
+      }
+
+      // Remove "+" sign from start of phone_number if present
+      if (registerPayload.phone_number && typeof registerPayload.phone_number === 'string') {
+        registerPayload.phone_number = registerPayload.phone_number.replace(/^\+/, '');
+      }
+
       const registerRes = await APICall("post", registerPayload, EndPoints.customer.register);
       
       if (!registerRes?.success) {
         toast.error(registerRes?.message || "Registration failed");
+        setLoading(false);
         return;
       }
 
@@ -132,23 +164,14 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
         }
       }
 
-      // Add all profile update fields to FormData (exclude document files and URLs)
-      Object.keys(step1Data).forEach((key) => {
-        // Skip document file objects and URLs
-        if (!key.includes("_url") || !(step1Data[key] instanceof File)) {
-          const value = step1Data[key];
-          // Only append if value is not null, undefined, empty string, or a File object
-          if (value !== null && value !== undefined && value !== "" && !(value instanceof File)) {
-            documentFormData.append(key, value);
-          }
-        }
-      });
+      // Only send document data - no extra profile fields
+      // All document files and their metadata have already been appended above
 
       // Upload documents with profile data
       const uploadRes = await APICall(
         "post",
         documentFormData,
-        `${EndPoints?.customer?.uploadDocument}/${id}`,
+        `${EndPoints?.customer?.newSecurityEndPoints?.corporate?.uploadDocument}`,
         null,
         true
       );
@@ -160,13 +183,19 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
           localStorage.setItem("user", JSON.stringify(uploadRes.data));
         }
         localStorage.removeItem("otp");
+        setLoading(false);
+        setIsOpen(false);
         navigate(ConstentRoutes.dashboard);
+
       } else {
         toast.error(uploadRes?.message || "Document upload failed");
+        setLoading(false);
       }
     } catch (err) {
       console.error("Registration error:", err);
       toast.error(err?.message || "Registration failed. Please try again.");
+      setLoading(false);
+      setIsOpen(false);
     }
   };
   
@@ -201,10 +230,18 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
                     Cancel
                   </Button>
                   <Button
-                    className="bg-secondary py-2 px-6 text-white sm:px-6"
+                    className="bg-secondary py-2 px-6 text-white sm:px-6 flex items-center justify-center gap-2"
                     onClick={() => handleSubmit()}
+                    disabled={loading}
                   >
-                    Submit
+                    {loading ? (
+                      <>
+                        <Spinner size="sm" className="h-4 w-4" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </div>
               </div>
@@ -218,10 +255,13 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
         onClose={() => setShowDocumentChoice(false)}
         onUploadDocument={() => {
           setShowDocumentChoice(false);
-          setIsOpen(false);  
+
           setActiveStep(1);
         }}
         onProceed={async () => {
+          if (loading) return; // Prevent multiple submissions
+          
+          setLoading(true);
           setShowDocumentChoice(false);
           
           try {
@@ -229,38 +269,61 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
             const step0Data = data?.step0Data;
             if (!step0Data) {
               toast.error("Registration data is missing");
+              setLoading(false);
               return;
             }
 
             const step1Data = data?.step1Data || {};
             if (!step1Data || Object.keys(step1Data).length === 0) {
               toast.error("Company information is missing");
+              setLoading(false);
               return;
             }
 
             const otp = localStorage.getItem("otp");
             
+            // Preserve password from step0Data before merging step1Data
+            const passwordFromStep0 = step0Data?.password;
+            
             // Combine step0Data and step1Data for register API (exclude document files)
             const registerPayload = {
-              ...step0Data, // Registration data (phone, verification_code, etc.)
+              ...step0Data, // Registration data (phone, verification_code, password, etc.)
               ...Object.keys(step1Data).reduce((acc, key) => {
-                // Include all step1Data fields except document files
-                if (!key.includes("_url") || !(step1Data[key] instanceof File)) {
+                // Include all step1Data fields except document files and password fields
+                // Don't let step1Data overwrite password from step0Data
+                if ((!key.includes("_url") || !(step1Data[key] instanceof File)) && 
+                    key !== 'password' && key !== 'confirm_password') {
                   acc[key] = step1Data[key];
                 }
                 return acc;
               }, {}),
             };
             
+            // Explicitly set password from step0Data to ensure it's included
+            if (passwordFromStep0) {
+              registerPayload.password = passwordFromStep0;
+            }
+            
             registerPayload.channel = "WEB";
             registerPayload.otp_id = otp;
             registerPayload.otp_code = step0Data?.verification_code;
             registerPayload.ntn = step1Data?.comp_reg_no;
 
+            // Remove "+" sign from start of contact_no if present
+            if (registerPayload.contact_no && typeof registerPayload.contact_no === 'string') {
+              registerPayload.contact_no = registerPayload.contact_no.replace(/^\+/, '');
+            }
+
+            // Remove "+" sign from start of phone_number if present
+            if (registerPayload.phone_number && typeof registerPayload.phone_number === 'string') {
+              registerPayload.phone_number = registerPayload.phone_number.replace(/^\+/, '');
+            }
+
             const registerRes = await APICall("post", registerPayload, EndPoints.customer.register);
             
             if (!registerRes?.success) {
               toast.error(registerRes?.message || "Registration failed");
+              setLoading(false);
               return;
             }
 
@@ -270,10 +333,14 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
             localStorage.setItem("id", id);
             localStorage.setItem("user", JSON.stringify(registerRes.data));
             localStorage.removeItem("otp");
+            setLoading(false);
             navigate(ConstentRoutes.dashboard);
+            setIsOpen(false);
           } catch (err) {
             console.error("Registration error:", err);
             toast.error(err?.message || "Registration failed. Please try again.");
+            setLoading(false);
+            setIsOpen(false);
           }
         }}
       />

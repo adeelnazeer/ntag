@@ -4,7 +4,7 @@
   "tagline": "Build fast, ship faster.",
   "language": "Language",
   "home": "Home",
-  "sectorOverview": "Sector Overview",
+  "sectorOverview": "Service Overview",
   "nameTag": "NameTAG",
   "identity": "Your Identity, Simplified",
   "service": "Service",
@@ -23,12 +23,12 @@
   "compInfo": "Company Information for NameTAG Registration",
   "login": {
     "login": "Login",
-    "desc": "Please enter your username and password to log in to your NameTAG account.",
-    "enterUserName": "Enter username",
+    "desc": "Please enter your phone number/username and password to log in to your NameTAG account.",
+    "enterUserName": "Enter username or phone number",
     "enterPassword": "Enter password",
     "remember": "Remember Me",
     "link1": "Register as Corporate",
-    "link2": "Register as individual",
+    "link2": "Register as Individual",
     "link3": "Forgot Password"
   },
   "common": {
@@ -95,7 +95,10 @@
         "passwordMaxLength": "Password cannot exceed 15 characters",
         "passwordPattern": "Password must contain one uppercase letter, one lowercase letter, and one special character",
         "passwordsDoNotMatch": "Passwords do not match",
+        "companyNameMinLength": "Company name must be at least 3 characters",
         "mobileNumberRequired": "Mobile number is required",
+        "firstNameMinLength": "First name must be at least 3 characters",
+        "fatherNameMinLength": "Father name must be at least 3 characters",
         "otpDoesNotMatch": "Your OTP does not match"
       }
     },
@@ -257,6 +260,103 @@
     "privacy": "Privacy Policy",
     "faqs": "FAQs",
     "contact": "Contact Us",
+    "complaint": "Complaint",
     "rights": "All rights reserved."
+  },
+  "complaint": {
+    "modal": {
+      "title": "NameTAG  Service Complaint",
+      "description": "Enter your mobile number to block NameTAG",
+      "mobileNumber": "Mobile Number",
+      "phoneRequired": "Mobile Number is required",
+      "mustStart9": "Mobile Numbers must start with 9",
+      "invalidLength": "Mobile Number must be 9 digits after country code",
+      "getOtp": "Get OTP",
+      "resendOtp": "Resend OTP",
+      "otpSent": "OTP sent successfully",
+      "otpFailed": "Failed to send OTP",
+      "verificationCode": "Verification Code",
+      "otpPlaceholder": "Enter 6-digit OTP",
+      "invalidOtp": "Please enter a valid 6-digit OTP code",
+      "otpIdMissing": "OTP ID not found. Please request OTP again.",
+      "verifyOtp": "Verify OTP",
+      "verifying": "Verifying...",
+      "otpVerified": "OTP verified successfully!",
+      "verifyFailed": "OTP verification failed",
+      "redirecting": "OTP verified! Redirecting...",
+      "cancelBtn": "Cancel"
+    },
+    "block": {
+      "title": "Blocked NameTAG Numbers",
+      "subtitle": "The NameTAGs you have blocked are listed below.",
+      "phoneNumber": "Mobile Number",
+      "noVerificationData": "No verification data found. Please start over.",
+      "fetchFailed": "Failed to fetch blocked numbers",
+      "fetchError": "Error loading blocked numbers",
+      "backButton": "Back to Home",
+      "maxLimitReached": "Maximum limit of 99 blocked numbers reached. Please unblock a number to add a new one.",
+      "table": {
+        "sr": "Sr#",
+        "blocked": "Blocked NameTAG",
+        "type": "Blocked Type",
+        "registered": "Registered Mobile Number",
+        "channel": "Channel",
+        "action": "Action",
+        "delete": "Unblock",
+        "empty": "No blocked numbers found"
+      },
+      "type": {
+        "tag": "TAG",
+        "mobile": "Mobile Number"
+      },
+      "addButton": "Block NameTAG",
+      "addModal": {
+        "title": "Block NameTAG",
+        "subtitle": "Enter the NameTAG number you want to block",
+        "tagLabel": "NameTAG Number",
+        "tagPlaceholder": "Enter NameTAG number (3-8 digits)",
+        "tagHint": "Enter 3 to 8 digits only without #",
+        "tagRequired": "NameTAG number is required",
+        "tagNumbersOnly": "NameTAG number must contain only numbers",
+        "tagMinLength": "NameTAG number must be at least 3 digits",
+        "tagMaxLength": "NameTAG number must be at most 8 digits",
+        "customerTypeLabel": "Block Reason",
+        "corpCustomer": "Spam",
+        "normalCustomer": "Fraud",
+        "blockMessage": "Once a caller is blocked, all future incoming calls from that number will be automatically rejected.",
+        "reason": {
+          "spamCall": "Spam Call",
+          "fraudOrScam": "Fraud or Scam",
+          "harassmentAndAbuse": "Harassment and Abuse",
+          "unwantedMarketingCall": "Unwanted Marketing Call",
+          "repeatedCalls": "Repeated Calls",
+          "personalReasons": "Personal Reasons",
+          "offensiveOrThreateningCall": "Offensive or Threatening Call",
+          "unknownCaller": "Unknown Caller",
+          "other": "Other"
+        },
+        "cancel": "Cancel",
+        "submit": "Submit",
+        "processing": "Processing...",
+        "success": "Number blocked successfully",
+        "failed": "Failed to block number",
+        "error": "Error blocking number"
+      },
+      "noPhoneNumber": "Phone number not found.",
+      "unauthorized": "Unauthorized. Please verify your phone number again.",
+      "noToken": "Guest token not found. Please verify your phone number again.",
+      "deleteModal": {
+        "title": "Confirm Unblock",
+        "desc1": "Are you sure you want to remove this number from blocklist?",
+        "desc2": "This number will be able to make calls on your TAG number",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "deleting": "Deleting...",
+        "success": "Number unblocked successfully",
+        "failed": "Failed to unblock number",
+        "error": "Error unblocking number",
+        "noId": "Cannot unblock: Missing number ID"
+      }
+    }
   }
 }

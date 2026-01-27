@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Logo from "../assets/images/logo.png";
 import TagName from "../assets/images/Telebirr.png";
 import MenuBar from "./menuBar";
@@ -31,7 +32,7 @@ const LANGS = [
   { code: "or", label: "OR", native: "OR", flag: "or" },
 ];
 
-const Header = () => {
+const Header = ({ isGuest = false }) => {
   const { t, i18n } = useTranslation(["common"]);
   const { t: t2 } = useTranslation(["sideBar"]);
 
@@ -72,23 +73,24 @@ const Header = () => {
     if (token && userData) {
       try {
         // Get user ID - check multiple possible locations
-        const userId = 
-          localStorage.getItem("id") || 
-          userData?.id || 
+        const userId =
+          localStorage.getItem("id") ||
+          userData?.id ||
           userData?.customer_account_id ||
           userData?.customer_id;
 
         if (userId) {
           // Prepare payload
           const payload = {
-            user_lang: code=="amET"?"am":code
+            user_lang: code == "amET" ? "am" : code,
           };
 
           // Call appropriate endpoint
           // Use individual endpoint if customer_type is "individual", otherwise corporate
-          const endpoint = userData?.customer_type === "individual"
-            ? EndPoints.customer.updateIndividualProfile(userId)
-            : EndPoints.customer.updateProfile(userId);
+          const endpoint =
+            userData?.customer_type === "individual"
+              ? EndPoints.customer.updateIndividualProfile(userId)
+              : EndPoints.customer.updateProfile(userId);
 
           const response = await APICall("put", payload, endpoint);
 
@@ -97,12 +99,15 @@ const Header = () => {
             if (response?.data) {
               localStorage.setItem("user", JSON.stringify(response.data));
             }
-            
+
             // Refresh the page to load data with new locale
             window.location.reload();
           } else {
             // If API call fails, still keep the language change
-            console.error("Failed to update language on server:", response?.message);
+            console.error(
+              "Failed to update language on server:",
+              response?.message
+            );
           }
         }
       } catch (error) {
@@ -125,11 +130,15 @@ const Header = () => {
     ConstentRoutes.FrequentlyAskedQuestions,
   ];
   const getCorporate = () => {
+    if (isGuest||location?.pathname?.includes("contact-us")) {
+      return "";
+    }
     const path = location?.pathname;
 
     const shouldHide =
       path?.includes("customer") ||
       path?.includes("individual") ||
+      path?.includes("bill") ||
       path === ConstentRoutes.home ||
       path === ConstentRoutes.login ||
       path === ConstentRoutes.forgetPassword ||
@@ -189,6 +198,16 @@ const Header = () => {
                         </Button>
                       </MenuHandler>
                       <MenuList>
+                        <p className="text-xs text-gray-500 mb-1">
+                          Account Type:{" "}
+                          {userData?.customer_type == "corporate"
+                            ? `Corporate ${
+                                userData?.parent_id == null
+                                  ? "(Primary)"
+                                  : "(Additional)"
+                              }`
+                            : "Individual"}
+                        </p>
                         <MenuItem
                           className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
                           onClick={() =>

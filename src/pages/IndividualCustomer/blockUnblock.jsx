@@ -64,7 +64,7 @@ const BlockUnblockCustomer = () => {
       }
 
       // Fetch user's TAGs
-      const response = await APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${accountId}`);
+      const response = await APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.individual.getReserveTags}`);
       setStatus(response?.data?.[0]?.status)
 
       if (response?.success && response?.data) {

@@ -7,7 +7,6 @@ import {
   getTagStatusDashboard,
 } from "../utilities/routesConst";
 import useSchedularHook from "./hooks/schedularHook";
-import moment from "moment";
 import { useEffect, useState } from "react";
 import APICall from "../network/APICall";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
@@ -60,16 +59,10 @@ const TagNames = () => {
   const checkDocument = () => {
     setLoading(true);
 
-    if (!userData?.customer_account_id) {
-      console.error("No customer account ID found");
-      setLoading(false);
-      return;
-    }
-
     APICall(
       "get",
       null,
-      `/customer/check-documents/${userData.customer_account_id}`
+      `${EndPoints.customer.newSecurityEndPoints.corporate.checkDocumentStatus}`
     )
       .then((res) => {
         setDocStatus(res?.data || {});
@@ -245,6 +238,18 @@ const TagNames = () => {
     }
   };
 
+  const getPaymentMethod = (payment_method) => {
+
+
+    if (payment_method == "telebirr") {
+      return "  telebirr  super App ";
+    } else if (payment_method == "telebirr_super_app") {
+      return "Telebirr Super App";
+    } else if (payment_method == "telebirr_partnerapp") {
+      return "telebirr  partner App";
+    }
+  };
+
   const renderTagData = (single) => {
     if (!single) return null;
 
@@ -258,6 +263,7 @@ const TagNames = () => {
     const isReserved = single?.type === "reserve";
     const isPaid = single?.payment_status !== 0;
     const isUnsub = single.status == 6;
+
 
     return (
       <div
@@ -374,6 +380,15 @@ const TagNames = () => {
           </Typography>
         </div>
 
+        <div className="flex justify-between gap-1 md:px-5 px-2 py-3 rounded-xl mt-1">
+          <Typography className="text-[14px]">
+            Payment Method
+          </Typography>
+          <Typography className="md:text-[14px] text-[12px]">
+            {getPaymentMethod(single?.payment_method)}
+          </Typography>
+        </div>
+
         <div className="md:px-5 px-2 py-3 rounded-xl mt-1">
           <div className="flex justify-between">
             <Typography className="text-[14px]">
@@ -424,12 +439,12 @@ const TagNames = () => {
               single?.service_id === "Monthly"
                 ? tagInfo?.monthly_fee || single?.service_fee || "0"
                 : single?.service_id === "Quarterly"
-                ? tagInfo?.quarterly_fee || single?.service_fee || "0"
-                : single?.service_id === "Semi-Annually"
-                ? tagInfo?.semiannually_fee || single?.service_fee || "0"
-                : single?.service_id === "Annually"
-                ? tagInfo?.annually_fee || single?.service_fee || "0"
-                : tagInfo?.service_fee || single?.service_fee || "0"
+                  ? tagInfo?.quarterly_fee || single?.service_fee || "0"
+                  : single?.service_id === "Semi-Annually"
+                    ? tagInfo?.semiannually_fee || single?.service_fee || "0"
+                    : single?.service_id === "Annually"
+                      ? tagInfo?.annually_fee || single?.service_fee || "0"
+                      : tagInfo?.service_fee || single?.service_fee || "0"
             )}{" "}
             {t("common.etb")}
           </Typography>
@@ -493,8 +508,8 @@ const TagNames = () => {
           {docStatus?.corp_document?.[0]?.doc_status != "0" && isReserved && (
             <>
               {docStatus?.corp_document?.[0]?.doc_status != "1" ||
-              docStatus?.corp_document?.[1]?.doc_status != "1" ||
-              docStatus?.corp_document?.[2]?.doc_status != "1" ? (
+                docStatus?.corp_document?.[1]?.doc_status != "1" ||
+                docStatus?.corp_document?.[2]?.doc_status != "1" ? (
                 <Button
                   className="bg-secondary text-white text-[14px]"
                   onClick={navigateToDocuments}
@@ -614,20 +629,20 @@ const TagNames = () => {
     <div className="shadow bg-white rounded-xl">
       <Typography className="text-[#1F1F2C] p-3 px-6 border-b text-lg font-bold">
         {docStatus.corp_document?.[0]?.doc_status == "1" &&
-        docStatus.corp_document?.[1]?.doc_status == "1"
+          docStatus.corp_document?.[1]?.doc_status == "1"
           ? t("headers.welcomeToNameTag")
           : t("headers.corporateNameTag")}
       </Typography>
       <div className="md:p-8 p-4">
         {docStatus.corp_document?.[0]?.doc_status == "1" &&
-        docStatus.corp_document?.[1]?.doc_status == "1" ? (
+          docStatus.corp_document?.[1]?.doc_status == "1" ? (
           <>
             <Typography className="text-[#1F1F2C] text-md font-bold text-left">
               {CompleteResponse.total > 0
                 ? t("registrationInfo.registeredCount", {
-                    total: CompleteResponse.total,
-                    max: CompleteResponse?.max_allowed_subscription,
-                  })
+                  total: CompleteResponse.total,
+                  max: CompleteResponse?.max_allowed_subscription,
+                })
                 : ""}
             </Typography>
 
@@ -642,8 +657,8 @@ const TagNames = () => {
         )}
 
         {docStatus.corp_document?.[0]?.doc_status == "0" &&
-        docStatus.corp_document?.[1]?.doc_status == "0" &&
-        docStatus.corp_document?.[2]?.doc_status == "0" ? (
+          docStatus.corp_document?.[1]?.doc_status == "0" &&
+          docStatus.corp_document?.[2]?.doc_status == "0" ? (
           <>
             <Typography className="text-red-500 text-lg font-medium text-center">
               {t("documentStatus.underReview")}
@@ -657,8 +672,8 @@ const TagNames = () => {
           <></>
         )}
         {docStatus.corp_document?.[0]?.doc_status == "2" ||
-        docStatus.corp_document?.[1]?.doc_status == "2" ||
-        docStatus.corp_document?.[2]?.doc_status == "2" ? (
+          docStatus.corp_document?.[1]?.doc_status == "2" ||
+          docStatus.corp_document?.[2]?.doc_status == "2" ? (
           <Typography className="text-red-500 text-lg font-medium text-center">
             {t("documentStatus.rejected")}
           </Typography>
@@ -675,8 +690,8 @@ const TagNames = () => {
             {(!Array.isArray(tagData) || tagData.length === 0) && (
               <Typography className="mt-2 font-normal text-base text-center">
                 {docStatus?.corp_document?.[0]?.doc_status == "0" ||
-                docStatus?.corp_document?.[1]?.doc_status == "0" ||
-                docStatus?.corp_document?.[2]?.doc_status == "0"
+                  docStatus?.corp_document?.[1]?.doc_status == "0" ||
+                  docStatus?.corp_document?.[2]?.doc_status == "0"
                   ? t("emptyStates.canReserveWhileProcessing")
                   : t("emptyStates.noTagReserved")}
               </Typography>
@@ -694,8 +709,8 @@ const TagNames = () => {
                   onClick={() => navigate(ConstentRoutes.buyTag)}
                 >
                   {docStatus?.corp_document?.[0]?.doc_status == "1" &&
-                  docStatus?.corp_document?.[1]?.doc_status == "1" &&
-                  docStatus?.corp_document?.[2]?.doc_status == "1"
+                    docStatus?.corp_document?.[1]?.doc_status == "1" &&
+                    docStatus?.corp_document?.[2]?.doc_status == "1"
                     ? t("buttons.buyNameTag")
                     : t("buttons.reserveNameTag")}
                 </Button>

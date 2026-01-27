@@ -149,17 +149,10 @@ const DocumentInfo = ({ profileData }) => {
 
   const checkDocument = async () => {
     try {
-      if (!userData?.customer_account_id && !customerId) {
-        console.error("No customer account ID found");
-        return;
-      }
-
-      const accountId = userData?.customer_account_id || customerId;
-
       const res = await APICall(
         "get",
         null,
-        `/customer/check-documents/${accountId}`
+        `${EndPoints.customer.newSecurityEndPoints.corporate.checkDocumentStatus}`
       );
 
       if (res?.data) {
@@ -174,70 +167,8 @@ const DocumentInfo = ({ profileData }) => {
       toast.error("Failed to refresh document status");
     }
   };
-  // Map index to field name
-  const getFieldName = (index) => {
-    switch (index) {
-      case 0:
-        return "application_letter";
-      case 1:
-        return "trade_license";
-      case 2:
-        return "registration_license";
-      default:
-        return `document_${index}`;
-    }
-  };
-  const handleUpdate = () => {
-    // Check if editing is allowed
-    if (!isEditingAllowed()) {
-      toast.error("Documents can't be modified after approval");
-      return;
-    }
 
-    // Use ID from Redux if available, fall back to localStorage
-    const id = customerId || localStorage.getItem("id");
 
-    if (!id) {
-      toast.error("Customer ID not found");
-      return;
-    }
-
-    const formData = new FormData();
-
-    changedDocuments.forEach((index) => {
-      if (data[index]?.doc_url) {
-        const fieldName = getFieldName(index);
-        formData.append(`${fieldName}_url`, data[index].doc_url);
-        formData.append(`${fieldName}_name`, data[index].doc_name);
-        formData.append(`${fieldName}_type`, data[index].docType);
-
-        // If doc has an ID (existing document), include it
-        if (data[index].id) {
-          formData.append(`${fieldName}_id`, data[index].id);
-        }
-      }
-    });
-
-    if (changedDocuments.length > 0) {
-      APICall(
-        "post",
-        formData,
-        `${EndPoints?.customer?.updateDocument}/${id}`,
-        null,
-        true
-      )
-        .then((res) => {
-          toast.success(res?.message);
-          checkDocument();
-          setChangedDocuments([]);
-        })
-        .catch((err) => {
-          toast.error(err?.message);
-        });
-    } else {
-      toast.info("No changes to update");
-    }
-  };
 
   const ImagePreviewModal = () => {
     if (!showImagePreview) return null;
@@ -260,10 +191,6 @@ const DocumentInfo = ({ profileData }) => {
       </div>
     );
   };
-
-  // Check if documents are approved (all have status 1)
-  const areDocumentsApproved =
-    data?.length >= 3 && data.every((doc) => doc?.doc_status === "1");
 
   // Document type labels
   const getDocumentLabel = (index) => {
@@ -303,7 +230,7 @@ const DocumentInfo = ({ profileData }) => {
                 {t("profile.version")}
               </th>
               <th className="px-4 py-3 font-medium text-left text-[#555555CC]">
-                {t("profile.version")}
+                {t("profile.comment")}
               </th>
               <th className="px-4 py-3 font-medium text-left text-[#555555CC]">
                 {t("profile.uploadDate")}

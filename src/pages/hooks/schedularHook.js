@@ -15,8 +15,12 @@ const useSchedularHook = (value) => {
     const getData = () => {
         const user = JSON.parse(localStorage.getItem("user"))
         const accountId = user?.parent_id != null && user?.parent?.customer_account_id
-            ? user.parent.customer_account_id
+            ? user?.parent?.customer_account_id
             : user?.customer_account_id;
+
+            const userId = user?.parent_id != null 
+            ? user?.parent?.id
+            : user?.id;
         setLoading(true)
         const params = {
             msisdn: user?.phone_number
@@ -35,7 +39,7 @@ const useSchedularHook = (value) => {
                 setLoading(false)
             });
 
-        APICall("get", user?.parent_id != null ? params : null, `${EndPoints.customer.getSchedular}?account_id=${user?.id}`)
+        APICall("get", user?.parent_id != null ? params : null, `${EndPoints.customer.getSchedular}?account_id=${userId}`)
             .then((res) => {
                 if (res?.success) {
 

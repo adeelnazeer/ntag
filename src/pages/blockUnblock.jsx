@@ -624,7 +624,6 @@
 
 // export default BlockUnblock;
 
-
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { BiPlusCircle } from "react-icons/bi";
@@ -696,11 +695,25 @@ const BlockUnblock = () => {
     }
 
     const user = JSON.parse(localStorage.getItem("user"));
+    const accountId =
+      user?.parent_id != null && user?.parent?.customer_account_id
+        ? user.parent.customer_account_id
+        : user?.customer_account_id;
     setLoading(true);
-    APICall("get", null, `${EndPoints.customer.getReserve}/${user?.customer_account_id}`)
+    const params = {
+      msisdn: user?.phone_number,
+    };
+    setLoading(true);
+    APICall(
+      "get",
+      user?.parent_id != null ? params : null,
+      `${EndPoints.customer.getReserve}/${accountId}`
+    )
       .then((res) => {
         if (res?.success) {
-          const activeData = res?.data?.filter((x) => x?.status == 1 || x?.status == 4);
+          const activeData = res?.data?.filter(
+            (x) => x?.status == 1 || x?.status == 4
+          );
           setData(activeData);
           if (res?.data?.some((x) => x?.status == 1 || x?.status == 4)) {
             setSelectedMsisdn(activeData?.[0]?.msisdn);
@@ -721,9 +734,15 @@ const BlockUnblock = () => {
 
     try {
       setLoading(true);
-      const response = await APICall("get", null, EndPoints.customer.GetAllNumbers(customerId));
+      const response = await APICall(
+        "get",
+        null,
+        EndPoints.customer.GetAllNumbers(customerId)
+      );
       if (response?.success && response?.data) {
-        const numbers = Array.isArray(response.data) ? response.data : [response.data];
+        const numbers = Array.isArray(response.data)
+          ? response.data
+          : [response.data];
         setMobileNumbers(numbers);
       } else {
         toast.error(t("errors.fetchMobiles"));
@@ -742,10 +761,16 @@ const BlockUnblock = () => {
     try {
       setLoading(true);
       const formattedMsisdn = msisdn.replace(/^\+/, "");
-      const response = await APICall("get", null, `${EndPoints.customer.getBlockNumber}?msisdn=${formattedMsisdn}`);
+      const response = await APICall(
+        "get",
+        null,
+        `${EndPoints.customer.getBlockNumber}?msisdn=${formattedMsisdn}`
+      );
 
       if (response?.success && response?.data) {
-        const blockedNumbers = Array.isArray(response.data) ? response.data : [response.data];
+        const blockedNumbers = Array.isArray(response.data)
+          ? response.data
+          : [response.data];
         setNumbers(blockedNumbers);
       } else {
         toast.error(t("errors.fetchBlocked"));
@@ -768,7 +793,11 @@ const BlockUnblock = () => {
   const confirmDelete = async () => {
     try {
       setDeletingNumber(true);
-      const deleteResponse = await APICall("delete", null, `${EndPoints.customer.deleteBlockNumber(selectedNumber.id)}`);
+      const deleteResponse = await APICall(
+        "delete",
+        null,
+        `${EndPoints.customer.deleteBlockNumber(selectedNumber.id)}`
+      );
 
       if (deleteResponse?.success) {
         toast.success(t("success.removed"));
@@ -837,8 +866,9 @@ const BlockUnblock = () => {
     try {
       setAddingNumber(true);
       // Use user's phone number when parent_id != null, otherwise use selectedMsisdn
-      const msisdnToUse = hasParentId 
-        ? (userData?.phone_number?.replace(/^\+/, "") || selectedMsisdn.replace(/^\+/, ""))
+      const msisdnToUse = hasParentId
+        ? userData?.phone_number?.replace(/^\+/, "") ||
+          selectedMsisdn.replace(/^\+/, "")
         : selectedMsisdn.replace(/^\+/, "");
       const payload = {
         msisdn: msisdnToUse,
@@ -852,24 +882,32 @@ const BlockUnblock = () => {
         payload.blocked_no = String(valueToBlock).replace(/^\+/, "");
       }
 
-      const response = await APICall("post", payload, EndPoints.customer.saveBlockNumber);
+      const response = await APICall(
+        "post",
+        payload,
+        EndPoints.customer.saveBlockNumber
+      );
 
       if (response?.success) {
-        toast.success(
-          blockType === "mobileNumber" ? t("success.addedMobile") : t("success.addedTag")
-        );
+        toast.success(response?.message);
         setValueToBlock(blockType === "mobileNumber" ? "+2519" : "");
         setShowAddDialog(false);
         fetchMobileNumbers();
       } else {
         toast.error(
           response?.message ||
-            (blockType === "mobileNumber" ? t("errors.addBlockedMobile") : t("errors.addBlockedTag"))
+            (blockType === "mobileNumber"
+              ? t("errors.addBlockedMobile")
+              : t("errors.addBlockedTag"))
         );
       }
     } catch (error) {
       console.error("Error adding blocked number:", error);
-      toast.error(blockType === "mobileNumber" ? t("errors.addBlockedMobile") : t("errors.addBlockedTag"));
+      toast.error(
+        blockType === "mobileNumber"
+          ? t("errors.addBlockedMobile")
+          : t("errors.addBlockedTag")
+      );
     } finally {
       setAddingNumber(false);
     }
@@ -899,7 +937,9 @@ const BlockUnblock = () => {
               <div className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-gray-50">
                 {userData?.phone_number ? (
                   <>
-                    {userData.phone_number.startsWith("+") ? userData.phone_number : `+${userData.phone_number}`}
+                    {userData.phone_number.startsWith("+")
+                      ? userData.phone_number
+                      : `+${userData.phone_number}`}
                   </>
                 ) : (
                   t("labels.noMobiles")
@@ -984,7 +1024,9 @@ const BlockUnblock = () => {
                           : formatPhoneNumberCustom(number.blocked_no)}
                       </td>
                       <td className="py-4 px-4 text-xs text-gray-700">
-                        {number.blocked_tag ? t("labels.tagType", "TAG Number") : t("labels.mobileType", "Mobile Number")}
+                        {number.blocked_tag
+                          ? t("labels.tagType", "TAG Number")
+                          : t("labels.mobileType", "Mobile Number")}
                       </td>
                       <td className="py-4 px-4 text-xs text-gray-700">
                         {formatPhoneNumberCustom(number.msisdn)}
@@ -1059,7 +1101,8 @@ const BlockUnblock = () => {
               >
                 {deletingNumber ? (
                   <div className="flex items-center gap-2">
-                    <Spinner size="sm" className="h-3 w-3" /> {t("buttons.removing")}
+                    <Spinner size="sm" className="h-3 w-3" />{" "}
+                    {t("buttons.removing")}
                   </div>
                 ) : (
                   t("buttons.confirm")
@@ -1095,7 +1138,9 @@ const BlockUnblock = () => {
                 <div className="flex gap-4 mb-4">
                   <div
                     className={`flex-1 p-3 border rounded-lg cursor-pointer ${
-                      blockType === "mobileNumber" ? "border-secondary bg-blue-50" : "border-gray-300"
+                      blockType === "mobileNumber"
+                        ? "border-secondary bg-blue-50"
+                        : "border-gray-300"
                     }`}
                     onClick={() => setBlockType("mobileNumber")}
                   >
@@ -1105,7 +1150,9 @@ const BlockUnblock = () => {
                   </div>
                   <div
                     className={`flex-1 p-3 border rounded-lg cursor-pointer ${
-                      blockType === "tagNumber" ? "border-secondary bg-blue-50" : "border-gray-300"
+                      blockType === "tagNumber"
+                        ? "border-secondary bg-blue-50"
+                        : "border-gray-300"
                     }`}
                     onClick={() => setBlockType("tagNumber")}
                   >
@@ -1117,7 +1164,9 @@ const BlockUnblock = () => {
 
                 <div className="mb-4">
                   <label className="block text-xs font-medium text-[#7A798A] mb-1">
-                    {blockType === "mobileNumber" ? t("addDialog.mobileLabel") : t("addDialog.tagLabel")}
+                    {blockType === "mobileNumber"
+                      ? t("addDialog.mobileLabel")
+                      : t("addDialog.tagLabel")}
                   </label>
                   {blockType === "mobileNumber" ? (
                     <PhoneInput
@@ -1174,7 +1223,9 @@ const BlockUnblock = () => {
                       // Show user's phone number when parent_id != null
                       userData?.phone_number ? (
                         <>
-                          {userData.phone_number.startsWith("+") ? userData.phone_number : `+${userData.phone_number}`}
+                          {userData.phone_number.startsWith("+")
+                            ? userData.phone_number
+                            : `+${userData.phone_number}`}
                         </>
                       ) : (
                         t("labels.noMobiles")
@@ -1183,7 +1234,9 @@ const BlockUnblock = () => {
                       // Show selected msisdn from dropdown when parent_id is null
                       <>
                         +{selectedMsisdn}{" "}
-                        {selectedMobileObject.mobile_type ? `(${selectedMobileObject.mobile_type})` : ""}
+                        {selectedMobileObject.mobile_type
+                          ? `(${selectedMobileObject.mobile_type})`
+                          : ""}
                       </>
                     )}
                   </div>
@@ -1202,11 +1255,15 @@ const BlockUnblock = () => {
               <Button
                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
                 onClick={addNewNumber}
-                disabled={addingNumber || (blockType === "mobileNumber" && !isValidPhone)}
+                disabled={
+                  addingNumber ||
+                  (blockType === "mobileNumber" && !isValidPhone)
+                }
               >
                 {addingNumber ? (
                   <div className="flex items-center gap-2">
-                    <Spinner size="sm" className="h-3 w-3" /> {t("buttons.adding")}
+                    <Spinner size="sm" className="h-3 w-3" />{" "}
+                    {t("buttons.adding")}
                   </div>
                 ) : (
                   t("buttons.confirm")

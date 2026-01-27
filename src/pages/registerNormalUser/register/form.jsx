@@ -9,7 +9,6 @@ import TickIcon from "../../../assets/images/tick.png";
 import { useState, useEffect, useMemo } from "react";
 import { ConstentRoutes } from "../../../utilities/routesConst";
 import { useNavigate } from "react-router-dom";
-import { validateEthiopianPhone } from "../../../utilities/validateEthiopianPhone";
 import { Controller, useForm } from "react-hook-form";
 import AccountConfirmation from "../../../modals/account-confirmation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";

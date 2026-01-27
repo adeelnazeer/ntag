@@ -67,10 +67,17 @@ const CallPinPage = () => {
   const fetchMobileNumbers = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
     setLoading(true);
+    const accountId = user?.parent_id != null && user?.parent?.customer_account_id
+            ? user.parent.customer_account_id
+            : user?.customer_account_id;
+        setLoading(true)
+        const params = {
+            msisdn: user?.phone_number
+        }
     APICall(
       "get",
-      null,
-      `${EndPoints.customer.getReserve}/${user?.customer_account_id}`
+      user?.parent_id != null ? params : null,
+      `${EndPoints.customer.getReserve}/${accountId}`
     )
       .then((res) => {
         if (res?.success) {
@@ -312,8 +319,6 @@ const CallPinPage = () => {
       }));
     }
   }, [findNumber]);
-
-  console.log({ data, findNumber, pinState });
 
   return (
     <div className="bg-white rounded-xl shadow pb-6">

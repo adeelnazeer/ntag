@@ -7,7 +7,6 @@ import EndPoints from '../../network/EndPoints';
 import APICall from '../../network/APICall';
 import { useAppSelector } from '../../redux/hooks';
 import { IoMdCloseCircle } from "react-icons/io";
-import moment from 'moment';
 import { ConstentRoutes, getTagStatus } from '../../utilities/routesConst';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
@@ -40,9 +39,8 @@ const ChangeMyTAG = () => {
 
   const fetchTagInfo = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
       setLoading(true);
-      const response = await APICall("get", null, `${EndPoints.customer.getReserveTagsCustomer}/${user?.id}`);
+      const response = await APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.individual.getReserveTags}`);
 
       if (response?.success && response?.data) {
         setTagData(response?.data);
@@ -151,7 +149,7 @@ const ChangeMyTAG = () => {
                         {formatPhoneNumberCustom(userData.phone_number || t("common.na"))}
                       </td>
                       <td className="py-4 px-4 text-sm text-gray-700">
-                        {tagData[0]?.next_charge_dt ? moment(tagData?.[0]?.next_charge_dt).format("DD-MM-YYYY") : t("common.na")}
+                        {tagData[0]?.next_charge_dt ? (tagData?.[0]?.next_charge_dt) : t("common.na")}
                       </td>
                       <td className="py-4 px-4 text-sm text-gray-700">
                         {(tagData?.[0]?.dues > 0 ? 0 : Math.abs(tagData?.[0]?.dues || 0))} {t("common.etb")}

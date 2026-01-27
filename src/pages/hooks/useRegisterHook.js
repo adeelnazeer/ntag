@@ -25,7 +25,7 @@ export const useRegisterHook = () => {
     APICall(
       "get",
       null,
-      `${EndPoints?.customer?.getProfileDetail}/${reduxUserData?.customer_account_id}`,
+      `${EndPoints?.customer?.newSecurityEndPoints.corporate.getProfile}`,
       null,
       true
     )
@@ -58,8 +58,9 @@ export const useRegisterHook = () => {
 
   const handleGetOtp = (phone) => {
     setIsResend(true);
+    const cleanedPhone = phone.replace(/^\+/, "");
     const data = {
-      msisdn: phone,
+      msisdn: cleanedPhone,
       otp_type: "IND",
       channel: "SMS",
       transaction_type: "OTP_GENRATION",
@@ -103,7 +104,7 @@ export const useRegisterHook = () => {
       })
       .catch((err) => {
         toast.error(
-          err.response?.data?.message || "Something went wrong try again!"
+          err || err.response?.data?.message || "Something went wrong try again!"
         );
         setVerified(false);
       });
@@ -183,7 +184,7 @@ export const useRegisterHook = () => {
       null,
       true
     )
-      .then(() => {})
+      .then(() => { })
       .catch((err) => {
         console.log("err", err);
       })
@@ -206,11 +207,10 @@ export const useRegisterHook = () => {
   };
 
   const handleUpdateUserInfo = (data) => {
-    const id = localStorage.getItem("id");
     const payload = { ...data };
     payload.channel = "WEB";
 
-    APICall("put", payload, EndPoints.customer.updateProfile(id))
+    APICall("put", payload, EndPoints.customer.newSecurityEndPoints.corporate.updateProfile)
       .then((res) => {
         if (res?.success) {
           toast.success(res?.message || "");
@@ -323,7 +323,7 @@ export const useRegisterHook = () => {
     payload.otp_id = otp;
     payload.otp_code = data?.verification_code;
     payload.phone_number = data?.phone_number?.replace(/^\+/, "");
-    APICall("post", payload, EndPoints.customer.individualRegister)
+    APICall("post", payload, EndPoints.customer.newSecurityEndPoints.individual.signUp)
       .then((res) => {
         if (res?.success) {
           toast.success(res?.message || "");

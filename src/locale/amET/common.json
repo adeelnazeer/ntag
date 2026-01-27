@@ -256,6 +256,103 @@
     "privacy": "የግላዊነት ፖሊሲ",
     "faqs": "ተደጋጋሚ ጥያቄዎች (FAQs)",
     "contact": "ያግኙን",
+    "complaint": "ቅሬታ",
     "rights": "ሁሉም መብቶች የተጠበቁ ናቸው።"
+  },
+  "complaint": {
+    "modal": {
+      "title": "ቅሬታ",
+      "description": "የታገዱ ስልኮችን ለማየት የሞባይል ቁጥርዎን ያስገቡ",
+      "mobileNumber": "የሞባይል ቁጥር",
+      "phoneRequired": "የሞባይል ቁጥር ያስፈልጋል",
+      "mustStart9": "የሞባይል ቁጥሮች በ 9 መጀመር አለባቸው",
+      "invalidLength": "የሞባይል ቁጥሩ ከአገር ኮድ በኋላ 9 አሃዞች መሆን አለበት",
+      "getOtp": "OTP ያግኙ",
+      "resendOtp": "OTP እንደገና ይላኩ",
+      "otpSent": "OTP በተሳካ ሁኔታ ተልኳል",
+      "otpFailed": "OTP ማስተላለፍ አልተሳካም",
+      "verificationCode": "የማረጋገጫ ኮድ",
+      "otpPlaceholder": "6-አሃዝ OTP ያስገቡ",
+      "invalidOtp": "እባክዎ ትክክለኛ 6-አሃዝ OTP ኮድ ያስገቡ",
+      "otpIdMissing": "OTP ID አልተገኘም። እባክዎ OTP እንደገና ይጠይቁ።",
+      "verifyOtp": "OTP ያረጋግጡ",
+      "verifying": "እየተረጋገጠ ነው...",
+      "otpVerified": "OTP በተሳካ ሁኔታ ተረጋግጧል!",
+      "verifyFailed": "OTP ማረጋገጥ አልተሳካም",
+      "redirecting": "OTP ተረጋግጧል! እየተዛወረ ነው...",
+      "cancelBtn": "ይቅር"
+    },
+    "block": {
+      "title": "የታገዱ ስልኮች",
+      "subtitle": "የታገዱ ስልኮችን ዝርዝር ይመልከቱ",
+      "phoneNumber": "የስልክ ቁጥር",
+      "noVerificationData": "የማረጋገጫ መረጃ አልተገኘም። እባክዎ እንደገና ይጀምሩ።",
+      "fetchFailed": "የታገዱ ስልኮችን ማምጣት አልተሳካም",
+      "fetchError": "የታገዱ ስልኮችን በመጫን ላይ ስህተት",
+      "backButton": "ወደ መነሻ ተመለስ",
+      "maxLimitReached": "የገደብ 99 የታገዱ ስልኮች ደርሷል። እባክዎ አዲስ ለመጨመር አንድን ቁጥር ይክፈቱ።",
+      "table": {
+        "sr": "Sr#",
+        "blocked": "የታገደ ቁጥር/TAG",
+        "type": "የቁጥር ዓይነት",
+        "registered": "የተመዘገበ የሞባይል ቁጥር",
+        "channel": "መንገድ",
+        "action": "ተግባር",
+        "delete": "ሰርዝ",
+        "empty": "ምንም የታገዱ ስልኮች አልተገኙም"
+      },
+      "type": {
+        "tag": "TAG",
+        "mobile": "የሞባይል ቁጥር"
+      },
+      "addButton": "የታገደ ቁጥር ጨምር",
+      "addModal": {
+        "title": "የታገደ ቁጥር ጨምር",
+        "subtitle": "ለመቆጣጠር የሚፈልጉትን የመለያ ቁጥር ያስገቡ",
+        "tagLabel": "የመለያ ቁጥር (TAG)",
+        "tagPlaceholder": "የመለያ ቁጥር ያስገቡ (3-8 አሃዞች)",
+        "tagHint": "3 እስከ 8 አሃዞች ብቻ ያስገቡ",
+        "tagRequired": "የመለያ ቁጥር ያስፈልጋል",
+        "tagNumbersOnly": "የመለያ ቁጥሩ ቁጥሮች ብቻ መሆን አለበት",
+        "tagMinLength": "የመለያ ቁጥሩ ቢያንስ 3 አሃዞች መሆን አለበት",
+        "tagMaxLength": "የመለያ ቁጥሩ ቢበዛ 8 አሃዞች መሆን አለበት",
+        "customerTypeLabel": "የመቆጣጠሪያ ምክንያት",
+        "corpCustomer": "የኩባንያ ደንበኛ",
+        "normalCustomer": "መደበኛ ደንበኛ",
+        "blockMessage": "ደዌተኛ አንዴ ከተገደበ በኋላ፣ ከዚያ ቁጥር የሚመጡ ሁሉም የወደፊት የገቢ ጥሪዎች በራስ-ሰር ይቀበላሉ።",
+        "reason": {
+          "spamCall": "የማስተላለፊያ ጥሪ",
+          "fraudOrScam": "አቀላጥፎ ወይም ማመቻቻት",
+          "harassmentAndAbuse": "ጭቆና እና አደጋ",
+          "unwantedMarketingCall": "ያልተፈለገ የገበያ ጥሪ",
+          "repeatedCalls": "ድጋሚ ጥሪዎች",
+          "personalReasons": "የግል ምክንያቶች",
+          "offensiveOrThreateningCall": "አጋንንት ወይም የፍርሃት ጥሪ",
+          "unknownCaller": "ያልታወቀ ደዌተኛ",
+          "other": "ሌላ"
+        },
+        "cancel": "ይቅር",
+        "submit": "አስገባ",
+        "processing": "እየተከናወነ ነው...",
+        "success": "ቁጥሩ በተሳካ ሁኔታ ታግዷል",
+        "failed": "ቁጥሩን ማገድ አልተሳካም",
+        "error": "ቁጥሩን በመቆጣጠር ላይ ስህተት"
+      },
+      "noPhoneNumber": "የስልክ ቁጥር አልተገኘም።",
+      "unauthorized": "ያልተፈቀደ። እባክዎ የስልክ ቁጥርዎን እንደገና ያረጋግጡ።",
+      "noToken": "የእንግዳ የማረጋገጫ ኮድ አልተገኘም። እባክዎ የስልክ ቁጥርዎን እንደገና ያረጋግጡ።",
+      "deleteModal": {
+        "title": "ማጥፋት ያረጋግጡ",
+        "desc1": "ይህንን ቁጥር ከታገዱ ዝርዝር ማስወገድ እርግጠኛ ነዎት?",
+        "desc2": "ይህ ቁጥር በመለያ ቁጥርዎ (TAG) ላይ የስልክ ጥሪዎችን ማድረግ ይችላል",
+        "cancel": "ይቅር",
+        "confirm": "አረጋግጥ",
+        "deleting": "እየተጠፋ ነው...",
+        "success": "ቁጥሩ በተሳካ ሁኔታ ተጠፏል",
+        "failed": "ቁጥሩን ማጥፋት አልተሳካም",
+        "error": "ቁጥሩን በመጥፋት ላይ ስህተት",
+        "noId": "ማጥፋት አይቻልም: የቁጥር ID የለም"
+      }
+    }
   }
 }

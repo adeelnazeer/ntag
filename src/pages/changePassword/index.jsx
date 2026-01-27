@@ -45,14 +45,13 @@ const ChangePassword = ({ isCustomer = false }) => {
         e.preventDefault();
         setLoading(true)
         const user = JSON.parse(localStorage.getItem('user'))
-        const endPoint = isCustomer ? EndPoints.customer.changePasswordCustomer : EndPoints.customer.changePassword
+        const endPoint = isCustomer ? EndPoints.customer.newSecurityEndPoints.individual.updatePassword : EndPoints.customer.changePassword
         const payload = {
             ...values,
             customer_account_id: user?.customer_account_id
         }
         const payloadCustomer = {
             ...values,
-            user_id: user?.id?.toString()
         }
         APICall("post", isCustomer ? payloadCustomer : payload, endPoint)
             .then((res) => {
