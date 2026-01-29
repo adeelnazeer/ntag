@@ -79,6 +79,7 @@ const EndPoints = {
         getProfile: "/customer/account-detail",
         uploadDocument: "/customer/documents/upload",
         updateDocument: "/customer/documents/update",
+        buyTag: "/customer/buy-tag",
       },
     },
   },
