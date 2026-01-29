@@ -126,26 +126,31 @@ export const useTagList = () => {
 
   const handleTagDetails = (tagData, setOpenModal, setDisableBtn) => {
     setLoadingPayment(true);
-
     const ensureRequiredFields = (data) => {
       return {
-        ...data,
-        transaction_type: data.transaction_type || "CORP_BUYTAG",
         channel: data.channel || "WEB",
         payment_method: data.payment_method || "telebirr",
         reserve_type: data.reserve_type,
-        business_type: data.business_type || "BuyGoods"
+
+        
+        business_type: data.business_type || "BuyGoods",
+
+        msisdn: data?.msisdn,
+        tag_id: data?.customer_tag_id,
+        type: data?.type,
+        is_premium:data?.is_premium,
+        service_id:data?.tag_list?.service_id,
+
       };
     };
 
     const payload = ensureRequiredFields(tagData);
-    
     // Replace account_id with parent?.customer_account_id if parent_id != null
     if (userData?.parent_id != null && userData?.parent?.customer_account_id) {
       payload.account_id = userData.parent.customer_account_id;
     }
 
-    APICall("post", payload, EndPoints.customer.buytags)
+    APICall("post", payload, EndPoints.customer.newSecurityEndPoints.corporate.buyTag)
       .then((res) => {
         if (res?.success) {
           setDisableBtn(true)
@@ -174,7 +179,7 @@ export const useTagList = () => {
     setLoadingPayment(true);
 
     const payload = { ...data };
-    
+
     // Replace account_id with parent?.customer_account_id if parent_id != null
     if (userData?.parent_id != null && userData?.parent?.customer_account_id) {
       payload.account_id = userData.parent.customer_account_id;
