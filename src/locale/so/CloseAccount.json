@@ -1,0 +1,39 @@
+{
+  "title": "Maamul Xidhitaanka Akoonka",
+  "table": {
+    "headers": {
+      "name": "Magaca",
+      "company_name": "Magaca Shirkadda",
+      "mobileNumber": "Lambarka Mobilka",
+      "createdDate": "Taariikhda Sameynta",
+      "status": "Xaalada ",
+      "action": "Tallaabo"
+    }
+  },
+  "note": "Waxaad haysataa NameTAG-yada shaqaynaya ee soo socda. Si aad u xidho akoonkaaga, fadlan mid kasta oo ka mid ah NameTAG-yadan iska jooji.",
+  "buttons": {
+    "close_account": "Xir Akoonka",
+    "processing": "Habaynta..."
+  },
+  "messages": {
+    "fetchError": "Ku guuldareystay in la soo geliyo ",
+    "noAccountId": "Lama helin aqoonsiga akoontada macmiilka ",
+    "closeSuccess": "Si Guul Ah Ayaa Loo Xiray Koontada ",
+    "closeFailed": "Ku guuldareystay in la xidho Akoonka ",
+    "errorOccurred": "Khalad ayaa dhacay ",
+    "commentRequired": "Fadlan gali sabab ka hor inta aanad xidhin akoonkaaga."
+  },
+  "modal": {
+    "title": "Xaqiiji Xidhitaanka Koontada ",
+    "message": "Ma hubtaa inaad doonayso inaad xidho akoonkaaga shirkadda? Tallaabadan lama noqon karo. .",
+    "commentLabel": "Sababta loo xidh ayo akoonkaaga ",
+    "confirm": "Xaqiiji ",
+    "cancel": "Jooji"
+  },
+  "loading": {
+    "spinner": "Soodejinaya..."
+  },
+  "common": {
+    "na": "N/A"
+  }
+}

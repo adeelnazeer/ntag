@@ -1,0 +1,38 @@
+{
+  "title": "Maamul Name TAG Diiwaangelinta",
+  "titleunsubscribe": "Maamul MagacaTAG ka-noqoshada",
+  "table": {
+    "headers": {
+      "tagNumber": "Lambarka TAG",
+      "mobile_number": "Lambarka Mobilka",
+      "registration_date": "Taariikhda Diiwangelinta",
+      "status": "Xaalada",
+      "action": "Ficil ama talbo"
+    },
+    "no_active": "Ma jiraan adeegyo firfircoon oo NameTAG ah oo la helay si ay iskaga noqdaan.",
+    "noActiveRegistered": "Nambarku ma laha magac firfircoon oo ka diiwaan gashan lambarka mobaylka"
+  },
+  "buttons": {
+    "unsubscribe": "Is-diiwaangelinta",
+    "processing": "Habaynta..."
+  },
+  "messages": {
+    "fetchError": "Ku guuldareystay in la soo geliyo xogta NameTAG",
+    "noAccountId": "Lama helin aqoonsiga akoontada macmiilka",
+    "unsubscribeSuccess": "Si guul leh ayaa isaga baxay",
+    "unsubscribeFailed": "Ku guul daraystay in la iska diiwaan geliyo",
+    "error_occurred": "Khalad ayaa dhacay"
+  },
+  "common": {
+    "not_available": "N/A"
+  },
+  "loading": {
+    "spinner": "Soodejinaya.. Ama Waa lagu guda jiraa."
+  },
+  "modal": {
+    "unsubscribeTitle": "Xaqiiji ka noqoshada",
+    "unsubscribeMessage": "Ma hubtaa inaad rabto inaad ka baxdo adeegan NameTAG?",
+    "confirm": "Xaqiiji",
+    "cancel": "Jooji"
+  }
+}

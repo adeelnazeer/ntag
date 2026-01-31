@@ -1,0 +1,123 @@
+{
+  "headers": {
+    "corporateNameTag": " Shirkadda NameTAG ",
+    "welcomeToNameTag": "Ku Soo Dhawoow Adeegga NameTAG! ",
+    "nameTagService": "Adeegga Name TAG"
+  },
+  "actionRequired": {
+    "title": "Tallaabada Loo Baahan Yahay Ogolaanshaha Lacag-bixinta Soo Noqnoqda ",
+    "message": "Si uu lambarkaaga NameTAG u ahaado mid shaqeynaya: fadlan oggolow lacag-bixinta tooska ah ee telebirr",
+    "pinPrompt": "Waxaad ku heli doontaa degdeg ah sira  adigoo isticmaalaya ogeysiin  tabo  ah. ",
+    "suspensionWarning": "Haddii aadan oggolaan: lambarkaaga NameTAG waxaa la damin doonaa 30 casho ka dib xilliga lacag-bixinta.",
+    "accept": "Aqbal"
+  },
+  "notices": {
+    "notice": "Ogaysiis  ",
+    "unsubscribed": "Waad ka baxday adeegga NameTAG:"
+  },
+  "tagInfo": {
+    "tagType": "Nooca TAG ",
+    "premium": "Heerka Sare.",
+    "corporate": "Shirkad ",
+    "nameTagCategory": "Nooca NameTAG",
+    "registeredMobileNumber": "Lambarka Mobilka ee Diwaangashan ",
+    "subscriptionFee": "Lacagta Isdiiwaangelinta ",
+    "subscriptionPaymentStatus": "Heerka Lacag-bixinta Is-diiwaangelinta ",
+    "reservationDate": "Taariikhda Booska ",
+    "subscriptionDate": "Taariikhda Isdiiwaangelinta ",
+    "serviceStatus": "Xaalada Adeegga ",
+    "servicePackage": "Xidhmada Adeegga ",
+    "recurringFee": "Kharashka soo noqnoqda ",
+    "monthly": "Bishii ",
+    "quarterly": "Saddexdii biloodba mar ",
+    "semiAnnually": "lix-biloodle (ama Nuskii sanadkiiba mar)",
+    "annually": "Sanad walba ",
+    "recurringFeeLastChargeDate": "Kharashka soo noqnoqda ee u dambeeya taariikhda ",
+    "recurringFeeDueDate": "Kharashka soo noqnoqda Taariikhda la filayo ",
+    "recurringFeeNextDueDate": "Kharashka soo noqnoqda Taariikhda ",
+    "unsubscribeDate": "Taariikhda la joojiyay:",
+    "resubscribeMessage": "Waxaad dib isu qori kartaa TAG Numberkan 7 maalmood gudahooda laga bilaabo taariikhda aad iska diiwaan gelin lahayd. ",
+    "incomingCallsStatus": "Xaaladda wicitaannada soo socda",
+    "serviceFeeLastChargeDate": "Kharashka Adeegga Taariikhda Lacag bixinta ugu dambeysa ",
+    "notAvailable": "Lama heli karo ",
+    "on": "SHIDAN",
+    "off": "MA SHAQEYNAYO",
+    "reserved": "La xafiday"
+  },
+  "buttons": {
+    "resubmitDocuments": "Dib u soo gudbi dukumentiyada ",
+    "buyTagNumber": "Iibso lambarka TAG ",
+    "processing": "Hawlgalaya",
+    "cancelReservation": "Jooji Boos sii qabsiga ",
+    "resubscribeTagNumber": "Dib-u-diiwaangelinta TAG Number ",
+    "buyNameTag": "Iibso MagacaTAG ",
+    "reserveNameTag": "Name TAG Kaydka"
+  },
+  "accountStatus": {
+    "blocked": "Akoonkaaga NameTAG waa la xannibay. Fadlan la soo xidhiidh Taageerada NameTAG si aad u hesho caawimaad dheeraad ah."
+  },
+  "  registrationInfo": {
+    "registeredCount": "Waxaad diiwaangelisay {{total }} ugu badnaan {{max}} NameTAGs."
+  },
+  "documentStatus": {
+    "underReview": "Codsigaaga ah in la bilaabo waajibaadka telebirr waa la soo diray. Fadlan hubi qalabkaaga gacanta oo ku oggolow adiga oo isticmaalaya PIN-kaaga telebirr. ",
+    "reviewTime": "Habka dib u eegista waxa uu qaadan karaa ilaa 48 saacadood. Waxaad heli doontaa ogeysiis SMS ah marka dukumeentigaaga dib loo eego. ",
+    "rejected": "Waraaqahaagii waa la diiday Fadlan hubi faahfaahinta oo dib u soo gudbi"
+  },
+  "emptyStates": {
+    "canReserveWhileProcessing": "Inta lagu jiro waxa aad kaydin kartaa nambarada NameTAG inta dukumeentigaagu socdo.",
+    "noTagReserved": "Ma jiro NameTAG nambar wali la ballansan  ama la diiwaan galiyay"
+  },
+  "toastMessages": {
+    "errorProcessing": "Waan ka xunnahay: ma awoodno inaan hadda ka shaqeyno codsigaaga . Fadlan isku day mar kale hadhow ",
+    "mandateSent": "Codsigaaga ah in la bilaabo waajibaadka telebirr waa la soo diray. Fadlan hubi qalabkaaga gacanta oo ku oggolow adiga oo isticmaalaya PIN-kaaga telebirr. ",
+    "successfullyUnsubscribed": "Si guul leh ayaad uga baxday adeeggii.",
+    "failedToUnsubscribe": "Ku guul daraystay in la iska diiwaan geliyo ",
+    "successfullyResubscribed": "Si guul leh ayaa dib loo diiwaan geliyay ",
+    "failedToResubscribe": "Ku guul daraystay inuu dib isu-diiwaangeliyo ",
+    "anErrorOccurred": "Khalad ayaa dhacay ",
+    "reservationCanceled": "Ballanta waa la joojiyay.",
+    "failedToCancelReservation": "Kuma guuleysan in la joojiyo ballanta."
+  },
+  "common": {
+    "na": "N/A ",
+    "etb": "ETB"
+  },
+  "modal": {
+    "titles": {
+      "unsubscribe": "Xaqiiji ka bixida ",
+      "resubscribe": "Xaqiiji dib-u-diiwaangelinta ",
+      "cancel": "Xaqiiji Joojinta",
+      "close": "Xaqiiji Xiritaanka Koontada",
+      "default": "Xaqiiji Tallaabada"
+    },
+    "messages": {
+      "unsubscribe": "Ka-noqoshada NameTAG #{{tagNo}}? ",
+      "resubscribe": "Ma hubtaa inaad doonayso inaad dib ugu noqoto adeegan NameTAG? ",
+      "cancel": "Ma hubtaa inaad rabto inaad joojiso ballanta NameTAG?",
+      "close": "Ma hubtaa inaad doonayso inaad ogolaato codsiga xidhitaanka akoontiga NameTAG? ",
+      "default": "Ma hubtaa inaad doonayso inaad sii waddo falkan?"
+    },
+    "descriptions": {
+      "unsubscribeIndividual": "hammaan lacagaha la bixiyay dib looma soo celinayo. NameTAG-gan si joogto ah ayaa loo tirtiri doonaa: dibna looma heli karo.",
+      "unsubscribeCorporate": "Dhammaan lacagaha la bixiyay dib looma soo celinayo."
+    },
+    "warnings": {
+      "unsubscribe": "Ogow Waxaad dib isu qori kartaa wakhti kasta 7da maalmood ee soo socda. Intaa ka dib NameTAG waxa ay diyaar u ahaan doontaa kuwa kale si ay u iibsadaan. ",
+      "cancel": "Haddii aad sii socoto: boos-qabsashadaada waa la baajin doonaa: NameTAG-ganna waxaa loo sii deyn doonaa in dad kale iibsadaan."
+    },
+    "actionButtons": {
+      "unsubscribe": "Is-diiwaangelinta ",
+      "resubscribe": "Dib-u-diiwaangelinta ",
+      "cancel": "Haa: Baaji Boos-qabsashada",
+      "default": "Xaqiiji"
+    },
+    "cancelButtons": {
+      "cancel": "Maya: sii hay booska",
+      "default": "Jooji"
+    },
+    "placeholders": {
+      "closeAccountReason": "Geli sababta aad u xidhayso akoonkaaga"
+    }
+  }
+}

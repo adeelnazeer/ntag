@@ -17,7 +17,7 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
   const location = useLocation();
   const sidebarRef = useRef(null);
   const dispatch = useAppDispatch();
-  const { t } = useTranslation(["sideBar"]);
+  const { t, i18n } = useTranslation(["sideBar"]);
 
   let userData = {};
   userData = useAppSelector((state) => state.user.userData);
@@ -76,8 +76,8 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
       icon: <FaHashtag className="h-4 w-4" />,
       text:
         data?.[0]?.doc_status == 1 &&
-        data?.[1]?.doc_status == 1 &&
-        data?.[2]?.doc_status == 1
+          data?.[1]?.doc_status == 1 &&
+          data?.[2]?.doc_status == 1
           ? t("sideBar.buyTag")
           : t("sideBar.reserveTag"),
       active: activeTwo,
@@ -140,16 +140,15 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0 z-40 bg-white rounded-tr-[60px] max-w-64 w-64`}
       >
-        <div className="h-full overflow-y-auto">
+        <div className="h-full overflow-y-auto" key={i18n.resolvedLanguage || i18n.language}>
           <Card className="px-4 py-4 h-full w-full bg-transparent shadow-blue-gray-900/5">
             <List className="text-base min-w-full w-full gap-4 p-0 font-normal text-black">
               {/* Standard menu items */}
               {sidebarData.slice(0, 2).map((item, index) => (
                 <div key={index} className="flex md:gap-6 gap-1">
                   <div
-                    className={`${
-                      item.active ? "bg-secondary" : "bg-white"
-                    } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                    className={`${item.active ? "bg-secondary" : "bg-white"
+                      } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
                   />
                   <ListItem
                     disabled={item.disabled}
@@ -162,26 +161,23 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       setIsSidebarOpen(false);
                     }}
                     className={`py-4 
-                      ${
-                        item.active
-                          ? "bg-secondary text-white hover:text-white hover:bg-secondary"
-                          : ""
+                      ${item.active
+                        ? "bg-secondary text-white hover:text-white hover:bg-secondary"
+                        : ""
                       } 
                       ${item.className || ""}
                       focus:bg-secondary focus:text-white
-                      ${
-                        item.disabled
-                          ? "opacity-50 cursor-not-allowed"
-                          : "cursor-pointer"
+                      ${item.disabled
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer"
                       }`}
                   >
                     <ListItemPrefix className="md:mr-4 mr-2">
                       {item.icon}
                     </ListItemPrefix>
                     <span
-                      className={`${
-                        item.active ? "text-white" : "text-[#8A8AA0]"
-                      } font-medium`}
+                      className={`${item.active ? "text-white" : "text-[#8A8AA0]"
+                        } font-medium`}
                     >
                       {item.text}
                     </span>
@@ -193,9 +189,8 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
               <div className="flex flex-col">
                 <div className="flex md:gap-6 gap-1">
                   <div
-                    className={`${
-                      activeThree ? "bg-secondary" : "bg-white"
-                    } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                    className={`${activeThree ? "bg-secondary" : "bg-white"
+                      } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
                   />
                   <ListItem
                     disabled={userData?.status == 5}
@@ -206,10 +201,9 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       // }
                     }}
                     className={`py-4 
-                      ${
-                        activeThree
-                          ? "bg-secondary text-white hover:text-white hover:bg-secondary"
-                          : ""
+                      ${activeThree
+                        ? "bg-secondary text-white hover:text-white hover:bg-secondary"
+                        : ""
                       } 
                       focus:bg-secondary focus:text-white
                       ${"cursor-pointer"}`}
@@ -218,9 +212,8 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       <BsFire className="h-4 w-4" />
                     </ListItemPrefix>
                     <span
-                      className={`${
-                        activeThree ? "text-white" : "text-[#8A8AA0]"
-                      } font-medium`}
+                      className={`${activeThree ? "text-white" : "text-[#8A8AA0]"
+                        } font-medium`}
                     >
                       {t("sideBar.manageTag")}
                     </span>
@@ -237,15 +230,13 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       }}
                       disabled={isDocumentDisabled}
                       className={`py-2 px-3 text-left text-sm rounded-md cursor-pointer 
-                        ${
-                          activeCallSchedule
-                            ? "bg-secondary text-white"
-                            : "text-[#8A8AA0] hover:bg-gray-100"
-                        } ${
-                        isDocumentDisabled
+                        ${activeCallSchedule
+                          ? "bg-secondary text-white"
+                          : "text-[#8A8AA0] hover:bg-gray-100"
+                        } ${isDocumentDisabled
                           ? "opacity-50 cursor-not-allowed"
                           : ""
-                      }`}
+                        }`}
                     >
                       {t("sideBar.callScheduling")}
                     </button>
@@ -256,15 +247,13 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       }}
                       disabled={isDocumentDisabled}
                       className={`py-2 px-3 text-sm text-left rounded-md cursor-pointer 
-                        ${
-                          activeCallPin
-                            ? "bg-secondary text-white"
-                            : "text-[#8A8AA0] hover:bg-gray-100"
-                        } ${
-                        isDocumentDisabled
+                        ${activeCallPin
+                          ? "bg-secondary text-white"
+                          : "text-[#8A8AA0] hover:bg-gray-100"
+                        } ${isDocumentDisabled
                           ? "opacity-50 cursor-not-allowed"
                           : ""
-                      }`}
+                        }`}
                     >
                       {t("sideBar.incomingCallPin")}
                     </button>
@@ -275,15 +264,13 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       }}
                       disabled={isDocumentDisabled}
                       className={`py-2 px-3 text-sm text-left rounded-md cursor-pointer 
-                        ${
-                          activeBlock
-                            ? "bg-secondary text-white"
-                            : "text-[#8A8AA0] hover:bg-gray-100"
-                        } ${
-                        isDocumentDisabled
+                        ${activeBlock
+                          ? "bg-secondary text-white"
+                          : "text-[#8A8AA0] hover:bg-gray-100"
+                        } ${isDocumentDisabled
                           ? "opacity-50 cursor-not-allowed"
                           : ""
-                      }`}
+                        }`}
                     >
                       {t("sideBar.BlockUnblock")}
                     </button>
@@ -293,10 +280,9 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                         setIsSidebarOpen(false);
                       }}
                       className={`py-2 px-3 text-sm rounded-md ${"cursor-pointer"} 
-                        ${
-                          activeChangeMyTag
-                            ? "bg-secondary text-white"
-                            : "text-[#8A8AA0] hover:bg-gray-100"
+                        ${activeChangeMyTag
+                          ? "bg-secondary text-white"
+                          : "text-[#8A8AA0] hover:bg-gray-100"
                         }`}
                     >
                       {t("sideBar.changeNameTag")}
@@ -307,10 +293,9 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                         setIsSidebarOpen(false);
                       }}
                       className={`py-2 px-3 text-sm rounded-md ${"cursor-pointer"} 
-                        ${
-                          changeNumber
-                            ? "bg-secondary text-white"
-                            : "text-[#8A8AA0] hover:bg-gray-100"
+                        ${changeNumber
+                          ? "bg-secondary text-white"
+                          : "text-[#8A8AA0] hover:bg-gray-100"
                         }`}
                     >
                       {t("sideBar.changeMobileNo")}
@@ -322,15 +307,13 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       }}
                       disabled={isDocumentDisabled}
                       className={`py-2 px-3 text-left text-sm rounded-md cursor-pointer 
-                        ${
-                          activeUnsubscribe
-                            ? "bg-secondary text-white"
-                            : "text-[#8A8AA0] hover:bg-gray-100"
-                        } ${
-                        isDocumentDisabled
+                        ${activeUnsubscribe
+                          ? "bg-secondary text-white"
+                          : "text-[#8A8AA0] hover:bg-gray-100"
+                        } ${isDocumentDisabled
                           ? "opacity-50 cursor-not-allowed"
                           : ""
-                      }`}
+                        }`}
                     >
                       {t("sideBar.unsubscribe")}
                     </button>
@@ -343,10 +326,9 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                           setIsSidebarOpen(false);
                         }}
                         className={`py-2 px-3 text-sm rounded-md cursor-pointer 
-                          ${
-                            closeAccount
-                              ? "bg-secondary text-white"
-                              : "text-[#8A8AA0] hover:bg-gray-100"
+                          ${closeAccount
+                            ? "bg-secondary text-white"
+                            : "text-[#8A8AA0] hover:bg-gray-100"
                           }`}
                       >
                         {t("sideBar.closeAccount")}
@@ -360,9 +342,8 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
               {sidebarData.slice(2).map((item, index) => (
                 <div key={index + 2} className="flex md:gap-6 gap-1">
                   <div
-                    className={`${
-                      item.active ? "bg-secondary" : "bg-white"
-                    } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                    className={`${item.active ? "bg-secondary" : "bg-white"
+                      } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
                   />
                   <ListItem
                     disabled={item.disabled}
@@ -375,26 +356,23 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
                       setIsSidebarOpen(false);
                     }}
                     className={`py-4 
-                      ${
-                        item.active
-                          ? "bg-secondary text-white hover:text-white hover:bg-secondary"
-                          : ""
+                      ${item.active
+                        ? "bg-secondary text-white hover:text-white hover:bg-secondary"
+                        : ""
                       } 
                       ${item.className || ""}
                       focus:bg-secondary focus:text-white
-                      ${
-                        item.disabled
-                          ? "opacity-50 cursor-not-allowed"
-                          : "cursor-pointer"
+                      ${item.disabled
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer"
                       }`}
                   >
                     <ListItemPrefix className="md:mr-4 mr-2">
                       {item.icon}
                     </ListItemPrefix>
                     <span
-                      className={`${
-                        item.active ? "text-white" : "text-[#8A8AA0]"
-                      } font-medium`}
+                      className={`${item.active ? "text-white" : "text-[#8A8AA0]"
+                        } font-medium`}
                     >
                       {item.text}
                     </span>

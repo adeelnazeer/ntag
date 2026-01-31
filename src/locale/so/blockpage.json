@@ -1,0 +1,189 @@
+{
+   "title": "Maamul nambarada xannibaadda ",
+   "labels": {
+      "selectRegistered": "Dooro Nambarkaaga Mobilka ee Diiwaangashan ",
+      "noMobiles": "Lama helin lambarada mobilada ",
+      "yourRegistered": "Lambarka Mobilkaaga ee Diwaangashan"
+   },
+   "buttons": {
+      "addToBlocklist": "Ku dar liiska xannibaadda ",
+      "unblock": "Ka fur",
+      "cancel": "Jooji ",
+      "confirm": "Xaqiiji ",
+      "removing": "Waa la saarayaa... ",
+      "adding": "Ku darida..."
+   },
+   "table": {
+      "sr": "Sr# ",
+      "blocked": "Lambarrada/TAG-yada xanniban",
+      "type": "Nooca Tirada ",
+      "registered": "Lambarka Mobilka ee Diwaangashan ",
+      "channel": "Kanaal",
+      "action": "Tallaabo",
+      "empty": "Lama helin wax lambarro ah oo xanniban"
+   },
+   "confirmDialog": {
+      "title": "Xaqiiji ka saarida ",
+      "desc1": "Ma hubtaa inaad doonayso inaad lambarkan ka saarto liiska xannibaadda? ",
+      "desc2": "Lanbarkan ayaa awood u yeelan doona inuu soo waco lambarkaaga TAG"
+   },
+   "addDialog": {
+      "title": "Ku dar liiska xannibaadda ",
+      "subtitle": "Fadlan dooro waxaad rabto inaad xannibto ",
+      "mobileOption": "Lambarka Mobilka ",
+      "tagOption": "Lambarka TAG ",
+      "mobileLabel": "Nambarka Mobilka ee la xannibi karo ",
+      "tagLabel": "TAG nambar si loo xannibo",
+      "formatHint": "Qaabka: +251xxxxxxxxx ",
+      "tagPlaceholder": "Geli lambarka TAG ( tusaale 4642)"
+   },
+   "errors": {
+      "fetchMobiles": "Ku guuldareystay in la keeno lambarada mobilada ",
+      "loadMobiles": "Cilad ayaa ku timid soo raridda lambarrada moobaylka",
+      "fetchBlocked": "Waa la waayay lambarrada xanniban",
+      "loadBlocked": "KhaladCilad ayaa ku timid soo raridda lambarrada xanniban s",
+      "fetchWhitelist": "Kuma guuleysan in la helo lambarrada liiska oggolaanshaha ama lambarrada liiska cad",
+      "loadWhitelist": "Khalad ayaa ka dhacay soo rarista lambarrada liiska oggolaanshaha ama lambarrada liiska cad",
+      "removeWhitelist": "Khalad ka saarida liiska oggolaanshaha ama liiska cad",
+      "addWhitelist": "Ku guul daraystay in lagu daro liiska oggolaanshaha ama lambarka liiska cadcad ",
+      "required": "Waxaa loo baahan yahay lambarka moobaylka",
+      "mustStartCountry": "Nambarka mobiladu waa inuu ka bilowdaa +251 ",
+      "mustStart9": "Nambarada mobiladu waa inay ku bilowdaan 9 ka dib koodhka wadanka ",
+      "length": "Nambarka moobilku waa inuu noqdaa 9 nambar kadib koodka waddanka ",
+      "tagRequired": "Lambarka TAG ayaa loo baahan yahay ",
+      "tagMinLength": "Lambarka TAG waa inuu ahaadaa ugu yaraan 2 xaraf ",
+      "tagMaxLength": "Lambarka TAG waa in aanu dhaafin 8 xaraf ",
+      "enterTag": "Fadlan geli lambarka TAG si aad u xannibto ",
+      "blockOwnTag": "Ma xannibi kartid Name TAG"
+   },
+   "success": {
+      "added": "Lambarka si guul leh ayaa loogu daray liiska xannibaadda (blocklist)",
+      "removed": "Lambarka ayaa si guul leh looga saaray liiska xannibaadda"
+   },
+   "callPinPage": {
+      "title": "Maamul PIN-ka ama sirta wicitaanka soo dhacaya iyo Lambarrada Liiska Cad ",
+      "mobileNumber": "Nambarka gacanta: ",
+      "currentPin": "Wicista hadda ee PIN:",
+      "buttons": {
+         "setPin": "Samee PIN (ama Geli Sirta)",
+         "removePin": "Ka saar PIN(Sirta) ",
+         "addWhitelist": "Ku dar liiska caddaymaha ama liiska oggolaanshaha”",
+         "cancel": "Jooji ",
+         "confirm": "Xaqiiji ",
+         "processing": "Hawlgalaya…....",
+         "adding": "Ku darida... ",
+         "removing": "Ka saaraya..."
+      },
+      "table": {
+         "headers": {
+            "sr": "Sr# ",
+            "nameTag": "NameTAG ",
+            "whitelistNumber": "Lambarka liiska cad ",
+            "whitelistDate": "Taariikhda Liistada Cad ",
+            "pin": "Sira ",
+            "action": "Tallaabo"
+         },
+         "empty": {
+            "noPin": "Hadda ma jiro PIN ama sira loo sameeyay wicitaannada soo dhacaya. Fadlan samee PIN si aad lambarro ugu darto liiska cad.",
+            "noActiveLinked": "Ma jiro NameTAG shaqaynaya oo ku xidhan lambarkaaga moobaylka.",
+            "noWhitelist": "Lama helin lambar cadcad!+A201:A219"
+         },
+         "actions": {
+            "delete": "Tirtir"
+         }
+      },
+      "confirmRemoval": {
+         "title": "Xaqiiji ka saarida ",
+         "description": "Ma hubtaa inaad doonayso inaad ka saarto lambarka mobaylka +{ number}} liiska cadcad? ",
+         "hint": "Dadka ku soo waca ee aan ku jirin liiska oggolaanshaha waa inay geliyaan PIN-ka ama sirta saxda ah si ay u gaadhaan NameTAG-gaaga."
+      },
+      "modalPin": {
+         "removeTitle": "Ka saar Wicitaanka PIN ama sirta ee wicitaanadaada soo socda ",
+         "setTitle": "Samee lambarka Wicista Wicitaannadaada soo socda ",
+         "descRemove": "Marka PIN-ka ama sirta la saaro dhammaan dadka soo wacaya waxay awoodi doonaan inay gaaraan NameTAGaga iyagoon gelin PIN. Ama sira",
+         "descSet": "Ma hubtaa inaad rabto inaad u sameeso PIN ama sira wicitaanada soo socda? Soo wacayaasha waxaa looga baahan doonaa inay galaan PIN ka hor intaysan ku xidhin lambarkaaga NameTAG. ",
+         "nameTag": "MagacaTAG = #{{tag}} ",
+         "mobileNumber": "Lambarka gacanta = +{ number }} ",
+         "currentPin": "Wicista PIN ama sirta ee hadda = {{pin}} ",
+         "notDefined": "Lama qeexin ",
+         "noteNoPin": "PIN looma baahna - dadka soo wacaya waxay gaari karaan NameTAGaga iyagoon galin PIN-ka ama sirta ",
+         "selectSingleDigit": "Fadlan dooro PIN ama sira ka kooban hal lambar",
+         "selectPinPlaceholder": "Dooro PIN ama sira"
+      },
+      "modalAddWhitelist": {
+         "title": "Ku dar liiska oggolaanshaha",
+         "subtitle": "Dadka ku jira liiska oggolaanshaha waxay wici karaan NameTAG-gaaga iyaga oo aan gelin PIN ama sira ",
+         "enterMobileLabel": "Geli Nambarka Mobilka si aad ugu darto Liiska oggolaanshaha ",
+         "formatHint": "Qaabka: +251xxxxxxxxx ",
+         "registeredMobileLabel": "Lambarka Mobilkaaga ee Diwaangashan"
+      },
+      "toast": {
+         "fetchWhitelistFailed": "Ku guuldareystay in la keeno lambarada liiska oggolaanshaha",
+         "loadWhitelistFailed": "Khalad soo dejinta ama sameeynta lambarada liiska oggolaanshaha ",
+         "removeWhitelistError": "Khalad ka saarida lambarka liiska oggolaanshaha",
+         "addWhitelistError": "Ku guul daraystay in lagu daro lambarka liiska oggolaanshaha"
+      }
+   },
+   "states": {
+      "loading": "Soodejinaya… ama Soo raraya…."
+   },
+   "common": {
+      "na": "N/A ",
+      "etb": "ETB"
+   },
+   "blockNumbersPage": {
+      "title": "Nambarada la xiray ",
+      "reserveTitle": "Ma jiro NameTAG shaqaynaya oo ku xidhan lambarkaaga moobaylka.",
+      "reserveSubtitle": "Fadlan soo iibso TAG kaaga gaarka ah si aad u isticmaasho sifada Block/ka-hortagga ",
+      "inactiveTitle": "Ma jiro NameTAG shaqaynaya oo ku xidhan lambarkaaga moobaylka.",
+      "noneTitle": "Ma lihid wax TAG ah oo ku xidhan lambarkaaga moobaylka",
+      "noneSubtitle": "Fadlan iibso TAG si aad u isticmaasho adeegga Xannibaadda/Ka-saarista xannibaadda.",
+      "buttons": {
+         "addToBlocklist": "Ku dar liiska xannibaadda ",
+         "unblockNumber": "Furi lambarka ",
+         "cancel": "Jooji ",
+         "confirm": "Xaqiiji ",
+         "adding": "Ku darida... ",
+         "removing": "saarida..."
+      },
+      "table": {
+         "headers": {
+            "sr": "Mudane",
+            "blocked": "Nambarka la xiray/TAG ",
+            "type": "Nooca Tirada ",
+            "registered": "Lambarka Mobilka ee Diwaangashan ",
+            "channel": "Kanaalka ",
+            "action": "talabda "
+         },
+         "empty": "Lama helin tiro ama nabar xanniban"
+      },
+      "confirmDialog": {
+         "title": "Xaqiiji ka saarida ",
+         "desc1": "Ma hubtaa inaad doonayso inaad lambarkan ka saarto liiska xannibaadda? ",
+         "desc2": "Lanbarkan ayaa awood u yeelan doona inuu soo waco lambarkaaga TAG"
+      },
+      "addDialog": {
+         "title": "Ku dar liiska xannibaadda ",
+         "subtitle": "Fadlan dooro waxaad rabto inaad xannibto ",
+         "mobileOption": "Lambarka Mobilka ",
+         "tagOption": "Lambarka TAG ",
+         "mobileLabel": "Nambarka Mobilka ee la xannibi karo ",
+         "tagLabel": "TAG nambar si loo xannibo ",
+         "formatHint": "Qaabka: +251xxxxxxxxx ",
+         "tagPlaceholder": "Geli lambarka TAG si aad u xannibto ",
+         "tagHint": "Lambarka TAG waa inuu u dhexeeyaa 2-8 xaraf"
+      },
+      "toast": {
+         "fetchBlockedFailed": "Ku guuldareystay inuu keeno lambarada la xiray ",
+         "removeBlockedSuccess": "Lambarka ayaa si guul leh looga saaray liiska xannibaadda",
+         "removeBlockedFailed": "Waa lagu guul daraystay in lambarka laga saaro liiska xannibaadda ",
+         "removeBlockedError": "Khalad ka saarida lambarka liiska xannibaadda ",
+         "addBlockedSuccess": "{{type}} ayaa lagu daray liiska xannibaadda si guul leh ",
+         "addBlockedFailed": "Ku guul daraystay in lagu daro {{type}} liiska xannibaadda ",
+         "addBlockedError": "Khalad ku darista {{type}} liiska xannibaadda"
+      },
+      "states": {
+         "loading": "Soodejinaya…"
+      }
+   }
+}

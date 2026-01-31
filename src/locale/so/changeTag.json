@@ -1,0 +1,53 @@
+{
+  "title": "Maamul Bedel NameTAG",
+  "note": "Fiiro gaar ah: Markaad bedesho Name TAG wixii lacag ah ee lagu bixiyay NameTAG hore looma sii wadi doono. Waxaan kugula talineynaa inaad bedesho Name TAG dhamaadka qorshahaaga hadda.",
+  "table": {
+    "headers": {
+      "nameTagNumber": "MagacaTAG Number ",
+      "mobileNumber": "Lambarka Mobilka ",
+      "recurringFeeDueDate": "Taariikhda kama dambaysta ah ee khidmadda soo noqnoqda ",
+      "outstandingFee": "Kharashka Soo Noqnoqda ee aadka u Wacan",
+      "status": "Xaalada ",
+      "action": "talabo  "
+    },
+    "noActive": "Lama helin wax adeegyo NameTAG ah oo shaqaynaya oo aad iska joojin karto..",
+    "noActiveLinked": "Ma lihid wax NameTAG oo shaqaynaya  oo ku xidhan lambarkaaga moobilka mana jiro NameTAG diyaar u ah in la beddelo. ",
+    "noTagLinked": "Ma lihid wax TAG ah oo ku xidhan lambarkaaga mobilka ."
+  },
+  "buttons": {
+    "changeNameTag": "Beddel  Name TAG",
+    "processing": "Hawlgalaya…"
+  },
+  "messages": {
+    "fetchError": "Ku guuldareystay in la soo geliyo xogta NameTAG ",
+    "changeSuccess": "TAG  si guul leh ayaa loo beddelay ",
+    "changeFailed": "Ku guuldareystay in la beddelo TAG kaaga ",
+    "noAccountId": "Lama helin aqoonsiga koontada macmiilka ",
+    "unsubscribeSuccess": "Si guul leh ayaa isaga baxay ",
+    "unsubscribeFailed": "Ku guul daraystay in la iska diiwaan geliyo ",
+    "errorOccurred": "Khalad ayaa dhacay"
+  },
+  "modals": {
+    "unsubscribeTitle": "Xaqiijinta Joojinta Is-diiwaangelinta",
+    "unsubscribeMessage": "Ma hubtaa inaad rabto inaad ka baxdo adeegan NameTAG? ",
+    "confirm": "Xaqiiji ",
+    "cancel": "Jooji"
+  },
+  "confirmDialog": {
+    "title": "Beddel Name TAG ",
+    "description": "Ma hubtaa inaad rabto inaad beddesho Name TAG? ",
+    "remaining": "Waxaad haysataa {{count}} isbedelo ayaa hadhay .",
+    "buttons": {
+      "cancel": "Jooji ",
+      "confirm": "Xaqiiji ",
+      "processing": "Habaynta… ama Hawlgalaya…....."
+    }
+  },
+  "loading": {
+    "spinner": "Soodejinaya.."
+  },
+  "common": {
+    "na": "N/A",
+    "etb": "ETB"
+  }
+}

@@ -85,6 +85,7 @@
         "confirmPassword": "Icciitii Mirkaneessuun Barbaachisaa",
         "verificationCode": "Koodiin Mirkaneeffannoo Barbaachisaa",
         "termAndCondition": "Itti fufuuf Deemmii fi Haalawwan irratti waliigaluu qabda",
+        "minLength": "Xiqqaa yoo ta'e qaamolee 3 ta'uu qaba",
         "tinMinLength": "Xiqqaa yoo ta'e lakkoofsota 9 ta'uu qaba",
         "tinMaxLength": "Lakkoofsota 10 caaluu hin qabu",
         "tinPattern": "Lakkoofsota (9–10) Qofa ",

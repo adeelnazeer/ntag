@@ -69,6 +69,8 @@ const normalizeLang = (lng) => {
   if (lng === "ar") return "ar";
   if (lng === "en") return "en";
   if (lng === "or") return "or";
+  if (lng === "so") return "so";
+  if (lng === "ti") return "ti";
 
   return lng;
 };

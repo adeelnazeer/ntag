@@ -30,6 +30,8 @@ const LANGS = [
   { code: "en", label: "EN", native: "EN", flag: "🇬🇧" },
   { code: "amET", label: "AM", native: "AM", flag: "et" },
   { code: "or", label: "OR", native: "OR", flag: "or" },
+  { code: "so", label: "SO", native: "SO", flag: "so" },
+  { code: "ti", label: "TI", native: "TI", flag: "ti" },
 ];
 
 const Header = ({ isGuest = false }) => {
@@ -130,7 +132,7 @@ const Header = ({ isGuest = false }) => {
     ConstentRoutes.FrequentlyAskedQuestions,
   ];
   const getCorporate = () => {
-    if (isGuest||location?.pathname?.includes("contact-us")) {
+    if (isGuest || location?.pathname?.includes("contact-us")) {
       return "";
     }
     const path = location?.pathname;
@@ -146,6 +148,8 @@ const Header = ({ isGuest = false }) => {
 
     return shouldHide ? "" : "Corporate";
   };
+
+  const isIndividual = userData?.customer_type === "individual";
   return (
     <div className={`sticky top-0 z-[99] bg-[#f5f5f5] md:${classes} `}>
       <div className="bg-white">
@@ -201,11 +205,10 @@ const Header = ({ isGuest = false }) => {
                         <p className="text-xs text-gray-500 mb-1">
                           Account Type:{" "}
                           {userData?.customer_type == "corporate"
-                            ? `Corporate ${
-                                userData?.parent_id == null
-                                  ? "(Primary)"
-                                  : "(Additional)"
-                              }`
+                            ? `Corporate ${userData?.parent_id == null
+                              ? "(Primary)"
+                              : "(Additional)"
+                            }`
                             : "Individual"}
                         </p>
                         <MenuItem
@@ -221,7 +224,7 @@ const Header = ({ isGuest = false }) => {
                         <MenuItem
                           className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
                           onClick={() => {
-                            if (location?.pathname?.includes("customer")) {
+                            if (userData?.customer_type === "individual") {
                               navigate(ConstentRoutes.changePasswordCustomer);
                             } else {
                               navigate(ConstentRoutes.changePassword);
@@ -240,9 +243,8 @@ const Header = ({ isGuest = false }) => {
                               <MenuItem
                                 key={lang.code}
                                 onClick={() => handleLanguageChange(lang.code)}
-                                className={`focus:border-none border-none transition-none hover:border-none focus-within:border-none text-sm ${
-                                  active ? "bg-gray-50 font-medium" : ""
-                                }`}
+                                className={`focus:border-none border-none transition-none hover:border-none focus-within:border-none text-sm ${active ? "bg-gray-50 font-medium" : ""
+                                  }`}
                               >
                                 {lang.native}
                               </MenuItem>
@@ -349,11 +351,11 @@ const Header = ({ isGuest = false }) => {
             </div>
           </div>
           {location.pathname == ConstentRoutes.login ||
-          location.pathname == ConstentRoutes.registerNormalUser ||
-          location.pathname == ConstentRoutes.register ||
-          location.pathname == ConstentRoutes.home ||
-          location.pathname == ConstentRoutes.forgetPassword ||
-          token ? (
+            location.pathname == ConstentRoutes.registerNormalUser ||
+            location.pathname == ConstentRoutes.register ||
+            location.pathname == ConstentRoutes.home ||
+            location.pathname == ConstentRoutes.forgetPassword ||
+            token ? (
             <div className="md:hidden flex items-center bg-secondary">
               <IconButton
                 onClick={() => setMenuOpen(!menuOpen)}
@@ -400,7 +402,7 @@ const Header = ({ isGuest = false }) => {
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
                   onClick={() => {
-                    navigate(ConstentRoutes.dashboard);
+                    navigate(isIndividual ? ConstentRoutes.dashboardCustomer : ConstentRoutes.dashboard);
                     setMenuOpen(false);
                   }}
                 >
@@ -409,7 +411,7 @@ const Header = ({ isGuest = false }) => {
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
                   onClick={() => {
-                    navigate(ConstentRoutes.buyTag);
+                    navigate(isIndividual ? ConstentRoutes.buyTagCustomer : ConstentRoutes.buyTag);
                     setMenuOpen(false);
                   }}
                 >
@@ -423,7 +425,7 @@ const Header = ({ isGuest = false }) => {
                     <Button
                       className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
                       onClick={() => {
-                        navigate(ConstentRoutes.manageTagName);
+                        navigate(isIndividual ? ConstentRoutes.manageTagNameCustomer : ConstentRoutes.manageTagName);
                         setMenuOpen(false);
                       }}
                     >
@@ -432,7 +434,7 @@ const Header = ({ isGuest = false }) => {
                     <Button
                       className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
                       onClick={() => {
-                        navigate(ConstentRoutes.corporateCallPin);
+                        navigate(isIndividual ? ConstentRoutes.incomingCallPin : ConstentRoutes.corporateCallPin);
                         setMenuOpen(false);
                       }}
                     >
@@ -441,7 +443,7 @@ const Header = ({ isGuest = false }) => {
                     <Button
                       className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
                       onClick={() => {
-                        navigate(ConstentRoutes.blockUnblockTag);
+                        navigate(isIndividual ? ConstentRoutes.blockUnblockTagCustomer : ConstentRoutes.blockUnblockTag);
                         setMenuOpen(false);
                       }}
                     >
@@ -450,25 +452,27 @@ const Header = ({ isGuest = false }) => {
                     <Button
                       className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
                       onClick={() => {
-                        navigate(ConstentRoutes.changeMyTAGCorporate);
+                        navigate(isIndividual ? ConstentRoutes.changeMyTAG : ConstentRoutes.changeMyTAGCorporate);
                         setMenuOpen(false);
                       }}
                     >
                       {t2("sideBar.changeNameTag")}
                     </Button>
+                    {!isIndividual && (
+                      <Button
+                        className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
+                        onClick={() => {
+                          navigate(ConstentRoutes.changeNumber);
+                          setMenuOpen(false);
+                        }}
+                      >
+                        {t2("sideBar.changeMobileNo")}
+                      </Button>
+                    )}
                     <Button
                       className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
                       onClick={() => {
-                        navigate(ConstentRoutes.changeNumber);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      {t2("sideBar.changeMobileNo")}
-                    </Button>
-                    <Button
-                      className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
-                      onClick={() => {
-                        navigate(ConstentRoutes.UnSUBblockTag);
+                        navigate(isIndividual ? ConstentRoutes.unsubTagCustomer : ConstentRoutes.UnSUBblockTag);
                         setMenuOpen(false);
                       }}
                     >
@@ -477,7 +481,7 @@ const Header = ({ isGuest = false }) => {
                     <Button
                       className="bg-white text-sm font-medium text-secondary py-1.5 px-3 w-full text-left"
                       onClick={() => {
-                        navigate(ConstentRoutes.closeAccount);
+                        navigate(isIndividual ? ConstentRoutes.closeAccountCustomer : ConstentRoutes.closeAccount);
                         setMenuOpen(false);
                       }}
                     >
@@ -488,11 +492,7 @@ const Header = ({ isGuest = false }) => {
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full mt-4"
                   onClick={() => {
-                    if (location?.pathname?.includes("customer")) {
-                      navigate(ConstentRoutes.profilePageCustomer);
-                    } else {
-                      navigate(ConstentRoutes.profilePage);
-                    }
+                    navigate(isIndividual ? ConstentRoutes.profilePageCustomer : ConstentRoutes.profilePage);
                     setMenuOpen(false);
                   }}
                 >
@@ -501,11 +501,7 @@ const Header = ({ isGuest = false }) => {
                 <Button
                   className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
                   onClick={() => {
-                    if (location?.pathname?.includes("customer")) {
-                      navigate(ConstentRoutes.changePasswordCustomer);
-                    } else {
-                      navigate(ConstentRoutes.changePassword);
-                    }
+                    navigate(isIndividual ? ConstentRoutes.changePasswordCustomer : ConstentRoutes.changePassword);
                     setMenuOpen(false);
                   }}
                 >
@@ -521,11 +517,10 @@ const Header = ({ isGuest = false }) => {
                       return (
                         <Button
                           key={lang.code}
-                          className={`bg-white text-base font-medium text-secondary py-2 px-4 flex-1 ${
-                            active
+                          className={`bg-white text-base font-medium text-secondary py-2 px-4 flex-1 ${active
                               ? "bg-gray-200 border-2 border-secondary"
                               : ""
-                          }`}
+                            }`}
                           onClick={() => {
                             handleLanguageChange(lang.code);
                             setMenuOpen(false);
@@ -583,11 +578,10 @@ const Header = ({ isGuest = false }) => {
                       return (
                         <Button
                           key={lang.code}
-                          className={`bg-white text-base font-medium text-secondary py-2 px-4 flex-1 ${
-                            active
+                          className={`bg-white text-base font-medium text-secondary py-2 px-4 flex-1 ${active
                               ? "bg-gray-200 border-2 border-secondary"
                               : ""
-                          }`}
+                            }`}
                           onClick={() => {
                             handleLanguageChange(lang.code);
                             setMenuOpen(false);

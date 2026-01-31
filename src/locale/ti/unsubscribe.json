@@ -1,0 +1,43 @@
+{
+  "title": "ምምሕዳር NameTAG ምምራሕ",
+  "titleUnsubscription": "ምምሕዳር NameTAG ምእላይ",
+
+  "table": {
+    "headers": {
+      "tagNumber": "TAG ቁፅሪ",
+      "mobileNumber": "ቁፅሪ ሞባይል",
+      "registrationDate": "ዕለት ምዝገባ",
+      "status": "ኩነታት",
+      "action": "ተግባር"
+    },
+    "noActive": "ዝኾነ ንጡፍ ኣገልግሎት NameTAG ምዝገባ ንምእላይ ኣይተረኽበን።",
+    "noActiveRegistered": "ቁፅሪ ኣንፃር ቁፅሪ ሞባይል ዝተመዝገበ ንጡፍ NameTAG የብሉን።"
+  },
+
+  "buttons": {
+    "unsubscribe": "ምውጋድ ሳብስክራይብ",
+    "processing": "ኣብ ሒደት..."
+  },
+
+  "messages": {
+    "fetchError": "NameTAG ዳታ ምፅዓን ኣይተክኣለን",
+    "noAccountId": "ናይ ዓሚል ኣካውንት መለለዪ ኣይተረኽበን።",
+    "unsubscribeSuccess": "ብዓወት ምዝገባ ተኣልዩ",
+    "unsubscribeFailed": "ምዝገባ ምእላይ ኣይተከኣለን",
+    "errorOccurred": "ጌጋ ኣጋጢሙ"
+  },
+  "common": {
+    "na": "N/A"
+  },
+
+  "loading": {
+    "spinner": "ኣብ ምፅዓን ..."
+  },
+
+  "modal": {
+    "unsubscribeTitle": "ምዝገባ ምእላይ ኣረጋግፅ",
+    "unsubscribeMessage": " ካብዚ ናይ NameTAG ኣገልግሎት ክትኣልዩ  ከምትደልዩ ርግፀኛ ድዮም?",
+    "confirm": "ኣረጋግፅ",
+    "cancel": "ሰርዝ"
+  }
+}

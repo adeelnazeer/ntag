@@ -1,0 +1,30 @@
+{
+  "title": "Beddel Lambarka Mobilka",
+  "table": {
+    "headers": {
+      "nametag_number": "MagacaTAG Number",
+      "mobile_number": "Lambarka Mobilka",
+      "mobilenumber_type": "Nooca Mobilka",
+      "recurring_Fee": "Kharashka soo noqnoqda",
+      "recurringFee_due_date": "Taariikhda kama dambaysta ah ee khidmadda soo noqnoqda",
+      "outstandingRecurringFee": "Kharashka Soo Noqnoqda ee aadka u Wacan",
+      "status": "Xaalada",
+      "action": "talabda"
+    },
+    "empty": "Lama helin wax adeegyo NameTAG ah oo shaqaynaya."
+  },
+  "chips": {
+    "primary": "Aasaasi (ama Kan koowaad)",
+    "additional": "Dheeraad ah"
+  },
+  "buttons": {
+    "changeMobileNumber": "Beddel Lambarka Mobilka"
+  },
+  "messages": {
+    "fetchError": "Ku guuldareystay in la soo geliyo xogta NameTAG",
+    "noAccountId": "Lama helin aqoonsiga akoontada macmiilka"
+  },
+  "loading": {
+    "spinner": "Soodejinaya..."
+  }
+}

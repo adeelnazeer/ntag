@@ -210,18 +210,21 @@ export const useRegisterHook = () => {
     const payload = { ...data };
     payload.channel = "WEB";
 
-    APICall("put", payload, EndPoints.customer.newSecurityEndPoints.corporate.updateProfile)
+    return APICall("put", payload, EndPoints.customer.newSecurityEndPoints.corporate.updateProfile)
       .then((res) => {
         if (res?.success) {
           toast.success(res?.message || "");
           localStorage.setItem("user", JSON.stringify(res?.data));
           getProfileDetail();
+          return res;
         } else {
           toast.error(res?.message);
+          return res;
         }
       })
       .catch((err) => {
         console.log("err", err);
+        toast.error(err?.response?.data?.message || err?.message || "Something went wrong");
       });
   };
 

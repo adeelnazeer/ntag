@@ -620,13 +620,23 @@ const CompanyForm = ({
           <GetLabel name={t("common.form.verificationCode")} />
           <div className="relative mt-2  items-center flex w-full">
             <Input
-              valueAsNumber
+              type="tel"
+              inputMode="numeric"
+              pattern="[0-9]*"
               className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder={t("common.form.verificationCode")}
               maxLength={6}
               disabled={registerData?.verified}
+              onKeyDown={(e) => {
+                const key = e.key;
+                const ctrl = e.ctrlKey || e.metaKey;
+                const allowed = ["Backspace", "Delete", "Tab", "Enter", "Escape", "ArrowLeft", "ArrowRight", "Home", "End"];
+                if (allowed.includes(key) || ctrl) return;
+                if (!/^\d$/.test(key)) e.preventDefault();
+              }}
               {...register("verification_code", {
                 required: t("common.form.errors.verificationCode"),
+                pattern: { value: /^\d*$/, message: t("common.form.errors.verificationCode") },
                 validate: (val) => {
                   if (watch("verification_code") != val) {
                     return t("common.form.errors.otpDoesNotMatch");

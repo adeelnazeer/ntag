@@ -1,0 +1,200 @@
+{
+  "title": "ዝተኣገዱ ቁፅርታት ምምሕዳር",
+
+  "labels": {
+    "selectRegistered": "ዝተመዝገበ ስልኪ ቁፅሪ ይምረፁ",
+    "noMobiles": "ምንም ቁፅርታት ሞባይል ኣይተረኸበን",
+    "yourRegistered": "ዝተመዝገበ ቁፅሪ ሞባይል"
+  },
+
+  "buttons": {
+    "addToBlocklist": "ናብ ዝርዝር እገዳ ምውሳኽ",
+    "unblock": "ካብ እገዳ ኣውፅእ",
+    "cancel": "ሰርዝ",
+    "confirm": "ኣረጋግፅ",
+    "removing": "ምውጋድ...",
+    "adding": "ምውሳኽ..."
+  },
+   "table": {
+    "sr": "Sr#",
+    "blocked": "ዝተኣገዱ ቁፅርታት /TAG",
+    "type": "ቁፅሪ ዓይነት",
+    "registered": "ዝተመዝገበ ቁፅሪ ሞባይል",
+    "channel": "ቻነል",
+    "action": "Action",
+    "empty": "ምንም ዝተኣገዱ ቁፅርታት ኣይተረኸበን"
+  },
+  
+  "confirmDialog": {
+    "title":"ምውጋድ ኣረጋግፅ",
+    "desc1": "እዚ ቁፅሪ ካብ ዝተኣገዱ ዝርዝር ምውጋድ ከምዝደልዩ ርግፀኛ ድዮም?",
+    "desc2": "እዚ ቁፅሪ ኣብ ናይ TAG ቁፅሪ ኽድውለልካ ይኽእል እዩ።"
+  },
+
+  "addDialog": {
+    "title": "ናብ ዝርዝር እገዳ ምውሳኽ",
+    "subtitle": "በይዝኦም እንታይ ንምእጋድ ከምዝደለዩ ይምረፁ",
+    "mobileOption": "ቁፅሪ ሞባይል",
+    "tagOption": "TAG ቁፅሪ",
+    "mobileLabel": " ቁፅሪ ሞባይል ንምእጋድ",
+    "tagLabel": "TAG ቁፅሪ ንምእጋድ",
+    "formatHint": "ቅርጺ: +251xxxxxxxxx",
+    "tagPlaceholder": "ቁፅሪ TAG ኣእትዉ (ኣብነት፣ 4642)"
+  },
+"errors": {
+    "fetchMobiles": "ናይ ሞባይል ቁፅርታት ክረክብ ኣይተኸኣለን",
+    "loadMobiles": "ጌጋ ኣብ ምፅዓን ሞባይል ቁፅርታት",
+    "fetchBlocked": "ዝተኣገዱ ቁፅርታት ክርከብ ኣይተኸኣለን",
+    "loadBlocked": "ጌጋ ኣብ ምፅዓን ዝተኣገዱ ቁፅርታት",
+    "fetchWhitelist": "ዝተፈቀደሎም ዝርዝር ቁፅርታት ክርከብ ኣይተኸኣለን",
+    "loadWhitelist": "ጌጋ ኣብ ምፅዓን ዝተፈቀደሎም ቁፅርታት",
+    "removeWhitelist": "ጌጋ ምውጋድ ቁፅርታት ካብ ዝተፈቀደሎም ዝርዝር",
+    "addWhitelist": "ዝተፈቀደሎም ዝርዝር ቁፅርታት ንምውሳኽ ኣይተኸኣለን",
+    "required": "ቁፅሪ ሞባይል ኣድላዪ እዩ",
+    "mustStartCountry": "ቁፅሪ ሞባይል ብ +251 ክጅምር ኣለዎ",
+    "mustStart9": "ቁፅርታት ሞባይል ድሕሪ ናይ ሃገር ኮድ ብ 9 ክጅምር ኣለዎ",
+    "length": "ቁፅርታት ሞባይል ድሕሪ ናይ ሃገር ኮድ 9 ኣሃዛት ክኸውን ኣለዎ",
+    "tagRequired": "TAG ቁፅሪ ኣድላዪ እዩ",
+    "tagMinLength": "TAG ቁፅሪ እንተወሓደ 2 ፊደላት ክኸውን አለዎ",
+    "tagMaxLength": "TAG ቁፅሪ ካብ 8 ፊደላት ክሓልፍ የብሉን",
+    "enterTag": "በይዝኦም ንምእጋድ TAG ቁፅሪ የእትዉ",
+    "blockOwnTag": "ናይ ባዕሎም NameTAG ምእጋድ ኣይኽእሉን "
+  },
+
+  "success": {
+    "added": "ቁፅሪ ብዝተሳክዐ መንገዲ ናብ ዝርዝር እገዳ ተወሲኹ",
+    "removed": "ቁፅሪ ብዝተሳክዐ መንገዲ ካብ ዝርዝር እገዳ ተወጊዱ"
+  },
+  
+  "callPinPage": {
+    "title": "ነቲ መፃኢ ደውል ምሽጢር ቁፅርን ዝተፈቀደሎም ዝርዝር ቁፅርታትን ምምሕዳር",
+    "labels": {
+      "mobileNumber": "ቁፅሪ ሞባይል:",
+      "currentPin": "ሐዚ ደውል ምሽጢር ቁፅሪ:"
+    },
+    "buttons": {
+      "setPin": "ምሽጢር ቁፅሪ ኣቀምጥ",
+      "removePin": "ምሽጢር ቁፅሪ ኣወግድ",
+      "addWhitelist": "ናብ ዝተፈቀደሎም ዝርዝር ይወስኹ",
+      "cancel": "ሰርዝ",
+      "confirm": "ኣረጋግፅ",
+      "processing": "ኣብ ከይዲ...",
+      "adding": "ምውሳኽ...",
+      "removing": "ምውጋድ..."
+    },
+    "table": {
+      "headers": {
+        "sr": "Sr#",
+        "nameTag": "NameTAG",
+        "whitelistNumber": "ዝተፈቀደሎም ዝርዝር ቁፅሪ",
+        "whitelistDate": "ዝተፈቀደሎም ዝርዝር ዕለት",
+        "pin": "ምሽጢር ቁፅሪ",
+        "action": "ተግባር"
+      },
+      "empty": {
+        "noPin": "ኣብዚ እዋን እዚ ንዝመፅእ ትፃውዒት ምሽጢር ቁፅሪ ኣይተዳለወን። በይዝኦም ቁፅርታት ናብ ዝተፈቀደሎም ዝርዝር ንምውሳኽ ምሽጢር ቁፅሪ የዳልዉ።",
+        "noActiveLinked": "ምስ ቁፅሪ ሞባይሎም ዝተኣሳሰረ ንጡፍ NameTAG የለን።",
+        "noWhitelist": "ቁፅሪ ዝተፈቀደሎም ዝርዝር ኣይተረኽበን!"
+      },
+      "actions": {
+        "delete": "ደምስስ"
+      }
+    },
+     "confirmRemoval": {
+      "title": "ምውጋድ ኣረጋግጽ",
+      "description": "ቁፅሪ ሞባይል +{{number}} ካብ ዝተፈቀደሎም ዝርዝር ከወግዱ ከምዝደልዩ ርግፀኛ ዲዮም?",
+      "hint": "ኣብ ዝተፈቀደሎም ዝርዝር ዘየለዉ ደወልቲ NameTAG ንምርካብ ትኽኽል ዝኮነ ምሽጢር ቁፅሪ ከእትዉ ኣለዎም።"
+    },
+    "modalPin": {
+      "removeTitle": "ንዝመፀእ ፃዊዒታት ደውል ምሽጢር ቁፅሪ ኣወግድ",
+      "setTitle": "ንዝመፀእ ፃዊዒታት ደውል ምሽጢር ቁፅሪ ኣቀምጥ",
+      "descRemove": "እቲ ምሽጢር ቁፅሪ ምስ ተወገደ ኩሎም ደወልቲ ምሽጢር ቁፅሪ ከየእተዉ ናብ NameTAG ምርካብ ይኽእሉ እዮም።",
+      "descSet": "ንዝመፀእ ፃዊዒታት ደውል ምሽጢር ቁፅሪ ምቅማጥ ከምዝደልዩ ርግፀኛ ዲዮም? እቶም ደወልቶም ናብ ቁፅሪ NameTAG ቅድሚ ምእታዎም ነቲ ምሽጢር ቁፅሪ ከእትዉ ትፅቢት ይግበረሎም።",
+      "nameTag": "NameTAG = #{{tag}}",
+      "mobileNumber": "ቁፅሪ ሞባይል = +{{number}}",
+      "currentPin": "ሐዚ ደውል ምሽጢር ቁፅሪ = {{pin}}",
+      "notDefined": "ኣይተገለፀን",
+      "noteNoPin": "ምሽጢር ቁፅሪ ኣየድልን— ደወልቲ ምሽጢር ቁፅሪ ከየእተዉ NameTAG ምርካብ ይኽእሉ እዮም።",
+      "selectSingleDigit": "በይዝኦም ንጽል ኣሃዝ ምሽጢር ቁፅሪ ይምረፁ",
+      "selectPinPlaceholder": "ምሽጢር ቁፅሪ ይምረፁ"
+    },
+    "modalAddWhitelist": {
+      "title": "ናብ ዝተፈቀደሎም ዝርዝር ይወስኹ",
+      "subtitle": "ዝተፈቀደሎም ዝርዝር ደወልቲ ብዘይምሽጢር ቁፅሪ ናቶም NameTAG ክድውሉ ይኽእሉ እዮም።",
+      "enterMobileLabel": "ናብ ዝተፈቀደሎም ዝርዝር ንምውሳኽ ቁፅሪ ሞባይል የእትዉ",
+      "formatHint": "ቅርፂ: +251xxxxxxxxx",
+      "registeredMobileLabel": "ዝተመዝገበ ቁፅሪ ሞባይል"
+    },
+    "toast": {
+      "fetchWhitelistFailed": "ቁፅርታት ዝተፈቀደሎም ዝርዝር ክርከብ ኣይተከኣለን",
+      "loadWhitelistFailed": "ጌጋ ኣብ ምፅዓን ዝተፈቀደሎም ዝርዝር ቁፅርታት",
+      "removeWhitelistError": "ጌጋ ምውጋድ ቁፅርታት ካብ ዝተፈቀደሎም ዝርዝር",
+      "addWhitelistError": "ዝተፈቀደሎም ዝርዝር ቁፅርታት ንምውሳኽ ኣይተኸኣለን"
+    },
+    "states": {
+      "loading": "ኣብ ምፅዓን ..."
+    },
+    "common": {
+      "na": "N/A",
+      "etb": "ETB"
+    }
+  },
+
+  "blockNumbersPage": {
+    "title": "ዝተኣገዱ ቁፅርታት",
+    "statusMessages": {
+      "reserveTitle": "ምስ ቁፅሪ ሞባይሎም ዝተኣሳሰረ ንጡፍ NameTAG የለን።",
+      "reserveSubtitle": "በይዝኦም ነቲ ምእጋድ/ዘይምእጋድ ባህርይ ንምጥቃም ዝተሓዝአ TAG ናትኩም ይግዛኡ።",
+      "inactiveTitle": "ምስ ቁፅሪ ሞባይሎም ዝተኣሳሰረ ንጡፍ NameTAG የለን።",
+      "noneTitle": "ምንም ዓይነት ምስ ቁፅሪ ሞባይሎም ዝተኣሳሰረ TAG የብሎምን።",
+      "noneSubtitle": "በይዝኦም ነቲ ምእጋድ/ዘይምእጋድ ባህርይ ንምጥቃም ዝተሓዝአ TAG ናትኩም ይግዛኡ።"
+    },
+    "buttons": {
+      "addToBlocklist": "ናብ ዝርዝር እገዳ ምውሳኽ",
+      "unblockNumber": "ካብ እገዳ ኣውፅእ",
+      "cancel": "ሰርዝ",
+      "confirm": "ኣረጋግፅ",
+      "adding": "ምውሳኽ...",
+      "removing": "ምውጋድ..."
+    },
+    "table": {
+      "headers": {
+        "sr": "Sr#",
+        "blocked": "ዝተኣገዱ ቁፅሪ/TAG",
+        "type": "ቁፅሪ ዓይነት",
+        "registered": "ዝተመዝገበ ቁፅሪ ሞባይል",
+        "channel": "ቻነል",
+        "action": "ተግባር"
+      },
+      "empty": "ምንም ዝተኣገዱ ቁፅርታት ኣይተረኸበን"
+    },
+    "confirmDialog": {
+      "title": "ምውጋድ ኣረጋግጽ",
+      "desc1": "እዚ ቁፅሪ ካብ ዝተኣገዱ ዝርዝር ምውጋድ ከምዝደልዩ ርግፀኛ ድዮም?",
+      "desc2": "እዚ ቁፅሪ ኣብ ናይ TAG ቁፅሮም ምድዋል ይኽእል እዩ"
+    },
+    "addDialog": {
+      "title": "ናብ ዝርዝር እገዳ ምውሳኽ",
+      "subtitle": "በይዝኦም እንታይ ንምእጋድ ከምዝደለዩ ይምረፁ",
+      "mobileOption": "ቁፅሪ ሞባይል",
+      "tagOption": "TAG ቁፅሪ",
+      "mobileLabel": "ቁፅሪ ሞባይል ንምእጋድ",
+      "tagLabel": "TAG ቁፅሪ ንምእጋድ",
+      "formatHint": "ቅርጺ: +251xxxxxxxxx",
+      "tagPlaceholder": "ንምእጋድ TAG ቁፅሪ ኣእትዉ",
+      "tagHint": "TAG ቁፅሪ ኣብ መንጎ 2-8 ኣሃዛት ክኾን ኣለዎ"
+    },
+    "toast": {
+      "fetchBlockedFailed": "ዝተኣገዱ ቁፅርታት ክርከብ ኣይተኸኣለን",
+      "removeBlockedSuccess": "ቁፅሪ ብዝተሳክዐ መንገዲ ካብ ዝርዝር እገዳ ተወጊዱ",
+      "removeBlockedFailed": "ቁፅሪ ካብ ዝርዝር እገዳ ምውጋድ ኣይተኸኣለን",
+      "removeBlockedError": "ጌጋ ምውጋድ ቁፅርታት ካብ ዝተኣገዱ ዝርዝር",
+      "addBlockedSuccess": "{{type}} ብዝተሳክዐ መንገዲ ናብ ዝርዝር እገዳ ተወሲኹ",
+      "addBlockedFailed": "{{type}} ናብ ዝርዝር እገዳ ክውሰኽ ኣይተኸኣለን",
+      "addBlockedError": "ጌጋ ምውሳኽ {{type}} ናብ ዝርዝር እገዳ"
+    },
+    "states": {
+      "loading": "ኣብ ምፅዓን..."
+    }
+  }
+}

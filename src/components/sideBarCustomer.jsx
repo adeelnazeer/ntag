@@ -12,10 +12,12 @@ import EndPoints from "../network/EndPoints";
 import { removeToken } from "../utilities/auth";
 import { useAppDispatch } from "../redux/hooks";
 import { clearUserData } from "../redux/userSlice";
+import { useTranslation } from "react-i18next";
 
 const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const { t, i18n } = useTranslation(["sideBar"]);
 
     const location = useLocation();
     const sidebarRef = useRef(null);
@@ -102,13 +104,11 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const getCallManagementLabel = () => {
         if (callStatus === 1) {
             return {
-                text: "Stop Incoming Calls",
-                // icon: <FaPhoneSlash className="h-4 w-4 text-red-500" />
+                text: t("sideBar.stopIncomingCalls"),
             };
         } else {
             return {
-                text: "Start Incoming Calls",
-                // icon: <FaPhone className="h-4 w-4 text-green-500" />
+                text: t("sideBar.startIncomingCalls"),
             };
         }
     };
@@ -118,25 +118,25 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const sidebarData = [
         {
             icon: <MdHomeFilled className="h-5 w-5" />,
-            text: "Dashboard",
+            text: t("sideBar.dashboard"),
             active: activeDashboard,
             route: ConstentRoutes.dashboardCustomer
         },
         {
             icon: <FaHashtag className="h-4 w-4" />,
-            text: "Buy NameTAG",
+            text: t("sideBar.buyTag"),
             active: activeTwo,
             route: ConstentRoutes.buyTagCustomer
         },
         {
             icon: <FaUser className="h-4 w-4" />,
-            text: "Profile",
+            text: t("sideBar.profile"),
             active: activeProfile,
             route: ConstentRoutes.profilePageCustomer,
         },
         {
             icon: <IoLogOutSharp className="h-4 w-4" />,
-            text: "Log Out",
+            text: t("sideBar.logout"),
             className: "text-[#FF4842]",
             onClick: handleLogOut
         }
@@ -175,7 +175,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
                 lg:translate-x-0 z-40 bg-white rounded-tr-[60px] max-w-64 w-64`}
             >
-                <div className="h-full overflow-y-auto">
+                <div className="h-full overflow-y-auto" key={i18n.resolvedLanguage || i18n.language}>
                     <Card className="px-4 py-4 h-full w-full bg-transparent shadow-blue-gray-900/5">
                         <List className="text-base min-w-full w-full gap-4 p-0 font-normal text-black">
                             {/* Standard menu items */}
@@ -220,7 +220,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     >
                                         <ListItemPrefix><BsFire className="h-4 w-4" /></ListItemPrefix>
                                         <span className={`font-medium ${activeThree ? "text-white" : "text-[#8A8AA0]"}`}>
-                                            Manage NameTAG
+                                            {t("sideBar.manageTag")}
                                         </span>
                                     </ListItem>
                                 </div>
@@ -249,7 +249,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                             className={`py-2 px-3 text-sm rounded-md cursor-pointer 
                                                 ${activeCallPin ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
                                         >
-                                            Incoming Call PIN
+                                            {t("sideBar.incomingCallPin")}
                                         </div>
                                         <div
                                             onClick={() => {
@@ -271,7 +271,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                             className={`py-2 px-3 text-sm rounded-md cursor-pointer 
                                                 ${activeChangeMyTag ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
                                         >
-                                            Change NameTAG
+                                            {t("sideBar.changeNameTag")}
                                         </div>
                                         <div
                                             onClick={() => {
@@ -294,7 +294,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                             className={`py-2 px-3 text-sm rounded-md cursor-pointer 
                         ${closeAccount ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
                                         >
-                                            Close Account
+                                            {t("sideBar.closeAccount")}
                                         </div>
                                     </div>
                                 )}

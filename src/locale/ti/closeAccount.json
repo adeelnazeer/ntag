@@ -1,0 +1,45 @@
+{
+  "title": "ምዕፃው ኣካውንት ምምሕዳር",
+
+  "table": {
+    "headers": {
+      "name": "ሽም",
+      "companyName": "ሽም ትካል",
+      "mobileNumber": "ቁፅሪ ሞባይል",
+      "createdDate": "ዝተከፈተሉ ዕለት",
+      "status": "ኩነታት",
+      "action": "ስጉምቲ"
+    }
+  },
+
+  "note": "እዞም ዝስዕቡ ንጡፋት NameTAGs ኣለዎም። ኣካውንትኩም ንምዕፃው ካብ ነፍሲ ወከፍ NameTAG ሳብስክራይብ ኣውፅኡ።",
+
+  "buttons": {
+    "closeAccount": "ኣካውንት ዕፀው",
+    "processing": "ኣብ ሒደት..."
+  },
+
+  "messages": {
+    "fetchError": "NameTAG ዳታ ምፅዓን ኣይተክኣለን",
+    "noAccountId": "ናይ ዓሚል ኣካውንት መለለዪ ኣይተረኽበን",
+    "closeSuccess": "ብዓወት ዝተዓፅወ ኣካውንት",
+    "closeFailed": "ኣካውንት ምዕፃው ኣይተክኣለን",
+    "errorOccurred": "ጌጋ ኣጋጢሙ",
+    "commentRequired": "በይዝኦም ቅድሚ ኣካውንቶም ምዕፃዮም ምክንያት የእትዉ።"
+  },
+
+  "modal": {
+    "title": "ምዕፃው ኣካውንት የረጋግፁ",
+    "message": "ናይ ትካል ኣካውንቶም ምዕፃው ከምዝደልዩ ርግፀኛ ዲዮም? እዚ ተግባር እዚ ክምለስ ኣይክእልን እዩ።",
+    "commentLabel": "ምክንያት ምዕፃው ኣካውንቶም",
+    "confirm": "ኣረጋግፅ",
+    "cancel": "ሰርዝ"
+  },
+
+  "loading": {
+    "spinner": "ኣብ ሒደት..."
+  },
+  "common": {
+    "na": "N/A"
+  }
+}

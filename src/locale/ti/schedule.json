@@ -1,0 +1,241 @@
+{
+  "manage": {
+    "confirmIncommingCall": "ናይ ዝኣቱ ፃውዒት መደብ ኣረጋግፅ?",
+    "confirmMsg1": "ርግፀኛ ድዮም ንመደብ ዝኣቱ ፃውዒት ከጥፉኡ ከምዝደልዩ?",
+    "confirm": "ኣረጋግፅ",
+    "cancel": "ሰርዝ",
+    "manageIncommingCall": "ዝኣቱ ፃውዒት ምምሕዳር",
+    "currentCallScheduling": "ናይ ሕጂ ዝኣቱ ፃውዒት መደብ ምግባር=",
+    "on": "ምውላዕ",
+    "off": "ምጥፋእ",
+    "info1": "መደብ ምድላው ዝኣቱ ፃውዒት OFF እንተኾይኑ 24/7 ዝኣትዉ ፃውዒታት ክትቅበሉ ኢኹም",
+    "info2": " ናይ ሕጂ ዝኣትዉ ፃውዒታት መደብ=", 
+    "info3": "ገልግሎቶም ዝኸውን", 
+    "scheduleCall": "ዝኣትዉ ፃውዒታት መደብ ግበር", 
+    "applyBtn": "መደብ ስራሕ ኣመልክት",
+    "info4":"ኣብዚ እዋን እዚ ዝኾነ NameTAG ኣንፃር ኣካውንቶም ኣይምዝገብን",
+    "desc1": "ርግፀኛ ድዮም",
+    "enable": "ኣኽእል",
+    "desc2": "መደብ ምውፃእ ዝኣቱ ፃውዒት ካብ",
+    "to": "ናብ",
+    "from": "ካብ"
+  },
+  "callPin": {
+    "title": "ዝኣቱ ናይ ፃውዒት ሚሽጢር ቁፅሪ ዝተፈቀደሎም ዝርዝር ቁፅርታትን ምምሕዳር", 
+    "selectNumber":"ዝተመዝገበ ቁፅሪ ሞባይልኩም ምረፁ",
+    "noNumber": "ቁፅሪ ሞባይል ኣይተረኽበን",
+    "currentPin": "ናይ ሕጂ ሚሽጢር ቁፅሪ",
+    "notDefined": "ኣይተገለፀን",
+    "removePin": "ሚሽጢር ቁፅሪ ኣወግድ",
+    "setPin": "ሚሽጢር ቁፅሪ ኣቐምጥ",
+    "changePin": "ሚሽጢር ቁፅሪ ምቕያር",
+    "addWhiteList":"ናብ ዝተፈቀደሎም ዝርዝር ወስኹ",
+    "table": {
+      "sr": "Sr#",
+      "nametag": "NameTAG",
+      "whitelistNumber":"ቁፅሪ ዝተፈቀደሎም ዝርዝር",
+      "whitelistDate": "ዝተፈቀደሎም ዕለት",
+      "pin": "ሚሽጢር ቁፅሪ",
+      "action": "ተግባር"
+    },
+
+    "empty": {
+      "noPin": "ኣብዚ እዋን ንዝኣቱ ፃውዒታት ዝኾነ ሚሽጢር ቁፅሪ ኣይተቐመጠን። በይዝኦም ቁፅርታት ናብ ዝተፈቀደሎም ዝርዝር ንምውሳኽ ሚሽጢር ቁፅሪ ኣቐምጡ።",
+      "noActive": "ዝኾነ ንጡፍ NameTAG ምስ ሞባይል ቁፅሮም ዝተኣሳሰር የለን።", 
+      "noWhitelist": "ቁፅሪ ዝተፈቀደሎም ዝርዝር ኣይተረኽበን!"
+    },
+
+    "confirmRemoval": {
+      "title": "ምእላይ ምርግጋፅ",
+      "desc": "ቁፅሪ ሞባይል +{{ቁፅሪ}} ካብ ዝተፈቀደሎም ዝርዝር ክተውትፅኡ ከም ዝደልዩ ርግፀኛ ድዮም?"
+    },
+
+    "modalPin": {
+      "removeTitle": "ንዝኣትዉ ፃውዒታቶም ሚሽጢር ቁፅሪፃውዒት ይደምስሱ",
+      "setTitle": "ንዝኣትዉ ፃውዒታቶም ሚሽጢር ቁፅሪ ፃውዒት የቐምጡ",
+      "changeTitle": "ንዝኣትዉ ፃውዒታቶም ሚሽጢር ቁፅሪ ፃውዒት ይቀይሩ",
+
+      "descRemove": "ሚሽጢር ቁፅሪ ምስ ተኣልየ ኩሎም ደወልቲ ሚሽጢር ቁፅሪ ከየእተዉ ናብ NameTAG ናትካ ክበፅሑ ይኽእሉ።", 
+      "descSet": "ንዝኣትዉ ፃውዒታት ሚሽጢር ቁፅሪ {{action}} ክገብሩ  ከም ዝደልዩ ርግፀኛ ድዮም? ደወልቶም ቅድሚ ምስ ቁፅሪ NameTAG ናትቶም ምትእስሳር ነቲ ሚሽጢር ቁፅሪ ከእትዉ ክግደዱ እዮም።",
+
+      "nameTag": "NameTAG",
+      "mobileNumber": "ቁፅሪ ሞባይል",
+      "callPin": "ፃውዒት ሚሽጢር ቁፅሪ ",
+      "noPin": "Nኣይተገለፀን",
+
+      "noteNoPin": "ዝኾነ ፒን ኣየድልን — ደወልቲ ሚሽጢር ቁፅሪ ከየእተዉ ናብ NameTAG ናትካ ክበፅሑ ይኽእሉ።", 
+      "selectSingleDigit":"በይዝኦም ነፀላ ኣሃዝ ሚሽጢር ቁፅሪ ምረፁ",
+      "selectPinPlaceholder":"ሚሽጢር ቁፅሪ ምረፁ"
+    },
+
+    "modalWhitelist": {
+      "title": "ናብ ዝተፈቀደሎም ዝርዝር ወስኹ",
+      "subtitle": "ብዝተፈቀደሎም ዝተፃሕፉ ደወልቲ ብዘይ ሚሽጢር ቁፅሪ ናብ NameTAG ክድውሉ ይኽእሉ።", 
+      "enterMobileLabel": "ዝተፈቀደሎም ዝርዝር ንምውሳኽ ሞባይል ቁፅሪ የእትዉ",
+      "formatHint": "ቅርፂ፡ +251xxxxxxxxxx",
+      "yourRegistered": "ዝተመዝገበ ቁፅሪ ሞባይልኩም" 
+    },
+
+    "buttons": {
+      "cancel": "ሰርዝ",
+      "confirm": "ኣረጋግፅ",
+      "processing": "ኣብ ሒደት...",
+      "removing": "ምእላይ..."
+    }
+  },
+
+  "errors": {
+    "mobile": {
+      "required": "ቁፅሪ ሞባይል የድሊ",
+      "mustStartCountry": "ቁፅሪ ሞባይል ብ +251 ክጅምር ኣለዎ",
+      "mustStart9": "ቁፅሪ ሞባይል ድሕሪ ኮድ ሃገር ብ 9 ክጅምር ኣለዎ",
+      "length": "ቁፅሪ ሞባይል ድሕሪ ኮድ ሃገር 9 ኣሃዛት ክኸውን ኣለዎ" 
+    },
+    "whitelistFetch": "ቁፅሪ ዝተፈቀደሎም ዝርዝር ምምፃእ ኣይተኻእለን",
+    "mobileFetch": "ቁፅሪ ሞባይል ምምፃእ ኣይተኻእለን",
+    "mobileLoad": "ቁፅሪ ሞባይል ኣብ ምፅዓን ጌጋ",
+    "whitelistLoad": "ቁፅርታት ዝተፈቀደሎም ዝርዝር ኣብ ምፅዓን ጌጋ",
+    "removeWhitelist": "ቁፅሪ ካብ ዝተፈቀደሎም ዝርዝር ኣብ ምእላይ ጌጋ"
+  },
+
+  "states": {
+    "loading": "ኣብ ምፅዓን..."
+  },
+  "changeTag": {
+    "title": "ለውጢ NameTAG ምምሕዳር",
+    "note": "መተሓሳሰቢ፡ NameTAG ምስ ቀየርኩም፣ ዝኾነ ይኹን ናይቲ ዝሓለፈ NameTAG ዝግበር ክፍሊት ንቕድሚት ኣይስጉምን እዩ። ኣብ መወዳእታ ናይቲ ሕጂ ዘለኻዮ ውጥን NameTAG ክትቅይሮ ንመክር።", 
+    "emptyState": "ዝኾነ ንጡፍ ኣገልግሎት NameTAG ምዝገባ ንምእላይ ኣይተረኽበን።",
+    "table": {
+      "nameTagNumber": "ቁፅሪ NameTAG",
+      "mobileNumber": "ቁፅሪ ሞባይል",
+      "recurringFeeDueDate": "ተደጋጋሚ ክፍሊት ዝኽፈልሉ ዕለት",
+      "outstandingRecurringFee": "ዘይተኸፈለ ተደጋጋሚ ክፍሊት",
+      "status": "ኩነታት",
+      "action": "ተግባር"
+    },
+    "buttons": {
+      "changeNameTag": "NameTAG ምቕያር",
+      "processing": "ኣብ ሒደት..."
+    },
+    "toastMessages": {
+      "failedToLoad": "ናይ NameTAG ዳታ ምፅዓን ኣይተኻእለን",
+      "successfullyUnsubscribed": "ምዝገባ ብዓወት ተኣልዩ",
+      "failedToUnsubscribe": "ምቁራፅ ሳብስክራይብ ኣይተኻእለን",
+      "anErrorOccurred": "ጌጋ ኣጋጢሙ"
+    },
+    "common": {
+      "na": "N/A",
+      "etb": "ETB"
+    }
+  },
+  "changeNumber": {
+    "title": "ቁፅሪ ሞባይል ምቕያር",
+    "emptyState": "ንጡፍ ኣገልግሎት NameTAG ኣይተረኽበን።",
+    "table": {
+      "nameTagNumber": "ቁፅሪ NameTAG",
+      "mobileNumber": "ቁፅሪ ሞባይል",
+      "mobileNumberType": "ዓይነት ቁፅሪ ሞባይል",
+      "recurringFee": "ተደጋጋሚ ክፍሊት",
+      "recurringFeeDueDate": "ተደጋጋሚ ክፍሊት ዝኽፈልሉ ዕለት",
+      "outstandingRecurringFee": "ዘይተኸፈለ ተደጋጋሚ ክፍሊት",
+      "status": "ኩነታት",
+      "action": "ተግባር"
+    },
+    "mobileNumberTypes": {
+      "primary": "ቀዳማይ",
+      "additional": "ተወሳኺ"
+    },
+    "buttons": {
+      "changeMobileNumber": "ቁፅሪ ሞባይል ምቕያር"
+    },
+    "toastMessages": {
+      "failedToLoad": "ናይ NameTAG ዳታ ምፅዓን ኣይተኻእለን"
+    },
+    "common": {
+      "na": "N/A",
+      "etb": "ETB"
+    }
+  },
+  "unsubscribe": {
+    "title": "NameTAG ምእላይ ምዝገባ ኣመሓድር",
+    "emptyState": "ዝኾነ ንጡፍ ኣገልግሎት NameTAG ምዝገባ ንምእላይ ኣይተረኽበን።",
+    "table": {
+      "tagNumber": "TAG ቁፅሪ",
+      "mobileNumber": "ቁፅሪ ሞባይል",
+      "registrationDate": "ዕለት ምዝገባ",
+      "status": "ኩነታት",
+      "action": "ተግባር"
+    },
+    "buttons": {
+      "unsubscribe": "ምእላይ",
+      "processing": "ኣብ ሒደት..."
+    },
+    "toastMessages": {
+      "failedToLoad": "ናይ NameTAG ዳታ ምፅዓን ኣይተኻእለን",
+      "successfullyUnsubscribed": "ብዓወት ምዝገባ ተኣልዩ",
+      "failedToUnsubscribe": "ምቁራፅ ሳብስክራይብ ኣይተኻእለን",
+      "anErrorOccurred": "ጌጋ ኣጋጢሙ"
+    },
+    "common": {
+      "na": "N/A"
+    }
+  },
+  "closeAccount": {
+    "title": "ምዕፃው ኣካውንት ትካላት ምምሕዳር",
+    "warningMessage": "እዞም ዝስዕቡ ንጡፋት NameTAGs ኣለዉዎም። ኣካውንቶም ንምዕፃው፣በይዝኦም ካብ ነፍሲ ወከፍ NameTAG ምዝገባ ኣውፅኡ።",
+    "table": {
+      "companyName": "ሽም ትካል",
+      "mobileNumber": "ቁፅሪ ሞባይል",
+      "createdDate": "ዝተፈጥረሉ ዕለት",
+      "status": "ኩነታት",
+      "action": "ተግባር"
+    },
+    "buttons": {
+      "closeAccount": "ኣካውንት ምዕፃው",
+      "processing": "ኣብ ሒደት..."
+    },
+    "toastMessages": {
+      "failedToLoad": "ናይ NameTAG ዳታ ምፅዓን ኣይተኻእለን",
+      "successfullyClosedAccount": "ብዓወት ኣካውንት ተዓፅዩ",
+      "failedToCloseAccount": "ምዕፃው ኣካውንት ኣይተኻእለን",
+      "anErrorOccurred": "ጌጋ ኣጋጢሙ"
+    },
+    "common": {
+      "na": "N/A"
+    }
+  },
+  "manageIncomingCalls": {
+    "title": "ዝኣትዉ ፃውዒታት ምምሕዳር",
+    "emptyState": "ዝኾነ ንጡፍ NameTAG ምስ ሞባይል ቁፀሮም ዝተኣሳሰር የለን።", 
+    "labels": {
+      "nameTag": "NameTAG:",
+      "mobileNumber": "ቁፅሪ ሞባይል:"
+    },
+    "status": {
+      "on": "",
+      "stopped": "ደው ኢሉ",
+      "currentStatus": "ናይ ሕጂ ናይ ዝኣቱ ፃውዒት ኩነታቶም:",
+      "stopInfo": "ዝኣትዉ ፃውዒታት ደው ከተብሉ እንተመሪፆም ንዝፅሉ 10 መዓልታት ዝኾነ ዝኣቱ ፃውዒት ኣይክፀኩምን እዩ።",
+      "stoppedInfo":  "ኣገልግሎት ካብ ዝተቛረፀሉ ዕለት ጀሚሩ ን10 መዓልታት ዝኾነ ዝኣቱ ፃውዒት ኣይቅበልካን"
+    },
+    "buttons": {
+      "stopCalls": "ፃውዒት ደው ምባል",
+      "startCalls": "ፃውዒት ምጅማር",
+      "processing": "ኣብ ሒደት....",
+      "cancel": "ሰርዝ",
+      "confirm": "ኣረጋግፅ"
+    },
+    "modal": {
+      "title": "ምርግጋፅ?",
+      "confirmStop": "በይዝኦም ንዝኣትዉ ፃውዒታትኩም ደው ንምባል ኣረጋግፁ።",
+      "confirmStart":"በይዝኦም ንዝኣትዉ ፃውዒታት ምቕባል ንምጅማር ኣረጋግፁ።"
+    },
+    "toastMessages": {
+      "errorLoading": "ሓበሬታ TAG ኣብ ምፅዓን ጌጋ",
+      "serviceActivated": "ኣገልግሎት ብዓወት ተከፊቱ",
+      "serviceDeactivated": "ኣገልግሎት ብዓወት ተዓፅዩ",
+      "failedToUpdate": "ኩነታት ኣገልግሎት ንምዕራፍ ኣይተኻእለን",
+      "errorUpdating": "ኩነታት ኣገልግሎት ኣብ ምዕራፍ ጌጋ። በይዝኦም እንደገና ፈትኑ።" 
+    }
+  }
+}
