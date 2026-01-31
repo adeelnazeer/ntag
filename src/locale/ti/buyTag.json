@@ -1,0 +1,122 @@
+{
+  "headers": {
+    "corporateNameTag": "ትካል NameTAG",
+    "welcomeToNameTag": "እንኳዕ ናብ NameTAG ኣገልግሎት ብደሓን መፃእኩም!",
+    "nameTagService": "NameTAG ኣገልግሎት"
+  },
+  "actionRequired": {
+    "title": "ኣድላዪ ስጕምቲ፦ ተደጋጋሚ ክፍሊት ፍቓድ ምሃብ",
+    "message": "ቁፅሪ NameTAG ንጡፍ ንኽኸውን፡ በይዝኦም ብtelebirr ኣቢሎም ተደጋጋሚ ክፍሊት ፍቓድ ይሃቡ።",
+    "pinPrompt": "ብpush notification ኣቢሉ ናይ ምሽጢር ቁፅሪ ምልክት ክመፀካ እዩ። ",
+    "suspensionWarning": "ፍቓድ እንተዘይተዋሂብዎ፡ ቁፅሪ NameTAG ድሕሪ 30 መዓልታት ካብቲ ተደጋጋሚ ክፍሊት ዝኽፈልሉ ዕለት ክቋረጽ እዩ።",
+    "accept": "ተቀበል"
+  },
+  "notices": {
+    "notice": "ኣፍልጦ:",
+    "unsubscribed": "ናይ NameTAG ኣገልግሎት ኣይተመዝገበን"
+  },
+  "tagInfo": {
+    "tagType": "TAG ዓይነት",
+    "premium": "ፕሪሚየም",
+    "corporate": "ትካል",
+    "nameTagCategory": "NameTAG ምድብ",
+    "registeredMobileNumber": "ምዝጉብ ቁፅሪ ሞባይል",
+    "subscriptionFee": "ናይ ምዝገባ ክፍሊት",
+    "subscriptionPaymentStatus": "ኩነታት ክፍሊት ምዝገባ",
+    "reservationDate": "ዕለት ምትሓዝ ",
+    "subscriptionDate": "ዕለት ምዝገባ",
+    "serviceStatus": "ኩነታት ኣገልግሎት",
+    "servicePackage": "ጥሙር ኣገልግሎት ",
+    "recurringFee": "ተደጋጋሚ ክፍሊት",
+    "monthly": "ወርሓዊ",
+    "quarterly": "ርብዒ ዓመት",
+    "semiAnnually": "ፍርቂ ዓመት",
+    "annually": "ዓመታዊ",
+    "recurringFeeLastChargeDate": "ተደጋጋሚ ክፍሊት ናይ መወዳእታ ክፍሊት ዕለት",
+    "recurringFeeDueDate": "ተደጋጋሚ ክፍሊት ዝኽፈለሉ ዕለት",
+    "recurringFeeNextDueDate": "ተደጋጋሚ ክፍሊት ቀፃሊ ዝኽፈልሉ ዕለት",
+    "unsubscribeDate": "ዕለት ምእላይ ምዝገባ",
+    "resubscribeMessage": "ነዚ TAG Number ካብ ምዝገባ ምውጋድ ጀሚሩ ኣብ ውሽጢ 7 መዓልታት ዳግማይ ምዝገባ ክትገብሩ ትኽእሉ ኢኹም።",
+    "incomingCallsStatus": "ኩነታት ዝኣትዉ ፃውዒታት ",
+    "serviceFeeLastChargeDate": "ናይ ኣገልግሎት ክፍሊት ናይ መወዳእታ ኽፍሊት",
+    "notAvailable": "ኣይተረከበን",
+    "on": "ምውላዕ",
+    "off": "ምጥፋእ",
+    "reserved": "ተዓቂቡ"
+  },
+  "buttons": {
+    "resubmitDocuments": "ሰነዳት ዳግማይ ምቕራብ",
+    "buyTagNumber": "TAG ቁፅሪ ምግዛእ",
+    "processing": "ኣብ ሒደት...",
+    "cancelReservation": "ዝተትሓዘ ምስራዝ",
+    "resubscribeTagNumber": "ዳግማይ ምምዝጋብ TAG ቁፅሪ",
+    "buyNameTag": "NameTAG ምግዛእ ",
+    "reserveNameTag": "NameTAG ምትሓዝ"
+  },
+  "accountStatus": {
+    "blocked": "ናይ NameTAG ቁፅሪ ሒሳብ ተዓፅዩ ኣሎ።ንተወሳኺ ሓገዝ በይዝኦም ንNameTAG ኣገልግሎት ተወከስ።"
+  },
+  "registrationInfo": {
+    "registeredCount": "ካብ ዝለዓለ {{max}} NameTAGs {{total}} ተመዝጊብካ ኣለኻ።"
+  },
+  "documentStatus": {
+    "underReview": "ኣብዚ እዋን'ዚ ሰነድኩም ኣብ ምፅራይ ይርከብ። በይዝኦም ብትዕግስቲ ይፀበዩ።",
+    "reviewTime": "እቲ መስርሕ ምፅራይ ክሳብ 48 ሰዓታት ክወስድ ይኽእል። ሰነድኩም ምስ ተገምገመ ናይ ሓፂር መልእኽቲ መፍለጢ ክበፅሖም እዩ።",
+    "rejected": "ሰነድኩም ተቀባልነት ኣይረኸበን ። በይዝኦም ዝርዝር ሓበሬታ መርሚሮም ዳግማይ ኣቕርብዎ።"
+  },
+  "emptyStates": {
+    "canReserveWhileProcessing": "ክሳብ ሽዑ ግን ሰነድኩም እናተሰርሐ እንከሎ ቁፅሪ NameTAG ክትሕዙ ይኽእሉ እዮም። ",
+    "noTagReserved": "ክሳብ ሕጂ ዝኾነ ናይ NameTAG ቁፅሪ ዝተትሓዘ ወይ ዝተመዝገበ የለን።"
+  },
+  "toastMessages": {
+    "errorProcessing": "ይቕሬታ፣ ኣብዚ ሕጂ እዋን ንሕቶኹም ክንሰርሓሉ ኣይከኣልናን። በይዝኦም ፀኒሕኩም ደጊምኩም ፈትኑ።",
+    "mandateSent": "ናይ ቴሌብር ዕማም ንምጅማር ሕቶኹም ተላኢኹ ኣሎ። በይዝኦም ሞባይልኩም መርምሩን ቴሌብር ምሽጢር ቁፅሪ ተጠቂምኩም ኣፅድቑዎን።",
+    "failedToUnsubscribe": "ሳብስክራይብ ምእላይ ኣይተክኣለን",
+    "successfullyResubscribed": "ዕውት ዳግማይ ምዝገባ ተገይሩ",
+    "failedToResubscribe": "ዳግማይ ሳብስክራይብ ምግባር ኣይተክኣለን",
+    "anErrorOccurred": "ጌጋ ኣጋጢሙ",
+    "reservationCanceled": "ምትሓዝ ተሰሪዙ",
+    "failedToCancelReservation": "ምዝገባ ክስርዝ ኣይተክኣለን"
+  },
+  "common": {
+    "na": "N/A",
+    "etb": "ETB"
+  },
+  "modal": {
+    "titles": {
+      "unsubscribe": "ሳብስክራይብ ምቁራፅ ኣረጋግፅ",
+      "resubscribe": "ዳግማይ ምዝገባ ኣረጋግፅ",
+      "cancel": "ምስራዝ ኣኣረጋግፅ",
+      "close": "ዕፅው ኣካውንት ኣረጋግፅ",
+      "default": "ስጉምቲ ኣረጋግፅ"
+    },
+    "messages": {
+      "unsubscribe": "ካብ NameTAG #{{tagNo}} ምዝገባ ምእላይ?",
+      "resubscribe": "ነዚ ናይ NameTAG ኣገልግሎት ዳግማይ ክምዝገቡ ከም ዝደልዩ ርግፀኛ ዲዮም?",
+      "cancel": "ናይ NameTAG ምዝገብኦም ክስርዙ ከም ዝደልዩ ርግፀኛ ዲዮም?",
+      "close": "ነቲ ናይ NameTAG ኣካውንት ምዕፃው ሕቶ ክፀድቅ ከም ዝደልዩ ርግፀኛ ዲዮም?",
+      "default": "ነዚ ስጉምቲ ክቅፅል ከም ዝደልዩ ርግፀኛ ዲዮም?"
+    },
+    "descriptions": {
+      "unsubscribeIndividual": "ኩሉ ዝተኸፍለ ክፍሊት ዘይምለስ እዩ።እዚ NameTAG ንሓዋሩ ክውገድ ስለዝኾነ ክምለስ ኣይክእልን እዩ።",
+      "unsubscribeCorporate": "ኩሉ ዝተኸፍለ ክፍሊት ዘይምለስ እዩ።"
+    },
+    "warnings": {
+      "unsubscribe": "መተሓሳሰቢ፡ ኣብ ዝቕፅሉ 7 መዓልታት ኣብ ዝኾነ እዋን ዳግማይ ምዝገባ ክትገብሩ ትኽእሉ ኢኹም። ብድሕሪኡ እዚ NameTAG ካልኦት ክገዝእዎ ክቐርብ እዩ።",
+      "cancel": " እቲ ሒደት እንተቀፂሎም፣ ምዕቃብ ይስረዝ፡ እዚ NameTAG ድማ ካልኦት ንኽገዝእዎ ክዝርጋሕ እዩ።"
+    },
+    "actionButtons": {
+      "unsubscribe": "ሳብስክራይብ ምቁራፅ",
+      "resubscribe": "ዳግማይ ምዝገባ",
+      "cancel": "እወ፣ ምዕቃብ ሰርዝ",
+      "default": "ኣረጋግፅ"
+    },
+    "cancelButtons": {
+      "cancel": "ኣይ፡ ምዕቃብ ከምዘሎ",
+      "default": "ሰርዝ"
+    },
+    "placeholders": {
+      "closeAccountReason": "ኣካውንቶም ዝዓፀውሉ ምኽንያት የእትዉ"
+    }
+  }
+}

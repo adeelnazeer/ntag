@@ -6,6 +6,8 @@
     "manageTag": "Manage NameTAG",
     "callScheduling": "Call Scheduling",
     "incomingCallPin": "Incoming Call PIN",
+    "startIncomingCalls": "Start Incoming Calls",
+    "stopIncomingCalls": "Stop Incoming Calls",
     "BlockUnblock": "Block & Unblock",
     "changeNameTag": "Change NameTAG",
     "changeMobileNo": "Change Mobile Number",

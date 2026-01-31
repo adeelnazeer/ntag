@@ -1,0 +1,56 @@
+{
+  "services": {
+    "title": "Adeegga hordhaca ah",
+    "introduction": {
+      "heading": "Soo bandhigida Name TAG: Aqoonsigaagu wuu kobcay",
+      "description": "Dunida maanta sida xawliga ah ugu socota abuurista khibradaha macaamiisha gaarka ah waa lama huraan. Hadii aanu nahay Ethio Telecom waxa naga go'an in aanu samayno hal-abuur iyo fududayn. Taasi waa sababta aan ugu faraxsannahay inaan soo bandhigno NameTAG—adeegga kuu oggolaanaya inaad ku qorto magac xusuus gaar ah lambarkaaga gacanta."
+    },
+    "whatIsNameTag": {
+      "heading": "Waa maxay NameTAG? ",
+      "description": "NameTAG waa adeeg nambar dalwad ah oo kuu ogolaanaya inaad doorato naaneysta magac gaaban oo soo jiidasho leh ama odhaah ku xidhan mobilka ee aasaasiga ah. Tani waxay ku siinaysaa xoriyada aad ku wacdo aqoonsi ka tarjumaysa shakhsiyaddaada ama ganacsigaaga."
+    },
+    "howItWorks": {
+      "heading": "Sidee u shaqeysaa?",
+      "steps": {
+        "step1": "Ka samee akoon bilaasha nametag.et (shakhsi ama shirkad).",
+        "step2": "Isku qor NameTAG oo dooro lambarka aad rabto (Platinum, Golden, Silver, ama Bronze).",
+        "step3": "Bixi is-diiwaangelinta iyo khidmadaha soo noqnoqda.",
+        "step4": "Isticmaal lambarkaaga NameTAG marka aad wicitaannada samaynayso ka horreeysii calaamadda # lambarka aad wacayso. Dadka aad wacayso waxay arki doonaan NameTAG-ga aad dooratay halkii uu ka muuqan lahaa lambarkaaga rasmiga ah."
+      }
+    },
+    "keyFeatures": {
+      "heading": "Astaamaha Muhiimka ah:",
+      "features": {
+        "features": "Isla markiiba ka hel nambar gaaban oo soo jiidasho leh SIM-kaaga jira adoon booqan shirkadda Ethio Telecom ama xafiis.",
+        "feature2": "Nambar dalwad ah oo gaar ah (2 ilaa 8 nambar) oo ku xiran lambarkaaga gacanta ee aasaasiga ah.",
+        "feature3": "U diyaar ah macmiisha lacag-bixinta hore loo bixiyay iyo ka dib bixinta oo ay ku jiraan—Waxaa la heli karaa nambarada lacag bixinta ka dib iyo xisaabaadka gaarka ah.",
+        "feature4": "NameTAG nambarada macaamiisha gaarka ah iyo kuwa shirkadaha sida ay doorteen.",
+        "feature5": "Maareynta fudud iyada oo loo marayo portal web, USSD, ama abka mobaylka.",
+        "feature6": "Gacanta ku hay lambarkaaga cusub. Maamul jadwalka shuruucda wicitaanada soo gala oo deji PIN.",
+        "feature7": "Doorashooyin qiimo oo dabacsan: qorsheyaal bishii ah, saddex biloodba mar, lix biloodba mar, iyo sannadle ah."
+      }
+    },
+    "carousel": {
+      "slides": [
+        {
+          "title": "NameTAG",
+          "para1": "Noqo in ka badan tiro ",
+          "para2": "Magacaaga ha muujin lambarkaaga marka aad wacayso. .",
+          "description": "Adigoo isticmaalaya NameTAG lambarka taleefankaagu wuxuu isu beddelaa magac xusuus gaar ah oo ka tarjumaya qofka aad tahay. Haddi aad tahay shaqsi ama ganacsi tani waxay kuu ogolaanaysaa inaad muujiso magacaga aad dooratay halkii aad ka isticmaali lahayd lambarka caadiga ah markaad wacdo - samaynta is dhexgalka kasta mid xirfad leh oo si fudud loo xasuusto.."
+        },
+        {
+          "title": "NameTAG",
+          "para1": "Kobciyo Aqoonsiga Summadaada ",
+          "para2": "Isticmaal magaca gaarka ah ee macaamiishaadu wacaan si ay u muujiyaan astaantaada. .",
+          "description": "NameTAG wuxuu kaa caawinayaa inaad xoojiso joogitaanka sumaddaada adoo ku beddelaya lambarkaaga taleefanka caadiga ah NameTAG caado ah. Ku fiican ganacsiyada iyo saameeyayaasha adeegani waxa ay u ogolaataa macaamiisha iyo xidhiidhada in ay gartaan oo ay ku xasuustaan ​​isla markaaba—iyaga oo ka caawinaya dhisidda daacadnimada summada iyo khibradaha isgaadhsiinta ee ka wanaagsan.."
+        },
+        {
+          "title": "NameTAG",
+          "para1": "Wicitaannada xusuusta leh waa la fududeeyey ",
+          "para2": "Abuur NameTAG soo jiidasho leh oo ku xidhan lambarkaaga. .",
+          "description": "Ku dhex istaag wicitaan kasta oo wata NameTAG-aqoonsiga wicitaankaaga ee gaarka ah. Haddi ay tahay naanaysta magaca sumadda ama weedha NameTAG waxa ay ku xidhaa magacaga aad dooratay lambarkaaga dhabta ah si loo hubiyo in qof kasta oo aad la xidhiidho uu marka hore arko aqoonsigaga. Way fududahay in la dejiyo si fudud loo maareeyo oo diyaar u ah isticmaalayaasha lacagta hore loo bixiyay iyo kuwa dambe.."
+        }
+      ]
+    }
+  }
+}

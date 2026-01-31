@@ -83,6 +83,7 @@
         "confirmPassword": "Confirm Password is required",
         "verificationCode": "Verification code is required",
         "termAndCondition": "You must accept the Terms & Conditions to continue",
+        "minLength": "Must be at least 3 characters",
         "tinMinLength": "Must be at least 9 digits",
         "tinMaxLength": "Cannot exceed 10 digits",
         "tinPattern": "Digits only (9–10)",

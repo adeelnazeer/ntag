@@ -1,0 +1,19 @@
+{
+  "sideBar": {
+    "dashboard": "ዳሽቦርድ",
+    "buyTag": "NameTAG ይግዝኡ",
+    "reserveTag": "NameTAG ይሓዙ",
+    "manageTag": "NameTAG ምምሕዳር",
+    "callScheduling": "ናይ ፃውዒት መደብ ምውፃእ",
+    "incomingCallPin": "ዝኣቱ ፃውዒት ሚሽጢር ቁፅሪ",
+    "startIncomingCalls": "ጽውዒት ምቕባል ጀምር",
+    "stopIncomingCalls": "ጽውዒት ምቕባል ኣቁም",
+    "BlockUnblock": "ዓግት/ምፍታሕ",
+    "changeNameTag": "ምቕያር NameTAG",
+    "changeMobileNo": "ምቕያር ቁፅሪ ሞባይል",
+    "unsubscribe": "ምውጋድ ሳብስክራይብ",
+    "closeAccount": "ኣካውንት ምዕፃው",
+    "profile": "መንነት",
+    "logout": "ይውፅኡ"
+  }
+}

@@ -6,6 +6,7 @@ import APICall from "../../../network/APICall";
 import EndPoints from "../../../network/EndPoints";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "@material-tailwind/react";
 
 /* ---------- helpers ---------- */
 const toStr = (v) => (v === 0 || v ? String(v) : "");
@@ -34,6 +35,7 @@ export default function CompanyInfo({ userProfileData }) {
 
   const [industries, setIndustries] = useState([]);
   const [regions, setRegions] = useState([]);
+  const [submitLoading, setSubmitLoading] = useState(false);
   const registerData = useRegisterHook();
 
   /* 1) Fetch lists */
@@ -77,20 +79,26 @@ export default function CompanyInfo({ userProfileData }) {
     setValue("comp_state", regName, { shouldDirty: false });
   }, [listsReady, industries, regions, userProfileData, reset, setValue]);
 
-  const onSubmit = (data) => {
-    registerData.handleUpdateUserInfo({
-      comp_name: data?.comp_name,
-      username: data?.username,
-      email: data?.email,
-      comp_industry: data?.comp_industry, // readable
-      comp_state: data?.comp_state, // readable
-      comp_city: data?.comp_city,
-      comp_addr: data?.comp_addr,
-      comp_reg_no: data?.comp_reg_no,
-      phone_number: data?.phone_number,
-      corp_industry_id: data?.corp_industry_id, // IDs (strings)
-      corp_region_id: data?.corp_region_id,
-    });
+  const onSubmit = async (data) => {
+    if (submitLoading) return;
+    setSubmitLoading(true);
+    try {
+      await registerData.handleUpdateUserInfo({
+        comp_name: data?.comp_name,
+        username: data?.username,
+        email: data?.email,
+        comp_industry: data?.comp_industry, // readable
+        comp_state: data?.comp_state, // readable
+        comp_city: data?.comp_city,
+        comp_addr: data?.comp_addr,
+        comp_reg_no: data?.comp_reg_no,
+        phone_number: data?.phone_number,
+        corp_industry_id: data?.corp_industry_id, // IDs (strings)
+        corp_region_id: data?.corp_region_id,
+      });
+    } finally {
+      setSubmitLoading(false);
+    }
   };
 
   return (
@@ -204,8 +212,18 @@ export default function CompanyInfo({ userProfileData }) {
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none border border-[#8A8AA033]"
             maxLength={20}
-            {...register("comp_city", { required: true })}
+            style={
+              errors.comp_city
+                ? { border: "1px solid red" }
+                : { border: "1px solid #8A8AA033" }
+            }
+            {...register("comp_city", { required: true, minLength: { value: 3, message: t("common.form.errors.minLength") } })}
           />
+          {errors.comp_city && (
+            <p className="text-left mt-1 text-sm text-[#FF0000]">
+              {errors.comp_city.message}
+            </p>
+          )}
         </div>
 
         <div>
@@ -215,8 +233,18 @@ export default function CompanyInfo({ userProfileData }) {
           <Input
             className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none border border-[#8A8AA033]"
             maxLength={100}
-            {...register("comp_addr", { required: true })}
+            style={
+              errors.comp_addr
+                ? { border: "1px solid red" }
+                : { border: "1px solid #8A8AA033" }
+            }
+            {...register("comp_addr", { required: true, minLength: { value: 3, message: t("common.form.errors.minLength") } })}
           />
+          {errors.comp_addr && (
+            <p className="text-left mt-1 text-sm text-[#FF0000]">
+              {errors.comp_addr.message}
+            </p>
+          )}
         </div>
 
         <div>
@@ -260,9 +288,13 @@ export default function CompanyInfo({ userProfileData }) {
       <div className="mt-10 max-w-3xl text-center">
         <button
           type="submit"
-          className="bg-secondary text-white font-medium px-10 py-3 rounded-lg"
+          disabled={submitLoading}
+          className="bg-secondary text-white font-medium px-10 py-3 rounded-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mx-auto"
         >
-          {t2("profile.updateCompInfoBtn")}
+          {submitLoading && (
+            <Spinner className="h-4 w-4" color="white" />
+          )}
+          {submitLoading ? t2("profile.companyInfo.updating") : t2("profile.updateCompInfoBtn")}
         </button>
       </div>
     </form>

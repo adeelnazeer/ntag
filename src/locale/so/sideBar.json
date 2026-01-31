@@ -1,0 +1,19 @@
+{
+  "sideBar": {
+    "dashboard": "Dashboard-ka",
+    "buyTag": "Iibso Name TAG",
+    "reserveTag": "Kaydka Name TAG",
+    "manageTag": "Maamul Name TAG",
+    "callScheduling": "Jadwalka wacitaanka",
+    "incomingCallPin": "Lambarka Wicista soo socda",
+    "startIncomingCalls": "Bilow Wicitaanka soo socda",
+    "stopIncomingCalls": "Jooji Wicitaanka soo socda",
+    "BlockUnblock": "Jooji / ka bixi",
+    "changeNameTag": "Beddel Name TAG",
+    "changeMobileNo": "Beddel Lambarka Mobilka",
+    "unsubscribe": "Is-diiwaangelinta",
+    "closeAccount": "Xidh Akoonka",
+    "profile": "Muuqaalka",
+    "logout": "Ka bax"
+  }
+}

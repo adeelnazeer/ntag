@@ -1,0 +1,111 @@
+{
+  "title": "Name TAG Siyaasadda Qarsoonnimada ",
+  "introduction": {
+    "heading": " Hordhac",
+    "introduction": "Xaga Ethio Telecom (\"we\", \"us\", \"our\") arrimahaaga gaarka ah. Qaanuunka Arrimaha Khaaska ah wuxuu sharxayaa sida aan u ururino isticmaalka, siidaynta, iyo ilaalinta macluumaadkaaga gaarka ah marka aad isticmaasho adeegga NameTAG iyo aaladaha la xidhiidha."
+  },
+  "definitions": {
+    "heading": "Qeexitaanno ",
+    "personalInformation": {
+      "label": "Macluumaadka Shakhsi ahaaneed:",
+      "text": "Macluumad kasta oo tilmaameysa waxay la xiriirtaa ama loo isticmaali karaa in lagu aqoonsado shaqsi."
+    },
+    "service": {
+      "label": "Adeegga:",
+      "text": "Adeegga lambarka farsamada ee NameTAG oo ay ku jiraan abka, mareegaha ee la xidhiidha iyo aaladaha."
+    }
+  },
+  "informationWeCollect": {
+    "heading": "Xog Aruurinta ",
+    "personalInformation": {
+      "label": "Macluumaadka Shakhsi ahaaneed: ",
+      "text": "Sida magacaaga, iimaylka, lambarka mobaylka iyo aqoonsiyada kale ee la bixiyay wakhtiga diiwaangelinta."
+    },
+    "usageData": {
+      "label": "Xogta Isticmaalka:",
+      "text": "Macluumaad ku saabsan sida aad ula falgasho Adeegga oo ay ku jiraan raadinta, taariikhda raadinta, iyo qaababka isgaarsiinta."
+    },
+    "deviceInformation": {
+      "label": "Macluumaadka Qalabka:",
+      "text": "Faahfaahinta sida qalabkaaga, nooca, ciwaanka IP-ga, iyo nooca browserka."
+    }
+  },
+  "howWeCollect": {
+    "heading": "Sida aan Xog Uruursano ",
+    "directly": {
+      "label": " Si toos ah adiga:",
+      "text": "Markaad isdiiwaangeliso, la xidhiidh taageerada, ama la macaamilka Adeegga."
+    },
+    "automatically": {
+      "label": "Si toos ah::",
+      "text": "Isticmaalka cookies iyo tignoolajiyada raadraaca marka aad isticmaalayso Adeeggayaga."
+    },
+    "thirdParties": {
+      "label": "Ka socota dhinacyo saddexaad: ",
+      "text": "Marka lagu daro wada-hawlgalayaashayada, xiriiriya warbaahinta bulshada, iyo ilaha dadweynaha ee la heli karo."
+    }
+  },
+  "howWeUse": {
+    "heading": "Sida aan u isticmaalno macluumaadka ",
+    "intro": "Waxaan u isticmaalnaa macluumaadkaaga: ",
+    "items": {
+      "provide": "Bixi shaqada oo ilaali Adeegga NameTAG",
+      "inprove": "Horumari oo gaaryeel khibradaada isticmaale",
+      "communicate": "La xidhiidh wararka, cusboonaysiinta ee muhiimka ah, iyo soo jeedinta xayaysiis (oggolaanshahaaga).",
+      "fulfill": "Buuxi shuruudaha sharci iyo sharciyeed."
+    }
+  },
+  "disclosure": {
+    "heading": "Shaacinta Xogta",
+    "intro": "Waxaa laga yaabaa inaan la wadaagno macluumaadkaaga gaarka ah: ",
+    "serviceProviders": {
+      "label": "Bixiyeyaasha adeegga:",
+      "text": "Who assist in delivering and improving our services.",
+      "partners": {
+        "label": "Wada-hawlgalayaasha iyo xiriiriyayaasha ",
+        "text": "Si loo ballaariyo adeegga iyo taageerada macaamiisha.:"
+      },
+      "lawEnforcement": {
+        "label": "Dhaqangelinta Sharciga ama Maamulka Sharciyeed: ",
+        "text": "Marka loo baahdo in loo hoggaansamo waajibaadka sharciga ah ama la ilaaliyo xuquuqda iyo badbaadada."
+      }
+    },
+    "cookies": {
+      "heading": "Kukiyada iyo Tiknoolajiyada Dabagalka ",
+      "intro": "Waxaan u isticmaalnaa cookies iyo tignoolajiyada la midka ah:",
+      "items": {
+        "analyze": "Falanqee oo faham sida Adeeggayaga loo isticmaalo. ",
+        "personalize": "Shakhsiyeel khibradaada iyo waxa ku jira. ",
+        "enhance": "Kobcinta shaqeynta iyo amniga adeegga."
+      },
+      "note": "Waxaad ku maareyn kartaa dookhyadaada buskudka aaladdaada ama dejinta browserka."
+    },
+    "yourRights": {
+      "heading": "Xuquuqdaada",
+      "intro": "Waxaad xaq u leedahay::",
+      "items": {
+        "access": "Gal oo dib u eeg macluumaadkaaga shakhsi ahaaneed.  ",
+        "requestCorrections": "Codso sixid ama cusbooneysiin ",
+        "object": "Ujeedo habaynta macluumaadkaaga xaaladaha qaarkood. ",
+        "requestDeletion": "Codso tirtirka macluumaadkaaga shakhsi ahaaneed (oo ku xiran waajibaadyada sharciga ah).",
+        "optOut": "Ka bax helidda fariimaha xayaysiiska wakhti kasta oo aad rabto.."
+      }
+    },
+    "security": {
+      "heading": "Amniga",
+      "text": "Waxaan hirgelineynaa tillaabooyinka amniga ee farsamada iyo hay'adda ku habboon si aan uga ilaalino macluumaadkaaga shakhsiyeed beddelka iyo burburinta siidaynta galitaanka aan la ogolayn."
+    },
+    "dataRetention": {
+      "heading": "Haynta Xogta ",
+      "text": "Waxaan haynaa macluumaadkaaga khaaska ah oo kaliya ilaa iyo inta lagama maarmaanka ah si loo fuliyo ujeedooyinka lagu qeexay siyaasaddan khaaska ah ilaa wakhti dheer oo sii hayn ah loo baahan yahay ama uu ogolyahay sharcigu."
+    },
+    "changes": {
+      "heading": "Isbeddellada Siyaasaddan Gaarka ah ",
+      "text": "Waxa laga yaabaa inaan cusboonaysiinno siyaasaddan Qarsoonnimada waqti ka waqti. Isbeddelada ayaa lagu soo dhejin doonaa mareegahayaga waxaanan kugu dhiirigelinaynaa inaad dib u eegto wakhtiyada qaarkood."
+    },
+    "acceptance": {
+      "heading": "Ogolaanshaha Siyaasadda Qarsoonnimada ",
+      "text": "Adigoo isticmaalaya Adeegga NameTAG waxaad xaqiijinaysaa inaad fahantay oo aad ogolaatay shuruudaha Siyaasaddan Khaaska ah."
+    }
+  }
+}

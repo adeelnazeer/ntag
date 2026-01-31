@@ -1,0 +1,59 @@
+{
+  "title": "ለውጢ NameTAG ምምሕዳር",
+
+  "note": "መተሓሳሰቢ፡ NameTAG ናትካ ምስ ቀየርካ፡ ዝኾነ ይኹን ናይቲ ዝሓለፈ NameTAG ዝተገብረ ክፍሊት ንቕድሚት ኣይከይድን እዩ። ኣብ መወዳእታ ናይቲ ሕጂ ዘለኻዮ ውጥን NameTAG ክትቅይር ንመክር።",
+  "table": {
+    "headers": {
+      "nameTagNumber": "NameTAG ቁፅሪ",
+      "mobileNumber": "ቁፅሪ ሞባይል",
+      "recurringFeeDueDate": "ተደጋጋሚ ክፍሊት ዝኽፈልሉ ዕለት",
+      "outstandingFee": "ዘይተኸፍለ ተደጋጋሚ ክፍሊት",
+      "status": "ኩነታት",
+      "action": "ስጉምቲ"
+    },
+    "noActive": "ምዝገባ ንምእላይ ዝኾነ ንጡፍ ኣገልግሎት NameTAG ኣይተረኽበን።",
+    "noActiveLinked": "ምስ ቁፅሪ ሞባይሎም ዝተኣሳሰር ዝኾነ ንጡፍ NameTAG የብሎምን፣ ክቅይሩ ዝክእልሉ NameTAG እውን የለን።",
+    "noTagLinked": "ምስ ቁፅሪ ሞባይሎም ዝተኣሳሰር ዝኾነ TAG የብሎምን።"
+  },
+  "buttons": {
+    "changeNameTag": "ምቕያር NameTAG",
+    "processing": "ኣብ ሒደት..."
+  },
+
+  "messages": {
+    "fetchError": "NameTAG ዳታ ምፅዓን ኣይተክኣለን",
+    "changeSuccess": "ናቶም TAG ብዓወት ተቐይሩ ኣሎ።",
+    "changeFailed": "ናቶም TAG ምቕያር ኣይተክኣለን",
+    "noAccountId": "ናይ ዓሚል ኣካውንት መለለዪ ኣይተረኽበን።",
+    "unsubscribeSuccess": "ብዓወት ምዝገባ ተኣልዩ",
+    "unsubscribeFailed": "ሳብስክራይብ ምእላይ ኣይተክኣለን",
+    "errorOccurred": "ጌጋ ኣጋጢሙ"
+  },
+
+  "modals": {
+    "unsubscribeTitle": "ምርግጋፅ ምዝገባ ምእላይ",
+    "unsubscribeMessage": "ካብዚ ናይ NameTAG ኣገልግሎት ምዝገባ ምእላይ ከምዝደልዩ ርግፀኛ ዲዮም?",
+    "confirm": "ኣረጋግፅ",
+    "cancel": "ሰርዝ"
+  },
+
+  "confirmDialog": {
+    "title": "NameTAG ምቕያር",
+    "description": "NameTAG ክቅይሩ ከምዝደልዩ ርግፀኛ ዲዮም?",
+    "remaining": "{{count}} ምቕያር ተሪፍዎም ኣሎ።",
+    "buttons": {
+      "cancel": "ሰርዝ",
+      "confirm": "ኣረጋግፅ",
+      "processing": "ኣብ ሒደት..."
+    }
+  },
+
+  "loading": {
+    "spinner": "ኣብ ምፅዓን..."
+  },
+
+  "common": {
+    "na": "N/A",
+    "etb": "ETB"
+  }
+}

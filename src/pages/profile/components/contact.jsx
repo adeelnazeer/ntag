@@ -6,6 +6,7 @@ import { useRegisterHook } from "../../hooks/useRegisterHook";
 import { useAppSelector } from "../../../redux/hooks";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "@material-tailwind/react";
 
 const toStr = (v) => (v === 0 || v ? String(v) : "");
 
@@ -23,7 +24,9 @@ const normalize = (p = {}) => ({
 const ContactInfo = ({ profileData, userProfileData }) => {
   const registerData = useRegisterHook();
   const [formDisabled, setFormDisabled] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
   const { t } = useTranslation(["common"]);
+  const { t: t2 } = useTranslation(["profile"]);
 
   // Get corporate documents from Redux state to check approval status
   const corporateDocuments = useAppSelector(
@@ -71,29 +74,22 @@ const ContactInfo = ({ profileData, userProfileData }) => {
     setFormDisabled(!isEditingAllowed());
   }, [corporateDocuments]);
 
-  const onSubmit = (data) => {
-    // Double-check if editing is allowed
-    // if (!isEditingAllowed()) {
-    //   toast.error("Contact information can't be modified after document approval");
-    //   return;
-    // }
+  const onSubmit = async (data) => {
+    if (submitLoading) return;
 
-    // // Check if primary phone number is being changed
-    // if (data.phone_number !== profileData.phone_number) {
-    //   toast.error("Primary mobile number cannot be changed");
-    //   // Reset the field to its original value
-    //   setValue("phone_number", profileData.phone_number);
-    //   return;
-    // }
-
-    registerData.handleUpdateUserInfo({
-      contact_fname: data?.contact_fname,
-      contact_lname: data?.contact_lname,
-      email: data?.email,
-      contact_no: data?.contact_no?.startsWith("+")
-        ? data?.contact_no?.slice(1)
-        : data?.contact_no,
-    });
+    setSubmitLoading(true);
+    try {
+      await registerData.handleUpdateUserInfo({
+        contact_fname: data?.contact_fname,
+        contact_lname: data?.contact_lname,
+        email: data?.email,
+        contact_no: data?.contact_no?.startsWith("+")
+          ? data?.contact_no?.slice(1)
+          : data?.contact_no,
+      });
+    } finally {
+      setSubmitLoading(false);
+    }
   };
 
   // Check if documents are approved (both have status 1)
@@ -311,10 +307,14 @@ const ContactInfo = ({ profileData, userProfileData }) => {
       </div>
       <div className="mt-10 max-w-3xl text-center">
         <button
-          className={` bg-secondary text-white font-medium px-10 py-3 rounded-lg`}
-          // disabled={formDisabled}
+          type="submit"
+          disabled={submitLoading}
+          className="bg-secondary text-white font-medium px-10 py-3 rounded-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mx-auto"
         >
-          Update Contact Information
+          {submitLoading && (
+            <Spinner className="h-4 w-4" color="white" />
+          )}
+          {submitLoading ? t2("profile.companyInfo.updating") : t2("profile.updateContactInfoBtn")}
         </button>
       </div>
     </form>

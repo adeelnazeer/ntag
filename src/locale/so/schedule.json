@@ -1,0 +1,230 @@
+{
+  "manage": {
+    "confirm_incoming_schedule": "Xaqiiji Jadwalka Wicista Soogalootiga?",
+    "confirmMsg1": "Ma hubtaa inaad rabto inaad damiso jadwalka wicitaanka soo socda?",
+    "confirm": "Xaqiiji",
+    "cancel": "Jooji",
+    "manageIncommingCall": "Maamul wicitaanka soo socda",
+    "currentCallScheduling": "Jadwalka wicitaanka ee hadda socda",
+    "on": "DAAR",
+    "off": "DAMN",
+    "info1": "Haddii jadwalka wicitaanka soo socda uu maqan yahay waxaad heli doontaa wicitaano soo socda 24/7",
+    "info2": " Jadwalka Wicitaanada Imaanaya ee Hadda= ",
+    "info3": " Adeeggaagu wuxuu ahaan doonaa",
+    "scheduleCall": "Jadwalka Wicitaanada Soo Galitaanka",
+    "applyBtn": " Codso Jadwalka  ",
+    "info4": "Hadda ma jiro NameTAG oo ka soo horjeeda akoonkaaga",
+    "desc1": " Ma hubtaa inaad rabto ",
+    "enable": "Oggolow",
+    "desc2": "Jadwalka wicitaanka ee ka imanaya ",
+    "to": "ku ",
+    "from": "KA"
+  },
+  "callPin": {
+    "title": "Maamul PIN ama sirta  soo socda ee Wicitaanka iyo Nambarada Liiska Cad ama Liiska Oggolaanshaha ",
+    "selectNumber": "SDooro Nambarkaaga Mobilka ee Diiwaangashan ",
+    "noNumber": "Lama helin lambarada mobilka ",
+    "currentPin": "PIN ama sirta  hadda ",
+    "notDefined": "Lama qeexin ",
+    "removePin": "Ka saar PIN ama sirta  ",
+    "setPin": "Sameyso Lambar Sir ah",
+    "changePin": "Beddel PIN ama sirta  ",
+    "addWhiteList": "Ku dar liiska caddaymaha  ama  Liiska Oggolaanshaha ",
+    "table": {
+      "sr": "Sr#",
+      "nametag": "NameTAG",
+      "whitelistNumber": "Lambarka liiska cad  ama  Liiska Oggolaanshaha ",
+      "whitelistDate": "Liistada cad  ama Liiska Oggolaanshaha ee Datde ",
+      "pin": "PIN  ama sirta ",
+      "action": "Ficil ama talbo "
+    },
+    "empty": {
+      "noPin": "Xilligan ma jiro lambar sir ah (PIN) oo u dejisan wicitaannada soo dhacaya. Fadlan sameyso lambar sir ah si aad ugu darto lambarro liiska oggolaanshaha (whitelist).",
+      "noActive": "Ma jiro NameTAG shaqaynaya oo ku xiran lambarkaaga mobaylka..",
+      "noWhitelist": "Lama helin wax lambar ah oo ku jira liiska oggolaanshaha!"
+    },
+    "confirmRemoval": {
+      "title": "Xaqiiji ka saarida ",
+      "desc": "Ma hubtaa inaad doonayso inaad ka saarto lambarka mobaylka +{{number }} liiska cadcad liiska oggolaanshaha ?"
+    },
+    "modalPin": {
+      "removeTitle": "Ka saar Wicitaanka PIN  ama sirta ee wicitaanadaada soo socda ",
+      "setTitle": "U sameyso lambar sir ah (PIN) wicitaannadaada soo dhacaya",
+      "changeTitle": "U beddel lambarka Wicista Wicitaannadaada soo socda ",
+      "descRemove": "Marka lambarka sirta ah (PIN) la tirtiro, dhammaan dadka soo wacaya waxay awoodi doonaan inay la xiriiraan NameTAG-gaaga iyagoon gelin wax lambar sir ah..",
+      "descSet": "Ma hubtaa inaad rabto inaad {{action }} PIN-ka wicida soogasha Soo wacayaasha waxaa looga baahan doonaa inay galaan PIN ka hor intaysan ku xidhin lambarkaaga NameTAG. .",
+      "nameTag": "NameTAG",
+      "mobileNumber": "Lambarka Mobilka ",
+      "callPin": "Wac PIN ama sirtra  ",
+      "noPin": "Lama qeexin",
+      "noteNoPin": "PIN looma baahna - dadka soo wacaya waxay gaari karaan NameTAGaga iyagoon galin PIN-ka .",
+      "selectSingleDigit": "Fadlan dooro PIN lambar ah oo kali ah ",
+      "selectPinPlaceholder": "Dooro PIN"
+    },
+    "modalWhitelist": {
+      "title": "Ku dar liiska caddaymaha ",
+      "subtitle": "Soo wacayaasha liiska la caddeeyey waxay wici karaan NameTAG adiga oo aan lahayn PIN. .",
+      "enterMobileLabel": "Geli Nambarka Mobilka si aad ugu darto Liiska Caddayn ",
+      "formatHint": "Qaabka:  +251xxxxxxxxx",
+      "yourRegistered": "Lambarka Mobilkaaga ee Diwaangashan"
+    },
+    "buttons": {
+      "cancel": "Jooji ",
+      "confirm": "Xaqiiji ",
+      "processing": "Habaynta...",
+      "removing": "saarida..."
+    }
+  },
+  "errors": {
+    "mobile": {
+      "required": "loo baahan yahay",
+      "mustStartCountry": "Nambarka mobiladu waa inuu ka bilowdaa +251 ",
+      "mustStart9": "Nambarada mobiladu waa inay ku bilowdaan 9 ka dib koodhka wadanka ",
+      "length": "Lambarka mobaylku waa inuu ka koobnaadaa 9 rambar ka dib lambarka dalka."
+    },
+    "whitelistFetch": "Ku guuldareystay in la keeno lambarada mobilada ",
+    "mobileLoad": "Khalad soo dejinta lambarada mobilada  ",
+    "whitelistLoad": "Khalad soo dejinta lambarada liiska cad  ama liidska ogalanshaha ",
+    "removeWhitelist": "Khalad ka saarida lambarka liiska cadcad"
+  },
+  "states": {
+    "loading": "Soodejinaya..."
+  },
+  "changeTag": {
+    "title": "Maamul Bedel Name TAG ",
+    "note": "Note: Fiiro gaar ah: Markaad bedesho Name TAG wixii lacag ah ee lagu bixiyay NameTAG hore looma sii wadi doono. Waxaan kugula talineynaa inaad bedesho Name TAG dhamaadka qorshahaaga hadda. .",
+    "emptyState": "Lama helin adeegyo NameTAG oo shaqaynaya oo laga bixi karo.",
+    "table": {
+      "nameTagNumber": "Lambarka Name TAG",
+      "mobileNumber": "Lambarka Mobilka ",
+      "recurringFeeDueDate": "Taariikhda kama dambaysta ah ee khidmadda soo noqnoqda ",
+      "outstandingRecurringFee": "Kharashka Soo Noqnoqda ee aadka u Wacan ",
+      "status": "Xaalada ",
+      "action": "Ficil ama talbo "
+    },
+    "buttons": {
+      "changeNameTag": "Beddel Name TAG ",
+      "processing": "Habaynta......"
+    },
+    "toastMessages": {
+      "failedToLoad": "Ku guuldareystay in la soo geliyo xogta NameTAG ",
+      "successfullyUnsubscribed": "Si guul leh ayaa isaga baxay ",
+      "failedToUnsubscribe": "Ku guul daraystay in la iska diiwaan geliyo ",
+      "anErrorOccurred": "Khalad ayaa dhacay"
+    },
+    "common": {
+      "na": "N/A",
+      "etb": "ETB"
+    }
+  },
+  "changeNumber": {
+    "title": "Beddel Lambarka Mobilka ",
+    "emptyState": "Lama helin adeegyo NameTAG oo aan shaqaynayn..",
+    "table": {
+      "nameTagNumber": "Name TAG Nambar  ",
+      "mobileNumber": "Lambarka Mobilka ",
+      "mobileNumberType": "Nooca Mobilka ",
+      "recurringFee": "Kharashka soo noqnoqda ",
+      "recurringFeeDueDate": "RTaariikhda kama dambaysta ah ee khidmadda soo noqnoqda ",
+      "outstandingRecurringFee": "Kharashka Soo Noqnoqda ee aadka u Wacan ",
+      "status": "Xaalada ",
+      "action": "Ficil ama talbo "
+    },
+    "mobileNumberTypes": {
+      "primary": "Asal ahaan  ama biloga ",
+      "additional": "Dheeraad "
+    },
+    "buttons": {
+      "changeMobileNumber": "Beddel Lambarka Mobilka"
+    },
+    "toastMessages": {
+      "failedToLoad": "Ku guuldareystay in la soo geliyo xogta NameTAG"
+    },
+    "common": {
+      "na": "N/A",
+      "etb": "ETB"
+    }
+  },
+  "unsubscribe": {
+    "title": "Maamul Name TAG ka-noqoshada ",
+    "emptyState": "Lama helin adeegyo NameTAG oo aan shaqaynayn.",
+    "table": {
+      "tagNumber": "Lambarka TAG ",
+      "mobileNumber": "Lambarka Mobilka ",
+      "registrationDate": "Taariikhda Diiwangelinta ",
+      "status": "Xaalada ",
+      "action": "Ficil ama talbo "
+    },
+    "buttons": {
+      "unsubscribe": "Is-diiwaangelinta ",
+      "processing": "Habaynta..."
+    },
+    "toastMessages": {
+      "failedToLoad": "Ku guuldareystay in la soo geliyo xogta NameTAG ",
+      "successfullyUnsubscribed": "Si guul leh ayaa isaga baxay ",
+      "failedToUnsubscribe": "Ku guul daraystay in la iska diiwaan geliyo ",
+      "anErrorOccurred": "Khalad ayaa dhacay"
+    },
+    "common": {
+      "na": "N/A"
+    }
+  },
+  "closeAccount": {
+    "title": "Maamul Xidhitaanka aKoontada Shirkadda ",
+    "warningMessage": "Waxaad leedahay NameTAG-yadan soo socda ee shaqaynaya. Si aad u xirto akoonkaaga, fadlan mid kasta oo NameTAG-yadan ah ka bixi (unsubscribe)..",
+    "table": {
+      "companyName": "Magaca Shirkadda ",
+      "mobileNumber": "Lambarka Mobilka ",
+      "createdDate": "Taariikhda Lasameeya  ",
+      "status": "Xaalada ",
+      "action": "Ficil ama talbo "
+    },
+    "buttons": {
+      "closeAccount": "Xidha Akoonka ",
+      "processing": "Habaynta..."
+    },
+    "toastMessages": {
+      "failedToLoad": "Ku guuldareystay in la soo geliyo xogta NameTAG ",
+      "successfullyClosedAccount": "Si Guul Ah Ayaa Loo Xidhay aKoontada ",
+      "failedToCloseAccount": "Ku guuldareystay in la xidho aKoontada ",
+      "anErrorOccurred": "Khalad ayaa dhacay"
+    },
+    "common": {
+      "na": "N/A"
+    }
+  },
+  "manageIncomingCalls": {
+    "title": "Maamul wicitaanada soo gala ",
+    "emptyState": "Ma jiraan adeegyo NameTAG oo shaqaynaya oo ku xidhan nambarkaaga moobilka.",
+    "labels": {
+      "nameTag": "NameTAG:",
+      "mobileNumber": "Nambarka Moobilka::"
+    },
+    "status": {
+      "on": "DAAR",
+      "stopped": "Joogsaday ",
+      "currentStatus": "Xaaladaada wicitaanka ee hadda waa: :",
+      "stopInfo": "Haddii aad doorato inaad joojiso wicitaanada soo socda ma heli doontid wax wicitaano ah 10ka maalmood ee soo socda. .",
+      "stoppedInfo": "Ma heli doontid wax wicitaano ah oo imanaya 10 maalmood laga bilaabo taariikhda adeegga la joojiyay"
+    },
+    "buttons": {
+      "stopCalls": "Jooji Wicitaannada ",
+      "startCalls": "Bilow Wicitaannada ",
+      "processing": "Habaynta... ...",
+      "cancel": "Jooji ",
+      "confirm": "Xaqiiji"
+    },
+    "modal": {
+      "title": "Xaqiijinta?",
+      "confirmStop": "Fadlan xaqiiji inaad joojiso wicitaanadaada soo socda. .",
+      "confirmStart": "Fadlan xaqiiji inaad Bilaabayso helista wicitaanada soo socda"
+    },
+    "toastMessages": {
+      "errorLoading": "Cilad soo rarista macluumaadka TAG ",
+      "serviceActivated": "Adeeggu si guul leh ayuu u hawl galay ",
+      "serviceDeactivated": "Adeeggu si guul leh ayuu u demilay ",
+      "failedToUpdate": "Ku guuldareystay in la cusboonaysiiyo heerka adeegga ",
+      "errorUpdating": "Khalad cusboonaysiinta heerka adeegga Fadlan isku day mar kale."
+    }
+  }
+}

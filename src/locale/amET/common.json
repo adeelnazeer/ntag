@@ -83,6 +83,7 @@
         "confirmPassword": "የይለፍ ቃል ማረጋገጥ ያስፈልጋል",
         "verificationCode": "ማረጋገጫ ኮድ ያስፈልጋል",
         "termAndCondition": "ለመቀጠል ውሎች እና ሁኔታዎች መስማማት አለብዎት",
+        "minLength": "ቢያንስ 3 ቁምፊዎች መሆን አለበት",
         "tinMinLength": "ቢያንስ 9 አሃዞች መሆን አለበት",
         "tinMaxLength": "ከ10 አሃዞች መብለጥ የለበትም",
         "tinPattern": "(9–10) አሃዞች ብቻ ",

@@ -8,7 +8,8 @@ const LANGS = [
     { code: "en", label: "EN", native: "EN", flag: "🇬🇧" },
     { code: "amET", label: "AM", native: "AM", flag: "et" },
     { code: "or", label: "OR", native: "OR", flag: "or" },
-
+    { code: "so", label: "SO", native: "SO", flag: "so" },
+    { code: "ti", label: "TI", native: "TI", flag: "ti" },
 ];
 
 // languages that should be RTL

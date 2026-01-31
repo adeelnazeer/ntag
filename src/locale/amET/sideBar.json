@@ -6,6 +6,8 @@
     "manageTag": "NameTAG አስተዳድር",
     "callScheduling": "የጥሪ ቀጠሮ ማሲያዢያ",
     "incomingCallPin": "የጥሪ ፒን",
+    "startIncomingCalls": "የጥሪ መቀበል ጀምር",
+    "stopIncomingCalls": "የጥሪ መቀበል አቁም",
     "BlockUnblock": "እገዳ/እገዳ ማንሺያ ",
     "changeNameTag": "የ NameTAG መቀየሪያ",
     "changeMobileNo": "የሞባይል ቁጥር መቀየሪያ",

@@ -1,0 +1,35 @@
+{
+  "title": "  ቁፅሪ ሞባይል ምቕያር",
+
+  "table": {
+    "headers": {
+      "nameTagNumber": "NameTAG ቁፅሪ",
+      "mobileNumber": "ቁፅሪ ሞባይል",
+      "mobileNumberType": "ቁፅሪ ሞባይል ዓይነት",
+      "recurringFee": "ተደጋጋሚ ክፍሊት",
+      "recurringFeeDueDate": "ተደጋጋሚ ክፍሊት ዝኽፈልሉ ዕለት",
+      "outstandingRecurringFee": "ዘይተኸፍለ ተደጋጋሚ ክፍሊት",
+      "status": "ኩነታት",
+      "action": "ስጉምቲ"
+    },
+    "empty": "ንጡፍ ኣገልግሎት NameTAG ኣይተረኽበን።"
+  },
+
+  "chips": {
+    "primary": "ቀዳማይ",
+    "additional": "ተወሳኺ"
+  },
+
+  "buttons": {
+    "changeMobileNumber": "ቁፅሪ ሞባይል ምቕያር"
+  },
+
+  "messages": {
+    "fetchError": "NameTAG ዳታ ምፅዓን ኣይተክኣለን",
+    "noAccountId": "ናይ ዓሚል ኣካውንት መለለዪ ኣይተረኽበን።"
+  },
+
+  "loading": {
+    "spinner": "ኣብ ምፅዓን..."
+  }
+}
