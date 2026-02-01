@@ -203,7 +203,7 @@ const CompanyForm = ({
     if ((!isGetCodeDisabled || otpExpired) && validatePhoneNumber(phoneNumber)) {
       setIsGetCodeDisabled(true);
       setOtpExpired(false);
-      setOriginalPhoneNumber(phoneNumber); // Store the phone number when OTP is requested
+      setOriginalPhoneNumber(phoneNumber);
       registerData.handleGetOtp(phoneNumber);
       setTimeout(() => {
         setIsGetCodeDisabled(false);
@@ -575,10 +575,11 @@ const CompanyForm = ({
                     hasBackendError ||
                     !isValidPhone ||
                     !areRequiredFieldsValid ||
-                    (isGetCodeDisabled && !otpExpired)
+                    (isGetCodeDisabled && !otpExpired) ||
+                    !registerData?.isRecaptchaReady
                   }
                   className={`!absolute right-3 bg-[#f5f5f5] p-2 shadow-sm border border-[#8A8AA033] 
-    ${(hasBackendError || !isValidPhone || !areRequiredFieldsValid || (isGetCodeDisabled && !otpExpired))
+    ${(hasBackendError || !isValidPhone || !areRequiredFieldsValid || (isGetCodeDisabled && !otpExpired) || !registerData?.isRecaptchaReady)
                       ? "opacity-50 cursor-not-allowed"
                       : "cursor-pointer hover:bg-gray-100"
                     } text-xs font-medium rounded`}
@@ -587,10 +588,12 @@ const CompanyForm = ({
                     !hasBackendError &&
                     isValidPhone &&
                     areRequiredFieldsValid &&
+                    registerData?.isRecaptchaReady &&
                     handleOtpRequest(phone)
                   }
                 >
-                  {otpExpired ? t("common.form.resendOtp") :
+                  {!registerData?.isRecaptchaReady ? t("common.form.pleaseWait") :
+                    otpExpired ? t("common.form.resendOtp") :
                     isGetCodeDisabled ? t("common.form.pleaseWait") :
                       registerData?.isResend ? t("common.form.resendOtp") : t("common.form.sentOtp")}
                 </button>

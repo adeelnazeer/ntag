@@ -595,10 +595,11 @@ const UserForm = () => {
                                                     hasBackendError ||
                                                     !isValidPhone ||
                                                     !areRequiredFieldsValid ||
-                                                    (isGetCodeDisabled && !otpExpired)
+                                                    (isGetCodeDisabled && !otpExpired) ||
+                                                    !registerData?.isRecaptchaReady
                                                 }
                                                 className={`!absolute right-3 bg-[#f5f5f5] p-2 shadow-sm border border-[#8A8AA033] 
-                                                     ${(hasBackendError || !isValidPhone || !areRequiredFieldsValid || (isGetCodeDisabled && !otpExpired))
+                                                     ${(hasBackendError || !isValidPhone || !areRequiredFieldsValid || (isGetCodeDisabled && !otpExpired) || !registerData?.isRecaptchaReady)
                                                         ? "opacity-50 cursor-not-allowed"
                                                         : "cursor-pointer hover:bg-gray-100"
                                                     } text-xs font-medium rounded`}
@@ -607,10 +608,12 @@ const UserForm = () => {
                                                     isValidPhone &&
                                                     !hasBackendError &&
                                                     areRequiredFieldsValid &&
+                                                    registerData?.isRecaptchaReady &&
                                                     handleOtpRequest(phone)
                                                 }
                                             >
-                                                {otpExpired ? "Resend OTP" :
+                                                {!registerData?.isRecaptchaReady ? t("common.form.pleaseWait") :
+                                                    otpExpired ? "Resend OTP" :
                                                     isGetCodeDisabled ? t("common.form.pleaseWait") :
                                                         registerData?.isResend ? t("common.form.resendOtp") : t("common.form.sentOtp")}
                                             </button>

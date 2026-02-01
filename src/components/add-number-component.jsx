@@ -183,15 +183,15 @@ const AddNumberComponent = ({
                     type="button"
                     className={`absolute right-3 bg-gray-100 p-2 shadow-sm border border-gray-200 
         ${
-          !isValidPhone || !phoneVerified
+          !isValidPhone || !phoneVerified || !registerData?.isRecaptchaReady
             ? "opacity-50 cursor-not-allowed"
             : "cursor-pointer hover:bg-gray-200"
         } 
         text-xs font-medium rounded-lg`}
                     onClick={handleGetOtp}
-                    disabled={!isValidPhone || !phoneVerified}
+                    disabled={!isValidPhone || !phoneVerified || !registerData?.isRecaptchaReady}
                   >
-                    {otpRequested ? "Resend OTP" : "Get OTP"}
+                    {!registerData?.isRecaptchaReady ? "Please wait..." : otpRequested ? "Resend OTP" : "Get OTP"}
                   </button>
                 </div>
               )

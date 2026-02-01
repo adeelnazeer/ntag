@@ -32,6 +32,10 @@
     "link3": "Forgot Password"
   },
   "common": {
+    "verifyHuman": "Verify you're human",
+    "recaptchaV2Message": "Please complete the security check below to continue.",
+    "cancel": "Cancel",
+    "verify": "Verify",
     "accountInfo": "Account Information",
     "termAndCondition": "Terms & Conditions",
     "form": {

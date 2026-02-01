@@ -9,11 +9,13 @@ import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
 import TickIcon from "../../assets/images/tick.png";
 import { useTranslation } from "react-i18next";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Header from "../../components/header";
 
 const Complaint = () => {
   const navigate = useNavigate();
   const { t } = useTranslation(["common", "complaint"]);
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const [phoneError, setPhoneError] = useState("");
   const [isValidPhone, setIsValidPhone] = useState(false);
@@ -79,7 +81,7 @@ const Complaint = () => {
     return true;
   };
 
-  const handleGetOtp = async () => {
+  const handleGetOtp = async (recaptchaTokenV2) => {
     if (!validatePhoneNumber(value)) return;
 
     setOtpRequested(true);
@@ -87,11 +89,60 @@ const Complaint = () => {
 
     try {
       const cleanedPhone = value.replace(/^\+/, "");
+      let recaptchaToken = recaptchaTokenV2;
+
+      if (!recaptchaToken) {
+        if (otpAttemptCount >= 3) {
+          toast.error(
+            t("complaint.modal.completeSecurityCheck", {
+              defaultValue: "Please complete the security check first.",
+            })
+          );
+          setVerifyingPhone(false);
+          setOtpRequested(false);
+          return;
+        }
+        if (!executeRecaptcha) {
+          toast.error(
+            t("complaint.modal.securityLoading", {
+              defaultValue: "Security check is loading. Please wait a moment and try again.",
+            })
+          );
+          setVerifyingPhone(false);
+          setOtpRequested(false);
+          return;
+        }
+        try {
+          recaptchaToken = await executeRecaptcha("complaint_generate_otp");
+        } catch (e) {
+          console.warn("reCAPTCHA error:", e);
+          toast.error(
+            t("complaint.modal.securityFailed", {
+              defaultValue: "Security verification failed. Please try again.",
+            })
+          );
+          setVerifyingPhone(false);
+          setOtpRequested(false);
+          return;
+        }
+        if (!recaptchaToken) {
+          toast.error(
+            t("complaint.modal.securityFailed", {
+              defaultValue: "Security verification failed. Please try again.",
+            })
+          );
+          setVerifyingPhone(false);
+          setOtpRequested(false);
+          return;
+        }
+      }
+
       const data = {
         msisdn: cleanedPhone,
         otp_type: "IND",
         channel: "SMS",
         transaction_type: "OTP_GENRATION",
+        recaptcha_token: recaptchaToken,
       };
 
       const response = await APICall(
@@ -99,6 +150,8 @@ const Complaint = () => {
         data,
         EndPoints.customer.generateOtp
       );
+
+      setOtpAttemptCount((c) => c + 1);
 
       if (response?.success) {
         toast.success(
@@ -150,10 +203,19 @@ const Complaint = () => {
     setVerifyingOtp(true);
 
     try {
+      let recaptchaToken = "";
+      if (executeRecaptcha) {
+        try {
+          recaptchaToken = await executeRecaptcha("complaint_verify_otp");
+        } catch (e) {
+          console.warn("reCAPTCHA error:", e);
+        }
+      }
       const data = {
         otp_id: otpId,
         otp_code: verificationCode,
         transaction_type: "OTP_GENRATION",
+        ...(recaptchaToken && { recaptcha_token: recaptchaToken }),
       };
 
       const response = await APICall(
@@ -301,15 +363,19 @@ const Complaint = () => {
                         type="button"
                         className={`absolute right-3 bg-gray-100 p-2 shadow-sm border border-gray-200 
                     ${
-                      !isValidPhone
+                      !isValidPhone || !executeRecaptcha
                         ? "opacity-50 cursor-not-allowed"
                         : "cursor-pointer hover:bg-gray-200"
                     } 
                     text-xs font-medium rounded-lg`}
-                        onClick={handleGetOtp}
-                        disabled={!isValidPhone}
+                        onClick={onGetOtpClick}
+                        disabled={!isValidPhone || !executeRecaptcha}
                       >
-                        {otpRequested
+                        {!executeRecaptcha
+                          ? t("complaint.modal.pleaseWait", {
+                              defaultValue: "Please wait...",
+                            })
+                          : otpRequested
                           ? t("complaint.modal.resendOtp", {
                               defaultValue: "Resend OTP",
                             })
