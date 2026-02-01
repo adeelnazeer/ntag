@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../../utilities/routesConst";
-import { get } from "react-hook-form";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export const useRegisterHook = () => {
   const navigate = useNavigate();
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const [expirationTime, setExpirationTime] = useState(null);
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
@@ -56,16 +57,35 @@ export const useRegisterHook = () => {
     }));
   };
 
-  const handleGetOtp = (phone) => {
+  const handleGetOtp = async (phone) => {
+    if (!executeRecaptcha) {
+      toast.error("Security check is loading. Please wait a moment and try again.");
+      return Promise.resolve();
+    }
     setIsResend(true);
-    const cleanedPhone = phone.replace(/^\+/, "");
+    const cleanedPhone = String(phone || "").replace(/^\+/, "");
+    let recaptchaToken = "";
+    try {
+      recaptchaToken = await executeRecaptcha("generate_otp");
+    } catch (e) {
+      console.warn("reCAPTCHA error:", e);
+      toast.error("Security verification failed. Please try again.");
+      setIsResend(false);
+      return Promise.resolve();
+    }
+    if (!recaptchaToken) {
+      toast.error("Security verification failed. Please try again.");
+      setIsResend(false);
+      return Promise.resolve();
+    }
     const data = {
       msisdn: cleanedPhone,
       otp_type: "IND",
       channel: "SMS",
       transaction_type: "OTP_GENRATION",
+      recaptcha_token: recaptchaToken,
     };
-    APICall("post", data, EndPoints.customer.generateOtp)
+    return APICall("post", data, EndPoints.customer.generateOtp)
       .then((res) => {
         if (res?.success) {
           toast.success(res?.message || "");
@@ -111,13 +131,21 @@ export const useRegisterHook = () => {
   };
   // ...existing code...
 
-  const handleRegister = (data, setActiveStep, reset) => {
+  const handleRegister = async (data, setActiveStep, reset) => {
     const otp = localStorage.getItem("otp");
     const payload = { ...data };
     payload.channel = "WEB";
-
-    (payload.otp_id = otp), (payload.otp_code = data?.verification_code);
-    console.log(payload, "pay post");
+    payload.otp_id = otp;
+    payload.otp_code = data?.verification_code;
+    let recaptchaToken = "";
+    if (executeRecaptcha) {
+      try {
+        recaptchaToken = await executeRecaptcha("register");
+      } catch (e) {
+        console.warn("reCAPTCHA error:", e);
+      }
+    }
+    if (recaptchaToken) payload.recaptcha_token = recaptchaToken;
 
     APICall("post", payload, EndPoints.customer.register)
       .then((res) => {
@@ -290,7 +318,8 @@ export const useRegisterHook = () => {
       .then((res) => {
         if (res?.success) {
           setState((st) => {
-            const { [name]: _, ...restError } = st.error; // remove `name` key from `error`
+            // eslint-disable-next-line no-unused-vars
+            const { [name]: _omit, ...restError } = st.error; // remove `name` key from `error`
             return {
               ...st,
               success: {
@@ -319,13 +348,22 @@ export const useRegisterHook = () => {
       });
   };
 
-  const handleIndividualRegister = (data, reset, setConfirmModal) => {
+  const handleIndividualRegister = async (data, reset, setConfirmModal) => {
     const otp = localStorage.getItem("otp");
     const payload = { ...data };
     payload.channel = "WEB";
     payload.otp_id = otp;
     payload.otp_code = data?.verification_code;
     payload.phone_number = data?.phone_number?.replace(/^\+/, "");
+    let recaptchaToken = "";
+    if (executeRecaptcha) {
+      try {
+        recaptchaToken = await executeRecaptcha("register_individual");
+      } catch (e) {
+        console.warn("reCAPTCHA error:", e);
+      }
+    }
+    if (recaptchaToken) payload.recaptcha_token = recaptchaToken;
     APICall("post", payload, EndPoints.customer.newSecurityEndPoints.individual.signUp)
       .then((res) => {
         if (res?.success) {
@@ -348,6 +386,7 @@ export const useRegisterHook = () => {
 
   return {
     handleGetOtp,
+    isRecaptchaReady: !!executeRecaptcha,
     expirationTime,
     state,
     verified,

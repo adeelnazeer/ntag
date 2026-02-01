@@ -7,13 +7,15 @@ import { toast } from "react-toastify";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 import { Button } from "@material-tailwind/react";
 import { useAppSelector } from "../../../redux/hooks";
-import { FiRefreshCw } from "react-icons/fi"; // Import refresh icon
+import { FiRefreshCw } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const OtpVerification = ({ otpId, setStep }) => {
     const { t } = useTranslation(["auth"]);
+    const { executeRecaptcha } = useGoogleReCaptcha();
     const { handleSubmit, control, reset, formState: { errors } } = useForm();
-    const [timeLeft, setTimeLeft] = useState(120); // Countdown timer in seconds
+    const [timeLeft, setTimeLeft] = useState(120);
     const [loading, setLoading] = useState(false);
     const [resending, setResending] = useState(false);
     const inputRefs = useRef([]);
@@ -31,18 +33,16 @@ const OtpVerification = ({ otpId, setStep }) => {
         }
     }, [timeLeft]);
 
-    // Resend OTP function (resets the timer)
     const handleResendOtp = () => {
         if (timeLeft > 0 || resending) return;
 
         setResending(true);
         reset();
 
-        // Add purpose parameter to help distinguish from registration flow
-        handleGetOtp(otpId?.phone_number, "password_reset")
+        handleGetOtp(otpId?.phone_number)
             .then(() => {
                 setTimeLeft(59);
-                inputRefs.current[0].focus(); // Focus on the first field
+                inputRefs.current[0]?.focus();
             })
             .catch((err) => {
                 toast.error(err?.message || t("otpVerification.toastMessages.failedToResendOtp"));
@@ -52,11 +52,10 @@ const OtpVerification = ({ otpId, setStep }) => {
             });
     };
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         setLoading(true);
         const otp = Object.values(data).join("");
 
-        // Use OTP ID from Redux if available, otherwise fall back to props or localStorage
         const otpIdValue = reduxOtpId || (otpId?.otp_id || localStorage.getItem("otp"));
 
         if (!otpIdValue) {
@@ -65,10 +64,20 @@ const OtpVerification = ({ otpId, setStep }) => {
             return;
         }
 
+        let recaptchaToken = "";
+        if (executeRecaptcha) {
+            try {
+                recaptchaToken = await executeRecaptcha("forget_password_verify_otp");
+            } catch (e) {
+                console.warn("reCAPTCHA error:", e);
+            }
+        }
+
         const payload = {
             otp_id: otpIdValue,
             otp_code: otp,
             transaction_type: "OTP_GENRATION",
+            ...(recaptchaToken && { recaptcha_token: recaptchaToken }),
         };
 
         APICall("post", payload, EndPoints.customer.verifyOty)

@@ -332,15 +332,15 @@ const AddNumberModal = ({
                       type="button"
                       className={`absolute right-3 bg-gray-100 p-2 shadow-sm border border-gray-200 
                       ${
-                        !isValidPhone || !phoneVerified
+                        !isValidPhone || !phoneVerified || !registerData?.isRecaptchaReady
                           ? "opacity-50 cursor-not-allowed"
                           : "cursor-pointer hover:bg-gray-200"
                       } 
                       text-xs font-medium rounded-lg`}
                       onClick={handleGetOtp}
-                      disabled={!isValidPhone || !phoneVerified}
+                      disabled={!isValidPhone || !phoneVerified || !registerData?.isRecaptchaReady}
                     >
-                      {otpRequested ? t("profile.addNumberModal.resendOtp") : t("profile.addNumberModal.getOtp")}
+                      {!registerData?.isRecaptchaReady ? t("common.form.pleaseWait") : otpRequested ? t("profile.addNumberModal.resendOtp") : t("profile.addNumberModal.getOtp")}
                     </button>
                   </div>
                 )

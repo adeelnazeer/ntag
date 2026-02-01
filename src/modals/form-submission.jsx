@@ -10,12 +10,14 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../redux/hooks";
 import { setUserData } from "../redux/userSlice";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
   const [showDocumentChoice, setShowDocumentChoice] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleSubmit = async () => {
     if (loading) return; // Prevent multiple submissions
@@ -94,6 +96,16 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
       if (registerPayload.phone_number && typeof registerPayload.phone_number === 'string') {
         registerPayload.phone_number = registerPayload.phone_number.replace(/^\+/, '');
       }
+
+      let recaptchaToken = "";
+      if (executeRecaptcha) {
+        try {
+          recaptchaToken = await executeRecaptcha("register_corporate");
+        } catch (e) {
+          console.warn("reCAPTCHA error:", e);
+        }
+      }
+      if (recaptchaToken) registerPayload.recaptcha_token = recaptchaToken;
 
       const registerRes = await APICall("post", registerPayload, EndPoints.customer.register);
       
@@ -318,6 +330,16 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
             if (registerPayload.phone_number && typeof registerPayload.phone_number === 'string') {
               registerPayload.phone_number = registerPayload.phone_number.replace(/^\+/, '');
             }
+
+            let recaptchaToken = "";
+            if (executeRecaptcha) {
+              try {
+                recaptchaToken = await executeRecaptcha("register_corporate");
+              } catch (e) {
+                console.warn("reCAPTCHA error:", e);
+              }
+            }
+            if (recaptchaToken) registerPayload.recaptcha_token = recaptchaToken;
 
             const registerRes = await APICall("post", registerPayload, EndPoints.customer.register);
             
