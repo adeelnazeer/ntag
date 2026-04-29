@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Carousel } from "@material-tailwind/react";
+import { FaLongArrowAltRight } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import ImgIdentity from "../../assets/images/home-identity.svg";
 import Logo from "../../assets/images/logo.png";
@@ -7,8 +8,8 @@ import TelebirrLogo from "../../assets/images/Telebirr.png";
 import HeroImg1 from "../../assets/images/img1.webp";
 import AParty from "../../assets/images/a-party.svg";
 import BParty from "../../assets/images/b-party.svg";
-import Slider2 from "../../assets/images/brand-mobile.svg";
-import Slider3 from "../../assets/images/brand2.svg";
+import Slider2 from "../../assets/images/slider2.svg";
+import Slider3 from "../../assets/images/slider3.svg";
 import Curve from "../../assets/images/curve.svg";
 const navLinks = [
   { href: "#home", label: "Home" },
@@ -62,7 +63,7 @@ const tiers = [
   },
   {
     name: "Bronze",
-    tag: "#Tufa",
+    tag: "#23104",
     level: "Named TAGs",
     description: "Custom names up to 8 characters",
     examples: "#Tufa, #Pepsi, #Touch",
@@ -149,14 +150,14 @@ const faqItems = [
   },
 ];
 
-function SectionTitle({ label, title, sub, light = false }) {
+function SectionTitle({ label, title, sub, light = false, white = false }) {
   return (
     <div className="mb-10">
-      <span className={`mb-3 block text-xs font-bold uppercase tracking-[2px] ${light ? "text-[#9ad45b]" : "text-[#5A9A18]"}`}>
+      <span className={`mb-3 block text-xs font-bold uppercase tracking-[2px] ${light ? "text-[#9ad45b]" : white ? "text-white" : "text-[#5A9A18]"}`}>
         {label}
       </span>
-      <h2 className={`mb-3 text-2xl font-extrabold leading-tight md:text-4xl ${light ? "text-white" : "text-[#0F3172]"}`}>{title}</h2>
-      {sub && <p className={`max-w-2xltext-sm md:text-base ${light ? "text-white/70" : "text-[#666666]"}`}>{sub}</p>}
+      <h2 className={`mb-3 text-2xl font-extrabold leading-tight md:text-4xl ${light ? "text-white" : white ? "text-white" : "text-[#126094]"}`}>{title}</h2>
+      {sub && <p className={`max-w-2xltext-sm md:text-base ${light ? "text-white/70" : white ? "text-white/85" : "text-[#666666]"}`}>{sub}</p>}
     </div>
   );
 }
@@ -166,12 +167,13 @@ export default function Home2Page() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("individual");
   const [openFaq, setOpenFaq] = useState(0);
+  const [heroActiveSlide, setHeroActiveSlide] = useState(0);
   const slidesData = t("carousel.slides", { returnObjects: true }) || [];
   const slideImages = [HeroImg1, Slider2, Slider3];
   const topImagePairs = [
     { left: AParty, right: BParty, showTwoImages: true },
-    { left: Slider2, right: null, showTwoImages: false, height: "380px" },
-    { left: Slider3, right: null, showTwoImages: false, height: "380px" },
+    { left: Slider2, right: null, showTwoImages: false, height: "md:h-[412px] h-[290px]" },
+    { left: Slider3, right: null, showTwoImages: false, height: "md:h-[450px] h-[290px]" },
   ];
   const heroSlides = (Array.isArray(slidesData) && slidesData.length ? slidesData : [
     {
@@ -253,7 +255,7 @@ export default function Home2Page() {
           <div className="border-t border-gray-200 bg-white px-4 py-3 md:hidden">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
-                <a key={link.href} href={link.href} className="rounded-md px-3 py-2 text-sm font-semibold text-[#0F3172] hover:bg-[#E8F5D7]" onClick={() => setMobileOpen(false)}>
+                <a key={link.href} href={link.href} className="rounded-md px-3 py-2 text-sm font-semibold text-[#126094] hover:bg-[#E8F5D7]" onClick={() => setMobileOpen(false)}>
                   {link.label}
                 </a>
               ))}
@@ -262,7 +264,7 @@ export default function Home2Page() {
         )}
       </nav>
 
-      <section id="home" className="bg-[#0F3172] py-4 md:py-6">
+      <section id="home" className={`pt-4 md:pt-6 ${heroActiveSlide === 1 ? "bg-white" : heroActiveSlide === 2 ? "bg-[#E8F5D7]" : "bg-[#126094]"}`}>
         <div className="mx-auto w-full max-w-7xl px-3 md:px-6">
           <Carousel
             className="rounded-2xl"
@@ -271,69 +273,87 @@ export default function Home2Page() {
             autoplay
             autoplayDelay={5000}
             loop
-            navigation={({ setActiveIndex, activeIndex, length }) => (
-              <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-                {new Array(length).fill("").map((_, i) => (
-                  <span
-                    key={i}
-                    onClick={() => setActiveIndex(i)}
-                    className={`block h-1 cursor-pointer rounded-2xl transition-all ${activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/40"
-                      }`}
-                  />
-                ))}
-              </div>
-            )}
+            navigation={({ setActiveIndex, activeIndex, length }) => {
+              if (heroActiveSlide !== activeIndex) {
+                setHeroActiveSlide(activeIndex);
+              }
+
+              return (
+                <div className="absolute right-4 top-4 z-20 flex gap-2 md:right-6 md:top-6">
+                  {new Array(length).fill("").map((_, i) => (
+                    <span
+                      key={i}
+                      onClick={() => setActiveIndex(i)}
+                      className={`block h-1 cursor-pointer rounded-2xl transition-all ${activeIndex === i
+                        ? activeIndex === 1 || activeIndex === 2
+                          ? "w-8 bg-[#126094]"
+                          : "w-8 bg-white"
+                        : activeIndex === 1 || activeIndex === 2
+                          ? "w-4 bg-[#126094]/40"
+                          : "w-4 bg-white/40"
+                        }`}
+                    />
+                  ))}
+                </div>
+              );
+            }}
           >
             {heroSlides.map((slide, index) => (
-              <div key={index} className="grid min-h-[460px] grid-cols-1 items-center gap-8 px-4 py-8 md:min-h-[560px] md:gap-10 md:px-6 md:py-10 lg:grid-cols-2">
-                <div className="text-white">
+              <div
+                key={index}
+                className={`grid min-h-[460px] grid-cols-1 items-center gap-8 px-4 pt-8 md:min-h-[560px] md:gap-10 md:px-6 md:pt-10 lg:grid-cols-2 ${index === 1 ? "bg-white" : index === 2 ? "bg-[#E8F5D7]" : "bg-[#126094]"
+                  }`}
+              >
+                <div className={index === 1 || index === 2 ? "text-[#126094] " : "text-white pb-6"}>
                   <p className="mb-4 text-xs font-bold uppercase tracking-[2px] text-[#76BC21]">Ethio Telecom VAS Service · April 2026</p>
                   <h1 className="mb-4 text-3xl font-black leading-tight md:text-6xl">{slide?.title}</h1>
-                  <p className="mb-2 max-w-xl text-white/90 md:text-[18px]">{slide?.para1}</p>
-                  <p className="mb-2 max-w-xl text-white/85 md:text-[18px]">{slide?.para2}</p>
-                  <p className="mb-7 max-w-xl text-white/80 md:text-[18px]">{slide?.description}</p>
+                  <p className={`mb-2 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-[#126094]/90" : "text-white/90"}`}>{slide?.para1}</p>
+                  <p className={`mb-2 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-[#126094]/85" : "text-white/85"}`}>{slide?.para2}</p>
+                  <p className={`mb-7 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-[#126094]/80" : "text-white/80"}`}>{slide?.description}</p>
                   <div className="mb-6 flex flex-wrap gap-3">
                     <button className="rounded-md bg-[#76BC21] px-6 py-3 text-sm font-bold text-white">Get My NameTAG</button>
-                    <a href="#how" className="rounded-md border-2 hover:text-secondary border-white/60 px-6 py-3 text-sm font-bold text-white">
+                    <a href="#how" className={`rounded-md border-2 px-6 py-3 text-sm font-bold ${index === 1 || index === 2 ? "border-[#126094]/45 text-[#126094] hover:bg-[#126094]/5" : "hover:text-secondary border-white/60 text-white"}`}>
                       See How It Works
                     </a>
                   </div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <button className="group inline-flex items-center gap-2 rounded-xl border border-white/30 bg-transparent px-3 py-2 text-white shadow-[0_8px_20px_rgba(0,0,0,0.28)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0f2b67]">
+                  <div className="flex flex-wrap pb-6 items-center gap-3">
+                    <button className={`group inline-flex items-center gap-2 rounded-xl border bg-transparent px-3 py-2 shadow-[0_8px_20px_rgba(0,0,0,0.28)] transition-all duration-200 hover:-translate-y-0.5 ${index === 1 || index === 2 ? "border-[#126094]/25 text-[#126094] hover:bg-[#126094]/5" : "border-white/30 text-white hover:bg-[#0f2b67]"}`}>
                       <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current text-[#76BC21]" aria-hidden="true">
                         <path d="M3.2 2.3c-.5.3-.8.8-.8 1.4v16.6c0 .6.3 1.1.8 1.4l.2.1L13 12 3.4 2.2l-.2.1zM16.2 9.1 5.3 3l8.6 8.8 2.3-2.4zM18.8 10.5l-1.6-.9-2.2 2.3 2.2 2.3 1.7-1c1.2-.6 1.2-2.1-.1-2.7zM5.3 21l10.9-6.1-2.3-2.4L5.3 21z" />
                       </svg>
                       <span className="text-left leading-tight">
-                        <span className="block text-[10px] text-white/70">GET IT ON</span>
+                        <span className={`block text-[10px] ${index === 1 || index === 2 ? "text-[#126094]/70" : "text-white/70"}`}>GET IT ON</span>
                         <span className="block text-sm font-bold">Google Play</span>
                       </span>
                     </button>
-                    <button className="group inline-flex items-center gap-2 rounded-xl border border-white/30 bg-transparent px-3 py-2 text-white shadow-[0_8px_20px_rgba(0,0,0,0.28)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0f2b67]">
+                    <button className={`group inline-flex items-center gap-2 rounded-xl border bg-transparent px-3 py-2 shadow-[0_8px_20px_rgba(0,0,0,0.28)] transition-all duration-200 hover:-translate-y-0.5 ${index === 1 || index === 2 ? "border-[#126094]/25 text-[#126094] hover:bg-[#126094]/5" : "border-white/30 text-white hover:bg-[#0f2b67]"}`}>
                       <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current text-[#76BC21]" aria-hidden="true">
                         <path d="M16.7 1.5h-9A2.2 2.2 0 0 0 5.5 3.7v16.6a2.2 2.2 0 0 0 2.2 2.2h9a2.2 2.2 0 0 0 2.2-2.2V3.7a2.2 2.2 0 0 0-2.2-2.2zm-4.2 19.6a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3.8-3.5H8V4.5h8.3v13.1z" />
                       </svg>
                       <span className="text-left leading-tight">
-                        <span className="block text-[10px] text-white/70">DOWNLOAD ON THE</span>
+                        <span className={`block text-[10px] ${index === 1 || index === 2 ? "text-[#126094]/70" : "text-white/70"}`}>DOWNLOAD ON THE</span>
                         <span className="block text-sm font-bold">App Store</span>
                       </span>
                     </button>
                   </div>
                 </div>
 
-                <div className="relative mx-auto flex h-[360px] w-full max-w-[360px] items-center justify-center overflow-hidden md:h-[520px] md:max-w-[560px]">
-                  <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 block">
-                    <div className="wave-ring absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-[#76BC21]/35 md:h-[460px] md:w-[460px]" />
-                    <div className="wave-ring wave-ring-delay-1 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-[#76BC21]/25 md:h-[460px] md:w-[460px]" />
-                    <div className="wave-ring wave-ring-delay-2 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-[#76BC21]/18 md:h-[460px] md:w-[460px]" />
-                  </div>
-                  <div className="relative z-10 flex w-full items-center justify-center">
-                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="relative mx-auto flex h-[360px] w-full max-w-[360px] items-center justify-center overflow-hidden md:h-[550px] md:max-w-[560px]">
+                  {index === 0 && (
+                    <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 block">
+                      <div className="wave-ring absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-[#76BC21]/35 md:h-[460px] md:w-[460px]" />
+                      <div className="wave-ring wave-ring-delay-1 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-[#76BC21]/25 md:h-[460px] md:w-[460px]" />
+                      <div className="wave-ring wave-ring-delay-2 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-[#76BC21]/18 md:h-[460px] md:w-[460px]" />
+                    </div>
+                  )}
+                  <div className="relative z-10 flex h-full w-full items-center justify-center">
+                    <div className={`${slide?.showTwoImages ? "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" : "absolute bottom-0 left-1/2 -translate-x-1/2"}`}>
                       <div
                         className={`flex items-center justify-center ${slide?.showTwoImages ? "gap-4 md:gap-14" : ""
                           }`}
                       >
                         <div
-                          className={`float-slow relative ${slide?.showTwoImages ? "w-[140px] md:w-[220px]" : "w-[220px] md:w-[320px]"
+                          className={` relative ${slide?.showTwoImages ? "w-[140px] md:w-[220px]" : "w-[280px] md:w-[420px]"
                             }`}
                         >
                           <div className="pointer-events-none absolute left-1/2 top-[45%] z-0">
@@ -344,10 +364,7 @@ export default function Home2Page() {
                           <img
                             src={slide?.topLeftImage}
                             alt="A Party"
-                            style={{
-                              height: slide.height ? slide.height : "auto"
-                            }}
-                            className={`relative z-10 h-auto w-full drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]`}
+                            className={`${slide.height} relative z-10 md:object-cover h-auto w-full drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]`}
                           />
                         </div>
                         {slide?.showTwoImages && slide?.topRightImage && (
@@ -401,7 +418,7 @@ export default function Home2Page() {
                   key={title}
                   className="rounded-xl cursor-pointer border border-gray-200 bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
                 >
-                  <h3 className="mb-1 text-sm font-bold text-[#0F3172]">{title}</h3>
+                  <h3 className="mb-1 text-sm font-bold text-[#126094]">{title}</h3>
                   <p className="text-sm text-[#666]">Designed for instant recognition, easier sharing, and a stronger personal or brand identity.</p>
                 </div>
               ))}
@@ -436,7 +453,7 @@ export default function Home2Page() {
                     <p className="mt-1 text-sm font-bold text-[#2B2B2B]">Memorable</p>
                     <p className="mt-1 text-sm text-[#787878]">Register your nicknaeas your caller identity</p>
                   </div>
-                  <div className="w-[118px] shrink-0 rounded-[10px] bg-[#173F8A] p-3 text-center text-white">
+                  <div className="w-[118px] shrink-0 rounded-[10px] bg-[#126094] p-3 text-center text-white">
                     <p className="text-[9px] font-semibold text-white/80">Incoming</p>
                     <div className="mx-auto mt-2 w-fit rounded-full bg-white px-4 py-1 text-sm font-bold text-[#2B2B2B]">#Tufa</div>
                     <div className="mt-3 flex items-center justify-center gap-3">
@@ -446,8 +463,12 @@ export default function Home2Page() {
                   </div>
                 </div>
               </div>
-
-              <div className="relative mx-auto mt-4 max-w-full overflow-hidden rounded-[28px] bg-[#F3F4F6] p-5 shadow-[0_16px_30px_rgba(0,0,0,0.14)]">
+              <div className="pt-4">
+              <div className="  w-fit rounded-full border border-[#126094]/20 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[1.5px] text-[#126094]">
+                Business Card
+              </div>
+              </div>
+              <div className="relative mx-auto mt-2 max-w-full overflow-hidden rounded-[28px] bg-[#F3F4F6] p-5 shadow-[0_16px_30px_rgba(0,0,0,0.14)]">
                 <div className="absolute left-0 top-0 h-3 w-full bg-[#8BBE33]" />
                 <div className="pt-4">
                   <div className="flex items-start justify-between border-b border-gray-400 pb-3">
@@ -455,32 +476,32 @@ export default function Home2Page() {
                       <div className="mt-1 flex gap-1">
                         <span className="h-8 w-1.5 -rotate-25 rounded bg-[#8BBE33]" />
                         <span className="h-8 w-1.5 rotate-25 rounded bg-[#8BBE33]" />
-                        <span className="h-8 w-1.5 -rotate-25 rounded bg-[#173F8A]" />
-                        <span className="h-8 w-1.5 rotate-25 rounded bg-[#173F8A]" />
+                        <span className="h-8 w-1.5 -rotate-25 rounded bg-[#126094]" />
+                        <span className="h-8 w-1.5 rotate-25 rounded bg-[#126094]" />
                       </div>
                       <div>
-                        <p className="text-[15px] font-extrabold tracking-tight text-[#173F8A] md:text-[18px]">KENTUCKY FRIED CHICKEN</p>
+                        <p className="text-[15px] font-extrabold tracking-tight text-[#126094] md:text-[18px]">KENTUCKY FRIED CHICKEN</p>
                         <p className="text-[11px] text-[#6f6f6f] md:text-[13px]">Official NameTAG</p>
                       </div>
                     </div>
-                    <p className="text-[11px] font-semibold text-[#173F8A] md:text-[13px]">www.company.com</p>
+                    <p className="text-[11px] font-semibold text-[#126094] md:text-[13px]">www.company.com</p>
                   </div>
 
                   <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto] md:gap-3">
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-[#173F8A]">
+                      <div className="flex items-center gap-2 text-[#126094]">
                         <span className="grid h-7 w-7 place-items-center bg-[#8BBE33] text-xl font-black text-white">#</span>
                         <p className="text-sm font-medium leading-none">#883 (#Tufa)</p>
                       </div>
-                      <div className="flex items-center gap-2 text-[#173F8A]">
+                      <div className="flex items-center gap-2 text-[#126094]">
                         <span className="grid h-7 w-7 place-items-center bg-[#8BBE33] text-sm text-white">☎</span>
                         <p className="text-sm">0978123456</p>
                       </div>
-                      <div className="flex items-center gap-2 text-[#173F8A]">
+                      <div className="flex items-center gap-2 text-[#126094]">
                         <span className="grid h-7 w-7 place-items-center bg-[#8BBE33] text-xs text-white">✉</span>
                         <p className="text-sm">companyofficial@gmail.com</p>
                       </div>
-                      <div className="flex items-center gap-2 text-[#173F8A]">
+                      <div className="flex items-center gap-2 text-[#126094]">
                         <span className="grid h-7 w-7 place-items-center bg-[#8BBE33] text-xs text-white">⌖</span>
                         <p className="text-sm">123 Main Street, Addis Ababa, Ethiopia</p>
                       </div>
@@ -492,9 +513,9 @@ export default function Home2Page() {
                         alt="curve background"
                         className="absolute -bottom-6 -right-2 z-[1] h-[130px] w-[170px] object-contain opacity-95"
                       />
-                      <div className="absolute -bottom-8 -right-16 z-0 h-[120px] w-[120px] rotate-45 bg-[#173F8A]" />
+                      <div className="absolute -bottom-8 -right-16 z-0 h-[120px] w-[120px] rotate-45 bg-[#126094]" />
                       <div className="relative z-10 pb-7">
-                        <p className="text-3xl font-black text-[#173F8A]">NAME</p>
+                        <p className="text-3xl font-black text-[#126094]">NAME</p>
                         <p className="text-base font-semibold text-[#7A7A7A]">MANAGER</p>
                       </div>
                     </div>
@@ -544,7 +565,7 @@ export default function Home2Page() {
         </div>
       </section>
 
-      <section className="bg-[#0F3172] py-16 text-white" id="users">
+      <section className="bg-[#126094] py-16 text-white" id="users">
         <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
           <SectionTitle light label="Who Uses NameTAG?" title="Designed for Individuals and Brands" sub="Whether you are an individual subscriber or a large corporate, NameTAG has the features you need." />
 
@@ -570,15 +591,15 @@ export default function Home2Page() {
                 ))}
               </ul>
             </div>
-            <div className="rounded-[28px] bg-[#F3F3F3] p-4 text-[#222] shadow-[0_14px_28px_rgba(0,0,0,0.2)] md:p-6">
+            <div className="rounded-[28px] bg-[#d5d9df]  p-4 text-[#222] shadow-[0_14px_28px_rgba(0,0,0,0.2)] md:p-6">
               <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-[1fr_auto_1fr]">
                 <div className="text-center">
                   <p className="mb-4 text-base font-bold text-[#2D2D2D] md:mb-6 md:text-lg">A Party</p>
                   <img src={AParty} alt="A Party" className="float-slow mx-auto w-[140px] object-contain md:w-[180px]" />
                 </div>
 
-                <div className="hidden px-2 text-[#5A5A5A] md:block">
-                  <span className="text-2xl">-----&gt;</span>
+                <div className="hidden px-2 text-[#fff] md:block">
+                  <FaLongArrowAltRight className="text-4xl text-white" />
                 </div>
 
                 <div className="text-center">
@@ -602,16 +623,16 @@ export default function Home2Page() {
               className="rounded-xl border cursor-pointer border-gray-200 bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
             >
               <img src={feature.img} alt={feature.title} className="mb-4 w-12 h-12 object-contain" />
-              <h3 className="mb-2 text-sm font-bold text-[#0F3172]">{feature.title}</h3>
+              <h3 className="mb-2 text-sm font-bold text-[#126094]">{feature.title}</h3>
               <p className="text-sm text-[#666]">{feature.description}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="pricing" className="bg-[#0F3172] py-16 text-white">
+      <section id="pricing" className="bg-gradient-to-br from-[#5A9A18] via-[#76BC21] to-[#4E8E12] py-16 text-white">
         <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
-          <SectionTitle light label="Subscription Plans" title="Flexible Plans for Every Need" sub="Choose your subscription period and pay via telebirr or Ethio Airtime." />
+          <SectionTitle white label="Subscription Plans" title="Flexible Plans for Every Need" sub="Choose your subscription period and pay via telebirr or Ethio Airtime." />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { code: "M", name: "Monthly", desc: "Flexible — renew every month. No long commitment." },
@@ -621,39 +642,44 @@ export default function Home2Page() {
             ].map((plan) => (
               <div
                 key={plan.name}
-                className={`rounded-xl border p-5 text-center cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#76BC21] hover:shadow-[0_10px_26px_rgba(0,0,0,0.28)] ${"border-white/20 bg-white/10"
+                className={`group rounded-2xl border p-5 text-center cursor-pointer transition-all duration-200 hover:-translate-y-1  hover:shadow-[0_14px_30px_rgba(0,0,0,0.26)] ${"border-[#D9E6F7] bg-white"
                   }`}
               >
-                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-base font-black">
+                <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-[#BFD2F0] bg-[#EEF4FF] text-base font-black text-[#126094] shadow-[0_6px_14px_rgba(0,0,0,0.10)]">
                   {plan.code}
                 </div>
-                <div className="text-base font-bold">{plan.name}</div>
-                <p className="mt-1 text-xs text-white/75">{plan.desc}</p>
+                <div className="text-base font-bold tracking-wide text-[#126094]">{plan.name}</div>
+                <p className="mt-1 text-xs text-[#4A5B73]">{plan.desc}</p>
+                {plan.featured && (
+                  <div className="mx-auto mt-3 w-fit rounded-full bg-[#126094] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[1px] text-white group-hover:bg-white group-hover:text-[#126094]">
+                    Most Popular
+                  </div>
+                )}
               </div>
             ))}
           </div>
 
           <h3 className="mt-8 mb-4 text-xl font-extrabold">Payment Channels</h3>
           <div className="grid gap-4 lg:grid-cols-3">
-            <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/10 p-4">
-              <div className="grid h-10 w-10 place-items-center rounded-lg bg-white/20 text-lg">T</div>
+            <div className="flex items-center gap-3 rounded-2xl border border-[#D9E6F7] bg-[#F9FBFF] p-4 transition-all duration-200 hover:border-[#126094]/40 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
+              <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#BFD2F0] bg-[#EEF4FF] text-lg font-black text-[#126094]">T</div>
               <div>
-                <p className="text-sm font-bold">telebirr Super App</p>
-                <p className="text-xs text-white/70">Pay directly through the telebirr super app (B2C)</p>
+                <p className="text-sm font-bold text-[#126094]">telebirr Super App</p>
+                <p className="text-xs text-[#4A5B73]">Pay directly through the telebirr super app (B2C)</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/10 p-4">
-              <div className="grid h-10 w-10 place-items-center rounded-lg bg-white/20 text-lg">P</div>
+            <div className="flex items-center gap-3 rounded-2xl border border-[#D9E6F7] bg-[#F9FBFF] p-4 transition-all duration-200 hover:border-[#126094]/40 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
+              <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#BFD2F0] bg-[#EEF4FF] text-lg font-black text-[#126094]">P</div>
               <div>
-                <p className="text-sm font-bold">telebirr Partner App</p>
-                <p className="text-xs text-white/70">Online payments via partner web portals (B2B)</p>
+                <p className="text-sm font-bold text-[#126094]">telebirr Partner App</p>
+                <p className="text-xs text-[#4A5B73]">Online payments via partner web portals (B2B)</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/10 p-4">
-              <div className="grid h-10 w-10 place-items-center rounded-lg bg-white/20 text-lg">A</div>
+            <div className="flex items-center gap-3 rounded-2xl border border-[#D9E6F7] bg-[#F9FBFF] p-4 transition-all duration-200 hover:border-[#126094]/40 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
+              <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#BFD2F0] bg-[#EEF4FF] text-lg font-black text-[#126094]">A</div>
               <div>
-                <p className="text-sm font-bold">Ethio Airtime</p>
-                <p className="text-xs text-white/70">Deduct subscription from your Ethio airtime balance</p>
+                <p className="text-sm font-bold text-[#126094]">Ethio Airtime</p>
+                <p className="text-xs text-[#4A5B73]">Deduct subscription from your Ethio airtime balance</p>
               </div>
             </div>
           </div>
@@ -670,7 +696,7 @@ export default function Home2Page() {
             className="mb-3 overflow-hidden rounded-xl border border-gray-200 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
           >
             <p
-              className="flex w-full items-center justify-between bg-white px-5 py-4 text-left text-sm font-bold text-[#0F3172] transition-colors duration-200 "
+              className="flex w-full items-center justify-between bg-white px-5 py-4 text-left text-sm font-bold text-[#126094] transition-colors duration-200 "
               onClick={() => setOpenFaq(openFaq === idx ? -1 : idx)}
             >
               {item.q}
@@ -694,12 +720,12 @@ export default function Home2Page() {
         </div>
       </section>
 
-      <footer className="bg-[#0A2A68] text-white">
+      <footer className="bg-[#126094] text-white">
         <div className="mx-auto w-full max-w-7xl px-4 py-10 md:px-6">
           <div className="grid gap-8 md:grid-cols-4">
             <div>
               <div className="mb-3 flex items-center gap-2">
-                <div className="grid h-8 w-8 place-items-center rounded-md bg-[#0F3172] text-lg font-black text-[#76BC21]">#</div>
+                <div className="grid h-8 w-8 place-items-center rounded-md bg-[#126094] text-lg font-black text-[#76BC21]">#</div>
                 <div>
                   <p className="text-base font-extrabold leading-none">NameTAG</p>
                   <p className="text-[10px] font-semibold uppercase tracking-[1px] text-[#9fd05a]">Ethio Telecom</p>
