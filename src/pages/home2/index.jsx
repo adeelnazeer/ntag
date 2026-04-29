@@ -3,7 +3,7 @@ import { Carousel } from "@material-tailwind/react";
 import { FaLongArrowAltRight, FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
 import { IoArrowUp, IoCallOutline, IoMailOutline } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
-import ImgIdentity from "../../assets/images/home-identity.svg";
+import ImgIdentity from "../../assets/images/home-identity.jpg";
 import Logo from "../../assets/images/logo.png";
 import TelebirrLogo from "../../assets/images/Telebirr.png";
 import HeroImg1 from "../../assets/images/img1.webp";
@@ -755,20 +755,20 @@ export default function Home2Page() {
           </div>
           <div className="w-full md:w-auto md:min-w-[520px]">
             <div className="grid grid-cols-1 gap-3.5 text-white sm:grid-cols-2">
-              <a href="tel:9234" className="flex items-center gap-2.5 text-[17px] font-semibold leading-none hover:text-white/80">
-                <IoCallOutline className="text-[20px]" />
+              <a href="tel:9234" className="flex items-center gap-2.5 text-sm font-semibold leading-none hover:text-white/80">
+                <IoCallOutline className="text-base" />
                 <span>9234</span>
               </a>
-              <a href="mailto:info@tech-vas.com" className="flex items-center gap-2.5 text-[17px] font-semibold leading-none hover:text-white/80">
-                <IoMailOutline className="text-[20px]" />
+              <a href="mailto:info@tech-vas.com" className="flex items-center gap-2.5 text-sm font-semibold leading-none hover:text-white/80">
+                <IoMailOutline className="text-base" />
                 <span>info@tech-vas.com</span>
               </a>
-              <a href="https://wa.me/" target="_blank" rel="noreferrer" className="flex items-center gap-2.5 text-[17px] font-semibold leading-none hover:text-white/80">
-                <FaWhatsapp className="text-[20px]" />
+              <a href="https://wa.me/" target="_blank" rel="noreferrer" className="flex items-center gap-2.5 text-sm font-semibold leading-none hover:text-white/80">
+                <FaWhatsapp className="text-base" />
                 <span>Chat on WhatsApp</span>
               </a>
-              <a href="https://t.me/" target="_blank" rel="noreferrer" className="flex items-center gap-2.5 text-[17px] font-semibold leading-none hover:text-white/80">
-                <FaTelegramPlane className="text-[19px]" />
+              <a href="https://t.me/" target="_blank" rel="noreferrer" className="flex items-center gap-2.5 text-sm font-semibold leading-none hover:text-white/80">
+                <FaTelegramPlane className="text-base" />
                 <span>Message on Telegram</span>
               </a>
             </div>
