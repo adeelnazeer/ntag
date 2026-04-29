@@ -1,43 +1,43 @@
 {
-  "title": "Manage NameTAG Subscription | Dhaabbataa MaqaaTAG Bulchu",
-  "titleUnsubscription": "Manage NameTAG Unsubscription | Baachuu MaqaaTAG Bulchu",
+  "title": "Dhaabbataa MaqaaTAG Bulchu",
+  "titleUnsubscription": "Baachuu MaqaaTAG Bulchu",
 
   "table": {
     "headers": {
-      "tagNumber": "TAG Number | Lakkoofsa TAG",
-      "mobileNumber": "Mobile Number | Lakkoofsa Bilbila",
-      "registrationDate": "Registration Date | Guyyaa Galmeeffannaa",
+      "tagNumber": "Lakkoofsa TAG",
+      "mobileNumber": "Lakkoofsa Bilbila",
+      "registrationDate": "Guyyaa Galmeeffannaa",
       "status": "Status | Haala",
-      "action": "Action | Hojiin"
+      "action": "Hojiin"
     },
-    "noActive": "No active NameTAG services found to unsubscribe. | Tajaajilawwan maqaa TAGn dhaaban baafachuuf hin argamne.",
-    "noActiveRegistered": "Number don't have active NameTAG registered against mobile number. | Lakkoofsi kun lakkoofsa bilbilaa waliin galmeeffate maqaa TAGn dhaaban hin qabu."
+    "noActive": "Tajaajilawwan maqaa TAGn dhaaban baafachuuf hin argamne.",
+    "noActiveRegistered": "Lakkoofsi kun lakkoofsa bilbilaa waliin galmeeffate maqaa TAGn dhaaban hin qabu."
   },
 
   "buttons": {
-    "unsubscribe": "Unsubscribe | Ba'i",
-    "processing": "Processing... | Hojiirra jira..."
+    "unsubscribe": "Ba'i",
+    "processing": "Hojiirra jira..."
   },
 
   "messages": {
-    "fetchError": "Failed to load NameTAG data | Odeeffannoo maqaa TAGn buusuun hin milkoofne",
-    "noAccountId": "No customer account ID found | ID maatii maamilaa hin argamne",
-    "unsubscribeSuccess": "Successfully unsubscribed | Milkaa'inaan baheera",
-    "unsubscribeFailed": "Failed to unsubscribe | Baachuu hin milkoofne",
-    "errorOccurred": "An error occurred | Dogoggora ta'e"
+    "fetchError": "Odeeffannoo maqaa TAGn buusuun hin milkoofne",
+    "noAccountId": "ID maatii maamilaa hin argamne",
+    "unsubscribeSuccess": "Milkaa'inaan baheera",
+    "unsubscribeFailed": "Baachuu hin milkoofne",
+    "errorOccurred": "Dogoggora ta'e"
   },
   "common": {
-    "na": "N/A | N/A"
+    "na": "N/A"
   },
 
   "loading": {
-    "spinner": "Loading... | Bufuraa jira..."
+    "spinner": "Bufuraa jira..."
   },
 
   "modal": {
-    "unsubscribeTitle": "Confirm Unsubscription | Mirkaneessaa Baachuu",
-    "unsubscribeMessage": "Are you sure you want to unsubscribe from this NameTAG service? | Mirkaneeffatta tajaajilaa NameTAG kana irraa baachuu barbaaddaa?",
-    "confirm": "Confirm | Mirkaneeffadhu",
-    "cancel": "Cancel | Haqi"
+    "unsubscribeTitle": "Mirkaneessaa Baachuu",
+    "unsubscribeMessage": "Mirkaneeffatta tajaajilaa NameTAG kana irraa baachuu barbaaddaa?",
+    "confirm": "Mirkaneeffadhu",
+    "cancel": "Haqi"
   }
 }

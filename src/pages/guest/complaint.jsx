@@ -9,13 +9,13 @@ import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
 import TickIcon from "../../assets/images/tick.png";
 import { useTranslation } from "react-i18next";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useRecaptchaToken } from "../../hooks/useRecaptchaToken";
 import Header from "../../components/header";
 
 const Complaint = () => {
   const navigate = useNavigate();
   const { t } = useTranslation(["common", "complaint"]);
-  const { executeRecaptcha } = useGoogleReCaptcha();
+  const { getRecaptchaPayload, isRecaptchaReady } = useRecaptchaToken();
 
   const [phoneError, setPhoneError] = useState("");
   const [isValidPhone, setIsValidPhone] = useState(false);
@@ -81,68 +81,43 @@ const Complaint = () => {
     return true;
   };
 
-  const handleGetOtp = async (recaptchaTokenV2) => {
+  const handleGetOtp = async () => {
     if (!validatePhoneNumber(value)) return;
 
     setOtpRequested(true);
     setVerifyingPhone(true);
 
     try {
-      const cleanedPhone = value.replace(/^\+/, "");
-      let recaptchaToken = recaptchaTokenV2;
-
-      if (!recaptchaToken) {
-        if (otpAttemptCount >= 3) {
-          toast.error(
-            t("complaint.modal.completeSecurityCheck", {
-              defaultValue: "Please complete the security check first.",
-            })
-          );
-          setVerifyingPhone(false);
-          setOtpRequested(false);
-          return;
-        }
-        if (!executeRecaptcha) {
-          toast.error(
-            t("complaint.modal.securityLoading", {
-              defaultValue: "Security check is loading. Please wait a moment and try again.",
-            })
-          );
-          setVerifyingPhone(false);
-          setOtpRequested(false);
-          return;
-        }
-        try {
-          recaptchaToken = await executeRecaptcha("complaint_generate_otp");
-        } catch (e) {
-          console.warn("reCAPTCHA error:", e);
-          toast.error(
-            t("complaint.modal.securityFailed", {
-              defaultValue: "Security verification failed. Please try again.",
-            })
-          );
-          setVerifyingPhone(false);
-          setOtpRequested(false);
-          return;
-        }
-        if (!recaptchaToken) {
-          toast.error(
-            t("complaint.modal.securityFailed", {
-              defaultValue: "Security verification failed. Please try again.",
-            })
-          );
-          setVerifyingPhone(false);
-          setOtpRequested(false);
-          return;
-        }
+      if (!isRecaptchaReady) {
+        toast.error(
+          t("complaint.modal.securityLoading", {
+            defaultValue: "Security check is loading. Please wait a moment and try again.",
+          })
+        );
+        setVerifyingPhone(false);
+        setOtpRequested(false);
+        return;
       }
 
+      const tokens = await getRecaptchaPayload("complaint_generate_otp", { silent: true });
+      if (!tokens) {
+        toast.error(
+          t("complaint.modal.securityFailed", {
+            defaultValue: "Security verification failed. Please try again.",
+          })
+        );
+        setVerifyingPhone(false);
+        setOtpRequested(false);
+        return;
+      }
+
+      const cleanedPhone = value.replace(/^\+/, "");
       const data = {
         msisdn: cleanedPhone,
         otp_type: "IND",
-        channel: "SMS",
+        channel: "WEB",
         transaction_type: "OTP_GENRATION",
-        recaptcha_token: recaptchaToken,
+        ...tokens,
       };
 
       const response = await APICall(
@@ -150,8 +125,6 @@ const Complaint = () => {
         data,
         EndPoints.customer.generateOtp
       );
-
-      setOtpAttemptCount((c) => c + 1);
 
       if (response?.success) {
         toast.success(
@@ -203,19 +176,12 @@ const Complaint = () => {
     setVerifyingOtp(true);
 
     try {
-      let recaptchaToken = "";
-      if (executeRecaptcha) {
-        try {
-          recaptchaToken = await executeRecaptcha("complaint_verify_otp");
-        } catch (e) {
-          console.warn("reCAPTCHA error:", e);
-        }
-      }
+      const tokens = await getRecaptchaPayload("complaint_verify_otp", { silent: true });
       const data = {
         otp_id: otpId,
         otp_code: verificationCode,
         transaction_type: "OTP_GENRATION",
-        ...(recaptchaToken && { recaptcha_token: recaptchaToken }),
+        ...(tokens || {}),
       };
 
       const response = await APICall(
@@ -273,7 +239,7 @@ const Complaint = () => {
     } catch (error) {
       console.error("Error verifying OTP:", error);
       toast.error(
-        error?.response?.data?.message ||
+       error|| error?.message|| error?.response?.data?.message ||
           t("complaint.modal.verifyFailed", {
             defaultValue: "OTP verification failed",
           })
@@ -330,7 +296,7 @@ const Complaint = () => {
                   <PhoneInput
                     defaultCountry="ET"
                     international
-                    flagUrl={`https://flagcdn.com/w40/et.png`}
+                    flagUrl={"/et.png"}
                     countryCallingCodeEditable={false}
                     countries={["ET"]}
                     className="w-full rounded-xl border border-gray-200 px-4 py-2.5 bg-white outline-none"
@@ -363,15 +329,15 @@ const Complaint = () => {
                         type="button"
                         className={`absolute right-3 bg-gray-100 p-2 shadow-sm border border-gray-200 
                     ${
-                      !isValidPhone || !executeRecaptcha
+                      !isValidPhone || !isRecaptchaReady
                         ? "opacity-50 cursor-not-allowed"
                         : "cursor-pointer hover:bg-gray-200"
                     } 
                     text-xs font-medium rounded-lg`}
-                        onClick={onGetOtpClick}
-                        disabled={!isValidPhone || !executeRecaptcha}
+                        onClick={handleGetOtp}
+                        disabled={!isValidPhone || !isRecaptchaReady}
                       >
-                        {!executeRecaptcha
+                        {!isRecaptchaReady
                           ? t("complaint.modal.pleaseWait", {
                               defaultValue: "Please wait...",
                             })

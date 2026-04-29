@@ -8,6 +8,7 @@ import EndPoints from "../network/EndPoints";
 import { useRegisterHook } from "../pages/hooks/useRegisterHook";
 import TickIcon from "../assets/images/tick.png";
 import { useTranslation } from "react-i18next";
+import { useRecaptchaToken } from "../hooks/useRecaptchaToken";
 
 const AddNumberComponent = ({
   isChangeNumberFlow = false,
@@ -15,6 +16,7 @@ const AddNumberComponent = ({
   setDisableBtn = () => {},
 }) => {
   const registerData = useRegisterHook();
+  const { getRecaptchaPayload } = useRecaptchaToken();
   const [phoneError, setPhoneError] = useState("");
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
@@ -71,9 +73,15 @@ const AddNumberComponent = ({
     const cleanedPhone = phone.startsWith("+") ? phone.slice(1) : phone;
     setVerifyingPhone(true);
     try {
+      const tokens = await getRecaptchaPayload("add_number_verify_account", { silent: true });
+      if (!tokens) {
+        setPhoneVerified(false);
+        setPhoneError("Security verification failed. Please try again.");
+        return;
+      }
       const response = await APICall(
         "post",
-        { phone_number: cleanedPhone },
+        { phone_number: cleanedPhone, ...tokens },
         EndPoints.customer.verifyAccount
       );
       if (response?.success) {
@@ -153,7 +161,7 @@ const AddNumberComponent = ({
             <PhoneInput
               defaultCountry="ET"
               international
-              flagUrl={`https://flagcdn.com/w40/et.png`}
+              flagUrl={"/et.png"}
               countryCallingCodeEditable={false}
               className="w-full rounded-xl border border-gray-200 px-4 py-2.5 bg-white outline-none"
               value={value}

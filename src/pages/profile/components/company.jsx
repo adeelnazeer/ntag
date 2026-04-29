@@ -7,6 +7,7 @@ import EndPoints from "../../../network/EndPoints";
 import { useRegisterHook } from "../../hooks/useRegisterHook";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "@material-tailwind/react";
+import { useRecaptchaToken } from "../../../hooks/useRecaptchaToken";
 
 /* ---------- helpers ---------- */
 const toStr = (v) => (v === 0 || v ? String(v) : "");
@@ -28,7 +29,7 @@ export default function CompanyInfo({ userProfileData }) {
     handleSubmit,
     reset,
     setValue,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({ defaultValues: {} });
   const { t } = useTranslation(["common"]);
   const { t: t2 } = useTranslation(["profile"]);
@@ -37,16 +38,32 @@ export default function CompanyInfo({ userProfileData }) {
   const [regions, setRegions] = useState([]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const registerData = useRegisterHook();
+  const { getRecaptchaPayload } = useRecaptchaToken();
 
   /* 1) Fetch lists */
   useEffect(() => {
-    APICall("get", null, EndPoints.customer.getIndustries)
-      .then((res) => setIndustries(res?.success ? res?.data || [] : []))
-      .catch(() => setIndustries([]));
-    APICall("get", null, EndPoints.customer.getRegions)
-      .then((res) => setRegions(res?.success ? res?.data || [] : []))
-      .catch(() => setRegions([]));
-  }, []);
+    let cancelled = false;
+    (async () => {
+      if (cancelled) return;
+      APICall("get", null, EndPoints.customer.getIndustries)
+        .then((res) => {
+          if (!cancelled) setIndustries(res?.success ? res?.data || [] : []);
+        })
+        .catch(() => {
+          if (!cancelled) setIndustries([]);
+        });
+      APICall("get", null, EndPoints.customer.getRegions)
+        .then((res) => {
+          if (!cancelled) setRegions(res?.success ? res?.data || [] : []);
+        })
+        .catch(() => {
+          if (!cancelled) setRegions([]);
+        });
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [getRecaptchaPayload]);
 
   /* 2) Reset when profile arrives */
   const profileKey = useMemo(
@@ -83,19 +100,22 @@ export default function CompanyInfo({ userProfileData }) {
     if (submitLoading) return;
     setSubmitLoading(true);
     try {
-      await registerData.handleUpdateUserInfo({
+      const res = await registerData.handleUpdateUserInfo({
         comp_name: data?.comp_name,
         username: data?.username,
         email: data?.email,
-        comp_industry: data?.comp_industry, // readable
-        comp_state: data?.comp_state, // readable
+        comp_industry: data?.comp_industry,
+        comp_state: data?.comp_state,
         comp_city: data?.comp_city,
         comp_addr: data?.comp_addr,
         comp_reg_no: data?.comp_reg_no,
         phone_number: data?.phone_number,
-        corp_industry_id: data?.corp_industry_id, // IDs (strings)
+        corp_industry_id: data?.corp_industry_id,
         corp_region_id: data?.corp_region_id,
       });
+      if (res?.success) {
+        reset(data, { keepDirty: false, keepTouched: false });
+      }
     } finally {
       setSubmitLoading(false);
     }
@@ -266,7 +286,7 @@ export default function CompanyInfo({ userProfileData }) {
             }}
             {...register("comp_reg_no", {
               required: t("common.form.errors.tinNumber"),
-              minLength: { value: 9, message: t("common.form.errors.tinMinLength") },
+              minLength: { value: 10, message: t("common.form.errors.tinMinLength") },
               maxLength: { value: 10, message: t("common.form.errors.tinMaxLength") },
               pattern: { value: /^\d{9,10}$/, message: t("common.form.errors.tinPattern") },
             })}
@@ -288,7 +308,7 @@ export default function CompanyInfo({ userProfileData }) {
       <div className="mt-10 max-w-3xl text-center">
         <button
           type="submit"
-          disabled={submitLoading}
+          disabled={submitLoading || !isDirty}
           className="bg-secondary text-white font-medium px-10 py-3 rounded-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mx-auto"
         >
           {submitLoading && (

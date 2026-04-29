@@ -6,8 +6,10 @@ import EndPoints from "../network/EndPoints";
 import { toast } from "react-toastify";
 import { IoCloseOutline } from "react-icons/io5";
 import { useAppSelector } from "../redux/hooks";
+import { useTranslation } from "react-i18next";
 
 const UploadDocument = ({ open, setOpen, checkDocument }) => {
+    const { t } = useTranslation(["common"]);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
     const [fileNames, setFileNames] = useState(["", "", ""]); // Added third slot for the new document
@@ -258,7 +260,7 @@ const UploadDocument = ({ open, setOpen, checkDocument }) => {
                     }}
                     disabled={!data?.trade_license_type || !data?.registration_license_type || !data?.application_letter_type}
                 >
-                    Submit
+                    {t("common.form.submit")}
                 </Button>
             </DialogFooter>
         </Dialog>

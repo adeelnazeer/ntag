@@ -17,6 +17,7 @@
     "desc1": " Are you sure you want to",
     "enable": "enable",
     "desc2": "incoming call scheduling from",
+    "disabled":"Confirm to stop Incoming Call Scheduling",
     "to": "to",
     "from": "FROM"
   },
@@ -202,6 +203,21 @@
     },
     "common": {
       "na": "N/A"
+    }
+  },
+  "deleteAccountDetail": {
+    "title": "Delete account",
+    "intro": "Below are the NameTAGs linked to your corporate account. You can request account deletion only after you have unsubscribed from every active NameTAG you purchased or subscribed.",
+    "activeBlocking": "You still have one or more active subscribed NameTAGs. Please unsubscribe from each of them first (Manage NameTAG → Unsubscribe).",
+    "goToUnsubscribe": "Go to unsubscribe page",
+    "manageTagsHint": "Use Manage NameTAG in the sidebar, then Unsubscribe, for each active tag.",
+    "emptyTags": "No NameTAGs were found for this account.",
+    "deleteButton": "Delete Account",
+    "toastMessages": {
+      "failedToLoad": "Failed to load NameTAG data",
+      "successfullyClosedAccount": "Account closure request submitted successfully",
+      "failedToCloseAccount": "Failed to submit account closure",
+      "anErrorOccurred": "An error occurred"
     }
   },
   "manageIncomingCalls": {

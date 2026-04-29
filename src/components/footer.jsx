@@ -18,7 +18,7 @@ const Footer = () => {
   }
 
   return (
-    <div className="bg-[#D7D7D7] z-[100] px-6 py-4 sticky bottom-0">
+    <div className="w-full bg-white z-10 px-6 py-4">
       {(location?.pathname !== ConstentRoutes?.login &&
         location?.pathname !== ConstentRoutes?.register) && (
           <div className="flex justify-center max-w-7xl mx-auto">

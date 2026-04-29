@@ -3,6 +3,85 @@
 @tailwind utilities;
 @import "fonts.css";
 
+/* ========== Global iOS / older Safari fixes (iPhone 13 and below) ========== */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Safe area for notch/home indicator */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Align inputs, buttons, select, textarea on older iOS */
+input,
+button,
+select,
+textarea {
+  box-sizing: border-box;
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
+/* iOS Safari: avoid auto-zoom + normalize text inputs only */
+input:not([type="checkbox"]):not([type="radio"]),
+textarea,
+select {
+  font-size: 16px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="password"],
+input[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button,
+[role="button"],
+select,
+a.button {
+  vertical-align: middle;
+}
+
+/* Flexbox alignment fix for Safari */
+.items-center {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.items-stretch {
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+  align-items: stretch;
+}
+
+/* Fix for flex items shrinking incorrectly on iOS */
+.flex-1,
+.flex-grow {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 0%;
+  flex: 1 1 0%;
+}
+
+/* Prevent horizontal overflow / rubber-band on iOS */
+#root {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ========== End iOS/Safari fixes ========== */
+
 button {
   outline: none;
   font-size: 14px !important;

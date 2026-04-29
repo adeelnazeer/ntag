@@ -71,39 +71,51 @@ const DashboardLayout = ({ children }) => {
       return;
     }
 
-    checkDocument();
-  }, []);
+    const user = userData?.customer_type != null
+      ? userData
+      : JSON.parse(localStorage.getItem("user") || "{}");
+    const customerType = user?.customer_type;
+
+    if (customerType !== "individual") {
+      checkDocument();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run when customer_type is known
+  }, [userData?.customer_type]);
 
   return (
-    <div className="h-screen flex flex-col">
-      <Header />
-      <div className="flex-1 flex flex-col overflow-auto">
-        <div className="flex flex-1 overflow-auto grid-cols-12 h-full">
-          <div className="lg:w-72 h-full bg-[#fbfbfb]">
+    <div className="h-screen flex flex-col w-full min-w-0 overflow-hidden">
+      <header className="flex-shrink-0 relative z-[50]">
+        <Header />
+      </header>
+      <div className="flex-1 flex min-h-0 overflow-hidden">
+        <div className="hidden lg:flex lg:w-72 flex-shrink-0 flex-col min-h-0 bg-[#fbfbfb]">
+          <div className="flex-1 min-h-0 overflow-y-auto">
             <Sidebar
               setIsSidebarOpen={setIsSidebarOpen}
               isSidebarOpen={isSidebarOpen}
               data={corporateDocuments}
             />
           </div>
-          <div className="w-full col-span-12 md:px-5 px-2 h-full overflow-auto md:py-4 py-2 pt-2 md:mt-0 md:block">
-            <div className="md:w-11/12 w-full md:mx-auto sm:w-full sm:mx-auto">
-              {!locatiion?.pathname?.includes("buy-tag") && (
-                <div className=" pb-4">
-                  <BiArrowBack
-                    className=" text-3xl cursor-pointer text-secondary font-bold"
-                    onClick={() => {
-                      navigate(-1);
-                    }}
-                  />
-                </div>
-              )}
-              {children}
-            </div>
+        </div>
+        <div className="flex-1 min-w-0 overflow-auto md:px-5 px-2 md:py-4 py-2 pt-2 md:mt-0">
+          <div className="md:w-11/12 w-full md:mx-auto sm:w-full sm:mx-auto">
+            {!locatiion?.pathname?.includes("buy-tag") && (
+              <div className=" pb-4">
+                <BiArrowBack
+                  className=" text-3xl cursor-pointer text-secondary font-bold"
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                />
+              </div>
+            )}
+            {children}
           </div>
         </div>
       </div>
-      <Footer />
+      <footer className="w-full flex-shrink-0 relative z-[50]">
+        <Footer />
+      </footer>
       <UplaodDocument
         open={open}
         setOpen={setOpen}

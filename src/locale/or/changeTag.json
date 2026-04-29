@@ -19,7 +19,8 @@
     "common": {
       "na": "Hin Jiru",
       "etb": "ETB"
-    }
+    },
+    "noTagLinked": "You don't have any TAG linked to your mobile number."
   },
   "toastMessages": {
     "fetchTagFailed": "Odeeffannoo maqaa TAGn buusuun hin milkoofne",
@@ -43,7 +44,9 @@
     "buttons": {
       "yesChangeTag": "Eeyyee, TAG Jijjiiri",
       "cancel": "Haqi",
-      "process": "Hojiirra jira..."
+      "process": "Hojiirra jira...",
+      "confirm": "Confirm",
+      "processing": "Processing..."
     }
   },
   "loading": {
@@ -52,5 +55,18 @@
   "common": {
     "na": "N/A",
     "etb": "ETB"
+  },
+  "buttons": {
+    "changeNameTag": "Change NameTAG",
+    "processing": "Processing..."
+  },
+  "messages": {
+    "fetchError": "Failed to load NameTAG data",
+    "changeSuccess": "Your TAG has been changed successfully",
+    "changeFailed": "Failed to change your TAG",
+    "noAccountId": "No customer account ID found",
+    "unsubscribeSuccess": "Successfully unsubscribed",
+    "unsubscribeFailed": "Failed to unsubscribe",
+    "errorOccurred": "An error occurred"
   }
 }

@@ -25,7 +25,7 @@ const useSchedularHook = (value) => {
         const params = {
             msisdn: user?.phone_number
         }
-        APICall("get", user?.parent_id != null ? params : null, `${EndPoints.customer.getReserve}/${accountId}`)
+        APICall("get", user?.parent_id != null ? params : null, `${EndPoints.customer.newSecurityEndPoints.corporate.getReserveTags}`)
             .then((res) => {
                 if (res?.success) {
                     setData(res?.data);
@@ -39,7 +39,7 @@ const useSchedularHook = (value) => {
                 setLoading(false)
             });
 
-        APICall("get", user?.parent_id != null ? params : null, `${EndPoints.customer.getSchedular}?account_id=${userId}`)
+        APICall("get", user?.parent_id != null ? params : null, `${EndPoints.customer.getSchedular}`)
             .then((res) => {
                 if (res?.success) {
 

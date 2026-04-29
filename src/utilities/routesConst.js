@@ -42,6 +42,7 @@ export const ConstentRoutes = {
    complaint: "/complaint",
    bill: "/bill",
    billPayment: "/bill/payment",
+   delAccountDetail: "/del-account-detail",
 };
 
 export const getStatus = (status) => {
@@ -106,7 +107,7 @@ export const getTagStatusDashboard = (status) => {
       case 7:
          return t("suspendedCallsBlocked")
       case 8:
-         return t("tagReserved")
+         return t("suspendedRecurringFeePending")
       case 9:
          return t("suspendedRecurringFeePending")
       default:

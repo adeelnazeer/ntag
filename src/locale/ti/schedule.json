@@ -9,73 +9,66 @@
     "on": "ምውላዕ",
     "off": "ምጥፋእ",
     "info1": "መደብ ምድላው ዝኣቱ ፃውዒት OFF እንተኾይኑ 24/7 ዝኣትዉ ፃውዒታት ክትቅበሉ ኢኹም",
-    "info2": " ናይ ሕጂ ዝኣትዉ ፃውዒታት መደብ=", 
-    "info3": "ገልግሎቶም ዝኸውን", 
-    "scheduleCall": "ዝኣትዉ ፃውዒታት መደብ ግበር", 
+    "info2": " ናይ ሕጂ ዝኣትዉ ፃውዒታት መደብ=",
+    "info3": "ገልግሎቶም ዝኸውን",
+    "scheduleCall": "ዝኣትዉ ፃውዒታት መደብ ግበር",
     "applyBtn": "መደብ ስራሕ ኣመልክት",
-    "info4":"ኣብዚ እዋን እዚ ዝኾነ NameTAG ኣንፃር ኣካውንቶም ኣይምዝገብን",
+    "info4": "ኣብዚ እዋን እዚ ዝኾነ NameTAG ኣንፃር ኣካውንቶም ኣይምዝገብን",
     "desc1": "ርግፀኛ ድዮም",
     "enable": "ኣኽእል",
     "desc2": "መደብ ምውፃእ ዝኣቱ ፃውዒት ካብ",
     "to": "ናብ",
-    "from": "ካብ"
+    "from": "ካብ",
+    "disabled": "Confirm to stop Incoming Call Scheduling"
   },
   "callPin": {
-    "title": "ዝኣቱ ናይ ፃውዒት ሚሽጢር ቁፅሪ ዝተፈቀደሎም ዝርዝር ቁፅርታትን ምምሕዳር", 
-    "selectNumber":"ዝተመዝገበ ቁፅሪ ሞባይልኩም ምረፁ",
+    "title": "ዝኣቱ ናይ ፃውዒት ሚሽጢር ቁፅሪ ዝተፈቀደሎም ዝርዝር ቁፅርታትን ምምሕዳር",
+    "selectNumber": "ዝተመዝገበ ቁፅሪ ሞባይልኩም ምረፁ",
     "noNumber": "ቁፅሪ ሞባይል ኣይተረኽበን",
     "currentPin": "ናይ ሕጂ ሚሽጢር ቁፅሪ",
     "notDefined": "ኣይተገለፀን",
     "removePin": "ሚሽጢር ቁፅሪ ኣወግድ",
     "setPin": "ሚሽጢር ቁፅሪ ኣቐምጥ",
     "changePin": "ሚሽጢር ቁፅሪ ምቕያር",
-    "addWhiteList":"ናብ ዝተፈቀደሎም ዝርዝር ወስኹ",
+    "addWhiteList": "ናብ ዝተፈቀደሎም ዝርዝር ወስኹ",
     "table": {
       "sr": "Sr#",
       "nametag": "NameTAG",
-      "whitelistNumber":"ቁፅሪ ዝተፈቀደሎም ዝርዝር",
+      "whitelistNumber": "ቁፅሪ ዝተፈቀደሎም ዝርዝር",
       "whitelistDate": "ዝተፈቀደሎም ዕለት",
       "pin": "ሚሽጢር ቁፅሪ",
       "action": "ተግባር"
     },
-
     "empty": {
       "noPin": "ኣብዚ እዋን ንዝኣቱ ፃውዒታት ዝኾነ ሚሽጢር ቁፅሪ ኣይተቐመጠን። በይዝኦም ቁፅርታት ናብ ዝተፈቀደሎም ዝርዝር ንምውሳኽ ሚሽጢር ቁፅሪ ኣቐምጡ።",
-      "noActive": "ዝኾነ ንጡፍ NameTAG ምስ ሞባይል ቁፅሮም ዝተኣሳሰር የለን።", 
+      "noActive": "ዝኾነ ንጡፍ NameTAG ምስ ሞባይል ቁፅሮም ዝተኣሳሰር የለን።",
       "noWhitelist": "ቁፅሪ ዝተፈቀደሎም ዝርዝር ኣይተረኽበን!"
     },
-
     "confirmRemoval": {
       "title": "ምእላይ ምርግጋፅ",
       "desc": "ቁፅሪ ሞባይል +{{ቁፅሪ}} ካብ ዝተፈቀደሎም ዝርዝር ክተውትፅኡ ከም ዝደልዩ ርግፀኛ ድዮም?"
     },
-
     "modalPin": {
       "removeTitle": "ንዝኣትዉ ፃውዒታቶም ሚሽጢር ቁፅሪፃውዒት ይደምስሱ",
       "setTitle": "ንዝኣትዉ ፃውዒታቶም ሚሽጢር ቁፅሪ ፃውዒት የቐምጡ",
       "changeTitle": "ንዝኣትዉ ፃውዒታቶም ሚሽጢር ቁፅሪ ፃውዒት ይቀይሩ",
-
-      "descRemove": "ሚሽጢር ቁፅሪ ምስ ተኣልየ ኩሎም ደወልቲ ሚሽጢር ቁፅሪ ከየእተዉ ናብ NameTAG ናትካ ክበፅሑ ይኽእሉ።", 
+      "descRemove": "ሚሽጢር ቁፅሪ ምስ ተኣልየ ኩሎም ደወልቲ ሚሽጢር ቁፅሪ ከየእተዉ ናብ NameTAG ናትካ ክበፅሑ ይኽእሉ።",
       "descSet": "ንዝኣትዉ ፃውዒታት ሚሽጢር ቁፅሪ {{action}} ክገብሩ  ከም ዝደልዩ ርግፀኛ ድዮም? ደወልቶም ቅድሚ ምስ ቁፅሪ NameTAG ናትቶም ምትእስሳር ነቲ ሚሽጢር ቁፅሪ ከእትዉ ክግደዱ እዮም።",
-
       "nameTag": "NameTAG",
       "mobileNumber": "ቁፅሪ ሞባይል",
       "callPin": "ፃውዒት ሚሽጢር ቁፅሪ ",
       "noPin": "Nኣይተገለፀን",
-
-      "noteNoPin": "ዝኾነ ፒን ኣየድልን — ደወልቲ ሚሽጢር ቁፅሪ ከየእተዉ ናብ NameTAG ናትካ ክበፅሑ ይኽእሉ።", 
-      "selectSingleDigit":"በይዝኦም ነፀላ ኣሃዝ ሚሽጢር ቁፅሪ ምረፁ",
-      "selectPinPlaceholder":"ሚሽጢር ቁፅሪ ምረፁ"
+      "noteNoPin": "ዝኾነ ፒን ኣየድልን — ደወልቲ ሚሽጢር ቁፅሪ ከየእተዉ ናብ NameTAG ናትካ ክበፅሑ ይኽእሉ።",
+      "selectSingleDigit": "በይዝኦም ነፀላ ኣሃዝ ሚሽጢር ቁፅሪ ምረፁ",
+      "selectPinPlaceholder": "ሚሽጢር ቁፅሪ ምረፁ"
     },
-
     "modalWhitelist": {
       "title": "ናብ ዝተፈቀደሎም ዝርዝር ወስኹ",
-      "subtitle": "ብዝተፈቀደሎም ዝተፃሕፉ ደወልቲ ብዘይ ሚሽጢር ቁፅሪ ናብ NameTAG ክድውሉ ይኽእሉ።", 
+      "subtitle": "ብዝተፈቀደሎም ዝተፃሕፉ ደወልቲ ብዘይ ሚሽጢር ቁፅሪ ናብ NameTAG ክድውሉ ይኽእሉ።",
       "enterMobileLabel": "ዝተፈቀደሎም ዝርዝር ንምውሳኽ ሞባይል ቁፅሪ የእትዉ",
       "formatHint": "ቅርፂ፡ +251xxxxxxxxxx",
-      "yourRegistered": "ዝተመዝገበ ቁፅሪ ሞባይልኩም" 
+      "yourRegistered": "ዝተመዝገበ ቁፅሪ ሞባይልኩም"
     },
-
     "buttons": {
       "cancel": "ሰርዝ",
       "confirm": "ኣረጋግፅ",
@@ -83,13 +76,12 @@
       "removing": "ምእላይ..."
     }
   },
-
   "errors": {
     "mobile": {
       "required": "ቁፅሪ ሞባይል የድሊ",
       "mustStartCountry": "ቁፅሪ ሞባይል ብ +251 ክጅምር ኣለዎ",
       "mustStart9": "ቁፅሪ ሞባይል ድሕሪ ኮድ ሃገር ብ 9 ክጅምር ኣለዎ",
-      "length": "ቁፅሪ ሞባይል ድሕሪ ኮድ ሃገር 9 ኣሃዛት ክኸውን ኣለዎ" 
+      "length": "ቁፅሪ ሞባይል ድሕሪ ኮድ ሃገር 9 ኣሃዛት ክኸውን ኣለዎ"
     },
     "whitelistFetch": "ቁፅሪ ዝተፈቀደሎም ዝርዝር ምምፃእ ኣይተኻእለን",
     "mobileFetch": "ቁፅሪ ሞባይል ምምፃእ ኣይተኻእለን",
@@ -97,13 +89,12 @@
     "whitelistLoad": "ቁፅርታት ዝተፈቀደሎም ዝርዝር ኣብ ምፅዓን ጌጋ",
     "removeWhitelist": "ቁፅሪ ካብ ዝተፈቀደሎም ዝርዝር ኣብ ምእላይ ጌጋ"
   },
-
   "states": {
     "loading": "ኣብ ምፅዓን..."
   },
   "changeTag": {
     "title": "ለውጢ NameTAG ምምሕዳር",
-    "note": "መተሓሳሰቢ፡ NameTAG ምስ ቀየርኩም፣ ዝኾነ ይኹን ናይቲ ዝሓለፈ NameTAG ዝግበር ክፍሊት ንቕድሚት ኣይስጉምን እዩ። ኣብ መወዳእታ ናይቲ ሕጂ ዘለኻዮ ውጥን NameTAG ክትቅይሮ ንመክር።", 
+    "note": "መተሓሳሰቢ፡ NameTAG ምስ ቀየርኩም፣ ዝኾነ ይኹን ናይቲ ዝሓለፈ NameTAG ዝግበር ክፍሊት ንቕድሚት ኣይስጉምን እዩ። ኣብ መወዳእታ ናይቲ ሕጂ ዘለኻዮ ውጥን NameTAG ክትቅይሮ ንመክር።",
     "emptyState": "ዝኾነ ንጡፍ ኣገልግሎት NameTAG ምዝገባ ንምእላይ ኣይተረኽበን።",
     "table": {
       "nameTagNumber": "ቁፅሪ NameTAG",
@@ -204,9 +195,24 @@
       "na": "N/A"
     }
   },
+  "deleteAccountDetail": {
+    "title": "ኣካውንት ምድምሳስ",
+    "intro": "ናይ ንግዲ ኣካውንትኩም ዝተኣሳሰሩ NameTAGs ኣብ ታሕቲ እዮም ዝርከቡ። ካብ ነፍሲ ወከፍ ንጡፍ NameTAG ዝተገዙ ወይ ዝተመዝገቡ ድሕሪ ምውፃእ ጥራይ ናይ ኣካውንት ምድምሳስ ምሕታት ትኽእሉ።",
+    "activeBlocking": "ክሳዕ ሕጂ ሓደ ወይ ልዕሊኡ ንጡፋት NameTAGs ኣለዉኩም። እባክዎ ካብ ነፍሲ ወከፎም ቅድሚ ምውፃእ (Manage NameTAG → Unsubscribe)።",
+    "goToUnsubscribe": "ናብ ገጽ unsubscribe ኪድ",
+    "manageTagsHint": "ካብ sidebar Manage NameTAG ተጠቐም፣ ድሕሪኡ ንነፍሲ ወከፍ ንጡፍ ታግ Unsubscribe።",
+    "emptyTags": "ንዚ ኣካውንት NameTAG ኣይተረኽበን።",
+    "deleteButton": "ኣካውንተይ ምድምሳስ",
+    "toastMessages": {
+      "failedToLoad": "ናይ NameTAG ዳታ ምፅዓን ኣይተኻእለን",
+      "successfullyClosedAccount": "ጥያታት ምዕፃው ኣካውንት ብዓወት ቀሪቡ",
+      "failedToCloseAccount": "ጥያታት ምዕፃው ኣካውንት ምቕራብ ኣይተኻእለን",
+      "anErrorOccurred": "ጌጋ ኣጋጢሙ"
+    }
+  },
   "manageIncomingCalls": {
     "title": "ዝኣትዉ ፃውዒታት ምምሕዳር",
-    "emptyState": "ዝኾነ ንጡፍ NameTAG ምስ ሞባይል ቁፀሮም ዝተኣሳሰር የለን።", 
+    "emptyState": "ዝኾነ ንጡፍ NameTAG ምስ ሞባይል ቁፀሮም ዝተኣሳሰር የለን።",
     "labels": {
       "nameTag": "NameTAG:",
       "mobileNumber": "ቁፅሪ ሞባይል:"
@@ -216,7 +222,7 @@
       "stopped": "ደው ኢሉ",
       "currentStatus": "ናይ ሕጂ ናይ ዝኣቱ ፃውዒት ኩነታቶም:",
       "stopInfo": "ዝኣትዉ ፃውዒታት ደው ከተብሉ እንተመሪፆም ንዝፅሉ 10 መዓልታት ዝኾነ ዝኣቱ ፃውዒት ኣይክፀኩምን እዩ።",
-      "stoppedInfo":  "ኣገልግሎት ካብ ዝተቛረፀሉ ዕለት ጀሚሩ ን10 መዓልታት ዝኾነ ዝኣቱ ፃውዒት ኣይቅበልካን"
+      "stoppedInfo": "ኣገልግሎት ካብ ዝተቛረፀሉ ዕለት ጀሚሩ ን10 መዓልታት ዝኾነ ዝኣቱ ፃውዒት ኣይቅበልካን"
     },
     "buttons": {
       "stopCalls": "ፃውዒት ደው ምባል",
@@ -228,14 +234,14 @@
     "modal": {
       "title": "ምርግጋፅ?",
       "confirmStop": "በይዝኦም ንዝኣትዉ ፃውዒታትኩም ደው ንምባል ኣረጋግፁ።",
-      "confirmStart":"በይዝኦም ንዝኣትዉ ፃውዒታት ምቕባል ንምጅማር ኣረጋግፁ።"
+      "confirmStart": "በይዝኦም ንዝኣትዉ ፃውዒታት ምቕባል ንምጅማር ኣረጋግፁ።"
     },
     "toastMessages": {
       "errorLoading": "ሓበሬታ TAG ኣብ ምፅዓን ጌጋ",
       "serviceActivated": "ኣገልግሎት ብዓወት ተከፊቱ",
       "serviceDeactivated": "ኣገልግሎት ብዓወት ተዓፅዩ",
       "failedToUpdate": "ኩነታት ኣገልግሎት ንምዕራፍ ኣይተኻእለን",
-      "errorUpdating": "ኩነታት ኣገልግሎት ኣብ ምዕራፍ ጌጋ። በይዝኦም እንደገና ፈትኑ።" 
+      "errorUpdating": "ኩነታት ኣገልግሎት ኣብ ምዕራፍ ጌጋ። በይዝኦም እንደገና ፈትኑ።"
     }
   }
 }

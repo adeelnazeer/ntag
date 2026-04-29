@@ -5,26 +5,30 @@
     "headers": {
       "tagNumber": "Lambarka TAG",
       "mobile_number": "Lambarka Mobilka",
-      "registration_date": "Taariikhda Diiwangelinta",
+      "registrationDate": "Taariikhda Diiwangelinta",
       "status": "Xaalada",
-      "action": "Ficil ama talbo"
+      "action": "Ficil ama talbo",
+      "mobileNumber": "Lambarka Mobilka"
     },
     "no_active": "Ma jiraan adeegyo firfircoon oo NameTAG ah oo la helay si ay iskaga noqdaan.",
-    "noActiveRegistered": "Nambarku ma laha magac firfircoon oo ka diiwaan gashan lambarka mobaylka"
+    "noActiveRegistered": "Nambarku ma laha magac firfircoon oo ka diiwaan gashan lambarka mobaylka",
+    "noActive": "Lama helin adeegyo NameTAG ah oo la iska diiwaan geliyo."
   },
   "buttons": {
     "unsubscribe": "Is-diiwaangelinta",
-    "processing": "Habaynta..."
+    "processing": "Hawlgalaya..."
   },
   "messages": {
     "fetchError": "Ku guuldareystay in la soo geliyo xogta NameTAG",
     "noAccountId": "Lama helin aqoonsiga akoontada macmiilka",
     "unsubscribeSuccess": "Si guul leh ayaa isaga baxay",
     "unsubscribeFailed": "Ku guul daraystay in la iska diiwaan geliyo",
-    "error_occurred": "Khalad ayaa dhacay"
+    "error_occurred": "Khalad ayaa dhacay",
+    "errorOccurred": "Khalad ayaa dhacay"
   },
   "common": {
-    "not_available": "N/A"
+    "not_available": "N/A",
+    "na": "N/A"
   },
   "loading": {
     "spinner": "Soodejinaya.. Ama Waa lagu guda jiraa."
@@ -34,5 +38,6 @@
     "unsubscribeMessage": "Ma hubtaa inaad rabto inaad ka baxdo adeegan NameTAG?",
     "confirm": "Xaqiiji",
     "cancel": "Jooji"
-  }
+  },
+  "titleUnsubscription": "Maamul ka-noqoshada NameTAG"
 }

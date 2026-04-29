@@ -29,7 +29,7 @@ export function MultiStepForm() {
     setValue,
     getValues,
     control,
-    formState: { errors },
+    formState: { errors, touchedFields, dirtyFields },
   } = useForm({ msisdn: "", mode: "onChange" });
 
   // Handle going back to step 0 and restore form values
@@ -127,6 +127,8 @@ export function MultiStepForm() {
               <CompanyForm
                 register={register}
                 errors={errors}
+                touchedFields={touchedFields}
+                dirtyFields={dirtyFields}
                 watch={watch}
                 setValue={setValue}
                 getValues={getValues}
@@ -139,6 +141,8 @@ export function MultiStepForm() {
               <AccountForm
                 register={register}
                 errors={errors}
+                touchedFields={touchedFields}
+                dirtyFields={dirtyFields}
                 watch={watch}
                 data={data}
                 setOpen={setOpen}

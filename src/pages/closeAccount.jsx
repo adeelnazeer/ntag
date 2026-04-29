@@ -58,7 +58,7 @@ function CloseAccount() {
     APICall(
       "get",
       user?.parent_id != null ? params : null,
-      `${EndPoints.customer.getReserve}/${accountId}`
+      `${EndPoints.customer.newSecurityEndPoints.corporate.getReserveTags}`
     )
       .then((res) => {
         if (res?.success) {
@@ -143,7 +143,7 @@ function CloseAccount() {
           )}
         </td>
         <td className="py-4 px-4 text-sm text-gray-700">
-          {(userData?.created_date) ||
+          {(userData?.created_at??userData?.created_date) ||
             t("closeAccount.common.na")}
         </td>
         <td className="py-4 px-4 text-sm text-gray-700">

@@ -34,6 +34,11 @@
     "uploadDesc": "አሁን ያለውን የጸደቀ ሰነድ ለመተካት እባክዎ አዲስ {{value}} ይጫኑ",
     "invalidFileType": "የተሳሳተ የፋይል አይነት። ጄፒጂ (JPG)፣ ፒኤንጂ (PNG) እና ፒዲኤፍ (PDF) ፋይሎች ብቻ ይፈቀዳሉ።",
     "fileSizeError": "የፋይል መጠን ከ3 ሜባ (MB) በላይ ነው።",
+    "uploadDocuments": "ሰነዶች ይጫኑ",
+    "dragDropType": "ለመጫን {{type}} ይጎትቱና ይልቀቁ ወይም ይጫኑ",
+    "previewAlt": "ቅድመ እይታ",
+    "docDescription": "የንግድ ምዝገባ ፈቃድ፣ የማመልከቻ ደብዳቤ እና የንግድ ፈቃድ",
+    "docHint": "ጄፒጂ (JPG)፣ ጄፒጂጂ (JPEG)፣ ፒኤንጂ (PNG) ወይም ፒዲኤፍ (PDF) ፋይሎች ብቻ ሊጫኑ ይችላሉ፣ እና እያንዳንዱ ፋይል 3 ሜባ (MB) መብለጥ የለበትም።",
     "tagDetail": {
       "notice": "ማስታወቂያ: ",
       "unsubMessage": "የእርስዎ NameTAG አገልግሎት ተሰርዟል",

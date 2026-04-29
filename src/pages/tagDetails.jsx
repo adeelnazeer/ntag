@@ -574,6 +574,7 @@ const TagDetails = () => {
   const stateData = location.state;
   console.log({ stateData });
   const { t } = useTranslation(["common"]);
+  const { t:t2 } = useTranslation(["buyTag"]);
 
   const isExchangeFlow = stateData?.isExchangeFlow || false;
   const currentTagData = stateData?.currentTagData || null;
@@ -593,6 +594,7 @@ const TagDetails = () => {
   const hasMsisdn = !!stateData?.msisdn;
   const [isOpenPayment, setIsOpenPayment] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
+  const [reserveLoading, setReserveLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const [phoneNumber, setPhoneNumber] = useState({
@@ -723,23 +725,27 @@ const TagDetails = () => {
   const recurringFeeOptions = [
     {
       value: "monthly_fee",
-      label: "Monthly",
+      label: t2("tagInfo.monthly"),
+      labelEnglish: "Monthly",
       amount: tagData.monthly_fee || 0,
     },
     // { value: "weekly_fee", label: "Weekly", amount: tagData.weekly_fee || 0 },
     {
       value: "quarterly_fee",
-      label: "Quarterly",
-      amount: tagData.quarterly_fee || 0,
+        label: t2("tagInfo.quarterly"),
+        labelEnglish: "Quarterly",
+        amount: tagData.quarterly_fee || 0,
     },
     {
       value: "semiannually_fee",
-      label: "Semi-Annually",
+      label: t2("tagInfo.semiAnnually"),
+      labelEnglish: "Semi-Annually",
       amount: tagData.semiannually_fee || 0,
     },
     {
       value: "annually_fee",
-      label: "Annually",
+      label: t2("tagInfo.annually"),
+      labelEnglish: "Annually",
       amount: tagData.annually_fee || 0,
     },
   ];
@@ -755,7 +761,7 @@ const TagDetails = () => {
     );
     if (selectedOption) {
       setSelectedFeeAmount(selectedOption.amount);
-      setSelectedFeeLabel(selectedOption.label);
+      setSelectedFeeLabel(selectedOption.labelEnglish);
     }
   }, [selectedRecurringFee]);
 
@@ -799,14 +805,15 @@ const TagDetails = () => {
   };
 
   const onSubmitPayment = (state) => {
-    // Check if a phone number is selected when needed (skip if parent_id != null)
     if (!hasParentId && !hasMsisdn && !selectedPhoneNumberId) {
       toast.error(t("dashboard.pleaseSelectMobileNumber"));
+      setReserveLoading(false);
       return;
     }
 
     if (docStatus?.status !== 0 && state?.action_type === "buy") {
       setShowConfirmModal(true);
+      setReserveLoading(false);
     } else {
       handleConfirmPaymentLastPage(state);
     }
@@ -856,9 +863,9 @@ const TagDetails = () => {
       selectedMsisdn = userData.phone_number;
     }
 
-    // If no phone is selected, show error and return
     if (!selectedMsisdn) {
       toast.error(t("dashboard.pleaseSelectMobileNumber"));
+      setReserveLoading(false);
       return;
     }
 
@@ -1049,9 +1056,12 @@ const TagDetails = () => {
         })
         .catch((err) => {
           toast.error(err?.message || "An error occurred");
+        })
+        .finally(() => {
+          setReserveLoading(false);
         });
     } else {
-      dashboard.handleTagDetails(values, setIsOpenPayment, setDisableBtn);
+      dashboard.handleTagDetails(values, setIsOpenPayment, setDisableBtn, setReserveLoading);
     }
   };
   const onSubmit = (data, action = null) => {
@@ -1116,7 +1126,7 @@ const TagDetails = () => {
           stateData?.price ||
           "0"
         ).toString(),
-        payment_method: "telebir",
+        payment_method: "telebirr",
         reserve_type: "existing",
         msisdn: stateData?.currentTagData?.msisdn?.replace(/^\+/, ""),
         business_type: userData?.business_type || "BuyGoods",
@@ -1166,8 +1176,13 @@ const TagDetails = () => {
     if (selectedRecurringFee == "") {
       return setErrors(true);
     }
+    if (reserveLoading) return;
+    setReserveLoading(true);
     setActionType("reserve");
-    handleSubmit((data) => onSubmit(data, "reserve"))();
+    handleSubmit(
+      (data) => onSubmit(data, "reserve"),
+      () => setReserveLoading(false)
+    )();
   };
 
   const renderActionButtons = () => {
@@ -1192,9 +1207,9 @@ const TagDetails = () => {
       return (
         <div className="flex justify-center gap-4 mb-4 mt-4">
           <Button
-            className="py-4 px-4 bg-secondary text-white"
+            className="py-4 px-4 bg-secondary text-white disabled:opacity-70 disabled:cursor-not-allowed"
             onClick={handleReserveClick}
-            disabled={!hasParentId && !hasMsisdn && !selectedPhoneNumberId}
+            disabled={reserveLoading || (!hasParentId && !hasMsisdn && !selectedPhoneNumberId)}
           >
             {t("buttons.reserveNameTag")}
           </Button>
@@ -1217,9 +1232,9 @@ const TagDetails = () => {
 
         {!isExchangeFlow && (
           <Button
-            className="py-4 px-4 bg-secondary text-white"
+            className="py-4 px-4 bg-secondary text-white "
             onClick={handleReserveClick}
-            disabled={(!hasParentId && !hasMsisdn && !selectedPhoneNumberId) || disableBtn}
+            disabled={reserveLoading || (!hasParentId && !hasMsisdn && !selectedPhoneNumberId) || disableBtn}
           >
             {t("buttons.reserveNameTag")}
           </Button>
@@ -1629,7 +1644,7 @@ const TagDetails = () => {
                           className="font-normal opacity-80 text-primary"
                         >
                           {t("dashboard.totalInfo")}{" "}
-                          {moment(nextChargeDate).format("DD-MM-YYYY")}.
+                          {moment(nextChargeDate).format("YYYY-MM-DD")}.
                         </Typography>
                       </div>
                     }
@@ -1695,7 +1710,7 @@ const TagDetails = () => {
                 }
                 onClick={() => clearErrors()}
               />
-              <Typography className="text-sm cursor-pointer leading-[40px] ">
+              <Typography className="text-sm cursor-pointer ">
                 <span
                   className="text-[#008fd5] hover:underline"
                   onClick={() => {

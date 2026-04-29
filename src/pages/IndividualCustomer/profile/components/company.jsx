@@ -26,7 +26,7 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
     handleSubmit,
     reset,
     setValue,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({
     defaultValues: {
       ...profileData,
@@ -87,22 +87,21 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
 
   const onSubmit = async (data) => {
     setUpdating(true);
-    // Create the payload with updatable fields
     const payload = {
       first_name: data?.first_name,
       last_name: data?.last_name,
       email: data?.email,
-      cnic: data?.cnic,
-       // Username is not included as it's not updatable
     };
 
-    // Update user profile
     const success = await handleUpdateUserInfo(payload);
 
-    if (!success) {
-      setUpdating(false);
+    if (success) {
+      reset(data, { keepDirty: false, keepTouched: false });
     }
+    setUpdating(false);
   };
+
+  console.log({ userProfileData })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -119,6 +118,7 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
                 : { border: "1px solid #8A8AA033" }
             }
             maxLength={30}
+            disabled={userProfileData?.fayda_verification?.is_registered === true}
             {...register("first_name", { required: t("common.form.errors.firstName") })}
           />
           {errors.first_name && (
@@ -137,6 +137,7 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
                 : { border: "1px solid #8A8AA033" }
             }
             maxLength={30}
+            disabled={userProfileData?.fayda_verification?.is_registered === true}
 
             {...register("last_name", { required: t("common.form.errors.fatherName") })}
           />
@@ -169,7 +170,7 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
                 : { border: "1px solid #8A8AA033" }
             }
             maxLength={50}
-            {...register("email", { required: t("common.form.errors.email") })}
+            {...register("email")}
           />
           {errors.email && (
             <p className="text-red-500 text-xs mt-1">
@@ -182,50 +183,28 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
           <label className="md:text-base text-[16px] text-[#232323]">
             {t("common.form.faydaNumber")}
           </label>
-          <input
-            className="mt-2 w-full rounded-xl px-4 py-2 bg-white outline-none"
-            type="tel"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            placeholder={t("common.form.faydaNumberPlaceholder")}
-            maxLength={16}
-            style={errors?.cnic ? { border: "1px solid red" } : { border: "1px solid #8A8AA033" }}
-            onKeyDown={(e) => {
-              const key = e.key;
-              const ctrl = e.ctrlKey || e.metaKey;
-              const allowed = ["Backspace", "Delete", "Tab", "Enter", "Escape", "ArrowLeft", "ArrowRight", "Home", "End"];
-              if (allowed.includes(key) || ctrl) return;
-              if (!/^\d$/.test(key)) e.preventDefault(); // digits only
-            }}
-            onPaste={(e) => {
-              e.preventDefault();
-              const el = e.currentTarget;
-              const pasted = (e.clipboardData || window.clipboardData).getData("text") || "";
-              const digits = pasted.replace(/\D/g, "");
-              const s = el.selectionStart ?? el.value.length;
-              const epos = el.selectionEnd ?? el.value.length;
-              const next = (el.value.slice(0, s) + digits + el.value.slice(epos)).slice(0, 16);
-              el.value = next;
-              el.dispatchEvent(new Event("input", { bubbles: true }));
-            }}
-            {...register("cnic", {
-              // Optional; if filled, must be exactly 16 digits
-              validate: (v) => v === "" || v == null || /^\d{16}$/.test(v) || t("common.form.errors.faydaExactDigits"),
-              onChange: (e) => {
-                const clean = e.target.value.replace(/\D/g, "").slice(0, 16);
-                if (clean !== e.target.value) e.target.value = clean;
-              },
-            })}
-          //     value: /^\d{16,16}$/,
-          //     message: "Fayda  Number must contain only digits"
-          //   }
-          // })}
-          />
-          {errors.cnic && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.cnic.message || t("common.form.errors.faydaDigits")}
-            </p>
-          )}
+          <div
+            className="mt-2 w-full rounded-xl px-4 py-3 bg-white outline-none flex items-center justify-between"
+            style={{ border: "1px solid #8A8AA033" }}
+          >
+            <span className="text-sm text-[#232323] font-medium">
+              {t("common.form.faydaVerificationStatus", { defaultValue: "Verification status" })}
+            </span>
+            {userProfileData?.fayda_verification?.is_registered === true ? (
+              <span className="inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700 border border-green-200">
+                <span className="h-2 w-2 rounded-full bg-green-600" />
+                {t("common.verified", { defaultValue: "Verified" })}
+              </span>
+            ) : userProfileData?.fayda_verification?.is_registered === false || userProfileData?.fayda_verification === null ? (
+              <span className="inline-flex items-center gap-2 rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 border border-red-200">
+                <span className="h-2 w-2 rounded-full bg-red-600" />
+                {t("common.notVerified", { defaultValue: "Not verified" })}
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-2 rounded-full  px-3 py-1 text-xs font-semibold">
+              </span>
+            )}
+          </div>
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
@@ -242,8 +221,9 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
       </div>
       <div className="mt-10 text-center">
         <button
-          className="bg-secondary text-white font-medium px-10 py-3 rounded-md hover:bg-opacity-90 transition-all duration-300 disabled:opacity-70"
-          disabled={updating}
+          type="submit"
+          className="bg-secondary text-white font-medium px-10 py-3 rounded-md hover:bg-opacity-90 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+          disabled={updating || !isDirty}
         >
           {updating ? t2("profile.companyInfo.updating") : t2("profile.companyInfo.updateAccountInfo")}
         </button>

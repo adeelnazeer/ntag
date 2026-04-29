@@ -27,30 +27,31 @@
         "feature4": "NameTAG nambarada macaamiisha gaarka ah iyo kuwa shirkadaha sida ay doorteen.",
         "feature5": "Maareynta fudud iyada oo loo marayo portal web, USSD, ama abka mobaylka.",
         "feature6": "Gacanta ku hay lambarkaaga cusub. Maamul jadwalka shuruucda wicitaanada soo gala oo deji PIN.",
-        "feature7": "Doorashooyin qiimo oo dabacsan: qorsheyaal bishii ah, saddex biloodba mar, lix biloodba mar, iyo sannadle ah."
+        "feature7": "Doorashooyin qiimo oo dabacsan: qorsheyaal bishii ah, saddex biloodba mar, lix biloodba mar, iyo sannadle ah.",
+        "feature1": "Instantly get a short and catchy virtual number on your existing SIM without visiting an Ethio Telecom franchise or office."
       }
-    },
-    "carousel": {
-      "slides": [
-        {
-          "title": "NameTAG",
-          "para1": "Noqo in ka badan tiro ",
-          "para2": "Magacaaga ha muujin lambarkaaga marka aad wacayso. .",
-          "description": "Adigoo isticmaalaya NameTAG lambarka taleefankaagu wuxuu isu beddelaa magac xusuus gaar ah oo ka tarjumaya qofka aad tahay. Haddi aad tahay shaqsi ama ganacsi tani waxay kuu ogolaanaysaa inaad muujiso magacaga aad dooratay halkii aad ka isticmaali lahayd lambarka caadiga ah markaad wacdo - samaynta is dhexgalka kasta mid xirfad leh oo si fudud loo xasuusto.."
-        },
-        {
-          "title": "NameTAG",
-          "para1": "Kobciyo Aqoonsiga Summadaada ",
-          "para2": "Isticmaal magaca gaarka ah ee macaamiishaadu wacaan si ay u muujiyaan astaantaada. .",
-          "description": "NameTAG wuxuu kaa caawinayaa inaad xoojiso joogitaanka sumaddaada adoo ku beddelaya lambarkaaga taleefanka caadiga ah NameTAG caado ah. Ku fiican ganacsiyada iyo saameeyayaasha adeegani waxa ay u ogolaataa macaamiisha iyo xidhiidhada in ay gartaan oo ay ku xasuustaan ​​isla markaaba—iyaga oo ka caawinaya dhisidda daacadnimada summada iyo khibradaha isgaadhsiinta ee ka wanaagsan.."
-        },
-        {
-          "title": "NameTAG",
-          "para1": "Wicitaannada xusuusta leh waa la fududeeyey ",
-          "para2": "Abuur NameTAG soo jiidasho leh oo ku xidhan lambarkaaga. .",
-          "description": "Ku dhex istaag wicitaan kasta oo wata NameTAG-aqoonsiga wicitaankaaga ee gaarka ah. Haddi ay tahay naanaysta magaca sumadda ama weedha NameTAG waxa ay ku xidhaa magacaga aad dooratay lambarkaaga dhabta ah si loo hubiyo in qof kasta oo aad la xidhiidho uu marka hore arko aqoonsigaga. Way fududahay in la dejiyo si fudud loo maareeyo oo diyaar u ah isticmaalayaasha lacagta hore loo bixiyay iyo kuwa dambe.."
-        }
-      ]
     }
+  },
+  "carousel": {
+    "slides": [
+      {
+        "title": "NameTAG",
+        "para1": "Noqo in ka badan tiro ",
+        "para2": "Magacaaga ha muujin lambarkaaga marka aad wacayso. .",
+        "description": "Adigoo isticmaalaya NameTAG lambarka taleefankaagu wuxuu isu beddelaa magac xusuus gaar ah oo ka tarjumaya qofka aad tahay. Haddi aad tahay shaqsi ama ganacsi tani waxay kuu ogolaanaysaa inaad muujiso magacaga aad dooratay halkii aad ka isticmaali lahayd lambarka caadiga ah markaad wacdo - samaynta is dhexgalka kasta mid xirfad leh oo si fudud loo xasuusto.."
+      },
+      {
+        "title": "NameTAG",
+        "para1": "Kobciyo Aqoonsiga Summadaada ",
+        "para2": "Isticmaal magaca gaarka ah ee macaamiishaadu wacaan si ay u muujiyaan astaantaada. .",
+        "description": "NameTAG wuxuu kaa caawinayaa inaad xoojiso joogitaanka sumaddaada adoo ku beddelaya lambarkaaga taleefanka caadiga ah NameTAG caado ah. Ku fiican ganacsiyada iyo saameeyayaasha adeegani waxa ay u ogolaataa macaamiisha iyo xidhiidhada in ay gartaan oo ay ku xasuustaan ​​isla markaaba—iyaga oo ka caawinaya dhisidda daacadnimada summada iyo khibradaha isgaadhsiinta ee ka wanaagsan.."
+      },
+      {
+        "title": "NameTAG",
+        "para1": "Wicitaannada xusuusta leh waa la fududeeyey ",
+        "para2": "Abuur NameTAG soo jiidasho leh oo ku xidhan lambarkaaga. .",
+        "description": "Ku dhex istaag wicitaan kasta oo wata NameTAG-aqoonsiga wicitaankaaga ee gaarka ah. Haddi ay tahay naanaysta magaca sumadda ama weedha NameTAG waxa ay ku xidhaa magacaga aad dooratay lambarkaaga dhabta ah si loo hubiyo in qof kasta oo aad la xidhiidho uu marka hore arko aqoonsigaga. Way fududahay in la dejiyo si fudud loo maareeyo oo diyaar u ah isticmaalayaasha lacagta hore loo bixiyay iyo kuwa dambe.."
+      }
+    ]
   }
 }

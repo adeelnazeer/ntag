@@ -44,7 +44,6 @@ const Dashboardtable = (props) => {
   }, [reduxUserData]);
   const customerId = useAppSelector(state => state.user.customerId);
   const corporateDocuments = useAppSelector(state => state.user.corporateDocuments);
-
   const docStatus = {
     status: (corporateDocuments?.[0]?.doc_status == "1" && corporateDocuments?.[1]?.doc_status == "1") ? 1 : 0,
     corp_document: corporateDocuments
@@ -120,11 +119,11 @@ const Dashboardtable = (props) => {
           return;
         }
 
-        const actualAccountId = userData?.parent_id != null && userData?.parent?.customer_account_id 
-            ? userData.parent.customer_account_id 
-            : accountId;
+        const actualAccountId = userData?.parent_id != null && userData?.parent?.customer_account_id
+          ? userData.parent.customer_account_id
+          : accountId;
 
-        const res = await APICall("get", null, `${EndPoints.customer.getReserve}/${actualAccountId}`);
+        const res = await APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.corporate.getReserveTags}`);
 
         if (res?.success) {
           const newReserveData = Array.isArray(res?.data) ? res?.data[0] : res?.data;
@@ -172,7 +171,9 @@ const Dashboardtable = (props) => {
           if (res?.success && res?.data && res?.data.length > 0) {
             // User has tags - store in localStorage and update state
             localStorage.setItem('userTagsData', JSON.stringify(res.data));
-            setHasReservedOrBought(true);
+            if (!isExchangeFlow) {
+              setHasReservedOrBought(true);
+            }
           }
           else {
             setHasReservedOrBought(false);
@@ -203,6 +204,7 @@ const Dashboardtable = (props) => {
     reserveData.type == "reserve" &&
     reserveData.corp_tag_list;
 
+
   const hasAvailableTags = data.length > 0 && data.some(tag => tag.status == 1);
   const shouldShowNoAvailableTagsMessage = data.length > 0 && !hasAvailableTags &&
     (subscriberTags.length > 0 || vipTags.length > 0 || suggestedNumbers.length > 0);
@@ -231,6 +233,8 @@ const Dashboardtable = (props) => {
       isCustomer: isCustomer,
     };
   };
+
+  console.log({ hasReservedOrBought, docStatus })
 
   const prepareVIPTagData = (tag) => {
     return {
@@ -440,8 +444,8 @@ const Dashboardtable = (props) => {
           {/* Display search results */}
           {data?.length > 0 ? (
             data.map((single) => (
-              <div key={single?.id} className="grid grid-cols-2 sm:grid-cols-7 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
-                <div className="md:flex hidden items-center">
+              <div key={single?.id} className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-6 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
+                <div className="md:flex sm:hidden hidden items-center">
                   <FaHashtag className="h-5 w-5 text-[#8dc63f]" />
                 </div>
 
@@ -476,7 +480,7 @@ const Dashboardtable = (props) => {
 
                 <div className="col-span-2 sm:col-span-2 flex justify-end gap-2 mt-2 sm:mt-0">
                   {single?.status == 1 && (
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       <Button className="bg-[#edf6eb] hidden md:block min-w-[100px] py-1 px-3 text-[14px] text-secondary">
                         {t("buttons.available")}
                       </Button>
@@ -510,21 +514,21 @@ const Dashboardtable = (props) => {
                     </div>
                   )}
                   {single?.status == 2 && (
-                    <div className="flex gap-2">
-                      <Button className="bg-gray-100 min-w-[100px] text-red-800 rounded-lg fw-bolder px-3 py-1">
+                    <div className="flex gap-2 flex-wrap">
+                      <Button className="bg-gray-100 !text-[13px] min-w-[100px] text-red-800 rounded-lg fw-bolder px-3 py-1">
                         {t("buttons.sold")}
                       </Button>
                       <div className="min-w-[100px]" />
                     </div>
                   )}
                   {single?.status == 3 && (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap">
                       <Chip
                         variant="ghost"
                         color="red"
                         size="sm"
                         value={t("buttons.reserved")}
-                        className="min-w-[100px] text-center"
+                        className="min-w-[100px] !text-[13px] text-center"
                       />
                       <div className="min-w-[100px]" />
                     </div>
@@ -548,8 +552,8 @@ const Dashboardtable = (props) => {
                 {t("dashboard.sections.subscriber")}
               </Typography>
               {subscriberTags.map((tag, index) => (
-                <div key={index} className="grid grid-cols-2 sm:grid-cols-7 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
-                  <div className="md:flex hidden items-center">
+                <div key={index} className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-6 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
+                  <div className="md:flex sm:hidden hidden items-center">
                     <FaHashtag className="h-5 w-5 text-[#8dc63f]" />
                   </div>
 
@@ -582,7 +586,7 @@ const Dashboardtable = (props) => {
                     </div>
                   </div>
 
-                  <div className="col-span-2 sm:col-span-2 flex justify-end gap-2 mt-2 sm:mt-0">
+                  <div className="flex flex-wrap justify-end gap-2 mt-2 sm:mt-0">
                     {tag.status == 1 && <Button
                       className="bg-secondary py-1 px-3 text-xs text-white"
 
@@ -616,7 +620,7 @@ const Dashboardtable = (props) => {
                     </Button>}
 
                     {tag?.status == 2 && (
-                      <Button className="bg-gray-100 text-red-800 rounded-lg fw-bolder px-3 py-1">
+                      <Button className="bg-gray-100 !text-[13px] text-red-800 rounded-lg fw-bolder px-3 py-1">
                         {t("buttons.sold")}
                       </Button>
                     )}
@@ -640,8 +644,8 @@ const Dashboardtable = (props) => {
                 {t("dashboard.sections.premium")}
               </Typography>
               {vipTags.map((tag, index) => (
-                <div key={index} className="grid grid-cols-2 items-center sm:grid-cols-7 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
-                  <div className="md:flex hidden items-center">
+                <div key={index} className="grid grid-cols-2 items-center sm:grid-cols-5 md:grid-cols-6 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
+                  <div className="md:flex sm:hidden hidden items-center">
                     <FaHashtag className="h-5 w-5 text-[#8dc63f]" />
                   </div>
 
@@ -674,13 +678,13 @@ const Dashboardtable = (props) => {
                     </div>
                   </div>
 
-                  <div className="col-span-2 sm:col-span-2 flex justify-end gap-2 mt-2 sm:mt-0">
-                    {tag.status == 1 && (<div className="flex gap-2">
-                      <Button className="bg-[#edf6eb] py-1 px-3 text-[14px] text-secondary">
+                  <div className=" flex flex-wrap justify-end gap-2 mt-2 sm:mt-0">
+                    {tag.status == 1 && (<div className="flex gap-2 flex-wrap justify-end">
+                      <Button className="bg-[#edf6eb] py-1 px-3 !text-[13px] text-secondary">
                         {t("buttons.available")}
                       </Button>
                       <Button
-                        className="bg-secondary py-1 px-3 text-[14px] text-white"
+                        className="bg-secondary py-1 px-3 !text-[13px] text-white"
                         onClick={() => {
                           if (isCustomer) {
                             navigate(ConstentRoutes.tagDetailCustomer, {
@@ -709,7 +713,7 @@ const Dashboardtable = (props) => {
                     </div>)}
 
                     {tag?.status == 2 && (
-                      <Button className="bg-gray-100 text-red-800 rounded-lg fw-bolder px-3 py-1">
+                      <Button className="bg-gray-100 !text-[13px] text-red-800 rounded-lg fw-bolder px-3 py-1">
                         {t("buttons.sold")}
                       </Button>
                     )}
@@ -734,8 +738,8 @@ const Dashboardtable = (props) => {
                 {t("dashboard.sections.suggested")}
               </Typography>
               {suggestedNumbers.map((tag, index) => (
-                <div key={index} className="grid grid-cols-2 sm:grid-cols-7 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
-                  <div className="md:flex hidden items-center">
+                <div key={index} className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-6 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
+                  <div className="md:flex sm:hidden hidden items-center">
                     <FaHashtag className="h-5 w-5 text-[#8dc63f]" />
                   </div>
 
@@ -768,8 +772,8 @@ const Dashboardtable = (props) => {
                     </div>
                   </div>
 
-                  <div className="col-span-2 sm:col-span-2 flex justify-end gap-2 mt-2 sm:mt-0">
-                    <div className="flex gap-2">
+                  <div className="flex flex-wrap justify-end gap-2 mt-2 sm:mt-0">
+                    <div className=" justify-end">
                       <Button className="bg-[#edf6eb] py-1 px-3 text-xs text-secondary">
                         {t("buttons.available")}
                       </Button>

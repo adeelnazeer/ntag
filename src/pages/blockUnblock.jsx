@@ -707,7 +707,7 @@ const BlockUnblock = () => {
     APICall(
       "get",
       user?.parent_id != null ? params : null,
-      `${EndPoints.customer.getReserve}/${accountId}`
+      `${EndPoints.customer.newSecurityEndPoints.corporate.getReserveTags}`
     )
       .then((res) => {
         if (res?.success) {
@@ -1172,6 +1172,7 @@ const BlockUnblock = () => {
                     <PhoneInput
                       defaultCountry="ET"
                       international
+                      flagUrl={"/et.png"}
                       countryCallingCodeEditable={false}
                       className="w-full rounded-xl border border-gray-200 px-4 py-2.5 bg-white outline-none"
                       value={valueToBlock}

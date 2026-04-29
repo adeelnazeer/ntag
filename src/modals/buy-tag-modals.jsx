@@ -4,7 +4,7 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { Textarea } from '@headlessui/react';
 import { useTranslation } from "react-i18next";
 
-const BuyTagConfirmationModal = ({ isOpen, onClose, modalAction, onConfirm, comment, setComment, tagNo = '', isIndividual = false }) => {
+const BuyTagConfirmationModal = ({ isOpen, onClose, modalAction, onConfirm, comment, setComment, tagNo = '', isIndividual = false, isDeleteAccount = false }) => {
   const { t } = useTranslation(["buyTag"]);
 
   if (!isOpen) return null;
@@ -18,7 +18,7 @@ const BuyTagConfirmationModal = ({ isOpen, onClose, modalAction, onConfirm, comm
       case 'cancel':
         return t("modal.titles.cancel");
       case 'close':
-        return t("modal.titles.close");
+        return isDeleteAccount ? t("modal.titles.delete") : t("modal.titles.close");
       default:
         return t("modal.titles.default");
     }

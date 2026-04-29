@@ -138,7 +138,8 @@ const TagDetails = () => {
         <div className="flex justify-between gap-1 md:px-5 px-2 py-3 rounded-xl mt-1">
           <Typography className="text-[14px]">{t("profile.tagDetail.serviceStatus")}</Typography>
           <Typography className="md:text-[14px] text-[12px]">
-            {getTagStatusDashboard(single?.status)}
+          { single?.type === "reserve" ? t("profile.tagDetail.reserved"):getTagStatusDashboard(single?.status)}
+
           </Typography>
         </div>
 

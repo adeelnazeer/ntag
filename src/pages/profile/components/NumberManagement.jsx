@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, } from "react";
 import {
   Button,
   Typography,
@@ -8,7 +8,7 @@ import {
   Tooltip,
   Chip,
 } from "@material-tailwind/react";
-import { FaPlus, FaTrash, FaMobileAlt, FaInfoCircle } from "react-icons/fa";
+import { FaPlus, FaTrash, FaInfoCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useAppSelector } from "../../../redux/hooks";
 import APICall from "../../../network/APICall";
@@ -17,62 +17,24 @@ import AddNumberModal from "../../../modals/Add-number-modals";
 import DeleteConfirmationModal from "../../../modals/Delete-number-modals";
 import { formatPhoneNumberCustom } from "../../../utilities/formatMobileNumber";
 import { useTranslation } from "react-i18next";
+import { useMobileNumbers } from "../../hooks/useMobileNumbers";
 
 const NumberManagement = ({ profileData }) => {
-  const [MobileNumbers, setMobileNumbers] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState(null);
   const [processingAction, setProcessingAction] = useState(false);
   const { t } = useTranslation(["profile"]);
 
-  // Always call hooks unconditionally
   const reduxUserData = useAppSelector((state) => state.user.userData);
   const userData = profileData || reduxUserData;
-  
-  // Use parent?.customer_account_id when parent_id != null, otherwise use regular id
-  const customerId = userData?.parent_id != null && userData?.parent?.customer_account_id 
-    ? userData.parent.customer_account_id 
-    : userData?.id;
 
-  useEffect(() => {
-    if (customerId) {
-      fetchMobileNumbers();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customerId]);
+  const customerId =
+    userData?.parent_id != null && userData?.parent?.customer_account_id
+      ? userData.parent.customer_account_id
+      : userData?.id;
 
-  const fetchMobileNumbers = async () => {
-    if (!customerId) {
-      console.error("No customer account ID found");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const response = await APICall(
-        "get",
-        null,
-        EndPoints.customer.GetAllNumbers(customerId)
-      );
-
-      if (response?.success && response?.data) {
-        const numbers = Array.isArray(response.data) ? response.data : [response.data];
-        setMobileNumbers(numbers);
-      } else {
-        toast.error(response?.message || "Failed to fetch Mobile numbers");
-        setMobileNumbers([]);
-      }
-    } catch (error) {
-      console.error("Error fetching Mobile numbers:", error);
-      toast.error("Error loading Mobile numbers");
-      setMobileNumbers([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { mobileNumbers: MobileNumbers, loading, refetch } = useMobileNumbers(customerId);
 
   const handleDeleteNumber = async () => {
     if (!selectedNumber) return;
@@ -90,7 +52,7 @@ const NumberManagement = ({ profileData }) => {
         toast.success("Mobile number deleted successfully");
         setOpenDeleteDialog(false);
         setSelectedNumber(null);
-        fetchMobileNumbers();
+        refetch();
       } else {
         toast.error(response?.message || "Failed to delete Mobile number");
       }
@@ -297,7 +259,7 @@ const NumberManagement = ({ profileData }) => {
         <AddNumberModal
           isOpen={openAddDialog}
           onClose={() => setOpenAddDialog(false)}
-          onAddNumber={fetchMobileNumbers}
+          onAddNumber={refetch}
           customerId={customerId}
         />
       )}

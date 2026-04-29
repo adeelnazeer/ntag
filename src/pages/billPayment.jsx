@@ -59,8 +59,11 @@ const BillPayment = () => {
   }, [tagDataList]);
 
   // Get tag info - handle both premium and regular tags
-  const isPremium = selectedTagData?.tag_list_premium_id == 1 || selectedTagData?.is_premium;
-  const tagInfo = isPremium && selectedTagData?.corp_premium_tag_list
+  const isPremium =
+    stateData?.tag_list_premium_id == 1 ||
+    stateData?.tag_type === "VIP" ||
+    stateData?.is_premium; 
+     const tagInfo = isPremium && selectedTagData?.corp_premium_tag_list
     ? selectedTagData.corp_premium_tag_list
     : selectedTagData?.corp_tag_list || selectedTagData || {};
 

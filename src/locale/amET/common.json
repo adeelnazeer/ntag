@@ -84,20 +84,24 @@
         "verificationCode": "ማረጋገጫ ኮድ ያስፈልጋል",
         "termAndCondition": "ለመቀጠል ውሎች እና ሁኔታዎች መስማማት አለብዎት",
         "minLength": "ቢያንስ 3 ቁምፊዎች መሆን አለበት",
-        "tinMinLength": "ቢያንስ 9 አሃዞች መሆን አለበት",
+        "tinMinLength": "ቢያንስ 10 አሃዞች መሆን አለበት",
         "tinMaxLength": "ከ10 አሃዞች መብለጥ የለበትም",
         "tinPattern": "(9–10) አሃዞች ብቻ ",
         "faydaExactDigits": "የፋይዳ ቁጥር በትክክል 16 አሃዞች መሆን አለበት",
         "faydaDigits": "የፋይዳ ቁጥር 12 አሃዞች መሆን አለበት",
         "companyNameRequired": "የኩባንያ ስም ያስፈልጋል",
         "companyNameNoDigits": "የኩባንያ ስም ከአሃዞች ብቻ ሊሆን አይችልም",
-        "usernameMinLength": "የተጠቃሚ ስም ቢያንስ 2 ቁምፊዎች መሆን አለበት",
+        "usernameMinLength": "የተጠቃሚ ስም ቢያንስ 3 ቁምፊዎች መሆን አለበት",
         "passwordMinLength": "የይለፍ ቃል ቢያንስ 5 ቁምፊዎች መሆን አለበት",
         "passwordMaxLength": "የይለፍ ቃል ከ15 ቁምፊዎች መብለጥ የለበትም",
         "passwordPattern": "የይለፍ ቃል አንድ ትልቅ የእንግሊዝኛ ፊደል፣ አንድ ትንሽ የእንግሊዝኛ ፊደል እና አንድ ልዩ ምልክት መያዝ አለበት",
         "passwordsDoNotMatch": "የይለፍ ቃሎች አይዛመዱም",
         "mobileNumberRequired": "የሞባይል ቁጥር ያስፈልጋል",
-        "otpDoesNotMatch": "የእርስዎ OTP አይዛመድም"
+        "otpDoesNotMatch": "የእርስዎ OTP አይዛመድም",
+        "cityMinLength": "የራስ መሆን አለበት የለበትም",
+        "companyNameMinLength": "የኩባንያ ስም ያስፈልጋል",
+        "firstNameMinLength": "የተጠቃሚ ስም ያስፈልጋል",
+        "fatherNameMinLength": "የይለፍ ቃል ያስፈልጋል"
       }
     },
     "monthly": "ወርሃዊ",
@@ -130,7 +134,11 @@
       "success": "ተሳክቷል",
       "failed": "አልተሳካም",
       "expiredPaymentTimeline": "የክፍያ ጊዜ ያለፈበት"
-    }
+    },
+    "verifyHuman": "Verify you're human",
+    "recaptchaV2Message": "Please complete the security check below to continue.",
+    "cancel": "Cancel",
+    "verify": "Verify"
   },
   "dashboard": {
     "welcomeNameTag": "ወደ NameTAG አገልግሎት እንኳን ደህና መጡ!",
@@ -242,12 +250,14 @@
     "sold": "ተሽጧል",
     "cancel": "ይቅር",
     "confirmBuy": "ግዢ ያረጋግጡ",
-    "ok": "እሺ"
+    "ok": "እሺ",
+    "confirm": "Confirm"
   },
   "accountConfirmation": {
     "message": "የምዝገባ ሂደቱን ለማጠናቀቅ የአካውንት መረጃውን ለማስገባት እርግጠኛ ነዎት?",
     "cancel": "ይቅር",
-    "submit": "አስገባ"
+    "submit": "አስገባ",
+    "submitting": "Submitting..."
   },
   "register": {
     "uploadDocumentsRequired": "እባክዎ ምዝገባዎን ለማጠናቀቅ ሁሉንም የሚያስፈልጉ ሰነዶችን ይስቀሉ።"

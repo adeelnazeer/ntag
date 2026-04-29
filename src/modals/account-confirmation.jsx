@@ -1,10 +1,10 @@
 import { Button } from "@headlessui/react";
-import { Typography } from "@material-tailwind/react";
+import { Spinner, Typography } from "@material-tailwind/react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 
 /* eslint-disable react/prop-types */
-const AccountConfirmation = ({ isOpen, handleSubmit, setIsOpen }) => {
+const AccountConfirmation = ({ isOpen, handleSubmit, setIsOpen, loading = false }) => {
     const { t } = useTranslation(["common"]);
     return (
         <>
@@ -37,10 +37,18 @@ const AccountConfirmation = ({ isOpen, handleSubmit, setIsOpen }) => {
                                         {t("accountConfirmation.cancel")}
                                     </Button>
                                     <Button
-                                        className="bg-secondary py-2 px-6 text-white sm:px-6"
+                                        className="bg-secondary py-2 px-6 text-white sm:px-6 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                                         onClick={() => handleSubmit()}
+                                        disabled={loading}
                                     >
-                                        {t("accountConfirmation.submit")}
+                                        {loading ? (
+                                            <>
+                                                <Spinner className="h-4 w-4" />
+                                                {t("common.form.pleaseWait")}
+                                            </>
+                                        ) : (
+                                            t("accountConfirmation.submit")
+                                        )}
                                     </Button>
                                 </div>
                             </div>

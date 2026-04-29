@@ -12,6 +12,7 @@ import TickIcon from '../../../assets/images/tick.png';
 import APICall from "../../../network/APICall";
 import EndPoints from "../../../network/EndPoints";
 import { useTranslation } from "react-i18next";
+import { useRecaptchaToken } from "../../../hooks/useRecaptchaToken";
 
 // Apply CSS fix for autofill styling
 const autofillStyle = `
@@ -33,11 +34,12 @@ const GetLabel = ({ name }) => {
   );
 };
 
-const AccountForm = ({ register, errors, watch, data, setOpen, setData, control, setValue }) => {
+const AccountForm = ({ register, errors, watch, data, setOpen, setData, control, setValue, touchedFields, dirtyFields }) => {
   const watchAll = watch();
   const location = useLocation()
   const { t } = useTranslation()
   const registerData = useRegisterHook();
+  const { getRecaptchaPayload } = useRecaptchaToken();
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [industries, setIndustries] = useState([])
   const [regions, setRegions] = useState([])
@@ -49,29 +51,28 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
       registerData.verifyAccount({ [fieldName]: cleanValue }, fieldName);
     }
   };
-  const getIndustries = () => {
-    APICall("get", null, EndPoints.customer.getIndustries)
-      .then(res => {
+  const getIndustries = async () => {
+     APICall("get", null, EndPoints.customer.getIndustries)
+      .then((res) => {
         if (res?.success) {
-          setIndustries(res?.data)
+          setIndustries(res?.data);
         } else {
-          setIndustries([])
+          setIndustries([]);
         }
       })
-      .catch(err => console.log("err", err));
-  }
-  const getRegions = () => {
-    APICall("get", null, EndPoints.customer.getRegions)
-      .then(res => {
+      .catch((err) => console.log("err", err));
+  };
+  const getRegions = async () => {
+     APICall("get", null, EndPoints.customer.getRegions)
+      .then((res) => {
         if (res?.success) {
-          setRegions(res?.data)
-        }
-        else {
-          setRegions([])
+          setRegions(res?.data);
+        } else {
+          setRegions([]);
         }
       })
-      .catch(err => console.log("err", err));
-  }
+      .catch((err) => console.log("err", err));
+  };
 
   const handleKeyPress = (e, value, fieldName) => {
     if (e.key === 'Enter' || e.key === 'Tab') {
@@ -88,13 +89,13 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
   };
 
 
-  // Initialize phone with default value
+  // Initialize phone with default value (don't mark as dirty/touched)
   useEffect(() => {
     // Set a default phone number if none exists
     if (!data?.contact_no) {
       const defaultPhone = "+2519";
       setData(st => ({ ...st, contact_no: defaultPhone }));
-      setValue("contact_no", defaultPhone);
+      setValue("contact_no", defaultPhone, { shouldDirty: false, shouldTouch: false, shouldValidate: false });
     }
     if (!data?.comp_reg_no && location?.state?.comp_name) {
       setData(st => ({
@@ -151,9 +152,13 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
               }
               {...register("contactf_name", {
                 required: t("common.form.errors.firstName"),
+                pattern: {
+                  value: /^[a-zA-Z\s]+$/,
+                  message: t("common.form.errors.numberOnly"),
+                },
                 minLength: {
                   value: 3,
-                  message: t("common.form.errors.firstNameMinLength") ||t("common.form.errors.firstNameMinLength") || "First name must be at least 3 characters"
+                  message: t("common.form.errors.firstNameMinLength") || "First name must be at least 3 characters"
                 }
               })}
             />
@@ -176,6 +181,10 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
               }
               {...register("contactl_name", {
                 required: t("common.form.errors.fatherName"),
+                pattern: {
+                  value: /^[a-zA-Z\s]+$/,
+                  message: t("common.form.errors.numberOnly"),
+                },
                 minLength: {
                   value: 3,
                   message: t("common.form.errors.fatherNameMinLength") || "Father name must be at least 3 characters"
@@ -195,53 +204,36 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
             <Controller
               name="contact_no"
               control={control}
-              defaultValue=""
+              defaultValue="+2519"
               rules={{
                 required: t("common.form.mobileError"),
                 validate: (value) =>
                   validatePhoneNumber(value) || t("common.form.mobileError"),
               }}
-              render={({ field }) => {
-                useEffect(() => {
-                  if (!field.value) {
-                    field.onChange("+2519");
-                    setData((prev) => ({ ...prev, contact_no: "+2519" }));
-                  }
-                }, []);
-
-                return (
-                  <PhoneInput
-                    className="w-full rounded-xl px-4 py-2 border border-[#8A8AA033] bg-white outline-none"
-                    defaultCountry="ET"
-                    international
-                    countryCallingCodeEditable={false}
-                    limitMaxLength={true}
-                    flagUrl={`https://flagcdn.com/w40/et.png`}
-                    disabled={registerData?.expirationTime}
-                    countries={["ET"]}
-                    value={field.value}
-                    onChange={(value) => {
-                      // Update form state
-                      field.onChange(value);
-
-                      // Update your local state
-                      setData((prev) => ({ ...prev, contact_no: value }));
-
-                      // Optional: Reset success state
-                      if (registerData?.state?.success?.contact_no) {
-                        registerData.resetFieldValidation("contact_no");
-                      }
-
-                      // Optional: validate and set validity state
-                      const isValid = validatePhoneNumber(value);
-                      setIsValidPhone(isValid);
-                    }}
-
-                  />
-                );
-              }}
+              render={({ field }) => (
+                <PhoneInput
+                  className="w-full rounded-xl px-4 py-2 border border-[#8A8AA033] bg-white outline-none"
+                  defaultCountry="ET"
+                  international
+                  countryCallingCodeEditable={false}
+                  limitMaxLength={true}
+                  flagUrl={"/et.png"}
+                  disabled={registerData?.expirationTime}
+                  countries={["ET"]}
+                  value={field.value}
+                  onChange={(value) => {
+                    field.onChange(value);
+                    setData((prev) => ({ ...prev, contact_no: value }));
+                    if (registerData?.state?.success?.contact_no) {
+                      registerData.resetFieldValidation("contact_no");
+                    }
+                    const isValid = validatePhoneNumber(value);
+                    setIsValidPhone(isValid);
+                  }}
+                />
+              )}
             />
-            {(errors.contact_no || registerData?.state?.error?.contact_no) && (
+            {(touchedFields?.contact_no || dirtyFields?.contact_no) && (errors.contact_no || registerData?.state?.error?.contact_no) && (
               <p className="text-left mt-1 text-sm text-[#FF0000]">
                 {errors.contact_no?.message || registerData?.state?.error?.contact_no}
               </p>
@@ -306,7 +298,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
                     : { border: "1px solid #8A8AA033" }
                 }
                 {...register("corp_industry_id", {
-                  required: "Industry is required"
+                  required: t("common.form.errors.industry")
                 })}
                 onChange={(e) => {
                   const filterInd = industries?.find(x => x?.id == e.target.value)
@@ -402,7 +394,7 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
                   required: t("common.form.errors.address"),
                   minLength: {
                     value: 3,
-                    message: t("common.form.errors.addressMinLength") || "Address must be at least 3 characters"
+                    message: t("common.form.errors.minLength") || "Address must be at least 3 characters"
                   }
                 })}
               />
@@ -452,13 +444,10 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
                       el.dispatchEvent(new Event("input", { bubbles: true }));
                     }}
                     {...register("comp_reg_no", {
-                      required: "Business Registration/TIN Number is required",
-                      minLength: { value: 10, message: "TIN Number must be at least 10 digits" },
-                      maxLength: { value: 10, message: "TIN Number cannot exceed 10 digits" },
-                      pattern: {
-                        value: /^\d{10}$/,
-                        message: "TIN Number must contain only digits"
-                      },
+                      required: t("common.form.errors.tinNumber"),
+              minLength: { value: 10, message: t("common.form.errors.tinMinLength") },
+              maxLength: { value: 10, message: t("common.form.errors.tinMaxLength") },
+              pattern: { value: /^\d{9,10}$/, message: t("common.form.errors.tinPattern") },
                       onBlur: (e) => handleBlur(e.target.value, "comp_reg_no"),
                       onChange: (e) => {
                         // sanitize any non-digit and enforce length on every change

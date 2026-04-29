@@ -6,7 +6,6 @@
 # Node artifact files
 node_modules/
 dist/
-dist-miniapp/
 
 # Compiled Java class files
 *.class

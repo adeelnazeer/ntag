@@ -13,6 +13,7 @@ import { formatPhoneNumberCustom } from "../utilities/formatMobileNumber";
 import { ConstentRoutes } from "../utilities/routesConst";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../redux/hooks";
+import { useRecaptchaToken } from "../hooks/useRecaptchaToken";
 
 const AddNumberModal = ({
   isOpen,
@@ -23,7 +24,8 @@ const AddNumberModal = ({
   selectedTag = null,
 }) => {
   const registerData = useRegisterHook();
-  
+  const { getRecaptchaPayload } = useRecaptchaToken();
+
   // Get userData to check for parent_id
   let userData = useAppSelector(state => state.user.userData);
   if (!userData) {
@@ -102,10 +104,16 @@ const AddNumberModal = ({
     setVerifyingPhone(true);
 
     try {
+      const tokens = await getRecaptchaPayload("add_number_verify_account", { silent: true });
+      if (!tokens) {
+        setPhoneVerified(false);
+        setPhoneError("Security verification failed. Please try again.");
+        return;
+      }
       // Check if Mobile Number is unique
       const response = await APICall(
         "post",
-        { phone_number: cleanedPhone },
+        { phone_number: cleanedPhone, ...tokens },
         EndPoints.customer.verifyAccount
       );
 
@@ -173,7 +181,6 @@ const AddNumberModal = ({
           ? userData.parent.customer_account_id 
           : customerId;
         const payload = {
-          account_id: accountId,
           existing_msisdn: selectedTag?.msisdn,
           new_msisdn: value.replace(/^\+/, ""),
           msisdn_type: "Primary",
@@ -182,7 +189,7 @@ const AddNumberModal = ({
         const response = await APICall(
           "post",
           payload,
-          EndPoints.customer.ChangeNumber
+          EndPoints.customer.newSecurityEndPoints.corporate.changeNumber
         );
 
         if (response?.success) {
@@ -195,7 +202,7 @@ const AddNumberModal = ({
       } catch (error) {
         toast.error(error || "Error change Mobile Number");
       } finally {
-        // setProcessingAction(false);
+        setProcessingAction(false);
       }
     } else {
       try {
@@ -289,7 +296,7 @@ const AddNumberModal = ({
               <PhoneInput
                 defaultCountry="ET"
                 international
-                flagUrl={`https://flagcdn.com/w40/et.png`}
+                flagUrl={"/et.png"}
                 countryCallingCodeEditable={false}
                 className="w-full rounded-xl border border-gray-200 px-4 py-2.5 bg-white outline-none"
                 value={value}

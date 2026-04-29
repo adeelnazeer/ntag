@@ -94,7 +94,7 @@ const TagNames = () => {
     APICall(
       "get",
       user?.parent_id != null ? params : null,
-      `${EndPoints.customer.getReserve}/${accountId}`
+      `${EndPoints.customer.newSecurityEndPoints.corporate.getReserveTags}`
     )
       .then((res) => {
         if (res?.success) {
@@ -416,7 +416,7 @@ const TagNames = () => {
             {t("tagInfo.serviceStatus")}
           </Typography>
           <Typography className="md:text-[14px] text-[12px]">
-            {getTagStatusDashboard(single?.status)}
+            { single?.type === "reserve" ? t("tagInfo.reserved"):getTagStatusDashboard(single?.status)}
           </Typography>
         </div>
 
@@ -440,7 +440,7 @@ const TagNames = () => {
                 ? tagInfo?.monthly_fee || single?.service_fee || "0"
                 : single?.service_id === "Quarterly"
                   ? tagInfo?.quarterly_fee || single?.service_fee || "0"
-                  : single?.service_id === "Semi-Annually"
+                  : single?.service_id === "Semi-Annual"
                     ? tagInfo?.semiannually_fee || single?.service_fee || "0"
                     : single?.service_id === "Annually"
                       ? tagInfo?.annually_fee || single?.service_fee || "0"

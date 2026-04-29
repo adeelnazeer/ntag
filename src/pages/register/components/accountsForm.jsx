@@ -5,10 +5,11 @@ import CountdownTimer from "../../../components/counter";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import TickIcon from '../../../assets/images/tick.png';
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { ConstentRoutes } from "../../../utilities/routesConst";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
+import OtpInput from "react-otp-input";
 
 // Apply CSS fix for autofill styling
 const autofillStyle = `
@@ -30,18 +31,6 @@ const GetLabel = ({ name }) => {
   );
 };
 
-const debounce = (func, wait) => {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-};
-
 const CompanyForm = ({
   register,
   errors,
@@ -51,7 +40,9 @@ const CompanyForm = ({
   getValues,
   control,
   registerData,
-  setData
+  setData,
+  touchedFields,
+  dirtyFields,
 }) => {
   const watchAllFields = watch();
   const { t } = useTranslation(["common"])
@@ -64,9 +55,10 @@ const CompanyForm = ({
   const [originalPhoneNumber, setOriginalPhoneNumber] = useState(null);
   const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
   const [lastVerifiedCode, setLastVerifiedCode] = useState(null);
+  const lastVerifiedCodeRef = useRef(null);
 
 
-  // Initialize phone number and track original phone number
+  // Initialize phone number and track original phone number (don't mark as dirty/touched)
   useEffect(() => {
     const phoneValue = watchAllFields?.phone_number;
     if (phoneValue && phoneValue !== phone) {
@@ -75,55 +67,35 @@ const CompanyForm = ({
         setOriginalPhoneNumber(phoneValue);
       }
     } else if (!phoneValue && !phone) {
-      setValue("phone_number", "+2519");
+      setValue("phone_number", "+2519", {
+        shouldDirty: false,
+        shouldTouch: false,
+        shouldValidate: false,
+      });
       setPhone("+2519");
       setOriginalPhoneNumber("+2519");
     }
   }, [watchAllFields?.phone_number, phone, originalPhoneNumber, setValue]);
 
-  // Auto-verify OTP when 6 digits are entered
+  // Auto-verify OTP when 6 digits are entered (reset state only; actual API call is from OtpInput onChange for iOS)
   useEffect(() => {
     const verificationCode = watchAllFields?.verification_code;
     const codeString = verificationCode?.toString();
-    const expirationTime = registerData?.expirationTime;
     const isVerified = registerData?.verified;
-    
-    // Only verify if:
-    // 1. Code is 6 digits
-    // 2. OTP is available (expirationTime exists)
-    // 3. Not currently verifying
-    // 4. Not already verified
-    // 5. This is a different code than the last one we tried to verify
-    if (
-      codeString &&
-      codeString.length === 6 &&
-      expirationTime &&
-      !isVerifyingOtp &&
-      !isVerified &&
-      codeString !== lastVerifiedCode &&
-      registerData?.handleVerifyOtp
-    ) {
-      setIsVerifyingOtp(true);
-      setLastVerifiedCode(codeString); // Track this code as attempted
-      registerData.handleVerifyOtp(codeString, null, false);
-      
-      // Reset verifying flag after a delay
-      setTimeout(() => {
-        setIsVerifyingOtp(false);
-      }, 2000);
-    }
-    
+
     // Reset lastVerifiedCode if user changes the code (code length is less than 6)
     if (codeString && codeString.length < 6) {
       setLastVerifiedCode(null);
+      lastVerifiedCodeRef.current = null;
     }
-    
+
     // Reset lastVerifiedCode if verification succeeds
     if (isVerified) {
       setLastVerifiedCode(null);
+      lastVerifiedCodeRef.current = null;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchAllFields?.verification_code, registerData?.expirationTime, registerData?.verified, isVerifyingOtp, lastVerifiedCode]);
+  }, [watchAllFields?.verification_code, registerData?.verified]);
 
   // Reset verification when phone number changes after OTP is verified
   useEffect(() => {
@@ -147,22 +119,46 @@ const CompanyForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchAllFields?.phone_number, originalPhoneNumber, registerData?.verified, setValue]);
 
-  // Handle validation when field loses focus or on key press - only for username, email, and phone_number
-  const handleValidation = (value, fieldName) => {
-    // Only validate username, email, and phone_number
-    if (['account_id', 'email', 'phone_number', "company_name"].includes(fieldName) && value && value.trim() !== '') {
-      const cleanValue = value.replace(/\s/g, "").replace(/^\+/, "");
+  const lastValidatedPhoneRef = useRef(null);
+  const validationTimeoutRef = useRef(null);
+
+  // Handle validation - only call API when value length > 3 (or 9 digits for phone)
+  const handleValidation = useCallback((value, fieldName) => {
+    if (!['account_id', 'email', 'phone_number', 'company_name'].includes(fieldName) || !value || value.trim() === '') {
+      return;
+    }
+    const cleanValue = value.replace(/\s/g, "").replace(/^\+/, "");
+    if (fieldName === 'phone_number') {
+      const cleanNumber = value ? value.replace(/^\+/, "").replace(/\s/g, "") : "";
+      if (cleanNumber.length > 9) {
+        if (cleanNumber === lastValidatedPhoneRef.current) return;
+        lastValidatedPhoneRef.current = cleanNumber;
+        registerData.verifyAccount({ phone_number: cleanNumber }, "phone_number");
+      } else {
+        lastValidatedPhoneRef.current = null;
+      }
+      return;
+    }
+    if (cleanValue.length > 3) {
       registerData.verifyAccount({ [fieldName]: cleanValue }, fieldName);
     }
-  };
+  }, [registerData]);
 
-  // Handle validation when field loses focus or on key press
-  // const handleValidation = (value, fieldName) => {
-  //   if (value && value.trim() !== '') {
-  //     const cleanValue = value.replace(/\s/g, "").replace(/^\+/, "");
-  //     registerData.verifyAccount({ [fieldName]: cleanValue }, fieldName);
-  //   }
-  // };
+  const debouncedValidation = useCallback((value, fieldName) => {
+    if (validationTimeoutRef.current) {
+      clearTimeout(validationTimeoutRef.current);
+    }
+    validationTimeoutRef.current = setTimeout(() => {
+      validationTimeoutRef.current = null;
+      handleValidation(value, fieldName);
+    }, 500);
+  }, [handleValidation]);
+
+  useEffect(() => {
+    return () => {
+      if (validationTimeoutRef.current) clearTimeout(validationTimeoutRef.current);
+    };
+  }, []);
 
   // Handle key press for validation
   const handleKeyPress = (e, value, fieldName) => {
@@ -171,24 +167,24 @@ const CompanyForm = ({
     }
   };
 
-  // Handle field blur for validation
+  // Handle field blur for validation (debounced API called on blur only, not on change)
   const handleBlur = (value, fieldName) => {
-    if (value && value.trim() !== '') {
-      if (fieldName === 'email') {
-        // For email, ensure it's a valid format before backend validation
-        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-        if (emailRegex.test(value)) {
-          handleValidation(value, fieldName);
-        }
-      } else if (fieldName === 'phone_number') {
-        // For phone, only validate complete numbers
-        const cleanNumber = value.replace(/\+251|\s/g, "");
-        if (cleanNumber.length === 9) {
-          handleValidation(value, fieldName);
-        }
-      } else {
-        // For other fields, validate on blur
-        handleValidation(value, fieldName);
+    if (!['account_id', 'email', 'phone_number', 'company_name'].includes(fieldName) || !value || value.trim() === '') {
+      return;
+    }
+    const cleanValue = value.replace(/\s/g, "").replace(/^\+/, "");
+    if (fieldName === 'email') {
+      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+      if (emailRegex.test(value)) {
+        debouncedValidation(value, fieldName);
+      }
+    } else if (fieldName === 'phone_number') {
+      const cleanNumber = value ? value.replace(/\+251|\s/g, "") : "";
+      if (cleanNumber.length === 9) debouncedValidation(value, fieldName);
+    } else {
+      // account_id, company_name
+      if (cleanValue.length > 3) {
+        debouncedValidation(value, fieldName);
       }
     }
   };
@@ -216,9 +212,6 @@ const CompanyForm = ({
     setOtpExpired(true);
   };
 
-  // Create debounced validation function to avoid too many API calls
-  const debouncedValidation = debounce(handleValidation, 300);
-
   // Handle change for fields that need validation
   const handleChange = (e, fieldName) => {
     const value = e.target.value;
@@ -231,18 +224,9 @@ const CompanyForm = ({
       setData(st => ({ ...st, company_name: value }));
     }
 
-    // Reset success state when field is modified to remove tick icon
     if (registerData?.state?.success?.[fieldName]) {
       registerData.resetFieldValidation(fieldName);
     }
-
-    // If field is empty, no need to validate
-    if (!value || value.trim() === '') {
-      return;
-    }
-
-    // Trigger validation after a short delay if field has content
-    debouncedValidation(value, fieldName);
   };
 
   const requiredFields = [
@@ -515,7 +499,7 @@ const CompanyForm = ({
                       defaultCountry="ET"
                       international
                       countryCallingCodeEditable={false}
-                      flagUrl={`https://flagcdn.com/w40/et.png`}
+                      flagUrl={"/et.png"}
                       value={field.value}
                       limitMaxLength={true}
                       disabled={registerData?.expirationTime}
@@ -552,10 +536,12 @@ const CompanyForm = ({
                         const isValid = validatePhoneNumber(value);
                         setIsValidPhone(isValid);
 
-                        // Only validate complete numbers
-                        const cleanNumber = value ? value.replace(/\+251|\s/g, "") : "";
-                        if (cleanNumber?.length === 9) {
-                          handleValidation(value, "phone_number");
+                        // Only validate complete numbers (debounced, and only if number actually changed)
+                        const cleanNumber = value ? value.replace(/^\+/, "").replace(/\s/g, "") : "";
+                        if (cleanNumber?.length > 9) {
+                          debouncedValidation(value, "phone_number");
+                        } else {
+                          lastValidatedPhoneRef.current = null;
                         }
                       }}
 
@@ -583,19 +569,20 @@ const CompanyForm = ({
                       ? "opacity-50 cursor-not-allowed"
                       : "cursor-pointer hover:bg-gray-100"
                     } text-xs font-medium rounded`}
-                  onClick={() =>
+                  onClick={() => {
                     !isGetCodeDisabled &&
-                    !hasBackendError &&
-                    isValidPhone &&
-                    areRequiredFieldsValid &&
-                    registerData?.isRecaptchaReady &&
+                      !hasBackendError &&
+                      isValidPhone &&
+                      areRequiredFieldsValid &&
+                      registerData?.isRecaptchaReady &&
+                     setValue("verification_code", "");
                     handleOtpRequest(phone)
-                  }
+                  }}
                 >
                   {!registerData?.isRecaptchaReady ? t("common.form.pleaseWait") :
                     otpExpired ? t("common.form.resendOtp") :
-                    isGetCodeDisabled ? t("common.form.pleaseWait") :
-                      registerData?.isResend ? t("common.form.resendOtp") : t("common.form.sentOtp")}
+                      isGetCodeDisabled ? t("common.form.pleaseWait") :
+                        registerData?.isResend ? t("common.form.resendOtp") : t("common.form.sentOtp")}
                 </button>
 
               )}
@@ -606,7 +593,7 @@ const CompanyForm = ({
               </div>
             }
           </div>
-          {phone && !isValidPhone && (
+          {phone && !isValidPhone && (touchedFields?.phone_number || dirtyFields?.phone_number) && (
             <p className="text-left text-sm mt-1  text-[#FF0000]">
               {t("common.form.mobileError")}
             </p>
@@ -621,39 +608,77 @@ const CompanyForm = ({
         {/* Verification Code Field */}
         <div>
           <GetLabel name={t("common.form.verificationCode")} />
-          <div className="relative mt-2  items-center flex w-full">
-            <Input
-              type="tel"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
-              placeholder={t("common.form.verificationCode")}
-              maxLength={6}
-              disabled={registerData?.verified}
-              onKeyDown={(e) => {
-                const key = e.key;
-                const ctrl = e.ctrlKey || e.metaKey;
-                const allowed = ["Backspace", "Delete", "Tab", "Enter", "Escape", "ArrowLeft", "ArrowRight", "Home", "End"];
-                if (allowed.includes(key) || ctrl) return;
-                if (!/^\d$/.test(key)) e.preventDefault();
-              }}
-              {...register("verification_code", {
+          <div className="relative mt-2 items-center flex w-full">
+            <Controller
+              name="verification_code"
+              control={control}
+              defaultValue=""
+              rules={{
                 required: t("common.form.errors.verificationCode"),
-                pattern: { value: /^\d*$/, message: t("common.form.errors.verificationCode") },
-                validate: (val) => {
-                  if (watch("verification_code") != val) {
-                    return t("common.form.errors.otpDoesNotMatch");
-                  }
-                  return true;
-                },
-              })}
-              style={
-                errors?.verification_code
-                  ? { border: "1px solid red" }
-                  : registerData?.verified
-                  ? { border: "1px solid #8A8AA033", backgroundColor: "#f5f5f5", cursor: "not-allowed" }
-                  : { border: "1px solid #8A8AA033" }
-              }
+                pattern: { value: /^\d{6}$/, message: t("common.form.errors.verificationCode") },
+                minLength: { value: 6, message: t("common.form.errors.verificationCode") },
+              }}
+              render={({ field }) => (
+                <OtpInput
+                  value={field.value ?? ""}
+                  onChange={(value) => {
+                    field.onChange(value);
+                    // Trigger verify as soon as 6 digits are entered (reliable on iOS where watch() can lag)
+                    const code = (value ?? "").toString().trim();
+                    if (
+                      code.length === 6 &&
+                      registerData?.expirationTime &&
+                      !registerData?.verified &&
+                      registerData?.handleVerifyOtp &&
+                      code !== lastVerifiedCodeRef.current
+                    ) {
+                      lastVerifiedCodeRef.current = code;
+                      setLastVerifiedCode(code);
+                      setIsVerifyingOtp(true);
+                      registerData.handleVerifyOtp(code, null, false);
+                      setTimeout(() => setIsVerifyingOtp(false), 2000);
+                    } else if (code.length < 6) {
+                      lastVerifiedCodeRef.current = null;
+                      setLastVerifiedCode(null);
+                    }
+                  }}
+                  numInputs={6}
+                  placeholder={t("common.form.verificationCode")}
+                  containerStyle="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-6"
+                  inputStyle={{
+                    backgroundColor: registerData?.verified ? "#f5f5f5" : "white",
+                    outline: "none",
+                    fontSize: "1rem",
+                    textAlign: "center",
+                    cursor: registerData?.verified ? "not-allowed" : "text",
+                  }}
+                  renderInput={(inputProps) => (
+                    <input
+                      {...inputProps}
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
+                      disabled={registerData?.verified}
+                      className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl bg-white outline-none text-center text-base box-border ${inputProps.className || ""} ${registerData?.verified ? "!bg-[#f5f5f5] cursor-not-allowed" : ""}`}
+                      style={{
+                        ...inputProps.style,
+                        width: undefined,
+                        minWidth: undefined,
+                        border: errors?.verification_code
+                          ? "1px solid red"
+                          : "1px solid #8A8AA033",
+                      }}
+                      onKeyDown={(e) => {
+                        const key = e.key;
+                        const ctrl = e.ctrlKey || e.metaKey;
+                        const allowed = ["Backspace", "Delete", "Tab", "Enter", "Escape", "ArrowLeft", "ArrowRight", "Home", "End"];
+                        if (allowed.includes(key) || ctrl) return;
+                        if (!/^\d$/.test(key)) e.preventDefault();
+                      }}
+                    />
+                  )}
+                />
+              )}
             />
             {isVerifyingOtp && !registerData?.verified && (
               <div className="absolute right-3 p-2">
@@ -685,7 +710,7 @@ const CompanyForm = ({
                     : { border: "1px solid #8A8AA033" }
                 }
               />
-              <Typography className="text-sm cursor-pointer  leading-[40px] ">
+              <Typography className="text-sm cursor-pointer ">
                 <span className="text-[#5B6AB0] hover:underline"
                   onClick={() => {
                     window.open(ConstentRoutes.termofuse, '_blank');

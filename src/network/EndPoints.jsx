@@ -21,11 +21,11 @@ const EndPoints = {
     newPassword: "/customer/auth/update/password",
     uploadDocument: "/customer/document/save",
     updateDocument: "/customer/document/update",
-    GetAllNumbers: (customerId) => `/customer/phone-number?corp_customer_account_id=${customerId}`,
+    GetAllNumbers: (customerId) => `/customer/phone-number`,
     CreateNumber: `/customer/phone-number`,
     ChangeNumber: `/customer/change-msisdn`,
     ChangeNumberOutstandingFee: `/customer/change-msisdn-outstanding-fee`,
-    DeleteNumber: (selectedNumber) => `/customer/phone-number/${selectedNumber}`,
+    DeleteNumber: (selectedNumber) => `/customer/phone-number`,
     premiumTag: "/customer/premium-tag-list",
     individualRegister: "/individual/auth/register",
     tagListCustomer: "/individual/tag-list",
@@ -64,14 +64,26 @@ const EndPoints = {
     guestDeleteBlockNumber: (id) => `/customer/guest/block-numbers/${id}`,
     validateToken: "/customer/payment-due/validate-token",
 
+    // Fayda eSignet verification
+    faydaAuthUrl: "/individual/auth/fayda/auth-url",
+    faydaToken: "/individual/auth/fayda/token",
+    faydaVerifyLink: "/individual/auth/fayda/verify/link",
+    faydaUpdateSub: "/individual/auth/fayda/update/fayda/sub",
+    faydaGetToken: "/individual/fayda/get-token",
+    faydaUrlForLogin:"/individual/fayda/get-auth-url",
+
     // New Security End Points 
     newSecurityEndPoints: {
+      forgotPassword: "/individual/v2/auth/forgot/password",
       individual: {
+        checkOtpFayda: "/individual/v2/check-otp-fayda",
         signUp: "/individual/auth/sign-up",
         updateProfile: "/individual/profile/update",
         getProfile: "/individual/profile",
         updatePassword: "/individual/password/update",
         getReserveTags: "/individual/reserve/tags",
+        buyTag: "/individual/buy-tags",
+        changeTag:"/individual/change-name-tag"
       },
       corporate: {
         checkDocumentStatus: "/customer/verify-document-status",
@@ -80,6 +92,9 @@ const EndPoints = {
         uploadDocument: "/customer/documents/upload",
         updateDocument: "/customer/documents/update",
         buyTag: "/customer/buy-tag",
+        getReserveTags:"/customer/reserved-tags",
+        changeTag: "/customer/change-nametag",
+        changeNumber:"/customer/msisdn/change"
       },
     },
   },

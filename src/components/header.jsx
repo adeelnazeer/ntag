@@ -91,10 +91,11 @@ const Header = ({ isGuest = false }) => {
           // Use individual endpoint if customer_type is "individual", otherwise corporate
           const endpoint =
             userData?.customer_type === "individual"
-              ? EndPoints.customer.updateIndividualProfile(userId)
-              : EndPoints.customer.updateProfile(userId);
+              ? EndPoints.customer.newSecurityEndPoints.individual.updateProfile
+              : EndPoints.customer.newSecurityEndPoints.corporate.updateProfile
+          const method = userData?.customer_type === "individual" ? "post" : "put";
 
-          const response = await APICall("put", payload, endpoint);
+          const response = await APICall(method, payload, endpoint);
 
           if (response?.success) {
             // Update user data in localStorage if returned
@@ -198,10 +199,10 @@ const Header = ({ isGuest = false }) => {
                     <Menu>
                       <MenuHandler>
                         <Button className="bg-white text-base font-medium text-secondary py-1 px-2">
-                          {userData?.comp_name || userData?.username}
+                          {userData?.comp_name || `${userData?.first_name} ${userData?.last_name}`}
                         </Button>
                       </MenuHandler>
-                      <MenuList>
+                      <MenuList className="z-[110]">
                         <p className="text-xs text-gray-500 mb-1">
                           Account Type:{" "}
                           {userData?.customer_type == "corporate"
@@ -275,7 +276,7 @@ const Header = ({ isGuest = false }) => {
                             {t("registerText")}
                           </Button>
                         </MenuHandler>
-                        <MenuList>
+                        <MenuList className="z-[110]">
                           <p className="text-[13px] outline-none text-[#555555] font-[400]">
                             {t("accountType")}
                           </p>
@@ -307,7 +308,7 @@ const Header = ({ isGuest = false }) => {
                           <MenuItem
                             className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
                             onClick={() => {
-                              navigate(ConstentRoutes.registerNormalUser);
+                              navigate(ConstentRoutes.registerNormalUser, { state: null });
                             }}
                           >
                             <label className="flex w-full cursor-pointer items-center">
@@ -518,8 +519,8 @@ const Header = ({ isGuest = false }) => {
                         <Button
                           key={lang.code}
                           className={`bg-white text-base font-medium text-secondary py-2 px-4 flex-1 ${active
-                              ? "bg-gray-200 border-2 border-secondary"
-                              : ""
+                            ? "bg-gray-200 border-2 border-secondary"
+                            : ""
                             }`}
                           onClick={() => {
                             handleLanguageChange(lang.code);
@@ -579,8 +580,8 @@ const Header = ({ isGuest = false }) => {
                         <Button
                           key={lang.code}
                           className={`bg-white text-base font-medium text-secondary py-2 px-4 flex-1 ${active
-                              ? "bg-gray-200 border-2 border-secondary"
-                              : ""
+                            ? "bg-gray-200 border-2 border-secondary"
+                            : ""
                             }`}
                           onClick={() => {
                             handleLanguageChange(lang.code);

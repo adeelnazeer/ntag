@@ -6,13 +6,26 @@ import Header from "../../components/header";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../../utilities/routesConst";
 import { getToken } from "../../utilities/auth";
+import { useEffect } from "react";
+import { useAppSelector } from "../../redux/hooks";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  
+  const userData = useAppSelector((state) => state.user.userData);
+
   // Use auth utility to get token from localStorage
   const token = getToken();
-  
+
+  useEffect(() => {
+    if (!token) return;
+    const user = userData ?? JSON.parse(localStorage.getItem("user") || "{}");
+    if (user?.customer_type === "individual") {
+      navigate(ConstentRoutes.buyTagCustomer, { replace: true });
+    } else {
+      navigate(ConstentRoutes.buyTag, { replace: true });
+    }
+  }, [token, userData, navigate]);
+
   const handleClick = () => {
     if (token) {
       navigate(ConstentRoutes.dashboard);
