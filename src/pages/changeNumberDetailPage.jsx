@@ -251,7 +251,7 @@ const ChangeNumberDetailPage = () => {
                                         : { border: "1px solid #8A8AA033" }
                                 }
                             />
-                            <Typography className="text-sm cursor-pointer leading-[40px] ">
+                            <Typography className="text-sm cursor-pointer ">
                                 <span className="text-[#008fd5] hover:underline"
                                     onClick={() => {
                                         window.open(ConstentRoutes.termofuse, "_blank")

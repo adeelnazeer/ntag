@@ -11,8 +11,9 @@
   "profile": "መግለፂ",
   "logout": "ይውፅኡ",
   "register": "ምዝገባ",
+  "registerText": "ምዝገባ",
   "premium": "ክፍሊት ዝበልጸገ",
-  "changePassword":"መሕለፊ ቃል ምቅያር",
+  "changePassword": "መሕለፊ ቃል ምቅያር",
   "accountType": "ዓይነት ኣካውንት ይምረፁ",
   "corpCustomer": "ናይ ትካል ዓሚል",
   "indCustomer": "ውልቀ ዓሚል",
@@ -83,17 +84,62 @@
         "verificationCode": "መረጋገፂ ኮድ የድሊ",
         "termAndCondition": "ንምቅፃል ውዕላትን ቅጥዕታትን ምቅባል ግድን እዩ",
         "minLength": "እንተወሓደ 3 ግልጺታት ክኸውን ኣለዎ",
-        "tinMinLength": "እንተወሓደ 9 ኣሃዛት ክኸውን ኣለዎ",
+        "passwordMinLength": "እንተወሓደ 5 ግልጺታት ክኸውን ኣለዎ",
+        "passwordMaxLength": "እንተወሓደ 15 ግልጺታት ክሓልፍ ኣይክእልን",
+        "passwordPattern": "እንተወሓደ 1 ግልጺታት - 1 ግልጺታት - 1 ግልጺታት",
+        "passwordsDoNotMatch": "እንተወሓደ 1 ግልጺታት - 1 ግልጺታት - 1 ግልጺታት",
+        "mobileNumberRequired": "እንተወሓደ 1 ግልጺታት - 1 ግልጺታት - 1 ግልጺታት",
+        "otpDoesNotMatch": "እንተወሓደ 1 ግልጺታት - 1 ግልጺታት - 1 ግልጺታት",
+        "tinMinLength": "እንተወሓደ 10 ኣሃዛት ክኸውን ኣለዎ",
         "tinMaxLength": "10 ኣሃዛት ክሓልፍ ኣይክእልን ",
         "tinPattern": "ኣሃዛት ጥራይ (9–10)",
         "faydaExactDigits": "ፋይዳ ቁፅሪ ብልክዕ 16 ኣሃዛት ክኸውን ኣለዎ።",
-        "faydaDigits": "ፋይዳ ቁፅሪ 12 ኣሃዛት ክኸውን ኣለዎ።"
-      }
+        "faydaDigits": "ፋይዳ ቁፅሪ 12 ኣሃዛት ክኸውን ኣለዎ።",
+        "cityMinLength": "ከተማ የድሊ",
+        "companyNameRequired": "ምዝገባ ንግዲ/TIN ቁፅሪ የድሊ",
+        "companyNameNoDigits": "ምዝገባ ንግዲ/TIN ቁፅሪ የድሊ",
+        "usernameMinLength": "ሽም ተጠቃሚ የድሊ",
+        "companyNameMinLength": "ምዝገባ ንግዲ/TIN ቁፅሪ የድሊ",
+        "firstNameMinLength": "ናይ መጀመርታ የድሊ",
+        "fatherNameMinLength": "ሽም ኣቦ የድሊ"
+      },
+      "stepIndicator": "Step {{current}} of {{total}}"
     },
     "monthly": "ወርሓዊ",
     "quartely": "ርብዒ ዓመት",
     "semi": "ፍርቂ ዓመት",
-    "annual": "ዓመታዊ"
+    "annual": "ዓመታዊ",
+    "verifyHuman": "ኣለን ንውሓት ኣለን",
+    "recaptchaV2Message": "ኣለን ንውሓት ኣለን",
+    "cancel": "ኣለን",
+    "verify": "ኣለን",
+    "status": {
+      "pendingForApproval": "ኣለን",
+      "approved": "ኣለን",
+      "rejected": "ኣለን",
+      "blockedByAdmin": "ኣለን",
+      "suspendByNonPayment": "ኣለን",
+      "blockDueToWrongPassword": "ኣለን",
+      "pendingForDocumentApproval": "ኣለን",
+      "pendingForPayment": "ኣለን",
+      "active": "ኣለን",
+      "subscribed": "Subscribed",
+      "documentsExpired": "ኣለን",
+      "paymentTimeExpired": "ኣለን",
+      "accountBlock": "ኣለን",
+      "documentApprovalPending": "ኣለን",
+      "expired": "Expired",
+      "activeRecurringFeePending": "Active - Recurring fee pending",
+      "blocked": "Blocked",
+      "unsubscribed": "Unsubscribed",
+      "suspendedCallsBlocked": "Suspended- Calls blocked due to Pending Recurring Fee",
+      "tagReserved": "TAG Reserved",
+      "suspendedRecurringFeePending": "Suspended - Recurring fee pending",
+      "pending": "Pending",
+      "success": "Success",
+      "failed": "Failed",
+      "expiredPaymentTimeline": "Expired Payment Timeline"
+    }
   },
   "dashboard": {
     "welcomeNameTag": "እንኳዕ ናብ ኣገልግሎት NameTAG ብደሓን መፃእኩም!",
@@ -126,6 +172,7 @@
     "subscriptionFee": "ክፍሊት ምዝገባ",
     "selectServicePlan": "ትልሚ ኣገልግሎት ይምረፁ",
     "servicePlan": "ትልሚ ኣገልግሎት",
+    "selectPlan": "ትልሚ ኣገልግሎት ይምረፁ",
     "clickHere": "ኣብዚ ይንክኡ",
     "recurringFee": "ተደጋጋሚ ክፍሊት",
     "outstanding": "ብሉጽ",
@@ -171,6 +218,7 @@
     "nameTagCategory": "NameTAG ምድብ",
     "registeredMobileNumber": "ዝተመዝገበ ቁፅሪ ሞባይል",
     "vat15": "ቫት (15%)",
+    "paymentOption": "ክፍሊት አማራጭ",
     "outstandingRecurringFee": "ዘይተኸፍለ ተደጋጋሚ ክፍሊት (ቅድሚ ሐዚ ዝነበረ ትልሚ)",
     "reservedNotice": "TAG ሒዞም ወይ ገዚኦም ኣለዉ። ኣብ ነፍሲ ወከፍ ኣካውንት ሓደ TAG ጥራይ እዩ ክህልዎም ዝኽእል።",
     "changeTagModePrefix": "ኣብዚ እዋን’ዚ ዘለውዎ",
@@ -187,7 +235,10 @@
       "standard": "መደበኛ",
       "premium": "ፕሪምየም",
       "suggested": "ዝቐረበ ሓሳብ"
-    }
+    },
+    "paymentViaTelebirrPartnerApp": "Payment via telebirr partner App",
+    "paymentViaTelebirrSuperApp": "Payment via telebirr super App",
+    "pleaseSelectMobileNumber": "Please select a mobile number"
   },
   "buttons": {
     "buyTag": "NameTAG ዕድጋ",
@@ -200,18 +251,117 @@
     "sold": "ተሸይጡ",
     "cancel": "ሰርዝ",
     "confirmBuy": "ንምግዛእ የረጋግፁ",
-    "ok": "እሺ"
+    "ok": "እሺ",
+    "confirm": "Confirm"
   },
   "accountConfirmation": {
     "message": "መስርሕ ምዝገባ ንምዝዛም ናይ ኣካውንት ሓበሬታ ክተቕርቡ ከም እትደልዩ ርግፀኛ ዲዮም?",
     "cancel": "ሰርዝ",
-    "submit": "የረክቡ"
+    "submit": "የረክቡ",
+    "submitting": "Submitting..."
   },
   "footer": {
     "terms": "ውዕላትን ቅጥዕታትን",
     "privacy": "ፖሊሲ ብሕታዊነት",
     "faqs": "ሕቶታት",
     "contact": "ርኸቡና",
-    "rights": "ኩሉም መሰላት ዝተሓለዉ እዩም።"
+    "rights": "ኩሉም መሰላት ዝተሓለዉ እዩም።",
+    "complaint": "Complaint"
+  },
+  "complaint": {
+    "modal": {
+      "title": "NameTAG  Service Complaint",
+      "description": "Enter your mobile number to block NameTAG",
+      "mobileNumber": "Mobile Number",
+      "phoneRequired": "Mobile Number is required",
+      "mustStart9": "Mobile Numbers must start with 9",
+      "invalidLength": "Mobile Number must be 9 digits after country code",
+      "getOtp": "Get OTP",
+      "resendOtp": "Resend OTP",
+      "otpSent": "OTP sent successfully",
+      "otpFailed": "Failed to send OTP",
+      "verificationCode": "Verification Code",
+      "otpPlaceholder": "Enter 6-digit OTP",
+      "invalidOtp": "Please enter a valid 6-digit OTP code",
+      "otpIdMissing": "OTP ID not found. Please request OTP again.",
+      "verifyOtp": "Verify OTP",
+      "verifying": "Verifying...",
+      "otpVerified": "OTP verified successfully!",
+      "verifyFailed": "OTP verification failed",
+      "redirecting": "OTP verified! Redirecting...",
+      "cancelBtn": "Cancel"
+    },
+    "block": {
+      "title": "Blocked NameTAG Numbers",
+      "subtitle": "The NameTAGs you have blocked are listed below.",
+      "phoneNumber": "Mobile Number",
+      "noVerificationData": "No verification data found. Please start over.",
+      "fetchFailed": "Failed to fetch blocked numbers",
+      "fetchError": "Error loading blocked numbers",
+      "backButton": "Back to Home",
+      "maxLimitReached": "Maximum limit of 99 blocked numbers reached. Please unblock a number to add a new one.",
+      "table": {
+        "sr": "Sr#",
+        "blocked": "Blocked NameTAG",
+        "type": "Blocked Type",
+        "registered": "Registered Mobile Number",
+        "channel": "Channel",
+        "action": "Action",
+        "delete": "Unblock",
+        "empty": "No blocked numbers found"
+      },
+      "type": {
+        "tag": "TAG",
+        "mobile": "Mobile Number"
+      },
+      "addButton": "Block NameTAG",
+      "addModal": {
+        "title": "Block NameTAG",
+        "subtitle": "Enter the NameTAG number you want to block",
+        "tagLabel": "NameTAG Number",
+        "tagPlaceholder": "Enter NameTAG number (3-8 digits)",
+        "tagHint": "Enter 3 to 8 digits only without #",
+        "tagRequired": "NameTAG number is required",
+        "tagNumbersOnly": "NameTAG number must contain only numbers",
+        "tagMinLength": "NameTAG number must be at least 3 digits",
+        "tagMaxLength": "NameTAG number must be at most 8 digits",
+        "customerTypeLabel": "Block Reason",
+        "corpCustomer": "Spam",
+        "normalCustomer": "Fraud",
+        "blockMessage": "Once a caller is blocked, all future incoming calls from that number will be automatically rejected.",
+        "reason": {
+          "spamCall": "Spam Call",
+          "fraudOrScam": "Fraud or Scam",
+          "harassmentAndAbuse": "Harassment and Abuse",
+          "unwantedMarketingCall": "Unwanted Marketing Call",
+          "repeatedCalls": "Repeated Calls",
+          "personalReasons": "Personal Reasons",
+          "offensiveOrThreateningCall": "Offensive or Threatening Call",
+          "unknownCaller": "Unknown Caller",
+          "other": "Other"
+        },
+        "cancel": "Cancel",
+        "submit": "Submit",
+        "processing": "Processing...",
+        "success": "Number blocked successfully",
+        "failed": "Failed to block number",
+        "error": "Error blocking number"
+      },
+      "noPhoneNumber": "Phone number not found.",
+      "unauthorized": "Unauthorized. Please verify your phone number again.",
+      "noToken": "Guest token not found. Please verify your phone number again.",
+      "deleteModal": {
+        "title": "Confirm Unblock",
+        "desc1": "Are you sure you want to remove this number from blocklist?",
+        "desc2": "This number will be able to make calls on your TAG number",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "deleting": "Deleting...",
+        "success": "Number unblocked successfully",
+        "failed": "Failed to unblock number",
+        "error": "Error unblocking number",
+        "noId": "Cannot unblock: Missing number ID"
+      }
+    }
   }
 }

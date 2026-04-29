@@ -4,11 +4,11 @@ import EndPoints from "../../network/EndPoints";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../../utilities/routesConst";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useRecaptchaToken } from "../../hooks/useRecaptchaToken";
 
 export const useRegisterHook = () => {
   const navigate = useNavigate();
-  const { executeRecaptcha } = useGoogleReCaptcha();
+  const { getRecaptchaPayload, isRecaptchaReady } = useRecaptchaToken();
   const [expirationTime, setExpirationTime] = useState(null);
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
@@ -58,32 +58,20 @@ export const useRegisterHook = () => {
   };
 
   const handleGetOtp = async (phone) => {
-    if (!executeRecaptcha) {
-      toast.error("Security check is loading. Please wait a moment and try again.");
-      return Promise.resolve();
-    }
     setIsResend(true);
+    setVerified(false);
     const cleanedPhone = String(phone || "").replace(/^\+/, "");
-    let recaptchaToken = "";
-    try {
-      recaptchaToken = await executeRecaptcha("generate_otp");
-    } catch (e) {
-      console.warn("reCAPTCHA error:", e);
-      toast.error("Security verification failed. Please try again.");
-      setIsResend(false);
-      return Promise.resolve();
-    }
-    if (!recaptchaToken) {
-      toast.error("Security verification failed. Please try again.");
+    const tokens = await getRecaptchaPayload("generate_otp");
+    if (!tokens) {
       setIsResend(false);
       return Promise.resolve();
     }
     const data = {
       msisdn: cleanedPhone,
       otp_type: "IND",
-      channel: "SMS",
+      channel: "WEB",
       transaction_type: "OTP_GENRATION",
-      recaptcha_token: recaptchaToken,
+      ...tokens,
     };
     return APICall("post", data, EndPoints.customer.generateOtp)
       .then((res) => {
@@ -101,12 +89,17 @@ export const useRegisterHook = () => {
       });
   };
 
-  // ...existing code...
-  const handleVerifyOtp = (code, setNewNumber, newNumber) => {
+  const handleVerifyOtp = async (code, setNewNumber, newNumber) => {
+    const tokens = await getRecaptchaPayload("verify_otp");
+    if (!tokens) {
+      setVerified(false);
+      return;
+    }
     const data = {
       otp_id: otpId,
       otp_code: code,
       transaction_type: "OTP_GENRATION",
+      ...tokens,
     };
     APICall("post", data, EndPoints.customer.verifyOty)
       .then((res) => {
@@ -129,7 +122,54 @@ export const useRegisterHook = () => {
         setVerified(false);
       });
   };
-  // ...existing code...
+
+  const handleCheckOtpFayda = async (otpCode, msisdn) => {
+    setLoading(true);
+    const tokens = await getRecaptchaPayload("check_otp_fayda");
+    if (!tokens) {
+      return null;
+    }
+    const id = otpId || localStorage.getItem("otp");
+    if (!id) {
+      toast.error("Please request an OTP first.");
+      return null;
+    }
+    const payload = {
+      channel: "WEB",
+      otp_id: id,
+      msisdn: String(msisdn || "").replace(/^\+/, ""),
+      otp_code: String(otpCode || "").trim(),
+      transaction_type: "REGISTER",
+      ...tokens,
+    };
+    try {
+      const res = await APICall(
+        "post",
+        payload,
+        EndPoints.customer.newSecurityEndPoints.individual.checkOtpFayda
+      );
+      if (res?.success) {
+        toast.success(res?.message || "");
+        localStorage.setItem("otp_code_step1", String(otpCode || "").trim());
+        setVerified(true);
+        setExpirationTime(null);
+        return res;
+      }
+      toast.error(res?.message);
+      setVerified(false);
+      return res;
+    } catch (err) {
+      toast.error(
+        err?.response?.data?.message ||
+        err?.message ||
+        "Something went wrong try again!"
+      );
+      setVerified(false);
+      return res;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleRegister = async (data, setActiveStep, reset) => {
     const otp = localStorage.getItem("otp");
@@ -137,15 +177,8 @@ export const useRegisterHook = () => {
     payload.channel = "WEB";
     payload.otp_id = otp;
     payload.otp_code = data?.verification_code;
-    let recaptchaToken = "";
-    if (executeRecaptcha) {
-      try {
-        recaptchaToken = await executeRecaptcha("register");
-      } catch (e) {
-        console.warn("reCAPTCHA error:", e);
-      }
-    }
-    if (recaptchaToken) payload.recaptcha_token = recaptchaToken;
+    const tokens = await getRecaptchaPayload("register", { silent: true });
+    if (tokens) Object.assign(payload, tokens);
 
     APICall("post", payload, EndPoints.customer.register)
       .then((res) => {
@@ -256,12 +289,16 @@ export const useRegisterHook = () => {
       });
   };
 
-  const handleLogin = (data) => {
+  const handleLogin = async (data, isDeleteAccount) => {
+    const tokens = await getRecaptchaPayload("login");
+    if (!tokens) return;
+
     setLoading(true);
     const payLoad = {
       username: data?.username,
       password: data?.password,
-      channel: "channel",
+      channel: "WEB",
+      ...tokens,
     };
 
     APICall("post", payLoad, EndPoints.customer.login)
@@ -269,7 +306,15 @@ export const useRegisterHook = () => {
         if (res?.success) {
           if (res?.data?.customer_type == "individual") {
             const token = res?.data?.token;
-            localStorage.setItem("token", token);
+            if (isDeleteAccount) {
+              localStorage.setItem("deleteToken", token);
+              navigate(ConstentRoutes.delAccountDetail);
+
+            } else {
+              localStorage.setItem("token", token);
+              navigate(ConstentRoutes.dashboardCustomer);
+
+            }
             localStorage.setItem("id", res?.data?.customer_account_id);
             localStorage.setItem("number", res?.data?.phone_number);
             localStorage.setItem("user", JSON.stringify(res?.data));
@@ -278,7 +323,6 @@ export const useRegisterHook = () => {
               JSON.stringify(res?.data.customer_type)
             );
             toast.success(res?.message || "");
-            navigate(ConstentRoutes.dashboardCustomer);
           } else {
             if (res?.data?.comp_reg_no == null) {
               toast.info("Please complete you registration process");
@@ -290,7 +334,13 @@ export const useRegisterHook = () => {
               });
             } else {
               const token = res?.data?.token;
-              localStorage.setItem("token", token);
+              if (isDeleteAccount) {
+                localStorage.setItem("deleteToken", token);
+                navigate(ConstentRoutes.delAccountDetail);
+              } else {
+                localStorage.setItem("token", token);
+                navigate(ConstentRoutes.dashboard);
+              }
               localStorage.setItem("id", res?.data?.customer_account_id);
               localStorage.setItem("number", res?.data?.phone_number);
               localStorage.setItem("user", JSON.stringify(res?.data));
@@ -299,7 +349,6 @@ export const useRegisterHook = () => {
                 JSON.stringify(res?.data.customer_type)
               );
               toast.success(res?.message || "");
-              navigate(ConstentRoutes.dashboard);
             }
           }
         } else {
@@ -309,12 +358,14 @@ export const useRegisterHook = () => {
       })
       .catch((err) => {
         setLoading(false);
-        toast.error(err);
+        toast.error(err?.response?.data?.message || err?.message || err);
       });
   };
 
-  const verifyAccount = (data, name) => {
-    APICall("post", data, EndPoints.customer.verifyAccount)
+  const verifyAccount = async (data, name) => {
+    const tokens = await getRecaptchaPayload("verify_account", { silent: true });
+    const payload = tokens ? { ...data, ...tokens } : data;
+    APICall("post", payload, EndPoints.customer.verifyAccount)
       .then((res) => {
         if (res?.success) {
           setState((st) => {
@@ -350,21 +401,15 @@ export const useRegisterHook = () => {
 
   const handleIndividualRegister = async (data, reset, setConfirmModal) => {
     const otp = localStorage.getItem("otp");
+    const otpCode = localStorage.getItem("otp_code_step1");
     const payload = { ...data };
     payload.channel = "WEB";
     payload.otp_id = otp;
-    payload.otp_code = data?.verification_code;
-    payload.phone_number = data?.phone_number?.replace(/^\+/, "");
-    let recaptchaToken = "";
-    if (executeRecaptcha) {
-      try {
-        recaptchaToken = await executeRecaptcha("register_individual");
-      } catch (e) {
-        console.warn("reCAPTCHA error:", e);
-      }
-    }
-    if (recaptchaToken) payload.recaptcha_token = recaptchaToken;
-    APICall("post", payload, EndPoints.customer.newSecurityEndPoints.individual.signUp)
+    payload.otp_code = otpCode || data?.verification_code || data?.otp_code;
+    payload.phone_number = localStorage.getItem("phone_number");
+    const tokens = await getRecaptchaPayload("register_individual", { silent: true });
+    if (tokens) Object.assign(payload, tokens);
+    return APICall("post", payload, EndPoints.customer.newSecurityEndPoints.individual.signUp)
       .then((res) => {
         if (res?.success) {
           toast.success(res?.message || "");
@@ -372,6 +417,9 @@ export const useRegisterHook = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("id", res?.data?.customer_account_id);
           localStorage.setItem("user", JSON.stringify(res?.data));
+          localStorage.removeItem("otp_code_step1");
+          localStorage.removeItem("otp");
+          localStorage.removeItem("phone_number");
           navigate(ConstentRoutes.dashboardCustomer);
           reset();
           setConfirmModal(false);
@@ -380,13 +428,13 @@ export const useRegisterHook = () => {
         }
       })
       .catch((err) => {
-        console.log("err", err);
+        toast.error(err || err?.message || err?.response?.data?.message || "Something went wrong try again!");
       });
   };
 
   return {
     handleGetOtp,
-    isRecaptchaReady: !!executeRecaptcha,
+    isRecaptchaReady,
     expirationTime,
     state,
     verified,
@@ -394,6 +442,7 @@ export const useRegisterHook = () => {
     getProfileDetail,
     loading,
     handleVerifyOtp,
+    handleCheckOtpFayda,
     handleExipre,
     handleRegister,
     handleLogin,

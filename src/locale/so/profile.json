@@ -34,6 +34,13 @@
     "uploadDesc": "Fadlan soo rar ama sogali {{qiimaha}} cusub si aad ugu badasho dukumeentiga la ansixiyay ee jira",
     "invalid_file_type": "Nooca faylka aan sax ahayn. Kaliya faylasha JPG, PNG iyo PDF ayaa la oggol yahay.",
     "file_size_error": "Cabbirka faylka ayaa ka badan 3MB.",
+    "invalidFileType": "Nooca faylka aan sax ahayn. Kaliya faylasha JPG, PNG iyo PDF ayaa la oggol yahay.",
+    "fileSizeError": "Cabbirka faylka ayaa ka badan 3MB.",
+    "uploadDocuments": "Soo geli Dukumentiyada",
+    "dragDropType": "Jiido oo dhig ama tabo si aad u geliso {{type}}",
+    "previewAlt": "Horudhac",
+    "docDescription": "Shatiga Diiwaangelinta Ganacsiga, Warqadda Codsiga, iyo Shatiga Ganacsiga",
+    "docHint": "Kaliya faylasha JPG, JPEG, PNG, ama PDF ayaa la soo geli karo, fayl kastana waa inuusan ka badan yaraan 3MB.",
     "tagDetail": {
       "notice": "Ogaysiis:",
       "unsubMessagen": "Adeegga NameTAG waa ka baxay",
@@ -77,11 +84,25 @@
         "failedToResubscribe": "Ku guul daraystay inuu dib isu-diiwaangeliyo",
         "reservationCanceled": "Boos sii qabsigu waa la joojiyay",
         "failedToCancelReservation": "Ku guul daraystay in la joojiyo boos sii qabsiga"
-      }
+      },
+      "unsubMessage": " NameTAG ayaa ka noqonaysiyo",
+      "tagType": "TAG Type",
+      "corporate": "Corporate",
+      "subFee": "Subscription Fee",
+      "subDate": "Subscription Date",
+      "serviceStatus": "Service Status",
+      "servicePackage": "Service Package",
+      "recurringFee": "Recurring Fee",
+      "quartely": "Quarterly",
+      "etb": "ETB",
+      "recurringFeeNextDueDate": "Recurring Fee Next Due Date:",
+      "serviceFeeLastChargeDate": "Service Fee Last Charge Date",
+      "incomingCallsStatus": "Incoming Calls Status",
+      "notAvailable": "Not Available"
     },
     "numberManagement": {
-      "title": "Maareynta Lambarka Mobilka",
       "5": "5",
+      "title": "Maareynta Lambarka Mobilka",
       "number": "tirooyinka",
       "maxnumbers": "Xadka ugu badan ee 5 lambarada mobilada ayaa la gaarey",
       "addmobnumber": "Ku dar Lambarka Mobaylka",
@@ -94,7 +115,14 @@
       "available": "La heli karo",
       "mapped": " Khariidad ",
       "deleteMsg": "Lama tirtiri karo lambarkan",
-      "delete": "Tirtir"
+      "delete": "Tirtir",
+      "maxNumber": "Maximum limit of 5 Mobile numbers reached",
+      "addMobNumber": "Ku dar Mobile Number",
+      "addNumber": "Ku dar Number",
+      "noNumber": "Lama helin lambarka moobilka. Fadlan soo galiyo Numberku ku dar Number cusub waxaa lagu xiri doonaa NameTAG.",
+      "mobileNumber": "Mobile Number",  
+      "numberType": "Nooca Mobilka",
+      "action": "Ficilada ama talaboyinka"
     },
     "addNumberModal": {
       "addNew": "Kudar Mobile Number Cusub ",
@@ -114,7 +142,15 @@
       "addBtn": "Ku dar Number",
       "process": "Habaynta...",
       "successMsg": "Nambarka moobilka ayaa si guul leh loogu daray",
-      "failedMsg": "Ku guul daraystay in lagu daro Lambarka Mobilka"
+      "failedMsg": "Ku guul daraystay in lagu daro Lambarka Mobilka",
+      "currentNumber": "Current Mobile Number:",
+      "nameTag": "NameTAG:",
+      "mobileNumber": "Mobile Number",
+      "getOtp": "Get OTP",
+      "resendOtp": "Resend OTP",
+      "verificationCode": "Verification Code",
+      "verifyOtp": "Verify OTP",
+      "term": "Terms and Conditions "
     },
     "deleteModal": {
       "title": "Xaqiiji Tirtirka?",
@@ -129,12 +165,30 @@
       "toastMessages": {
         "update_success": "Xogta si guul leh ayaa loo cusboonaysiiyay",
         "updateFailed": "Cusbooneysii waa guuldareystay",
-        "somethingWentWrong": "Wax baa khaldamay Fadlan isku day mar kale"
+        "somethingWentWrong": "Wax baa khaldamay Fadlan isku day mar kale",
+        "profileUpdatedSuccessfully": "Profile updated successfully"
       }
     },
     "profilePage": {
       "accountInformation": "Macluumaadka Xisaabaadka ",
       "nameTagDetails": "Name TAG Faahfaahinta"
-    }
+    },
+    "item2": "Macluumaadka Xidhiidka",
+    "item3": "Dukumentiyada",
+    "item4": "MagacaTAG Faahfaahinta",
+    "item5": "Maareynta Tirada",
+    "companyName": "Magaca Shirkadda",
+    "userName": "Magaca isticmaalaha",
+    "regMobileNo": "Lambarka Mobilka ee Diwaangashan",
+    "updateCompInfoBtn": "Cusbooneysii Macluumaadka Shirkadda",
+    "regLicense": "Shatiga Diiwaangelinta",
+    "appLetter": "Warqadda Codsiga",
+    "status": "Xaalada",
+    "reUploadBtn": "Dib u Soo geli Dukumeentiga",
+    "orignal": "Asal ahaan",
+    "viewPdf": "Daawo PDF",
+    "pdfPreview": "Horudhac PDF ah",
+    "invalidFileType": "Nooca faylka aan sax ahayn. Kaliya faylasha JPG, PNG iyo PDF ayaa la oggol yahay.",
+    "fileSizeError": "Cabbirka faylka ayaa ka badan 3MB."
   }
 }

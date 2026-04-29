@@ -106,7 +106,7 @@ const OtpVerification = ({ otpId, setStep }) => {
                 {t("otpVerification.description", { phoneNumber: otpId?.phone_number })}
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex justify-between mb-6">
+                <div className="flex justify-between gap-3 mb-6">
                     {[0, 1, 2, 3,4,5].map((index) => (
                         <Controller
                             key={index}

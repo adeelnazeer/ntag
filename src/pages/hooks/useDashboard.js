@@ -124,25 +124,28 @@ export const useTagList = () => {
       });
   }, []);
 
-  const handleTagDetails = (tagData, setOpenModal, setDisableBtn) => {
+  const handleTagDetails = (tagData, setOpenModal, setDisableBtn, setReserveLoading) => {
     setLoadingPayment(true);
     const ensureRequiredFields = (data) => {
-      return {
+      const base = {
         channel: data.channel || "WEB",
         payment_method: data.payment_method || "telebirr",
         reserve_type: data.reserve_type,
 
-        
         business_type: data.business_type || "BuyGoods",
-
         msisdn: data?.msisdn,
         tag_id: data?.customer_tag_id,
         type: data?.type,
-        is_premium:data?.is_premium,
-        service_id:data?.tag_list?.service_id,
-
+        is_premium: data?.is_premium||0,
+        service_id: data?.tag_list?.service_id,
       };
+      if (data?.customer_tag_id == null && data?.tag_list?.tag_no != null) {
+        base.tag_no = data.tag_list.tag_no;
+      }
+      return base;
     };
+
+    console.log({ tagData })
 
     const payload = ensureRequiredFields(tagData);
     // Replace account_id with parent?.customer_account_id if parent_id != null
@@ -168,10 +171,12 @@ export const useTagList = () => {
           toast.error(res?.message || "Failed to process request");
         }
         setLoadingPayment(false);
+        setReserveLoading?.(false);
       })
       .catch((err) => {
-        toast.error(err?.message || "An error occurred");
+        toast.error(err || err?.message || "An error occurred");
         setLoadingPayment(false);
+        setReserveLoading?.(false);
       });
   };
 
@@ -180,12 +185,28 @@ export const useTagList = () => {
 
     const payload = { ...data };
 
+    const payloadNew = {
+      type: data?.type,
+      reserve_type: "existing",
+      msisdn: data?.msisdn,
+      tag_id: data?.tag_list?.id,          // or omit and use "customer_tag_id": 123
+      tag_no: data?.tag_list?.tag_no,      // required if tag_id/customer_tag_id is not sent
+      is_premium: data?.is_premium,
+      service_id: data?.service_id,
+      channel: "WEB",
+      payment_method: data?.payment_method,
+      tag_name: data?.tag_list?.tag_name,
+      payment_type: "CHANGE_TAG",
+      business_type: data?.business_type || "BuyGoods"
+    }
+
+
     // Replace account_id with parent?.customer_account_id if parent_id != null
     if (userData?.parent_id != null && userData?.parent?.customer_account_id) {
       payload.account_id = userData.parent.customer_account_id;
     }
 
-    APICall("post", payload, EndPoints.customer.corporatechangeNumberSaving)
+    APICall("post", payloadNew, EndPoints.customer.newSecurityEndPoints.corporate.changeTag)
       .then((res) => {
         setLoadingPayment(false);
         if (res?.success) {
@@ -199,7 +220,7 @@ export const useTagList = () => {
       })
       .catch((err) => {
         setLoadingPayment(false);
-        toast.error(err?.message || "An error occurred");
+        toast.error(err || err?.message || "An error occurred");
       });
   };
 

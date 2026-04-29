@@ -186,14 +186,25 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { FaCheck } from "react-icons/fa6";
 import { toast } from 'react-toastify';
 import Dropzone from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 
 const UploadBtn = ({ setData, data }) => {
+  const { t } = useTranslation(["profile"]);
   const [error, setError] = useState(null);
   const [fileNames, setFileNames] = useState(["", "", ""]);
   const [uploadedFiles, setUploadedFiles] = useState([null, null, null]);
   const [pdfModal, setPdfModal] = useState({ open: false, src: null });
 
   const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
+  /** English document type names sent to API (unchanged by locale) */
+  const DOC_TYPE_API = {
+    registration_license: "Registration License",
+    application_letter: "Application Letter",
+    trade_license: "Trade License",
+  };
+
+  const docLabels = [t("regLicense"), t("appLetter"), t("trade")];
 
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -207,13 +218,13 @@ const UploadBtn = ({ setData, data }) => {
   const handleDrop = async (acceptedFiles, index, type) => {
     const file = acceptedFiles[0];
     if (!allowedTypes?.includes(file?.type)) {
-      toast.error("Invalid file type. Only JPG, PNG, and PDF files are allowed.");
+      toast.error(t("invalidFileType"));
       return;
     }
 
     const fileSizeMB = file?.size / (1024 * 1024);
     if (fileSizeMB > 3) {
-      setError("File size exceeds 3MB.");
+      setError(t("fileSizeError"));
       return;
     }
 
@@ -221,18 +232,7 @@ const UploadBtn = ({ setData, data }) => {
     const updatedFileNames = [...fileNames];
     const updatedUploadedFiles = [...uploadedFiles];
 
-    let fieldLabel = "";
-    switch (index) {
-      case 0:
-        fieldLabel = "Registration License";
-        break;
-      case 1:
-        fieldLabel = "Application Letter";
-        break;
-      case 2:
-        fieldLabel = "Trade License";
-        break;
-    }
+    const fieldLabel = docLabels[index] ?? "";
 
     updatedFileNames[index] = `${file.name}  ${fieldLabel}`;
     updatedUploadedFiles[index] = base64String;
@@ -259,7 +259,7 @@ const UploadBtn = ({ setData, data }) => {
       ...st,
       [`${fieldName}_url`]: file,
       [`${fieldName}_name`]: file?.name,
-      [`${fieldName}_type`]: type
+      [`${fieldName}_type`]: DOC_TYPE_API[fieldName] ?? type
     }));
 
     setError(null);
@@ -317,13 +317,13 @@ const UploadBtn = ({ setData, data }) => {
           className={`border-2 border-dashed relative rounded-lg p-5 w-full text-center cursor-pointer transition-colors duration-200 ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 bg-white'}`}
         >
           <input {...getInputProps()} />
-          <p className="text-sm text-left text-gray-600">Drag & drop or click to upload {type}</p>
+          <p className="text-sm text-left text-gray-600">{t("profile.dragDropType", { type })}</p>
           {uploadedFiles[index] && (
             <div className="mt-3">
               {uploadedFiles[index].startsWith('data:image') ? (
                 <img
                   src={uploadedFiles[index]}
-                  alt="Preview"
+                  alt={t("profile.previewAlt")}
                   className="mx-auto max-h-40 rounded border "
                 />
               ) : (
@@ -335,7 +335,7 @@ const UploadBtn = ({ setData, data }) => {
                   }}
                   className="text-[#008fd5] text-sm underline hover:border-transparent"
                 >
-                  View PDF
+                  {t("profile.viewPdf")}
                 </button>
               )}
             </div>
@@ -361,20 +361,20 @@ const UploadBtn = ({ setData, data }) => {
     <div className="flex flex-col gap-2">
       <div>
         <label className="md:text-base text-[16px]  text-[#555]">
-          Upload Documents <span className=" text-red-500">*</span>
+          {t("profile.uploadDocuments")} <span className=" text-red-500">*</span>
         </label>
       </div>
       <div className="flex justify-between relative border border-gray-300 p-4 rounded-xl gap-4 flex-wrap">
-        {renderDropzone(0, "Registration License", "registration_license")}
-        {renderDropzone(1, "Application Letter", "application_letter")}
-        {renderDropzone(2, "Trade License", "trade_license")}
+        {renderDropzone(0, t("profile.regLicense"), "registration_license")}
+        {renderDropzone(1, t("profile.appLetter"), "application_letter")}
+        {renderDropzone(2, t("profile.trade"), "trade_license")}
       </div>
       <div>
         <p className="text-base font-semibold text-[#55555566]">
-          Business Registration License, Application Letter, and Trade License
+          {t("profile.docDescription")}
         </p>
         <p className="mt-1 text-sm text-[#555]">
-          Only JPG, JPEG, PNG, or PDF files can be uploaded, and each file must not exceed 3MB.
+          {t("profile.docHint")}
         </p>
 
         {/* {fileNames.map((fileName, index) => (
@@ -398,9 +398,9 @@ const UploadBtn = ({ setData, data }) => {
               className="absolute top-2 right-2 text-red-600 text-sm"
               onClick={closePdfModal}
             >
-              Close
+              {t("close")}
             </button>
-            <h2 className="text-lg font-semibold mb-4">PDF Preview</h2>
+            <h2 className="text-lg font-semibold mb-4">{t("pdfPreview")}</h2>
             <iframe
               src={pdfModal.src}
               title="PDF Preview"

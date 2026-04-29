@@ -18,7 +18,9 @@
     "enable": "Oggolow",
     "desc2": "Jadwalka wicitaanka ee ka imanaya ",
     "to": "ku ",
-    "from": "KA"
+    "from": "KA",
+    "confirmIncommingCall": "Confirm Incoming Call Schedule?",
+    "disabled": "Confirm to stop Incoming Call Scheduling"
   },
   "callPin": {
     "title": "Maamul PIN ama sirta  soo socda ee Wicitaanka iyo Nambarada Liiska Cad ama Liiska Oggolaanshaha ",
@@ -85,7 +87,8 @@
     "whitelistFetch": "Ku guuldareystay in la keeno lambarada mobilada ",
     "mobileLoad": "Khalad soo dejinta lambarada mobilada  ",
     "whitelistLoad": "Khalad soo dejinta lambarada liiska cad  ama liidska ogalanshaha ",
-    "removeWhitelist": "Khalad ka saarida lambarka liiska cadcad"
+    "removeWhitelist": "Khalad ka saarida lambarka liiska cadcad",
+    "mobileFetch": "Failed to fetch Mobile numbers"
   },
   "states": {
     "loading": "Soodejinaya..."
@@ -191,6 +194,21 @@
     },
     "common": {
       "na": "N/A"
+    }
+  },
+  "deleteAccountDetail": {
+    "title": "Tirtir akoonka",
+    "intro": "Hoos waxaa ku qoran NameTAG-yada ku xiran akoonkaaga shirkadda. Waxaad codsan kartaa in la tirtiro akoonka kaliya ka dib markaad ka baxdo dhammaan NameTAG-yada firfircoon ee aad iibsato ama iska diiwaangeliso.",
+    "activeBlocking": "Waxaad wali leedahay hal ama in ka badan oo NameTAG ah oo firfircoon. Fadlan marka hore ka bax mid kasta (Manage NameTAG → Unsubscribe).",
+    "goToUnsubscribe": "Tag bogga unsubscribe",
+    "manageTagsHint": "Isticmaal Manage NameTAG ee xidhiidhka, ka dibna Unsubscribe mid kasta oo firfircoon.",
+    "emptyTags": "Ma jirin NameTAG loogu talagalay akoonkan.",
+    "deleteButton": "Tirtir akoonkayga",
+    "toastMessages": {
+      "failedToLoad": "Ku guuldareystay in la soo geliyo xogta NameTAG",
+      "successfullyClosedAccount": "Codsiga xidhitaanka akoonka si guul ah ayaa loo gudbiyay",
+      "failedToCloseAccount": "Ku guuldareystay in la gudbiyo codsiga xidhitaanka",
+      "anErrorOccurred": "Khalad ayaa dhacay"
     }
   },
   "manageIncomingCalls": {

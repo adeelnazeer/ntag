@@ -260,7 +260,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                             className={`py-2 px-3 text-sm rounded-md cursor-pointer 
                                                 ${activeBlock ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
                                         >
-                                            Block/Unblock
+                                               {t("sideBar.BlockUnblock")}
                                         </div>
                                         <div
                                             onClick={() => {
@@ -283,7 +283,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                             className={`py-2 px-3 text-sm rounded-md cursor-pointer 
                                                 ${activeUnsubscribe ? "bg-secondary text-white" : "text-[#8A8AA0] hover:bg-gray-100"}`}
                                         >
-                                            Unsubscribe
+                                              {t("sideBar.unsubscribe")}
                                         </div>
                                         <div
                                             onClick={() => {

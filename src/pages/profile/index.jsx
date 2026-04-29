@@ -196,7 +196,7 @@ const ProfilePage = () => {
             user={userData}
             component={component}
             userProfileData={data}
-            key={JSON.stringify(data)} // ensures re-render on data update
+            key={component}
           />
         )
       }

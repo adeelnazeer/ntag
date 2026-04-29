@@ -4,11 +4,13 @@ import { toast } from "react-toastify";
 import APICall from "../network/APICall";
 import EndPoints from "../network/EndPoints";
 import { ConstentRoutes } from "../utilities/routesConst";
+import { useRecaptchaToken } from "../hooks/useRecaptchaToken";
 
 const Bill = () => {
   const { token } = useParams();
   const navigate = useNavigate();
   const [validating, setValidating] = useState(true);
+  const { getRecaptchaPayload } = useRecaptchaToken();
 
   useEffect(() => {
     const validateToken = async () => {
@@ -24,10 +26,16 @@ const Bill = () => {
           return;
         }
 
+        const tokens = await getRecaptchaPayload("bill_validate_token");
+        if (!tokens) {
+          setValidating(false);
+          return;
+        }
+
         // Call API to validate token
         const response = await APICall(
           "post",
-          { token },
+          { token, ...tokens },
           EndPoints.customer.validateToken
         );
 
@@ -89,7 +97,7 @@ const Bill = () => {
     };
 
     validateToken();
-  }, [token, navigate]);
+  }, [token, navigate, getRecaptchaPayload]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">

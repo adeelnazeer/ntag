@@ -76,7 +76,8 @@
     "failedToResubscribe": "ዳግማይ ሳብስክራይብ ምግባር ኣይተክኣለን",
     "anErrorOccurred": "ጌጋ ኣጋጢሙ",
     "reservationCanceled": "ምትሓዝ ተሰሪዙ",
-    "failedToCancelReservation": "ምዝገባ ክስርዝ ኣይተክኣለን"
+    "failedToCancelReservation": "ምዝገባ ክስርዝ ኣይተክኣለን",
+    "successfullyUnsubscribed": "Successfully unsubscribed"
   },
   "common": {
     "na": "N/A",

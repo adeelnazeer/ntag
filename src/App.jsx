@@ -40,6 +40,7 @@ import ContactUsPublic from "./pages/contactUsPublic.jsx";
 import ContactUsIndividual from "./pages/IndividualCustomer/contactUs.jsx";
 import ChangePassword from "./pages/changePassword/index.jsx";
 import CloseAccount from "./pages/closeAccount.jsx";
+import DelAccountDetail from "./pages/delAccountDetail.jsx";
 import ChangeMyTag from "./pages/changeMyTag.jsx";
 import CloseAccountCustomer from "./pages/IndividualCustomer/closeAccount.jsx";
 import ChangeNumber from "./pages/changeNumber.jsx";
@@ -51,12 +52,19 @@ import GuestBlock from "./pages/guest/guestBlock.jsx";
 import Complaint from "./pages/guest/complaint.jsx";
 import Bill from "./pages/bill.jsx";
 import BillPayment from "./pages/billPayment.jsx";
+import FaydaCallback from "./pages/faydaCallback.jsx";
+import FaydaVerifyUssd from "./pages/faydaVerifyUssd.jsx";
+import FaydaCallbackUssd from "./pages/faydaCallbackUssd.jsx";
+import DeleteAccount from "./pages/deleteAccount/deleteAccount.jsx";
+import Home2Page from "./pages/home2";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path={ConstentRoutes.home} element={<HomePage />} />
+        <Route path="/faydacallback" element={<FaydaCallback />} />
+        <Route path="/faydaclbkussd" element={<FaydaCallbackUssd />} />
         <Route path={ConstentRoutes.login} element={<Login />} />
         <Route path={ConstentRoutes.register} element={<RegisterPage />} />
         <Route
@@ -258,6 +266,12 @@ function App() {
           }
         />
         <Route
+          path={ConstentRoutes.delAccountDetail}
+          element={
+            <DelAccountDetail />
+          }
+        />
+        <Route
           path={ConstentRoutes.buyTag}
           element={
             <DashboardLayout>
@@ -347,9 +361,18 @@ function App() {
           element={<Bill />}
         />
         <Route
+          path="/verifayda/:token"
+          element={<FaydaVerifyUssd />}
+        />
+        <Route
           path={ConstentRoutes.billPayment}
           element={<BillPayment />}
         />
+        <Route
+          path={"/delaccount"}
+          element={<DeleteAccount />}
+        />
+        <Route path="/home-2" element={<Home2Page />} />
       </Routes>
       <ToastContainer
         position="top-right"

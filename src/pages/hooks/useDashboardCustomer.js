@@ -103,21 +103,23 @@ export const useTagListCustomer = () => {
     const handleTagDetails = (tagData, setOpenModal, setPaymentType) => {
 
         setLoadingPayment(true);
-
         const ensureRequiredFields = (data) => {
             return {
-                ...data,
-                transaction_type: data.transaction_type || "IND_BUYTAG",
                 channel: data.channel || "WEB",
                 payment_method: data.payment_method || "telebirr",
-                reserve_type: data.reserve_type || "new",
+                reserve_type: data.reserve_type,
+                tag_no:data?.tag_list?.tag_no,
+                msisdn:data?.msisdn,
                 business_type: data.business_type || "BuyGoods",
-                tax: 0,
+                tag_id: data?.customer_tag_id,
+                type: data?.type,
+                is_premium:data?.is_premium,
+                service_id:data?.tag_list?.service_id,
             };
         };
 
         const payload = ensureRequiredFields(tagData);
-        APICall("post", payload, EndPoints.customer.buytagsCustomer)
+        APICall("post", payload, EndPoints.customer.newSecurityEndPoints.individual.buyTag)
             .then((res) => {
                 if (res?.success) {
                     if (tagData?.type == "buy") {
@@ -143,8 +145,22 @@ export const useTagListCustomer = () => {
     };
     const handleTagExchange = (data, setPaymentType) => {
         setLoadingPayment(true);
+        const payloadNew = {
+            type: data?.type,
+            reserve_type: "existing",
+            msisdn: data?.msisdn,
+            tag_id: data?.tag_list?.id,
+            tag_no: data?.tag_list?.tag_no,
+            is_premium: data?.is_premium,
+            service_id: data?.service_id,
+            channel: "WEB",
+            payment_method: data?.payment_method,
+            tag_name: data?.tag_list?.tag_name,
+            payment_type: "CHANGE_TAG",
+            business_type: data?.business_type || "BuyGoods"
+          }
 
-        APICall("post", data, EndPoints.customer.individualchangeNumberSaving)
+        APICall("post", payloadNew, EndPoints.customer.newSecurityEndPoints.individual.changeTag)
             .then((res) => {
                 setLoadingPayment(false);
                 if (res?.success) {
@@ -158,7 +174,7 @@ export const useTagListCustomer = () => {
             })
             .catch((err) => {
                 setLoadingPayment(false);
-                toast.error(err?.message || "An error occurred");
+                toast.error(err || err?.message || "An error occurred");
             });
     };
     return {

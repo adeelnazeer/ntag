@@ -38,7 +38,7 @@ const ContactInfo = ({ profileData, userProfileData }) => {
     handleSubmit,
     watch,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
     setValue,
   } = useForm({
     defaultValues: {
@@ -79,7 +79,7 @@ const ContactInfo = ({ profileData, userProfileData }) => {
 
     setSubmitLoading(true);
     try {
-      await registerData.handleUpdateUserInfo({
+      const res = await registerData.handleUpdateUserInfo({
         contact_fname: data?.contact_fname,
         contact_lname: data?.contact_lname,
         email: data?.email,
@@ -87,6 +87,9 @@ const ContactInfo = ({ profileData, userProfileData }) => {
           ? data?.contact_no?.slice(1)
           : data?.contact_no,
       });
+      if (res?.success) {
+        reset(data, { keepDirty: false, keepTouched: false });
+      }
     } finally {
       setSubmitLoading(false);
     }
@@ -124,9 +127,17 @@ const ContactInfo = ({ profileData, userProfileData }) => {
                 ? { border: "1px solid red" }
                 : { border: "1px solid #8A8AA033" }
             }
-            {...register("contact_fname", { required: true })}
+            {...register("contact_fname", {
+              required: true,
+              minLength: { value: 3, message: t("common.form.errors.minLength") },
+            })}
             // disabled={formDisabled}
           />
+          {errors?.contact_fname && (
+            <p className="mt-1 text-sm text-red-500">
+              {errors.contact_fname.message || t("common.form.errors.firstName")}
+            </p>
+          )}
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
@@ -141,9 +152,17 @@ const ContactInfo = ({ profileData, userProfileData }) => {
                 ? { border: "1px solid red" }
                 : { border: "1px solid #8A8AA033" }
             }
-            {...register("contact_lname", { required: true })}
+            {...register("contact_lname", {
+              required: true,
+              minLength: { value: 3, message: t("common.form.errors.minLength") },
+            })}
             // disabled={formDisabled}
           />
+          {errors?.contact_lname && (
+            <p className="mt-1 text-sm text-red-500">
+              {errors.contact_lname.message || t("common.form.errors.fatherName")}
+            </p>
+          )}
         </div>
         <div>
           <label className="md:text-base text-[16px] text-[#232323]">
@@ -308,7 +327,7 @@ const ContactInfo = ({ profileData, userProfileData }) => {
       <div className="mt-10 max-w-3xl text-center">
         <button
           type="submit"
-          disabled={submitLoading}
+          disabled={submitLoading || !isDirty}
           className="bg-secondary text-white font-medium px-10 py-3 rounded-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mx-auto"
         >
           {submitLoading && (

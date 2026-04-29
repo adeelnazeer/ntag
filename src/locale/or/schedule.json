@@ -18,7 +18,8 @@
     "enable": "banuu/hojiirra oolchuu",
     "desc2": "sagantaa bilbila seenuu",
     "to": "hamma",
-    "from": "Kutaa"
+    "from": "Kutaa",
+    "disabled": "Confirm to stop Incoming Call Scheduling"
   },
   "callPin": {
     "title": "Piinii (PIN) Bilbila Seenuu fi Lakkoofsota Tarree Adii Bulchi",
@@ -192,6 +193,21 @@
     },
     "common": {
       "na": "Hin Jiru"
+    }
+  },
+  "deleteAccountDetail": {
+    "title": "Herrega Haquu",
+    "intro": "NameTAG herrega kompanii keessan waliin hidhaman armaan gadii argama. NameTAG hunda irraa yoo baate booddee qofa herrega keessan haquu gaafachuu dandeessu.",
+    "activeBlocking": "NameTAG hojii irra jiran ammallee qabda. Jalqaba irraa hunda irraa haqamuu (Manage NameTAG → Unsubscribe).",
+    "goToUnsubscribe": "Fuula haqamuu bira deemii",
+    "manageTagsHint": "Barruu gidduu Manage NameTAG irraa, Unsubscribe fayyadamii.",
+    "emptyTags": "Herrega kanaaf NameTAG hin argamne.",
+    "deleteButton": "Herrega koo haqi",
+    "toastMessages": {
+      "failedToLoad": "Odeeffannoo NameTAG fe'uun hin milkoofne",
+      "successfullyClosedAccount": "Gaafachni herrega cufuu milkaa'inaan ergameera",
+      "failedToCloseAccount": "Gaafachni herrega cufuu erguun hin milkoofne",
+      "anErrorOccurred": "Dogoggorri uumameera"
     }
   },
   "manageIncomingCalls": {

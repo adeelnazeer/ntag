@@ -23,6 +23,8 @@ const autofillStyle = `
 
 const ChangePassword = ({ isCustomer = false }) => {
     const { t } = useTranslation(["auth"]);
+    const { t: t2 } = useTranslation(["common"]);
+
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState({
         password1: false,
@@ -44,11 +46,9 @@ const ChangePassword = ({ isCustomer = false }) => {
     const onSubmit = (values, e) => {
         e.preventDefault();
         setLoading(true)
-        const user = JSON.parse(localStorage.getItem('user'))
         const endPoint = isCustomer ? EndPoints.customer.newSecurityEndPoints.individual.updatePassword : EndPoints.customer.changePassword
         const payload = {
             ...values,
-            customer_account_id: user?.customer_account_id
         }
         const payloadCustomer = {
             ...values,
@@ -125,6 +125,11 @@ const ChangePassword = ({ isCustomer = false }) => {
                                             {showPassword?.password1 ? <AiOutlineEye size={22} /> : <AiOutlineEyeInvisible size={22} />}
                                         </div>
                                     </div>
+                                    {errors.old_password && (
+                                        <p className="text-left mt-1 text-sm text-red-600">
+                                            {errors.old_password.message}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div className="mb-4">
@@ -147,11 +152,15 @@ const ChangePassword = ({ isCustomer = false }) => {
                                                 required: t("changePassword.validation.passwordRequired"),
                                                 minLength: {
                                                     value: 5,
-                                                    message: t("changePassword.validation.passwordMinLength"),
+                                                    message: t2("common.form.errors.passwordMinLength"),
                                                 },
                                                 maxLength: {
                                                     value: 15,
-                                                    message: t("changePassword.validation.passwordMaxLength"),
+                                                    message: t2("common.form.errors.passwordMaxLength"),
+                                                },
+                                                pattern: {
+                                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{5,15}$/,
+                                                    message: t2("common.form.errors.passwordPattern")
                                                 },
                                                 validate: (value) => {
                                                     const oldPassword = getValues("old_password");
@@ -176,6 +185,11 @@ const ChangePassword = ({ isCustomer = false }) => {
                                             {showPassword?.password2 ? <AiOutlineEye size={22} /> : <AiOutlineEyeInvisible size={22} />}
                                         </div>
                                     </div>
+                                    {errors.password && (
+                                        <p className="text-left mt-1 text-sm text-red-600">
+                                            {errors.password.message}
+                                        </p>
+                                    )}
                                 </div>
                                 <div className="mb-4">
                                     <label className="md:text-base text-[16px] text-[#232323]">
@@ -226,6 +240,11 @@ const ChangePassword = ({ isCustomer = false }) => {
                                             {showPassword?.password3 ? <AiOutlineEye size={22} /> : <AiOutlineEyeInvisible size={22} />}
                                         </div>
                                     </div>
+                                    {(errors.password_confirmation) && (
+                                        <p className="text-left mt-1 text-sm text-red-600">
+                                            {errors.password_confirmation.message}
+                                        </p>
+                                    )}
                                 </div>
                                 <div className="pt-6 flex justify-center">
                                     <Button

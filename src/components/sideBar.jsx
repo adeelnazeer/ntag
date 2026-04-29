@@ -135,13 +135,14 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
 
       <div
         ref={sidebarRef}
-        className={`fixed top-0 left-0 h-full transition-transform transform pt-16 
+        className={`fixed left-0 top-0 h-full transition-transform transform pt-16 
           lg:w-72 md:min-w-[17rem]
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 z-40 bg-white rounded-tr-[60px] max-w-64 w-64`}
+          lg:translate-x-0 z-40 bg-white rounded-tr-[60px] max-w-64 w-64
+          lg:top-16 lg:pt-4 lg:h-[calc(100vh-4rem-4rem)] lg:rounded-tr-[60px]`}
       >
         <div className="h-full overflow-y-auto" key={i18n.resolvedLanguage || i18n.language}>
-          <Card className="px-4 py-4 h-full w-full bg-transparent shadow-blue-gray-900/5">
+          <Card className="px-4 py- w-full bg-transparent shadow-blue-gray-900/5">
             <List className="text-base min-w-full w-full gap-4 p-0 font-normal text-black">
               {/* Standard menu items */}
               {sidebarData.slice(0, 2).map((item, index) => (

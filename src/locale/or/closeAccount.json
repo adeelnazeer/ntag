@@ -28,7 +28,8 @@
     "message": "Mirkaneeffatta akkaawuntii walta'aa keessan cufuu barbaaddaa? Hojii kana deebisanii hin hojjetamu.",
     "placeholder": "Sababa Cufuu Akkaawuntii Galchi",
     "confirm": "Mirkaneeffadhu",
-    "cancel": "Haqi"
+    "cancel": "Haqi",
+    "commentLabel": "Reason for closing your account"
   },
   "loading": {
     "spinner": "Bufuraa jira..."

@@ -1,0 +1,640 @@
+{
+  "documentTitle": "Name TAG Shuruudaha iyo Xaaladaha Adeegga",
+  "sections": [
+    {
+      "title": "Hordhac",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Shuruudahan iyo Xaaladahan (\"Shuruudaha\") waxay xukumayaan isticmaalkaaga Adeegga NameTAG (\"Adeegga\") ee ay bixiso Ethio Telecom (\"annaga\", \"annagu\"). Markaad iska diiwaangeliso ama aad isticmaasho Adeegga, adiga (\"adiga\", \"kaaga\" — haddii aad tahay shaqsi ama hay'ad ganacsi) waxaad ogolaanaysaa inaad u hoggaansanto Shuruudahan."
+        }
+      ]
+    },
+    {
+      "title": "Sharaxaada Adeegga",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "NameTAG waa adeeg nambaro dalwad ah oo u oggolaanaya macaamiisha Ethio inay doortaan magac gaar ah oo la xasuusan karo oo ku xidhan nambarkooda gacanta ee aasaasiga ah. Waxay xoojisaa aqoonsiga shakhsi ahaaneed iyo muuqaalka sumadda oo awood u siinaya in si fudud loo aqoonsado iyo xidhiidhka aan toosnayn ee shakhsiyaadka iyo ganacsiyadaba."
+        },
+        {
+          "type": "paragraph",
+          "text": "NameTAG nambarada ayaa weli ah hantida Ethio Telecom. Macaamiisha waxaa la siiyay xaqa ay u leeyihiin inay is-diiwaangeliyaan oo ay isticmaalaan nambarada NameTAG inta lagu jiro xilliga is-diiwaangelinta iyagoo bixinaya khidmadda adeegga ee soo noqnoqda iyadoo loo eegayo lambarka NameTAG ee la doortay iyo qorshaha adeegga."
+        }
+      ]
+    },
+    {
+      "title": "U qalmida",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "title": "Macaamiisha Shirkadaha",
+              "description": "waa in aad iska diiwaan gelisaa dukumeenti shirkadeed sax ah iyada oo loo marayo marinka internetka: www.nametag.et."
+            },
+            {
+              "title": "Macaamiisha gaarka ah",
+              "description": "Waxaad iska diiwaan gelin kartaa adigoo isticmaalaya: USSD (*883#) portal web ama mobile App."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Isdiiwaangelinta iyo Isticmaalka",
+      "content": [
+        {
+          "type": "subtitle",
+          "text": "Loogu talagalay Macaamiisha Shirkadaha:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Iska diiwaan geli www.nametag.et oo soo rar faahfaahinta iyo dukumentiyada shirkadda oo sax ah."
+            },
+            {
+              "description": "Hayso nambarka NameTAG ilaa 48 saacadood markaad dhamaystirto astaanta shirkadda si aad u hesho ogolaanshaha dukumeenti."
+            },
+            {
+              "description": "Marka dukumiintiyada ay ansixiyaan lacag bixinta maamulka NameTAG waa in lagu dhammeeyaa 24 saacadood gudahood ama Magaca Tags ee la haray ayaa dib loogu sii dayn doonaa suuqa."
+            },
+            {
+              "description": "Isla nambarka gacanta looma isticmaali karo koontada NameTAG ee shaqsiga ah haddii mar hore loogu diiwaan gashanaa macmiil shirkad ahaan ama lidkeeda."
+            },
+            {
+              "description": "Iibso NameTAG adiga oo bixinaya khidmad hal mar ah oo isdiiwaangelinta iyo khidmadda soo noqnoqda ee telebirr ah."
+            },
+            {
+              "description": "Macaamiishu waa inay aqbalaan codsiga mandate debit telebirr ee ay ku helaan nambarkooda gacanta ee ka diiwaan gashan oo ay ku ogolaadaan koodka sirta ah ee telebirr."
+            },
+            {
+              "description": "Nambarada NameTAG waxaa loo qoondeeyay habka ugu horreeya ee loo adeego."
+            },
+            {
+              "description": "Haddii NameTAG uu la mid yahay magaca calaamad kale mudnaanta waxaa la siiyaa macmiilka ugu horreeya ee codsaday."
+            },
+            {
+              "description": "Macaamiisha shirkadu ma kaydsan karaan ama ma iibsan karaan NameTAG ee la xidhiidha shirkad kale ama kood gaaban oo jira."
+            },
+            {
+              "description": "Ethio Telecom waxay xaq u leedahay inay tirtirto nambarka NameTAG kasta ama koontada NameTAG ee lagu helo inay ku xad gudubtay xuquuqda lahaanshaha sumadda."
+            },
+            {
+              "description": "Haddii NameTAG loo isticmaalo wicitaanno been abuur ah oo aan habboonayn ama xadgudub ah Ethio Telecom waxay xaq u leedahay inay joojiso ama joojiso NameTAG iyo adeegga la xidhiidha."
+            },
+            {
+              "description": "Nambarada NameTAG waxay ku xaddidan yihiin wicitaannada codka gudaha shabakadda Ethio Telecom (kobka internetka) oo keliya."
+            },
+            {
+              "description": "Wicitaan caalami ah (soo galaya iyo ka baxaya) isticmaalka nambarada NameTAG lama ogola."
+            },
+            {
+              "description": "aKoontada shirkadu waxay kaydin kartaa ama iibsan kartaa ilaa shan (5) lambarrada NameTAG waxaana lagu diwaangelin karaa nambaro shirkadeed oo kala duwan."
+            },
+            {
+              "description": "Nambarka mobaylka ee diwaangashan inta lagu guda jiro xisaab abuurka waxa loola dhaqmaa sidii lambarka mobaylka koowaad ee macmiilka shirkadda si loo xaqiijiyo iyo soo kabashada erayga sirta ah."
+            }
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Loogu talagalay Macaamiisha Gaarka ah ee isticmaalaya USSD Koodhka Gaaban:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Macaamiishu waxay isku qori karaan nambarada NameTAG iyagoo isticmaalaya USSD (*883#) waxayna ku bixin karaan hadhaaga wakhtiga hawada Ethio."
+            },
+            {
+              "description": "Macaamiisha NameTAG waxay iska diiwaan galiyeen adeegga iyagoo isticmaalaya adeegga kanaalka USSD khidmadda soo noqnoqda bishiiba waxaa laga dalaci doonaa hadhaaga wakhtiga hawada."
+            },
+            {
+              "description": "Kanaalka USSD Magaca nambaradu waa inay ahaadaan inta u dhaxaysa 7 ilaa 8 nambar oo qaybo kala duwan ah dhererka NameTAG waxaa bedeli kara Ethio."
+            },
+            {
+              "description": "Isticmaalka macaamiishu kanaalka USSD waxay baadhi karaan oo iibsan karaan lambarrada NameTAG waxay ku bixinayaan wakhtiga hawada ee koontada hore loo bixiyay ama ka dib."
+            },
+            {
+              "description": "Bixinta guulaysata ee khidmadda isdiiwaangelinta iyo khidmadda soo noqnoqda ee bisha koowaad ee la codsado nambarka NameTAG waxa loo qoondayn doonaa lambarka macmiilaha."
+            },
+            {
+              "description": "Bixin la'aanta marka la doorto NameTAG waa la sii dayn doonaa waxayna diyaar u noqon doontaa macaamiisha kale."
+            },
+            {
+              "description": "Macaamiisha gaarka ah ma iibsan karaan lambarada NameTAG ee la xidhiidha shirkadaha summadaha shirkadaha ama koodka gaaban ee diiwaangashan."
+            },
+            {
+              "description": "Haddii NameTAG loo isticmaalo wicitaanno been abuur ah oo aan habboonayn ama xadgudub ah Ethio Telecom waxay xaq u leedahay inay joojiso ama joojiso NameTAG iyo adeegga la xidhiidha."
+            }
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Macaamiisha Shakhsi ahaaneed ee isticmaalaya Xariirka Shabakadda ama App-ka Mobilka:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Macaamiisha gaarka ah waxay ku biiri karaan oo iibsan karaan NameTAG iyagoo isticmaalaya portal web ama mobile App waxayna ku bixin karaan koontada telebirr."
+            },
+            {
+              "description": "Macaamiisha gaarka ah waxay ku iibsan karaan khidmadda is-diiwaangelinta iyo khidmadda soo noqnoqda ee bisha ugu horreysa akoonka telebirr."
+            },
+            {
+              "description": "Magaca joogtada ah ee nambarada dhererkoodu wuxuu noqon karaa sida laga heli karo bogga internetka ama mobaylka App-ka ee hoos yimaada qaybo kala duwan oo ay ku jiraan Platinum Gold Silver iyo Bronze."
+            },
+            {
+              "description": "Shakhsiyaadka ayaa maamuli kara adeegga NameTAG iyagoo isticmaalaya marinka shabakadda ama abka mobaylka."
+            },
+            {
+              "description": "Shakhsiyaadka ma iibsan karaan NameTAGs ee la xidhiidha shirkadaha summadaha shirkadaha ama summada gaaban ee diiwaangashan."
+            },
+            {
+              "description": "Shakhsiyaadka macaamiisha ah ayaa damin kara wicitaanada soo gala lambarka NameTAG kaas oo mar labaad la dami doono 10 maalmood ka dib."
+            },
+            {
+              "description": "Macaamiisha gaarka ah waxay isku diwaangelin karaan hal (1) Nambarka NameTAG ee lambarka moobilka aasaasiga ah."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kharashka Joogtada ah ee Adeegga",
+      "content": [
+        {
+          "type": "subtitle",
+          "text": "Kharashka soo noqnoqda ee isticmaalka telebirr"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Kharashka soo noqnoqda ee bilawga ah waa in lala dalacaa kharashka is-diiwaangelinta ee adeega NameTAG."
+            },
+            {
+              "description": "Laga bilaabo wareegga labaad ee biilasha kharashka soo noqnoqda waxaa lagu dalaci doonaa iyada oo la adeegsanayo amarka debit telebirr."
+            },
+            {
+              "description": "Markaad iska diiwaan geliso adeegga NameTAG macaamiishu waxay ku heshiiyaan lacag bixin soo noqnoqota iyadoo la isticmaalayo amarka telebirr. Ku guuldareysiga inaad u hogaansanto waxay keeni doontaa in si toos ah loogaga baxo NameTAG."
+            },
+            {
+              "description": "Si loo oggolaado in si toos ah loo dhimo khidmadda soo noqnoqda sida ku cad xirmada la doortay macaamiisha waxay xaqiijin doonaan waajibaadka lacag bixinta iyagoo isticmaalaya lambarka sirta ah ee telebirr."
+            },
+            {
+              "description": "Haddii macaamiilku ku guul-darraysto inuu aqbalo codsiga waajibka-dhaafka ah wakhtiga is-diiwaangelinta adeegga waxay ka bilaabi karaan bogga shabakadda ka dib markay galaan akoonkooda."
+            }
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Kharashka soo noqnoqda iyadoo la isticmaalayo wakhtiga hawada (USSD channel)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Marka macmiilku iska diiwaan galiyo NameTAG isagoo sii maraya kanaalka USSD oo uu bixiyo khidmadda isdiiwaangelinta isagoo isticmaalaya hadhaaga wakhtiga hawadooda khidmadda soo noqnoqda waxa sidoo kale si toos ah looga jarayaa hadhaaga wakhtiga hawada ee lambarka mobaylka ee diiwaangashan."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Qiimaha iyo Lacag bixinta",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Khidmadaha isdiiwaangelinta way kala duwan yihiin iyadoo ku saleysan dhererka iyo qaybta NameTAG."
+            },
+            {
+              "title": "Qorshayaasha Is-diiwaangelinta",
+              "description": "",
+              "subItems": [
+                "Macaamiisha Shirkadaha: Qorshayaasha Saddex-biloodlaha ah ee Sannadlaha ah ama Sannadlaha ah.",
+                "Macaamiisha Shakhsi ahaaneed: Qorshaha bilaha kaliya."
+              ]
+            },
+            {
+              "description": "Dhammaan lacagaha waa in lagu bixiyaa kanaalada la ansixiyay (telebirr ama hadhaaga hawada) iyadoo ku xiran nooca macmiilka iyo kanaalka la doortay."
+            },
+            {
+              "description": "NameTAG nambarka waxa loo qoondayn karaa nambarka mobaylka ka dib khidmada isdiiwaangelinta ee guusha leh."
+            },
+            {
+              "description": "Kharashka is-diiwaangelinta iyo khidmadda soo noqnoqota ee ugu horraysa waxa lagu dalaci doonaa hore wakhtiga diiwaangelinta adeegga."
+            },
+            {
+              "description": "Kharashka soo noqnoqda ee saafiga ah wuxuu bilaabmaa ka dib marka la dhammeeyo wareegga lacag-bixinta ee soo noqnoqota ee ugu horreysa."
+            },
+            {
+              "description": "Ku guuldareysiga bixinta khidmadaha adeegga ee soo noqnoqda waxay keeni doontaa hakinta Adeegga NameTAG ilaa lacag bixinta la bixiyo."
+            },
+            {
+              "description": "Macaamiisha waxaa loo oggol yahay inay ku beddelaan NameTAG ay hadda leeyihiin NameTAG cusub."
+            },
+            {
+              "description": "Kharashyada isdiiwaangelinta cusub iyo kharashyada soo noqnoqda ayaa lagu dabaqi doonaa mar kasta oo macmiilku beddelo Nambarkooda NameTAG."
+            },
+            {
+              "description": "Ethio Telecom waxay xaq u leedahay inay beddesho khidmadda is-diiwaangelinta ama khidmadda soo noqnoqda iyadoon ogaysiis hore la helin."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Maamulka Adeegga",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Macaamiishu waxay maamuli karaan adeega iyo NameTAG wicitaanada soo socda oo leh astaamo ay ka mid yihiin jadwalka wicitaanka dejinta PIN xannibaadda iyo furista lambarrada gacanta ama lambarrada NameTAG."
+            },
+            {
+              "description": "Macaamiisha shirkadu waxay maamuli karaan adeeggooda NameTAG iyagoo maraya marinka shabakadda."
+            },
+            {
+              "description": "Macaamiisha gaarka ah waxay ku maamuli karaan adeegooda iyagoo isticmaalaya USSD portal-ka webka ama abka mobaylka."
+            },
+            {
+              "description": "Macaamiisha gaarka ah waxay si ku meel gaar ah u damin karaan wicitaanada soo socda. Adeeggu si toos ah ayuu dib u shidmi doonaa 10 maalmood ka dib."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Wicitaanada Codka leh ee Adeegga NameTAG",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Macaamiishu waxay wici karaan wicitaanada iyagoo isticmaalaya nambarkooda NameTAG ee shabakada Ethio Telecom."
+            },
+            {
+              "description": "Adeeggu wuxuu ku xaddidan yahay wicitaanada codka ee shabakada kaliya."
+            },
+            {
+              "description": "Wicitaannada caalamiga ah (soo galaya iyo kuwa baxaya) laguma taageero lambarrada NameTAG."
+            },
+            {
+              "description": "Kaliya wicitaanada shabakada P2P ayaa loo ogolyahay sida ku cad qorshaha xirmada nambarka gacanta ee macaamiisha."
+            },
+            {
+              "description": "Kharashka wicitaannada baxaya ee laga sameeyo lambarrada NameTAG waxaa laga jari doonaa air-time-ka iyadoo la raacayo xirmada (package) lambarka moobilka aasaasiga ah."
+            },
+            {
+              "description": "Labada dhinac ee soo wacaya iyo kuwa helaya waa inay ahaadaan macaamiisha Ethio Telecom; Macaamiisha dhex wareegaysa uma qalmaan inay ka soo wacaan lambarada NameTAG."
+            },
+            {
+              "description": "Isticmaalayaasha NameTAG waxay ka heli karaan wicitaanada macmiilayaasha kale ee NameTAG ama kuwa aan caadiga ahayn."
+            },
+            {
+              "description": "Macmiilayaasha NameTAG waxay wici karaan wicitaanada dhammaan macaamiisha Ethio Telecom haddii ay isticmaalaan NameTAG iyo haddii kale."
+            },
+            {
+              "description": "Nambarada moobilka ama nambarada NameTAG ee uu xannibay macaamiishu ma awoodi doonaan inay ku xidhmaan macaamiishu NameTAG ilaa aan la xidhin."
+            },
+            {
+              "description": "Macaamiishu waxay arki doonaan wicitaanada soo socda oo ay wataan horgale (#) ka hor lambarka mobaylka soo wacaha (tusaale #0910561147 ama #4545)."
+            },
+            {
+              "description": "Kuwa aan isdiiwaangelinin waxay garaaci karaan nambarada NameTAG macaamiisha."
+            },
+            {
+              "description": "Haddii macmiilka NameTAG uu awood u siiyo sifada wicitaanka soo gelaysa ee PIN si uu uga ilaaliyo nambarkooda NameTAG wicitaanada aan loo baahnayn soo wacaha ayaa looga baahan yahay inuu galo lambarka sirta ah si uu ugu xidho."
+            },
+            {
+              "description": "Macaamiisha waxay isticmaali karaan nambarada NameTAG ee wicitaanada shirarka leh nambarada gacanta ee caadiga ah."
+            },
+            {
+              "description": "Kadib 90 maalmood oo aan la isticmaalin nambarka NameTAG (wacitaanada soo galaya ama ka baxaya NameTAG) Adeegga NameTAG waxa uu joojin doonaa nambarka gacanta ee macmiilaha."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Jadwalka wacitaanka",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Habka jadwalka wicitaanka waxaa loo heli karaa oo keliya xisaabaadka macaamiisha ee shirkadda waana ikhtiyaari ilaa uu habeeyo macaamilka."
+            },
+            {
+              "description": "Macaamiisha shirkadu waxay dejin karaan jadwal iyagoo qeexaya bilawga iyo dhammaadka taariikhaha iyo wakhtiyada wicitaanada soo socda."
+            },
+            {
+              "description": "Marka jadwalka wicitaanka la furo dadka soo wacaya waxay gaari karaan lambarka NameTAG inta lagu jiro taariikhda iyo wakhtiga la qorsheeyay."
+            },
+            {
+              "description": "Wicitaannada la helo wax ka baxsan wakhtiga la qorsheeyay laguma xidhi doono nambarka NameTAG."
+            },
+            {
+              "description": "Haddii macaamiishu illoobaan inuu joojiyo jadwalka wicitaanka soo wacayaasha ma awoodi doonaan inay ku xidhmaan lambarka NameTAG aan ahayn taariikhda iyo wakhtiga loo qorsheeyay."
+            },
+            {
+              "description": "Macaamiishu waxay bedeli karaan ama joojin karaan jadwalka wicitaanka wakhti kasta iyaga oo galaya bogga internetka ee NameTAG."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Wicitaannada soo gala PIN ama sirta",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Tilmaamaha PIN ama sirta ee soo galaya waa ikhtiyaari. Sida caadiga ah wax PIN ah lama dejiyo ilaa macmiiluhu uu mid abuuro."
+            },
+            {
+              "description": "Macaamiishu waxay dejin karaan PIN ama sirta hal-lambar ah oo ku yaalla lambarkooda NameTAG si ay uga xannibaan wicitaannada aan la rabin ee NameTAG-gooda."
+            },
+            {
+              "description": "Marka sifada PIN-ka ama sirta ee soo galeeysa la ogolaado dadka soo wacaya waa inay galaan PIN sax ah si ay ugu xidhmaan lambarka NameTAG."
+            },
+            {
+              "description": "Macaamiishu waxay ku dari karaan lambarada liiska la caddeeyey. Wicitaannada ka imanaya lambarrada liiska cadcad waxay dhaafi doonaan shuruudaha PIN ama sirta."
+            },
+            {
+              "description": "Macaamiishu waxay ku dari karaan ama ka saari karaan lambarada liiska cad-cad wakhti kasta sida ay u baahnaan."
+            },
+            {
+              "description": "Macaamiishu waxay ka saari karaan PIN-ka wicitaanada soo socda wakhti kasta iyaga oo galaya marinka shabakada ee NameTAG."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Is-diiwaangelinta",
+      "content": [
+        {
+          "type": "subtitle",
+          "text": "Loogu talagalay Macaamiisha Shirkadaha:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Macaamiisha shirkadu waxay ka bixi karaan magaca NameTAG iyaga oo sii maraya marinka shabakada."
+            },
+            {
+              "description": "Ka dib iska-diiwaangelinta macaamiishu waxay haystaan 7 maalmood si ay dib ugu qoraan isla nambarka NameTAG ka hor inta aanu helin kuwa kale."
+            },
+            {
+              "description": "Haddii macmiilku dib isu-diiwaangeliyo 7 maalmood gudahooda waa inay mar labaad bixiyaan kharashka is-diiwaangelinta ee lagu dabaqi karo."
+            },
+            {
+              "description": "7 maalmood kadib nambarada NameTAG ayaa si guud loo heli doonaa dadka kale si ay u iibsadaan."
+            },
+            {
+              "description": "Marka macmiilka aan la qorin ma sheegan karo nambarka NameTAG ee la xidhiidha nambarkooda gacanta."
+            }
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Loogu talagalay Macaamiisha Shakhsi ahaaneed:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Macaamiisha khaaska ah waxay ka bixi karaan adeega NameTAG iyagoo isticmaalaya USSD Web portal ama Mobile App."
+            },
+            {
+              "description": "Isdiiwaangelinta ka dib MagacaTAG isla markiiba waa laga saarayaa lambarka mobaylka macmiilka oo wuxuu diyaar u ahaan doonaa iibka macaamiisha kale."
+            },
+            {
+              "description": "Ka dib iska-diiwaangelinta macaamiishu ma soo celin karaan isla NameTAG mana codsan karaan soo celinta kharashka is-diiwaangelinta ama kharashyada soo noqnoqda ee horay loo bixiyay."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Siyaasadda Xiritaanka Akoonka",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Macaamiisha shirkadu waxay codsan karaan inay xidhaan akoonkooda NameTAG si joogto ah."
+            },
+            {
+              "description": "Tidhtnka wixii lacag bixin ah."
+            },
+            {
+              "description": "Ka bax dhammaan magacyada la iibsaday."
+            },
+            {
+              "description": "Codsiga koontada xidhitaanku waxa oggolaan kara ama diidi kara maamulaha NameTAG."
+            },
+            {
+              "description": "Ilaa codsiga koontada dhow uu ansixiyo NameTAG admin adeeg macmiilku wuu sii shaqayn doonaa."
+            },
+            {
+              "description": "Marka codsiga koontada dhow la oggolaado astaanta macmiilka waxaa loo hayaa NameTAGs iyo dukumeentiyada si joogto ah ayaa looga saari doonaa goobta NameTAG."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Name TAG Siyaasadda Beddelka",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Macaamiisha shirkadaha iyo kuwa gaarka ah waxay bedeli karaan NameTAG hadda jira iyagoo iibsanaya mid cusub."
+            },
+            {
+              "description": "Isbeddelka NameTAG waxa uu dhaqan galayaa khidmada isdiiwaangelinta ee guulaysata iyo rasiidka bixinta ujrada soo noqnoqda ee NameTAG cusub."
+            },
+            {
+              "description": "Magaca hore ee NameTAG ayaa laga saari doonaa lambarkooda marka si guul leh loo beddelo."
+            },
+            {
+              "description": "Magaca hore ee NameTAG waxaa loo diyaariyaa iibka macaamiisha kale."
+            },
+            {
+              "description": "Kharashka soo noqnoqda waxaa lagu dalaci doonaa si waafaqsan qorshaha cusub ee la doortay ee NameTAG."
+            },
+            {
+              "description": "Markaad bedesho MagacaagaTAG wixii lacag ah ee lagu bixiyay NameTAG hore looma sii wadi doono. Waxaan kugula talineynaa inaad bedesho MagacaagaTAG dhamaadka qorshahaaga hadda."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "U beddel lambarka moobilka magaca IskaashatadaTAG",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Macaamiisha shirkadu waxay bedeli karaan nambarkooda gacanta ee hadda jira ee ku xidhan NameTAG."
+            },
+            {
+              "description": "Macmiilka shirkadu wuxuu dooran karaa nambarka mobaylka cusub wuxuuna ku xidhi karaa magaca jira ee NameTAG."
+            },
+            {
+              "description": "Nambarkii hore ee mobilka ayaa laga saari doonaa NameTAG marka lagu guuleysto beddelka."
+            },
+            {
+              "description": "Nambarkii hore ee mobilku ma awoodi doono inuu isticmaalo nambarka NameTAG ee wicitaanada."
+            },
+            {
+              "description": "Haddi khidmad soo noq-noqoto ah ay ku jirto nambarka mobaylka ee hadda, macmiilku waa inuu bixiyaa inta dhiman ka hor inta aanu bedelin nambarka gacanta."
+            },
+            {
+              "description": "Kharashka soo noqnoqda waxaa lagu dalaci doonaa nambarka mobilada cusub si waafaqsan qorshaha la doortay."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Waajibaadka Isticmaalayaasha",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Bixi macluumaad sax ah oo dhamaystiran oo la cusboonaysiiyay mar walba."
+            },
+            {
+              "description": "U hoggaansan dhammaan shuruucda iyo qawaaniinta deegaanka ee khuseeya."
+            },
+            {
+              "description": "Ka fogow si xun u isticmaalka adeega oo ay ku jiraan khiyaamo sharci darro ah ama waxqabadyo xadgudub ah."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Qarsoodi iyo Ilaalinta Xogta",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Xogtaada khaaska ah waxaa la ururin doonaa oo la ilaalin doonaa si waafaqsan siyaasadda gaarka ah ee Ethio Telecom."
+            },
+            {
+              "description": "Waxaan hirgelineynaa tillaabooyin ammaan oo macquul ah iyo heerka warshadaha si aan u ilaalino xogtaada."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hakinta iyo Joojinta",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Waxaan joojin karnaa ama hakin karnaa helitaankaaga Adeegga xaaladaha soo socda:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Ku xadgudubka Shuruudahan."
+            },
+            {
+              "description": "Si xun u isticmaalka Adeegga."
+            },
+            {
+              "description": "Kadib 30 maalmood ee soo noqnoqoshada dallacaadda guuldarada wicitaanada baxaya ayaa ka xannibi doona lambarka NameTAG. Adeegga dib ayaa loo bilaabi karaa ka dib marka la bixiyo khidmadda soo noqnoqda."
+            },
+            {
+              "description": "Kadib 60 maalmood ee soo noqnoqoshada dallacaadda guuldarada adeeggu wuxuu joojin doonaa wicitaanada soo socda iyo kuwa baxaya ee nambarka NameTAG. Adeegga dib ayaa loo bilaabi karaa ka dib marka la bixiyo khidmadda soo noqnoqda."
+            },
+            {
+              "description": "Kadib 90 maalmood ee soo noqnoqoshada dallacaadda guuldarada adeeggu wuu go'i doonaa (joojin doonaa) nambarka NameTAG ee macmiilaha mana awoodi doono inuu sheegto."
+            },
+            {
+              "description": "Ethio Telecom waxay xaq u leedahay inay tirtirto nambarka NameTAG kasta ama koontada NameTAG ee lagu helo inay ku xad gudubtay xuquuqda lahaanshaha sumadda."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Wuxuu dhacayaa Adeegga NameTAG",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "NameTAG ka qaybqaadashada waxay shaqaynaysaa 10 sano."
+            },
+            {
+              "description": "Ethio Telecom waxay kordhin kartaa taariikhda dhicitaanka iyadoon ogeysiis hore la helin."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Xadaynta Masuuliyadda",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "description": "Adeegga waxaa lagu bixiyaa \"sida-uu yahay\" iyo \"sida la heli karo\" ku salaysan."
+            },
+            {
+              "description": "Ethio Telecom mas'uul kama aha wax kasta oo waxyeelo aan toos ahayn ama shil ah oo ka dhasha isticmaalka Adeegga."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Isbeddellada Shuruudaha",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Ethio Telecom waxay xaq u leedahay inay wax ka beddesho Shuruudahan wakhti kasta. Cusbooneysiinta waxaa lagu soo gudbin doonaa www.nametag.et ama kanaalada rasmiga ah ee isgaarsiinta macaamiisha."
+        }
+      ]
+    },
+    {
+      "title": "Sharciga maamulka",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Shuruudahan waxaa maamula shuruucda Jamhuuriyadda Dimuqraadiga Federaalka ee Itoobiya."
+        }
+      ]
+    },
+    {
+      "title": "Macluumaadka Xiriirka",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Wixii taageero ah weydiimaha ama cabashooyinka fadlan booqo www.nametag.et ama la xiriir xarunta adeegga macaamiisha."
+        }
+      ]
+    }
+  ]
+}

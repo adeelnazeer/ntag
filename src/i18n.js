@@ -127,11 +127,15 @@ i18n
     resources,
     ns,
     defaultNS: "common",
-    // fallbackLng: "en",
+    fallbackLng: "en",
     supportedLngs,
     detection: {
-      order: ["localStorage", "querystring", "navigator", "htmlTag"],
-      caches: ["localStorage"],
+      // localStorage is excluded: in mini-program WebView environments it is
+      // proxied through the native JS bridge. Calling it synchronously at
+      // import time causes "Cannot read properties of undefined (reading
+      // 'onInvokeFinished')" in native.js before the bridge is ready.
+      order: ["querystring", "navigator", "htmlTag"],
+      caches: [],
     },
     interpolation: { escapeValue: false },
     react: { useSuspense: true },

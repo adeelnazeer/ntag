@@ -15,6 +15,25 @@ axiosInstance.interceptors.request.use(
     if (!tempConfig.headers) {
       tempConfig.headers = {};
     }
+    // Axios may provide headers as an AxiosHeaders instance; normalize to plain object
+    // so reads/writes like tempConfig.headers.Authorization work reliably.
+    if (typeof tempConfig.headers?.toJSON === "function") {
+      tempConfig.headers = { ...tempConfig.headers.toJSON() };
+    } else {
+      tempConfig.headers = { ...(tempConfig.headers || {}) };
+    }
+
+    const getAuthorizationHeader = () =>
+      tempConfig.headers.Authorization ?? tempConfig.headers.authorization;
+    const setAuthorizationHeader = (value) => {
+      tempConfig.headers.Authorization = value;
+      // avoid two different casings being sent
+      if (tempConfig.headers.authorization) delete tempConfig.headers.authorization;
+    };
+    const deleteAuthorizationHeader = () => {
+      if (tempConfig.headers.Authorization) delete tempConfig.headers.Authorization;
+      if (tempConfig.headers.authorization) delete tempConfig.headers.authorization;
+    };
     
     // For guest endpoints, use guest_token as a custom header
     // For regular endpoints, use Authorization Bearer token
@@ -24,9 +43,14 @@ axiosInstance.interceptors.request.use(
       // Guest endpoint: use guest_token as custom header
       if (guestToken) {
         tempConfig.headers["guest-token"] = guestToken;
-        // Remove Authorization header for guest endpoints to avoid conflicts
-        if (tempConfig.headers.Authorization) {
-          delete tempConfig.headers.Authorization;
+        // For guest endpoints, avoid sending the normal user-session token as Authorization,
+        // but preserve any explicitly provided Authorization value (e.g. deleteToken).
+        if (
+          token &&
+          typeof getAuthorizationHeader() === "string" &&
+          getAuthorizationHeader().trim() === `Bearer ${token}`
+        ) {
+          deleteAuthorizationHeader();
         }
         console.log("Guest endpoint detected, setting guest_token header");
       } else {
@@ -34,8 +58,8 @@ axiosInstance.interceptors.request.use(
       }
     } else {
       // Regular endpoint: use Authorization Bearer token
-      if (token) {
-        tempConfig.headers.Authorization = `Bearer ${token}`;
+      if (token && !getAuthorizationHeader()) {
+        setAuthorizationHeader(`Bearer ${token}`);
       }
       // Remove guest_token for regular endpoints
       if (tempConfig.headers["guest-token"]) {
@@ -51,8 +75,8 @@ axiosInstance.interceptors.request.use(
     if (isGuestEndpoint) {
       console.log("Request headers for guest endpoint:", {
         url: config.url,
-        guest_token: tempConfig.headers["guest_token"] ? "present" : "missing",
-        hasAuthorization: !!tempConfig.headers.Authorization
+        guest_token: tempConfig.headers["guest-token"] ? "present" : "missing",
+        hasAuthorization: !!getAuthorizationHeader()
       });
     }
     
@@ -120,18 +144,28 @@ const APICall = async (
       .catch((error) => {
         if (error.response) {
           if (error.response.status === 401) {
-            // Don't redirect guest users to login, just reject with error
-            const isGuestEndpoint = error.config?.url?.includes("/guest/") || error.config?.url?.includes("guest");
-            if (!isGuestEndpoint) {
+            const isGuestEndpoint =
+              error.config?.url?.includes("/guest/") ||
+              error.config?.url?.includes("/customer/guest/") ||
+              error.config?.url?.includes("guest");
+            const noAuthRedirect =
+              error.config?.headers?.["x-no-auth-redirect"] ||
+              error.config?.headers?.["X-No-Auth-Redirect"];
+
+            if (!isGuestEndpoint && !noAuthRedirect) {
               reject(new Error("Session expired. Please log in again."));
               window.location.href = "/login";
               localStorage.clear();
               return;
-            } else {
-              // For guest endpoints, just reject with the error message
-              reject(error.response.data?.message || "Unauthorized. Please verify your guest token.");
-              return;
             }
+
+            reject(
+              error.response.data?.message ||
+                (isGuestEndpoint
+                  ? "Unauthorized. Please verify your guest token."
+                  : "Unauthorized.")
+            );
+            return;
           }
           if (error.response.data && error.response.data?.message) {
             reject(error.response.data.message);

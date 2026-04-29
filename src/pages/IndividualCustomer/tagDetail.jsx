@@ -98,7 +98,7 @@ const TagDetailsCustomer = () => {
   });
 
   const [selectedFeeLabel, setSelectedFeeLabel] = useState(
-    stateData.service_id || t("common.monthly")
+    stateData.service_id ||"monthly"
   );
 
   // Define recurring fee options
@@ -107,22 +107,26 @@ const TagDetailsCustomer = () => {
       value: "monthly_fee",
       label: t("common.monthly"),
       amount: tagData.monthly_fee || 0,
+      englishLabel: "Monthly",
     },
     // { value: "weekly_fee", label: "Weekly", amount: tagData.weekly_fee || 0 },
     {
       value: "quarterly_fee",
       label: t("common.quartely"),
       amount: tagData.quarterly_fee || 0,
+      englishLabel: "Quarterly",
     },
     {
       value: "semiannually_fee",
       label: t("common.semi"),
       amount: tagData.semiannually_fee || 0,
+      englishLabel: "Semi-Annually",
     },
     {
       value: "annually_fee",
       label: t("common.annual"),
       amount: tagData.annually_fee || 0,
+      englishLabel: "Annually",
     },
   ];
 
@@ -133,7 +137,7 @@ const TagDetailsCustomer = () => {
     );
     if (selectedOption) {
       setSelectedFeeAmount(selectedOption.amount);
-      setSelectedFeeLabel(selectedOption.label);
+        setSelectedFeeLabel(selectedOption.englishLabel);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedRecurringFee]);
@@ -194,7 +198,7 @@ const TagDetailsCustomer = () => {
         tag_name: stateData?.tag_name || "",
         tag_price: (stateData?.tag_price || "0").toString(),
         service_fee: (selectedFeeAmount || "0").toString(),
-        service_id: selectedFeeLabel || t("common.monthly"),
+        service_id: selectedFeeLabel || "Monthly",
         tag_type: stateData?.tag_type || "",
         tag_digits: stateData?.tag_digits || 0,
         created_date: stateData?.created_date || "",
@@ -467,7 +471,7 @@ const TagDetailsCustomer = () => {
                           color="white"
                           className="font-normal opacity-80 text-primary"
                         >
-                          {t("dashboard.totalInfo")} {nextChargeDate}.
+                          {t("dashboard.totalInfo")} {moment(nextChargeDate).format("YYYY-MM-DD")}.
                         </Typography>
                       </div>
                     }
@@ -511,7 +515,7 @@ const TagDetailsCustomer = () => {
                     : { border: "1px solid #8A8AA033" }
                 }
               />
-              <Typography className="text-sm cursor-pointer leading-[40px] ">
+              <Typography className="text-sm cursor-pointer ">
                 <span
                   className="text-[#008fd5] hover:underline"
                   onClick={() => {

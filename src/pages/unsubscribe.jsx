@@ -46,7 +46,7 @@ function Unsubscribe() {
     APICall(
       "get",
       user?.parent_id != null ? params : null,
-      `${EndPoints.customer.getReserve}/${accountId}`
+      `${EndPoints.customer.newSecurityEndPoints.corporate.getReserveTags}`
     )
       .then((res) => {
         if (res?.success) {

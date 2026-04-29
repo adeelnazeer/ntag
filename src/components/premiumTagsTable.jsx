@@ -120,7 +120,7 @@ const PremiumTagsTable = ({ handleTagDetails, isExchangeFlow = false,
           return;
         }
 
-        const res = await APICall("get", null, `${EndPoints.customer.getReserve}/${accountId}`);
+        const res = await APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.corporate.getReserveTags}`);
 
         if (res?.success) {
           setReserveData(Array.isArray(res?.data) ? res?.data[0] : res?.data);

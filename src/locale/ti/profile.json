@@ -34,6 +34,11 @@
     "uploadDesc": " በይዝኦም ሓድሽ {{value}} ብምስቃል ብዝፀደቐ ሰነድ ንምትካእ ሰቐል ሰነድ",
     "invalidFileType":"ዘይኮኑ ዓይነት ፋይል,JPG, PNG, PDF ፋይላት ጥራይ እዮም ዝፍቀዱ።",
     "fileSizeError": "ዓቐን ፋይል ካብ 3MB ይሓልፍ።",
+    "uploadDocuments": "ሰነዳት ምፅዓን",
+    "dragDropType": "ምስሓብ ወይ ንምስቃል {{type}} ጠውቕ",
+    "previewAlt": "ቅድመ ምርኢት",
+    "docDescription": "ፍቓድ ምዝገባ ንግዲ፣ ናይ መመልከቲ ደብዳቤ፣ ንግዲ ፍቓድ",
+    "docHint": "ጥራይ ፋይላት JPG, JPEG, PNG ወይ PDF ክሰቐሉ ይኽእሉ፣ ንዅሉ ፋይል 3MB ክሕልዎ ኣይግብኣን።",
     "tagDetail": {
       "notice": "ኣፍልጦ: ",
       "unsubMessage": "ኣገልግሎት NameTAG ናቶም ምዝገባ ተኣልዩ እዩ",

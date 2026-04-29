@@ -8,23 +8,28 @@ import { Button } from "@material-tailwind/react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Input } from "@headlessui/react";
 import { useTranslation } from "react-i18next";
+import { useRecaptchaToken } from "../../../hooks/useRecaptchaToken";
 
 const PasswordReset = ({ setStep, data }) => {
     const { t } = useTranslation(["auth"]);
+    const { getRecaptchaPayload } = useRecaptchaToken();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState({
         password1: false,
         password2: false,
     })
     const [loading, setLoading] = useState(false)
-    const onSubmit = (values) => {
-        setLoading(true)
+    const onSubmit = async (values) => {
+        const tokens = await getRecaptchaPayload("forget_password_new_password");
+        if (!tokens) return;
+
+        setLoading(true);
         const payload = {
             password: values?.newPassword,
             password_confirmation: values?.confirmPassword,
-            customer_account_id: data?.customer_account_id?.toString() || data?.id?.toString()
-        }
-        // Add logic for saving the new password here
+            customer_account_id: data?.customer_account_id?.toString() || data?.id?.toString(),
+            ...tokens,
+        };
         APICall("post", payload, EndPoints.customer.newPassword)
             .then((res) => {
                 if (res?.success) {
@@ -35,7 +40,10 @@ const PasswordReset = ({ setStep, data }) => {
                 }
             })
             .catch((err) => {
-                toast.error(err?.message)
+                toast.error(err?.message);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
 

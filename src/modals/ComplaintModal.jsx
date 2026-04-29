@@ -9,11 +9,13 @@ import APICall from "../network/APICall";
 import EndPoints from "../network/EndPoints";
 import TickIcon from "../assets/images/tick.png";
 import { useTranslation } from "react-i18next";
+import { useRecaptchaToken } from "../hooks/useRecaptchaToken";
 
 const ComplaintModal = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const { t } = useTranslation(["common", "complaint"]);
-  
+  const { getRecaptchaPayload, isRecaptchaReady } = useRecaptchaToken();
+
   const [phoneError, setPhoneError] = useState("");
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [verifyingPhone, setVerifyingPhone] = useState(false);
@@ -78,12 +80,36 @@ const ComplaintModal = ({ isOpen, onClose }) => {
     setVerifyingPhone(true);
 
     try {
+      if (!isRecaptchaReady) {
+        toast.error(
+          t("complaint.modal.securityLoading", {
+            defaultValue: "Security check is loading. Please wait a moment and try again.",
+          })
+        );
+        setVerifyingPhone(false);
+        setOtpRequested(false);
+        return;
+      }
+
+      const tokens = await getRecaptchaPayload("complaint_generate_otp", { silent: true });
+      if (!tokens) {
+        toast.error(
+          t("complaint.modal.securityFailed", {
+            defaultValue: "Security verification failed. Please try again.",
+          })
+        );
+        setVerifyingPhone(false);
+        setOtpRequested(false);
+        return;
+      }
+
       const cleanedPhone = value.replace(/^\+/, "");
       const data = {
         msisdn: cleanedPhone,
         otp_type: "IND",
-        channel: "SMS",
+        channel: "WEB",
         transaction_type: "OTP_GENRATION",
+        ...tokens,
       };
 
       const response = await APICall("post", data, EndPoints.customer.generateOtp);
@@ -120,10 +146,12 @@ const ComplaintModal = ({ isOpen, onClose }) => {
     setVerifyingOtp(true);
 
     try {
+      const tokens = await getRecaptchaPayload("complaint_verify_otp", { silent: true });
       const data = {
         otp_id: otpId,
         otp_code: verificationCode,
         transaction_type: "OTP_GENRATION",
+        ...(tokens || {}),
       };
 
       const response = await APICall("post", data, EndPoints.customer.guestVerifyOtp);
@@ -213,7 +241,7 @@ const ComplaintModal = ({ isOpen, onClose }) => {
               <PhoneInput
                 defaultCountry="ET"
                 international
-                flagUrl={`https://flagcdn.com/w40/et.png`}
+                flagUrl={"/et.png"}
                 countryCallingCodeEditable={false}
                 className="w-full rounded-xl border border-gray-200 px-4 py-2.5 bg-white outline-none"
                 value={value}
@@ -245,17 +273,19 @@ const ComplaintModal = ({ isOpen, onClose }) => {
                     type="button"
                     className={`absolute right-3 bg-gray-100 p-2 shadow-sm border border-gray-200 
                     ${
-                      !isValidPhone
+                      !isValidPhone || !isRecaptchaReady
                         ? "opacity-50 cursor-not-allowed"
                         : "cursor-pointer hover:bg-gray-200"
                     } 
                     text-xs font-medium rounded-lg`}
                     onClick={handleGetOtp}
-                    disabled={!isValidPhone}
+                    disabled={!isValidPhone || !isRecaptchaReady}
                   >
-                    {otpRequested 
-                      ? t("complaint.modal.resendOtp", { defaultValue: "Resend OTP" }) 
-                      : t("complaint.modal.getOtp", { defaultValue: "Get OTP" })}
+                    {!isRecaptchaReady
+                      ? t("complaint.modal.pleaseWait", { defaultValue: "Please wait..." })
+                      : otpRequested
+                        ? t("complaint.modal.resendOtp", { defaultValue: "Resend OTP" })
+                        : t("complaint.modal.getOtp", { defaultValue: "Get OTP" })}
                   </button>
                 )
               )}

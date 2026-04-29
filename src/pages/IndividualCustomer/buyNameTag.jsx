@@ -241,7 +241,7 @@ const TagNamesIndividual = () => {
         const recurringFeeAmount = formatCurrency(
             single?.service_id === "Monthly" ? tagInfo?.monthly_fee || single?.service_fee :
                 single?.service_id === "Quarterly" ? tagInfo?.quarterly_fee || single?.service_fee :
-                    single?.service_id === "Semi-Annually" ? tagInfo?.semiannually_fee || single?.service_fee :
+                single?.service_id === "Semi-Annual"? tagInfo?.semiannually_fee || single?.service_fee :
                         single?.service_id === "Annually" ? tagInfo?.annually_fee || single?.service_fee :
                             tagInfo?.service_fee || single?.service_fee
         );

@@ -9,7 +9,12 @@
       "recurringFee_due_date": "Taariikhda kama dambaysta ah ee khidmadda soo noqnoqda",
       "outstandingRecurringFee": "Kharashka Soo Noqnoqda ee aadka u Wacan",
       "status": "Xaalada",
-      "action": "talabda"
+      "action": "talabda",
+      "nameTagNumber": "NameTAG Number",
+      "mobileNumber": "Mobile Number",
+      "mobileNumberType": "Mobile Number Type",
+      "recurringFee": "Recurring Fee",
+      "recurringFeeDueDate": "Recurring Fee Due Date"
     },
     "empty": "Lama helin wax adeegyo NameTAG ah oo shaqaynaya."
   },

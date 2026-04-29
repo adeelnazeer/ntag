@@ -42,7 +42,6 @@
       "password": "Icciitii",
       "confirmPassword": "Icciitii Mirkaneessi",
       "stepIndicator": "Dalagaa {{current}} keessaa {{total}} keessaa",
-
       "contactNo": "Lakkoofsa Quunnamtii",
       "email": "Imeelii",
       "industry": "Indaastirii",
@@ -86,20 +85,24 @@
         "verificationCode": "Koodiin Mirkaneeffannoo Barbaachisaa",
         "termAndCondition": "Itti fufuuf Deemmii fi Haalawwan irratti waliigaluu qabda",
         "minLength": "Xiqqaa yoo ta'e qaamolee 3 ta'uu qaba",
-        "tinMinLength": "Xiqqaa yoo ta'e lakkoofsota 9 ta'uu qaba",
+        "tinMinLength": "Xiqqaa yoo ta'e lakkoofsota 10 ta'uu qaba",
         "tinMaxLength": "Lakkoofsota 10 caaluu hin qabu",
         "tinPattern": "Lakkoofsota (9–10) Qofa ",
         "faydaExactDigits": "Lakkoofsi Faydaa sirriitti lakkoofsota 16 ta'uu qaba",
         "faydaDigits": "Lakkoofsi Faydaa lakkoofsota 12 ta'uu qaba",
         "companyNameRequired": "Maqaa Dhaabbataa lakkoofsaa qabaachuuf qaba",
         "companyNameNoDigits": "Maqaa Dhaabbataa lakkoofsaa qabaachuuf qaba",
-        "usernameMinLength": "Maqaan Fayyadamaa Qubee 2 ta'uu qaba",
+        "usernameMinLength": "Maqaan Fayyadamaa Qubee 3 ta'uu qaba",
         "passwordMinLength": "Icciitii Qubee 5 ta'uu qaba",
         "passwordMaxLength": "Icciitii Qubee 15 ta'uu qaba hin qabu",
         "passwordPattern": "Icciitii Qubee 1 ta'uu qaba - 1 ta'uu qaba - 1 ta'uu qaba",
         "passwordsDoNotMatch": "Icciitiiin wal hin qabaanu",
         "mobileNumberRequired": "Lakkoofsi Bilbila Harkaa qabaachuuf qaba",
-        "otpDoesNotMatch": "Koodii OTP keessan hin qabaanu"
+        "otpDoesNotMatch": "Koodii OTP keessan hin qabaanu",
+        "cityMinLength": "Magaalaa Qubee 3 ta'uu qaba",
+        "companyNameMinLength": "Maqaa Dhaabbataa Qubee 3 ta'uu qaba",
+        "firstNameMinLength": "Maqaan Duraa Qubee 3 ta'uu qaba",
+        "fatherNameMinLength": "Maqaan Abbaa Qubee 3 ta'uu qaba"
       }
     },
     "monthly": "Ji'aan",
@@ -132,7 +135,11 @@
       "success": "Milkaa'eera",
       "failed": "Hindirgaggeeffamne",
       "expiredPaymentTimeline": "Yeroon Kaffaltii Darbeera"
-    }
+    },
+    "verifyHuman": "Verify you're human",
+    "recaptchaV2Message": "Please complete the security check below to continue.",
+    "cancel": "Cancel",
+    "verify": "Verify"
   },
   "dashboard": {
     "welcomeNameTag": "Gara Tajaajila NameTAG Nagaatti Dhuftanii!",
@@ -244,12 +251,14 @@
     "sold": "Gurgurameera",
     "cancel": "Haqa",
     "confirmBuy": "Bitaa Mirkaneessi",
-    "ok": "Eeyyee"
+    "ok": "Eeyyee",
+    "confirm": "Confirm"
   },
   "accountConfirmation": {
     "message": "Raawwii galmee xumuruuf odeeffannoo akaawuntii galchuuf dhugumatti barbaadduu?",
     "cancel": "Haqa",
-    "submit": "Dhiyeessi"
+    "submit": "Dhiyeessi",
+    "submitting": "Submitting..."
   },
   "footer": {
     "terms": "Deemmii fi Haalawwan",

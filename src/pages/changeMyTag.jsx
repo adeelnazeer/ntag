@@ -44,7 +44,7 @@ function ChangeMyTag() {
         msisdn: user?.phone_number,
       };    
 
-        APICall("get", user?.parent_id != null ? params : null, `${EndPoints.customer.getReserve}/${accountId}`)
+        APICall("get", user?.parent_id != null ? params : null, `${EndPoints.customer.newSecurityEndPoints.corporate.getReserveTags}`)
             .then((res) => {
                 if (res?.success) {
                     const activeTags = res?.data.filter(tag =>

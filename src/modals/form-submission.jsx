@@ -11,8 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../redux/hooks";
 import { setUserData } from "../redux/userSlice";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-
+import { useTranslation } from "react-i18next";
 const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
+  const { t } = useTranslation(["common"]);
   const [showDocumentChoice, setShowDocumentChoice] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
@@ -229,7 +230,7 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
               <div className="flex justify-center items-center mt-2">
                 <div className="shadow rounded-xl p-4 sm:p-6 md:p-8 lg:p-12 w-full">
                   <Typography className="text-center">
-                  Are you sure you want to submit the company information to complete the registration process?
+                  {t("accountConfirmation.message")}
                   </Typography>
                 </div>
               </div>
@@ -239,7 +240,7 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
                     className="bg-white text-[#757575] border border-secondary py-2 px-6 sm:px-6"
                     onClick={() => setIsOpen(false)}
                   >
-                    Cancel
+                    {t("accountConfirmation.cancel")}
                   </Button>
                   <Button
                     className="bg-secondary py-2 px-6 text-white sm:px-6 flex items-center justify-center gap-2"
@@ -249,10 +250,10 @@ const FormSubmission = ({ isOpen, setIsOpen, data, setActiveStep }) => {
                     {loading ? (
                       <>
                         <Spinner size="sm" className="h-4 w-4" />
-                        <span>Submitting...</span>
+                        <span>{t("accountConfirmation.submitting")}</span>
                       </>
                     ) : (
-                      "Submit"
+                      t("accountConfirmation.submit")
                     )}
                   </Button>
                 </div>

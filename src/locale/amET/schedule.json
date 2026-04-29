@@ -18,7 +18,8 @@
     "enable": "ማንቃት",
     "desc2": "ገቢ ጥሪ መርሐግብር ከ",
     "to": "እስከ",
-    "from": "ከ"
+    "from": "ከ",
+    "disabled": "Confirm to stop Incoming Call Scheduling"
   },
   "callPin": {
     "title": "የገቢ ጥሪ ፒን (PIN) እና ነጭ ዝርዝር ቁጥሮችን ያስተዳድሩ",
@@ -192,6 +193,21 @@
     },
     "common": {
       "na": "የለም"
+    }
+  },
+  "deleteAccountDetail": {
+    "title": "አካውንት ሰርዝ",
+    "intro": "ከድርጅትዎ አካውንት ጋር የተገናኙ NameTAGs ከታች ተዘርዝረዋል። ከእያንዳንዱ ንቁ የተገዙ ወይም የተመዘገቡ NameTAG ከመመዝገብዎ በኋላ ብቻ የአካውንት ሰርዝ ጥያቄ ማስገባት ይችላሉ።",
+    "activeBlocking": "አሁንም ንቁ የተመዘገቡ NameTAGs አሉዎት። እባክዎ ከእያንዳንዳቸው መጀመሪያ ምዝገባ ይሰርዙ (Manage NameTAG → Unsubscribe)።",
+    "goToUnsubscribe": "ወደ ምዝገባ ሰርዝ ገጽ ይሂዱ",
+    "manageTagsHint": "ከጎን አሞሌ Manage NameTAG ከዚያ ለእያንዳንዱ ንቁ ታግ Unsubscribe ይጠቀሙ።",
+    "emptyTags": "ለዚህ አካውንት ምንም NameTAG አልተገኘም።",
+    "deleteButton": "አካውንቴን ሰርዝ",
+    "toastMessages": {
+      "failedToLoad": "የNameTAG መረጃ መጫን አልተሳካም",
+      "successfullyClosedAccount": "የአካውንት መዝጋት ጥያቄ በተሳካ ሁኔታ ቀርቧል",
+      "failedToCloseAccount": "የአካውንት መዝጋት ጥያቄ ማስገባት አልተሳካም",
+      "anErrorOccurred": "ስህተት ተፈጥሯል"
     }
   },
   "manageIncomingCalls": {

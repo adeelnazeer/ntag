@@ -14,6 +14,7 @@ import {
 import { LuCalendarClock } from "react-icons/lu";
 import useSchedularHook from "./hooks/schedularHook";
 import { forwardRef, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import DatePicker from "react-datepicker";
 import { PiXCircleBold } from "react-icons/pi";
 import moment from "moment";
@@ -43,29 +44,46 @@ const Schedulecall = () => {
   const [serverBaseline, setServerBaseline] = useState({}); // { [id]: { enabled, start, end } }
 
   // ---------- Helpers ----------
-  const parseServerDate = (d) => {
-    if (
-      !d ||
-      (typeof d === "string" &&
-        (d.includes("0000-00-00") || d.startsWith("0000")))
-    )
-      return null;
-    const dt = new Date(d);
+  // Parse date in an iOS/Chrome-safe way. Manually parse "YYYY-MM-DD HH:mm:ss" to avoid WebKit quirks.
+  const parseDateIOSSafe = (d) => {
+    if (!d) return null;
+    if (d instanceof Date) return isNaN(d.getTime()) ? null : d;
+    if (typeof d !== "string") return null;
+    const trimmed = d.trim();
+    if (trimmed.includes("0000-00-00") || trimmed.startsWith("0000")) return null;
+    // Manual parse for "2026-03-09 03:54:00" or "2026-03-09T03:54:00" (optional .millis)
+    const match = trimmed.match(
+      /^(\d{4})-(\d{2})-(\d{2})[T\s](\d{2}):(\d{2}):(\d{2})(?:\.\d+)?\s*$/
+    );
+    if (match) {
+      const y = parseInt(match[1], 10);
+      const mo = parseInt(match[2], 10) - 1;
+      const day = parseInt(match[3], 10);
+      const h = parseInt(match[4], 10);
+      const min = parseInt(match[5], 10);
+      const sec = parseInt(match[6], 10) || 0;
+      const dt = new Date(y, mo, day, h, min, sec, 0);
+      return isNaN(dt.getTime()) ? null : dt;
+    }
+    // Fallback: try native after replacing space with T
+    const normalized = trimmed.replace(/\s+/, "T");
+    const dt = new Date(normalized);
     return isNaN(dt.getTime()) ? null : dt;
   };
+
+  const parseServerDate = (d) => parseDateIOSSafe(d);
 
   // Treat zero/invalid as null
   const isZeroOrInvalid = (d) =>
     !d ||
     (typeof d === "string" &&
       (d.includes("0000-00-00") || d.startsWith("0000"))) ||
-    isNaN(new Date(d).getTime());
+    !parseDateIOSSafe(d);
 
   // Convert any input (Date/string/null) to a comparable "minute key"
   const toMinuteKey = (d) => {
-    if (!d) return null;
-    const dt = d instanceof Date ? d : new Date(d);
-    if (isNaN(dt.getTime())) return null;
+    const dt = parseDateIOSSafe(d);
+    if (!dt) return null;
     return Math.floor(dt.getTime() / 60000);
   };
 
@@ -110,8 +128,10 @@ const Schedulecall = () => {
 
   const validateDateRange = (startDate, endDate, index) => {
     const errors = {};
-    if (startDate && endDate) {
-      if (new Date(startDate).getTime() > new Date(endDate).getTime()) {
+    const start = parseDateIOSSafe(startDate);
+    const end = parseDateIOSSafe(endDate);
+    if (start && end) {
+      if (start.getTime() > end.getTime()) {
         errors[`end_${index}`] =
           "End date/time cannot be earlier than start date/time";
       } else {
@@ -145,9 +165,31 @@ const Schedulecall = () => {
     });
   }, [buyData]);
 
-  const ExampleCustomInput = forwardRef(({ value, onClick, error }, ref) => {
-    if (!value) return null;
-    const date = new Date(value);
+  const ExampleCustomInput = forwardRef(({ value, onClick, error, selectedDate }, ref) => {
+    // Use selectedDate (Date) when provided; otherwise try parsing value (react-datepicker passes formatted string)
+    const date = selectedDate != null && selectedDate instanceof Date && !isNaN(selectedDate.getTime())
+      ? selectedDate
+      : (value ? parseDateIOSSafe(value) : null);
+    if (!date) {
+      return (
+        <div className="flex flex-col justify-center align-center min-w-[281px]">
+          <div
+            className="flex cursor-pointer justify-center items-baseline"
+            onClick={onClick}
+            ref={ref}
+          >
+            <Typography className="md:text-[30px] text-[25px] example-custom-input font-medium text-[#646E82] p-2">
+              Select date & time
+            </Typography>
+          </div>
+          {error && (
+            <Typography className="text-xs text-red-500 mt-1 px-2 text-center self-center">
+              {error}
+            </Typography>
+          )}
+        </div>
+      );
+    }
     const timeStr = date
       .toLocaleString("en-US", {
         hour: "2-digit",
@@ -181,9 +223,47 @@ const Schedulecall = () => {
     );
   });
 
+  // Mobile: display time only (for time-first picker)
+  const MobileTimeInput = forwardRef(({ value, onClick, selectedDate }, ref) => {
+    const date = selectedDate != null && selectedDate instanceof Date && !isNaN(selectedDate.getTime())
+      ? selectedDate
+      : (value ? parseDateIOSSafe(value) : null);
+    const timeStr = date
+      ? date.toLocaleString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).toUpperCase()
+      : "Select time";
+    return (
+      <div
+        className="flex cursor-pointer justify-between items-center w-full py-3 px-4 rounded-lg bg-white border border-[#8A8AA033] text-[#646E82] text-[14px]"
+        onClick={onClick}
+        ref={ref}
+      >
+        <span>{timeStr}</span>
+      </div>
+    );
+  });
+
+  // Mobile: display date only (for date picker)
+  const MobileDateInput = forwardRef(({ value, onClick, selectedDate }, ref) => {
+    const date = selectedDate != null && selectedDate instanceof Date && !isNaN(selectedDate.getTime())
+      ? selectedDate
+      : (value ? parseDateIOSSafe(value) : null);
+    const dateStr = date
+      ? date.toLocaleString("en-US", { day: "numeric", month: "short", year: "numeric" })
+      : "Select date";
+    return (
+      <div
+        className="flex cursor-pointer justify-between items-center w-full py-3 px-4 rounded-lg bg-white border border-[#8A8AA033] text-[#646E82] text-[14px]"
+        onClick={onClick}
+        ref={ref}
+      >
+        <span>{dateStr}</span>
+      </div>
+    );
+  });
+
   const formatDateTime = (date) => {
-    if (!date) return { time: "", date: "" };
-    const dateObj = new Date(date);
+    const dateObj = parseDateIOSSafe(date);
+    if (!dateObj) return { time: "", date: "" };
     return {
       time: dateObj
         .toLocaleString("en-US", {
@@ -223,12 +303,35 @@ const Schedulecall = () => {
     }
   };
 
+  // Mobile: merge only time (hours/minutes) into current datetime
+  const handleTimeOnlyChange = (type, index) => (timeDate) => {
+    const current = getDateTime(
+      type === "start" ? buyData[index]?.incall_start_dt : buyData[index]?.incall_end_dt,
+      type === "start"
+    );
+    const next = new Date(current);
+    next.setHours(timeDate.getHours(), timeDate.getMinutes(), 0, 0);
+    handleDateChange(next, type, index);
+  };
+
+  // Mobile: merge only date (year/month/day) into current datetime
+  const handleDateOnlyChange = (type, index) => (dateOnly) => {
+    const current = getDateTime(
+      type === "start" ? buyData[index]?.incall_start_dt : buyData[index]?.incall_end_dt,
+      type === "start"
+    );
+    const next = new Date(dateOnly);
+    next.setHours(current.getHours(), current.getMinutes(), 0, 0);
+    handleDateChange(next, type, index);
+  };
+
   const getDateTime = (dateStr, isStartDate = true) => {
     const invalid =
       !dateStr ||
       (typeof dateStr === "string" &&
         (dateStr.includes("0000-00-00") || dateStr.startsWith("0000")));
-    if (invalid) {
+    const parsed = !invalid ? parseDateIOSSafe(dateStr) : null;
+    if (!parsed) {
       const now = new Date();
       now.setMinutes(Math.ceil(now.getMinutes() / 15) * 15);
       now.setSeconds(0);
@@ -236,13 +339,13 @@ const Schedulecall = () => {
       if (!isStartDate) now.setHours(now.getHours() + 2);
       return now;
     }
-    const date = new Date(dateStr);
-    return !isNaN(date) ? date : null;
+    return parsed;
   };
 
   const filterPassedTime = (time, startDate = null) => {
     const currentDate = new Date();
-    const selectedDate = new Date(time);
+    const selectedDate = parseDateIOSSafe(time);
+    if (!selectedDate) return false;
     if (!startDate) {
       if (
         selectedDate.getDate() === currentDate.getDate() &&
@@ -253,7 +356,8 @@ const Schedulecall = () => {
       }
       return true;
     }
-    const start = new Date(startDate);
+    const start = parseDateIOSSafe(startDate);
+    if (!start) return true;
     if (
       selectedDate.getDate() === start.getDate() &&
       selectedDate.getMonth() === start.getMonth() &&
@@ -298,7 +402,7 @@ const Schedulecall = () => {
                   );
                 })()
               : selectedSchedule?.incoming_call_status
-              ? t("manage.confirmIncommingCall")
+              ? t("manage.disabled")
               : t("manage.confirmIncommingCall")}
           </Typography>
         </DialogBody>
@@ -337,10 +441,8 @@ const Schedulecall = () => {
                 ...prev,
                 [selectedSchedule.id]: {
                   enabled: intendedEnabled,
-                  start: row?.incall_start_dt
-                    ? new Date(row.incall_start_dt)
-                    : null,
-                  end: row?.incall_end_dt ? new Date(row.incall_end_dt) : null,
+                  start: parseDateIOSSafe(row?.incall_start_dt),
+                  end: parseDateIOSSafe(row?.incall_end_dt),
                 },
               }));
 
@@ -398,36 +500,36 @@ const Schedulecall = () => {
                         {t2("nameTag")}: {index + 1}
                       </Typography>
 
-                      <div className="flex gap-8 pb-4 w-full">
-                        <div className="flex gap-1 flex-col p-3 rounded-lg shadow border border-[#8080801f]">
-                          <Typography className="font-medium md:text-[14px] text-[12px]">
+                      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:flex md:flex-wrap md:gap-8 pb-4 w-full">
+                        <div className="flex gap-0.5 flex-col p-3 rounded-lg shadow border border-[#8080801f] min-w-0">
+                          <Typography className="font-medium text-[12px] sm:text-[13px] md:text-[14px]">
                             {t2("nameTag")}:
                           </Typography>
-                          <Typography className="md:text-[14px] text-[12px]">
+                          <Typography className="text-[12px] sm:text-[13px] md:text-[14px] truncate" title={single?.name_tag}>
                             #{single?.name_tag}
                           </Typography>
                         </div>
-                        <div className="flex gap-1 flex-col p-3 rounded-lg shadow border border-[#8080801f]">
-                          <Typography className="font-medium md:text-[14px] text-[12px]">
+                        <div className="flex gap-0.5 flex-col p-3 rounded-lg shadow border border-[#8080801f] min-w-0">
+                          <Typography className="font-medium text-[12px] sm:text-[13px] md:text-[14px]">
                             {t2("nameTag")} {t2("dashboard.number")}:
                           </Typography>
-                          <Typography className="md:text-[14px] text-[12px] ">
+                          <Typography className="text-[12px] sm:text-[13px] md:text-[14px] truncate" title={single?.tag_no}>
                             #{single?.tag_no}
                           </Typography>
                         </div>
-                        <div className="flex gap-1 flex-col p-3 border border-[#8080801f] rounded-lg shadow">
-                          <Typography className="md:text-[14px] text-[12px] font-medium">
+                        <div className="flex gap-0.5 flex-col p-3 border border-[#8080801f] rounded-lg shadow min-w-0">
+                          <Typography className="font-medium text-[12px] sm:text-[13px] md:text-[14px]">
                             {t2("dashboard.mobileNo")}:
                           </Typography>
-                          <Typography className="md:text-[14px] text-[12px] ">
+                          <Typography className="text-[12px] sm:text-[13px] md:text-[14px] break-all" title={formatPhoneNumberCustom(single?.msisdn)}>
                             {formatPhoneNumberCustom(single?.msisdn)}
                           </Typography>
                         </div>
-                        <div className="flex gap-1 flex-col p-3 border border-[#8080801f] rounded-lg shadow">
-                          <Typography className="md:text-[14px] text-[12px] font-medium">
+                        <div className="flex gap-0.5 flex-col p-3 border border-[#8080801f] rounded-lg shadow min-w-0">
+                          <Typography className="font-medium text-[12px] sm:text-[13px] md:text-[14px]">
                             {t2("dashboard.serviceStatus")}:
                           </Typography>
-                          <Typography className="md:text-[14px] text-[12px] ">
+                          <Typography className="text-[12px] sm:text-[13px] md:text-[14px]">
                             {getTagStatusDashboard(single?.status)}
                           </Typography>
                         </div>
@@ -535,8 +637,9 @@ const Schedulecall = () => {
 
                       {/* Show pickers when UI toggle is ON */}
                       {uiEnabled ? (
-                        <div className="flex md:flex-row flex-col mt-5 gap-2">
-                          <div>
+                        <div className="flex md:flex-row flex-col mt-5 gap-4">
+                          {/* Desktop: single date+time picker */}
+                          <div className="hidden md:block flex-1">
                             <Typography className="md:text-[14px] text-[12px] text-[#898F9A] font-normal">
                               {t("manage.from")}
                             </Typography>
@@ -556,8 +659,18 @@ const Schedulecall = () => {
                                   dateFormat="h:mm aa d MMMM yyyy"
                                   minDate={new Date()}
                                   filterTime={filterPassedTime}
+                                  popperContainer={({ children }) =>
+                                    createPortal(children, document.body)
+                                  }
+                                  popperClassName="schedule-datepicker-popper"
+                                  popperPlacement="auto-start"
+                                  popperProps={{ strategy: "fixed" }}
                                   customInput={
                                     <ExampleCustomInput
+                                      selectedDate={getDateTime(
+                                        buyData[index]?.incall_start_dt,
+                                        true
+                                      )}
                                       error={dateErrors[`start_${index}`]}
                                     />
                                   }
@@ -565,7 +678,7 @@ const Schedulecall = () => {
                               </div>
                             </div>
                           </div>
-                          <div>
+                          <div className="hidden md:block flex-1">
                             <Typography className="md:text-[14px] text-[12px] uppercase text-[#898F9A] font-normal">
                               {t("manage.to")}
                             </Typography>
@@ -583,9 +696,9 @@ const Schedulecall = () => {
                                   dateFormat="h:mm aa d MMMM yyyy"
                                   minDate={
                                     buyData[index]?.incall_start_dt
-                                      ? new Date(
+                                      ? parseDateIOSSafe(
                                           buyData[index]?.incall_start_dt
-                                        )
+                                        ) || new Date()
                                       : new Date()
                                   }
                                   timeIntervals={1}
@@ -596,13 +709,151 @@ const Schedulecall = () => {
                                       buyData[index]?.incall_start_dt
                                     )
                                   }
+                                  popperContainer={({ children }) =>
+                                    createPortal(children, document.body)
+                                  }
+                                  popperClassName="schedule-datepicker-popper"
+                                  popperPlacement="auto-start"
+                                  popperProps={{ strategy: "fixed" }}
                                   customInput={
                                     <ExampleCustomInput
+                                      selectedDate={getDateTime(
+                                        buyData[index]?.incall_end_dt,
+                                        false
+                                      )}
                                       error={dateErrors[`end_${index}`]}
                                     />
                                   }
                                 />
                               </div>
+                            </div>
+                          </div>
+
+                          {/* Mobile: two rows — row1: start date + start time, row2: end date + end time */}
+                          <div className="md:hidden space-y-4 w-full">
+                            {/* Row 1: Start date and start time */}
+                            <div>
+                              <Typography className="text-[14px] text-[#898F9A] font-normal mb-2">
+                                {t("manage.from")}
+                              </Typography>
+                              <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                  <Typography className="text-xs text-[#898F9A] mb-1">Date</Typography>
+                                  <DatePicker
+                                    selected={getDateTime(buyData[index]?.incall_start_dt, true)}
+                                    onChange={handleDateOnlyChange("start", index)}
+                                    showTimeSelect={false}
+                                    dateFormat="d MMM yyyy"
+                                    minDate={new Date()}
+                                    popperContainer={({ children }) =>
+                                      createPortal(children, document.body)
+                                    }
+                                    popperClassName="schedule-datepicker-popper"
+                                    popperPlacement="auto-start"
+                                    popperProps={{ strategy: "fixed" }}
+                                    customInput={
+                                      <MobileDateInput
+                                        selectedDate={getDateTime(buyData[index]?.incall_start_dt, true)}
+                                      />
+                                    }
+                                  />
+                                </div>
+                                <div>
+                                  <Typography className="text-xs text-[#898F9A] mb-1">Time</Typography>
+                                  <DatePicker
+                                    selected={getDateTime(buyData[index]?.incall_start_dt, true)}
+                                    onChange={handleTimeOnlyChange("start", index)}
+                                    showTimeSelect
+                                    showTimeSelectOnly
+                                    timeIntervals={1}
+                                    timeCaption="Time"
+                                    dateFormat="h:mm aa"
+                                    minDate={new Date()}
+                                    filterTime={filterPassedTime}
+                                    popperContainer={({ children }) =>
+                                      createPortal(children, document.body)
+                                    }
+                                    popperClassName="schedule-datepicker-popper"
+                                    popperPlacement="auto-start"
+                                    popperProps={{ strategy: "fixed" }}
+                                    customInput={
+                                      <MobileTimeInput
+                                        selectedDate={getDateTime(buyData[index]?.incall_start_dt, true)}
+                                      />
+                                    }
+                                  />
+                                </div>
+                              </div>
+                              {dateErrors[`start_${index}`] && (
+                                <p className="text-xs text-red-500 mt-1">{dateErrors[`start_${index}`]}</p>
+                              )}
+                            </div>
+                            {/* Row 2: End date and end time */}
+                            <div>
+                              <Typography className="text-[14px] uppercase text-[#898F9A] font-normal mb-2">
+                                {t("manage.to")}
+                              </Typography>
+                              <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                  <Typography className="text-xs text-[#898F9A] mb-1">Date</Typography>
+                                  <DatePicker
+                                    selected={getDateTime(buyData[index]?.incall_end_dt, false)}
+                                    onChange={handleDateOnlyChange("end", index)}
+                                    showTimeSelect={false}
+                                    dateFormat="d MMM yyyy"
+                                    minDate={
+                                      buyData[index]?.incall_start_dt
+                                        ? parseDateIOSSafe(buyData[index]?.incall_start_dt) || new Date()
+                                        : new Date()
+                                    }
+                                    popperContainer={({ children }) =>
+                                      createPortal(children, document.body)
+                                    }
+                                    popperClassName="schedule-datepicker-popper"
+                                    popperPlacement="auto-start"
+                                    popperProps={{ strategy: "fixed" }}
+                                    customInput={
+                                      <MobileDateInput
+                                        selectedDate={getDateTime(buyData[index]?.incall_end_dt, false)}
+                                      />
+                                    }
+                                  />
+                                </div>
+                                <div>
+                                  <Typography className="text-xs text-[#898F9A] mb-1">Time</Typography>
+                                  <DatePicker
+                                    selected={getDateTime(buyData[index]?.incall_end_dt, false)}
+                                    onChange={handleTimeOnlyChange("end", index)}
+                                    showTimeSelect
+                                    showTimeSelectOnly
+                                    timeIntervals={1}
+                                    timeCaption="Time"
+                                    dateFormat="h:mm aa"
+                                    minDate={
+                                      buyData[index]?.incall_start_dt
+                                        ? parseDateIOSSafe(buyData[index]?.incall_start_dt) || new Date()
+                                        : new Date()
+                                    }
+                                    filterTime={(time) =>
+                                      filterPassedTime(time, buyData[index]?.incall_start_dt)
+                                    }
+                                    popperContainer={({ children }) =>
+                                      createPortal(children, document.body)
+                                    }
+                                    popperClassName="schedule-datepicker-popper"
+                                    popperPlacement="auto-start"
+                                    popperProps={{ strategy: "fixed" }}
+                                    customInput={
+                                      <MobileTimeInput
+                                        selectedDate={getDateTime(buyData[index]?.incall_end_dt, false)}
+                                      />
+                                    }
+                                  />
+                                </div>
+                              </div>
+                              {dateErrors[`end_${index}`] && (
+                                <p className="text-xs text-red-500 mt-1">{dateErrors[`end_${index}`]}</p>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -614,19 +865,25 @@ const Schedulecall = () => {
                           <Typography className="mt-5 md:text-[14px] text-[12px]">
                             {t("manage.info3")}{" "}
                             {serverEnabled ? "activated" : "inactive"} from{" "}
-                            <>
-                              <span className="text-[#646E82] font-medium">
-                                {moment(single.incall_start_dt).format(
-                                  "hh:mm A D MMM YYYY"
-                                )}
-                              </span>
-                              <span> to </span>
-                              <span className="text-[#646E82] font-medium">
-                                {moment(single.incall_end_dt).format(
-                                  "hh:mm A D MMM YYYY"
-                                )}
-                              </span>
-                            </>
+                            {(() => {
+                              const startDt = parseDateIOSSafe(single.incall_start_dt);
+                              const endDt = parseDateIOSSafe(single.incall_end_dt);
+                              return startDt && endDt ? (
+                                <>
+                                  <span className="text-[#646E82] font-medium">
+                                    {moment(startDt).format(
+                                      "hh:mm A D MMM YYYY"
+                                    )}
+                                  </span>
+                                  <span> to </span>
+                                  <span className="text-[#646E82] font-medium">
+                                    {moment(endDt).format(
+                                      "hh:mm A D MMM YYYY"
+                                    )}
+                                  </span>
+                                </>
+                              ) : null;
+                            })()}
                           </Typography>
                         )}
 

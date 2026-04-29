@@ -89,6 +89,7 @@
       "resubscribe": "Confirm Resubscribe",
       "cancel": "Confirm Cancellation",
       "close": "Confirm Close Account",
+      "delete": "Confirm Delete Account",
       "default": "Confirm Action"
     },
     "messages": {

@@ -11,11 +11,13 @@ import { formatPhoneNumberCustom } from "../../utilities/formatMobileNumber";
 import { useTranslation } from "react-i18next";
 import Header from "../../components/header";
 import { ConstentRoutes } from "../../utilities/routesConst";
+import { useRecaptchaToken } from "../../hooks/useRecaptchaToken";
 
 const GuestBlock = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation(["common", "complaint"]);
+  const { getRecaptchaPayload, isRecaptchaReady } = useRecaptchaToken();
 
   const [loading, setLoading] = useState(true);
   const [numbers, setNumbers] = useState([]);
@@ -178,6 +180,26 @@ const GuestBlock = () => {
       return;
     }
 
+    if (!isRecaptchaReady) {
+      toast.error(
+        t("complaint.modal.securityLoading", {
+          defaultValue:
+            "Security check is loading. Please wait a moment and try again.",
+        })
+      );
+      return;
+    }
+
+    const tokens = await getRecaptchaPayload("guest_block_number", { silent: true });
+    if (!tokens) {
+      toast.error(
+        t("complaint.modal.securityFailed", {
+          defaultValue: "Security verification failed. Please try again.",
+        })
+      );
+      return;
+    }
+
     setAddingNumber(true);
 
     try {
@@ -188,6 +210,7 @@ const GuestBlock = () => {
         reason: blockReason,
         guest_token: guestToken,
         request_source: "EXTERNAL",
+        ...tokens,
       };
 
       const response = await APICall(
@@ -262,12 +285,32 @@ const GuestBlock = () => {
       return;
     }
 
+    if (!isRecaptchaReady) {
+      toast.error(
+        t("complaint.modal.securityLoading", {
+          defaultValue:
+            "Security check is loading. Please wait a moment and try again.",
+        })
+      );
+      return;
+    }
+
+    const tokens = await getRecaptchaPayload("guest_delete_block_number", { silent: true });
+    if (!tokens) {
+      toast.error(
+        t("complaint.modal.securityFailed", {
+          defaultValue: "Security verification failed. Please try again.",
+        })
+      );
+      return;
+    }
+
     setDeletingNumber(true);
 
     try {
       const response = await APICall(
         "delete",
-        null,
+        tokens,
         EndPoints.customer.guestDeleteBlockNumber(selectedNumber.id)
       );
 
@@ -634,7 +677,7 @@ const GuestBlock = () => {
               <Button
                 className="flex-1 py-2.5 bg-secondary text-white shadow-none hover:shadow-none"
                 onClick={handleAddBlockNumber}
-                disabled={addingNumber || !isValidTag}
+                disabled={addingNumber || !isValidTag || !isRecaptchaReady}
               >
                 {addingNumber ? (
                   <div className="flex items-center justify-center gap-2">
@@ -711,7 +754,7 @@ const GuestBlock = () => {
               <Button
                 className="flex-1 py-2.5 bg-red-500 text-white shadow-none hover:shadow-none hover:bg-red-600"
                 onClick={confirmDelete}
-                disabled={deletingNumber}
+                disabled={deletingNumber || !isRecaptchaReady}
               >
                 {deletingNumber ? (
                   <div className="flex items-center justify-center gap-2">

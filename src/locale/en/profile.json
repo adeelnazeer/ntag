@@ -34,6 +34,11 @@
     "uploadDesc": "  Please upload new {{value}} to replace with existing approved document Upload Document",
     "invalidFileType": "Invalid file type. Only JPG, PNG, and PDF files are allowed.",
     "fileSizeError": "File size exceeds 3MB.",
+    "uploadDocuments": "Upload Documents",
+    "dragDropType": "Drag & drop or click to upload {{type}}",
+    "previewAlt": "Preview",
+    "docDescription": "Business Registration License, Application Letter, and Trade License",
+    "docHint": "Only JPG, JPEG, PNG, or PDF files can be uploaded, and each file must not exceed 3MB.",
     "tagDetail": {
       "notice": "Notice: ",
       "unsubMessage": " Your NameTAG service is unsubscribed",

@@ -168,6 +168,7 @@ const ForgetPass = () => {
                             international
                             countryCallingCodeEditable={false}
                             limitMaxLength={true}
+                            flagUrl={"/et.png"}
                             countries={["ET"]}
                             onChange={(value) => {
                               // Ensure the value starts with "+2519"
