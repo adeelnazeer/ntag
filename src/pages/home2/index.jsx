@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Carousel } from "@material-tailwind/react";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import { FaLongArrowAltRight, FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
+import { IoArrowUp, IoCallOutline, IoMailOutline } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 import ImgIdentity from "../../assets/images/home-identity.svg";
 import Logo from "../../assets/images/logo.png";
@@ -148,6 +149,30 @@ const faqItems = [
     q: "Can corporates manage multiple NameTAGs?",
     a: "Corporate accounts can manage multiple TAGs and assign them per team, branch, or campaign.",
   },
+  {
+    q: "Can I block someone from calling NameTag?",
+    a: "Yes. You can manage blocked callers from your portal, app, or supported SMS commands at any time.",
+  },
+  {
+    q: "How do I register my NameTAG?",
+    a: "You can register from the web portal, mobile app, or USSD *883# after availability and identity verification.",
+  },
+  {
+    q: "Can I use my NameTAG for business branding?",
+    a: "Yes. Business users can create branded tags and configure welcome prompt, routing, and identity settings.",
+  },
+  {
+    q: "What payment options are available?",
+    a: "You can pay using telebirr Super App, partner channels, or Ethio airtime based on your subscription plan.",
+  },
+  {
+    q: "Can I transfer my NameTAG to another number?",
+    a: "Transfer and migration are supported after verification and eligibility checks defined by the platform policy.",
+  },
+  {
+    q: "Is NameTAG available in multiple languages?",
+    a: "Yes. The service supports multiple languages including English, Amharic, Afaan Oromo, Somali, and Tigrinya.",
+  },
 ];
 
 function SectionTitle({ label, title, sub, light = false, white = false }) {
@@ -168,6 +193,7 @@ export default function Home2Page() {
   const [activeTab, setActiveTab] = useState("individual");
   const [openFaq, setOpenFaq] = useState(0);
   const [heroActiveSlide, setHeroActiveSlide] = useState(0);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const slidesData = t("carousel.slides", { returnObjects: true }) || [];
   const slideImages = [HeroImg1, Slider2, Slider3];
   const topImagePairs = [
@@ -212,6 +238,19 @@ export default function Home2Page() {
         ],
     [activeTab]
   );
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollBottom = window.scrollY + window.innerHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+      const scrollProgress = pageHeight > 0 ? scrollBottom / pageHeight : 0;
+      setShowBackToTop(scrollProgress >= 0.70);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="bg-white text-[#111111]">
@@ -270,8 +309,8 @@ export default function Home2Page() {
             className="rounded-2xl"
             nextArrow={false}
             prevArrow={false}
-            autoplay
-            autoplayDelay={5000}
+            // autoplay
+            // autoplayDelay={5000}
             loop
             navigation={({ setActiveIndex, activeIndex, length }) => {
               if (heroActiveSlide !== activeIndex) {
@@ -364,7 +403,7 @@ export default function Home2Page() {
                           <img
                             src={slide?.topLeftImage}
                             alt="A Party"
-                            className={`${slide.height} relative z-10 md:object-cover h-auto w-full drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]`}
+                            className={`${slide.height} relative z-10 md:object-contain h-[340px] w-full drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]`}
                           />
                         </div>
                         {slide?.showTwoImages && slide?.topRightImage && (
@@ -378,7 +417,7 @@ export default function Home2Page() {
                               <img
                                 src={slide?.topRightImage}
                                 alt="B Party"
-                                className="relative z-10 h-auto w-full drop-shadow-[0_22px_48px_rgba(0,0,0,0.35)]"
+                                className="relative z-10 h-[340px] w-full drop-shadow-[0_22px_48px_rgba(0,0,0,0.35)]"
                               />
                             </div>
                           </div>
@@ -650,11 +689,9 @@ export default function Home2Page() {
                 </div>
                 <div className="text-base font-bold tracking-wide text-[#126094]">{plan.name}</div>
                 <p className="mt-1 text-xs text-[#4A5B73]">{plan.desc}</p>
-                {plan.featured && (
-                  <div className="mx-auto mt-3 w-fit rounded-full bg-[#126094] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[1px] text-white group-hover:bg-white group-hover:text-[#126094]">
-                    Most Popular
-                  </div>
-                )}
+                   <div className="mx-auto mt-3 w-fit rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-[1px] text-white group-hover:bg-white group-hover:text-[#126094]">
+                   </div>
+                
               </div>
             ))}
           </div>
@@ -705,6 +742,9 @@ export default function Home2Page() {
             {openFaq === idx && <div className="bg-[#F7F7F7] px-5 py-4 text-sm text-[#666]">{item.a}</div>}
           </div>
         ))}
+        <button className="mt-2 text-sm font-bold text-[#76BC21] hover:text-[#5A9A18]">
+          +More Questions
+        </button>
       </section>
 
       <section className="bg-[#76BC21] py-10">
@@ -713,9 +753,25 @@ export default function Home2Page() {
             <h2 className="text-3xl font-black text-white">Be More Than a Number.</h2>
             <p className="text-white/85">Register your NameTAG at www.nametag.et or dial *883# today.</p>
           </div>
-          <div className="flex gap-3">
-            <button className="rounded-md bg-white px-5 py-3 text-sm font-bold text-[#5A9A18]">Get Your NameTAG</button>
-            <button className="rounded-md border-2 border-white/70 px-5 py-3 text-sm font-bold text-white">Contact Us</button>
+          <div className="w-full md:w-auto md:min-w-[520px]">
+            <div className="grid grid-cols-1 gap-3.5 text-white sm:grid-cols-2">
+              <a href="tel:9234" className="flex items-center gap-2.5 text-[17px] font-semibold leading-none hover:text-white/80">
+                <IoCallOutline className="text-[20px]" />
+                <span>9234</span>
+              </a>
+              <a href="mailto:info@tech-vas.com" className="flex items-center gap-2.5 text-[17px] font-semibold leading-none hover:text-white/80">
+                <IoMailOutline className="text-[20px]" />
+                <span>info@tech-vas.com</span>
+              </a>
+              <a href="https://wa.me/" target="_blank" rel="noreferrer" className="flex items-center gap-2.5 text-[17px] font-semibold leading-none hover:text-white/80">
+                <FaWhatsapp className="text-[20px]" />
+                <span>Chat on WhatsApp</span>
+              </a>
+              <a href="https://t.me/" target="_blank" rel="noreferrer" className="flex items-center gap-2.5 text-[17px] font-semibold leading-none hover:text-white/80">
+                <FaTelegramPlane className="text-[19px]" />
+                <span>Message on Telegram</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -734,7 +790,6 @@ export default function Home2Page() {
               <p className="max-w-xs text-xs leading-relaxed text-white/70">
                 Ethiopia's first caller identity VAS service, transforming how people see you when you call, from digits to a name that truly represents you.
               </p>
-              <p className="mt-3 text-[11px] text-white/35">Solution Partner: TechVAS Technologies PLC</p>
             </div>
 
             <div>
@@ -743,8 +798,6 @@ export default function Home2Page() {
                 <li>Web Portal</li>
                 <li>Mobile App</li>
                 <li>USSD *883#</li>
-                <li>telebirr</li>
-                <li>Ethio Airtime</li>
               </ul>
             </div>
 
@@ -763,7 +816,7 @@ export default function Home2Page() {
               <p className="mb-3 text-xs font-extrabold uppercase tracking-[1px]">Languages</p>
               <ul className="space-y-1.5 text-xs text-white/75">
                 <li>English</li>
-                <li>Amharic</li>
+                <li>አማርኛ (Amharic)</li>
                 <li>Afaan Oromo</li>
                 <li>Tigrinya</li>
                 <li>Somali</li>
@@ -777,6 +830,18 @@ export default function Home2Page() {
           </div>
         </div>
       </footer>
+      {showBackToTop && (
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 text-base font-bold text-[#2C5CA8] shadow-[0_8px_20px_rgba(0,0,0,0.18)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white md:right-10"
+        >
+          <span>Back to Top</span>
+          <span className="grid h-6 w-6 place-items-center rounded-full bg-[#26C6E5] text-[#0B3F70]">
+            <IoArrowUp className="text-base" />
+          </span>
+        </button>
+      )}
       <style>{`
         @keyframes ringWave {
           0% {
