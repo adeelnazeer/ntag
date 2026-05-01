@@ -738,9 +738,9 @@ export default function Home2Page() {
           <h3 className="mb-4 mt-8 text-xl font-extrabold">Payment Channels</h3>
           <div className="grid gap-4 lg:grid-cols-3">
             {[
-              { icon: IoPersonOutline,img:"/telebirr_super_app_dark.png", title: "telebirr Super App", desc: "Pay directly through the telebirr super app (B2C)" },
-              { icon: IoShieldCheckmarkOutline,img:"/telebirr_partner_app_blue.png", title: "telebirr Partner App", desc: "Online payments via partner web portals (B2B)" },
-              { icon: IoCallOutline,img:"/ethio_airtime_green.png", title: "Ethio Airtime", desc: "Deduct subscription from your Ethio airtime balance" },
+              { icon: IoPersonOutline, img: "/telebirr_super_app_dark.png", title: "telebirr Super App", desc: "Pay directly through the telebirr super app (B2C)" },
+              { icon: IoShieldCheckmarkOutline, img: "/telebirr_partner_app_blue.png", title: "telebirr Partner App", desc: "Online payments via partner web portals (B2B)" },
+              { icon: IoCallOutline, img: "/ethio_airtime_green.png", title: "Ethio Airtime", desc: "Deduct subscription from your Ethio airtime balance" },
             ].map((channel) => {
               return (
                 <div key={channel.title} className="flex items-center gap-3 rounded-2xl border border-brand-blue-border-soft bg-brand-card-blue p-4 transition-all duration-200 hover:border-brand-blue/40 hover:bg-white hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
@@ -834,6 +834,7 @@ export default function Home2Page() {
             <p className="text-white/85">Register your NameTAG at www.nametag.et or dial *883# today.</p>
           </div>
           <div className="w-full md:w-auto md:min-w-[520px]">
+            <p className="text-base mb-4   font-semibold leading-none text-white">Contact Us</p>
             <div className="grid grid-cols-1 gap-3.5 text-white sm:grid-cols-2">
               <a href="tel:9234" className="flex items-center gap-2.5 text-sm font-semibold leading-none hover:text-white/80">
                 <IoCallOutline className="text-base" />
@@ -861,15 +862,14 @@ export default function Home2Page() {
           <div className="grid gap-8 md:grid-cols-4">
             <div>
               <div className="mb-3 flex items-center gap-2">
-                <div className="grid h-8 w-8 place-items-center rounded-md bg-brand-blue text-lg font-black text-brand-green">#</div>
+                <div className="grid h-10 w-10 place-items-center rounded-md bg-brand-blue text-2xl font-black text-brand-green">#</div>
                 <div>
                   <p className="text-base font-extrabold leading-none">NameTAG</p>
                   <p className="text-[10px] font-semibold uppercase tracking-[1px] text-brand-green-footer">Ethio Telecom</p>
                 </div>
               </div>
               <p className="max-w-xs text-xs leading-relaxed text-white/70">
-                Ethiopia's first caller identity VAS service, transforming how people see you when you call, from digits to a name that truly represents you.
-              </p>
+                Ethiopia's first caller identity platform, transforming how people see you when you call, from long numbers to a #TAG that truly represents you.              </p>
             </div>
 
             <div>
