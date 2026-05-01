@@ -1,7 +1,25 @@
 import { useEffect, useMemo, useState } from "react";
 import { Carousel } from "@material-tailwind/react";
-import { FaLongArrowAltRight, FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
-import { IoArrowUp, IoCallOutline, IoMailOutline } from "react-icons/io5";
+import { FaApple, FaGooglePlay, FaLongArrowAltRight, FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
+import {
+  IoArrowUp,
+  IoBarChartOutline,
+  IoCallOutline,
+  IoFlashOutline,
+  IoLockClosedOutline,
+  IoMailOutline,
+  IoPersonOutline,
+  IoCalendarOutline,
+  IoShieldCheckmarkOutline,
+  IoCheckmarkCircle,
+  IoShieldOutline,
+  IoStar,
+  IoPricetagOutline,
+  IoGlobeOutline,
+  IoPhonePortraitOutline,
+  IoKeypadOutline
+} from "react-icons/io5";
+import { FaPercent } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import ImgIdentity from "../../assets/images/home-identity.jpg";
 import Logo from "../../assets/images/logo.png";
@@ -67,7 +85,7 @@ const tiers = [
     tag: "#23104",
     level: "Named TAGs",
     description: "Custom names up to 8 characters",
-    examples: "#Tufa, #Pepsi, #Touch",
+    examples: "#Name, #Pepsi, #Touch",
     headerClass: "bg-[#1b5e20]",
     chipLabel: "Standard Tier",
     chipClass: "bg-white/20 text-white",
@@ -175,14 +193,23 @@ const faqItems = [
   },
 ];
 
-function SectionTitle({ label, title, sub, light = false, white = false }) {
+const userFeatureIcons = [
+  IoPersonOutline,
+  IoFlashOutline,
+  IoShieldCheckmarkOutline,
+  IoLockClosedOutline,
+  IoCalendarOutline,
+  IoPersonOutline,
+];
+
+function SectionTitle({ label, title, sub, light = false, white = false ,blue = false}) {
   return (
     <div className="mb-10">
-      <span className={`mb-3 block text-xs font-bold uppercase tracking-[2px] ${light ? "text-[#9ad45b]" : white ? "text-white" : "text-[#5A9A18]"}`}>
+      <span className={`mb-3 block text-xs font-bold uppercase tracking-[2px] ${light ? "text-brand-green-label-light" : white ? "text-white" : blue ? "text-brand-blue" : "text-brand-green-dark"}`}>
         {label}
       </span>
-      <h2 className={`mb-3 text-2xl font-extrabold leading-tight md:text-4xl ${light ? "text-white" : white ? "text-white" : "text-[#126094]"}`}>{title}</h2>
-      {sub && <p className={`max-w-2xltext-sm md:text-base ${light ? "text-white/70" : white ? "text-white/85" : "text-[#666666]"}`}>{sub}</p>}
+      <h2 className={`mb-3 text-2xl font-extrabold leading-tight md:text-4xl ${light ? "text-white" : white ? "text-white" : blue ? "text-brand-blue" : " text-black"}`}>{title}</h2>
+      {sub && <p className={`max-w-2xltext-sm md:text-base ${light ? "text-white/70" : white ? "text-white/85" : blue ? "text-white" : "text-[#666666]"}`}>{sub}</p>}
     </div>
   );
 }
@@ -255,29 +282,7 @@ export default function Home2Page() {
   return (
     <div className="bg-white text-[#111111]">
       <nav className="sticky top-0 z-40 bg-[#F3F3F3] shadow-sm">
-        <div className="bg-white">
-          <div className="mx-auto flex h-[62px] w-full max-w-7xl items-center justify-between px-4 md:px-6">
-            <div className="flex items-center">
-              <img src={Logo} alt="Ethio Telecom" className="h-[38px] w-auto object-contain md:h-[52px]" />
-            </div>
-
-            <div className="ml-auto hidden items-center gap-3 md:flex">
-              <button className="flex items-center gap-1 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-[#4B4B4B]">
-                Eng
-                <span className="text-[10px]">▾</span>
-              </button>
-              <button className="rounded-md border border-[#CFD8BF] bg-[#F7F7F2] px-4 py-1.5 text-sm font-semibold text-[#8A8A8A]">Log in</button>
-              <button className="rounded-md bg-[#8BBE33] px-4 py-1.5 text-sm font-semibold text-white">Register</button>
-              <img src={TelebirrLogo} alt="telebirr" className="h-[48px] w-auto object-contain pl-3" />
-            </div>
-
-            <button className="text-2xl md:hidden" onClick={() => setMobileOpen((s) => !s)} aria-label="menu">
-              ☰
-            </button>
-          </div>
-        </div>
-
-        <div className="border-t border-[#82B736] bg-[#8BBE33]">
+        <div className="border-t border-brand-green-nav-border bg-secondary">
           <div className="mx-auto hidden h-[54px] max-w-7xl items-center justify-center gap-5 px-4 md:flex">
             {navLinks.map((link, index) => (
               <a
@@ -290,11 +295,34 @@ export default function Home2Page() {
             ))}
           </div>
         </div>
+        <div className="bg-white">
+          <div className="mx-auto flex h-[62px] w-full max-w-7xl items-center justify-between px-4 md:px-6">
+            <div className="flex items-center">
+              <img src={Logo} alt="Ethio Telecom" className="h-[38px] w-auto object-contain md:h-[52px]" />
+            </div>
+
+            <div className="ml-auto hidden items-center gap-3 md:flex">
+              <button className="flex items-center gap-1 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-[#4B4B4B]">
+                Eng
+                <span className="text-[10px]">▾</span>
+              </button>
+              <button className="rounded-md border border-[#CFD8BF] bg-[#F7F7F2] px-4 py-1.5 text-sm font-semibold text-[#8A8A8A]">Log in</button>
+              <button className="rounded-md bg-secondary px-4 py-1.5 text-sm font-semibold text-white">Register</button>
+              <img src={TelebirrLogo} alt="telebirr" className="h-[48px] w-auto object-contain pl-3" />
+            </div>
+
+            <button className="text-2xl md:hidden" onClick={() => setMobileOpen((s) => !s)} aria-label="menu">
+              ☰
+            </button>
+          </div>
+        </div>
+
+
         {mobileOpen && (
           <div className="border-t border-gray-200 bg-white px-4 py-3 md:hidden">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
-                <a key={link.href} href={link.href} className="rounded-md px-3 py-2 text-sm font-semibold text-[#126094] hover:bg-[#E8F5D7]" onClick={() => setMobileOpen(false)}>
+                <a key={link.href} href={link.href} className="rounded-md px-3 py-2 text-sm font-semibold text-brand-blue hover:bg-brand-green-pale" onClick={() => setMobileOpen(false)}>
                   {link.label}
                 </a>
               ))}
@@ -303,7 +331,7 @@ export default function Home2Page() {
         )}
       </nav>
 
-      <section id="home" className={`pt-4 md:pt-6 ${heroActiveSlide === 1 ? "bg-white" : heroActiveSlide === 2 ? "bg-[#E8F5D7]" : "bg-[#126094]"}`}>
+      <section id="home" className={`pt-4 md:pt-6 ${heroActiveSlide === 1 ? "bg-white" : heroActiveSlide === 2 ? "bg-brand-green-pale" : "bg-brand-green"}`}>
         <div className="mx-auto w-full max-w-7xl px-3 md:px-6">
           <Carousel
             className="rounded-2xl"
@@ -325,10 +353,10 @@ export default function Home2Page() {
                       onClick={() => setActiveIndex(i)}
                       className={`block h-1 cursor-pointer rounded-2xl transition-all ${activeIndex === i
                         ? activeIndex === 1 || activeIndex === 2
-                          ? "w-8 bg-[#126094]"
+                          ? "w-8 bg-brand-blue"
                           : "w-8 bg-white"
                         : activeIndex === 1 || activeIndex === 2
-                          ? "w-4 bg-[#126094]/40"
+                          ? "w-4 bg-brand-blue/40"
                           : "w-4 bg-white/40"
                         }`}
                     />
@@ -340,49 +368,53 @@ export default function Home2Page() {
             {heroSlides.map((slide, index) => (
               <div
                 key={index}
-                className={`grid min-h-[460px] grid-cols-1 items-center gap-8 px-4 pt-8 md:min-h-[560px] md:gap-10 md:px-6 md:pt-10 lg:grid-cols-2 ${index === 1 ? "bg-white" : index === 2 ? "bg-[#E8F5D7]" : "bg-[#126094]"
+                className={`grid min-h-[460px] grid-cols-1 items-center gap-8 px-4 pt-8 md:min-h-[560px] md:gap-10 md:px-6 md:pt-10 lg:grid-cols-2 ${index === 1 ? "bg-white" : index === 2 ? "bg-brand-green-pale" : "bg-brand-green"
                   }`}
               >
-                <div className={index === 1 || index === 2 ? "text-[#126094] " : "text-white pb-6"}>
-                  <p className="mb-4 text-xs font-bold uppercase tracking-[2px] text-[#76BC21]">Ethio Telecom VAS Service · April 2026</p>
+                <div className={index === 1 || index === 2 ? "text-brand-blue" : "text-white pb-6"}>
+                  <p className="mb-4 text-xs font-bold uppercase tracking-[2px] text-brand-green">Ethio Telecom VAS Service · April 2026</p>
                   <h1 className="mb-4 text-3xl font-black leading-tight md:text-6xl">{slide?.title}</h1>
-                  <p className={`mb-2 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-[#126094]/90" : "text-white/90"}`}>{slide?.para1}</p>
-                  <p className={`mb-2 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-[#126094]/85" : "text-white/85"}`}>{slide?.para2}</p>
-                  <p className={`mb-7 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-[#126094]/80" : "text-white/80"}`}>{slide?.description}</p>
+                  <p className={`mb-2 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-brand-blue/90" : "text-white"}`}>{slide?.para1}</p>
+                  <p className={`mb-2 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-brand-blue/85" : "text-white"}`}>{slide?.para2}</p>
+                  <p className={`mb-7 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-brand-blue/80" : "text-white"}`}>{slide?.description}</p>
                   <div className="mb-6 flex flex-wrap gap-3">
-                    <button className="rounded-md bg-[#76BC21] px-6 py-3 text-sm font-bold text-white">Get My NameTAG</button>
-                    <a href="#how" className={`rounded-md border-2 px-6 py-3 text-sm font-bold ${index === 1 || index === 2 ? "border-[#126094]/45 text-[#126094] hover:bg-[#126094]/5" : "hover:text-secondary border-white/60 text-white"}`}>
+                    <button className={`rounded-md px-6 py-3 text-sm font-bold text-white ${index === 0 ? "bg-brand-blue hover:bg-brand-blue-hover" : "bg-brand-green"}`}>Get My NameTAG</button>
+                    <a href="#how" className={`rounded-md border-2 px-6 py-3 text-sm font-bold ${index === 1 || index === 2 ? "border-brand-blue/45 text-brand-blue hover:bg-brand-blue/5" : "border-brand-blue bg-brand-blue text-white hover:bg-brand-blue-hover"}`}>
                       See How It Works
                     </a>
                   </div>
-                  <div className="flex flex-wrap pb-6 items-center gap-3">
-                    <button className={`group inline-flex items-center gap-2 rounded-xl border bg-transparent px-3 py-2 shadow-[0_8px_20px_rgba(0,0,0,0.28)] transition-all duration-200 hover:-translate-y-0.5 ${index === 1 || index === 2 ? "border-[#126094]/25 text-[#126094] hover:bg-[#126094]/5" : "border-white/30 text-white hover:bg-[#0f2b67]"}`}>
-                      <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current text-[#76BC21]" aria-hidden="true">
-                        <path d="M3.2 2.3c-.5.3-.8.8-.8 1.4v16.6c0 .6.3 1.1.8 1.4l.2.1L13 12 3.4 2.2l-.2.1zM16.2 9.1 5.3 3l8.6 8.8 2.3-2.4zM18.8 10.5l-1.6-.9-2.2 2.3 2.2 2.3 1.7-1c1.2-.6 1.2-2.1-.1-2.7zM5.3 21l10.9-6.1-2.3-2.4L5.3 21z" />
-                      </svg>
+                  <div className="flex flex-wrap pb-6 items-center gap-2.5">
+                    <a
+                      href="#"
+                      className="inline-flex items-center gap-2.5 rounded-lg bg-black px-3 py-2 text-white shadow-[0_4px_14px_rgba(0,0,0,0.35)] transition hover:bg-[#1a1a1a]"
+                      aria-label="Get it on Google Play"
+                    >
+                      <FaGooglePlay className="h-[34px] w-[34px] shrink-0 text-white" aria-hidden />
                       <span className="text-left leading-tight">
-                        <span className={`block text-[10px] ${index === 1 || index === 2 ? "text-[#126094]/70" : "text-white/70"}`}>GET IT ON</span>
-                        <span className="block text-sm font-bold">Google Play</span>
+                        <span className="block text-[9px] font-medium uppercase tracking-wide text-white/95">GET IT ON</span>
+                        <span className="block text-base font-semibold leading-tight tracking-tight text-white">Google Play</span>
                       </span>
-                    </button>
-                    <button className={`group inline-flex items-center gap-2 rounded-xl border bg-transparent px-3 py-2 shadow-[0_8px_20px_rgba(0,0,0,0.28)] transition-all duration-200 hover:-translate-y-0.5 ${index === 1 || index === 2 ? "border-[#126094]/25 text-[#126094] hover:bg-[#126094]/5" : "border-white/30 text-white hover:bg-[#0f2b67]"}`}>
-                      <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current text-[#76BC21]" aria-hidden="true">
-                        <path d="M16.7 1.5h-9A2.2 2.2 0 0 0 5.5 3.7v16.6a2.2 2.2 0 0 0 2.2 2.2h9a2.2 2.2 0 0 0 2.2-2.2V3.7a2.2 2.2 0 0 0-2.2-2.2zm-4.2 19.6a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3.8-3.5H8V4.5h8.3v13.1z" />
-                      </svg>
+                    </a>
+                    <a
+                      href="#"
+                      className="inline-flex items-center gap-2 rounded-lg bg-black px-3 py-2 text-white shadow-[0_4px_14px_rgba(0,0,0,0.35)] transition hover:bg-[#1a1a1a]"
+                      aria-label="Download on the App Store"
+                    >
+                      <FaApple className="h-[36px] w-[36px] shrink-0 -translate-y-[1px] text-white" aria-hidden />
                       <span className="text-left leading-tight">
-                        <span className={`block text-[10px] ${index === 1 || index === 2 ? "text-[#126094]/70" : "text-white/70"}`}>DOWNLOAD ON THE</span>
-                        <span className="block text-sm font-bold">App Store</span>
+                        <span className="block text-[11px] font-normal capitalize text-white/95">Download on the</span>
+                        <span className="block text-base font-semibold leading-tight text-white">App Store</span>
                       </span>
-                    </button>
+                    </a>
                   </div>
                 </div>
 
                 <div className="relative mx-auto flex h-[360px] w-full max-w-[360px] items-center justify-center overflow-hidden md:h-[550px] md:max-w-[560px]">
                   {index === 0 && (
                     <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 block">
-                      <div className="wave-ring absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-[#76BC21]/35 md:h-[460px] md:w-[460px]" />
-                      <div className="wave-ring wave-ring-delay-1 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-[#76BC21]/25 md:h-[460px] md:w-[460px]" />
-                      <div className="wave-ring wave-ring-delay-2 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-[#76BC21]/18 md:h-[460px] md:w-[460px]" />
+                      <div className="wave-ring absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-white/35 md:h-[460px] md:w-[460px]" />
+                      <div className="wave-ring wave-ring-delay-1 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-white/25 md:h-[460px] md:w-[460px]" />
+                      <div className="wave-ring wave-ring-delay-2 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-white/18 md:h-[460px] md:w-[460px]" />
                     </div>
                   )}
                   <div className="relative z-10 flex h-full w-full items-center justify-center">
@@ -396,28 +428,28 @@ export default function Home2Page() {
                             }`}
                         >
                           <div className="pointer-events-none absolute left-1/2 top-[45%] z-0">
-                            <div className="avatar-ring absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-[#76BC21]/70 md:h-[140px] md:w-[140px]" />
-                            <div className="avatar-ring avatar-ring-delay-1 absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-[#76BC21]/55 md:h-[140px] md:w-[140px]" />
-                            <div className="avatar-ring avatar-ring-delay-2 absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-[#76BC21]/40 md:h-[140px] md:w-[140px]" />
+                            <div className="avatar-ring absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-brand-green-pale/92 md:h-[140px] md:w-[140px]" />
+                            <div className="avatar-ring avatar-ring-delay-1 absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-brand-mint-soft/78 md:h-[140px] md:w-[140px]" />
+                            <div className="avatar-ring avatar-ring-delay-2 absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-brand-mint-softer/62 md:h-[140px] md:w-[140px]" />
                           </div>
                           <img
                             src={slide?.topLeftImage}
                             alt="A Party"
-                            className={`${slide.height} relative z-10 md:object-contain h-[340px] w-full drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]`}
+                            className={`${slide.height} relative z-10 md:object-contain h-[340px] w-full`}
                           />
                         </div>
                         {slide?.showTwoImages && slide?.topRightImage && (
                           <div>
                             <div className="float-slower relative w-[140px] md:w-[220px]">
                               <div className="pointer-events-none absolute left-1/2 top-[45%] z-0">
-                                <div className="avatar-ring absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-[#76BC21]/70 md:h-[140px] md:w-[140px]" />
-                                <div className="avatar-ring avatar-ring-delay-1 absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-[#76BC21]/55 md:h-[140px] md:w-[140px]" />
-                                <div className="avatar-ring avatar-ring-delay-2 absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-[#76BC21]/40 md:h-[140px] md:w-[140px]" />
+                                <div className="avatar-ring absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-brand-green-pale/92 md:h-[140px] md:w-[140px]" />
+                                <div className="avatar-ring avatar-ring-delay-1 absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-brand-mint-soft/78 md:h-[140px] md:w-[140px]" />
+                                <div className="avatar-ring avatar-ring-delay-2 absolute left-1/2 top-1/2 block h-[90px] w-[90px] rounded-full border-2 border-brand-mint-softer/62 md:h-[140px] md:w-[140px]" />
                               </div>
                               <img
                                 src={slide?.topRightImage}
                                 alt="B Party"
-                                className="relative z-10 h-[340px] w-full drop-shadow-[0_22px_48px_rgba(0,0,0,0.35)]"
+                                className="relative z-10 h-[340px] w-full"
                               />
                             </div>
                           </div>
@@ -432,12 +464,12 @@ export default function Home2Page() {
         </div>
       </section>
 
-      <section className="bg-[#76BC21]">
+      <section className=" bg-brand-blue">
         <div className="mx-auto grid w-full max-w-7xl grid-cols-2 md:grid-cols-4">
           {stats.map((s) => (
             <div key={s.label} className="border-white/20 px-4 py-6 text-center odd:border-r md:border-r last:border-r-0">
               <div className="text-2xl font-black text-white md:text-2xl">{s.value}</div>
-              <div className="mt-1 text-xs font-semibold text-white/80">{s.label}</div>
+              <div className="mt-1 text-xs font-semibold text-white">{s.label}</div>
             </div>
           ))}
         </div>
@@ -452,12 +484,13 @@ export default function Home2Page() {
                 "Your 2nd Short Number",
                 "Show Your Name, Not Digits",
                 "Dial with # Prefix",
+                "Dial Calls to Other #TAGs and #Mobile numbers"
               ].map((title) => (
                 <div
                   key={title}
                   className="rounded-xl cursor-pointer border border-gray-200 bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
                 >
-                  <h3 className="mb-1 text-sm font-bold text-[#126094]">{title}</h3>
+                  <h3 className="mb-1 text-sm font-bold text-brand-blue">{title}</h3>
                   <p className="text-sm text-[#666]">Designed for instant recognition, easier sharing, and a stronger personal or brand identity.</p>
                 </div>
               ))}
@@ -468,14 +501,14 @@ export default function Home2Page() {
               <div className="rounded-xl bg-white p-4 shadow-[0_2px_10px_rgba(0,0,0,0.06)]">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-base font-extrabold uppercase tracking-tight text-[#76BC21]">Corporate</p>
-                    <p className="mt-1 text-sm font-black leading-none text-[#2B2B2B]">#KFC,#532</p>
+                    <p className="text-base font-extrabold uppercase tracking-tight text-brand-green">Corporate</p>
+                    <p className="mt-1 text-sm font-black leading-none text-[#2B2B2B]">#Ethio,#532</p>
                     <p className="mt-1 text-sm font-bold text-[#2B2B2B]">Brand Identity</p>
                     <p className="mt-1 text-sm text-[#787878]">Register your nicknaeas your caller identity</p>
                   </div>
-                  <div className="w-[118px] shrink-0 rounded-[10px] bg-[#8BBE33] p-3 text-center text-white">
+                  <div className="w-[118px] shrink-0 rounded-[10px] bg-secondary p-3 text-center text-white">
                     <p className="text-[9px] font-semibold text-white/80">Incoming</p>
-                    <div className="mx-auto mt-2 w-fit rounded-full bg-white px-4 py-1 text-sm font-bold text-[#2B2B2B]">#KFC</div>
+                    <div className="mx-auto mt-2 w-fit rounded-full bg-white px-4 py-1 text-sm font-bold text-[#2B2B2B]">#Ethio</div>
                     <div className="mt-3 flex items-center justify-center gap-3">
                       <span className="grid h-5 w-5 place-items-center rounded-full bg-[#FF3B30] text-[10px]">•</span>
                       <span className="grid h-5 w-5 place-items-center rounded-full bg-[#1DD75B] text-[10px]">•</span>
@@ -487,14 +520,14 @@ export default function Home2Page() {
               <div className="rounded-xl bg-white p-4 shadow-[0_2px_10px_rgba(0,0,0,0.06)]">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-base font-extrabold uppercase tracking-tight text-[#76BC21]">INDIVIDUAL</p>
-                    <p className="mt-1 text-sm font-black leading-none text-[#2B2B2B]">#Tufa,#8832</p>
+                    <p className="text-base font-extrabold uppercase tracking-tight text-brand-green">INDIVIDUAL</p>
+                    <p className="mt-1 text-sm font-black leading-none text-[#2B2B2B]">#Name,#8832</p>
                     <p className="mt-1 text-sm font-bold text-[#2B2B2B]">Memorable</p>
                     <p className="mt-1 text-sm text-[#787878]">Register your nicknaeas your caller identity</p>
                   </div>
-                  <div className="w-[118px] shrink-0 rounded-[10px] bg-[#126094] p-3 text-center text-white">
+                  <div className="w-[118px] shrink-0 rounded-[10px] bg-brand-blue p-3 text-center text-white">
                     <p className="text-[9px] font-semibold text-white/80">Incoming</p>
-                    <div className="mx-auto mt-2 w-fit rounded-full bg-white px-4 py-1 text-sm font-bold text-[#2B2B2B]">#Tufa</div>
+                    <div className="mx-auto mt-2 w-fit rounded-full bg-white px-4 py-1 text-sm font-bold text-[#2B2B2B]">#Name</div>
                     <div className="mt-3 flex items-center justify-center gap-3">
                       <span className="grid h-5 w-5 place-items-center rounded-full bg-[#FF3B30] text-[10px]">•</span>
                       <span className="grid h-5 w-5 place-items-center rounded-full bg-[#1DD75B] text-[10px]">•</span>
@@ -503,45 +536,45 @@ export default function Home2Page() {
                 </div>
               </div>
               <div className="pt-4">
-              <div className="  w-fit rounded-full border border-[#126094]/20 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[1.5px] text-[#126094]">
-                Business Card
-              </div>
+                <div className="  w-fit rounded-full border border-brand-blue/20 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[1.5px] text-brand-blue">
+                  Business Card
+                </div>
               </div>
               <div className="relative mx-auto mt-2 max-w-full overflow-hidden rounded-[28px] bg-[#F3F4F6] p-5 shadow-[0_16px_30px_rgba(0,0,0,0.14)]">
-                <div className="absolute left-0 top-0 h-3 w-full bg-[#8BBE33]" />
+                <div className="absolute left-0 top-0 h-3 w-full bg-secondary" />
                 <div className="pt-4">
                   <div className="flex items-start justify-between border-b border-gray-400 pb-3">
                     <div className="flex items-start gap-3">
                       <div className="mt-1 flex gap-1">
-                        <span className="h-8 w-1.5 -rotate-25 rounded bg-[#8BBE33]" />
-                        <span className="h-8 w-1.5 rotate-25 rounded bg-[#8BBE33]" />
-                        <span className="h-8 w-1.5 -rotate-25 rounded bg-[#126094]" />
-                        <span className="h-8 w-1.5 rotate-25 rounded bg-[#126094]" />
+                        <span className="h-8 w-1.5 -rotate-25 rounded bg-secondary" />
+                        <span className="h-8 w-1.5 rotate-25 rounded bg-secondary" />
+                        <span className="h-8 w-1.5 -rotate-25 rounded bg-brand-blue" />
+                        <span className="h-8 w-1.5 rotate-25 rounded bg-brand-blue" />
                       </div>
                       <div>
-                        <p className="text-[15px] font-extrabold tracking-tight text-[#126094] md:text-[18px]">KENTUCKY FRIED CHICKEN</p>
+                        <p className="text-[15px] font-extrabold tracking-tight text-brand-blue md:text-[18px]">KENTUCKY FRIED CHICKEN</p>
                         <p className="text-[11px] text-[#6f6f6f] md:text-[13px]">Official NameTAG</p>
                       </div>
                     </div>
-                    <p className="text-[11px] font-semibold text-[#126094] md:text-[13px]">www.company.com</p>
+                    <p className="text-[11px] font-semibold text-brand-blue md:text-[13px]">www.company.com</p>
                   </div>
 
                   <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto] md:gap-3">
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-[#126094]">
-                        <span className="grid h-7 w-7 place-items-center bg-[#8BBE33] text-xl font-black text-white">#</span>
-                        <p className="text-sm font-medium leading-none">#883 (#Tufa)</p>
+                      <div className="flex items-center gap-2 text-brand-blue">
+                        <span className="grid h-7 w-7 place-items-center bg-secondary text-xl font-black text-white">#</span>
+                        <p className="text-sm font-medium leading-none">#883 (#Name)</p>
                       </div>
-                      <div className="flex items-center gap-2 text-[#126094]">
-                        <span className="grid h-7 w-7 place-items-center bg-[#8BBE33] text-sm text-white">☎</span>
+                      <div className="flex items-center gap-2 text-brand-blue">
+                        <span className="grid h-7 w-7 place-items-center bg-secondary text-sm text-white">☎</span>
                         <p className="text-sm">0978123456</p>
                       </div>
-                      <div className="flex items-center gap-2 text-[#126094]">
-                        <span className="grid h-7 w-7 place-items-center bg-[#8BBE33] text-xs text-white">✉</span>
+                      <div className="flex items-center gap-2 text-brand-blue">
+                        <span className="grid h-7 w-7 place-items-center bg-secondary text-xs text-white">✉</span>
                         <p className="text-sm">companyofficial@gmail.com</p>
                       </div>
-                      <div className="flex items-center gap-2 text-[#126094]">
-                        <span className="grid h-7 w-7 place-items-center bg-[#8BBE33] text-xs text-white">⌖</span>
+                      <div className="flex items-center gap-2 text-brand-blue">
+                        <span className="grid h-7 w-7 place-items-center bg-secondary text-xs text-white">⌖</span>
                         <p className="text-sm">123 Main Street, Addis Ababa, Ethiopia</p>
                       </div>
                     </div>
@@ -552,9 +585,9 @@ export default function Home2Page() {
                         alt="curve background"
                         className="absolute -bottom-6 -right-2 z-[1] h-[130px] w-[170px] object-contain opacity-95"
                       />
-                      <div className="absolute -bottom-8 -right-16 z-0 h-[120px] w-[120px] rotate-45 bg-[#126094]" />
+                      <div className="absolute -bottom-8 -right-16 z-0 h-[120px] w-[120px] rotate-45 bg-brand-blue" />
                       <div className="relative z-10 pb-7">
-                        <p className="text-3xl font-black text-[#126094]">NAME</p>
+                        <p className="text-3xl font-black text-brand-blue">NAME</p>
                         <p className="text-base font-semibold text-[#7A7A7A]">MANAGER</p>
                       </div>
                     </div>
@@ -604,30 +637,35 @@ export default function Home2Page() {
         </div>
       </section>
 
-      <section className="bg-[#126094] py-16 text-white" id="users">
+      <section className=" bg-brand-green py-16 text-white" id="users">
         <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
-          <SectionTitle light label="Who Uses NameTAG?" title="Designed for Individuals and Brands" sub="Whether you are an individual subscriber or a large corporate, NameTAG has the features you need." />
+          <SectionTitle  blue label="Who Uses NameTAG?" title="Designed for Individuals and Brands" sub="Whether you are an individual subscriber or a large corporate, NameTAG has the features you need." />
 
           <div className="grid gap-8 lg:grid-cols-2">
             <div>
               <div className="mb-6 flex flex-wrap gap-2">
-                <button className={`rounded-full border-2 px-5 py-2 text-sm font-bold ${activeTab === "individual" ? "border-[#76BC21] bg-[#76BC21] text-white" : "border-white/30 text-white/70"}`} onClick={() => setActiveTab("individual")}>
+                <button className={`rounded-full border-1 px-5 py-2 text-sm font-bold ${activeTab === "individual" ? "border-brand-blue bg-brand-blue text-white" : "border-white text-white"}`} onClick={() => setActiveTab("individual")}>
                   Individual Customers
                 </button>
-                <button className={`rounded-full border-2 px-5 py-2 text-sm font-bold ${activeTab === "corporate" ? "border-[#76BC21] bg-[#76BC21] text-white" : "border-white/30 text-white/70"}`} onClick={() => setActiveTab("corporate")}>
+                <button className={`rounded-full border-1 px-5 py-2 text-sm font-bold ${activeTab === "corporate" ? "border-brand-blue bg-brand-blue text-white" : "border-white text-white"}`} onClick={() => setActiveTab("corporate")}>
                   Corporate & Brands
                 </button>
               </div>
               <ul className="space-y-3">
-                {activeTabItems.map((item) => (
+                {activeTabItems.map((item, idx) => {
+                  const FeatureIcon = userFeatureIcons[idx % userFeatureIcons.length];
+                  return (
                   <li key={item} className="flex items-start gap-3">
-                    <span className="mt-2 block h-2 w-2 rounded-full bg-[#76BC21]" />
+                    <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/95 text-brand-blue shadow-[0_2px_8px_rgba(0,0,0,0.12)]">
+                      <FeatureIcon className="text-lg" />
+                    </span>
                     <div>
-                      <div className="text-sm font-bold">{item}</div>
+                      <div className="pt-1 text-sm font-bold">{item}</div>
                       <div className="text-xs text-white/70">Optimized for Ethiopia market use-cases.</div>
                     </div>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             </div>
             <div className="rounded-[28px] bg-[#d5d9df]  p-4 text-[#222] shadow-[0_14px_28px_rgba(0,0,0,0.2)] md:p-6">
@@ -662,63 +700,124 @@ export default function Home2Page() {
               className="rounded-xl border cursor-pointer border-gray-200 bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
             >
               <img src={feature.img} alt={feature.title} className="mb-4 w-12 h-12 object-contain" />
-              <h3 className="mb-2 text-sm font-bold text-[#126094]">{feature.title}</h3>
+              <h3 className="mb-2 text-sm font-bold text-brand-blue">{feature.title}</h3>
               <p className="text-sm text-[#666]">{feature.description}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="pricing" className="bg-gradient-to-br from-[#5A9A18] via-[#76BC21] to-[#4E8E12] py-16 text-white">
+      <section id="pricing" className="bg-gradient-to-br from-brand-green-dark via-brand-green to-brand-green-muted py-16 text-white">
         <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
           <SectionTitle white label="Subscription Plans" title="Flexible Plans for Every Need" sub="Choose your subscription period and pay via telebirr or Ethio Airtime." />
+
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { code: "M", name: "Monthly", desc: "Flexible — renew every month. No long commitment." },
-              { code: "Q", name: "Quarterly", desc: "3-month plan — save more than monthly." },
-              { code: "S", name: "Semi-Annual", desc: "6-month plan — great value for regular users.", featured: true },
-              { code: "A", name: "Annual", desc: "Best savings — 12 months at the lowest rate." },
-            ].map((plan) => (
-              <div
-                key={plan.name}
-                className={`group rounded-2xl border p-5 text-center cursor-pointer transition-all duration-200 hover:-translate-y-1  hover:shadow-[0_14px_30px_rgba(0,0,0,0.26)] ${"border-[#D9E6F7] bg-white"
-                  }`}
-              >
-                <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-[#BFD2F0] bg-[#EEF4FF] text-base font-black text-[#126094] shadow-[0_6px_14px_rgba(0,0,0,0.10)]">
-                  {plan.code}
+              { code: "M", name: "Monthly", desc: "Flexible — renew every month. No long commitment.", accent: "border-b-[3px] border-b-[#3B82F6]", tint: "text-[#3B82F6]/28", kind: "monthly" },
+              { code: "Q", name: "Quarterly", desc: "3-month plan — save more than monthly.", accent: "border-b-[3px] border-b-[#22C55E]", tint: "text-[#22C55E]/28", kind: "quarterly" },
+              { code: "S", name: "Semi-Annual", desc: "6-month plan — great value for regular users.", accent: "border-b-[3px] border-b-[#F59E0B]", tint: "text-[#F59E0B]/28", kind: "semi" },
+              { code: "A", name: "Annual", desc: "Best savings — 12 months at the lowest rate.", accent: "border-b-[3px] border-b-[#A855F7]", tint: "text-[#A855F7]/28", kind: "annual" },
+            ].map((plan) => {
+              return (
+                <div
+                  key={plan.name}
+                  className={`group relative cursor-pointer overflow-hidden rounded-2xl border border-black/10 bg-white p-5 text-left shadow-[0_8px_18px_rgba(0,0,0,0.15)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.20)] ${plan.accent}`}
+                >
+                  <div className="relative z-10 mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-brand-blue-soft bg-brand-blue-tint text-xs font-bold text-brand-blue">
+                    {plan.code}
+                  </div>
+                  <div className="relative z-10 text-lg md:text-xl font-extrabold leading-tight text-brand-blue">{plan.name}</div>
+                  <p className="relative z-10 mt-1 text-sm md:text-base leading-relaxed text-brand-blue-text-muted">{plan.desc}</p>
+                  {/* {plan.kind === "monthly" && (
+                    <div className={`pointer-events-none bottom-0 right-0 z-0 ${plan.tint}`}>
+                      <IoCalendarOutline className="text-[86px] text-brand-blue" />
+                     </div>
+                  )}
+                  {plan.kind === "quarterly" && (
+                    <div className={`pointer-events-none bottom-0 right-0 z-0 ${plan.tint}`}>
+                      <IoBarChartOutline className="text-[90px] text-brand-blue" />
+                     </div>
+                  )}
+                  {plan.kind === "semi" && (
+                    <div className={`pointer-events-none absolute bottom-0 right-0 z-0 ${plan.tint}`}>
+                      <IoShieldOutline className="text-[94px] text-brand-blue" />
+                     </div>
+                  )}
+                  {plan.kind === "annual" && (
+                    <div className={`pointer-events-none absolute bottom-0 right-0 z-0 ${plan.tint}`}>
+                      <IoPricetagOutline className="text-[96px] text-brand-blue" />
+                     </div>
+                  )} */}
                 </div>
-                <div className="text-base font-bold tracking-wide text-[#126094]">{plan.name}</div>
-                <p className="mt-1 text-xs text-[#4A5B73]">{plan.desc}</p>
-                   <div className="mx-auto mt-3 w-fit rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-[1px] text-white group-hover:bg-white group-hover:text-[#126094]">
-                   </div>
-                
+              );
+            })}
+          </div>
+
+          <h3 className="mb-4 mt-8 text-xl font-extrabold">Payment Channels</h3>
+          <div className="grid gap-4 lg:grid-cols-3">
+            {[
+              { icon: IoPersonOutline, title: "telebirr Super App", desc: "Pay directly through the telebirr super app (B2C)" },
+              { icon: IoShieldCheckmarkOutline, title: "telebirr Partner App", desc: "Online payments via partner web portals (B2B)" },
+              { icon: IoCallOutline, title: "Ethio Airtime", desc: "Deduct subscription from your Ethio airtime balance" },
+            ].map((channel) => {
+              const ChannelIcon = channel.icon;
+              return (
+                <div key={channel.title} className="flex items-center gap-3 rounded-2xl border border-brand-blue-border-soft bg-brand-card-blue p-4 transition-all duration-200 hover:border-brand-blue/40 hover:bg-white hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
+                  <div className="grid h-11 w-11 place-items-center rounded-xl border border-brand-blue-soft bg-brand-blue-tint text-brand-blue">
+                    <ChannelIcon className="text-[20px]" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-brand-blue">{channel.title}</p>
+                    <p className="text-xs text-brand-blue-text-muted">{channel.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f4f5f7] py-16">
+        <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
+          <div className="mb-10 text-center">
+            <p className="mb-2 text-[11px] font-black uppercase tracking-[2.4px] text-brand-green/70">Get Started</p>
+            <h2 className="text-2xl font-black text-brand-blue md:text-4xl">Subscribe in 4 Simple Steps</h2>
+          </div>
+
+          <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { no: "01", title: "Create Account", desc: "Register at nametag.et or via the Mobile App. Choose individual or corporate account type." },
+              { no: "02", title: "Choose Your TAG", desc: "Search and pick your NameTAG across Platinum, Golden, Silver, or Bronze tiers." },
+              { no: "03", title: "Pay & Activate", desc: "Pay via telebirr or Ethio Airtime. Your TAG is instantly active on your SIM." },
+              { no: "04", title: "Start Calling", desc: "Dial with # prefix before any number. The receiver sees your NameTAG as CLI." },
+            ].map((step) => (
+              <div key={step.no} className="text-center">
+                <p className="text-[44px] font-black leading-none text-brand-green/80 [text-shadow:_0_1px_0_#ffffff,_0_0_1px_#3f6212]">{step.no}</p>
+                <p className="mt-1 text-sm font-extrabold text-brand-blue">{step.title}</p>
+                <p className="mx-auto mt-1 max-w-[220px] text-xs leading-relaxed text-[#6c7a8f]">{step.desc}</p>
               </div>
             ))}
           </div>
 
-          <h3 className="mt-8 mb-4 text-xl font-extrabold">Payment Channels</h3>
-          <div className="grid gap-4 lg:grid-cols-3">
-            <div className="flex items-center gap-3 rounded-2xl border border-[#D9E6F7] bg-[#F9FBFF] p-4 transition-all duration-200 hover:border-[#126094]/40 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
-              <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#BFD2F0] bg-[#EEF4FF] text-lg font-black text-[#126094]">T</div>
-              <div>
-                <p className="text-sm font-bold text-[#126094]">telebirr Super App</p>
-                <p className="text-xs text-[#4A5B73]">Pay directly through the telebirr super app (B2C)</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 rounded-2xl border border-[#D9E6F7] bg-[#F9FBFF] p-4 transition-all duration-200 hover:border-[#126094]/40 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
-              <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#BFD2F0] bg-[#EEF4FF] text-lg font-black text-[#126094]">P</div>
-              <div>
-                <p className="text-sm font-bold text-[#126094]">telebirr Partner App</p>
-                <p className="text-xs text-[#4A5B73]">Online payments via partner web portals (B2B)</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 rounded-2xl border border-[#D9E6F7] bg-[#F9FBFF] p-4 transition-all duration-200 hover:border-[#126094]/40 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
-              <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#BFD2F0] bg-[#EEF4FF] text-lg font-black text-[#126094]">A</div>
-              <div>
-                <p className="text-sm font-bold text-[#126094]">Ethio Airtime</p>
-                <p className="text-xs text-[#4A5B73]">Deduct subscription from your Ethio airtime balance</p>
-              </div>
-            </div>
+          <div className="mt-12 grid max-w-2xl mx-auto gap-6 md:grid-cols-3">
+            {[
+              { icon: IoGlobeOutline, title: "Web Portal", desc: "www.nametag.et" },
+              { icon: IoPhonePortraitOutline, title: "Mobile App", desc: "NameTAG Mobile" },
+              { icon: IoKeypadOutline, title: "USSD Code", desc: "Dial *883#" },
+            ].map((channel) => {
+              const ChannelIcon = channel.icon;
+              return (
+                <div key={channel.title} className=" items-center gap-3 rounded-2xl border border-[#d9dde5] bg-white px-5 py-5 shadow-[0_6px_16px_rgba(0,0,0,0.06)]">
+                  <div className="grid h-11 w-11 mx-auto place-items-center rounded-xl border border-brand-blue-soft bg-brand-blue-tint text-brand-green">
+                    <ChannelIcon className="text-[22px]" />
+                  </div>
+                  <div className="text-center mt-2">
+                    <p className="text-sm font-bold text-brand-blue">{channel.title}</p>
+                    <p className="text-xs mt-2 text-[#7a8798]">{channel.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -733,21 +832,21 @@ export default function Home2Page() {
             className="mb-3 overflow-hidden rounded-xl border border-gray-200 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
           >
             <p
-              className="flex w-full items-center justify-between bg-white px-5 py-4 text-left text-sm font-bold text-[#126094] transition-colors duration-200 "
+              className="flex w-full items-center justify-between bg-white px-5 py-4 text-left text-sm font-bold text-brand-blue transition-colors duration-200 "
               onClick={() => setOpenFaq(openFaq === idx ? -1 : idx)}
             >
               {item.q}
-              <span className="text-xl text-[#76BC21]">{openFaq === idx ? "−" : "+"}</span>
+              <span className="text-xl text-brand-green">{openFaq === idx ? "−" : "+"}</span>
             </p>
             {openFaq === idx && <div className="bg-[#F7F7F7] px-5 py-4 text-sm text-[#666]">{item.a}</div>}
           </div>
         ))}
-        <button className="mt-2 text-sm font-bold text-[#76BC21] hover:text-[#5A9A18]">
+        <button className="mt-2 text-sm font-bold text-brand-green hover:text-brand-green-dark">
           +More Questions
         </button>
       </section>
 
-      <section className="bg-[#76BC21] py-10">
+      <section className="bg-brand-green py-10">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-start justify-between gap-5 px-4 md:flex-row md:items-center md:px-6">
           <div>
             <h2 className="text-3xl font-black text-white">Be More Than a Number.</h2>
@@ -776,15 +875,15 @@ export default function Home2Page() {
         </div>
       </section>
 
-      <footer className="bg-[#126094] text-white">
+      <footer className="bg-brand-blue text-white">
         <div className="mx-auto w-full max-w-7xl px-4 py-10 md:px-6">
           <div className="grid gap-8 md:grid-cols-4">
             <div>
               <div className="mb-3 flex items-center gap-2">
-                <div className="grid h-8 w-8 place-items-center rounded-md bg-[#126094] text-lg font-black text-[#76BC21]">#</div>
+                <div className="grid h-8 w-8 place-items-center rounded-md bg-brand-blue text-lg font-black text-brand-green">#</div>
                 <div>
                   <p className="text-base font-extrabold leading-none">NameTAG</p>
-                  <p className="text-[10px] font-semibold uppercase tracking-[1px] text-[#9fd05a]">Ethio Telecom</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[1px] text-brand-green-footer">Ethio Telecom</p>
                 </div>
               </div>
               <p className="max-w-xs text-xs leading-relaxed text-white/70">
@@ -834,10 +933,10 @@ export default function Home2Page() {
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 text-base font-bold text-[#2C5CA8] shadow-[0_8px_20px_rgba(0,0,0,0.18)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white md:right-10"
+          className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 text-base font-bold text-brand-blue shadow-[0_8px_20px_rgba(0,0,0,0.18)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white md:right-10"
         >
           <span>Back to Top</span>
-          <span className="grid h-6 w-6 place-items-center rounded-full bg-[#26C6E5] text-[#0B3F70]">
+          <span className="grid h-6 w-6 place-items-center rounded-full bg-brand-blue text-white">
             <IoArrowUp className="text-base" />
           </span>
         </button>
