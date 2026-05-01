@@ -202,7 +202,7 @@ const userFeatureIcons = [
   IoPersonOutline,
 ];
 
-function SectionTitle({ label, title, sub, light = false, white = false ,blue = false}) {
+function SectionTitle({ label, title, sub, light = false, white = false, blue = false }) {
   return (
     <div className="mb-10">
       <span className={`mb-3 block text-xs font-bold uppercase tracking-[2px] ${light ? "text-brand-green-label-light" : white ? "text-white" : blue ? "text-brand-blue" : "text-brand-green-dark"}`}>
@@ -219,7 +219,6 @@ export default function Home2Page() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("individual");
   const [openFaq, setOpenFaq] = useState(0);
-  const [heroActiveSlide, setHeroActiveSlide] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const slidesData = t("carousel.slides", { returnObjects: true }) || [];
   const slideImages = [HeroImg1, Slider2, Slider3];
@@ -331,55 +330,41 @@ export default function Home2Page() {
         )}
       </nav>
 
-      <section id="home" className={`pt-4 md:pt-6 ${heroActiveSlide === 1 ? "bg-white" : heroActiveSlide === 2 ? "bg-brand-green-pale" : "bg-brand-green"}`}>
+      <section id="home" className="bg-brand-green pt-4 md:pt-6">
         <div className="mx-auto w-full max-w-7xl px-3 md:px-6">
           <Carousel
             className="rounded-2xl"
             nextArrow={false}
             prevArrow={false}
-            // autoplay
-            // autoplayDelay={5000}
+            autoplay
+            autoplayDelay={5000}
             loop
-            navigation={({ setActiveIndex, activeIndex, length }) => {
-              if (heroActiveSlide !== activeIndex) {
-                setHeroActiveSlide(activeIndex);
-              }
-
-              return (
-                <div className="absolute right-4 top-4 z-20 flex gap-2 md:right-6 md:top-6">
-                  {new Array(length).fill("").map((_, i) => (
-                    <span
-                      key={i}
-                      onClick={() => setActiveIndex(i)}
-                      className={`block h-1 cursor-pointer rounded-2xl transition-all ${activeIndex === i
-                        ? activeIndex === 1 || activeIndex === 2
-                          ? "w-8 bg-brand-blue"
-                          : "w-8 bg-white"
-                        : activeIndex === 1 || activeIndex === 2
-                          ? "w-4 bg-brand-blue/40"
-                          : "w-4 bg-white/40"
-                        }`}
-                    />
-                  ))}
-                </div>
-              );
-            }}
+            navigation={({ setActiveIndex, activeIndex, length }) => (
+              <div className="absolute right-4 top-4 z-20 flex gap-2 md:right-6 md:top-6">
+                {new Array(length).fill("").map((_, i) => (
+                  <span
+                    key={i}
+                    onClick={() => setActiveIndex(i)}
+                    className={`block h-1 cursor-pointer rounded-2xl transition-all ${activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/40"}`}
+                  />
+                ))}
+              </div>
+            )}
           >
             {heroSlides.map((slide, index) => (
               <div
                 key={index}
-                className={`grid min-h-[460px] grid-cols-1 items-center gap-8 px-4 pt-8 md:min-h-[560px] md:gap-10 md:px-6 md:pt-10 lg:grid-cols-2 ${index === 1 ? "bg-white" : index === 2 ? "bg-brand-green-pale" : "bg-brand-green"
-                  }`}
+                className="grid min-h-[460px] grid-cols-1 items-center gap-8 bg-brand-green px-4 pt-8 md:min-h-[560px] md:gap-10 md:px-6 md:pt-10 lg:grid-cols-2"
               >
-                <div className={index === 1 || index === 2 ? "text-brand-blue" : "text-white pb-6"}>
+                <div className="text-white pb-6">
                   <p className="mb-4 text-xs font-bold uppercase tracking-[2px] text-brand-green">Ethio Telecom VAS Service · April 2026</p>
                   <h1 className="mb-4 text-3xl font-black leading-tight md:text-6xl">{slide?.title}</h1>
-                  <p className={`mb-2 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-brand-blue/90" : "text-white"}`}>{slide?.para1}</p>
-                  <p className={`mb-2 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-brand-blue/85" : "text-white"}`}>{slide?.para2}</p>
-                  <p className={`mb-7 max-w-xl md:text-[18px] ${index === 1 || index === 2 ? "text-brand-blue/80" : "text-white"}`}>{slide?.description}</p>
+                  <p className="mb-2 max-w-xl text-white md:text-[18px]">{slide?.para1}</p>
+                  <p className="mb-2 max-w-xl text-white md:text-[18px]">{slide?.para2}</p>
+                  <p className="mb-7 max-w-xl text-white md:text-[18px]">{slide?.description}</p>
                   <div className="mb-6 flex flex-wrap gap-3">
-                    <button className={`rounded-md px-6 py-3 text-sm font-bold text-white ${index === 0 ? "bg-brand-blue hover:bg-brand-blue-hover" : "bg-brand-green"}`}>Get My NameTAG</button>
-                    <a href="#how" className={`rounded-md border-2 px-6 py-3 text-sm font-bold ${index === 1 || index === 2 ? "border-brand-blue/45 text-brand-blue hover:bg-brand-blue/5" : "border-brand-blue bg-brand-blue text-white hover:bg-brand-blue-hover"}`}>
+                    <button className="rounded-md bg-brand-blue px-6 py-3 text-sm font-bold text-white hover:bg-brand-blue-hover">Get My NameTAG</button>
+                    <a href="#how" className="rounded-md border-2 border-brand-blue bg-brand-blue px-6 py-3 text-sm font-bold text-white hover:bg-brand-blue-hover">
                       See How It Works
                     </a>
                   </div>
@@ -409,7 +394,7 @@ export default function Home2Page() {
                   </div>
                 </div>
 
-                <div className="relative mx-auto flex h-[360px] w-full max-w-[360px] items-center justify-center overflow-hidden md:h-[550px] md:max-w-[560px]">
+                <div className="relative mx-auto flex h-[360px] w-full max-w-[360px] items-center justify-center overflow-hidden md:h-[570px] md:max-w-[560px]">
                   {index === 0 && (
                     <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 block">
                       <div className="wave-ring absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-white/35 md:h-[460px] md:w-[460px]" />
@@ -639,7 +624,7 @@ export default function Home2Page() {
 
       <section className=" bg-brand-green py-16 text-white" id="users">
         <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
-          <SectionTitle  blue label="Who Uses NameTAG?" title="Designed for Individuals and Brands" sub="Whether you are an individual subscriber or a large corporate, NameTAG has the features you need." />
+          <SectionTitle blue label="Who Uses NameTAG?" title="Designed for Individuals and Brands" sub="Whether you are an individual subscriber or a large corporate, NameTAG has the features you need." />
 
           <div className="grid gap-8 lg:grid-cols-2">
             <div>
@@ -655,15 +640,15 @@ export default function Home2Page() {
                 {activeTabItems.map((item, idx) => {
                   const FeatureIcon = userFeatureIcons[idx % userFeatureIcons.length];
                   return (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/95 text-brand-blue shadow-[0_2px_8px_rgba(0,0,0,0.12)]">
-                      <FeatureIcon className="text-lg" />
-                    </span>
-                    <div>
-                      <div className="pt-1 text-sm font-bold">{item}</div>
-                      <div className="text-xs text-white/70">Optimized for Ethiopia market use-cases.</div>
-                    </div>
-                  </li>
+                    <li key={item} className="flex items-start gap-3">
+                      <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/95 text-brand-blue shadow-[0_2px_8px_rgba(0,0,0,0.12)]">
+                        <FeatureIcon className="text-lg" />
+                      </span>
+                      <div>
+                        <div className="pt-1 text-sm font-bold">{item}</div>
+                        <div className="text-xs text-white/70">Optimized for Ethiopia market use-cases.</div>
+                      </div>
+                    </li>
                   );
                 })}
               </ul>
@@ -713,41 +698,38 @@ export default function Home2Page() {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { code: "M", name: "Monthly", desc: "Flexible — renew every month. No long commitment.", accent: "border-b-[3px] border-b-[#3B82F6]", tint: "text-[#3B82F6]/28", kind: "monthly" },
-              { code: "Q", name: "Quarterly", desc: "3-month plan — save more than monthly.", accent: "border-b-[3px] border-b-[#22C55E]", tint: "text-[#22C55E]/28", kind: "quarterly" },
-              { code: "S", name: "Semi-Annual", desc: "6-month plan — great value for regular users.", accent: "border-b-[3px] border-b-[#F59E0B]", tint: "text-[#F59E0B]/28", kind: "semi" },
-              { code: "A", name: "Annual", desc: "Best savings — 12 months at the lowest rate.", accent: "border-b-[3px] border-b-[#A855F7]", tint: "text-[#A855F7]/28", kind: "annual" },
+              {
+                code: "M", name: "Monthly", desc: "Flexible — renew every month. No long commitment.", accent: "border-b-[3px] border-b-[#3B82F6]", tint: "text-[#3B82F6]/28", kind: "monthly",
+                img: "/monthly_calendar.png"
+              },
+              {
+                code: "Q", name: "Quarterly", desc: "3-month plan — save more than monthly.", accent: "border-b-[3px] border-b-[#22C55E]", tint: "text-[#22C55E]/28", kind: "quarterly",
+                img: "/quarterly_growth.png"
+              },
+              {
+                code: "S", name: "Semi-Annual", desc: "6-month plan — great value for regular users.", accent: "border-b-[3px] border-b-[#F59E0B]", tint: "text-[#F59E0B]/28", kind: "semi",
+                img: "/semi_annual_shield.png"
+              },
+              {
+                code: "A", name: "Annual", desc: "Best savings — 12 months at the lowest rate.", accent: "border-b-[3px] border-b-[#A855F7]", tint: "text-[#A855F7]/28", kind: "annual",
+                img: "/annual_badge.png"
+              },
             ].map((plan) => {
               return (
                 <div
                   key={plan.name}
-                  className={`group relative cursor-pointer overflow-hidden rounded-2xl border border-black/10 bg-white p-5 text-left shadow-[0_8px_18px_rgba(0,0,0,0.15)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.20)] ${plan.accent}`}
+                  className={`group relative cursor-pointer overflow-hidden rounded-2xl border border-black/10 bg-white text-left shadow-[0_8px_18px_rgba(0,0,0,0.15)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.20)] ${plan.accent}`}
                 >
-                  <div className="relative z-10 mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-brand-blue-soft bg-brand-blue-tint text-xs font-bold text-brand-blue">
-                    {plan.code}
+                  <div className="p-5">
+                    <div className="relative z-10 mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-brand-blue-soft bg-brand-blue-tint text-xs font-bold text-brand-blue">
+                      {plan.code}
+                    </div>
+                    <div className="relative z-10 text-lg md:text-xl font-extrabold leading-tight text-brand-blue">{plan.name}</div>
+                    <p className="relative z-10 mt-1 text-sm md:text-base leading-relaxed text-brand-blue-text-muted">{plan.desc}</p>
                   </div>
-                  <div className="relative z-10 text-lg md:text-xl font-extrabold leading-tight text-brand-blue">{plan.name}</div>
-                  <p className="relative z-10 mt-1 text-sm md:text-base leading-relaxed text-brand-blue-text-muted">{plan.desc}</p>
-                  {/* {plan.kind === "monthly" && (
-                    <div className={`pointer-events-none bottom-0 right-0 z-0 ${plan.tint}`}>
-                      <IoCalendarOutline className="text-[86px] text-brand-blue" />
-                     </div>
-                  )}
-                  {plan.kind === "quarterly" && (
-                    <div className={`pointer-events-none bottom-0 right-0 z-0 ${plan.tint}`}>
-                      <IoBarChartOutline className="text-[90px] text-brand-blue" />
-                     </div>
-                  )}
-                  {plan.kind === "semi" && (
-                    <div className={`pointer-events-none absolute bottom-0 right-0 z-0 ${plan.tint}`}>
-                      <IoShieldOutline className="text-[94px] text-brand-blue" />
-                     </div>
-                  )}
-                  {plan.kind === "annual" && (
-                    <div className={`pointer-events-none absolute bottom-0 right-0 z-0 ${plan.tint}`}>
-                      <IoPricetagOutline className="text-[96px] text-brand-blue" />
-                     </div>
-                  )} */}
+                  <div className={`pointer-events-none flex justify-end bottom-0 right-0 z-0 ${plan.tint}`}>
+                    <img src={plan.img} alt={plan.name} className="w-[200px] h-[150px] object-contain" />
+                  </div>
                 </div>
               );
             })}
@@ -756,15 +738,14 @@ export default function Home2Page() {
           <h3 className="mb-4 mt-8 text-xl font-extrabold">Payment Channels</h3>
           <div className="grid gap-4 lg:grid-cols-3">
             {[
-              { icon: IoPersonOutline, title: "telebirr Super App", desc: "Pay directly through the telebirr super app (B2C)" },
-              { icon: IoShieldCheckmarkOutline, title: "telebirr Partner App", desc: "Online payments via partner web portals (B2B)" },
-              { icon: IoCallOutline, title: "Ethio Airtime", desc: "Deduct subscription from your Ethio airtime balance" },
+              { icon: IoPersonOutline,img:"/telebirr_super_app_dark.png", title: "telebirr Super App", desc: "Pay directly through the telebirr super app (B2C)" },
+              { icon: IoShieldCheckmarkOutline,img:"/telebirr_partner_app_blue.png", title: "telebirr Partner App", desc: "Online payments via partner web portals (B2B)" },
+              { icon: IoCallOutline,img:"/ethio_airtime_green.png", title: "Ethio Airtime", desc: "Deduct subscription from your Ethio airtime balance" },
             ].map((channel) => {
-              const ChannelIcon = channel.icon;
               return (
                 <div key={channel.title} className="flex items-center gap-3 rounded-2xl border border-brand-blue-border-soft bg-brand-card-blue p-4 transition-all duration-200 hover:border-brand-blue/40 hover:bg-white hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
-                  <div className="grid h-11 w-11 place-items-center rounded-xl border border-brand-blue-soft bg-brand-blue-tint text-brand-blue">
-                    <ChannelIcon className="text-[20px]" />
+                  <div className="grid h-14 w-14 place-items-center bg-brand-blue-tint text-brand-blue">
+                    <img src={channel.img} alt={channel.title} className="w-full h-full object-contain" />
                   </div>
                   <div>
                     <p className="text-sm font-bold text-brand-blue">{channel.title}</p>
