@@ -40,19 +40,20 @@ const navLinks = [
 ];
 
 const stats = [
-  { value: "5M+", label: "Target Subscribers" },
-  { value: "#1", label: "Caller Identity VAS in Ethiopia" },
+  { value: "#1", label: "Caller Identity Platform in Ethiopia" },
   { value: "4 Tiers", label: "Platinum · Golden · Silver · Bronze" },
+  { value: "Call Charges", label: "As per package plan of your primary number" },
   { value: "5 Languages", label: "EN · AM · OR · TI · SO" },
+
 ];
 
 const tiers = [
   {
     name: "Platinum",
-    tag: "#11",
+    tag: "#1111",
     level: "Ultra-Exclusive",
     description: "Shortest, most prestigious numbers",
-    examples: "#11, #222, #333",
+    examples: "#11100, #0022, #333111",
     headerClass: "bg-[#1a1a2e]",
     chipLabel: "Highest Tier",
     chipClass: "bg-[#FFD700] text-[#1A1A1A]",
@@ -63,7 +64,7 @@ const tiers = [
     tag: "#9990",
     level: "Repeating Patterns",
     description: "High prestige repeating patterns",
-    examples: "#11222, #200200, #9990",
+    examples: "#11022, #200200, #9900",
     headerClass: "bg-[#92400E]",
     chipLabel: "Premium Tier",
     chipClass: "bg-white/20 text-white",
@@ -103,19 +104,19 @@ const features = [
   {
     title: "Fayda KYC Verification",
     description:
-      "Secure identity verification via Ethiopia's National ID system.",
+      "Secure identity verification via Ethiopia's National ID system for Individual Customers.",
     img: "/icon2.svg"
   },
   {
     title: "Call PIN Security",
     description:
-      "Optional PIN for incoming calls so only approved callers can reach your TAG.",
+     "Optional PIN for incoming calls so only approved callers can reach your #TAG.",
     img: "/icon3.svg"
   },
   {
     title: "Call Scheduling",
     description:
-      "Set active hours for your TAG and manage when calls can reach you.",
+      "Set active hours for your #TAG and manage when calls can reach you.",
     img: "/icon4.svg"
   },
   {
@@ -125,27 +126,27 @@ const features = [
     img: "/icon5.svg"
   },
   {
-    title: "Analytics Dashboard",
+    title: "Customer Dashboard",
     description:
-      "Track call volumes, impressions, CDR reports, and usage insights.",
-    img: "/icon6.svg"
+      "NameTAG Dashboard for customers to manage the Account and #TAGs",
+      img: "/icon6.svg"
   },
   {
     title: "Multi-Channel Access",
     description:
-      "Manage via Web Portal, Mobile App, or USSD *883# from anywhere.",
+      "Manage via Web Portal, Mobile App. And USSD *883# for an individaul customers.",
     img: "/icon7.svg"
   },
   {
-    title: "Flexible Billing",
+    title: "Flexible Billing for Corprotes",
     description:
-      "Monthly, Quarterly, Semi-Annual, and Annual plans with telebirr or airtime.",
+     "Monthly, Quarterly, Semi-Annual, and Annual plans with telebirr.",
     img: "/icon8.svg"
   },
   {
-    title: "Welcome Voice Prompt",
+    title: "Monthly Billing for Individuals",
     description:
-      "Corporate greeting playback before connection for stronger brand identity.",
+    "Monthly plan for individual customer with telebirr and Ethio Airtime charging.",
     img: "/icon9.svg"
   },
 ];
@@ -231,7 +232,7 @@ export default function Home2Page() {
     {
       title: "Your Identity, Simplified.",
       para1: "Get a memorable 2nd number on your existing SIM.",
-      para2: "Show your name, not your digits, on every call.",
+      para2: "Show your #TAG, not your orginal mobile number on NameTAG calls.",
       description: "NameTAG for individuals and brands.",
     },
   ]).map((slide, index) => ({
@@ -251,16 +252,18 @@ export default function Home2Page() {
           "Quick self-activation",
           "Fayda KYC verification",
           "Call PIN security",
-          "Incoming call scheduling",
+          "Incoming call management",
           "Block / Unblock callers",
+
         ]
         : [
-          "Branded Caller ID",
-          "Multiple NameTAGs",
-          "Welcome voice prompt",
-          "Analytics dashboard",
+          "Corporete NameTAG",
+          "Multiple NameTAGs under single corproate account",
+          "NameTAG change as per business requirement",
+          "Dashboard to manage all NameTAGs",
+          "Call PIN security",
           "Call scheduling",
-          "PABX integration",
+          "Verification with company registration documents",
         ],
     [activeTab]
   );
@@ -467,9 +470,9 @@ export default function Home2Page() {
             <div className="space-y-4">
               {[
                 "Your 2nd Short Number",
-                "Show Your Name, Not Digits",
+                "Show Your #TAG, Not Primay number",
                 "Dial with # Prefix",
-                "Dial Calls to Other #TAGs and #Mobile numbers"
+                "Dial Calls to Other's #TAGs and Mobile number with call charges as per your package plan"
               ].map((title) => (
                 <div
                   key={title}
@@ -711,7 +714,7 @@ export default function Home2Page() {
                 img: "/semi_annual_shield.png"
               },
               {
-                code: "A", name: "Annual", desc: "Best savings — 12 months at the lowest rate.", accent: "border-b-[3px] border-b-[#A855F7]", tint: "text-[#A855F7]/28", kind: "annual",
+                code: "A", name: "Annual", desc: "Best savings — 12 months with best rates.", accent: "border-b-[3px] border-b-[#A855F7]", tint: "text-[#A855F7]/28", kind: "annual",
                 img: "/annual_badge.png"
               },
             ].map((plan) => {
@@ -769,8 +772,8 @@ export default function Home2Page() {
             {[
               { no: "01", title: "Create Account", desc: "Register at nametag.et or via the Mobile App. Choose individual or corporate account type." },
               { no: "02", title: "Choose Your TAG", desc: "Search and pick your NameTAG across Platinum, Golden, Silver, or Bronze tiers." },
-              { no: "03", title: "Pay & Activate", desc: "Pay via telebirr or Ethio Airtime. Your TAG is instantly active on your SIM." },
-              { no: "04", title: "Start Calling", desc: "Dial with # prefix before any number. The receiver sees your NameTAG as CLI." },
+              { no: "03", title: "Pay & Activate", desc: "Pay via telebirr or Ethio Airtime. Your #TAG is instantly active on your SIM after verification." },
+              { no: "04", title: "Start Calling", desc: "Dial with # prefix before any number. The receiver sees your #TAG  as CLI." },
             ].map((step) => (
               <div key={step.no} className="text-center">
                 <p className="text-[44px] font-black leading-none text-brand-green/80 [text-shadow:_0_1px_0_#ffffff,_0_0_1px_#3f6212]">{step.no}</p>
@@ -869,7 +872,7 @@ export default function Home2Page() {
                 </div>
               </div>
               <p className="max-w-xs text-xs leading-relaxed text-white/70">
-                Ethiopia's first caller identity platform, transforming how people see you when you call, from long numbers to a #TAG that truly represents you.              </p>
+                Ethiopia's first caller identity platform, transforming how people see you when you call, from long numbers to a short #TAG that truly represents you.              </p>
             </div>
 
             <div>
