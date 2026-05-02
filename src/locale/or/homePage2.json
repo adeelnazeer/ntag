@@ -1,0 +1,129 @@
+{
+    "nav": {
+      "links": [
+        { "href": "#home", "label": "Mana Jalqabaa" },
+        { "href": "#how", "label": "Akka Itti Hojjetu" },
+        { "href": "#tiers", "label": "Sadarkaa Lakkoofsaa" },
+        { "href": "#users", "label": "Eenyu Fayyadama" },
+        { "href": "#features", "label": "Amaloota" },
+        { "href": "#faq", "label": "Gaaffilee Yeroo Baay’ee Gaafataman" }
+      ],
+      "lang": "OR",
+      "login": "Seeni",
+      "register": "Galmaa’i",
+      "logoAlt": "Ethio Telecom",
+      "telebirrAlt": "telebirr",
+      "menuAria": "Menu Bani",
+      "menuCloseAria": "Menu Cufi"
+    },
+    "carousel": {
+      "fallback": {
+        "title": "Eenyummaan Kee, Salphaa.",
+        "para1": "SIM kee irratti lakkoofsa lammaffaa yaadatamaa argadhu.",
+        "para2": "Wicita NameTAG irratti lakkoofsa kee osoo hin taane #TAG kee agarsiisi.",
+        "description": "NameTAG nama dhuunfaa fi dhaabbileeef."
+      },
+      "slides": [
+        {
+          "title": "NameTAG",
+          "para1": "Lakkoofsa Qofa Hin Ta’iin",
+          "para2": "Yeroo wicita gootu maqaa kee agarsiisi malee lakkoofsa hin ta’in.",
+          "description": "NameTAG lakkoofsa bilbila kee gara maqaa addaa fi yaadatamaa jijjiira. Nama dhuunfaa yookaan dhaabbata yoo taate, maqaa kee agarsiisuun walqunnamtii kee salphaa, bareedaa fi yaadatamaa taasisa."
+        },
+        {
+          "title": "NameTAG",
+          "para1": "Aqoonsa Brand Kee Cimsii",
+          "para2": "Maamiltootaaf maqaa addaa fayyadamuun brand kee agarsiisi.",
+          "description": "NameTAG lakkoofsa kee gara maqaa brand kee jijjiiruudhaan maqaa kee cimsuuf si gargaara. Kun maamiltootaaf si beekuu fi yaadachuu salphisa, akkasumas amantaa fi amanamummaa ijaara."
+        },
+        {
+          "title": "NameTAG",
+          "para1": "Wicita Yaadatamaa, Salphaan",
+          "para2": "Maqaa hawwataa lakkoofsa kee waliin walitti hidhi.",
+          "description": "NameTAG eenyummaan kee yeroo wicitaati. Maqaan ati filatte yeroo hunda dursee ni mul’ata. Itti fayyadamuun salphaa dha, namoota prepaid fi postpaid hundaaf ni danda’ama."
+        }
+      ]
+    },
+    "hero": {
+      "badge": "Tajaajila VAS Ethio Telecom · Ebla 2026",
+      "ctaPrimary": "NameTAG Koo Argadhu",
+      "ctaSecondary": "Akka Itti Hojjetu Ilaali",
+      "imgLeftAlt": "Qaama A",
+      "imgRightAlt": "Qaama B",
+      "store": {
+        "googleAria": "Google Play irraa argadhu",
+        "googleTop": "ARGADHU",
+        "googleBottom": "Google Play",
+        "appleAria": "App Store irraa buusi",
+        "appleTop": "BUUSI",
+        "appleBottom": "App Store"
+      }
+    },
+    "stats": {
+      "items": [
+        { "value": "#1", "label": "Platform Aqoonsa Wicita Itoophiyaa" },
+        { "value": "Sadarkaa 4", "label": "Platinum · Golden · Silver · Bronze" },
+        { "value": "Kaffaltii Wicitaa", "label": "Akka karoora lakkoofsa kee jalqabaatti" },
+        { "value": "Afaan 5", "label": "EN · AM · OR · TI · SO" }
+      ]
+    },
+    "what": {
+      "label": "NameTAG Maali?",
+      "title": "Lakkoofsa Virtual Eenyummaa Kee",
+      "sub": "NameTAG lakkoofsa gabaabaa (2–8 qubee) SIM kee waliin walqabatu siif kenna.",
+      "bulletBody": "Beekamtii saffisaa fi qoodinsa salphaaf kan qophaa’e.",
+      "bullets": [
+        "Lakkoofsa Lammaffaa Gabaabaa",
+        "#TAG Kee Agarsiisi",
+        "# tiin Wici",
+        "#TAG yookaan lakkoofsa birootti wici"
+      ]
+    },
+    "how": {
+      "label": "Akka Itti Hojjetu",
+      "title": "Muuxannoo Wicita NameTAG",
+      "sub": "Qaamni A # fayyadamee ni waca, Qaamni B NameTAG ni arga.",
+      "imageAlt": "Aqoonsa"
+    },
+    "tiers": {
+      "label": "Sadarkaa Lakkoofsaa",
+      "title": "Sadarkaa NameTAG Kee Filadhu",
+      "sub": "Xiqqaan 2 · Guddaan 8",
+      "items": [
+        {
+          "id": "platinum",
+          "name": "Platinum",
+          "tag": "#1111",
+          "level": "Baay’ee Addaa",
+          "description": "Lakkoofsota gabaabaa fi qaalii",
+          "examples": "#11100, #0022",
+          "chipLabel": "Ol’aanaa"
+        }
+      ]
+    },
+    "faq": {
+      "label": "FAQ",
+      "title": "Gaaffilee Yeroo Baay’ee Gaafataman",
+      "items": [
+        {
+          "id": "original-private",
+          "q": "Lakkoofsi koo ni dhokata?",
+          "a": "Eeyyee, #TAG qofatu mul’ata."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Lakkoofsa Qofa Hin Ta’iin.",
+      "sub": "NameTAG galmeessi",
+      "contactHeading": "Nu Qunnami",
+      "phone": "9234",
+      "email": "info@tech-vas.com"
+    },
+    "footer": {
+      "brand": "NameTAG",
+      "brandSub": "Ethio Telecom",
+      "tagline": "Platform aqoonsa wicitaa jalqabaa Itoophiyaa",
+      "copyright": "©2026 Ethio telecom"
+    },
+    "backToTop": "Gara Gubbaa"
+  }

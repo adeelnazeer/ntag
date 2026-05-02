@@ -12,6 +12,7 @@ import APICall from "../network/APICall";
 import EndPoints from "../network/EndPoints";
 import { ConstentRoutes } from "../utilities/routesConst";
 import { useRecaptchaToken } from "../hooks/useRecaptchaToken";
+import HeaderNew from "../pages/home2/components/HeaderNew";
 
 const DashboardLayoutCustomer = ({ children }) => {
     const navigate = useNavigate();
@@ -92,17 +93,25 @@ const DashboardLayoutCustomer = ({ children }) => {
     };
 
     return (
-        <div className="h-screen flex flex-col">
-            <Header />
-            <div className="flex-1 flex flex-col overflow-auto">
-                <div className="flex flex-1 overflow-auto grid-cols-12 h-full">
-                    <div className="lg:w-72 h-full bg-[#fbfbfb]">
+        <div className="flex h-screen min-h-0 flex-col">
+            <div className="relative z-[50] shrink-0">
+                <HeaderNew
+                    customerSidebar={{
+                        isOpen: isSidebarOpen,
+                        setOpen: setIsSidebarOpen,
+                    }}
+                />
+            </div>
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+                <div className="flex h-full min-h-0 flex-1 overflow-hidden">
+                    <div className="relative h-full w-0 shrink-0 overflow-visible bg-[#fbfbfb] lg:w-72 lg:shrink-0">
                         <SidebarCustomer
                             setIsSidebarOpen={setIsSidebarOpen}
                             isSidebarOpen={isSidebarOpen}
+                            hideFloatingTrigger
                         />
                     </div>
-                    <div className="w-full col-span-12 md:px-5 px-2 h-full overflow-auto md:py-4 py-2 pt-2 md:mt-0 md:block">
+                    <div className="col-span-12 h-full min-w-0 flex-1 overflow-auto px-2 py-2 pt-2 md:mt-0 md:block md:px-5 md:py-4">
                         <div className="md:w-11/12 w-full md:mx-auto sm:w-full sm:mx-auto">
                             {!locatiion?.pathname?.includes("buy-tag") && (
                                 <div className=" pb-4">

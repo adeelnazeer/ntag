@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import Sidebar from "../components/sideBar";
-import Header from "../components/header";
 import Footer from "../components/footer";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,6 +10,7 @@ import { setUserData, setCorporateDocuments } from "../redux/userSlice";
 import { getToken } from "../utilities/auth";
 import { BiArrowBack } from "react-icons/bi";
 import EndPoints from "../network/EndPoints";
+import HeaderNew from "../pages/home2/components/HeaderNew";
 
 const DashboardLayout = ({ children }) => {
   const navigate = useNavigate();
@@ -41,14 +41,10 @@ const DashboardLayout = ({ children }) => {
     APICall("get", null, `${EndPoints.customer.newSecurityEndPoints.corporate.checkDocumentStatus}`)
       .then((res) => {
         if (res?.data) {
-          // Store user data in Redux
-
           if (userData?.parent_id == null) {
             dispatch(setUserData(res.data));
-            // Store documents in Redux
             dispatch(setCorporateDocuments(res.data.corp_document || []));
           }
-          // Show upload modal if no documents
           if (
             res?.data?.corp_document?.length < 3 &&
             userData?.parent_id == null
@@ -83,37 +79,47 @@ const DashboardLayout = ({ children }) => {
   }, [userData?.customer_type]);
 
   return (
-    <div className="h-screen flex flex-col w-full min-w-0 overflow-hidden">
-      <header className="flex-shrink-0 relative z-[50]">
-        <Header />
+    <div className="flex h-screen min-h-0 w-full flex-col overflow-hidden">
+      <header className="relative z-[50] shrink-0">
+        <HeaderNew
+          corporateSidebar={{
+            isOpen: isSidebarOpen,
+            setOpen: setIsSidebarOpen,
+          }}
+        />
       </header>
-      <div className="flex-1 flex min-h-0 overflow-hidden">
-        <div className="hidden lg:flex lg:w-72 flex-shrink-0 flex-col min-h-0 bg-[#fbfbfb]">
-          <div className="flex-1 min-h-0 overflow-y-auto">
-            <Sidebar
-              setIsSidebarOpen={setIsSidebarOpen}
-              isSidebarOpen={isSidebarOpen}
-              data={corporateDocuments}
-            />
-          </div>
-        </div>
-        <div className="flex-1 min-w-0 overflow-auto md:px-5 px-2 md:py-4 py-2 pt-2 md:mt-0">
-          <div className="md:w-11/12 w-full md:mx-auto sm:w-full sm:mx-auto">
-            {!locatiion?.pathname?.includes("buy-tag") && (
-              <div className=" pb-4">
-                <BiArrowBack
-                  className=" text-3xl cursor-pointer text-secondary font-bold"
-                  onClick={() => {
-                    navigate(-1);
-                  }}
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <div className="flex h-full min-h-0 flex-1 overflow-hidden">
+          <div className="relative h-full w-0 shrink-0 overflow-visible bg-[#fbfbfb] lg:w-72 lg:shrink-0">
+            <div className="flex h-full min-h-0 flex-col">
+              <div className="min-h-0 flex-1 overflow-y-auto">
+                <Sidebar
+                  setIsSidebarOpen={setIsSidebarOpen}
+                  isSidebarOpen={isSidebarOpen}
+                  data={corporateDocuments}
+                  hideFloatingTrigger
                 />
               </div>
-            )}
-            {children}
+            </div>
+          </div>
+          <div className="min-w-0 flex-1 overflow-auto px-2 py-2 pt-2 md:mt-0 md:px-5 md:py-4">
+            <div className="w-full sm:mx-auto sm:w-full md:mx-auto md:w-11/12">
+              {!locatiion?.pathname?.includes("buy-tag") && (
+                <div className=" pb-4">
+                  <BiArrowBack
+                    className=" text-3xl cursor-pointer text-secondary font-bold"
+                    onClick={() => {
+                      navigate(-1);
+                    }}
+                  />
+                </div>
+              )}
+              {children}
+            </div>
           </div>
         </div>
       </div>
-      <footer className="w-full flex-shrink-0 relative z-[50]">
+      <footer className="relative z-[50] w-full shrink-0">
         <Footer />
       </footer>
       <UplaodDocument

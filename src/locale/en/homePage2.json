@@ -1,0 +1,411 @@
+{
+  "nav": {
+    "links": [
+      { "href": "#home", "label": "Home" },
+      { "href": "#how", "label": "How It Works" },
+      { "href": "#tiers", "label": "Number Tiers" },
+      { "href": "#users", "label": "Who Uses" },
+      { "href": "#features", "label": "Features" },
+      { "href": "#faq", "label": "FAQ" }
+    ],
+    "lang": "Eng",
+    "login": "Log in",
+    "register": "Register",
+    "logoAlt": "Ethio Telecom",
+    "telebirrAlt": "telebirr",
+    "menuAria": "Open menu",
+    "menuCloseAria": "Close menu"
+  },
+  "carousel": {
+    "fallback": {
+      "title": "Your Identity, Simplified.",
+      "para1": "Get a memorable 2nd number on your existing SIM.",
+      "para2": "Show your #TAG, not your orginal mobile number on NameTAG calls.",
+      "description": "NameTAG for individuals and brands."
+    },
+    "slides": [
+      {
+        "title": "NameTAG",
+        "para1": "Be More Than a Number",
+        "para2": "Show your name, not your number, when making calls.",
+        "description": "With NameTAG, your phone number transforms into a unique, memorable name that reflects who you are. Whether you're an individual or a business, this lets you display your chosen name instead of a standard number when making calls—making every interaction more personal, professional, and easy to remember."
+      },
+      {
+        "title": "NameTAG",
+        "para1": "Boost Your Brand Identity",
+        "para2": "Use a custom name for your customers calls to reflect your brand.",
+        "description": "NameTAG helps you strengthen your brand presence by replacing your regular phone number with a custom NameTAG. Perfect for businesses and influencers, this service allows customers and contacts to recognize and remember you instantly—helping to build trust, brand loyalty, and better communication experiences."
+      },
+      {
+        "title": "NameTAG",
+        "para1": "Memorable Calls, Made Easy",
+        "para2": "Create a catchy NameTAG linked to your number.",
+        "description": "Stand out in every call with a NameTAG—your personalized calling identity. Whether it's a nickname, brand name, or phrase, NameTAG links your selected name to your real number, ensuring that whoever you contact sees your identity first. It's simple to set up, easy to manage, and available for both prepaid and postpaid users."
+      }
+    ]
+  },
+  "hero": {
+    "badge": "Ethio Telecom VAS Service · April 2026",
+    "ctaPrimary": "Get My NameTAG",
+    "ctaSecondary": "See How It Works",
+    "imgLeftAlt": "A Party",
+    "imgRightAlt": "B Party",
+    "store": {
+      "googleAria": "Get it on Google Play",
+      "googleTop": "GET IT ON",
+      "googleBottom": "Google Play",
+      "appleAria": "Download on the App Store",
+      "appleTop": "Download on the",
+      "appleBottom": "App Store"
+    }
+  },
+  "stats": {
+    "items": [
+      { "value": "#1", "label": "Caller Identity Platform in Ethiopia" },
+      { "value": "4 Tiers", "label": "Platinum · Golden · Silver · Bronze" },
+      { "value": "Call Charges", "label": "As per package plan of your primary number" },
+      { "value": "5 Languages", "label": "EN · AM · OR · TI · SO" }
+    ]
+  },
+  "what": {
+    "label": "What is NameTAG?",
+    "title": "A Virtual Number for Your Real Identity",
+    "sub": "NameTAG lets you get a short, catchy number (2–8 chars) mapped to your existing Ethio SIM.",
+    "bulletBody": "Designed for instant recognition, easier sharing, and a stronger personal or brand identity.",
+    "bullets": [
+      "Your 2nd Short Number",
+      "Show Your #TAG, Not Primay number",
+      "Dial with # Prefix",
+      "Dial Calls to Other's #TAGs and Mobile number with call charges as per your package plan"
+    ],
+    "corporate": {
+      "label": "Corporate",
+      "tagLine": "#Ethio,#532",
+      "subtitle": "Brand Identity",
+      "body": "Register your nicknaeas your caller identity",
+      "incoming": "Incoming",
+      "cli": "#Ethio"
+    },
+    "individual": {
+      "label": "INDIVIDUAL",
+      "tagLine": "#Name,#8832",
+      "subtitle": "Memorable",
+      "body": "Register your nicknaeas your caller identity",
+      "incoming": "Incoming",
+      "cli": "#Name"
+    },
+    "businessCardChip": "Business Card",
+    "businessCard": {
+      "company": "KENTUCKY FRIED CHICKEN",
+      "official": "Official NameTAG",
+      "website": "www.company.com",
+      "tag": "#883 (#Name)",
+      "phone": "0978123456",
+      "email": "companyofficial@gmail.com",
+      "address": "123 Main Street, Addis Ababa, Ethiopia",
+      "nameBlock": "NAME",
+      "role": "MANAGER"
+    },
+    "curveAlt": "curve background"
+  },
+  "how": {
+    "label": "How It Works",
+    "title": "The NameTAG Call Experience",
+    "sub": "A-Party dials with # prefix, platform resolves identity, B-Party sees NameTAG as CLI.",
+    "imageAlt": "Identity"
+  },
+  "tiers": {
+    "label": "Number Tiers",
+    "title": "Choose Your NameTAG Level",
+    "sub": "Min 2 digits · Max 8 digits/characters · On-net voice calls only",
+    "examplesPrefix": "Examples: ",
+    "items": [
+      {
+        "id": "platinum",
+        "name": "Platinum",
+        "tag": "#1111",
+        "level": "Ultra-Exclusive",
+        "description": "Shortest, most prestigious numbers",
+        "examples": "#11100, #0022, #333111",
+        "chipLabel": "Highest Tier"
+      },
+      {
+        "id": "golden",
+        "name": "Golden",
+        "tag": "#9990",
+        "level": "Repeating Patterns",
+        "description": "High prestige repeating patterns",
+        "examples": "#11022, #200200, #9900",
+        "chipLabel": "Premium Tier"
+      },
+      {
+        "id": "silver",
+        "name": "Silver",
+        "tag": "#33944",
+        "level": "Patterned Numbers",
+        "description": "Popular patterned numbers",
+        "examples": "#11022, #33944",
+        "chipLabel": "Mid Tier"
+      },
+      {
+        "id": "bronze",
+        "name": "Bronze",
+        "tag": "#23104",
+        "level": "Named TAGs",
+        "description": "Custom names up to 8 characters",
+        "examples": "#Name, #Pepsi, #Touch",
+        "chipLabel": "Standard Tier"
+      }
+    ]
+  },
+  "users": {
+    "label": "Who Uses NameTAG?",
+    "title": "Designed for Individuals and Brands",
+    "sub": "Whether you are an individual subscriber or a large corporate, NameTAG has the features you need.",
+    "tabIndividual": "Individual Customers",
+    "tabCorporate": "Corporate & Brands",
+    "featureHint": "Optimized for Ethiopia market use-cases.",
+    "partyA": "A Party",
+    "partyB": "B Party",
+    "features": {
+      "individual": [
+        "Custom caller identity",
+        "Quick self-activation",
+        "Fayda KYC verification",
+        "Call PIN security",
+        "Incoming call management",
+        "Block / Unblock callers"
+      ],
+      "corporate": [
+        "Corporete NameTAG",
+        "Multiple NameTAGs under single corproate account",
+        "NameTAG change as per business requirement",
+        "Dashboard to manage all NameTAGs",
+        "Call PIN security",
+        "Call scheduling",
+        "Verification with company registration documents"
+      ]
+    }
+  },
+  "featuresSection": {
+    "label": "Platform Features",
+    "title": "Everything You Need to Manage Your Identity",
+    "items": [
+      {
+        "title": "Real-Time Assignment",
+        "description": "Instant NameTAG registration and activation with live availability check.",
+        "img": "/icon1.svg"
+      },
+      {
+        "title": "Fayda KYC Verification",
+        "description": "Secure identity verification via Ethiopia's National ID system for Individual Customers.",
+        "img": "/icon2.svg"
+      },
+      {
+        "title": "Call PIN Security",
+        "description": "Optional PIN for incoming calls so only approved callers can reach your #TAG.",
+        "img": "/icon3.svg"
+      },
+      {
+        "title": "Call Scheduling",
+        "description": "Set active hours for your #TAG and manage when calls can reach you.",
+        "img": "/icon4.svg"
+      },
+      {
+        "title": "Multi-Language Support",
+        "description": "English, Amharic, Oromo, Somali, and Tigrinya for inclusive access.",
+        "img": "/icon5.svg"
+      },
+      {
+        "title": "Customer Dashboard",
+        "description": "NameTAG Dashboard for customers to manage the Account and #TAGs",
+        "img": "/icon6.svg"
+      },
+      {
+        "title": "Multi-Channel Access",
+        "description": "Manage via Web Portal, Mobile App. And USSD *883# for an individaul customers.",
+        "img": "/icon7.svg"
+      },
+      {
+        "title": "Flexible Billing for Corprotes",
+        "description": "Monthly, Quarterly, Semi-Annual, and Annual plans with telebirr.",
+        "img": "/icon8.svg"
+      },
+      {
+        "title": "Monthly Billing for Individuals",
+        "description": "Monthly plan for individual customer with telebirr and Ethio Airtime charging.",
+        "img": "/icon9.svg"
+      }
+    ]
+  },
+  "pricing": {
+    "label": "Subscription Plans",
+    "title": "Flexible Plans for Every Need",
+    "sub": "Choose your subscription period and pay via telebirr or Ethio Airtime.",
+    "paymentTitle": "Payment Channels",
+    "plans": [
+      {
+        "code": "M",
+        "name": "Monthly",
+        "desc": "Flexible — renew every month. No long commitment.",
+        "accent": "border-b-[3px] border-b-[#3B82F6]",
+        "tint": "text-[#3B82F6]/28",
+        "img": "/monthly_calendar.png"
+      },
+      {
+        "code": "Q",
+        "name": "Quarterly",
+        "desc": "3-month plan — save more than monthly.",
+        "accent": "border-b-[3px] border-b-[#22C55E]",
+        "tint": "text-[#22C55E]/28",
+        "img": "/quarterly_growth.png"
+      },
+      {
+        "code": "S",
+        "name": "Semi-Annual",
+        "desc": "6-month plan — great value for regular users.",
+        "accent": "border-b-[3px] border-b-[#F59E0B]",
+        "tint": "text-[#F59E0B]/28",
+        "img": "/semi_annual_shield.png"
+      },
+      {
+        "code": "A",
+        "name": "Annual",
+        "desc": "Best savings — 12 months with best rates.",
+        "accent": "border-b-[3px] border-b-[#A855F7]",
+        "tint": "text-[#A855F7]/28",
+        "img": "/annual_badge.png"
+      }
+    ],
+    "paymentChannels": [
+      {
+        "img": "/telebirr_super_app_dark.png",
+        "title": "telebirr Super App",
+        "desc": "Pay directly through the telebirr super app (B2C)"
+      },
+      {
+        "img": "/telebirr_partner_app_blue.png",
+        "title": "telebirr Partner App",
+        "desc": "Online payments via partner web portals (B2B)"
+      },
+      {
+        "img": "/ethio_airtime_green.png",
+        "title": "Ethio Airtime",
+        "desc": "Deduct subscription from your Ethio airtime balance"
+      }
+    ]
+  },
+  "subscribeSteps": {
+    "label": "Get Started",
+    "title": "Subscribe in 4 Simple Steps",
+    "steps": [
+      {
+        "no": "01",
+        "title": "Create Account",
+        "desc": "Register at nametag.et or via the Mobile App. Choose individual or corporate account type."
+      },
+      {
+        "no": "02",
+        "title": "Choose Your TAG",
+        "desc": "Search and pick your NameTAG across Platinum, Golden, Silver, or Bronze tiers."
+      },
+      {
+        "no": "03",
+        "title": "Pay & Activate",
+        "desc": "Pay via telebirr or Ethio Airtime. Your #TAG is instantly active on your SIM after verification."
+      },
+      {
+        "no": "04",
+        "title": "Start Calling",
+        "desc": "Dial with # prefix before any number. The receiver sees your #TAG  as CLI."
+      }
+    ],
+    "channels": [
+      { "title": "Web Portal", "desc": "www.nametag.et" },
+      { "title": "Mobile App", "desc": "NameTAG Mobile" },
+      { "title": "USSD Code", "desc": "Dial *883#" }
+    ]
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Frequently Asked Questions",
+    "moreQuestions": "+More Questions",
+    "iconExpanded": "−",
+    "iconCollapsed": "+",
+    "items": [
+      {
+        "id": "original-private",
+        "q": "Does my original number stay private?",
+        "a": "Yes. When you call via NameTAG, receivers only see your TAG. Your primary MSISDN can be disclosed by platform SMS for transparency."
+      },
+      {
+        "id": "block-calling",
+        "q": "Can I block someone from calling my NameTAG?",
+        "a": "Yes. Use web/app tools or SMS commands to block and unblock users and maintain your whitelist."
+      },
+      {
+        "id": "sim-change",
+        "q": "What if I change my SIM or mobile number?",
+        "a": "NameTAG supports number migration after verification so your identity can stay with you."
+      },
+      {
+        "id": "corporate-multiple",
+        "q": "Can corporates manage multiple NameTAGs?",
+        "a": "Corporate accounts can manage multiple TAGs and assign them per team, branch, or campaign."
+      },
+      {
+        "id": "block-nametag",
+        "q": "Can I block someone from calling NameTag?",
+        "a": "Yes. You can manage blocked callers from your portal, app, or supported SMS commands at any time."
+      },
+      {
+        "id": "register-how",
+        "q": "How do I register my NameTAG?",
+        "a": "You can register from the web portal, mobile app, or USSD *883# after availability and identity verification."
+      },
+      {
+        "id": "business-branding",
+        "q": "Can I use my NameTAG for business branding?",
+        "a": "Yes. Business users can create branded tags and configure welcome prompt, routing, and identity settings."
+      },
+      {
+        "id": "payments",
+        "q": "What payment options are available?",
+        "a": "You can pay using telebirr Super App, partner channels, or Ethio airtime based on your subscription plan."
+      },
+      {
+        "id": "transfer",
+        "q": "Can I transfer my NameTAG to another number?",
+        "a": "Transfer and migration are supported after verification and eligibility checks defined by the platform policy."
+      },
+      {
+        "id": "languages",
+        "q": "Is NameTAG available in multiple languages?",
+        "a": "Yes. The service supports multiple languages including English, Amharic, Afaan Oromo, Somali, and Tigrinya."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Be More Than a Number.",
+    "sub": "Register your NameTAG at www.nametag.et or dial *883# today.",
+    "contactHeading": "Contact Us",
+    "phone": "9234",
+    "email": "info@tech-vas.com",
+    "whatsapp": "Chat on WhatsApp",
+    "telegram": "Message on Telegram"
+  },
+  "footer": {
+    "brand": "NameTAG",
+    "brandSub": "Ethio Telecom",
+    "tagline": "Ethiopia's first caller identity platform, transforming how people see you when you call, from long numbers to a short #TAG that truly represents you.",
+    "subscribeTitle": "Subscribe",
+    "subscribeLinks": ["Web Portal", "Mobile App", "USSD *883#"],
+    "supportTitle": "Support",
+    "supportLinks": ["Terms & Conditions", "Privacy Policy", "FAQs", "Contact Us", "Complaint"],
+    "languagesTitle": "Languages",
+    "languages": ["English", "አማርኛ (Amharic)", "Afaan Oromo", "Tigrinya", "Somali"],
+    "copyright": "©2026 Ethio telecom. all rights reserved. NameTAG — Your Identity, Simplified.",
+    "sites": "www.ethiotelecom.et   www.nametag.et"
+  },
+  "backToTop": "Back to Top"
+}
