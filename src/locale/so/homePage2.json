@@ -1,0 +1,411 @@
+{
+    "nav": {
+      "links": [
+        { "href": "#home", "label": "Bogga Hore" },
+        { "href": "#how", "label": "Sida Ay U Shaqeyso" },
+        { "href": "#tiers", "label": "Heerarka Lambarka" },
+        { "href": "#users", "label": "Yaa Isticmaala" },
+        { "href": "#features", "label": "Astaamaha" },
+        { "href": "#faq", "label": "Su’aalaha Badanaa La Isweydiiyo" }
+      ],
+      "lang": "Som",
+      "login": "Gal",
+      "register": "Isdiiwaangeli",
+      "logoAlt": "Ethio Telecom",
+      "telebirrAlt": "telebirr",
+      "menuAria": "Fur menu-ga",
+      "menuCloseAria": "Xir menu-ga"
+    },
+    "carousel": {
+      "fallback": {
+        "title": "Aqoonsigaaga, Si Fudud.",
+        "para1": "Hel lambar labaad oo fudud in la xasuusto adigoo isticmaalaya SIM-kaaga hadda jira.",
+        "para2": "Ku muuji #TAG-gaaga, halkii aad ka muujin lahayd lambarkaaga asalka ah marka aad waceyso NameTAG.",
+        "description": "NameTAG waxaa loogu talagalay shaqsiyaadka iyo ganacsiyada."
+      },
+      "slides": [
+        {
+          "title": "NameTAG",
+          "para1": "Ka Badanow Lambar Kaliya",
+          "para2": "Ku muuji magacaaga, halkii aad ka muujin lahayd lambarkaaga marka aad waceyso.",
+          "description": "NameTAG wuxuu lambarkaaga telefoonka u beddelaa magac gaar ah oo fudud in la xasuusto, kana tarjumaya qofka aad tahay. Haddii aad tahay shaqsi ama ganacsi, adeeggan wuxuu kuu oggolaanayaa inaad muujiso magaca aad dooratay halkii laga arki lahaa lambar caadi ah marka aad waceyso—taasoo ka dhigaysa xiriir kasta mid shaqsiyeed, xirfad leh, oo sahlan in la xasuusto."
+        },
+        {
+          "title": "NameTAG",
+          "para1": "Xooji Aqoonsiga Brand-kaaga",
+          "para2": "U isticmaal magac gaar ah wicitaanada macaamiishaada si uu u muujiyo brand-kaaga.",
+          "description": "NameTAG wuxuu kaa caawinayaa inaad xoojiso muuqaalka brand-kaaga adigoo lambarkaaga caadiga ah ku beddelaya NameTAG gaar ah. Wuxuu ku habboon yahay ganacsiyada iyo dadka saameynta leh, adeeggan wuxuu macaamiisha iyo xiriirada u sahlayaa inay si degdeg ah kuu aqoonsadaan oo kuu xasuustaan—taasoo dhisaysa kalsooni, daacadnimo brand, iyo khibrad isgaarsiin oo wanaagsan."
+        },
+        {
+          "title": "NameTAG",
+          "para1": "Wicitaanno La Xasuusto, Si Fudud",
+          "para2": "Samee NameTAG soo jiidasho leh oo ku xiran lambarkaaga.",
+          "description": "Ka dhex muuqo wicitaan kasta adigoo isticmaalaya NameTAG—aqoonsigaaga wicitaan ee gaarka ah. Haddii uu yahay naaneys, magac brand, ama weedh, NameTAG wuxuu magaca aad dooratay ku xiraa lambarkaaga dhabta ah, si qofka aad waceyso uu marka hore u arko aqoonsigaaga. Way fududahay in la dejiyo, la maamulo, waxaana heli kara macaamiisha prepaid iyo postpaid labadaba."
+        }
+      ]
+    },
+    "hero": {
+      "badge": "Adeegga VAS ee Ethio Telecom · Abriil 2026",
+      "ctaPrimary": "Hel NameTAG-kayga",
+      "ctaSecondary": "Eeg Sida Ay U Shaqeyso",
+      "imgLeftAlt": "Qofka Wacaya",
+      "imgRightAlt": "Qofka La Wacayo",
+      "store": {
+        "googleAria": "Ka hel Google Play",
+        "googleTop": "KA HEL",
+        "googleBottom": "Google Play",
+        "appleAria": "Ka soo dejiso App Store",
+        "appleTop": "Ka soo dejiso",
+        "appleBottom": "App Store"
+      }
+    },
+    "stats": {
+      "items": [
+        { "value": "#1", "label": "Platform-ka Aqoonsiga Wicitaanka ee Itoobiya" },
+        { "value": "4 Heer", "label": "Platinum · Golden · Silver · Bronze" },
+        { "value": "Qiimaha Wicitaanka", "label": "Sida ku cad qorshaha lambarkaaga koowaad" },
+        { "value": "5 Luqadood", "label": "EN · AM · OR · TI · SO" }
+      ]
+    },
+    "what": {
+      "label": "Waa Maxay NameTAG?",
+      "title": "Lambar Virtual ah oo Matala Aqoonsigaaga Dhabta ah",
+      "sub": "NameTAG wuxuu kuu oggolaanayaa inaad hesho lambar gaaban oo fudud in la xasuusto (2–8 xaraf) oo ku xiran SIM-kaaga Ethio ee hadda jira.",
+      "bulletBody": "Waxaa loogu talagalay aqoonsi degdeg ah, wadaagid fudud, iyo aqoonsi shaqsi ama brand oo xooggan.",
+      "bullets": [
+        "Lambarkaaga Labaad ee Gaaban",
+        "Muuji #TAG-gaaga, Ha Muujin Lambarkaaga Koowaad",
+        "Ku wac adigoo isticmaalaya calaamadda #",
+        "Wac #TAG-yada dadka kale iyo lambarrada mobile-ka iyadoo qiimaha wicitaanku yahay sida qorshahaaga"
+      ],
+      "corporate": {
+        "label": "Shirkad",
+        "tagLine": "#Ethio,#532",
+        "subtitle": "Aqoonsiga Brand-ka",
+        "body": "Diiwaangeli naaneyskaaga si uu u noqdo aqoonsigaaga wicitaanka",
+        "incoming": "Soo galaya",
+        "cli": "#Ethio"
+      },
+      "individual": {
+        "label": "SHAQSI",
+        "tagLine": "#Name,#8832",
+        "subtitle": "Fudud in La Xasuusto",
+        "body": "Diiwaangeli naaneyskaaga si uu u noqdo aqoonsigaaga wicitaanka",
+        "incoming": "Soo galaya",
+        "cli": "#Name"
+      },
+      "businessCardChip": "Kaarka Ganacsiga",
+      "businessCard": {
+        "company": "KENTUCKY FRIED CHICKEN",
+        "official": "NameTAG Rasmi ah",
+        "website": "www.company.com",
+        "tag": "#883 (#Name)",
+        "phone": "0978123456",
+        "email": "companyofficial@gmail.com",
+        "address": "123 Main Street, Addis Ababa, Ethiopia",
+        "nameBlock": "MAGAC",
+        "role": "MAAMULE"
+      },
+      "curveAlt": "asalka curve"
+    },
+    "how": {
+      "label": "Sida Ay U Shaqeyso",
+      "title": "Khibradda Wicitaanka NameTAG",
+      "sub": "Qofka A wuxuu ku wacaa calaamadda #, platform-ku wuxuu aqoonsadaa magaca, qofka B-na wuxuu arkaa NameTAG sida CLI.",
+      "imageAlt": "Aqoonsi"
+    },
+    "tiers": {
+      "label": "Heerarka Lambarka",
+      "title": "Dooro Heerka NameTAG-kaaga",
+      "sub": "Ugu yaraan 2 digit · Ugu badnaan 8 digit/xaraf · Wicitaanno on-net oo keliya",
+      "examplesPrefix": "Tusaalooyin: ",
+      "items": [
+        {
+          "id": "platinum",
+          "name": "Platinum",
+          "tag": "#1111",
+          "level": "Aad U Gaar Ah",
+          "description": "Lambarrada ugu gaaban uguna qiimaha badan",
+          "examples": "#11100, #0022, #333111",
+          "chipLabel": "Heerka Ugu Sarreeya"
+        },
+        {
+          "id": "golden",
+          "name": "Golden",
+          "tag": "#9990",
+          "level": "Qaabab Soo Noqnoqda",
+          "description": "Qaabab tirooyin ah oo sharaf sare leh",
+          "examples": "#11022, #200200, #9900",
+          "chipLabel": "Heer Premium ah"
+        },
+        {
+          "id": "silver",
+          "name": "Silver",
+          "tag": "#33944",
+          "level": "Lambaro Qaab Leh",
+          "description": "Lambaro qaabaysan oo caan ah",
+          "examples": "#11022, #33944",
+          "chipLabel": "Heer Dhexe"
+        },
+        {
+          "id": "bronze",
+          "name": "Bronze",
+          "tag": "#23104",
+          "level": "NameTAG-yo Magac Leh",
+          "description": "Magacyo gaar ah ilaa 8 xaraf",
+          "examples": "#Name, #Pepsi, #Touch",
+          "chipLabel": "Heer Caadi ah"
+        }
+      ]
+    },
+    "users": {
+      "label": "Yaa Isticmaala NameTAG?",
+      "title": "Waxaa Loogu Talagalay Shaqsiyaadka iyo Brand-yada",
+      "sub": "Haddii aad tahay macmiil shaqsi ah ama shirkad weyn, NameTAG wuxuu leeyahay astaamaha aad u baahan tahay.",
+      "tabIndividual": "Macaamiisha Shaqsiga ah",
+      "tabCorporate": "Shirkadaha & Brand-yada",
+      "featureHint": "Waxaa loo habeeyay isticmaalka suuqa Itoobiya.",
+      "partyA": "Qofka A",
+      "partyB": "Qofka B",
+      "features": {
+        "individual": [
+          "Aqoonsi wicitaan oo gaar ah",
+          "Is-activation degdeg ah",
+          "Xaqiijinta Fayda KYC",
+          "Amniga Call PIN",
+          "Maamulka wicitaanada soo gala",
+          "Xannib / Ka saar xannibaadda dadka wacaya"
+        ],
+        "corporate": [
+          "NameTAG shirkadeed",
+          "NameTAG-yo badan hal account shirkadeed hoostiisa",
+          "Beddelka NameTAG sida baahida ganacsiga",
+          "Dashboard lagu maamulo dhammaan NameTAG-yada",
+          "Amniga Call PIN",
+          "Jadwaleynta wicitaanada",
+          "Xaqiijin iyadoo la adeegsanayo dukumentiyada diiwaangelinta shirkadda"
+        ]
+      }
+    },
+    "featuresSection": {
+      "label": "Astaamaha Platform-ka",
+      "title": "Wax Walba Oo Aad U Baahan Tahay Si Aad U Maamusho Aqoonsigaaga",
+      "items": [
+        {
+          "title": "Qoondeyn Waqti-Dhab ah",
+          "description": "Diiwaangelin iyo activation degdeg ah oo NameTAG ah, iyadoo si live ah loo hubinayo helitaanka.",
+          "img": "/icon1.svg"
+        },
+        {
+          "title": "Xaqiijinta Fayda KYC",
+          "description": "Xaqiijin aqoonsi oo ammaan ah iyadoo loo marayo nidaamka National ID ee Itoobiya ee macaamiisha shaqsiga ah.",
+          "img": "/icon2.svg"
+        },
+        {
+          "title": "Amniga Call PIN",
+          "description": "PIN ikhtiyaari ah oo loogu talagalay wicitaanada soo gala si kaliya dadka la oggolaaday ay kuu soo wici karaan #TAG-gaaga.",
+          "img": "/icon3.svg"
+        },
+        {
+          "title": "Jadwaleynta Wicitaanada",
+          "description": "Deji saacadaha firfircoon ee #TAG-gaaga oo maamul goorta wicitaanadu ku soo gaari karaan.",
+          "img": "/icon4.svg"
+        },
+        {
+          "title": "Taageero Luqado Badan",
+          "description": "Ingiriisi, Amxaaro, Oromo, Soomaali, iyo Tigrinya si qof walba u helo adeegga.",
+          "img": "/icon5.svg"
+        },
+        {
+          "title": "Dashboard-ka Macmiilka",
+          "description": "Dashboard NameTAG ah oo macaamiishu ku maamuli karaan account-ka iyo #TAG-yada.",
+          "img": "/icon6.svg"
+        },
+        {
+          "title": "Helitaan Kanaallo Badan",
+          "description": "Ku maamul Web Portal, Mobile App, iyo USSD *883# ee macaamiisha shaqsiga ah.",
+          "img": "/icon7.svg"
+        },
+        {
+          "title": "Biil-bixin Dabacsan oo Shirkadaha ah",
+          "description": "Qorshayaal bille, saddex-biloodle, lix-biloodle, iyo sanadle ah oo lagu bixiyo telebirr.",
+          "img": "/icon8.svg"
+        },
+        {
+          "title": "Biil Bille ah oo Shaqsiyaadka ah",
+          "description": "Qorshe bille ah oo loogu talagalay macmiilka shaqsiga ah, laguna bixin karo telebirr iyo Ethio Airtime.",
+          "img": "/icon9.svg"
+        }
+      ]
+    },
+    "pricing": {
+      "label": "Qorshayaasha Subscription-ka",
+      "title": "Qorshayaal Dabacsan oo Ku Habboon Baahi Kasta",
+      "sub": "Dooro muddada subscription-kaaga oo ku bixi telebirr ama Ethio Airtime.",
+      "paymentTitle": "Kanaallada Lacag-bixinta",
+      "plans": [
+        {
+          "code": "M",
+          "name": "Bille",
+          "desc": "Dabacsan — cusbooneysii bil kasta. Ballanqaad dheer ma jiro.",
+          "accent": "border-b-[3px] border-b-[#3B82F6]",
+          "tint": "text-[#3B82F6]/28",
+          "img": "/monthly_calendar.png"
+        },
+        {
+          "code": "Q",
+          "name": "Saddex-biloodle",
+          "desc": "Qorshe 3 bilood ah — ka jaban qorshaha billaha ah.",
+          "accent": "border-b-[3px] border-b-[#22C55E]",
+          "tint": "text-[#22C55E]/28",
+          "img": "/quarterly_growth.png"
+        },
+        {
+          "code": "S",
+          "name": "Lix-biloodle",
+          "desc": "Qorshe 6 bilood ah — qiimo fiican oo loogu talagalay isticmaalayaasha joogtada ah.",
+          "accent": "border-b-[3px] border-b-[#F59E0B]",
+          "tint": "text-[#F59E0B]/28",
+          "img": "/semi_annual_shield.png"
+        },
+        {
+          "code": "A",
+          "name": "Sanadle",
+          "desc": "Kaydka ugu fiican — 12 bilood oo leh qiimaha ugu wanaagsan.",
+          "accent": "border-b-[3px] border-b-[#A855F7]",
+          "tint": "text-[#A855F7]/28",
+          "img": "/annual_badge.png"
+        }
+      ],
+      "paymentChannels": [
+        {
+          "img": "/telebirr_super_app_dark.png",
+          "title": "telebirr Super App",
+          "desc": "Si toos ah uga bixi telebirr super app (B2C)"
+        },
+        {
+          "img": "/telebirr_partner_app_blue.png",
+          "title": "telebirr Partner App",
+          "desc": "Lacag-bixin online ah oo loo maro partner web portals (B2B)"
+        },
+        {
+          "img": "/ethio_airtime_green.png",
+          "title": "Ethio Airtime",
+          "desc": "Subscription-ka waxaa laga jari karaa balance-kaaga Ethio airtime"
+        }
+      ]
+    },
+    "subscribeSteps": {
+      "label": "Bilow",
+      "title": "Ku Subscribe-garee 4 Tallaabo Oo Fudud",
+      "steps": [
+        {
+          "no": "01",
+          "title": "Samee Account",
+          "desc": "Iska diiwaangeli nametag.et ama Mobile App-ka. Dooro account shaqsi ama shirkadeed."
+        },
+        {
+          "no": "02",
+          "title": "Dooro TAG-gaaga",
+          "desc": "Raadi oo dooro NameTAG-kaaga heerarka Platinum, Golden, Silver, ama Bronze."
+        },
+        {
+          "no": "03",
+          "title": "Bixi & Dhaqaaji",
+          "desc": "Ku bixi telebirr ama Ethio Airtime. #TAG-gaaga wuxuu isla markiiba ka shaqeynayaa SIM-kaaga kadib xaqiijinta."
+        },
+        {
+          "no": "04",
+          "title": "Bilow Wicitaanka",
+          "desc": "Ku wac calaamadda # ka hor lambar kasta. Qofka wicitaanka helaya wuxuu arki doonaa #TAG-gaaga sida CLI."
+        }
+      ],
+      "channels": [
+        { "title": "Web Portal", "desc": "www.nametag.et" },
+        { "title": "Mobile App", "desc": "NameTAG Mobile" },
+        { "title": "USSD Code", "desc": "Dial *883#" }
+      ]
+    },
+    "faq": {
+      "label": "FAQ",
+      "title": "Su’aalaha Badanaa La Isweydiiyo",
+      "moreQuestions": "+Su’aalo Dheeraad ah",
+      "iconExpanded": "−",
+      "iconCollapsed": "+",
+      "items": [
+        {
+          "id": "original-private",
+          "q": "Lambarkayga asalka ah ma qarsoonaanayaa?",
+          "a": "Haa. Marka aad ku wacdo NameTAG, dadka wicitaanka helaya waxay arki doonaan TAG-gaaga oo keliya. Lambarkaaga koowaad waxaa lagu muujin karaa SMS platform ah si hufnaan loo ilaaliyo."
+        },
+        {
+          "id": "block-calling",
+          "q": "Ma xannibi karaa qof iga soo wacaya NameTAG-kayga?",
+          "a": "Haa. Waxaad isticmaali kartaa web/app tools ama amarrada SMS si aad u xannibto ama uga saarto xannibaadda isticmaalayaasha, una maamusho whitelist-kaaga."
+        },
+        {
+          "id": "sim-change",
+          "q": "Maxaa dhacaya haddii aan beddelo SIM-kayga ama lambarkayga mobile-ka?",
+          "a": "NameTAG wuxuu taageeraa migration-ka lambarka kadib xaqiijin, si aqoonsigaagu kuu sii raaco."
+        },
+        {
+          "id": "corporate-multiple",
+          "q": "Shirkaduhu ma maamuli karaan NameTAG-yo badan?",
+          "a": "Account-yada shirkadaha waxay maamuli karaan TAG-yo badan, waxayna u qoondeyn karaan kooxo, laamo, ama ololeyaal."
+        },
+        {
+          "id": "block-nametag",
+          "q": "Ma xannibi karaa qof iga soo wacaya NameTAG?",
+          "a": "Haa. Waxaad ka maamuli kartaa dadka xanniban portal-kaaga, app-kaaga, ama amarrada SMS ee la taageero waqti kasta."
+        },
+        {
+          "id": "register-how",
+          "q": "Sideen u diiwaangeliyaa NameTAG-kayga?",
+          "a": "Waxaad iska diiwaangelin kartaa web portal-ka, mobile app-ka, ama USSD *883# kadib hubinta helitaanka iyo xaqiijinta aqoonsiga."
+        },
+        {
+          "id": "business-branding",
+          "q": "Ma u isticmaali karaa NameTAG-kayga branding ganacsi?",
+          "a": "Haa. Isticmaalayaasha ganacsiga waxay abuuri karaan tags brand leh, waxayna dejin karaan welcome prompt, routing, iyo identity settings."
+        },
+        {
+          "id": "payments",
+          "q": "Waa maxay doorashooyinka lacag-bixinta ee la heli karo?",
+          "a": "Waxaad ku bixin kartaa telebirr Super App, partner channels, ama Ethio airtime iyadoo ku xiran qorshaha subscription-kaaga."
+        },
+        {
+          "id": "transfer",
+          "q": "Ma ku wareejin karaa NameTAG-kayga lambar kale?",
+          "a": "Wareejinta iyo migration-ka waa la taageeraa kadib xaqiijin iyo hubinta shuruudaha uu qeexayo policy-ga platform-ka."
+        },
+        {
+          "id": "languages",
+          "q": "NameTAG ma lagu heli karaa luqado badan?",
+          "a": "Haa. Adeeggu wuxuu taageeraa luqado badan oo ay ku jiraan English, Amharic, Afaan Oromo, Somali, iyo Tigrinya."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ka Badanow Lambar Kaliya.",
+      "sub": "Ka diiwaangeli NameTAG-kaaga www.nametag.et ama garaac *883# maanta.",
+      "contactHeading": "Nala Soo Xiriir",
+      "phone": "9234",
+      "email": "info@tech-vas.com",
+      "whatsapp": "Kala hadal WhatsApp",
+      "telegram": "Fariin ku dir Telegram"
+    },
+    "footer": {
+      "brand": "NameTAG",
+      "brandSub": "Ethio Telecom",
+      "tagline": "Platform-kii ugu horreeyay ee aqoonsiga wicitaanka ee Itoobiya, kaasoo beddelaya sida dadka kuu arkaan marka aad waceyso—lambar dheer halkii laga arki lahaa, #TAG gaaban oo si dhab ah kuu matala ayaa la arkaa.",
+      "subscribeTitle": "Subscribe",
+      "subscribeLinks": ["Web Portal", "Mobile App", "USSD *883#"],
+      "supportTitle": "Taageero",
+      "supportLinks": ["Shuruudaha & Xaaladaha", "Siyaasadda Asturnaanta", "FAQs", "Nala Soo Xiriir", "Cabasho"],
+      "languagesTitle": "Luqadaha",
+      "languages": ["English", "አማርኛ (Amharic)", "Afaan Oromo", "Tigrinya", "Somali"],
+      "copyright": "©2026 Ethio telecom. xuquuqda oo dhan way dhowrsan tahay. NameTAG — Aqoonsigaaga, Si Fudud.",
+      "sites": "www.ethiotelecom.et   www.nametag.et"
+    },
+    "backToTop": "Ku Noqo Kore"
+  }

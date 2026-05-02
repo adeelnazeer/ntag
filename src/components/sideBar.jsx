@@ -12,7 +12,12 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { clearUserData } from "../redux/userSlice";
 import { useTranslation } from "react-i18next";
 
-const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
+const Sidebar = ({
+  data,
+  isSidebarOpen = false,
+  setIsSidebarOpen = () => {},
+  hideFloatingTrigger = false,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const sidebarRef = useRef(null);
@@ -101,20 +106,20 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target) &&
-        !event.target.closest("button")
-      ) {
-        setIsSidebarOpen(false);
-      }
+      if (event.target.closest("[data-sidebar-exclude-close]")) return;
+      if (sidebarRef.current?.contains(event.target)) return;
+      setIsSidebarOpen(false);
     };
 
     if (isSidebarOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
     }
     return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, [isSidebarOpen]);
+  }, [isSidebarOpen, setIsSidebarOpen]);
+
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [location.pathname, setIsSidebarOpen]);
 
   const isDocumentDisabled =
     data?.[0]?.doc_status == 0 ||
@@ -122,27 +127,35 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
     data?.[2]?.doc_status == 0;
 
   return (
-    <div className="w-full h-full">
-      <div className="lg:hidden fixed top-4 right-2 z-50">
-        <FaBars
-          className="text-3xl cursor-pointer text-white"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsSidebarOpen(!isSidebarOpen);
-          }}
+    <div className="relative h-full w-full">
+      {!hideFloatingTrigger && (
+        <div className="fixed right-5 top-4 z-50 lg:hidden" data-sidebar-exclude-close>
+          <FaBars
+            className="cursor-pointer text-3xl text-white"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsSidebarOpen(!isSidebarOpen);
+            }}
+          />
+        </div>
+      )}
+
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-[40] bg-black/40 lg:hidden"
+          aria-hidden
+          onClick={() => setIsSidebarOpen(false)}
         />
-      </div>
+      )}
 
       <div
         ref={sidebarRef}
-        className={`fixed left-0 top-0 h-full transition-transform transform pt-16 
-          lg:w-72 md:min-w-[17rem]
-          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 z-40 bg-white rounded-tr-[60px] max-w-64 w-64
-          lg:top-16 lg:pt-4 lg:h-[calc(100vh-4rem-4rem)] lg:rounded-tr-[60px]`}
+        className={` left-0 top-0 z-[45] flex h-[100dvh] w-64 max-w-[min(18rem,88vw)] flex-col bg-white shadow-xl transition-transform duration-300 ease-out lg:static lg:z-0 lg:h-full lg:max-w-none lg:w-72 lg:translate-x-0 lg:shadow-none ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full max-lg:pointer-events-none"
+        } lg:pointer-events-auto`}
       >
         <div className="h-full overflow-y-auto" key={i18n.resolvedLanguage || i18n.language}>
-          <Card className="px-4 py- w-full bg-transparent shadow-blue-gray-900/5">
+          <Card className="w-full bg-transparent px-4 py-4 shadow-none">
             <List className="text-base min-w-full w-full gap-4 p-0 font-normal text-black">
               {/* Standard menu items */}
               {sidebarData.slice(0, 2).map((item, index) => (
@@ -384,13 +397,6 @@ const Sidebar = ({ data, isSidebarOpen, setIsSidebarOpen }) => {
           </Card>
         </div>
       </div>
-
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/20 lg:hidden z-30"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
     </div>
   );
 };

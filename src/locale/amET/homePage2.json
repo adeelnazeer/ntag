@@ -1,0 +1,129 @@
+{
+    "nav": {
+      "links": [
+        { "href": "#home", "label": "መነሻ" },
+        { "href": "#how", "label": "እንዴት ይሰራል" },
+        { "href": "#tiers", "label": "ደረጃዎች" },
+        { "href": "#users", "label": "ማን ይጠቀማል" },
+        { "href": "#features", "label": "ባህሪያት" },
+        { "href": "#faq", "label": "ተደጋጋሚ ጥያቄዎች" }
+      ],
+      "lang": "አማ",
+      "login": "ግባ",
+      "register": "ይመዝገቡ",
+      "logoAlt": "ኢትዮ ቴሌኮም",
+      "telebirrAlt": "ቴሌብር",
+      "menuAria": "ሜኑ ክፈት",
+      "menuCloseAria": "ሜኑ ዝጋ"
+    },
+    "carousel": {
+      "fallback": {
+        "title": "ማንነትዎ ቀላል ተደርጓል።",
+        "para1": "በነባር ሲምዎ ላይ የሚታሰብ ሁለተኛ ቁጥር ያግኙ።",
+        "para2": "በNameTAG ጥሪዎች ላይ ዋና ቁጥርዎን ሳይሆን #TAG ያሳዩ።",
+        "description": "NameTAG ለግለሰቦችና ለንግዶች።"
+      },
+      "slides": [
+        {
+          "title": "NameTAG",
+          "para1": "ከቁጥር በላይ ይሁኑ",
+          "para2": "ጥሪ ሲደርስ ቁጥርዎን ሳይሆን ስምዎን ያሳዩ።",
+          "description": "በNameTAG ቁጥርዎ ወደ ልዩ ስም ይቀየራል። ለግለሰቦችና ለንግዶች የሚመች፣ ማንነትዎን ቀላል እና የሚታሰብ ያደርገዋል።"
+        },
+        {
+          "title": "NameTAG",
+          "para1": "የብራንድዎን ማንነት ያጠናክሩ",
+          "para2": "ደንበኞችዎ ሲያዩ ብራንድዎን የሚያመለክት ስም ይጠቀሙ።",
+          "description": "NameTAG ቁጥርዎን በብራንድ ስም በመቀየር የንግድዎን መለያ ያጠናክራል። ይህም እምነትን እና የብራንድ ታዋቂነትን ያሳድጋል።"
+        },
+        {
+          "title": "NameTAG",
+          "para1": "የሚታሰቡ ጥሪዎች",
+          "para2": "ከቁጥርዎ ጋር የተገናኘ የሚስብ ስም ይፍጠሩ።",
+          "description": "NameTAG የግል የጥሪ ማንነትዎ ነው። ማንኛውም ሰው ሲያይ በመጀመሪያ ማንነትዎን ያያል። ቀላል ማስጀመር እና መቆጣጠር ይቻላል።"
+        }
+      ]
+    },
+    "hero": {
+      "badge": "ኢትዮ ቴሌኮም VAS አገልግሎት · ኤፕሪል 2026",
+      "ctaPrimary": "NameTAG አግኝ",
+      "ctaSecondary": "እንዴት እንደሚሰራ ይመልከቱ",
+      "imgLeftAlt": "A ወገን",
+      "imgRightAlt": "B ወገን",
+      "store": {
+        "googleAria": "በ Google Play ያግኙ",
+        "googleTop": "ከ",
+        "googleBottom": "Google Play",
+        "appleAria": "በ App Store ያውርዱ",
+        "appleTop": "ከ",
+        "appleBottom": "App Store"
+      }
+    },
+    "stats": {
+      "items": [
+        { "value": "#1", "label": "በኢትዮጵያ የጥሪ መለያ ፕላትፎርም" },
+        { "value": "4 ደረጃ", "label": "Platinum · Golden · Silver · Bronze" },
+        { "value": "የጥሪ ክፍያ", "label": "እንደ ዋና ቁጥር ፓኬጅ ይሆናል" },
+        { "value": "5 ቋንቋዎች", "label": "EN · AM · OR · TI · SO" }
+      ]
+    },
+    "what": {
+      "label": "NameTAG ምንድነው?",
+      "title": "ለእውነተኛ ማንነትዎ የተመሰረተ ቪርቹዋል ቁጥር",
+      "sub": "NameTAG ከነባር ሲምዎ ጋር የሚገናኝ አጭር ቁጥር (2–8 ቁምፊ) ይሰጣል።",
+      "bulletBody": "ለቀላል ማስታወሻ እና ለብራንድ ማንነት የተነደፈ።",
+      "bullets": [
+        "ሁለተኛ አጭር ቁጥር",
+        "#TAG አሳይ እንጂ ዋና ቁጥር አይደለም",
+        "በ # ቅድሚያ ይደውሉ",
+        "ለሌሎች TAG ወይም ቁጥር ይደውሉ"
+      ]
+    },
+    "how": {
+      "label": "እንዴት ይሰራል",
+      "title": "የNameTAG ጥሪ ሂደት",
+      "sub": "A ወገን # በመጠቀም ይደውላል፣ B ወገን NameTAG ያያል።",
+      "imageAlt": "መለያ"
+    },
+    "tiers": {
+      "label": "የቁጥር ደረጃዎች",
+      "title": "NameTAG ደረጃዎን ይምረጡ",
+      "sub": "ከ2 እስከ 8 ቁምፊ",
+      "items": [
+        {
+          "id": "platinum",
+          "name": "Platinum",
+          "tag": "#1111",
+          "level": "እጅግ ልዩ",
+          "description": "አጭር እና ክቡር ቁጥሮች",
+          "examples": "#11100, #0022",
+          "chipLabel": "ከፍተኛ"
+        }
+      ]
+    },
+    "faq": {
+      "label": "FAQ",
+      "title": "ተደጋጋሚ ጥያቄዎች",
+      "items": [
+        {
+          "id": "original-private",
+          "q": "ዋና ቁጥሬ ይሸፈናል?",
+          "a": "አዎ፣ NameTAG ብቻ ይታያል።"
+        }
+      ]
+    },
+    "cta": {
+      "title": "ከቁጥር በላይ ይሁኑ።",
+      "sub": "NameTAG ይመዝገቡ",
+      "contactHeading": "እኛን ያግኙ",
+      "phone": "9234",
+      "email": "info@tech-vas.com"
+    },
+    "footer": {
+      "brand": "NameTAG",
+      "brandSub": "ኢትዮ ቴሌኮም",
+      "tagline": "የመጀመሪያው የጥሪ መለያ ፕላትፎርም",
+      "copyright": "©2026 ኢትዮ ቴሌኮም"
+    },
+    "backToTop": "ወደ ላይ"
+  }
