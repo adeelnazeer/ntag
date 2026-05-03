@@ -11,7 +11,7 @@ export default function BackToTop() {
       const scrollBottom = window.scrollY + window.innerHeight;
       const pageHeight = document.documentElement.scrollHeight;
       const scrollProgress = pageHeight > 0 ? scrollBottom / pageHeight : 0;
-      setShowBackToTop(scrollProgress >= 0.7);
+      setShowBackToTop(scrollProgress >= 0.25);
     };
 
     window.addEventListener("scroll", handleScroll);

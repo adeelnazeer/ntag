@@ -7,11 +7,12 @@ import AParty from "../../../assets/images/a-party.svg";
 import BParty from "../../../assets/images/b-party.svg";
 import Slider2 from "../../../assets/images/slider2.svg";
 import Slider3 from "../../../assets/images/slider3.svg";
+import { ConstentRoutes } from "../../../utilities/routesConst";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
     const { t } = useTranslation("homePage2");
-
-
+    const navigate = useNavigate();
 
     const HERO_SLIDE_IMAGES = [HeroImg1, Slider2, Slider3];
     const HERO_TOP_IMAGE_PAIRS = [
@@ -75,7 +76,11 @@ const HeroSection = () => {
                                 <p className="mb-2 max-w-xl text-white md:text-[18px]">{slide?.para2}</p>
                                 <p className="mb-7 max-w-xl text-white md:text-[18px]">{slide?.description}</p>
                                 <div className="mb-6 flex flex-wrap gap-3">
-                                    <button className="rounded-md bg-brand-blue px-6 py-3 text-sm font-bold text-white hover:bg-brand-blue-hover">{t("hero.ctaPrimary")}</button>
+                                    <button className="rounded-md bg-brand-blue px-6 py-3 text-sm font-bold text-white hover:bg-brand-blue-hover"
+                                    onClick={() => {
+                                        navigate(ConstentRoutes.login);
+                                      }}
+                                    >{t("hero.ctaPrimary")}</button>
                                     <a href="#how" className="rounded-md border-2 border-brand-blue bg-brand-blue px-6 py-3 text-sm font-bold text-white hover:bg-brand-blue-hover">
                                         {t("hero.ctaSecondary")}
                                     </a>
@@ -109,9 +114,9 @@ const HeroSection = () => {
                             <div className="relative mx-auto flex h-[360px] w-full max-w-[360px] items-center justify-center overflow-hidden md:h-[570px] md:max-w-[560px]">
                                 {index === 0 && (
                                     <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 block">
-                                        <div className="wave-ring absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-white/35 md:h-[460px] md:w-[460px]" />
-                                        <div className="wave-ring wave-ring-delay-1 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-white/25 md:h-[460px] md:w-[460px]" />
-                                        <div className="wave-ring wave-ring-delay-2 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-white/18 md:h-[460px] md:w-[460px]" />
+                                        <div className="wave-ring absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-white/90 md:h-[460px] md:w-[460px]" />
+                                        <div className="wave-ring wave-ring-delay-1 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-white/65 md:h-[460px] md:w-[460px]" />
+                                        <div className="wave-ring wave-ring-delay-2 absolute left-1/2 top-1/2 h-[280px] w-[280px] rounded-full bg-white/45 md:h-[460px] md:w-[460px]" />
                                     </div>
                                 )}
                                 <div className="relative z-10 flex h-full w-full items-center justify-center">
