@@ -11,6 +11,7 @@ import TickIcon from "../../assets/images/tick.png";
 import { useTranslation } from "react-i18next";
 import { useRecaptchaToken } from "../../hooks/useRecaptchaToken";
 import Header from "../../components/header";
+import HeaderNew from "../home2/components/HeaderNew";
 
 const Complaint = () => {
   const navigate = useNavigate();
@@ -261,7 +262,7 @@ const Complaint = () => {
 
   return (
     <>
-      <Header isGuest={true} />
+      <HeaderNew isGuest={true} />
       <div className="min-h-screen bg-gray-50 pb-20">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="pb-4">

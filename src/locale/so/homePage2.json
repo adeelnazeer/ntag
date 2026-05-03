@@ -403,7 +403,13 @@
       "supportTitle": "Taageero",
       "supportLinks": ["Shuruudaha & Xaaladaha", "Siyaasadda Asturnaanta", "FAQs", "Nala Soo Xiriir", "Cabasho"],
       "languagesTitle": "Luqadaha",
-      "languages": ["English", "አማርኛ (Amharic)", "Afaan Oromo", "Tigrinya", "Somali"],
+      "languages": [
+        { "code": "en", "label": "English" },
+        { "code": "amET", "label": "አማርኛ (Amharic)" },
+        { "code": "or", "label": "Afaan Oromo" },
+        { "code": "ti", "label": "Tigrinya" },
+        { "code": "so", "label": "Somali" }
+      ],
       "copyright": "©2026 Ethio telecom. xuquuqda oo dhan way dhowrsan tahay. NameTAG — Aqoonsigaaga, Si Fudud.",
       "sites": "www.ethiotelecom.et   www.nametag.et"
     },

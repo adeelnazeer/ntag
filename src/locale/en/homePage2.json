@@ -26,8 +26,8 @@
     "slides": [
       {
         "title": "NameTAG",
-        "para1": "Be More Than a Number",
-        "para2": "Show your name, not your number, when making calls.",
+        "para1": "Your Identity, Simplified",
+        "para2": " Show your #TAG, not your primary number when making calls with NameTAG service.",
         "description": "With NameTAG, your phone number transforms into a unique, memorable name that reflects who you are. Whether you're an individual or a business, this lets you display your chosen name instead of a standard number when making calls—making every interaction more personal, professional, and easy to remember."
       },
       {
@@ -403,7 +403,13 @@
     "supportTitle": "Support",
     "supportLinks": ["Terms & Conditions", "Privacy Policy", "FAQs", "Contact Us", "Complaint"],
     "languagesTitle": "Languages",
-    "languages": ["English", "አማርኛ (Amharic)", "Afaan Oromo", "Tigrinya", "Somali"],
+    "languages": [
+      { "code": "en", "label": "English" },
+      { "code": "amET", "label": "አማርኛ (Amharic)" },
+      { "code": "or", "label": "Afaan Oromo" },
+      { "code": "ti", "label": "Tigrinya" },
+      { "code": "so", "label": "Somali" }
+    ],
     "copyright": "©2026 Ethio telecom. all rights reserved. NameTAG — Your Identity, Simplified.",
     "sites": "www.ethiotelecom.et   www.nametag.et"
   },

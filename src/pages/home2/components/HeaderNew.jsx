@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     Button,
     Menu,
@@ -21,6 +21,9 @@ import { removeToken } from "../../../utilities/auth";
 import APICall from "../../../network/APICall";
 import EndPoints from "../../../network/EndPoints";
 import { ConstentRoutes } from "../../../utilities/routesConst";
+
+/** Marketing landing route; `#home` matches `HeroSection` `id="home"`. */
+const HOME_2_PATH = "/home-2";
 
 const LANGS = [
     { code: "en", label: "EN", native: "EN", flag: "🇬🇧" },
@@ -147,7 +150,10 @@ export default function HeaderNew({ customerSidebar, corporateSidebar, isGuest =
         setMobileOpen(false);
     };
 
-    const showMarketingNavStrip = location.pathname === "/home-2";
+    const hideMenus=["/home-2",ConstentRoutes.home,ConstentRoutes.login,ConstentRoutes.register,ConstentRoutes.forgetPassword,ConstentRoutes.termofuse,ConstentRoutes.privacyPolicy,ConstentRoutes.FrequentlyAskedQuestions,ConstentRoutes.registerNormalUser];
+    
+
+    const showMarketingNavStrip = hideMenus.includes(location?.pathname);
     const getCorporate = () => {
         if (isGuest || location?.pathname?.includes("contact-us")) {
             return "";
@@ -172,16 +178,20 @@ export default function HeaderNew({ customerSidebar, corporateSidebar, isGuest =
                 {
                     showMarketingNavStrip ?
                         <div className="mx-auto hidden h-[54px] max-w-7xl items-center justify-center gap-5 px-4 md:flex">
-                            {navLinks.map((link, index) => (
-                                <a
-                                    key={link.href}
-                                    href={link.href}
-                                    className={`rounded-md px-4 py-1 text-[13px] font-semibold text-white transition ${index === 0 ? "border border-white/70 bg-white/15" : "hover:bg-white/15"
-                                        }`}
-                                >
-                                    {link.label}
-                                </a>
-                            ))}
+                            {navLinks.map((link, index) => {
+                                const isHome = link.href === "#home";
+                                const className = `rounded-md px-4 py-1 text-[13px] font-semibold text-white transition ${index === 0 ? "border border-white/70 bg-white/15" : "hover:bg-white/15"
+                                    }`;
+                                return isHome ? (
+                                    <Link key={link.href} to={`${HOME_2_PATH}#home`} className={className}>
+                                        {link.label}
+                                    </Link>
+                                ) : (
+                                    <a key={link.href} href={link.href} className={className}>
+                                        {link.label}
+                                    </a>
+                                );
+                            })}
                         </div>
                         :
                         <div className="mx-auto hidden h-[54px] max-w-7xl items-center justify-center gap-5 px-4 md:flex">
@@ -198,7 +208,11 @@ export default function HeaderNew({ customerSidebar, corporateSidebar, isGuest =
             <div className="bg-white">
                 <div className={`mx-auto flex h-[62px] w-full ${showMarketingNavStrip ? "max-w-7xl" : "max-w-full"} items-center justify-between px-4 md:px-6`}>
                     <div className="flex items-center">
-                        <img src={Logo} alt={t("nav.logoAlt")} className="h-[38px] w-auto object-contain md:h-[52px]" />
+                        <img src={Logo} alt={t("nav.logoAlt")} className="h-[38px] cursor-pointer w-auto object-contain md:h-[52px]" 
+                             onClick={() => {
+                                window.open("https://ethiotelecom.et/", "_blank");
+                              }}
+                        />
                     </div>
 
                     <div className={`ml-auto hidden items-center gap-3 ${navLayout.desktop}`}>
@@ -346,7 +360,11 @@ export default function HeaderNew({ customerSidebar, corporateSidebar, isGuest =
                             </>
                         )}
 
-                        <img src={TelebirrLogo} alt={t("nav.telebirrAlt")} className="h-[48px] w-auto object-contain pl-3" />
+                        <img src={TelebirrLogo} alt={t("nav.telebirrAlt")} className="h-[48px] cursor-pointer w-auto object-contain pl-3" 
+                        onClick={() => {
+                            window.open("https://ethiotelecom.et/", "_blank");
+                          }}
+                        />
                     </div>
 
                     <div className={navLayout.mobileBar}>
@@ -439,16 +457,26 @@ export default function HeaderNew({ customerSidebar, corporateSidebar, isGuest =
             {mobileOpen && !mobileMenuOpensSidebar && (
                 <div className={`border-t border-gray-200 bg-white px-4 py-3 ${navLayout.mobileSheet}`}>
                     <div className="flex max-h-[80vh] flex-col gap-3 overflow-y-auto pb-4">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                className="rounded-md px-3 py-2 text-sm font-semibold text-brand-blue hover:bg-brand-green-pale"
-                                onClick={() => setMobileOpen(false)}
-                            >
-                                {link.label}
-                            </a>
-                        ))}
+                        {navLinks.map((link) => {
+                            const isHome = link.href === "#home";
+                            const className =
+                                "rounded-md px-3 py-2 text-sm font-semibold text-brand-blue hover:bg-brand-green-pale";
+                            const close = () => setMobileOpen(false);
+                            return isHome ? (
+                                <Link
+                                    key={link.href}
+                                    to={`${HOME_2_PATH}#home`}
+                                    className={className}
+                                    onClick={close}
+                                >
+                                    {link.label}
+                                </Link>
+                            ) : (
+                                <a key={link.href} href={link.href} className={className} onClick={close}>
+                                    {link.label}
+                                </a>
+                            );
+                        })}
 
                         {token ? (
                             <>

@@ -1,13 +1,14 @@
 import Header from "../components/header";
 import { Typography } from "@material-tailwind/react";
 import { useTranslation } from "react-i18next";
+import HeaderNew from "./home2/components/HeaderNew";
 
 const PrivacyPolicy = () => {
   const { t } = useTranslation(["privacyPolicy"]);
 
   return (
     <>
-      <Header />
+      <HeaderNew />
       <div className="max-w-4xl mx-auto p-6 my-6 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center mb-6 text-secondary pb-2 border-b">
           {t("title")}
