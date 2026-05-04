@@ -242,6 +242,10 @@
       "label": "Qorshayaasha Subscription-ka",
       "title": "Qorshayaal Dabacsan oo Ku Habboon Baahi Kasta",
       "sub": "Dooro muddada subscription-kaaga oo ku bixi telebirr ama Ethio Airtime.",
+      "notes": [
+        "Kaliya macaamiisha shaqsiyadu waxay xaq u leeyihiin in lacag bixinta hawada lagu qaado.",
+        "Isticmaalayaasha shaqsiyadu waxay dooran karaan qorshaha bilaha oo keliya."
+      ],
       "paymentTitle": "Kanaallada Lacag-bixinta",
       "plans": [
         {

@@ -14,10 +14,31 @@ export default function PricingSection() {
     return Array.isArray(items) ? items : [];
   }, [t]);
 
+  const pricingNotes = useMemo(() => {
+    const items = t("pricing.notes", { returnObjects: true });
+    return Array.isArray(items) ? items : [];
+  }, [t]);
+
   return (
     <section id="pricing" className="bg-gradient-to-br from-brand-green-dark via-brand-green to-brand-green-muted py-16 text-white">
       <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
-        <SectionTitle white label={t("pricing.label")} title={t("pricing.title")} sub={t("pricing.sub")} />
+        <SectionTitle white label={t("pricing.label")} title={t("pricing.title")} sub={t("pricing.sub")} 
+        
+        className="mb-2"
+        />
+
+        {pricingNotes.length > 0 ? (
+          <ul className="mb-8 max-w-3xl list-none space-y-2 text-sm leading-relaxed text-white/90 md:text-[15px]">
+            {pricingNotes.map((note) => (
+              <li key={note} className="flex gap-2">
+                <span className="shrink-0 select-none font-semibold" aria-hidden>
+                  *
+                </span>
+                <span>{note}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {pricingPlans.map((plan) => (

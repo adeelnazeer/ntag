@@ -1,6 +1,6 @@
-export default function SectionTitle({ label, title, sub, light = false, white = false, blue = false }) {
+export default function SectionTitle({ label, title, sub, light = false, white = false, blue = false,className = "mb-10" }) {
   return (
-    <div className="mb-10">
+    <div className={className}>
       <span
         className={`mb-3 block text-xs font-bold uppercase tracking-[2px] ${
           light ? "text-brand-green-label-light" : white ? "text-white" : blue ? "text-brand-blue" : "text-brand-green-dark"
