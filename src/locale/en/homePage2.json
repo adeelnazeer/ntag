@@ -242,6 +242,10 @@
     "label": "Subscription Plans",
     "title": "Flexible Plans for Every Need",
     "sub": "Choose your subscription period and pay via telebirr or Ethio Airtime.",
+    "notes": [
+      "Only individual subscribers are eligible for airtime charging.",
+      "Individual users can select the monthly plan only."
+    ],
     "paymentTitle": "Payment Channels",
     "plans": [
       {
