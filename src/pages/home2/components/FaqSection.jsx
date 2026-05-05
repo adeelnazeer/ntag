@@ -1,15 +1,25 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SectionTitle from "./SectionTitle";
+import { ConstentRoutes } from "../../../utilities/routesConst";
 
 export default function FaqSection() {
+  const navigate = useNavigate();
   const { t } = useTranslation("homePage2");
+  const { t: tFaq } = useTranslation("faqs");
   const [openFaq, setOpenFaq] = useState(0);
 
   const faqItems = useMemo(() => {
-    const items = t("faq.items", { returnObjects: true });
-    return Array.isArray(items) ? items : [];
-  }, [t]);
+    const items = [];
+    for (let i = 1; i <= 36; i += 1) {
+      const q = tFaq(`question${i}`, { defaultValue: "" });
+      const a = tFaq(`answer${i}`, { defaultValue: "" });
+      if (!q || !a) break;
+      items.push({ id: i, q, a });
+    }
+    return items.slice(0, 7);
+  }, [tFaq]);
 
   return (
     <section id="faq" className="mx-auto w-full max-w-4xl px-4 py-16 md:px-6">
@@ -32,7 +42,11 @@ export default function FaqSection() {
           {openFaq === idx && <div className="bg-[#F7F7F7] px-5 py-4 text-sm text-[#666]">{item.a}</div>}
         </div>
       ))}
-      <button type="button" className="mt-2 text-sm font-bold text-brand-green hover:text-brand-green-dark">
+      <button
+        type="button"
+        onClick={() => navigate(ConstentRoutes.FrequentlyAskedQuestions)}
+        className="mt-2 text-sm font-bold text-brand-green hover:text-brand-green-dark"
+      >
         {t("faq.moreQuestions")}
       </button>
     </section>

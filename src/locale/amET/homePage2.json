@@ -92,12 +92,39 @@
       "items": [
         {
           "id": "platinum",
-          "name": "Platinum",
+          "name": "ፕላቲነም",
           "tag": "#1111",
           "level": "እጅግ ልዩ",
-          "description": "አጭር እና ክቡር ቁጥሮች",
-          "examples": "#11100, #0022",
-          "chipLabel": "ከፍተኛ"
+          "description": "አጭር እና በጣም የተከበሩ ቁጥሮች",
+          "examples": "#11100, #0022, #333111",
+          "chipLabel": "ከፍተኛ ደረጃ"
+        },
+        {
+          "id": "golden",
+          "name": "ወርቃማ",
+          "tag": "#9990",
+          "level": "ተደጋጋሚ ንድፎች",
+          "description": "ከፍተኛ ክብር ያላቸው ተደጋጋሚ ንድፎች",
+          "examples": "#11022, #200200, #9900",
+          "chipLabel": "ፕሪሚየም ደረጃ"
+        },
+        {
+          "id": "silver",
+          "name": "ብር",
+          "tag": "#33944",
+          "level": "ንድፍ ያላቸው ቁጥሮች",
+          "description": "ታዋቂ ንድፍ ያላቸው ቁጥሮች",
+          "examples": "#11022, #33944",
+          "chipLabel": "መካከለኛ ደረጃ"
+        },
+        {
+          "id": "bronze",
+          "name": "ነሐስ",
+          "tag": "#23104",
+          "level": "የተሰየሙ TAGዎች",
+          "description": "እስከ 8 ፊደላት ያሉ ብጁ ስሞች",
+          "examples": "#Name, #Pepsi, #Touch",
+          "chipLabel": "መደበኛ ደረጃ"
         }
       ]
     },
