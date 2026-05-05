@@ -254,7 +254,7 @@
         "desc": "Flexible — renew every month. No long commitment.",
         "accent": "border-b-[3px] border-b-[#3B82F6]",
         "tint": "text-[#3B82F6]/28",
-        "img": "/monthly_calendar.png"
+        "img": "/1.png"
       },
       {
         "code": "Q",
@@ -262,7 +262,7 @@
         "desc": "3-month plan — save more than monthly.",
         "accent": "border-b-[3px] border-b-[#22C55E]",
         "tint": "text-[#22C55E]/28",
-        "img": "/quarterly_growth.png"
+        "img": "/2.png"
       },
       {
         "code": "S",
@@ -270,7 +270,7 @@
         "desc": "6-month plan — great value for regular users.",
         "accent": "border-b-[3px] border-b-[#F59E0B]",
         "tint": "text-[#F59E0B]/28",
-        "img": "/semi_annual_shield.png"
+        "img": "/3.png"
       },
       {
         "code": "A",
@@ -278,7 +278,7 @@
         "desc": "Best savings — 12 months with best rates.",
         "accent": "border-b-[3px] border-b-[#A855F7]",
         "tint": "text-[#A855F7]/28",
-        "img": "/annual_badge.png"
+        "img": "/4.png"
       }
     ],
     "paymentChannels": [
