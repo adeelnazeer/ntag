@@ -44,7 +44,7 @@ export default function PricingSection() {
           {pricingPlans.map((plan) => (
             <div
               key={plan.name}
-              className={`group relative cursor-pointer overflow-hidden rounded-2xl border border-black/10 bg-white text-left shadow-[0_8px_18px_rgba(0,0,0,0.15)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.20)] ${plan.accent}`}
+              className={`group relative min-h-[260px] cursor-pointer overflow-hidden rounded-2xl border border-black/10 bg-white text-left shadow-[0_8px_18px_rgba(0,0,0,0.15)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.20)] ${plan.accent}`}
             >
               <div className="p-5">
                 <div className="relative z-10 mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-brand-blue-soft bg-brand-blue-tint text-xs font-bold text-brand-blue">
@@ -53,8 +53,8 @@ export default function PricingSection() {
                 <div className="relative z-10 text-lg md:text-xl font-extrabold leading-tight text-brand-blue">{plan.name}</div>
                 <p className="relative z-10 mt-1 text-sm md:text-base leading-relaxed text-brand-blue-text-muted">{plan.desc}</p>
               </div>
-              <div className={`pointer-events-none flex justify-end bottom-0 right-0 z-0 ${plan.tint}`}>
-                <img src={plan.img} alt={plan.name} className="w-[200px] h-[150px] object-contain" />
+              <div className={`pointer-events-none absolute bottom-0 right-0 z-0 flex justify-end ${plan.tint}`}>
+                <img src={plan.img} alt={plan.name} className="w-[230px] h-[190px] object-contain" />
               </div>
             </div>
           ))}
