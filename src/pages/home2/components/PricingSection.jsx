@@ -46,6 +46,7 @@ export default function PricingSection() {
               key={plan.name}
               className={`group relative min-h-[260px] cursor-pointer overflow-hidden rounded-2xl border border-black/10 bg-white text-left shadow-[0_8px_18px_rgba(0,0,0,0.15)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.20)] ${plan.accent}`}
             >
+              <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-white/95 via-white/85 to-white/20" />
               <div className="p-5">
                 <div className="relative z-10 mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-brand-blue-soft bg-brand-blue-tint text-xs font-bold text-brand-blue">
                   {plan.code}

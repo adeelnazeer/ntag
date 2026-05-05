@@ -80,26 +80,26 @@
       ],
       "corporate": {
         "label": "Shirkad",
-        "tagLine": "#Ethio,#532",
+        "tagLine": "#Ethio,#38446",
         "subtitle": "Aqoonsiga Brand-ka",
         "body": "Diiwaangeli naaneyskaaga si uu u noqdo aqoonsigaaga wicitaanka",
         "incoming": "Soo galaya",
-        "cli": "#Ethio"
+        "cli": "#38446"
       },
       "individual": {
         "label": "SHAQSI",
-        "tagLine": "#Name,#8832",
+        "tagLine": "#Name,#6268",
         "subtitle": "Fudud in La Xasuusto",
         "body": "Diiwaangeli naaneyskaaga si uu u noqdo aqoonsigaaga wicitaanka",
         "incoming": "Soo galaya",
-        "cli": "#Name"
+        "cli": "#6268"
       },
       "businessCardChip": "Kaarka Ganacsiga",
       "businessCard": {
         "company": "KENTUCKY FRIED CHICKEN",
         "official": "NameTAG Rasmi ah",
         "website": "www.company.com",
-        "tag": "#883 (#Name)",
+        "tag": "#6263 (#Name)",
         "phone": "0978123456",
         "email": "companyofficial@gmail.com",
         "address": "123 Main Street, Addis Ababa, Ethiopia",

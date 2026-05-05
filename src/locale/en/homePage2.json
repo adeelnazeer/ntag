@@ -80,11 +80,11 @@
     ],
     "corporate": {
       "label": "Corporate",
-      "tagLine": "#Ethio,#532",
+      "tagLine": "#Ethio,#38446",
       "subtitle": "Brand Identity",
       "body": "Register your nicknaeas your caller identity",
       "incoming": "Incoming",
-      "cli": "#Ethio"
+      "cli": "#38446"
     },
     "individual": {
       "label": "INDIVIDUAL",
@@ -92,14 +92,14 @@
       "subtitle": "Memorable",
       "body": "Register your nicknaeas your caller identity",
       "incoming": "Incoming",
-      "cli": "#Name"
+      "cli": "#6268"
     },
     "businessCardChip": "Business Card",
     "businessCard": {
       "company": "KENTUCKY FRIED CHICKEN",
       "official": "Official NameTAG",
       "website": "www.company.com",
-      "tag": "#883 (#Name)",
+      "tag": "#6263 (#Name)",
       "phone": "0978123456",
       "email": "companyofficial@gmail.com",
       "address": "123 Main Street, Addis Ababa, Ethiopia",
