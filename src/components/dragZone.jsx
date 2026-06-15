@@ -18,7 +18,6 @@ const DropzoneUploader = ({ url = '/upload', acceptedFiles = 'image/*', onUpload
                 addRemoveLinks: true,
                 init: function () {
                     this.on('success', (file, response) => {
-                        console.log('Upload success:', response);
                         if (onUploadSuccess) onUploadSuccess(file, response);
                     });
 

@@ -1,111 +1,107 @@
 {
-  "title": "Poollisii Iccitii NameTAG",
+  "title": "Imaammata Iccitii NameTAG",
   "introduction": {
-    "heading": "Seensa",
-    "text": "Ethio Telecom keessatti (\"nuti\"), icciitii keessan barbaachisaa dha. Poollisii Iccitiin kun odeeffannoo dhuunfaa keessan akkamittan NameTAG tajaajilaa fi platformota waliigalaa yeroo fayyadamtan qabnu, fayyadamnu, ifnu, fi eegu ibsa."
+    "heading": "1. Seensa",
+    "text1": "Ethio Telecom keessatti (\"nuti\", \"keenya\", \"nu\") iccitii fi nageenyi odeeffannoo keessanii nuuf baay’ee barbaachisaa dha. Imaammanni Iccitii kun yeroo isin applicationii moobaayilaa NameTAG (\"App\"), portal weebii NameTAG, tajaajila lakkoofsa dhokataa (virtual number), fi tajaajiloota walqabatan fayyadamtan odeeffannoo dhuunfaa keessan akkamitti walitti qabnu, itti fayyadamnu, qoodnu fi eegnu ibsa.",
+    "text2": "Appii NameTAG ykn Portal Weebii NameTAG buufachuun, galmaa’uun ykn itti fayyadamuun, akka Imaammata kanaatti odeeffannoon keessan walitti qabamuu fi itti fayyadamuu isaa irratti walii galtee kennitaniittu."
   },
   "definitions": {
-    "heading": "Hiika",
+    "heading": "2. Hiika Jechootaa",
     "personalInformation": {
       "label": "Odeeffannoo Dhuunfaa:",
-      "text": "Odeeffannoo namoota adda baasu, waliin kan hidhu, ykn fayyadamuuf danda'amu."
+      "text": "Odeeffannoo nama tokko adda baasuu, isa waliin walqabatu ykn nama tokko adda baasuuf fayyadu kamiyyuu."
     },
     "service": {
-      "label": "Tajaajilaa:",
-      "text": "Tajaajilaa lakkoofsa virtualii NameTAG, weebsaayitii, appliikeeshinootaa, fi platformota waliigalaa dabalatee."
+      "label": "Tajaajila:",
+      "text": "Applicationii moobaayilaa NameTAG, tajaajila lakkoofsa dhokataa (virtual number), marsariitiiwwan walqabatan, portaloota weebii fi tajaajiloota telekoomii."
+    },
+    "faydaId": {
+      "label": "Fayda ID:",
+      "text": "Sirna eenyummaa mootummaa Itoophiyaa irraa kennamu. Galmee maamiltoota dhuunfaa keessatti, NameTAG walitti hidhamiinsa sirna Fayda mootummaa fayyadamuun eenyummaa keessan mirkaneessa."
     }
   },
   "informationWeCollect": {
-    "heading": "Odeeffannoo Nuti Qabnu",
-    "personalInformation": {
-      "label": "Odeeffannoo Dhuunfaa:",
-      "text": "Fakkeenyaaf maqaa keessan, teessoo imeelii, lakkoofsa bilbilaa, fi mallattoo birooti yeroo galmeeffannaa kennaman."
+    "heading": "3. Odeeffannoo Walitti Qabnu fi Akkaataa Itti Fayyadamnu",
+    "intro": "Sirna lakkoofsa dhokataa nageenya qabu fi hojii isaa sirriitti raawwatu kennuuf, gosoota odeeffannoo armaan gadii walitti qabnee hojii irra oolchinaa:",
+    "accountProfile": {
+      "label": "Odeeffannoo Akaawuntii fi Proofaayilii:",
+      "text": "Yeroo Appii NameTAG ykn Portal Weebii irratti galmooftan, lakkoofsa bilbilaa keessan isa guddaa, maqaa guutuu fi teessoo imeelii keessan walitti qabna. Kunis proofaayila lakkoofsa dhokataa keessanii qopheessuuf fi eenyummaa keessan mirkaneessuuf fayyada."
+    },
+    "faydaId": {
+      "label": "Fayda ID (Eenyummaa Biyyaalessaa):",
+      "text": "Mirkaneessa akaawuntii dhuunfaa keessatti, odeeffannoon Fayda ID sirna mootummaa Fayda fayyadamuun hojii irra oola; kunis ulaagaalee KYC (Know Your Customer) guutuuf fayyada."
+    },
+    "mobileDevice": {
+      "label": "Hayyama fi Odeeffannoo Meeshaa Moobaayilaa:",
+      "deviceIdentifiers": {
+        "label": "Mallattoolee Addaa Meeshaa:",
+        "text": "Uumama akaawuntii sobaa ittisuuf fi walqabsiisummaa lakkoofsa dhokataa keessanii eegsisuuf, teessoo IP, gosa meeshaa, vershinii sirna hojii (Operating System) fi mallattoolee addaa akka IMEI ykn Android ID ni fayyadamna."
+      },
+      "phoneState": {
+        "label": "Haala Bilbilaa:",
+        "text": "Sababni isaas NameTAG lakkoofsota dhokataa fi sirna qajeelcha bilbilaa bulchu waan ta’eef, Appiin hayyama haala bilbilaa dubbisuu fi hojiiwwan telekoomii bu’uuraa raawwachuuf barbaachisa."
+      }
     },
     "usageData": {
-      "label": "Odeeffannoo Fayyadamaa:",
-      "text": "Odeeffannoo akkamitti Tajaajilaa waliin walqunnamtaniif, daaw'annaa dursaa, gaaffilee barbaachisaa, fi saalaa waliita'aa dabalatee."
-    },
-    "deviceInformation": {
-      "label": "Odeeffannoo Meeshaa:",
-      "text": "Gad-fageenya akka teessoo IP keessan, gosa meeshaa, sirna hojii, fi gosa brauzeraa."
+      "label": "Odeeffannoo Itti Fayyadamaa:",
+      "text": "Odeeffannoo akkaataa Appii fi Portal Weebii itti fayyadamtan agarsiisu, kanneen akka haala walqunnamtii neetworkii, galmee hojiiwwanii, qindaa’ina sirna qajeelchaa fi safartuu raawwii hojii."
     }
   },
   "howWeCollect": {
-    "heading": "Akkamittan Odeeffannoo Qabnu",
+    "heading": "4. Akkaataa Odeeffannoo Walitti Qabnu",
     "directly": {
-      "label": "Gara Keessan Irraa:",
-      "text": "Yeroo galmeeffattan, gargaarsa quunnamtani, ykn Tajaajilaa waliin walqunnamtani."
+      "label": "Kallattiidhaan Isin Irraa:",
+      "text": "Yeroo galmee keessan Appii ykn Portal Weebii keessatti xumurtan."
     },
     "automatically": {
-      "label": "Ofii Ofii:",
-      "text": "Tajaajilaa keenya yeroo fayyadamtan cookie fi teeknooloojii hordofii fayyadamuun."
+      "label": "Ofumaan:",
+      "text": "Karaa interface Appii, qaamolee sirna hojii fi tajaajiloota nageenyaan eegaman irraa walitti qabama."
     },
-    "thirdParties": {
-      "label": "Qaama Sadaasaaf:",
-      "text": "Hojjettoota, qaamolee waliigalaa, miidiyaa hawaasaa fi qu'annaa ummataa argamu dabalatee."
-    }
-  },
-  "howWeUse": {
-    "heading": "Akkamittan Odeeffannoo Fayyadamnu",
-    "intro": "Odeeffannoo keessan fayyadamna:",
-    "items": {
-      "provide": "Tajaajilaa NameTAG kennuu, hojjachuu, fi tikisuu.",
-      "improve": "Yaalaa fayyadamaa keessan fooyya'essuu fi dhuunfaa gochuu.",
-      "communicate": "Odeeffannoo barbaachisaa, haaromsa, fi kennoo baasii waliita'aa (hayyama keessan waliin).",
-      "fulfill": "Haala seeraa fi dhaabbannaa guutuu."
+    "faydaPlatform": {
+      "label": "Sirna Fayda:",
+      "text": "Yeroo akka maamila dhuunfaatti galmooftan, mirkaneessi eenyummaa keessanii karaa walitti hidhamiinsa sirna Fayda mootummaa Itoophiyaa ni raawwatama. Fayda ID keessan karaa nageenya qabuun ni mirkaneeffattu."
     }
   },
   "disclosure": {
-    "heading": "Odeeffannoo Ifuu",
-    "intro": "Odeeffannoo Dhuunfaa keessan waliin qooduu dandeenya:",
+    "heading": "5. Qoodinsa Odeeffannoo",
+    "intro": "Odeeffannoo dhuunfaa keessan hin gurgurru. Haala armaan gadiitti qofa qooduu dandeenya:",
     "serviceProviders": {
-      "label": "Kennitoota Tajaajilaa:",
-      "text": "Tajaajilaa keenya kennuu fi fooyya'essuu keessatti nu gargaaran."
-    },
-    "partners": {
-      "label": "Hojjettoota fi Qaamolee Waliigalaa:",
-      "text": "Bal'ina tajaajilaa fi deeggarsa maatiiif."
+      "label": "Kennitoota Tajaajilaa fi Michoota Teeknikaa:",
+      "text": "Michoota amanamoo sirna tajaajila NameTAG diriirsuu, keessummeessuu fi bulchiinsa serverii nageenya qabu keessatti nu gargaaran waliin."
     },
     "lawEnforcement": {
-      "label": "Hojjettoota Seeraa ykn Mootummaa Dhaabbannaa:",
-      "text": "Yeroo haala seeraa guutuu ykn mirga fi nageenya eeguun barbaachisaa ta'e."
+      "label": "Qaamolee Seeraa fi To’annoo:",
+      "text": "Yeroo seerota telekoomii Itoophiyaa, ulaagaalee mootummaa ykn ajaja mana murtii seeraan dirqisiisaa ta’e kabajuun barbaachisu qofa."
     }
   },
-  "cookies": {
-    "heading": "Cookie fi Teeknooloojii Hordofii",
-    "intro": "Cookie fi teeknooloojii wal fakkaataa fayyadamna:",
-    "items": {
-      "analyze": "Tajaajilaa keenya akkamitti fayyadamu ilaaluu fi hubachuu.",
-      "personalize": "Yaalaa keessan fi qu'annaa dhuunfaa gochuu.",
-      "enhance": "Hojiimmaa Tajaajilaa fi nageenya fooyya'essuu."
+  "dataRetention": {
+    "heading": "6. Imaammata Kuusaa Odeeffannoo fi Haquu Akaawuntii (Google Play Waliin Kan Walsimu)",
+    "intro": "Tajaajila lakkoofsa dhokataa isiniif kennuuf fi ulaagaalee mootummaa fi telekoomii guutuuf hanga barbaachisutti odeeffannoo dhuunfaa keessan ni kuusna.",
+    "userDeletion": {
+      "label": "Mirga Haquu:",
+      "text": "Akaawuntii NameTAG fi odeeffannoo isaa yeroo kamiyyuu haquuf mirga guutuu qabdu."
     },
-    "note": "Filannoo cookie keessan meeshaa ykn saalaa brauzeraa keessan irraa bulchuu dandeessu."
-  },
-  "yourRights": {
-    "heading": "Mirgi Keessan",
-    "intro": "Mirgi qabdu:",
-    "items": {
-      "access": "Odeeffannoo Dhuunfaa keessan argachuu fi ilaaluu.",
-      "requestCorrections": "Sirreessuu ykn haaromsa kadhadhu.",
-      "object": "Hojii odeeffannoo keessan haala tokko tokko keessatti diina.",
-      "requestDeletion": "Haquu Odeeffannoo Dhuunfaa keessan kadhadhu (haala seeraa irratti hundaa'uun).",
-      "optOut": "Yeroo hundaa oggaa baasii bitaa fudhachuu irraa filannoo baasi."
+    "howToDelete": {
+      "label": "Akkaataa Odeeffannoo Keessan Haqtan:",
+      "text": "Gaaffii haquu Appii keessatti menu Settings irraa, Portal Weebii dashboard irraa ykn imeelii garee deeggarsaa keenyaaf erguun dhiyeessuu dandeessu. Erga mirkanaa’ee booda, Ethio Telecom odeeffannoo dhuunfaa keessan database hojii irraa haquu ykn maqaa irraa qulqulleessuu ni raawwata; yoo seeraan kuufamuun dirqama ta’e garuu ni tura."
     }
   },
   "security": {
-    "heading": "Nageenya",
-    "text": "Mala nageenya teeknikaalaa fi qindaa'inaa sirrii Odeeffannoo Dhuunfaa keessan argamsii hin hayyamne, ifaa, jijjiiramaa, fi balleessaa irraa eeguuf hojjachina."
-  },
-  "dataRetention": {
-    "heading": "Odeeffannoo Qabachuu",
-    "text": "Odeeffannoo Dhuunfaa keessan yeroo qofaa kan Poollisii Iccitii kana keessatti ibsame guutuu barbaachisaa ta'ee qabanna, yoo yeroo dheerina qabachuu seeran hin eegamine yookiin hin hayyamne malee."
+    "heading": "7. Nageenya",
+    "text": "Odeeffannoo dhuunfaa keessan irraa eegsisuuf, tooftaalee nageenyaa teeknikaa, mootummaa fi mootummaa dhaabbataa sadarkaa industirii kanneen akka encryption yeroo dabarsaa fi yeroo kuusaa fayyadamna."
   },
   "changes": {
-    "heading": "Jijjiirama Poollisii Iccitii Kanaa",
-    "text": "Poollisii Iccitii kana yeroo yeroo haaromsuu dandeenya. Jijjiiramni weebsaayitii keenya irratti maxxanfama, fi yeroo yeroo ilaaluuf si dhiyeessina."
+    "heading": "8. Jijjiirama Imaammata Iccitii Kana",
+    "text": "Yeroo yerootti Imaammata Iccitii keenya haaromsuu dandeenya. Jijjiiramni kamiyyuu Appii fi Portal Weebii keessatti ni mul’ata; guyyaan haaromfame immoo gubbaa fuula imaammataa irratti ni kaa’ama. Yeroo yerootti akka ilaaltan isin jajjabeessina."
   },
-  "acceptance": {
-    "heading": "Poollisii Iccitii Fudhachuu",
-    "text": "Tajaajilaa NameTAG fayyadamuun, hayyama Poollisii Iccitii kana dubbiftee, hubdee, fi walii galtuu keessan mirkaneeffita."
+  "contact": {
+    "heading": "9. Nu Qunnamaa",
+    "intro": "Gaaffii Imaammata Iccitii kanaa ykn gaaffii haquu odeeffannoo irratti yoo qabaattan, karaa armaan gadii nu qunnamaa:",
+    "email": "info@tech-vas.com",
+    "contactSupport": "https://nametag.et/contact-us",
+    "website": "https://nametag.et",
+    "emailLabel": "Imeelii:",
+    "contactSupportLabel": "Deeggarsa Qunnamaa:",
+    "websiteLabel": "Marsariitii:"
   }
 }

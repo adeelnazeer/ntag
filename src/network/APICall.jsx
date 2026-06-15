@@ -52,7 +52,6 @@ axiosInstance.interceptors.request.use(
         ) {
           deleteAuthorizationHeader();
         }
-        console.log("Guest endpoint detected, setting guest_token header");
       } else {
         console.warn("Guest endpoint called but no guest_token found in localStorage");
       }

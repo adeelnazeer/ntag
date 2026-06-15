@@ -114,7 +114,6 @@ const AccountForm = ({ register, errors, watch, data, setOpen, setData, control,
     return cleanNumber.startsWith('9') && cleanNumber.length === 9;
   };
 
-  console.log({ watchAll })
 
   return (
     <>

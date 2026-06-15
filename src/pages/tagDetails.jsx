@@ -553,7 +553,7 @@ import {
 } from "../utilities/routesConst";
 import { useForm } from "react-hook-form";
 import { useAppSelector } from "../redux/hooks";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { formatPhoneNumberCustom } from "../utilities/formatMobileNumber";
 import IndividualPaymentConfirmationModal from "../modals/IndividualPaymentConfirmationModal";
 import Paymentsuccessful from "../modals/paymentsuccessful";
@@ -566,16 +566,16 @@ import PaymentConfirmationModal from "../modals/ConfirmPayment";
 import { IoMdInformation } from "react-icons/io";
 import moment from "moment/moment";
 import { useTranslation } from "react-i18next";
+import { getTelebirrAppTypeChannel } from "../utilities/telebirrMiniAppChannel";
 
 const TagDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dashboard = useTagList();
   const stateData = location.state;
-  console.log({ stateData });
   const { t } = useTranslation(["common"]);
-  const { t:t2 } = useTranslation(["buyTag"]);
-
+  const { t: t2 } = useTranslation(["buyTag"]);
+  const channel = getTelebirrAppTypeChannel()
   const isExchangeFlow = stateData?.isExchangeFlow || false;
   const currentTagData = stateData?.currentTagData || null;
   const [type, setType] = useState("");
@@ -585,7 +585,7 @@ const TagDetails = () => {
     (state) => state.user.corporateDocuments
   );
   const [isOpen, setIsOpen] = useState(false);
-  const [businessType, setBusinessType] = useState("BuyGoods");
+  const [businessType, setBusinessType] = useState(stateData?.payment_method == "telebirr_partnerapp" ? "TransferToOtherOrg" : "BuyGoods");
 
   const [availablePhoneNumbers, setAvailablePhoneNumbers] = useState([]);
   const [loadingPhoneNumbers, setLoadingPhoneNumbers] = useState(false);
@@ -603,8 +603,8 @@ const TagDetails = () => {
   const docStatus = {
     status:
       corporateDocuments?.[0]?.doc_status == "1" &&
-      corporateDocuments?.[1]?.doc_status == "1" &&
-      corporateDocuments?.[2]?.doc_status == "1"
+        corporateDocuments?.[1]?.doc_status == "1" &&
+        corporateDocuments?.[2]?.doc_status == "1"
         ? 1
         : 0,
     corp_document: corporateDocuments,
@@ -670,7 +670,7 @@ const TagDetails = () => {
       setSelectedPhoneNumber(userData.phone_number);
       return;
     }
-    
+
     if (!hasMsisdn) {
       fetchAvailablePhoneNumbers();
     } else {
@@ -732,9 +732,9 @@ const TagDetails = () => {
     // { value: "weekly_fee", label: "Weekly", amount: tagData.weekly_fee || 0 },
     {
       value: "quarterly_fee",
-        label: t2("tagInfo.quarterly"),
-        labelEnglish: "Quarterly",
-        amount: tagData.quarterly_fee || 0,
+      label: t2("tagInfo.quarterly"),
+      labelEnglish: "Quarterly",
+      amount: tagData.quarterly_fee || 0,
     },
     {
       value: "semiannually_fee",
@@ -825,12 +825,12 @@ const TagDetails = () => {
       selectedRecurringFee === "monthly_fee"
         ? 30
         : selectedRecurringFee === "quarterly_fee"
-        ? 90
-        : selectedRecurringFee === "semiannually_fee"
-        ? 180
-        : selectedRecurringFee === "annually_fee"
-        ? 365
-        : null;
+          ? 90
+          : selectedRecurringFee === "semiannually_fee"
+            ? 180
+            : selectedRecurringFee === "annually_fee"
+              ? 365
+              : null;
 
     if (daysToAdd === null) return null;
 
@@ -883,8 +883,8 @@ const TagDetails = () => {
       reserveType = "new";
     }
 
-    const accountId = userData?.parent_id != null && userData?.parent?.customer_account_id 
-      ? userData.parent.customer_account_id 
+    const accountId = userData?.parent_id != null && userData?.parent?.customer_account_id
+      ? userData.parent.customer_account_id
       : userData?.customer_account_id;
     const values = {
       transaction_type: "CORP_BUYTAG",
@@ -1031,6 +1031,9 @@ const TagDetails = () => {
     if (state.mode == "resubscribe") {
       const payload = {
         corp_subscriber_id: state?.reserve_tag_id,
+        payment_method:
+          businessType == "BuyGoods" ? "telebirr" : "telebirr_partnerapp",
+        business_type: businessType,
       };
 
       APICall("post", payload, "customer/re-subscribe")
@@ -1108,8 +1111,8 @@ const TagDetails = () => {
       return; // Prevent form submission
     }
     if (isExchangeFlow) {
-      const accountId = userData?.parent_id != null && userData?.parent?.customer_account_id 
-        ? userData.parent.customer_account_id 
+      const accountId = userData?.parent_id != null && userData?.parent?.customer_account_id
+        ? userData.parent.customer_account_id
         : userData?.id;
       const payload = {
         transaction_type: "CHANGE_MY_TAG",
@@ -1126,10 +1129,11 @@ const TagDetails = () => {
           stateData?.price ||
           "0"
         ).toString(),
-        payment_method: "telebirr",
+        payment_method:
+          businessType == "BuyGoods" ? "telebirr" : "telebirr_partnerapp",
+        business_type: businessType,
         reserve_type: "existing",
         msisdn: stateData?.currentTagData?.msisdn?.replace(/^\+/, ""),
-        business_type: userData?.business_type || "BuyGoods",
         service_fee: selectedFeeAmount, // Use selected fee amount
         // Add recurring fee information
         recurring_fee_type: selectedRecurringFee,
@@ -1273,7 +1277,7 @@ const TagDetails = () => {
     if (hasParentId && userData?.phone_number) {
       return userData.phone_number;
     }
-    
+
     if (hasMsisdn) {
       return stateData?.msisdn;
     } else if (selectedPhoneNumber) {
@@ -1306,7 +1310,57 @@ const TagDetails = () => {
     }
   };
 
-  console.log(stateData);
+  const businessOptions = useMemo(() => {
+    if (channel === "WEB") {
+      return [
+        {
+          value: "TransferToOtherOrg",
+          label: t("dashboard.paymentViaTelebirrPartnerApp"),
+        },
+        {
+          value: "BuyGoods",
+          label: t("dashboard.paymentViaTelebirrSuperApp"),
+        },
+      ];
+    }
+
+    if (channel === "MINI_PARTNERAPP") {
+      return [
+        {
+          value: "TransferToOtherOrg",
+          label: t("dashboard.paymentViaTelebirrPartnerApp"),
+        },
+      ];
+    }
+
+    if (channel === "MINI_SUPERAPP") {
+      return [
+        {
+          value: "BuyGoods",
+          label: t("dashboard.paymentViaTelebirrSuperApp"),
+        },
+      ];
+    }
+
+    return [];
+  }, [channel, t]);
+
+  useEffect(() => {
+    if (stateData?.payment_method === "telebirr_partnerapp") {
+      setBusinessType("TransferToOtherOrg");
+    } else if (channel === "MINI_PARTNERAPP") {
+      setBusinessType("TransferToOtherOrg");
+    } else if (channel === "MINI_SUPERAPP") {
+      setBusinessType("BuyGoods");
+    } else {
+      setBusinessType("BuyGoods");
+    }
+  }, [channel, stateData?.payment_method]);
+
+  const showPaymentSection =
+    stateData?.mode === "resubscribe" || channel === "WEB";
+  const showCurrentPaymentMethod = stateData?.mode === "resubscribe";
+  const showPaymentOptionSelect = channel === "WEB";
 
   return (
     <>
@@ -1330,12 +1384,12 @@ const TagDetails = () => {
               {isReserved
                 ? t("dashboard.resubTag")
                 : docStatus.status !== 1
-                ? t("dashboard.reserveTag")
-                : actionType
-                ? actionType === "buy"
-                  ? t("dashboard.buyTag")
-                  : t("dashboard.reserveTag")
-                : t("dashboard.tagDetail")}{" "}
+                  ? t("dashboard.reserveTag")
+                  : actionType
+                    ? actionType === "buy"
+                      ? t("dashboard.buyTag")
+                      : t("dashboard.reserveTag")
+                    : t("dashboard.tagDetail")}{" "}
               {isPremium ? t("dashboard.premium") : ""}
             </Typography>
           ) : (
@@ -1343,12 +1397,12 @@ const TagDetails = () => {
               {isReserved
                 ? t("dashboard.buyTag")
                 : docStatus.status !== 1
-                ? t("dashboard.reserveTag")
-                : actionType
-                ? actionType === "buy"
-                  ? t("dashboard.buyTag")
-                  : t("dashboard.reserveTag")
-                : t("dashboard.tagDetail")}{" "}
+                  ? t("dashboard.reserveTag")
+                  : actionType
+                    ? actionType === "buy"
+                      ? t("dashboard.buyTag")
+                      : t("dashboard.reserveTag")
+                    : t("dashboard.tagDetail")}{" "}
               {isPremium ? t("dashboard.premium") : ""}
             </Typography>
           )}
@@ -1435,8 +1489,8 @@ const TagDetails = () => {
                     {hasParentId
                       ? formatPhoneNumber(userData?.phone_number)
                       : isExchangeFlow
-                      ? formatPhoneNumber(stateData?.currentTagData?.msisdn)
-                      : formatPhoneNumber(stateData.msisdn)}
+                        ? formatPhoneNumber(stateData?.currentTagData?.msisdn)
+                        : formatPhoneNumber(stateData.msisdn)}
                   </Typography>
                 </div>
               </div>
@@ -1671,30 +1725,43 @@ const TagDetails = () => {
               </Typography>
             </div>
           </div>
-
-          {/* {actionType === "buy" && docStatus?.status !== 0 && ( */}
-          <div className="border-[#77777733] border bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
-            <div className="flex justify-between items-center">
-              <Typography className="text-[14px]">
-                {t("dashboard.paymentOption")}
-              </Typography>
-              <div className="w-80">
-                <Select
-                  value={businessType}
-                  onChange={(value) => setBusinessType(value)}
-                  className="border border-[#8dc63f] rounded-lg"
-                >
-                  <Option value="TransferToOtherOrg">
-                    {t("dashboard.paymentViaTelebirrPartnerApp")}
-                  </Option>
-                  <Option value="BuyGoods">
-                    {t("dashboard.paymentViaTelebirrSuperApp")}
-                  </Option>
-                </Select>
-              </div>
+          {showPaymentSection && (
+            <div className="border-[#77777733] border bg-[#F6F7FB] px-5 py-3 rounded-xl mt-3">
+              {showCurrentPaymentMethod && (
+                <div className="flex justify-between mb-2 items-center">
+                  <Typography className="text-[14px]">
+                    {t("dashboard.currentPaymentMethod")}
+                  </Typography>
+                  <Typography className="text-[14px]">
+                    {stateData?.payment_method == "telebirr_partnerapp"
+                      ? "telebirr partner App"
+                      : "telebirr super App"}
+                  </Typography>
+                </div>
+              )}
+              {showPaymentOptionSelect && (
+                <div className="flex justify-between items-center">
+                  <Typography className="text-[14px]">
+                    {t("dashboard.paymentOption")}
+                  </Typography>
+                  <div className="w-80">
+                    <Select
+                      value={businessType || undefined}
+                      onChange={(value) => setBusinessType(value)}
+                      className="border border-[#8dc63f] rounded-lg"
+                      disabled={businessOptions.length === 0}
+                    >
+                      {businessOptions.map((item) => (
+                        <Option key={item.value} value={item.value}>
+                          {item.label}
+                        </Option>
+                      ))}
+                    </Select>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-          {/* )} */}
+          )}
 
           <div className="px-5 rounded-xl mt-3 text-[#555]">
             <div className="flex items-center">
@@ -1790,7 +1857,7 @@ const TagDetails = () => {
             total_amount: priceBreakdown?.totalPrice,
           }}
           phoneNumber={formatPhoneNumber(getCurrentPhoneNumber())}
-          businessType={"BuyGoods"}
+          businessType={businessType}
           reserve_tag_id={stateValue?.reserve_tag_id}
           onConfirm={() => handleConfirmPaymentLastPage(stateValue)}
           type={actionType}

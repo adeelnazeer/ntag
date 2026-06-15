@@ -1,112 +1,107 @@
 {
-  "title": "Name TAG Siyaasadda Qarsoonnimada ",
+  "title": "Siyaasadda Asturnaanta NameTAG",
   "introduction": {
-    "heading": " Hordhac",
-    "text": "Xaga Ethio Telecom (\"we\", \"us\", \"our\") arrimahaaga gaarka ah. Qaanuunka Arrimaha Khaaska ah wuxuu sharxayaa sida aan u ururino isticmaalka, siidaynta, iyo ilaalinta macluumaadkaaga gaarka ah marka aad isticmaasho adeegga NameTAG iyo aaladaha la xidhiidha."
+    "heading": "1. Hordhac",
+    "text1": "Ethio Telecom (\"annaga\", \"na\", \"keenna\") waxaan si weyn u qadarinaynaa asturnaantaada. Siyaasaddan Asturnaanta waxay sharxaysaa sida aan u ururino, u isticmaalno, u wadaagno, uguna ilaalino xogtaada shakhsiga ah marka aad rakibto oo aad isticmaasho barnaamijka moobilka ee NameTAG (\"App-ka\"), bogga webka ee NameTAG, adeegga lambarka farsamada (virtual number), iyo adeegyada kale ee la xiriira.",
+    "text2": "Markaad soo dejisato, iska diiwaangeliso, ama isticmaasho App-ka NameTAG ama Web Portal-ka, waxaad oggolaatay ururinta iyo isticmaalka xogtaada sida ku cad siyaasaddan."
   },
   "definitions": {
-    "heading": "Qeexitaanno ",
+    "heading": "2. Qeexitaanno",
     "personalInformation": {
-      "label": "Macluumaadka Shakhsi ahaaneed:",
-      "text": "Macluumad kasta oo tilmaameysa waxay la xiriirtaa ama loo isticmaali karaa in lagu aqoonsado shaqsi."
+      "label": "Xogta Shakhsiga Ah:",
+      "text": "Macluumaad kasta oo lagu aqoonsan karo, la xiriiri kara, ama loo isticmaali karo aqoonsiga qof."
     },
     "service": {
       "label": "Adeegga:",
-      "text": "Adeegga lambarka farsamada ee NameTAG oo ay ku jiraan abka, mareegaha ee la xidhiidha iyo aaladaha."
+      "text": "Barnaamijka moobilka ee NameTAG, adeegga lambarka farsamada, bogagga internetka ee la xiriira, web portal-ka, iyo adeegyada isgaarsiinta."
+    },
+    "faydaId": {
+      "label": "Fayda ID:",
+      "text": "Nidaamka Aqoonsiga Qaranka ee Dowladda Itoobiya. Diiwaangelinta macaamiisha shaqsiga ah, NameTAG waxay xaqiijisaa aqoonsigaaga iyada oo adeegsanaysa isku xirka rasmiga ah ee nidaamka Fayda."
     }
   },
   "informationWeCollect": {
-    "heading": "Xog Aruurinta ",
-    "personalInformation": {
-      "label": "Macluumaadka Shakhsi ahaaneed: ",
-      "text": "Sida magacaaga, iimaylka, lambarka mobaylka iyo aqoonsiyada kale ee la bixiyay wakhtiga diiwaangelinta."
+    "heading": "3. Xogta Aan Ururino iyo Sida Aan U Isticmaalno",
+    "intro": "Si aan u bixino nidaam lambaro farsamo oo ammaan ah oo shaqeynaya, waxaan ururinaa oo farsameynaa xogaha soo socda:",
+    "accountProfile": {
+      "label": "Xogta Akoonka iyo Profile-ka:",
+      "text": "Markaad iska diiwaangeliso App-ka NameTAG ama Web Portal-ka, waxaan ururinaa lambarkaaga moobilka ee ugu muhiimsan, magacaaga oo buuxa, iyo cinwaanka email-ka si aan u abuurno profile-kaaga lambarka farsamada iyo xaqiijinta aqoonsigaaga."
+    },
+    "faydaId": {
+      "label": "Fayda ID (Aqoonsiga Qaranka):",
+      "text": "Xogta xaqiijinta Aqoonsiga Qaranka waxaa lagu farsameeyaa nidaamka rasmiga ah ee Fayda si loo xaqiijiyo shuruudaha KYC (Know Your Customer)."
+    },
+    "mobileDevice": {
+      "label": "Ogolaanshaha iyo Xogta Qalabka Moobilka:",
+      "deviceIdentifiers": {
+        "label": "Aqoonsiyada Qalabka:",
+        "text": "Waxaan helnaa xog sida IP-ga qalabkaaga, nooca qalabka, nooca nidaamka hawlgalka, iyo aqoonsiyada gaarka ah ee qalabka (sida IMEI ama Android ID) si looga hortago sameynta akoonno been abuur ah loona ilaaliyo nidaamka lambarka farsamada."
+      },
+      "phoneState": {
+        "label": "Xaaladda Taleefanka:",
+        "text": "Maadaama NameTAG maamusho lambarrada farsamada iyo jihaynta wicitaannada, App-ku wuxuu u baahan yahay oggolaansho si uu u akhriyo xaaladda taleefanka una fuliyo adeegyada isgaarsiinta ee muhiimka ah."
+      }
     },
     "usageData": {
       "label": "Xogta Isticmaalka:",
-      "text": "Macluumaad ku saabsan sida aad ula falgasho Adeegga oo ay ku jiraan raadinta, taariikhda raadinta, iyo qaababka isgaarsiinta."
-    },
-    "deviceInformation": {
-      "label": "Macluumaadka Qalabka:",
-      "text": "Faahfaahinta sida qalabkaaga, nooca, ciwaanka IP-ga, iyo nooca browserka."
+      "text": "Macluumaadka ku saabsan sida aad ula falgasho App-ka iyo Web Portal-ka, oo ay ku jiraan xaaladaha isku xirka shabakadda, diiwaannada hawlgallada, qaabeynta jihaynta, iyo cabbirrada waxqabadka."
     }
   },
   "howWeCollect": {
-    "heading": "Sida aan Xog Uruursano ",
+    "heading": "4. Sida Aan U Ururino Xogta",
     "directly": {
-      "label": " Si toos ah adiga:",
-      "text": "Markaad isdiiwaangeliso, la xidhiidh taageerada, ama la macaamilka Adeegga."
+      "label": "Si Toos Ah Adiga Ayaa Lagaaga Qaadaa:",
+      "text": "Markaad dhammaystirto diiwaangelinta App-ka ama Web Portal-ka."
     },
     "automatically": {
-      "label": "Si toos ah::",
-      "text": "Isticmaalka cookies iyo tignoolajiyada raadraaca marka aad isticmaalayso Adeeggayaga."
+      "label": "Si Toos Ah (Automatic):",
+      "text": "Waxaa lagu ururiyaa iyadoo la adeegsanayo App-ka, nidaamyada qalabka, iyo adeegyada amniga leh ee asalka ka shaqeeya."
     },
-    "thirdParties": {
-      "label": "Ka socota dhinacyo saddexaad: ",
-      "text": "Marka lagu daro wada-hawlgalayaashayada, xiriiriya warbaahinta bulshada, iyo ilaha dadweynaha ee la heli karo."
-    }
-  },
-  "howWeUse": {
-    "heading": "Sida aan u isticmaalno macluumaadka ",
-    "intro": "Waxaan u isticmaalnaa macluumaadkaaga: ",
-    "items": {
-      "provide": "Bixi shaqada oo ilaali Adeegga NameTAG",
-      "inprove": "Horumari oo gaaryeel khibradaada isticmaale",
-      "communicate": "La xidhiidh wararka, cusboonaysiinta ee muhiimka ah, iyo soo jeedinta xayaysiis (oggolaanshahaaga).",
-      "fulfill": "Buuxi shuruudaha sharci iyo sharciyeed.",
-      "improve": "Improve and personalize your user experience."
+    "faydaPlatform": {
+      "label": "Nidaamka Fayda:",
+      "text": "Markaad isu diiwaangeliso sidii macaamiil shaqsi ah, xaqiijinta aqoonsiga waxaa lagu sameeyaa nidaamka Fayda ee Dowladda Itoobiya. Waxaad si ammaan ah ugu xaqiijin doontaa Fayda ID-gaaga nidaamkaas."
     }
   },
   "disclosure": {
-    "heading": "Shaacinta Xogta",
-    "intro": "Waxaa laga yaabaa inaan la wadaagno macluumaadkaaga gaarka ah: ",
+    "heading": "5. Wadaagista Xogta",
+    "intro": "Ma iibino xogtaada shakhsiga ah. Waxaan wadaagi karnaa xogtaada oo keliya xaaladaha adag ee soo socda:",
     "serviceProviders": {
-      "label": "Bixiyeyaasha adeegga:",
-      "text": "Who assist in delivering and improving our services."
-    },
-    "partners": {
-      "label": "Wada-hawlgalayaasha iyo xiriiriyayaasha ",
-      "text": "Si loo ballaariyo adeegga iyo taageerada macaamiisha.:"
+      "label": "Bixiyeyaasha Adeegga iyo La-hawlgalayaasha Farsamada:",
+      "text": "La-hawlgalayaasha lagu kalsoon yahay ee naga caawiya hirgelinta farsamada, martigelinta adeegga, iyo maamulka amniga server-yada ee adeegga NameTAG."
     },
     "lawEnforcement": {
-      "label": "Dhaqangelinta Sharciga ama Maamulka Sharciyeed: ",
-      "text": "Marka loo baahdo in loo hoggaansamo waajibaadka sharciga ah ama la ilaaliyo xuquuqda iyo badbaadada."
+      "label": "Hay'adaha Sharci Fulinta ama Maamulka:",
+      "text": "Marka si adag loogu baahdo in loo hoggaansamo sharciyada isgaarsiinta ee Itoobiya, xeerarka maamulka, ama amar maxkamadeed oo sharci ahaan waajib ah."
     }
   },
-  "cookies": {
-    "heading": "Kukiyada iyo Tiknoolajiyada Dabagalka ",
-    "intro": "Waxaan u isticmaalnaa cookies iyo tignoolajiyada la midka ah:",
-    "items": {
-      "analyze": "Falanqee oo faham sida Adeeggayaga loo isticmaalo. ",
-      "personalize": "Shakhsiyeel khibradaada iyo waxa ku jira. ",
-      "enhance": "Kobcinta shaqeynta iyo amniga adeegga."
+  "dataRetention": {
+    "heading": "6. Siyaasadda Kaydinta Xogta iyo Tirtiridda Akoonka (Waafaqsan Google Play)",
+    "intro": "Waxaan haynaa xogtaada shakhsiga ah oo keliya inta looga baahan yahay bixinta adeegyada lambarka farsamada iyo u hoggaansanaanta shuruucda maamulka isgaarsiinta.",
+    "userDeletion": {
+      "label": "Xuquuqda Tirtiridda:",
+      "text": "Waxaad xaq buuxa u leedahay inaad tirtirto akoonkaaga NameTAG iyo xogta la xiriirta wakhti kasta."
     },
-    "note": "Waxaad ku maareyn kartaa dookhyadaada buskudka aaladdaada ama dejinta browserka."
-  },
-  "yourRights": {
-    "heading": "Xuquuqdaada",
-    "intro": "Waxaad xaq u leedahay::",
-    "items": {
-      "access": "Gal oo dib u eeg macluumaadkaaga shakhsi ahaaneed.  ",
-      "requestCorrections": "Codso sixid ama cusbooneysiin ",
-      "object": "Ujeedo habaynta macluumaadkaaga xaaladaha qaarkood. ",
-      "requestDeletion": "Codso tirtirka macluumaadkaaga shakhsi ahaaneed (oo ku xiran waajibaadyada sharciga ah).",
-      "optOut": "Ka bax helidda fariimaha xayaysiiska wakhti kasta oo aad rabto.."
+    "howToDelete": {
+      "label": "Sida Loo Tirtiro Xogtaada:",
+      "text": "Waxaad codsi tirtiris ah ka gudbin kartaa qaybta Settings ee App-ka, dashboard-ka Web Portal-ka, ama adigoo email u diraya kooxda taageerada. Marka la xaqiijiyo, Ethio Telecom waxay si joogto ah u tirtiri doontaa ama u qarxin doontaa xogtaada shakhsiga ah ee ku jirta keydadkayaga firfircoon, marka laga reebo xaaladaha sharci ahaan lagu khasban yahay in la hayo."
     }
   },
   "security": {
-    "heading": "Amniga",
-    "text": "Waxaan hirgelineynaa tillaabooyinka amniga ee farsamada iyo hay'adda ku habboon si aan uga ilaalino macluumaadkaaga shakhsiyeed beddelka iyo burburinta siidaynta galitaanka aan la ogolayn."
-  },
-  "dataRetention": {
-    "heading": "Haynta Xogta ",
-    "text": "Waxaan haynaa macluumaadkaaga khaaska ah oo kaliya ilaa iyo inta lagama maarmaanka ah si loo fuliyo ujeedooyinka lagu qeexay siyaasaddan khaaska ah ilaa wakhti dheer oo sii hayn ah loo baahan yahay ama uu ogolyahay sharcigu."
+    "heading": "7. Ammaanka",
+    "text": "Waxaan hirgelinnaa tallaabooyin amni oo heer warshadeed ah, oo ay ku jiraan sirgelinta xogta inta lagu jiro gudbinta iyo kaydinta, si aan uga ilaalino xogtaada shakhsiga ah gelitaan aan la oggolayn, faafinta, wax ka beddelka, ama burburinta."
   },
   "changes": {
-    "heading": "Isbeddellada Siyaasaddan Gaarka ah ",
-    "text": "Waxa laga yaabaa inaan cusboonaysiinno siyaasaddan Qarsoonnimada waqti ka waqti. Isbeddelada ayaa lagu soo dhejin doonaa mareegahayaga waxaanan kugu dhiirigelinaynaa inaad dib u eegto wakhtiyada qaarkood."
+    "heading": "8. Isbeddellada Siyaasaddan Asturnaanta",
+    "text": "Waxaan mararka qaarkood cusboonaysiin karnaa Siyaasaddan Asturnaanta. Isbeddel kasta waxaa lagu soo bandhigi doonaa App-ka iyo Web Portal-ka, waxaana la cusboonaysiin doonaa taariikhda dib-u-eegista ee ku taal bogga siyaasadda. Waxaan kugula talineynaa inaad si joogto ah u akhrido."
   },
-  "acceptance": {
-    "heading": "Ogolaanshaha Siyaasadda Qarsoonnimada ",
-    "text": "Adigoo isticmaalaya Adeegga NameTAG waxaad xaqiijinaysaa inaad fahantay oo aad ogolaatay shuruudaha Siyaasaddan Khaaska ah."
+  "contact": {
+    "heading": "9. Nala Soo Xiriir",
+    "intro": "Haddii aad qabto wax su'aalo ah oo ku saabsan Siyaasaddan Asturnaanta ama codsiyada tirtiridda xogta, fadlan nagala soo xiriir:",
+    "email": "info@tech-vas.com",
+    "contactSupport": "https://nametag.et/contact-us",
+    "website": "https://nametag.et",
+    "emailLabel": "Email:",
+    "contactSupportLabel": "Taageero:",
+    "websiteLabel": "Website:"
   }
 }

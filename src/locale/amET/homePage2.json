@@ -1,156 +1,421 @@
 {
-    "nav": {
-      "links": [
-        { "href": "#home", "label": "መነሻ" },
-        { "href": "#how", "label": "እንዴት ይሰራል" },
-        { "href": "#tiers", "label": "ደረጃዎች" },
-        { "href": "#users", "label": "ማን ይጠቀማል" },
-        { "href": "#features", "label": "ባህሪያት" },
-        { "href": "#faq", "label": "ተደጋጋሚ ጥያቄዎች" }
-      ],
-      "lang": "አማ",
-      "login": "ግባ",
-      "register": "ይመዝገቡ",
-      "logoAlt": "ኢትዮ ቴሌኮም",
-      "telebirrAlt": "ቴሌብር",
-      "menuAria": "ሜኑ ክፈት",
-      "menuCloseAria": "ሜኑ ዝጋ"
+  "nav": {
+    "links": [
+      { "href": "#home", "label": "መነሻ" },
+      { "href": "#how", "label": "እንዴት እንደሚሰራ" },
+      { "href": "#tiers", "label": "የቁጥር ደረጃዎች" },
+      { "href": "#users", "label": "ማን ይጠቀማል" },
+      { "href": "#features", "label": "ባህሪያት" },
+      { "href": "#faq", "label": "ተደጋጋሚ ጥያቄዎች" }
+    ],
+    "lang": "አማ",
+    "login": "ግባ",
+    "register": "ተመዝገብ",
+    "logoAlt": "ኢትዮ ቴሌኮም",
+    "telebirrAlt": "ቴሌብር",
+    "menuAria": "ሜኑ ክፈት",
+    "menuCloseAria": "ሜኑ ዝጋ"
+  },
+  "carousel": {
+    "fallback": {
+      "title": "ማንነትዎ በቀላሉ።",
+      "para1": "በነባር SIM ካርድዎ ላይ ቀላል የሚታወስ ሁለተኛ ቁጥር ያግኙ።",
+      "para2": "በNameTAG ጥሪዎች ላይ ዋና የሞባይል ቁጥርዎን ሳይሆን #TAGዎን ያሳዩ።",
+      "description": "NameTAG ለግለሰቦች እና ለብራንዶች።"
     },
-    "carousel": {
-      "fallback": {
-        "title": "ማንነትዎ ቀላል ተደርጓል።",
-        "para1": "በነባር ሲምዎ ላይ የሚታሰብ ሁለተኛ ቁጥር ያግኙ።",
-        "para2": "በNameTAG ጥሪዎች ላይ ዋና ቁጥርዎን ሳይሆን #TAG ያሳዩ።",
-        "description": "NameTAG ለግለሰቦችና ለንግዶች።"
+    "slides": [
+      {
+        "title": "NameTAG",
+        "para1": "ማንነትዎ በቀላሉ",
+        "para2": "በNameTAG አገልግሎት ጥሪ ሲያደርጉ ዋና ቁጥርዎን ሳይሆን #TAGዎን ያሳዩ።",
+        "description": "በNameTAG፣ የስልክ ቁጥርዎ ማንነትዎን የሚያንጸባርቅ ልዩ እና ቀላል የሚታወስ ስም ይሆናል። ግለሰብም ይሁኑ ንግድ፣ ጥሪ ሲያደርጉ ከመደበኛ ቁጥር ይልቅ የመረጡትን ስም እንዲታይ ያደርጋል፤ ይህም እያንዳንዱን ግንኙነት የበለጠ ግላዊ፣ ሙያዊ እና ቀላል የሚታወስ ያደርገዋል።"
       },
-      "slides": [
-        {
-          "title": "NameTAG",
-          "para1": "ከቁጥር በላይ ይሁኑ",
-          "para2": "ጥሪ ሲደርስ ቁጥርዎን ሳይሆን ስምዎን ያሳዩ።",
-          "description": "በNameTAG ቁጥርዎ ወደ ልዩ ስም ይቀየራል። ለግለሰቦችና ለንግዶች የሚመች፣ ማንነትዎን ቀላል እና የሚታሰብ ያደርገዋል።"
-        },
-        {
-          "title": "NameTAG",
-          "para1": "የብራንድዎን ማንነት ያጠናክሩ",
-          "para2": "ደንበኞችዎ ሲያዩ ብራንድዎን የሚያመለክት ስም ይጠቀሙ።",
-          "description": "NameTAG ቁጥርዎን በብራንድ ስም በመቀየር የንግድዎን መለያ ያጠናክራል። ይህም እምነትን እና የብራንድ ታዋቂነትን ያሳድጋል።"
-        },
-        {
-          "title": "NameTAG",
-          "para1": "የሚታሰቡ ጥሪዎች",
-          "para2": "ከቁጥርዎ ጋር የተገናኘ የሚስብ ስም ይፍጠሩ።",
-          "description": "NameTAG የግል የጥሪ ማንነትዎ ነው። ማንኛውም ሰው ሲያይ በመጀመሪያ ማንነትዎን ያያል። ቀላል ማስጀመር እና መቆጣጠር ይቻላል።"
-        }
-      ]
-    },
-    "hero": {
-      "badge": "ኢትዮ ቴሌኮም VAS አገልግሎት · ኤፕሪል 2026",
-      "ctaPrimary": "NameTAG አግኝ",
-      "ctaSecondary": "እንዴት እንደሚሰራ ይመልከቱ",
-      "imgLeftAlt": "A ወገን",
-      "imgRightAlt": "B ወገን",
-      "store": {
-        "googleAria": "በ Google Play ያግኙ",
-        "googleTop": "ከ",
-        "googleBottom": "Google Play",
-        "appleAria": "በ App Store ያውርዱ",
-        "appleTop": "ከ",
-        "appleBottom": "App Store"
+      {
+        "title": "NameTAG",
+        "para1": "የብራንድ ማንነትዎን ያጠናክሩ",
+        "para2": "የደንበኞችዎ ጥሪዎች ላይ ብራንድዎን የሚያንጸባርቅ ብጁ ስም ይጠቀሙ።",
+        "description": "NameTAG መደበኛ የስልክ ቁጥርዎን በብጁ NameTAG በመተካት የብራንድዎን መገኘት ያጠናክራል። ለንግዶች እና ለኢንፍሉዌንሰሮች ተስማሚ የሆነው ይህ አገልግሎት፣ ደንበኞች እና እውቂያዎች እርስዎን በቀላሉ እንዲያውቁ እና እንዲያስታውሱ ያግዛል፤ ይህም እምነት፣ የብራንድ ታማኝነት እና የተሻለ የግንኙነት ተሞክሮ ለመገንባት ይረዳል።"
+      },
+      {
+        "title": "NameTAG",
+        "para1": "ቀላል የሚታወሱ ጥሪዎች፣ በቀላሉ",
+        "para2": "ከቁጥርዎ ጋር የተያያዘ ቀላል የሚስብ NameTAG ይፍጠሩ።",
+        "description": "በNameTAG በእያንዳንዱ ጥሪ ይታዩ፤ ይህ የግል የጥሪ ማንነትዎ ነው። ቅጽል ስም፣ የብራንድ ስም ወይም ሐረግ ቢሆንም፣ NameTAG የመረጡትን ስም ከእውነተኛ ቁጥርዎ ጋር ያገናኛል፣ ስለዚህ የሚደውሉለት ሰው መጀመሪያ ማንነትዎን ያያል። ለማዘጋጀት ቀላል፣ ለማስተዳደር ቀላል እና ለፕሪፔይድ እና ፖስትፔይድ ተጠቃሚዎች ይገኛል።"
       }
+    ]
+  },
+  "hero": {
+    "badge": "የኢትዮ ቴሌኮም VAS አገልግሎት · ሚያዝያ 2026",
+    "ctaPrimary": "NameTAGዬን ያግኙ",
+    "ctaSecondary": "እንዴት እንደሚሰራ ይመልከቱ",
+    "imgLeftAlt": "A Party",
+    "imgRightAlt": "B Party",
+    "store": {
+      "googleAria": "በGoogle Play ያግኙት",
+      "googleTop": "GET IT ON",
+      "googleBottom": "Google Play",
+      "appleAria": "በApp Store ያውርዱ",
+      "appleTop": "Download on the",
+      "appleBottom": "App Store"
+    }
+  },
+  "stats": {
+    "items": [
+      { "value": "#1", "label": "በኢትዮጵያ የጠሪ ማንነት ፕላትፎርም" },
+      { "value": "4 ደረጃዎች", "label": "ፕላቲነም · ጎልደን · ሲልቨር · ብሮንዝ" },
+      { "value": "የጥሪ ክፍያዎች", "label": "በዋና ቁጥርዎ የፓኬጅ ዕቅድ መሠረት" },
+      { "value": "5 ቋንቋዎች", "label": "EN · AM · OR · TI · SO" }
+    ]
+  },
+  "what": {
+    "label": "NameTAG ምንድነው?",
+    "title": "ለእውነተኛ ማንነትዎ የሚሆን ቨርቹዋል ቁጥር",
+    "sub": "NameTAG ከነባር የኢትዮ SIMዎ ጋር የሚያያዝ አጭር እና ቀላል የሚታወስ ቁጥር፣ 2–8 ቁምፊዎች፣ እንዲያገኙ ያስችልዎታል።",
+    "bulletBody": "ለፈጣን መታወቂያ፣ ቀላል ማጋራት እና ጠንካራ የግል ወይም የብራንድ ማንነት የተዘጋጀ።",
+    "bullets": [
+      "የእርስዎ ሁለተኛ አጭር ቁጥር",
+      "ዋና ቁጥርዎን ሳይሆን #TAGዎን ያሳዩ",
+      "በ# ቅድመ ምልክት ይደውሉ",
+      "ወደ ሌሎች #TAGዎች እና የሞባይል ቁጥሮች ይደውሉ፣ የጥሪ ክፍያዎች በፓኬጅዎ መሠረት ይሆናሉ"
+    ],
+    "corporate": {
+      "label": "ኮርፖሬት",
+      "tagLine": "#Ethio,#38446",
+      "subtitle": "የብራንድ ማንነት",
+      "body": "ቅጽል ስምዎን እንደ የጠሪ ማንነትዎ ይመዝገቡ",
+      "incoming": "ገቢ ጥሪ",
+      "cli": "#38446"
     },
-    "stats": {
-      "items": [
-        { "value": "#1", "label": "በኢትዮጵያ የጥሪ መለያ ፕላትፎርም" },
-        { "value": "4 ደረጃ", "label": "Platinum · Golden · Silver · Bronze" },
-        { "value": "የጥሪ ክፍያ", "label": "እንደ ዋና ቁጥር ፓኬጅ ይሆናል" },
-        { "value": "5 ቋንቋዎች", "label": "EN · AM · OR · TI · SO" }
+    "individual": {
+      "label": "ግለሰብ",
+      "tagLine": "#Name,#8832",
+      "subtitle": "ቀላል የሚታወስ",
+      "body": "ቅጽል ስምዎን እንደ የጠሪ ማንነትዎ ይመዝገቡ",
+      "incoming": "ገቢ ጥሪ",
+      "cli": "#6268"
+    },
+    "businessCardChip": "የንግድ ካርድ",
+    "businessCard": {
+      "company": "KENTUCKY FRIED CHICKEN",
+      "official": "ይፋዊ NameTAG",
+      "website": "www.company.com",
+      "tag": "#6263 (#Name)",
+      "phone": "0978123456",
+      "email": "companyofficial@gmail.com",
+      "address": "123 Main Street, Addis Ababa, Ethiopia",
+      "nameBlock": "ስም",
+      "role": "ሥራ አስኪያጅ"
+    },
+    "curveAlt": "የተጠማዘዘ ዳራ"
+  },
+  "how": {
+    "label": "እንዴት እንደሚሰራ",
+    "title": "የNameTAG ጥሪ ተሞክሮ",
+    "sub": "A-Party በ# ቅድመ ምልክት ይደውላል፣ ፕላትፎርሙ ማንነቱን ይፈታል፣ B-Party NameTAGን እንደ CLI ያያል።",
+    "imageAlt": "ማንነት"
+  },
+  "tiers": {
+    "label": "የቁጥር ደረጃዎች",
+    "title": "የNameTAG ደረጃዎን ይምረጡ",
+    "sub": "ቢያንስ 2 ዲጂት · ከፍተኛ 8 ዲጂት/ቁምፊዎች · የOn-net ድምጽ ጥሪዎች ብቻ",
+    "examplesPrefix": "ምሳሌዎች፦ ",
+    "items": [
+      {
+        "id": "platinum",
+        "name": "ፕላቲነም",
+        "tag": "#1111",
+        "level": "እጅግ ልዩ",
+        "description": "አጭር እና ከፍተኛ ክብር ያላቸው ቁጥሮች",
+        "examples": "#11100, #0022, #333111",
+        "chipLabel": "ከፍተኛ ደረጃ"
+      },
+      {
+        "id": "golden",
+        "name": "ጎልደን",
+        "tag": "#9990",
+        "level": "ተደጋጋሚ ንድፎች",
+        "description": "ከፍተኛ ክብር ያላቸው ተደጋጋሚ ንድፎች",
+        "examples": "#11022, #200200, #9900",
+        "chipLabel": "ፕሪሚየም ደረጃ"
+      },
+      {
+        "id": "silver",
+        "name": "ሲልቨር",
+        "tag": "#33944",
+        "level": "ንድፍ ያላቸው ቁጥሮች",
+        "description": "ተወዳጅ ንድፍ ያላቸው ቁጥሮች",
+        "examples": "#11022, #33944",
+        "chipLabel": "መካከለኛ ደረጃ"
+      },
+      {
+        "id": "bronze",
+        "name": "ብሮንዝ",
+        "tag": "#23104",
+        "level": "የስም TAGዎች",
+        "description": "እስከ 8 ቁምፊዎች ያላቸው ብጁ ስሞች",
+        "examples": "#Name, #Pepsi, #Touch",
+        "chipLabel": "መደበኛ ደረጃ"
+      }
+    ]
+  },
+  "users": {
+    "label": "NameTAGን ማን ይጠቀማል?",
+    "title": "ለግለሰቦች እና ለብራንዶች የተዘጋጀ",
+    "sub": "ግለሰብ ተመዝጋቢም ይሁኑ ትልቅ ኮርፖሬት፣ NameTAG የሚያስፈልጉዎትን ባህሪያት ይሰጥዎታል።",
+    "tabIndividual": "ግለሰብ ደንበኞች",
+    "tabCorporate": "ኮርፖሬት እና ብራንዶች",
+    "featureHint": "ለኢትዮጵያ ገበያ አጠቃቀም የተመቻቸ።",
+    "partyA": "A Party",
+    "partyB": "B Party",
+    "features": {
+      "individual": [
+        "ብጁ የጠሪ ማንነት",
+        "ፈጣን የራስ አክቲቬሽን",
+        "Fayda KYC ማረጋገጫ",
+        "የጥሪ PIN ደህንነት",
+        "የገቢ ጥሪ አስተዳደር",
+        "ጠሪዎችን አግድ / አንሳ"
+      ],
+      "corporate": [
+        "የኮርፖሬት NameTAG",
+        "በአንድ የኮርፖሬት መለያ ስር በርካታ NameTAGዎች",
+        "በንግድ ፍላጎት መሠረት NameTAG መቀየር",
+        "ሁሉንም NameTAGዎች ለማስተዳደር Dashboard",
+        "የጥሪ PIN ደህንነት",
+        "የጥሪ መርሐግብር",
+        "በኩባንያ ምዝገባ ሰነዶች ማረጋገጫ"
       ]
-    },
-    "what": {
-      "label": "NameTAG ምንድነው?",
-      "title": "ለእውነተኛ ማንነትዎ የተመሰረተ ቪርቹዋል ቁጥር",
-      "sub": "NameTAG ከነባር ሲምዎ ጋር የሚገናኝ አጭር ቁጥር (2–8 ቁምፊ) ይሰጣል።",
-      "bulletBody": "ለቀላል ማስታወሻ እና ለብራንድ ማንነት የተነደፈ።",
-      "bullets": [
-        "ሁለተኛ አጭር ቁጥር",
-        "#TAG አሳይ እንጂ ዋና ቁጥር አይደለም",
-        "በ # ቅድሚያ ይደውሉ",
-        "ለሌሎች TAG ወይም ቁጥር ይደውሉ"
-      ]
-    },
-    "how": {
-      "label": "እንዴት ይሰራል",
-      "title": "የNameTAG ጥሪ ሂደት",
-      "sub": "A ወገን # በመጠቀም ይደውላል፣ B ወገን NameTAG ያያል።",
-      "imageAlt": "መለያ"
-    },
-    "tiers": {
-      "label": "የቁጥር ደረጃዎች",
-      "title": "NameTAG ደረጃዎን ይምረጡ",
-      "sub": "ከ2 እስከ 8 ቁምፊ",
-      "items": [
-        {
-          "id": "platinum",
-          "name": "ፕላቲነም",
-          "tag": "#1111",
-          "level": "እጅግ ልዩ",
-          "description": "አጭር እና በጣም የተከበሩ ቁጥሮች",
-          "examples": "#11100, #0022, #333111",
-          "chipLabel": "ከፍተኛ ደረጃ"
-        },
-        {
-          "id": "golden",
-          "name": "ወርቃማ",
-          "tag": "#9990",
-          "level": "ተደጋጋሚ ንድፎች",
-          "description": "ከፍተኛ ክብር ያላቸው ተደጋጋሚ ንድፎች",
-          "examples": "#11022, #200200, #9900",
-          "chipLabel": "ፕሪሚየም ደረጃ"
-        },
-        {
-          "id": "silver",
-          "name": "ብር",
-          "tag": "#33944",
-          "level": "ንድፍ ያላቸው ቁጥሮች",
-          "description": "ታዋቂ ንድፍ ያላቸው ቁጥሮች",
-          "examples": "#11022, #33944",
-          "chipLabel": "መካከለኛ ደረጃ"
-        },
-        {
-          "id": "bronze",
-          "name": "ነሐስ",
-          "tag": "#23104",
-          "level": "የተሰየሙ TAGዎች",
-          "description": "እስከ 8 ፊደላት ያሉ ብጁ ስሞች",
-          "examples": "#Name, #Pepsi, #Touch",
-          "chipLabel": "መደበኛ ደረጃ"
-        }
-      ]
-    },
-    "faq": {
-      "label": "FAQ",
-      "title": "ተደጋጋሚ ጥያቄዎች",
-      "items": [
-        {
-          "id": "original-private",
-          "q": "ዋና ቁጥሬ ይሸፈናል?",
-          "a": "አዎ፣ NameTAG ብቻ ይታያል።"
-        }
-      ]
-    },
-    "cta": {
-      "title": "ከቁጥር በላይ ይሁኑ።",
-      "sub": "NameTAG ይመዝገቡ",
-      "contactHeading": "እኛን ያግኙ",
-      "phone": "9234",
-      "email": "info@tech-vas.com"
-    },
-    "footer": {
-      "brand": "NameTAG",
-      "brandSub": "ኢትዮ ቴሌኮም",
-      "tagline": "የመጀመሪያው የጥሪ መለያ ፕላትፎርም",
-      "copyright": "©2026 ኢትዮ ቴሌኮም"
-    },
-    "backToTop": "ወደ ላይ"
-  }
+    }
+  },
+  "featuresSection": {
+    "label": "የፕላትፎርም ባህሪያት",
+    "title": "ማንነትዎን ለማስተዳደር የሚያስፈልግዎት ሁሉ",
+    "items": [
+      {
+        "title": "በቅጽበት መመደብ",
+        "description": "በቀጥታ የመገኘት ማረጋገጫ ጋር ፈጣን NameTAG ምዝገባ እና አክቲቬሽን።",
+        "img": "/icon1.svg"
+      },
+      {
+        "title": "Fayda KYC ማረጋገጫ",
+        "description": "ለግለሰብ ደንበኞች በኢትዮጵያ ብሔራዊ መታወቂያ ስርዓት በኩል የተጠበቀ የማንነት ማረጋገጫ።",
+        "img": "/icon2.svg"
+      },
+      {
+        "title": "የጥሪ PIN ደህንነት",
+        "description": "የተፈቀዱ ጠሪዎች ብቻ #TAGዎን እንዲደርሱ ለገቢ ጥሪዎች አማራጭ PIN።",
+        "img": "/icon3.svg"
+      },
+      {
+        "title": "የጥሪ መርሐግብር",
+        "description": "ለ#TAGዎ ንቁ ሰዓቶችን ያዘጋጁ እና ጥሪዎች መቼ እንደሚደርሱዎ ያስተዳድሩ።",
+        "img": "/icon4.svg"
+      },
+      {
+        "title": "የብዙ ቋንቋ ድጋፍ",
+        "description": "ሁሉን አቀፍ መዳረሻ ለማቅረብ እንግሊዝኛ፣ አማርኛ፣ ኦሮምኛ፣ ሶማሊኛ እና ትግርኛ።",
+        "img": "/icon5.svg"
+      },
+      {
+        "title": "የደንበኛ Dashboard",
+        "description": "ደንበኞች መለያቸውን እና #TAGዎችን ለማስተዳደር የNameTAG Dashboard።",
+        "img": "/icon6.svg"
+      },
+      {
+        "title": "ባለብዙ ቻናል መዳረሻ",
+        "description": "በWeb Portal፣ Mobile App እና ለግለሰብ ደንበኞች USSD *883# በኩል ያስተዳድሩ።",
+        "img": "/icon7.svg"
+      },
+      {
+        "title": "ለኮርፖሬቶች ተለዋዋጭ ክፍያ",
+        "description": "ወርሃዊ፣ ሩብ ዓመታዊ፣ ግማሽ ዓመታዊ እና ዓመታዊ ዕቅዶች በቴሌብር።",
+        "img": "/icon8.svg"
+      },
+      {
+        "title": "ለግለሰቦች ወርሃዊ ክፍያ",
+        "description": "ለግለሰብ ደንበኞች በቴሌብር እና በኢትዮ Airtime ክፍያ የወርሃዊ ዕቅድ።",
+        "img": "/icon9.svg"
+      }
+    ]
+  },
+  "pricing": {
+    "label": "የምዝገባ ዕቅዶች",
+    "title": "ለእያንዳንዱ ፍላጎት ተለዋዋጭ ዕቅዶች",
+    "sub": "የምዝገባ ጊዜዎን ይምረጡ እና በቴሌብር ወይም በኢትዮ Airtime ይክፈሉ።",
+    "notes": [
+      "የAirtime ክፍያ ለግለሰብ ተመዝጋቢዎች ብቻ ይገኛል።",
+      "ግለሰብ ተጠቃሚዎች ወርሃዊ ዕቅድ ብቻ መምረጥ ይችላሉ።"
+    ],
+    "paymentTitle": "የክፍያ ቻናሎች",
+    "plans": [
+      {
+        "code": "M",
+        "name": "ወርሃዊ",
+        "desc": "ተለዋዋጭ — በየወሩ ያድሱ። ረጅም ቁርጠኝነት የለም።",
+        "accent": "border-b-[3px] border-b-[#3B82F6]",
+        "tint": "text-[#3B82F6]/28",
+        "img": "/1.png"
+      },
+      {
+        "code": "Q",
+        "name": "ሩብ ዓመታዊ",
+        "desc": "የ3 ወር ዕቅድ — ከወርሃዊ ይልቅ የበለጠ ይቆጥቡ።",
+        "accent": "border-b-[3px] border-b-[#22C55E]",
+        "tint": "text-[#22C55E]/28",
+        "img": "/2.png"
+      },
+      {
+        "code": "S",
+        "name": "ግማሽ ዓመታዊ",
+        "desc": "የ6 ወር ዕቅድ — ለመደበኛ ተጠቃሚዎች ጥሩ ዋጋ።",
+        "accent": "border-b-[3px] border-b-[#F59E0B]",
+        "tint": "text-[#F59E0B]/28",
+        "img": "/3.png"
+      },
+      {
+        "code": "A",
+        "name": "ዓመታዊ",
+        "desc": "ምርጥ ቁጠባ — 12 ወራት በምርጥ ዋጋዎች።",
+        "accent": "border-b-[3px] border-b-[#A855F7]",
+        "tint": "text-[#A855F7]/28",
+        "img": "/4.png"
+      }
+    ],
+    "paymentChannels": [
+      {
+        "img": "/telebirr_super_app_dark.png",
+        "title": "telebirr Super App",
+        "desc": "በtelebirr Super App በቀጥታ ይክፈሉ፣ C2B"
+      },
+      {
+        "img": "/telebirr_partner_app_blue.png",
+        "title": "telebirr Partner App",
+        "desc": "በPartner web portals በኩል የመስመር ላይ ክፍያዎች፣ B2B"
+      },
+      {
+        "img": "/ethio_airtime_green.png",
+        "title": "Ethio Airtime",
+        "desc": "ምዝገባዎን ከEthio airtime ቀሪ ሂሳብዎ ይክፈሉ"
+      }
+    ]
+  },
+  "subscribeSteps": {
+    "label": "ጀምሩ",
+    "title": "በ4 ቀላል ደረጃዎች ይመዝገቡ",
+    "steps": [
+      {
+        "no": "01",
+        "title": "መለያ ይፍጠሩ",
+        "desc": "በnametag.et ወይም በMobile App በኩል ይመዝገቡ። የግለሰብ ወይም የኮርፖሬት መለያ አይነት ይምረጡ።"
+      },
+      {
+        "no": "02",
+        "title": "TAGዎን ይምረጡ",
+        "desc": "NameTAGዎን በፕላቲነም፣ ጎልደን፣ ሲልቨር ወይም ብሮንዝ ደረጃዎች ውስጥ ፈልገው ይምረጡ።"
+      },
+      {
+        "no": "03",
+        "title": "ይክፈሉ እና ያንቁ",
+        "desc": "በቴሌብር ወይም በኢትዮ Airtime ይክፈሉ። ከማረጋገጫ በኋላ #TAGዎ በSIMዎ ላይ በቅጽበት ንቁ ይሆናል።"
+      },
+      {
+        "no": "04",
+        "title": "መደወል ይጀምሩ",
+        "desc": "ከማንኛውም ቁጥር በፊት # ቅድመ ምልክት በማድረግ ይደውሉ። ተቀባዩ #TAGዎን እንደ CLI ያያል።"
+      }
+    ],
+    "channels": [
+      { "title": "Web Portal", "desc": "www.nametag.et" },
+      { "title": "Mobile App", "desc": "NameTAG Mobile" },
+      { "title": "USSD Code", "desc": "Dial *883#" }
+    ]
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "ተደጋጋሚ ጥያቄዎች",
+    "moreQuestions": "+ተጨማሪ ጥያቄዎች",
+    "iconExpanded": "−",
+    "iconCollapsed": "+",
+    "items": [
+      {
+        "id": "original-private",
+        "q": "ዋና ቁጥሬ ግላዊ ሆኖ ይቆያል?",
+        "a": "አዎ። በNameTAG በኩል ሲደውሉ፣ ተቀባዮች TAGዎን ብቻ ያያሉ። ዋና MSISDNዎ ለግልጽነት በፕላትፎርሙ SMS ሊገለጽ ይችላል።"
+      },
+      {
+        "id": "block-calling",
+        "q": "አንድ ሰው NameTAGዬን እንዳይደውል ማገድ እችላለሁ?",
+        "a": "አዎ። ተጠቃሚዎችን ለማገድ እና ለማንሳት፣ እንዲሁም whitelistዎን ለማስተዳደር web/app መሣሪያዎችን ወይም SMS ትዕዛዞችን ይጠቀሙ።"
+      },
+      {
+        "id": "sim-change",
+        "q": "SIMዬን ወይም የሞባይል ቁጥሬን ብቀይርስ?",
+        "a": "NameTAG ከማረጋገጫ በኋላ የቁጥር ማዛወርን ይደግፋል፣ ስለዚህ ማንነትዎ ከእርስዎ ጋር ሊቆይ ይችላል።"
+      },
+      {
+        "id": "corporate-multiple",
+        "q": "ኮርፖሬቶች በርካታ NameTAGዎችን ማስተዳደር ይችላሉ?",
+        "a": "የኮርፖሬት መለያዎች በርካታ TAGዎችን ማስተዳደር እና በቡድን፣ ቅርንጫፍ ወይም ዘመቻ መመደብ ይችላሉ።"
+      },
+      {
+        "id": "block-nametag",
+        "q": "አንድ ሰው NameTag እንዳይደውል ማገድ እችላለሁ?",
+        "a": "አዎ። የታገዱ ጠሪዎችን ከportalዎ፣ appዎ ወይም ከሚደገፉ SMS ትዕዛዞች በማንኛውም ጊዜ ማስተዳደር ይችላሉ።"
+      },
+      {
+        "id": "register-how",
+        "q": "NameTAGዬን እንዴት እመዘግባለሁ?",
+        "a": "ከመገኘት እና የማንነት ማረጋገጫ በኋላ በweb portal፣ mobile app ወይም USSD *883# በኩል መመዝገብ ይችላሉ።"
+      },
+      {
+        "id": "business-branding",
+        "q": "NameTAGዬን ለንግድ ብራንዲንግ መጠቀም እችላለሁ?",
+        "a": "አዎ። የንግድ ተጠቃሚዎች branded tags መፍጠር እና የwelcome prompt፣ routing እና identity settings ማቀናበር ይችላሉ።"
+      },
+      {
+        "id": "payments",
+        "q": "ምን የክፍያ አማራጮች አሉ?",
+        "a": "በምዝገባ ዕቅድዎ መሠረት telebirr Super App፣ partner channels ወይም Ethio airtime መጠቀም ይችላሉ።"
+      },
+      {
+        "id": "transfer",
+        "q": "NameTAGዬን ወደ ሌላ ቁጥር ማስተላለፍ እችላለሁ?",
+        "a": "በፕላትፎርሙ ፖሊሲ የተገለጹ ማረጋገጫ እና የብቃት ምርመራዎች ከተፈጸሙ በኋላ ማስተላለፍ እና ማዛወር ይደገፋሉ።"
+      },
+      {
+        "id": "languages",
+        "q": "NameTAG በብዙ ቋንቋዎች ይገኛል?",
+        "a": "አዎ። አገልግሎቱ እንግሊዝኛ፣ አማርኛ፣ Afaan Oromo፣ ሶማሊኛ እና ትግርኛን ጨምሮ ብዙ ቋንቋዎችን ይደግፋል።"
+      }
+    ]
+  },
+  "cta": {
+    "title": "ከቁጥር በላይ ይሁኑ።",
+    "sub": "NameTAGዎን ዛሬ በwww.nametag.et ይመዝገቡ ወይም *883# ይደውሉ።",
+    "contactHeading": "ያግኙን",
+    "phone": "9234",
+    "email": "info@tech-vas.com",
+    "whatsapp": "በWhatsApp ይወያዩ",
+    "telegram": "በTelegram መልዕክት ይላኩ"
+  },
+  "footer": {
+    "brand": "NameTAG",
+    "brandSub": "ኢትዮ ቴሌኮም",
+    "tagline": "የኢትዮጵያ የመጀመሪያው የጠሪ ማንነት ፕላትፎርም፣ ሰዎች ሲደውሉ እርስዎን እንዴት እንደሚያዩ ከረጅም ቁጥሮች ወደ እርስዎን በእውነት የሚወክል አጭር #TAG በመቀየር ይለውጣል።",
+    "subscribeTitle": "ይመዝገቡ",
+    "subscribeLinks": ["Web Portal", "Mobile App", "USSD *883#"],
+    "supportTitle": "ድጋፍ",
+    "supportLinks": ["ውሎችና ሁኔታዎች", "የግላዊነት ፖሊሲ", "FAQs", "ያግኙን", "ቅሬታ"],
+    "languagesTitle": "ቋንቋዎች",
+    "languages": [
+      { "code": "en", "label": "English" },
+      { "code": "amET", "label": "አማርኛ (Amharic)" },
+      { "code": "or", "label": "Afaan Oromo" },
+      { "code": "ti", "label": "Tigrinya" },
+      { "code": "so", "label": "Somali" }
+    ],
+    "copyright": "©2026 ኢትዮ ቴሌኮም። መብቱ ሁሉ የተጠበቀ ነው። NameTAG — ማንነትዎ በቀላሉ።",
+    "sites": "www.ethiotelecom.et   www.nametag.et"
+  },
+  "backToTop": "ወደ ላይ ተመለስ"
+}

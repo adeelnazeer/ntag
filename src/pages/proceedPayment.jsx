@@ -92,7 +92,6 @@ const ProceedPayment = () => {
   const stampDuty = Number(state?.stamp_duty ?? 0); // Default to 5 if not available
   const totalAmount = state?.total_amount || state?.totalPrice ||
     (Number(vatableTotalAmount) + Number(vatAmount) + Number(stampDuty));
-  console.log({ state })
 
   useEffect(() => {
     if (!hasMsisdn) {

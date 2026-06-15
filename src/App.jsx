@@ -57,12 +57,16 @@ import FaydaVerifyUssd from "./pages/faydaVerifyUssd.jsx";
 import FaydaCallbackUssd from "./pages/faydaCallbackUssd.jsx";
 import DeleteAccount from "./pages/deleteAccount/deleteAccount.jsx";
 import Home2Page from "./pages/home2";
+import TelebirrMiniAppHome from "./components/TelebirrMiniAppHome.jsx";
+import BrandNamePage from "./pages/brandName/BrandNamePage.jsx";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path={ConstentRoutes.home} element={<HomePage />} />
+        <Route path="/super_mini" element={<TelebirrMiniAppHome channel="super" />} />
+        <Route path="/partner_mini" element={<TelebirrMiniAppHome channel="partner" />} />
+        <Route path={ConstentRoutes.home} element={<Home2Page />} />
         <Route path="/faydacallback" element={<FaydaCallback />} />
         <Route path="/faydaclbkussd" element={<FaydaCallbackUssd />} />
         <Route path={ConstentRoutes.login} element={<Login />} />
@@ -266,6 +270,86 @@ function App() {
           }
         />
         <Route
+          path={ConstentRoutes.brandNameCallBuy}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallRecurringFee}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallIntro}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallChange}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallNumbers}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallIncomingNumber}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallStartStop}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallSchedule}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallUnsubscribe}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallHistory}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
           path={ConstentRoutes.delAccountDetail}
           element={
             <DelAccountDetail />
@@ -344,10 +428,15 @@ function App() {
           }
         />
 
-        <Route
-          path={ConstentRoutes.privacyPolicy}
-          element={<PrivacyPolicy />}
-        />
+          <Route
+            path={ConstentRoutes.privacyPolicy2}
+            element={<PrivacyPolicy />}
+          />
+          
+          <Route
+            path={ConstentRoutes.privacyPolicy}
+            element={<PrivacyPolicy />}
+          />
         <Route
           path={ConstentRoutes.guestBlock}
           element={<GuestBlock />}

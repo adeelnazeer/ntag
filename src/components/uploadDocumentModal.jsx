@@ -123,7 +123,6 @@ const UploadDocument = ({ open, setOpen, checkDocument }) => {
             })
             .catch((err) => {
                 toast.error(err);
-                console.log("err", err);
             });
     };
 

@@ -19,6 +19,8 @@ import { formatPhoneNumberCustom } from "../../../utilities/formatMobileNumber";
 import { useTranslation } from "react-i18next";
 import { useMobileNumbers } from "../../hooks/useMobileNumbers";
 
+const MAX_ALLOWED_LIMIT = import.meta.env.VITE_MAX_ALLOWED_LIMIT;
+
 const NumberManagement = ({ profileData }) => {
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -74,7 +76,7 @@ const NumberManagement = ({ profileData }) => {
             <div className="flex items-center gap-1 text-gray-600">
               <FaInfoCircle className="h-4 w-4" />
               <Typography variant="small">
-                {MobileNumbers?.length}/{t("profile.numberManagement.5")}{" "}
+                {MobileNumbers?.length}/{MAX_ALLOWED_LIMIT}{" "}
                 {t("profile.numberManagement.number")}
               </Typography>
             </div>
@@ -83,7 +85,7 @@ const NumberManagement = ({ profileData }) => {
             size="sm"
             className="bg-secondary flex items-center gap-2"
             onClick={() => {
-              if (MobileNumbers?.length >= 5) {
+              if (MobileNumbers?.length >= MAX_ALLOWED_LIMIT) {
                 toast.error(t("profile.numberManagement.maxNumber"));
               } else {
                 setOpenAddDialog(true);

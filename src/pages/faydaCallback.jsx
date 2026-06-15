@@ -104,7 +104,6 @@ const FaydaCallback = () => {
           }), 1500);
         }
       } catch (err) {
-        console.log("err", err?.response?.data?.message);
         setStatus("error");
         setMessage(err?.response?.data?.message || err?.message || err || "Verification failed. Please try again.");
         tokenExchangeStartedForSearchRef.current = null;

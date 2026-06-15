@@ -14,6 +14,19 @@
     "unsubscribe": "Unsubscribe",
     "closeAccount": "Close Account",
     "profile": "Profile",
-    "logout": "Logout"
+    "logout": "Logout",
+    "brandNameCall": "Brand Name Call",
+    "newBadge": "NEW",
+    "manageBrandName": "MANAGE BRAND NAME",
+    "buyBrandName": "Buy a Brand Name",
+    "brandRecurringFee": "Brand Name Recurring Fee",
+    "brandCallIntro": "Brand Name Call Intro",
+    "changeBrandName": "Change Brand Name",
+    "brandAddRemoveNumbers": "Add/Remove Numbers",
+    "brandIncomingCallNumber": "Set Incoming Call Number",
+    "brandStartStopCalls": "Start/Stop Brand Calls",
+    "brandScheduleCalls": "Schedule Brand Name Calls",
+    "brandUnsubscribe": "Unsubscribe Brand Call",
+    "brandCallsHistory": "Brand Calls History"
   }
 }

@@ -31,8 +31,6 @@ const IndividualPaymentConfirmationModal = ({
   const recurringFeeLabel =
     state?.service_id || state?.recurring_fee_label || "Monthly";
 
-  console.log({ state });
-
   return (
     <div className="fixed p-2 inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm">
       <div className="relative w-full max-w-md max-h-[92%] overflow-auto rounded-2xl bg-white p-6">

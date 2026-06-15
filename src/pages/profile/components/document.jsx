@@ -48,8 +48,6 @@ const DocumentInfo = ({ profileData }) => {
     return value != "1";
   };
 
-  console.log({ data });
-
   const isPdfFile = (docData) => {
     if (docData?.doc_url?.type === "application/pdf") {
       return true;

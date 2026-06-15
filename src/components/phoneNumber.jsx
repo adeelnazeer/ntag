@@ -13,8 +13,6 @@ export function InputWithDropdown() {
     const { countries } = useCountries();
     const [country, setCountry] = React.useState(9);
     const { name, flags, countryCallingCode } = countries[country];
-    console.log({countries})
-
     return (
         <div className="relative flex w-full max-w-[24rem]">
             <Menu placement="bottom-start">

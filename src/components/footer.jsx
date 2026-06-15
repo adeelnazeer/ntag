@@ -17,6 +17,9 @@ const Footer = () => {
     console.error("Error parsing user data:", error);
   }
 
+  const hideMenus=["/home-2",ConstentRoutes.home,ConstentRoutes.login,ConstentRoutes.register,ConstentRoutes.forgetPassword,ConstentRoutes.termofuse,ConstentRoutes.privacyPolicy,ConstentRoutes.privacyPolicy2,ConstentRoutes.FrequentlyAskedQuestions,ConstentRoutes.registerNormalUser];
+
+
   return (
     <div className="w-full bg-white z-10 px-6 py-4">
       {(location?.pathname !== ConstentRoutes?.login &&
@@ -53,7 +56,7 @@ const Footer = () => {
           </p>
           <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
             onClick={() => {
-              navigate(ConstentRoutes.privacyPolicy);
+              navigate(ConstentRoutes.privacyPolicy2);
             }}
           >
             {t("footer.privacy")}
@@ -83,13 +86,16 @@ const Footer = () => {
           >
             {t("footer.contact")}
           </p>
-          <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
-            onClick={() => {
-              navigate(ConstentRoutes.complaint);
-            }}
-          >
-            {t("footer.complaint")}
-          </p>
+          {hideMenus.includes(location?.pathname) && (
+            <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
+              onClick={() => {
+                navigate(ConstentRoutes.complaint);
+              }}
+            >
+              {t("footer.complaint")}
+            </p>
+          )}
+         
         </div>
         <p className="text-center font-medium text-xs md:text-base text-[#008fd5]">
           ©{new Date()?.getFullYear()} {t("footer.rights")}

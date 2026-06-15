@@ -211,7 +211,6 @@ const Complaint = () => {
 
         if (guestToken) {
           localStorage.setItem("cToken", guestToken);
-          console.log("Guest token stored successfully");
         } else {
           console.error("Guest token not found in response:", response);
           toast.error("Guest token not received. Please try again.");

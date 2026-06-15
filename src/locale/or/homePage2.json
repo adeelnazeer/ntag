@@ -1,129 +1,485 @@
 {
-    "nav": {
-      "links": [
-        { "href": "#home", "label": "Mana Jalqabaa" },
-        { "href": "#how", "label": "Akka Itti Hojjetu" },
-        { "href": "#tiers", "label": "Sadarkaa Lakkoofsaa" },
-        { "href": "#users", "label": "Eenyu Fayyadama" },
-        { "href": "#features", "label": "Amaloota" },
-        { "href": "#faq", "label": "Gaaffilee Yeroo Baay’ee Gaafataman" }
-      ],
-      "lang": "OR",
-      "login": "Seeni",
-      "register": "Galmaa’i",
-      "logoAlt": "Ethio Telecom",
-      "telebirrAlt": "telebirr",
-      "menuAria": "Menu Bani",
-      "menuCloseAria": "Menu Cufi"
-    },
-    "carousel": {
-      "fallback": {
-        "title": "Eenyummaan Kee, Salphaa.",
-        "para1": "SIM kee irratti lakkoofsa lammaffaa yaadatamaa argadhu.",
-        "para2": "Wicita NameTAG irratti lakkoofsa kee osoo hin taane #TAG kee agarsiisi.",
-        "description": "NameTAG nama dhuunfaa fi dhaabbileeef."
+  "nav": {
+    "links": [
+      {
+        "href": "#home",
+        "label": "Mana"
       },
-      "slides": [
-        {
-          "title": "NameTAG",
-          "para1": "Lakkoofsa Qofa Hin Ta’iin",
-          "para2": "Yeroo wicita gootu maqaa kee agarsiisi malee lakkoofsa hin ta’in.",
-          "description": "NameTAG lakkoofsa bilbila kee gara maqaa addaa fi yaadatamaa jijjiira. Nama dhuunfaa yookaan dhaabbata yoo taate, maqaa kee agarsiisuun walqunnamtii kee salphaa, bareedaa fi yaadatamaa taasisa."
-        },
-        {
-          "title": "NameTAG",
-          "para1": "Aqoonsa Brand Kee Cimsii",
-          "para2": "Maamiltootaaf maqaa addaa fayyadamuun brand kee agarsiisi.",
-          "description": "NameTAG lakkoofsa kee gara maqaa brand kee jijjiiruudhaan maqaa kee cimsuuf si gargaara. Kun maamiltootaaf si beekuu fi yaadachuu salphisa, akkasumas amantaa fi amanamummaa ijaara."
-        },
-        {
-          "title": "NameTAG",
-          "para1": "Wicita Yaadatamaa, Salphaan",
-          "para2": "Maqaa hawwataa lakkoofsa kee waliin walitti hidhi.",
-          "description": "NameTAG eenyummaan kee yeroo wicitaati. Maqaan ati filatte yeroo hunda dursee ni mul’ata. Itti fayyadamuun salphaa dha, namoota prepaid fi postpaid hundaaf ni danda’ama."
-        }
-      ]
-    },
-    "hero": {
-      "badge": "Tajaajila VAS Ethio Telecom · Ebla 2026",
-      "ctaPrimary": "NameTAG Koo Argadhu",
-      "ctaSecondary": "Akka Itti Hojjetu Ilaali",
-      "imgLeftAlt": "Qaama A",
-      "imgRightAlt": "Qaama B",
-      "store": {
-        "googleAria": "Google Play irraa argadhu",
-        "googleTop": "ARGADHU",
-        "googleBottom": "Google Play",
-        "appleAria": "App Store irraa buusi",
-        "appleTop": "BUUSI",
-        "appleBottom": "App Store"
+      {
+        "href": "#how",
+        "label": "Akkamitti Hojjeta"
+      },
+      {
+        "href": "#tiers",
+        "label": "Sadarkaa Lakkoofsaa"
+      },
+      {
+        "href": "#users",
+        "label": "Eenyutu Fayyadama"
+      },
+      {
+        "href": "#features",
+        "label": "Amaloota"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ"
       }
+    ],
+    "lang": "Afaan Oromoo",
+    "login": "Seeni",
+    "register": "Galmaa'i",
+    "logoAlt": "Ithio Telekom",
+    "telebirrAlt": "teeleebir",
+    "menuAria": "Baafata banu",
+    "menuCloseAria": "Baafata cufu"
+  },
+  "carousel": {
+    "fallback": {
+      "title": "Eenyummaa Keessan, Salphaatti.",
+      "para1": "Kaardii SIM keessan irratti lakkoofsa 2ffaa salphaatti yaadatamuu danda'u argadhaa.",
+      "para2": "Yeroo bilbila NameTAG bilbiltan lakkoofsa moobaayila keessan isa jalqabaa osoo hin taane #TAG keessan agarsiisaa.",
+      "description": "NameTAG dhuunfaafi daldalaaf."
     },
-    "stats": {
-      "items": [
-        { "value": "#1", "label": "Platform Aqoonsa Wicita Itoophiyaa" },
-        { "value": "Sadarkaa 4", "label": "Platinum · Golden · Silver · Bronze" },
-        { "value": "Kaffaltii Wicitaa", "label": "Akka karoora lakkoofsa kee jalqabaatti" },
-        { "value": "Afaan 5", "label": "EN · AM · OR · TI · SO" }
+    "slides": [
+      {
+        "title": "NameTAG",
+        "para1": "Eenyummaa Keessan, Salphaatti",
+        "para2": "Yeroo tajaajila NameTAG fayyadamanii bilbiltan, lakkoofsa keessan isa jalqabaa osoo hin taane #TAG keessan agarsiisaa.",
+        "description": "NameTAG fayyadamuun, lakkoofsi bilbila keessan gara maqaa addaa fi salphaatti yaadatamuu danda'u kan eenyummaa keessan calaqqisiisutti jijjiirama. Dhuunfaas ta'e daldala, lakkoofsa baramaa ta'een ala maqaa keessan isa filatame agarsiisuun walqunnamtii hunda caalaatti dhuunfatti kan dhihaatu, ogummaan kan guutamee fi salphaatti kan yaadatamuu danda'u taasisa."
+      },
+      {
+        "title": "NameTAG",
+        "para1": "Eenyummaa Daldala Keessanii Ol Kaasaa",
+        "para2": "Eenyummaa daldala keessanii calaqqisiisuuf maqaa dhuunfaa maamiltoota keessaniif bilbiltan fayyadamaa.",
+        "description": "NameTAG lakkoofsa bilbila keessan isa idilee NameTAG dhuunfaan bakka buusuun eenyummaa daldala keessanii akka cimsitan isin gargaara. Daldalaafi namoota dhibbaa qabaniif kan qophaa'e yoo ta'u, maamiltoonniifi qunnamtiiwwan keessan battalatti akka isin beekanii fi isin yaadatan taasisa—kunis amantaa ijaaruu, maamila amanamaa horachuu fi muxannoo walqunnamtii gaarii uumuuf gargaara."
+      },
+      {
+        "title": "NameTAG",
+        "para1": "Bilbila Yaadatamuu Danda'u, Salphaatti",
+        "para2": "Lakkoofsa keessan waliin NameTAG nama hawwatu uumaa.",
+        "description": "Bilbila hunda irratti NameTAG—eenyummaa bilbila dhuunfaa keessaniin—adda ta'anii mul'adhaa. Maqaa masoo, maqaa daldalaa ykn ibsa yoo ta'e, NameTAG maqaa filattan lakkoofsa keessan isa dhugaa waliin walitti hidha. Qophaa'uun isaa salphaa, bulchuuf mijaawaa fi maamiltoota 'prepaid' fi 'postpaid' hundaaf ni argama."
+      }
+    ]
+  },
+  "hero": {
+    "badge": "Tajaajila Ethio Telecom VAS · Ebla 2026",
+    "ctaPrimary": "NameTAG koo Argadhu",
+    "ctaSecondary": "Akkaataa Hojii Isaa Ilaalaa",
+    "imgLeftAlt": "Bilbilaa (A Party)",
+    "imgRightAlt": "Bilbila Simataa (B Party)",
+    "store": {
+      "googleAria": "Google Play irraa argadhaa",
+      "googleTop": "IRRAA ARGADHAA",
+      "googleBottom": "Google Play",
+      "appleAria": "App Store irraa buufadhaa",
+      "appleTop": "IRRAA BUUFADHAA",
+      "appleBottom": "App Store"
+    }
+  },
+  "stats": {
+    "items": [
+      {
+        "value": "#1",
+        "label": "Itoophiyaa keessatti madda eenyummaa bilbilaa"
+      },
+      {
+        "value": "Sadarkaa 4",
+        "label": "Platiiniyam · Warqee · Meetii · Nahaasa"
+      },
+      {
+        "value": "Kaffaltii Bilbilaa",
+        "label": "Akka tajaajila paakeejii lakkoofsa keessan isa jalqabaatti"
+      },
+      {
+        "value": "Afaanota 5",
+        "label": "EN · AM · OR · TI · SO"
+      }
+    ]
+  },
+  "what": {
+    "label": "NameTAG jechuun maali?",
+    "title": "Eenyummaa Keessan Isa Dhugaaf Lakkoofsa 'Virtual'",
+    "sub": "NameTAG lakkoofsa gabaabaa fi nama hawwatu (kaarikteroota 2–8) kaardii SIM Ithio keessan irratti akka argattan isin dandeessisa.",
+    "bulletBody": "Battalatti beekamuuf, salphaatti qooduufi eenyummaa dhuunfaa ykn daldalaa cimaa ijaaruuf kan qophaa'edha.",
+    "bullets": [
+      "Lakkoofsa keessan isa 2ffaa gabaabaa",
+      "#TAG keessan agarsiisaa, lakkoofsa jalqabaa miti",
+      "Mallattoo # dura galchuun bilbilaa",
+      "Gara #TAG nama birootti ykn lakkoofsa moobaayilaatti bilbilaa, kaffaltiin isaas akka paakeejii keessaniiti"
+    ],
+    "corporate": {
+      "label": "DALDALA",
+      "tagLine": "#Ethio,#38446",
+      "subtitle": "Eenyummaa Daldalaa",
+      "body": "Maqaa masoo keessan akka eenyummaa bilbilaatti galmeessaa",
+      "incoming": "Kan Seenu",
+      "cli": "#38446"
+    },
+    "individual": {
+      "label": "DHUUNFAA",
+      "tagLine": "#Name,#8832",
+      "subtitle": "Kan Yaadatamuu Danda'u",
+      "body": "Maqaa masoo keessan akka eenyummaa bilbilaatti galmeessaa",
+      "incoming": "Kan Seenu",
+      "cli": "#6268"
+    },
+    "businessCardChip": "Kaardii Daldalaa",
+    "businessCard": {
+      "company": "KENTUCKY FRIED CHICKEN",
+      "official": "NameTAG Ofisiyelaa",
+      "website": "www.company.com",
+      "tag": "#6263 (#Name)",
+      "phone": "0978123456",
+      "email": "companyofficial@gmail.com",
+      "address": "Karaa Miyeen 123, Finfinnee, Itoophiyaa",
+      "nameBlock": "MAQAA",
+      "role": "MANAJEERA"
+    },
+    "curveAlt": "duubbee 'curve'"
+  },
+  "how": {
+    "label": "Akkamitti Hojjeta",
+    "title": "Muxannoo Bilbila NameTAG",
+    "sub": "Bilbilaan mallattoo # dura galchee bilbila, mantiin (platform) eenyummaa adda baasa, namni bilbila simatu NameTAG akka CLI tti argadha.",
+    "imageAlt": "Eenyummaa"
+  },
+  "tiers": {
+    "label": "Sadarkaa Lakkoofsaa",
+    "title": "Sadarkaa NameTAG Keessan Filadhaa",
+    "sub": "Diijitii 2 gadi fageenyaan · Diijitii/kaarikteroota 8 ol aanaan · Bilbila sagalee 'on-net' qofaaf",
+    "examplesPrefix": "Fakkeenyaaf: ",
+    "items": [
+      {
+        "id": "platinum",
+        "name": "Platiiniyam",
+        "tag": "#1111",
+        "level": "Baay'ee Adda",
+        "description": "Lakkoofsa gabaabaa fi kabaja qabu",
+        "examples": "#11100, #0022, #333111",
+        "chipLabel": "Sadarkaa Ol Aanaa"
+      },
+      {
+        "id": "golden",
+        "name": "Warqee",
+        "tag": "#9990",
+        "level": "Lakkoofsa Irra Deddeebi'u",
+        "description": "Kabaja ol aanaa kan lakkoofsa irra deddeebi'an qaban",
+        "examples": "#11022, #200200, #9900",
+        "chipLabel": "Sadarkaa Priimiyeemii"
+      },
+      {
+        "id": "silver",
+        "name": "Meetii",
+        "tag": "#33944",
+        "level": "Lakkoofsa Toora Qaban",
+        "description": "Lakkoofsa toora qaban kan beekamoo ta'an",
+        "examples": "#11022, #33944",
+        "chipLabel": "Sadarkaa Giddu-galeessaa"
+      },
+      {
+        "id": "bronze",
+        "name": "Nahaasa",
+        "tag": "#23104",
+        "level": "TAG Maqaan Filatame",
+        "description": "Maqaa dhuunfaa kaarikteroota 8 gahan",
+        "examples": "#Maqaa, #Pepsi, #Touch",
+        "chipLabel": "Sadarkaa Baramaa"
+      }
+    ]
+  },
+  "users": {
+    "label": "NameTAG Eenyutu Fayyadama?",
+    "title": "Dhuunfaafi Daldalaaf Kan Qophaa'e",
+    "sub": "Dhuunfaa taatanis ykn daldala guddaa, NameTAG amala isin barbaachisu qaba.",
+    "tabIndividual": "Maamiltoota Dhuunfaa",
+    "tabCorporate": "Daldalaafi Eenyummaa (Brands)",
+    "featureHint": "Haala gabaa Itoophiyaatiif kan mijaaye.",
+    "partyA": "Bilbilaa",
+    "partyB": "Simataa",
+    "features": {
+      "individual": [
+        "Eenyummaa bilbilaa dhuunfaa",
+        "Salphaatti ofiin hojjechiisuu",
+        "Mirkaneessa Fayda KYC",
+        "Nageenya PIN bilbilaa",
+        "Bulchiinsa bilbila seenuu",
+        "Cufuu / Bilbilaa banuu"
+      ],
+      "corporate": [
+        "NameTAG Daldalaa",
+        "NameTAG hedduu akaawuntii daldalaa tokko jala",
+        "Akka fedhii daldalaatti NameTAG jijjiiruun",
+        "Daashboordii NameTAG hunda bulchuuf",
+        "Nageenya PIN bilbilaa",
+        "Sa'aatii bilbilaa sirreessu",
+        "Mirkaneessa sanadoota galmee daldalaatiin"
       ]
-    },
-    "what": {
-      "label": "NameTAG Maali?",
-      "title": "Lakkoofsa Virtual Eenyummaa Kee",
-      "sub": "NameTAG lakkoofsa gabaabaa (2–8 qubee) SIM kee waliin walqabatu siif kenna.",
-      "bulletBody": "Beekamtii saffisaa fi qoodinsa salphaaf kan qophaa’e.",
-      "bullets": [
-        "Lakkoofsa Lammaffaa Gabaabaa",
-        "#TAG Kee Agarsiisi",
-        "# tiin Wici",
-        "#TAG yookaan lakkoofsa birootti wici"
-      ]
-    },
-    "how": {
-      "label": "Akka Itti Hojjetu",
-      "title": "Muuxannoo Wicita NameTAG",
-      "sub": "Qaamni A # fayyadamee ni waca, Qaamni B NameTAG ni arga.",
-      "imageAlt": "Aqoonsa"
-    },
-    "tiers": {
-      "label": "Sadarkaa Lakkoofsaa",
-      "title": "Sadarkaa NameTAG Kee Filadhu",
-      "sub": "Xiqqaan 2 · Guddaan 8",
-      "items": [
-        {
-          "id": "platinum",
-          "name": "Platinum",
-          "tag": "#1111",
-          "level": "Baay’ee Addaa",
-          "description": "Lakkoofsota gabaabaa fi qaalii",
-          "examples": "#11100, #0022",
-          "chipLabel": "Ol’aanaa"
-        }
-      ]
-    },
-    "faq": {
-      "label": "FAQ",
-      "title": "Gaaffilee Yeroo Baay’ee Gaafataman",
-      "items": [
-        {
-          "id": "original-private",
-          "q": "Lakkoofsi koo ni dhokata?",
-          "a": "Eeyyee, #TAG qofatu mul’ata."
-        }
-      ]
-    },
-    "cta": {
-      "title": "Lakkoofsa Qofa Hin Ta’iin.",
-      "sub": "NameTAG galmeessi",
-      "contactHeading": "Nu Qunnami",
-      "phone": "9234",
-      "email": "info@tech-vas.com"
-    },
-    "footer": {
-      "brand": "NameTAG",
-      "brandSub": "Ethio Telecom",
-      "tagline": "Platform aqoonsa wicitaa jalqabaa Itoophiyaa",
-      "copyright": "©2026 Ethio telecom"
-    },
-    "backToTop": "Gara Gubbaa"
-  }
+    }
+  },
+  "featuresSection": {
+    "label": "Amaloota Mantaa (Platform)",
+    "title": "Eenyummaa Keessan Bulchuuf Waantota Isin Barbaachisan Hunda",
+    "items": [
+      {
+        "title": "Yeroo Battalaatti Kennuu",
+        "description": "Galmeessaa fi hojjechiisuu NameTAG battalaa mirkaneessa jiraachuu waliin.",
+        "img": "/icon1.svg"
+      },
+      {
+        "title": "Mirkaneessa Fayda KYC",
+        "description": "Mirkaneessa eenyummaa amansiisaa sirna Waraqaa Eenyummaa Biyyaalessaa Itoophiyaatiin maamiltoota dhuunfaatiif.",
+        "img": "/icon2.svg"
+      },
+      {
+        "title": "Nageenya PIN Bilbilaa",
+        "description": "Bilbiloota seenaniif PIN filannoo ta'e, akka namoonni hayyamameef qofti #TAG keessan argatan.",
+        "img": "/icon3.svg"
+      },
+      {
+        "title": "Sa'aatii Bilbilaa Sirreessu",
+        "description": "Sa'aatii #TAG keessan itti hojjetu sirreessaa fi yeroo bilbiloonni isin bira gahan bulchaa.",
+        "img": "/icon4.svg"
+      },
+      {
+        "title": "Afaanota Hedduu Deeggaruu",
+        "description": "Afaan Ingilizii, Amaaraa, Oromoo, Somaalee, fi Tigriffaa.",
+        "img": "/icon5.svg"
+      },
+      {
+        "title": "Daashboordii Maamilaa",
+        "description": "Daashboordii NameTAG maamiltoonni akaawuntii fi #TAG isaanii ittiin bulchan.",
+        "img": "/icon6.svg"
+      },
+      {
+        "title": "Karaa Hedduun Argachuu",
+        "description": "Karaa 'Web Portal', Moobaayila App, fi USSD *883# fayyadamuu danda'u.",
+        "img": "/icon7.svg"
+      },
+      {
+        "title": "Kaffaltii Mijataa Daldalaaf",
+        "description": "Karoora Ji'aa, Raabii-waggaa, Walakkaa-waggaa, fi Waggaa teeleebir-iin.",
+        "img": "/icon8.svg"
+      },
+      {
+        "title": "Kaffaltii Ji'aa Dhuunfaaf",
+        "description": "Karoora ji'aa maamila dhuunfaaf teeleebir fi Ithio Airtime-iin.",
+        "img": "/icon9.svg"
+      }
+    ]
+  },
+  "pricing": {
+    "label": "Karoora Galmee",
+    "title": "Karoora Mijataa Fedhii Hundaaf",
+    "sub": "Yeroo galmee keessan filadhaatii teeleebir ykn Ithio Airtime-iin kaffalaa.",
+    "notes": [
+      "Maamiltoonni dhuunfaa qofti kaffaltii 'airtime' fayyadamuu danda'u.",
+      "Fayyadamtoonni dhuunfaa karoora ji'aa qofa filachuu danda'u."
+    ],
+    "paymentTitle": "Karaalee Kaffaltii",
+    "plans": [
+      {
+        "code": "M",
+        "name": "Ji'aa",
+        "desc": "Mijataa — ji'a ji'aan haaromsama. Waadaa dheeraa hin qabu.",
+        "accent": "border-b-[3px] border-b-[#3B82F6]",
+        "tint": "text-[#3B82F6]/28",
+        "img": "/1.png"
+      },
+      {
+        "code": "Q",
+        "name": "Raabii-waggaa",
+        "desc": "Karoora ji'a 3 — kan ji'aa caalaa qusannoo qaba.",
+        "accent": "border-b-[3px] border-b-[#22C55E]",
+        "tint": "text-[#22C55E]/28",
+        "img": "/2.png"
+      },
+      {
+        "code": "S",
+        "name": "Walakkaa-waggaa",
+        "desc": "Karoora ji'a 6 — fayyadamtoota yeroo hundaaf gatii gaarii.",
+        "accent": "border-b-[3px] border-b-[#F59E0B]",
+        "tint": "text-[#F59E0B]/28",
+        "img": "/3.png"
+      },
+      {
+        "code": "A",
+        "name": "Waggaa",
+        "desc": "Qusannoo gaarii — ji'a 12 gatii gadi bu'aa ta'een.",
+        "accent": "border-b-[3px] border-b-[#A855F7]",
+        "tint": "text-[#A855F7]/28",
+        "img": "/4.png"
+      }
+    ],
+    "paymentChannels": [
+      {
+        "img": "/telebirr_super_app_dark.png",
+        "title": "telebirr Super App",
+        "desc": "Kallattiin 'telebirr super app' (B2C) kaffalaa"
+      },
+      {
+        "img": "/telebirr_partner_app_blue.png",
+        "title": "telebirr Partner App",
+        "desc": "Kaffaltii toora intarneetaa karaa 'partner web portals' (B2B)"
+      },
+      {
+        "img": "/ethio_airtime_green.png",
+        "title": "Ithio Airtime",
+        "desc": "Kaffaltii galmee herrega 'airtime' keessan irraa hir'isuun"
+      }
+    ]
+  },
+  "subscribeSteps": {
+    "label": "Eegali",
+    "title": "Sadaarkaa 4 Salphaatti Galmaa'i",
+    "steps": [
+      {
+        "no": "01",
+        "title": "Akaawuntii Uumi",
+        "desc": "nametag.et irratti ykn Moobaayila App-iin galmaa'aa. Gosa akaawuntii dhuunfaa ykn daldalaa filadhaa."
+      },
+      {
+        "no": "02",
+        "title": "TAG Keessan Filadhaa",
+        "desc": "Sadarkaa Platiiniyam, Warqee, Meetii, ykn Nahaasa keessaa NameTAG keessan barbaadaa fi filadhaa."
+      },
+      {
+        "no": "03",
+        "title": "Kaffalaa & Hojjechiisaa",
+        "desc": "teeleebir ykn Ithio Airtime-iin kaffalaa. Mirkaneessi erga dhufee booda #TAG keessan battalatti kaardii SIM irratti hojjechuu eegala."
+      },
+      {
+        "no": "04",
+        "title": "Bilbiluu Eegala",
+        "desc": "Lakkoofsa kamiyyuu dura mallattoo # galchuun bilbilaa. Simataan #TAG keessan akka CLI tti argata."
+      }
+    ],
+    "channels": [
+      {
+        "title": "Web Portal",
+        "desc": "www.nametag.et"
+      },
+      {
+        "title": "Moobaayila App",
+        "desc": "NameTAG Mobile"
+      },
+      {
+        "title": "Koodii USSD",
+        "desc": "*883# irratti bilbilaa"
+      }
+    ]
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Gaaffilee Yeroo Hedduu Gafataman",
+    "moreQuestions": "+Gaaffilee Biroo",
+    "iconExpanded": "−",
+    "iconCollapsed": "+",
+    "items": [
+      {
+        "id": "original-private",
+        "q": "Lakkoofsi koo inni duraa iccitii ta'ee hafaa?",
+        "a": "Eeyyee. Yeroo NameTAG-iin bilbiltan, simattoonni TAG keessan qofa argu. MSISDN keessan inni jalqabaa iftoominaaf jecha SMS mantaatiin (platform) ibsamuu danda'a."
+      },
+      {
+        "id": "block-calling",
+        "q": "Namni tokko gara NameTAG kootti akka hin bilbiille cufuu nan danda'aa?",
+        "a": "Eeyyee. 'Web/app tools' ykn ajaja SMS fayyadamuun namoota cufuu fi banuu dandeessu."
+      },
+      {
+        "id": "sim-change",
+        "q": "Yoo kaardii SIM ykn lakkoofsa moobaayila koo jijjiiree?",
+        "a": "NameTAG mirkaneessi erga dhufee booda lakkoofsa jijjiiruun eenyummaan keessan isin waliin akka turu ni deeggara."
+      },
+      {
+        "id": "corporate-multiple",
+        "q": "Daldalli NameTAG hedduu bulchuun ni danda'amaa?",
+        "a": "Akaawuntiin daldalaa NameTAG hedduu bulchuu fi garee, damee ykn kaampaaniif kennuu ni danda'a."
+      },
+      {
+        "id": "block-nametag",
+        "q": "Namni tokko gara NameTag akka hin bilbiille cufuu nan danda'aa?",
+        "a": "Eeyyee. Namoota bilbilan cufaman karaa portal, app ykn ajaja SMS-iin yeroo kamiyyuu bulchuun ni danda'ama."
+      },
+      {
+        "id": "register-how",
+        "q": "NameTAG koo akkamitti galmeessuu nan danda'aa?",
+        "a": "Mirkaneessi eenyummaa erga dhufee booda 'web portal', 'mobile app', ykn USSD *883# irratti galmeessuu dandeessu."
+      },
+      {
+        "id": "business-branding",
+        "q": "NameTAG koo eenyummaa daldalaatiif fayyadamuu nan danda'aa?",
+        "a": "Eeyyee. Fayyadamtoonni daldalaa 'branded tags' uumuun, ergaa simannaa fi qindaa'ina eenyummaa sirreessuu danda'u."
+      },
+      {
+        "id": "payments",
+        "q": "Filannoowwan kaffaltii maalfaadha?",
+        "a": "Akka karoora keessaniitti 'telebirr Super App', karaalee 'partner' ykn 'Ethio airtime' fayyadamanii kaffaluun ni danda'ama."
+      },
+      {
+        "id": "transfer",
+        "q": "NameTAG koo gara lakkoofsa biraatti dabarsuu nan danda'aa?",
+        "a": "Dabarsuun ni danda'ama; garuu mirkaneessa fi qajeelfama mantaa (platform policy) eeguu barbaachisa."
+      },
+      {
+        "id": "languages",
+        "q": "NameTAG afaanota hedduun ni argamaa?",
+        "a": "Eeyyee. Tajaajilli kun afaanota hedduu kanneen akka Ingilizii, Amaaraa, Afaan Oromoo, Somaalee fi Tigriffaa ni deeggara."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Lakkoofsa Qofa Osoo Hin Taane Caalaatti Mul'adhaa.",
+    "sub": "NameTAG keessan www.nametag.et irratti galmeessaa ykn har'a *883# irratti bilbilaa.",
+    "contactHeading": "Nu Quunnamaa",
+    "phone": "9234",
+    "email": "info@tech-vas.com",
+    "whatsapp": "WhatsApp irratti haasa'aa",
+    "telegram": "Telegram irratti ergaa ergaa"
+  },
+  "footer": {
+    "brand": "NameTAG",
+    "brandSub": "Ithio Telekom",
+    "tagline": "Itoophiyaa keessatti madda eenyummaa bilbilaa isa jalqabaa; yeroo bilbiltan lakkoofsa dheeraa irra gara #TAG gabaabaa eenyummaa keessan calaqqisiisutti jijjiira.",
+    "subscribeTitle": "Galmaa'aa",
+    "subscribeLinks": [
+      "Web Portal",
+      "Moobaayila App",
+      "USSD *883#"
+    ],
+    "supportTitle": "Deeggarsa",
+    "supportLinks": [
+      "Waliigaltee & Haalawwan",
+      "Iccitii Eeguu",
+      "FAQs",
+      "Nu Quunnamaa",
+      "Komin"
+    ],
+    "languagesTitle": "Afaanota",
+    "languages": [
+      {
+        "code": "en",
+        "label": "English"
+      },
+      {
+        "code": "amET",
+        "label": "አማርኛ (Amharic)"
+      },
+      {
+        "code": "or",
+        "label": "Afaan Oromo"
+      },
+      {
+        "code": "ti",
+        "label": "Tigrinya"
+      },
+      {
+        "code": "so",
+        "label": "Somali"
+      }
+    ],
+    "copyright": "©2026 Ithio telekom. Mirgi hunduu eegamaadha. NameTAG — Eenyummaa Keessan, Salphaatti.",
+    "sites": "www.ethiotelecom.et   www.nametag.et"
+  },
+  "backToTop": "Gara Gubbaatti"
+}
