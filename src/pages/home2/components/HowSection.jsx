@@ -10,7 +10,7 @@ export default function HowSection() {
       <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
         <SectionTitle label={t("how.label")} title={t("how.title")} sub={t("how.sub")} />
         <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1">
-          <img src={ImgIdentity} alt={t("how.imageAlt")} className="w-full h-full object-cover" />
+          <img src="/new-home-img.jpeg" alt={t("how.imageAlt")} className="w-full h-full object-cover" />
         </div>
       </div>
     </section>

@@ -54,8 +54,6 @@ const PaymentConfirmationDialog = ({ onClose, paymentData: externalPaymentData, 
 
   const isSuccess = paymentDetails.status === 'PAY_SUCCESS';
 
-  console.log({paymentDetails})
-
   return (
     <div className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm">
       <div className="relative w-full max-w-md rounded-2xl bg-white p-6">

@@ -130,6 +130,7 @@ const HeaderSimple = ({ isGuest = false }) => {
     const hideMenu = [
         ConstentRoutes.termofuse,
         ConstentRoutes.privacyPolicy,
+        ConstentRoutes.privacyPolicy2,
         ConstentRoutes.FrequentlyAskedQuestions,
     ];
     const getCorporate = () => {

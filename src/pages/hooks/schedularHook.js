@@ -72,7 +72,6 @@ const useSchedularHook = (value) => {
             .then((res) => {
                 toast.success(res?.message)
                 getData()
-                console.log(res, "res")
                 // if (res?.success) {
 
                 //     setData(res?.data);
@@ -83,7 +82,6 @@ const useSchedularHook = (value) => {
             })
             .catch((err) => {
                 toast.error(err)
-                console.log("err", err);
             });
     }
 

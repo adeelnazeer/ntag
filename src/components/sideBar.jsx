@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Card, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
 import { MdHomeFilled } from "react-icons/md";
 import { FaHashtag, FaUser, FaBars } from "react-icons/fa";
-import { BsFire } from "react-icons/bs";
+import { BsFire, BsStarFill } from "react-icons/bs";
 import { IoLogOutSharp } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../utilities/routesConst";
@@ -53,8 +53,22 @@ const Sidebar = ({
   const activeChangeMyTag =
     location?.pathname === ConstentRoutes.changeMyTAGCorporate;
 
-  // State to manage dropdown open/closed
+  const brandRoutes = [
+    ConstentRoutes.brandNameCallBuy,
+    ConstentRoutes.brandNameCallRecurringFee,
+    ConstentRoutes.brandNameCallIntro,
+    ConstentRoutes.brandNameCallChange,
+    ConstentRoutes.brandNameCallNumbers,
+    ConstentRoutes.brandNameCallIncomingNumber,
+    ConstentRoutes.brandNameCallStartStop,
+    ConstentRoutes.brandNameCallSchedule,
+    ConstentRoutes.brandNameCallUnsubscribe,
+    ConstentRoutes.brandNameCallHistory,
+  ];
+  const activeBrand = brandRoutes.includes(location?.pathname);
+
   const [openManageMenu, setOpenManageMenu] = useState(activeThree);
+  const [openBrandMenu, setOpenBrandMenu] = useState(activeBrand);
 
   // Update dropdown state when routes change
   // useEffect(() => {
@@ -126,6 +140,76 @@ const Sidebar = ({
     data?.[1]?.doc_status == 0 ||
     data?.[2]?.doc_status == 0;
 
+  const brandPrimaryItems = [
+    { key: "buyBrandName", route: ConstentRoutes.brandNameCallBuy, icon: "🛒" },
+    {
+      key: "brandRecurringFee",
+      route: ConstentRoutes.brandNameCallRecurringFee,
+      icon: "💳",
+    },
+    { key: "brandCallIntro", route: ConstentRoutes.brandNameCallIntro, icon: "ℹ️" },
+  ];
+
+  const brandManageItems = [
+    { key: "changeBrandName", route: ConstentRoutes.brandNameCallChange, icon: "✏️" },
+    {
+      key: "brandAddRemoveNumbers",
+      route: ConstentRoutes.brandNameCallNumbers,
+      icon: "👥",
+    },
+    {
+      key: "brandIncomingCallNumber",
+      route: ConstentRoutes.brandNameCallIncomingNumber,
+      icon: "📞",
+    },
+    {
+      key: "brandStartStopCalls",
+      route: ConstentRoutes.brandNameCallStartStop,
+      icon: "▶️",
+    },
+    {
+      key: "brandScheduleCalls",
+      route: ConstentRoutes.brandNameCallSchedule,
+      icon: "📅",
+    },
+    {
+      key: "brandUnsubscribe",
+      route: ConstentRoutes.brandNameCallUnsubscribe,
+      icon: "🚫",
+    },
+    {
+      key: "brandCallsHistory",
+      route: ConstentRoutes.brandNameCallHistory,
+      icon: "📊",
+    },
+  ];
+
+  const renderBrandLink = (item, highlightGreen = false) => {
+    const isActive = location?.pathname === item.route;
+    return (
+      <button
+        key={item.key}
+        type="button"
+        onClick={() => {
+          navigate(item.route);
+          setIsSidebarOpen(false);
+        }}
+        disabled={isDocumentDisabled}
+        className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm
+          ${
+            isActive
+              ? "bg-secondary text-white"
+              : highlightGreen
+                ? "text-secondary hover:bg-[#8dc63f]/10"
+                : "text-[#8A8AA0] hover:bg-gray-100"
+          }
+          ${isDocumentDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+      >
+        <span>{t(`sideBar.${item.key}`)}</span>
+      </button>
+    );
+  };
+
   return (
     <div className="relative h-full w-full">
       {!hideFloatingTrigger && (
@@ -142,7 +226,7 @@ const Sidebar = ({
 
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 z-[40] bg-black/40 lg:hidden"
+          className="fixed inset-0 z-[110] bg-black/40 lg:hidden"
           aria-hidden
           onClick={() => setIsSidebarOpen(false)}
         />
@@ -150,19 +234,19 @@ const Sidebar = ({
 
       <div
         ref={sidebarRef}
-        className={` left-0 top-0 z-[45] flex h-[100dvh] w-64 max-w-[min(18rem,88vw)] flex-col bg-white shadow-xl transition-transform duration-300 ease-out lg:static lg:z-0 lg:h-full lg:max-w-none lg:w-72 lg:translate-x-0 lg:shadow-none ${
+        className={`fixed left-0 top-0 z-[120] flex h-[100dvh] w-64 max-w-[min(18rem,88vw)] flex-col bg-white shadow-xl transition-transform duration-300 ease-out lg:static lg:z-0 lg:h-full lg:max-w-none lg:w-72 lg:translate-x-0 lg:shadow-none ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full max-lg:pointer-events-none"
         } lg:pointer-events-auto`}
       >
         <div className="h-full overflow-y-auto" key={i18n.resolvedLanguage || i18n.language}>
-          <Card className="w-full bg-transparent px-4 py-4 shadow-none">
+          <Card className="w-full bg-transparent pr-4 py-4 shadow-none">
             <List className="text-base min-w-full w-full gap-4 p-0 font-normal text-black">
               {/* Standard menu items */}
               {sidebarData.slice(0, 2).map((item, index) => (
-                <div key={index} className="flex md:gap-6 gap-1">
+                <div key={index} className="flex md:gap-6 gap-2">
                   <div
                     className={`${item.active ? "bg-secondary" : "bg-white"
-                      } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                      } w-2 h-auto rounded-tr-[10px] rounded-br-[10px]`}
                   />
                   <ListItem
                     disabled={item.disabled}
@@ -201,10 +285,10 @@ const Sidebar = ({
 
               {/* Manage NameTAG with dropdown */}
               <div className="flex flex-col">
-                <div className="flex md:gap-6 gap-1">
+                <div className="flex md:gap-6 gap-2">
                   <div
                     className={`${activeThree ? "bg-secondary" : "bg-white"
-                      } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                      } w-2 h-auto rounded-tr-[10px] rounded-br-[10px]`}
                   />
                   <ListItem
                     disabled={userData?.status == 5}
@@ -352,12 +436,58 @@ const Sidebar = ({
                 )}
               </div>
 
+              <div className="my-3 border-t border-gray-200" />
+
+              {/* Brand Name Call */}
+              <div className="flex flex-col">
+                <div className="flex md:gap-6 gap-2">
+                  <div
+                    className={`${
+                      activeBrand ? "bg-secondary" : "bg-white"
+                    } w-2 h-auto rounded-tr-[10px] rounded-br-[10px]`}
+                  />
+                  <ListItem
+                    disabled={userData?.status == 5}
+                    onClick={() => setOpenBrandMenu(!openBrandMenu)}
+                    className={`rounded-lg bg-[#8dc63f]/10 py-4 cursor-pointer
+                      ${activeBrand ? "bg-secondary text-white hover:bg-secondary" : ""}
+                      focus:bg-secondary focus:text-white`}
+                  >
+                    <ListItemPrefix className="md:mr-4 mr-2">
+                      <BsStarFill
+                        className={`h-4 w-4 ${activeBrand ? "text-white" : "text-secondary"}`}
+                      />
+                    </ListItemPrefix>
+                    <span
+                      className={`flex flex-1 items-center gap-2 font-medium ${
+                        activeBrand ? "text-white" : "text-secondary"
+                      }`}
+                    >
+                      {t("sideBar.brandNameCall")}
+                      {/* <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-bold uppercase text-white">
+                        {t("sideBar.newBadge")}
+                      </span> */}
+                    </span>
+                  </ListItem>
+                </div>
+
+                {openBrandMenu && (
+                  <div className="ml-8 mt-1 flex flex-col gap-1 pl-4 mb-2">
+                    {brandPrimaryItems.map((item) => renderBrandLink(item, true))}
+                    <p className="px-3 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+                      {t("sideBar.manageBrandName")}
+                    </p>
+                    {brandManageItems.map((item) => renderBrandLink(item))}
+                  </div>
+                )}
+              </div>
+
               {/* Remaining menu items */}
               {sidebarData.slice(2).map((item, index) => (
-                <div key={index + 2} className="flex md:gap-6 gap-1">
+                <div key={index + 2} className="flex md:gap-6 gap-2">
                   <div
                     className={`${item.active ? "bg-secondary" : "bg-white"
-                      } w-2 h-full rounded-tr-[10px] rounded-br-[10px]`}
+                      } w-2 h-auto rounded-tr-[10px] rounded-br-[10px]`}
                   />
                   <ListItem
                     disabled={item.disabled}

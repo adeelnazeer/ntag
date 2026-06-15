@@ -34,7 +34,6 @@ export const useRegisterHook = () => {
         setData(res?.data);
       })
       .catch((err) => {
-        console.log("err", err);
       });
   };
 
@@ -85,7 +84,7 @@ export const useRegisterHook = () => {
         }
       })
       .catch((err) => {
-        console.log("err", err);
+        toast.error(err || err?.message || err?.response?.data?.message || "Something went wrong try again!");
       });
   };
 
@@ -117,7 +116,7 @@ export const useRegisterHook = () => {
       })
       .catch((err) => {
         toast.error(
-          err || err.response?.data?.message || "Something went wrong try again!"
+          err || err?.message || err?.response?.data?.message || "Something went wrong try again!"
         );
         setVerified(false);
       });

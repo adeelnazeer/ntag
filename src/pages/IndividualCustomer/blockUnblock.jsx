@@ -123,7 +123,6 @@ const BlockUnblockCustomer = () => {
 
         setNumbers(blockedNumbers);
 
-        console.log({ response })
         // Set pagination metadata directly from the corp_tag_list
         setMetaData({
           total: response?.meta?.total || 0,

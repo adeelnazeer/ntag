@@ -87,8 +87,6 @@ const Paymentsuccessful = ({
       vatableTotalAmount + vatAmount + stampDuty
   );
 
-  console.log("payment success", { state });
-
   return (
     <>
       {isOpen && (

@@ -63,7 +63,6 @@ const ForgetPass = () => {
   useEffect(() => {
     if (userData) {
       reset({
-        username: userData?.username,
         phone_number: userData?.phone_number
       });
     }
@@ -99,16 +98,16 @@ const ForgetPass = () => {
           />
         </div>
         <div className="flex items-center justify-center mx-6 md:mx-0">
-       
-          <div className="bg-white p-8 rounded-xl shadow-lg max-w-xl w-full min-h-[400px]">
-               <div className=" pb-4">
-            <BiArrowBack className=" text-3xl cursor-pointer text-secondary font-bold"
-              onClick={() => {
-                navigate(-1)
 
-              }}
-            />
-          </div>
+          <div className="bg-white p-8 rounded-xl shadow-lg max-w-xl w-full min-h-[400px]">
+            <div className=" pb-4">
+              <BiArrowBack className=" text-3xl cursor-pointer text-secondary font-bold"
+                onClick={() => {
+                  navigate(-1)
+
+                }}
+              />
+            </div>
             {step === 1 ? (
               <>
                 <h2 className=" font-semibold md:text-[38px] text-[25px]  mb-4">{userData ? t("forgotPassword.title.update") : t("forgotPassword.title.forgot")}</h2>
@@ -116,19 +115,6 @@ const ForgetPass = () => {
                   {t("forgotPassword.description")}
                 </p>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="mb-2">
-                    <Input
-                      className="mt-2 w-full rounded-xl px-4 py-3 bg-[#F6F7FB] outline-none"
-                      placeholder={t("forgotPassword.placeholders.userName")}
-                      type="text"
-                      style={
-                        errors?.username
-                          ? { border: "1px solid red" }
-                          : { border: "1px solid #8A8AA033" }
-                      }
-                      {...register("username", { required: true })}
-                    />
-                  </div>
                   {/* <div className="mb-2">
                     <Input
                       className="w-full rounded-xl px-4 py-3 bg-[#F6F7FB] outline-none"

@@ -706,18 +706,16 @@ const UserForm = () => {
                                             {...register("password", {
                                                 required: t("common.form.errors.password"),
                                                 minLength: {
-                                                    value: 5,
-                                                    message: "Password must be at least 5 characters",
+                                                    value: 8,
+                                                    message: t("common.form.errors.passwordMinLength"),
                                                 },
                                                 maxLength: {
                                                     value: 15,
-                                                    message: "Password cannot exceed 15 characters",
+                                                    message: t("common.form.errors.passwordMaxLength"),
                                                 },
                                                 pattern: {
-                                                    value:
-                                                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{5,15}$/,
-                                                    message:
-                                                        "Password must contain at least one uppercase letter, one lowercase letter, and one special character",
+                                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,15}$/,
+                                                    message: t("common.form.errors.passwordPattern")
                                                 },
                                             })}
                                             style={
@@ -1030,7 +1028,6 @@ const UserForm = () => {
                                             setCheckOtpFaydaLoading(true);
                                             try {
                                                 const res = await registerData.handleCheckOtpFayda(code, phone);
-                                                console.log(res);
                                                 if (res?.data?.is_registered == true) {
                                                     setCurrentStep(3);
                                                     setFaydaVerified(true);

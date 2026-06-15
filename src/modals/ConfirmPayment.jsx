@@ -22,8 +22,6 @@ const PaymentConfirmationModal = ({
     return Number(price).toFixed(2);
   };
 
-  console.log("confirm",{state})
-
   return (
     <div className="fixed p-2 inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm">
       <div className="relative max-h-[92%] overflow-auto w-full max-w-md rounded-2xl bg-white p-6">

@@ -1,156 +1,421 @@
 {
-    "nav": {
-      "links": [
-        { "href": "#home", "label": "መነሻ" },
-        { "href": "#how", "label": "እንዴት እንደሚሰራ" },
-        { "href": "#tiers", "label": "ስድር ምትክ" },
-        { "href": "#users", "label": "ማን እንደምትጠቀም" },
-        { "href": "#features", "label": "ኣማላጺ" },
-        { "href": "#faq", "label": "ጥያቄታት ተደጋጋም" }
-      ],
-      "lang": "TI",
-      "login": "ግባ",
-      "register": "መዝገብ",
-      "logoAlt": "Ethio Telecom",
-      "telebirrAlt": "telebirr",
-      "menuAria": "መኑን ክፈት",
-      "menuCloseAria": "መኑን ዝጋ"
+  "nav": {
+    "links": [
+      { "href": "#home", "label": "መእተዊ" },
+      { "href": "#how", "label": "ከመይ ይሰርሕ" },
+      { "href": "#tiers", "label": "ደረጃታት ቁጽሪ" },
+      { "href": "#users", "label": "መን ይጥቀመሉ" },
+      { "href": "#features", "label": "ፍሉይ ባህርያት" },
+      { "href": "#faq", "label": "ብተደጋጋሚ ዝሕተቱ ሕቶታት" }
+    ],
+    "lang": "ትግርኛ",
+    "login": "እቶ",
+    "register": "ምዝገባ",
+    "logoAlt": "ኢትዮ ቴሌኮም",
+    "telebirrAlt": "ቴሌብር",
+    "menuAria": "ሜኑ ክፈት",
+    "menuCloseAria": "ሜኑ ዕጸው"
+  },
+  "carousel": {
+    "fallback": {
+      "title": "መንነትኩም፣ ብቐሊሉ ዝቐረበ።",
+      "para1": "ኣብቲ ዘለኩም ሲም (SIM) ካርዲ ተወሳኺ ዝዝከር ቁጽሪ ይርከቡ።",
+      "para2": "ኣብ ናይ NameTAG ጻውዒታትኩም ናይ መበቆል ሞባይል ቁጽርኹም ዘይኮነስ #TAG-ኩም ኣርእዩ።",
+      "description": "NameTAG ንውልቀ-ሰባትን ንትካላትን።"
     },
-    "carousel": {
-      "fallback": {
-        "title": "መንገድዎ ቀላል ተደርጓል።",
-        "para1": "በነባር ሲምዎ ላይ ሁለተኛ ቁጥር ያግኙ።",
-        "para2": "በNameTAG ጥሪዎች ላይ ዋና ቁጥርዎን ሳይሆን #TAG ያሳዩ።",
-        "description": "NameTAG ለግለሰቦችና ለንግዶች።"
+    "slides": [
+      {
+        "title": "NameTAG",
+        "para1": "መንነትኩም፣ ብቐሊሉ ዝቐረበ",
+        "para2": "ብመገዲ NameTAG ጻውዒት ክትገብሩ ከለኹም፡ ኣብ ክንዲ ቀንድ ቁጽርኹም #TAG-ኩም ኣርእዩ።",
+        "description": "ብ NameTAG ኣቢሉ፡ ናይ ስልኪ ቁጽርኹም ናብቲ ንመንነትኩም ዝገልጽ ፍሉይን ዝዝከርን ስም ይቕየር። ውልቀ-ሰብ ይኹኑ ትካል፡ ኣብ ክንዲ ተራ ቁጽሪ ዝመረጽዎ ስም ክረአ ብምግባር፡ ዝኾነ ርክብ ዝያዳ ውልቃዊ፡ ሞያዊ ከምኡ’ውን ንምዝካር ቀሊል ክኸውን ይገብር።"
       },
-      "slides": [
-        {
-          "title": "NameTAG",
-          "para1": "ከቁጥር በላይ ይሁኑ",
-          "para2": "ጥሪ ሲደርስ ቁጥርዎን ሳይሆን ስምዎን ያሳዩ።",
-          "description": "በNameTAG ቁጥርዎ ወደ ልዩ ስም ተቀይሮ ይታያል። ለግለሰቦችና ለንግዶች የሚመች፣ ማንነትዎን ቀላል እና የሚታሰብ ያደርገዋል።"
-        },
-        {
-          "title": "NameTAG",
-          "para1": "የብራንድዎን ማንነት ያጠናክሩ",
-          "para2": "ደንበኞችዎ ሲያዩ ብራንድዎን የሚያመለክት ስም ይጠቀሙ።",
-          "description": "NameTAG ቁጥርዎን በብራንድ ስም በመቀየር የንግድዎን መለያ ያጠናክራል። ይህም እምነትን እና የብራንድ ታዋቂነትን ያሳድጋል።"
-        },
-        {
-          "title": "NameTAG",
-          "para1": "የሚታሰቡ ጥሪዎች",
-          "para2": "ከቁጥርዎ ጋር የተገናኘ የሚስብ ስም ይፍጠሩ።",
-          "description": "NameTAG የግል የጥሪ ማንነትዎ ነው። ማንኛውም ሰው ሲያይ በመጀመሪያ ማንነትዎን ያያል። ቀላል ማስጀመር እና መቆጣጠር ይቻላል።"
-        }
-      ]
-    },
-    "hero": {
-      "badge": "ኢትዮ ቴሌኮም VAS አገልግሎት · ኤፕሪል 2026",
-      "ctaPrimary": "NameTAG አግኝ",
-      "ctaSecondary": "እንዴት እንደሚሰራ ይመልከቱ",
-      "imgLeftAlt": "A ወገን",
-      "imgRightAlt": "B ወገን",
-      "store": {
-        "googleAria": "በ Google Play ያግኙ",
-        "googleTop": "ከ",
-        "googleBottom": "Google Play",
-        "appleAria": "በ App Store ያውርዱ",
-        "appleTop": "ከ",
-        "appleBottom": "App Store"
+      {
+        "title": "NameTAG",
+        "para1": "ናይ ትካልኩም መንነት ኣዕብዩ",
+        "para2": "ንደወልቲ ዓማዊልኩም መንነት ትካልኩም ንምግላጽ ብፍሉይ ዝተዳለወ ስም ተጠቐሙ።",
+        "description": "NameTAG ንቡር ናይ ስልኪ ቁጽርኹም ብናይ ባዕልኹም NameTAG ብምትካእ፡ ንመነነት ትካልኩም ንምጥንኻር ይሕግዘኩም። ንትካላትን ጽልዋ ንዘለዎም ሰባትን ተጽዕኖ ፈጠርቲ ዝተዳለወ ኮይኑ፡ ዓማዊልኩምን መሻርኽትኹምን ብቕጽበት ንኽፈልጥኹምን ንኽዝክሩኹምን የኽእሎም—እዚ ድማ እምነት ንምህናጽን ዝሓሸ ናይ ርክብ ተመክሮ ንምፍጣርን ይሕግዝ።"
+      },
+      {
+        "title": "NameTAG",
+        "para1": "ዝዝከሩ ጻውዒታት ብቐሊሉ",
+        "para2": "ምስ ቁጽርኹም ዝተኣሳሰር ማራኺ ዝኾነ NameTAG ፍጠሩ።",
+        "description": "ኣብ ዝኾነ ጻውዒት ብ NameTAG—ብሕታዊ ናይ ደወል መንነትኩም—ጎሊሕኩም ተራኣዩ። ተወሳኪ መፀውዒ ስም ይኹን፣ ስም ትካል ወይ ካልእ ሓረጋት፡ NameTAG ነቲ ዝመረጽዎ ስም ምስቲ ናይ ሓቂ ቁጽርኹም የተኣሳስሮ። ንምድላው ቀሊልን ንምምሕዳር ምቹውን ኮይኑ፡ ንቅድመ-ክፍሊትን ድሕረ-ክፍሊትን ተጠቀምቲ ዝተዳለወ እዩ።"
       }
+    ]
+  },
+  "hero": {
+    "badge": "ኢትዮ ቴሌኮም VAS ኣገልግሎት · ሚያዝያ 2026",
+    "ctaPrimary": "NameTAG-ከይ ይርከብ",
+    "ctaSecondary": "ከመይ ከም ዝሰርሕ ርኣዩ",
+    "imgLeftAlt": "ደዋሊ (A Party)",
+    "imgRightAlt": "ተቐባሊ (B Party)",
+    "store": {
+      "googleAria": "ካብ Google Play ኣውርዱ",
+      "googleTop": "ኣብዚ ይርከብ",
+      "googleBottom": "Google Play",
+      "appleAria": "ካብ App Store ኣውርዱ",
+      "appleTop": "ካብዚ ኣውርዱ",
+      "appleBottom": "App Store"
+    }
+  },
+  "stats": {
+    "items": [
+      { "value": "#1", "label": "ኣብ ኢትዮጵያ ቀዳማይ ናይ ደወልቲ መንነት መድረኽ" },
+      { "value": "4 ደረጃታት", "label": "ፕላቲነም · ወርቂ · ብሩር · ነሓስ" },
+      { "value": "ናይ ጻውዒት ክፍሊት", "label": "ከምቲ ናይ ቀንድ ቁጽርኹም ፓኬጅ" },
+      { "value": "5 ቋንቋታት", "label": "እንግሊዝኛ · ኣምሓርኛ · ኦሮምኛ · ትግርኛ · ሶማሊኛ" }
+    ]
+  },
+  "what": {
+    "label": "NameTAG እንታይ እዩ?",
+    "title": "ንናይ ሓቂ መንነትኩም ዝኸውን ቨርቹዋል (Virtual) ቁጽሪ",
+    "sub": "NameTAG ምስቲ ዘለኩም ናይ ኢትዮ ሲም (Ethio SIM) ዝተኣሳሰር ሓጺርን ማራኽን ቁጽሪ (ካብ 2-8 ፊደላት/ቁጽርታት) ንኽትረኽቡ የኽእለኩም።",
+    "bulletBody": "ብቕጽበት ንምፍላጥ፣ ንምክፋል ዝቐለለን ድልዱል ውልቃዊ ወይ ትካላዊ መንነት ንምህናጽ ዝተዳለወ እዩ።",
+    "bullets": [
+      "ናይ ካልኣይ ሓጺር ቁጽርኹም",
+      "ቀንድ ቁጽርኹም ዘይኮነስ #TAG-ኩም ኣርእዩ",
+      "ብምልክት # ጀሚርኩም ደውሉ",
+      "ናብ ካልኦት NameTAG ይኹን ናብ ተራ ቁጽሪ ምስቲ ዘለኩም ፓኬጅ ብዝሰማማዕ ዋጋ ደውሉ"
+    ],
+    "corporate": {
+      "label": "ትካላዊ",
+      "tagLine": "#Ethio,#38446",
+      "subtitle": "መንነት ትካል",
+      "body": "ንመንነት ደዋሊኹም ዝኸውን ሳጓኩም ኣመዝግቡ",
+      "incoming": "ዝኣቱ ጻውዒት",
+      "cli": "#38446"
     },
-    "stats": {
-      "items": [
-        { "value": "#1", "label": "በኢትዮጵያ የጥሪ መለያ ፕላትፎርም" },
-        { "value": "4 ደረጃ", "label": "Platinum · Golden · Silver · Bronze" },
-        { "value": "የጥሪ ክፍያ", "label": "እንደ ዋና ቁጥር ፓኬጅ ይሆናል" },
-        { "value": "5 ቋንቋዎች", "label": "EN · AM · OR · TI · SO" }
+    "individual": {
+      "label": "ውልቃዊ",
+      "tagLine": "#Name,#8832",
+      "subtitle": "ዝዝከር",
+      "body": "ንመንነት ደዋሊኹም ዝኸውን ሳጓኩም ኣመዝግቡ",
+      "incoming": "ዝኣቱ ጻውዒት",
+      "cli": "#6268"
+    },
+    "businessCardChip": "ናይ ንግዲ ካርድ",
+    "businessCard": {
+      "company": "KENTUCKY FRIED CHICKEN",
+      "official": "ወግዓዊ NameTAG",
+      "website": "www.company.com",
+      "tag": "#6263 (#Name)",
+      "phone": "0978123456",
+      "email": "companyofficial@gmail.com",
+      "address": "123 ጎደና ሜይን፣ ኣዲስ ኣበባ፣ ኢትዮጵያ",
+      "nameBlock": "ስም",
+      "role": "ሓላፊ"
+    },
+    "curveAlt": "ድሕረ ባይታ"
+  },
+  "how": {
+    "label": "ከመይ ይሰርሕ",
+    "title": "ናይ NameTAG ናይ ደወል ተመክሮ",
+    "sub": "ደዋሊ ብምልክት # ጀሚሩ ይድውል፣ እቲ ፕላትፎርም መንነት የጻሪ፣ ተቀባሊ ድማ ነቲ NameTAG ከም መለለዪ ደዋሊ (CLI) ይርእዮ።",
+    "imageAlt": "መንነት"
+  },
+  "tiers": {
+    "label": "ደረጃታት ቁጽሪ",
+    "title": "ናይ NameTAG ደረጃኹም ምረጹ",
+    "sub": "ትሑት 2 ዲጂት · ዝለዓለ 8 ዲጂት/ፊደላት · ንውሽጢ መርበብ (On-net) ጥራይ",
+    "examplesPrefix": "ኣብነታት: ",
+    "items": [
+      {
+        "id": "platinum",
+        "name": "ፕላቲነም",
+        "tag": "#1111",
+        "level": "ብሉጽ-ፍሉይ",
+        "description": "ዝሓጸሩን ዝኸበሩን ቁጽርታት",
+        "examples": "#11100, #0022, #333111",
+        "chipLabel": "ዝለዓለ ደረጃ"
+      },
+      {
+        "id": "golden",
+        "name": "ወርቂ",
+        "tag": "#9990",
+        "level": "ተደጋጋሚ ቅዲታት",
+        "description": "ልዑል ክብሪ ዘለዎም ተደጋጋሚ ቅዲታት",
+        "examples": "#11022, #200200, #9900",
+        "chipLabel": "ፕሪሚየም ደረጃ"
+      },
+      {
+        "id": "silver",
+        "name": "ብሩር",
+        "tag": "#33944",
+        "level": "ቅዲ ዘለዎም ቁጽርታት",
+        "description": "ተመራጺ ቅዲ ዘለዎም ቁጽርታት",
+        "examples": "#11022, #33944",
+        "chipLabel": "ማእከላይ ደረጃ"
+      },
+      {
+        "id": "bronze",
+        "name": "ነሓስ",
+        "tag": "#23104",
+        "level": "ዝተሰመዩ TAG-ታት",
+        "description": "ክሳብ 8 ፊደላት ዝኾኑ ናይ ባዕልኹም ስማት",
+        "examples": "#Name, #Pepsi, #Touch",
+        "chipLabel": "ተራ ደረጃ"
+      }
+    ]
+  },
+  "users": {
+    "label": "NameTAG መን ይጥቀመሉ?",
+    "title": "ንውልቀ-ሰባትን ትካላትን ዝተዳለወ",
+    "sub": "ውልቃዊ ዓሚል ይኹኑ ወይ ዓቢ ትካል፣ NameTAG ዘድልዩኹም ባህርያት ሒዙ ኣሎ።",
+    "tabIndividual": "ውልቃዊ ዓማዊል",
+    "tabCorporate": "ትካላትን ብራንድታትን",
+    "featureHint": "ንዕዳጋ ኢትዮጵያ ተባሂሉ ዝተመዓራረየ።",
+    "partyA": "ደዋሊ",
+    "partyB": "ተቀባሊ",
+    "features": {
+      "individual": [
+        "ፍሉይ ናይ ደዋሊ መንነት",
+        "ቅልጡፍ ናይ ባዕልኻ ምሕዳስ",
+        "ብፋይዳ (Fayda) መንነት ምርግጋጽ",
+        "ናይ ደወል PIN ውሕስነት",
+        "ዝኣትዉ ጻውዒታት ምምሕዳር",
+        "ደወልቲ ምዕጋት / መፍቃድ"
+      ],
+      "corporate": [
+        "ትካላዊ NameTAG",
+        "ኣብ ትሕቲ ሓደ ናይ ትካል ኣካውንት ብዙሓት NameTAG ስማት",
+        "ከም ኣድላይነት ስራሕ NameTAG ምቕያር",
+        "ንኹሎም NameTAG ስማት ንምምሕዳር ዘኽእል ዳሽቦርድ",
+        "ናይ ደወል PIN ውሕስነት",
+        "ጻውዒታት ዝግበረሉ ግዜ ምውሳን",
+        "ብናይ ንግዲ ሰነዳት መንነት ምርግጋጽ"
       ]
-    },
-    "what": {
-      "label": "NameTAG ምንድነው?",
-      "title": "ለእውነተኛ ማንነትዎ የተመሰረተ ቪርቹዋል ቁጥር",
-      "sub": "NameTAG ከነባር ሲምዎ ጋር የሚገናኝ አጭር ቁጥር (2–8 ቁምፊ) ይሰጣል።",
-      "bulletBody": "ለቀላል ማስታወሻ እና ለብራንድ ማንነት የተነደፈ።",
-      "bullets": [
-        "ሁለተኛ አጭር ቁጥር",
-        "#TAG አሳይ እንጂ ዋና ቁጥር አይደለም",
-        "በ # ቅድሚያ ይደውሉ",
-        "ለሌሎች TAG ወይም ቁጥር ይደውሉ"
-      ]
-    },
-    "how": {
-      "label": "እንዴት ይሰራል",
-      "title": "የNameTAG ጥሪ ሂደት",
-      "sub": "A ወገን # በመጠቀም ይደውላል፣ B ወገን NameTAG ያያል።",
-      "imageAlt": "መለያ"
-    },
-    "tiers": {
-      "label": "የቁጥር ደረጃዎች",
-      "title": "NameTAG ደረጃዎን ይምረጡ",
-      "sub": "ከ2 እስከ 8 ቁምፊ",
-      "items": [
-        {
-          "id": "platinum",
-          "name": "Platinum",
-          "tag": "#1111",
-          "level": "እጅግ ልዩ",
-          "description": "Lakkoofsota ugu gaaban uguna qiimaha badan",
-          "examples": "#11100, #0022",
-          "chipLabel": "Heerka Ugu Sarreeya"
-        },
-        {
-          "id": "golden",
-          "name": "Golden",
-          "tag": "#9990",
-          "level": "Qaabab Soo Noqnoqda",
-          "description": "Qaabab tirooyin ah oo sharaf sare leh",
-          "examples": "#11022, #200200, #9900",
-          "chipLabel": "Heer Premium ah"
-        },
-        {
-          "id": "silver",
-          "name": "Silver",
-          "tag": "#33944",
-          "level": "Lambaro Qaab Leh",
-          "description": "Lambaro qaabaysan oo caan ah",
-          "examples": "#11022, #33944",
-          "chipLabel": "Heer Dhexe"
-        },
-        {
-          "id": "bronze",
-          "name": "Bronze",
-          "tag": "#23104",
-          "level": "NameTAG-yo Magac Leh",
-          "description": "Magacyo gaar ah ilaa 8 xaraf",
-          "examples": "#Name, #Pepsi, #Touch",
-          "chipLabel": "Heer Caadi ah"
-        }
-      ]
-    },
-    "faq": {
-      "label": "FAQ",
-      "title": "ተደጋጋሚ ጥያቄዎች",
-      "items": [
-        {
-          "id": "original-private",
-          "q": "ዋና ቁጥሬ ይሸፈናል?",
-          "a": "አዎ፣ NameTAG ብቻ ይታያል."
-        }
-      ]
-    },
-    "cta": {
-      "title": "ከቁጥር በላይ ይሁኑ።",
-      "sub": "NameTAG galmeessi",
-      "contactHeading": "እኛን ያግኙ",
-      "phone": "9234",
-      "email": "info@tech-vas.com"
-    },
-    "footer": {
-      "brand": "NameTAG",
-      "brandSub": "Ethio Telecom",
-      "tagline": "የመጀመሪያው የጥሪ መለያ ፕላትፎርም",
-      "copyright": "©2026 Ethio telecom"
-    },
-    "backToTop": "ወደ ላይ"
-  }
+    }
+  },
+  "featuresSection": {
+    "label": "ናይቲ መድረኽ ባህርያት",
+    "title": "መንነትኩም ንምምሕዳር ዘድልዩኹም ኩሎም ነገራት",
+    "items": [
+      {
+        "title": "ናይ ግዜኡ ምምዝጋብ",
+        "description": "ቅጽበታዊ ናይ NameTAG ምዝገባን ምሕዳስን ምስ ናይ ክፉት ምዃኑ ምርግጋጽ።",
+        "img": "/icon1.svg"
+      },
+      {
+        "title": "ብፋይዳ (Fayda) መንነት ምርግጋጽ",
+        "description": "ናይ ውልቀ ዓማዊል ብመንገዲ ናይ ኢትዮጵያ ብሄራዊ መለለዪ (National ID) ዝግበር ውሑስ ምርግጋጽ።",
+        "img": "/icon2.svg"
+      },
+      {
+        "title": "ናይ ደወል PIN ውሕስነት",
+        "description": "ዝተፈቀደሎም ደወልቲ ጥራይ ክረኽቡኹም ዝገብር ኣማራጺ ናይ PIN ውሕስነት።",
+        "img": "/icon3.svg"
+      },
+      {
+        "title": "ግዜ ምውሳን",
+        "description": "NameTAG-ኩም ንጡፍ ዝኾነሉ ሰዓታት ብምውሳን ጻውዒታት መዓስ ክበጽሑኹም ከም ዘለዎም ኣመሓድሩ።",
+        "img": "/icon4.svg"
+      },
+      {
+        "title": "ናይ ብዙሓት ቋንቋታት ደገፍ",
+        "description": "እንግሊዝኛ፣ ኣምሓርኛ፣ ኦሮምኛ፣ ሶማሊኛን ትግርኛን ዘጠቓለለ።",
+        "img": "/icon5.svg"
+      },
+      {
+        "title": "ናይ ዓማዊል ዳሽቦርድ",
+        "description": "ዓማዊል ኣካውንቶምን NameTAG-ታቶምን ንምምሕዳር ዝጥቀሙሉ ዳሽቦርድ።",
+        "img": "/icon6.svg"
+      },
+      {
+        "title": "ብብዙሓት መገድታት ምጥቃም",
+        "description": "ብመንገዲ ወብሳይት፣ ሞባይል ኣፕሊኬሽን ከምኡ’ውን USSD *883# ንውልቃዊ ዓማዊል ምጥቃም ይከኣል።",
+        "img": "/icon7.svg"
+      },
+      {
+        "title": "ንትካላት ዝኸውን ናይ ክፍሊት ኣማራጺታት",
+        "description": "ወርሓዊ፣ ርባዕ ዓመት፣ መንፈቅ ዓመትን ዓመታውን ናይ ክፍሊት ትልምታት ብቴሌብር።",
+        "img": "/icon8.svg"
+      },
+      {
+        "title": "ንውልቀ-ሰባት ዝኸውን ወርሓዊ ክፍሊት",
+        "description": "ንውልቃዊ ዓማዊል ብቴሌብርን ብናይ ኣየር ግዜን (Airtime) ዝኽፈል ወርሓዊ ትልሚ።",
+        "img": "/icon9.svg"
+      }
+    ]
+  },
+  "pricing": {
+    "label": "ናይ ምዝገባ ትልምታት",
+    "title": "ንኹሉ ዘድሊ ተዓጻጻፊ ትልምታት",
+    "sub": "ናይ ምዝገባ ግዜኹም ምረጹ እሞ ብቴሌብር ወይ ብኣየር ግዜ ክፈሉ።",
+    "notes": [
+      "ብኣየር ግዜ ምኽፋል ዝኽእሉ ውልቃዊ ተጠቀምቲ ጥራይ እዮም።",
+      "ውልቃዊ ተጠቀምቲ ወርሓዊ ትልሚ ጥራይ እዮም ክመርጹ ዝኽእሉ።"
+    ],
+    "paymentTitle": "ናይ ክፍሊት መገድታት",
+    "plans": [
+      {
+        "code": "M",
+        "name": "ወርሓዊ",
+        "desc": "ተዓጻጻፊ — ኣብ ነፍሲ ወከፍ ወርሒ ዝሕደስ። ነዊሕ ግዴታ የብሉን።",
+        "accent": "border-b-[3px] border-b-[#3B82F6]",
+        "tint": "text-[#3B82F6]/28",
+        "img": "/1.png"
+      },
+      {
+        "code": "Q",
+        "name": "ርባዕ ዓመት",
+        "desc": "ናይ 3-ወርሒ ትልሚ — ካብቲ ወርሓዊ ዝሓሸ ቁጠባ ዘለዎ።",
+        "accent": "border-b-[3px] border-b-[#22C55E]",
+        "tint": "text-[#22C55E]/28",
+        "img": "/2.png"
+      },
+      {
+        "code": "S",
+        "name": "መንፈቅ ዓመት",
+        "desc": "ናይ 6-ወርሒ ትልሚ — ኩሉ ግዜ ንዝጥቀሙ ዝሓሸ ዋጋ።",
+        "accent": "border-b-[3px] border-b-[#F59E0B]",
+        "tint": "text-[#F59E0B]/28",
+        "img": "/3.png"
+      },
+      {
+        "code": "A",
+        "name": "ዓመታዊ",
+        "desc": "ዝበለጸ ቁጠባ — ብዝሓሰረ ዋጋ ን12 ኣዋርሕ።",
+        "accent": "border-b-[3px] border-b-[#A855F7]",
+        "tint": "text-[#A855F7]/28",
+        "img": "/4.png"
+      }
+    ],
+    "paymentChannels": [
+      {
+        "img": "/telebirr_super_app_dark.png",
+        "title": "telebirr Super App",
+        "desc": "ብቐጥታ ብቴሌብር ሱፐር ኣፕ ክፈሉ (B2C)"
+      },
+      {
+        "img": "/telebirr_partner_app_blue.png",
+        "title": "telebirr Partner App",
+        "desc": "ብመንገዲ መሻርኽቲ ወብሳይታት ዝግበር ክፍሊት (B2B)"
+      },
+      {
+        "img": "/ethio_airtime_green.png",
+        "title": "ኢትዮ ኣየር ግዜ",
+        "desc": "ካብ ናይ ኣየር ግዜ ባላንስኩም ይቆረጽ"
+      }
+    ]
+  },
+  "subscribeSteps": {
+    "label": "ይጀምሩ",
+    "title": "ብ4 ቀለልቲ ስጉምትታት ይመዝገቡ",
+    "steps": [
+      {
+        "no": "01",
+        "title": "ኣካውንት ይፍጠሩ",
+        "desc": "ኣብ nametag.et ወይ ብሞባይል ኣፕሊኬሽን ይመዝገቡ። ውልቃዊ ወይ ትካላዊ ኣካውንት ምረጹ።"
+      },
+      {
+        "no": "02",
+        "title": "TAG-ኩም ምረጹ",
+        "desc": "ካብ ፕላቲነም፣ ወርቂ፣ ብሩር ወይ ነሓስ ደረጃታት ዝደለኹምዎ NameTAG ድለዩ እሞ ምረጹ።"
+      },
+      {
+        "no": "03",
+        "title": "ክፈሉን ኣንጥፉን",
+        "desc": "ብቴሌብር ወይ ብኣየር ግዜ ክፈሉ። መንነትኩም ምስ ተረጋገጸ #TAG-ኩም ብቕጽበት ኣብ ሲምኩም ንጡፍ ይኸውን።"
+      },
+      {
+        "no": "04",
+        "title": "ምድዋል ይጀምሩ",
+        "desc": "ቅድሚ ዝኾነ ቁጽሪ ምልክት # ብምእታው ደውሉ። ተቀባሊ ነቲ #TAG-ኩም ከም መለለዪ ደዋሊ ይርእዮ።"
+      }
+    ],
+    "channels": [
+      { "title": "ወብሳይት", "desc": "www.nametag.et" },
+      { "title": "ሞባይል ኣፕ", "desc": "NameTAG Mobile" },
+      { "title": "USSD ኮድ", "desc": "*883# ይደውሉ" }
+    ]
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "ብተደጋጋሚ ዝሕተቱ ሕቶታት",
+    "moreQuestions": "+ተወሳኺ ሕቶታት",
+    "iconExpanded": "−",
+    "iconCollapsed": "+",
+    "items": [
+      {
+        "id": "original-private",
+        "q": "ናተይ ናይ ቀደም ቁጽሪ ምስጢራዊ ኮይኑ ይፀንሕ ድዩ?",
+        "a": "እወ። ብ NameTAG ክትድውሉ ከለኹም፡ ተቐበልቲ ነቲ TAG ጥራይ እዮም ዝርእዩ። ንግልጽነት ተባሂሉ ግና ናይ መበቆል ቁጽርኹም ብናይቲ መድረኽ SMS ክግለጽ ይኽእል እዩ።"
+      },
+      {
+        "id": "block-calling",
+        "q": "ሓደ ሰብ ናብ NameTAG-ከይ ከይድውል ክዓፅዎ ይኽእል ድየ?",
+        "a": "እወ። ብመንገዲ ወብሳይት/ኣፕሊኬሽን ወይ ብ SMS ትእዛዛት ተጠቂምኩም ደወልቲ ክትዓግቱን ክትፈትሑን ትኽእሉ ኢኹም።"
+      },
+      {
+        "id": "sim-change",
+        "q": "ሲም ወይ ሞባይል ቁጽሪ እንተቀይረኸ?",
+        "a": "NameTAG ናይ ቁጽሪ ምስግጋር ይድግፍ እዩ፣ ስለዚ መንነትኩም ምስ ተረጋገጸ ምስጋር ይከኣል እዩ።"
+      },
+      {
+        "id": "corporate-multiple",
+        "q": "ትካላት ብዙሓት NameTAG-ታት ከመሓድሩ ይኽእሉ ድዮም?",
+        "a": "ትካላዊ ኣካውንት ብዙሓት TAG-ታት ክሕዙን ንዝተፈላለዩ ጉጅለታት ወይ ጨናፍር ክመድቡን ይኽእሉ እዮም።"
+      },
+      {
+        "id": "block-nametag",
+        "q": "ሓደ ሰብ ናብ NameTag ከይድውል ክዓግቶ ይኽእል ድየ?",
+        "a": "እወ። ዝተዓገቱ ደወልቲ ካብ ዳሽቦርድኩም፣ ኣፕሊኬሽንኩም ወይ ብ SMS ኣብ ዝኾነ ግዜ ክተመሓድሩ ትኽእሉ ኢኹም።"
+      },
+      {
+        "id": "register-how",
+        "q": "ከመይ ጌረ NameTAG-ከይ የመዝግብ?",
+        "a": "ኣብ ወብሳይት፣ ሞባይል ኣፕሊኬሽን ወይ ብ USSD *883# ምስ ኣተኹም፡ እቲ ቁጽሪ እንተሃልዩን መንነትኩም ምስ ተረጋገጸን ክትምዝገቡ ትኽእሉ ኢኹም።"
+      },
+      {
+        "id": "business-branding",
+        "q": "ንትካል ንምልላይ (branding) NameTAG ክጥቀም ይኽእል ድየ?",
+        "a": "እወ። ናይ ንግዲ ተጠቀምቲ ናይ ባዕሎም TAG ክፈጥሩ፣ ናይ እንቋዕ ደሓን መጻእኩም መልእኽቲ ክሰርዑን መንነቶም ከመዓራርዩን ይኽእሉ እዮም።"
+      },
+      {
+        "id": "payments",
+        "q": "እንታይ ዓይነት ናይ ክፍሊት ኣማራጺታት ኣለዉ?",
+        "a": "ከምቲ ዝመረጽዎ ትልሚ ብቴሌብር ሱፐር ኣፕ፣ ብመሻርኽቲ መገድታት ወይ ብኢትዮ ኣየር ግዜ ክትከፍሉ ትኽእሉ ኢኹም።"
+      },
+      {
+        "id": "transfer",
+        "q": "NameTAG-ከይ ናብ ካልእ ቁጽሪ ከሰጋግሮ ይኽእል ድየ?",
+        "a": "ምስግጋርን ምቕያርን ብመሰረት ናይቲ መድረኽ ፖሊሲን ምርግጋጽ መንነትን ይከኣል እዩ።"
+      },
+      {
+        "id": "languages",
+        "q": "NameTAG ብብዙሓት ቋንቋታት ይርከብ ድዩ?",
+        "a": "እወ። እዚ ኣገልግሎት እንግሊዝኛ፣ ኣምሓርኛ፣ ኦሮምኛ፣ ሶማሊኛን ትግርኛን ሓዊሱ ብብዙሓት ቋንቋታት ይርከብ እዩ።"
+      }
+    ]
+  },
+  "cta": {
+    "title": "ካብ ቁጽሪ ንላዕሊ ኩኑ።",
+    "sub": "ሎሚ ኣብ www.nametag.et ተመዝገቡ ወይ *883# ይደውሉ።",
+    "contactHeading": "ርከቡና",
+    "phone": "9234",
+    "email": "info@tech-vas.com",
+    "whatsapp": "ብ WhatsApp ኣዛርቡና",
+    "telegram": "ብ Telegram መልእኽቲ ስደዱልና"
+  },
+  "footer": {
+    "brand": "NameTAG",
+    "brandSub": "ኢትዮ ቴሌኮም",
+    "tagline": "ናይ ኢትዮጵያ ቀዳማይ ናይ ደወልቲ መንነት መድረኽ፣ ሰባት ክትድውሉ ከለኹም ዝርእዩኹም ኣገባብ ካብ ነዊሕ ቁጽሪ ናብቲ ንዓኹም ዝገልጽ ሓጺር #TAG ዝቕይር።",
+    "subscribeTitle": "ይመዝገቡ",
+    "subscribeLinks": ["ወብሳይት", "ሞባይል ኣፕ", "USSD *883#"],
+    "supportTitle": "ሓገዝ",
+    "supportLinks": ["ውዕላትን ኩነታትን", "ፖሊሲ ምስጢራውነት", "FAQs", "ርከቡና", "ጥርዓን"],
+    "languagesTitle": "ቋንቋታት",
+    "languages": [
+      { "code": "en", "label": "English" },
+      { "code": "amET", "label": "አማርኛ (Amharic)" },
+      { "code": "or", "label": "Afaan Oromo" },
+      { "code": "ti", "label": "ትግርኛ" },
+      { "code": "so", "label": "Somali" }
+    ],
+    "copyright": "©2026 ኢትዮ ቴሌኮም. ኩሉ መሰሉ ዝተሓለወ እዩ። NameTAG — መንነትኩም፣ ብቐሊሉ ዝቐረበ።",
+    "sites": "www.ethiotelecom.et   www.nametag.et"
+  },
+  "backToTop": "ናብ ላዕሊ ተመለስ"
+}

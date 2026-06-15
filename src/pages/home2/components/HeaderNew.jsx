@@ -22,9 +22,7 @@ import APICall from "../../../network/APICall";
 import EndPoints from "../../../network/EndPoints";
 import { ConstentRoutes } from "../../../utilities/routesConst";
 
-/** Marketing landing route; `#home` matches `HeroSection` `id="home"`. */
-const HOME_2_PATH = "/home-2";
-
+/** Marketing landing is `ConstentRoutes.home` (`/`); section ids match `link.href` (e.g. `#how`). */
 const LANGS = [
     { code: "en", label: "EN", native: "EN", flag: "🇬🇧" },
     { code: "amET", label: "AM", native: "AM", flag: "et" },
@@ -67,6 +65,7 @@ export default function HeaderNew({ customerSidebar, corporateSidebar, isGuest =
     const hideMenu = [
         ConstentRoutes.termofuse,
         ConstentRoutes.privacyPolicy,
+        ConstentRoutes.privacyPolicy2,
         ConstentRoutes.FrequentlyAskedQuestions,
       ];
 
@@ -150,7 +149,7 @@ export default function HeaderNew({ customerSidebar, corporateSidebar, isGuest =
         setMobileOpen(false);
     };
 
-    const hideMenus=["/home-2",ConstentRoutes.home,ConstentRoutes.login,ConstentRoutes.register,ConstentRoutes.forgetPassword,ConstentRoutes.termofuse,ConstentRoutes.privacyPolicy,ConstentRoutes.FrequentlyAskedQuestions,ConstentRoutes.registerNormalUser];
+    const hideMenus=["/home-2",ConstentRoutes.home,ConstentRoutes.login,ConstentRoutes.register,ConstentRoutes.forgetPassword,ConstentRoutes.termofuse,ConstentRoutes.privacyPolicy,ConstentRoutes.privacyPolicy2,ConstentRoutes.FrequentlyAskedQuestions,ConstentRoutes.registerNormalUser];
     
 
     const showMarketingNavStrip = hideMenus.includes(location?.pathname);
@@ -179,17 +178,19 @@ export default function HeaderNew({ customerSidebar, corporateSidebar, isGuest =
                     showMarketingNavStrip ?
                         <div className="mx-auto hidden h-[54px] max-w-7xl items-center justify-center gap-5 px-4 md:flex">
                             {navLinks.map((link, index) => {
-                                const isHome = link.href === "#home";
                                 const className = `rounded-md px-4 py-1 text-[13px] font-semibold text-white transition ${index === 0 ? "border border-white/70 bg-white/15" : "hover:bg-white/15"
                                     }`;
-                                return isHome ? (
-                                    <Link key={link.href} to={`${HOME_2_PATH}#home`} className={className}>
+                                return (
+                                    <Link
+                                        key={link.href}
+                                        to={{
+                                            pathname: ConstentRoutes.home,
+                                            hash: link.href.replace(/^#/, ""),
+                                        }}
+                                        className={className}
+                                    >
                                         {link.label}
                                     </Link>
-                                ) : (
-                                    <a key={link.href} href={link.href} className={className}>
-                                        {link.label}
-                                    </a>
                                 );
                             })}
                         </div>
@@ -458,23 +459,21 @@ export default function HeaderNew({ customerSidebar, corporateSidebar, isGuest =
                 <div className={`border-t border-gray-200 bg-white px-4 py-3 ${navLayout.mobileSheet}`}>
                     <div className="flex max-h-[80vh] flex-col gap-3 overflow-y-auto pb-4">
                         {navLinks.map((link) => {
-                            const isHome = link.href === "#home";
                             const className =
                                 "rounded-md px-3 py-2 text-sm font-semibold text-brand-blue hover:bg-brand-green-pale";
                             const close = () => setMobileOpen(false);
-                            return isHome ? (
+                            return (
                                 <Link
                                     key={link.href}
-                                    to={`${HOME_2_PATH}#home`}
+                                    to={{
+                                        pathname: ConstentRoutes.home,
+                                        hash: link.href.replace(/^#/, ""),
+                                    }}
                                     className={className}
                                     onClick={close}
                                 >
                                     {link.label}
                                 </Link>
-                            ) : (
-                                <a key={link.href} href={link.href} className={className} onClick={close}>
-                                    {link.label}
-                                </a>
                             );
                         })}
 

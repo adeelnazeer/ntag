@@ -1,0 +1,63 @@
+{
+  "stepper": {
+    "step1": "Check Availability",
+    "step2": "Submit Brand Name Request",
+    "step3": "Approval from Admin",
+    "step4": "Payment Processing",
+    "step5": "Set Callers & Manage Brand Name"
+  },
+  "step1": {
+    "title": "Step 1 — Check Brand Name Availability",
+    "description": "Enter your desired brand name. This will appear as the Caller ID (CLI) when your employees make calls. Must be 3–16 characters, letters and numbers only.",
+    "label": "Enter your preferred Brand Name",
+    "hint": "3 to 16 characters — letters and numbers only. No special symbols.",
+    "placeholder": "e.g. EthioBank, KFC, MIDROC",
+    "charCount": "{{count}} / 16 characters",
+    "checkButton": "Check Availability",
+    "checking": "Checking...",
+    "available": "'{{name}}' is available! Please proceed to submit your brand name request below.",
+    "invalidFormat": "Brand name must be 3–16 characters and contain letters and numbers only.",
+    "unavailable": "'{{name}}' is not available. Please try another name.",
+    "required": "Please enter a brand name."
+  },
+  "step2": {
+    "title": "Step 2 — Submit Brand Name Request",
+    "description": "Confirm the number of employee numbers (callers) you want to link with this Brand Name Call. You can add or remove numbers after activation.",
+    "callersLabel": "Number of Callers / Accounts to link",
+    "callersHint": "Enter a number between 1 and 1,000",
+    "callersSuffix": "callers (max 1,000)",
+    "callersNote": "Each caller number must be an active Ethio Telecom number.",
+    "costSummaryTitle": "Estimated Cost Summary",
+    "registrationFee": "Brand Name Registration (one-time)",
+    "perCallerFee": "Per caller / month",
+    "numberOfCallers": "Number of callers",
+    "monthlyTotal": "Estimated Monthly Recurring Fee",
+    "currency": "ETB",
+    "approvalTitle": "Approval & Activation Process",
+    "approvalPoints": [
+      "Your request will be reviewed by our admin team based on your company profile and submitted documents.",
+      "Approval typically takes 24 to 48 hours.",
+      "You will receive an SMS notification once your request is approved.",
+      "After receiving the SMS, proceed to payment to activate your Brand Name Call service.",
+      "Your Brand Name Call service will be activated immediately after successful payment."
+    ],
+    "disclaimer": "By submitting this request, you confirm that the brand name complies with Ethio Telecom policies and does not infringe on any trademark or intellectual property rights. NameTAG reserves the right to reject any request that does not meet our guidelines.",
+    "submitButton": "Confirm and Proceed for Approval",
+    "submitting": "Submitting..."
+  },
+  "step3": {
+    "title": "Step 3 — Approval from Admin",
+    "description": "Your brand name request has been submitted and is pending admin review.",
+    "pendingMessage": "We are reviewing your request for \"{{name}}\". You will receive an SMS notification within 24 to 48 hours once approved."
+  },
+  "step4": {
+    "title": "Step 4 — Payment Processing",
+    "description": "Complete payment to activate your Brand Name Call service.",
+    "pendingMessage": "Payment will be available once your request is approved."
+  },
+  "step5": {
+    "title": "Step 5 — Set Callers & Manage Brand Name",
+    "description": "Add caller numbers and manage your Brand Name Call service.",
+    "pendingMessage": "You will be able to manage callers after payment is completed."
+  }
+}

@@ -25,7 +25,7 @@ const EndPoints = {
     CreateNumber: `/customer/phone-number`,
     ChangeNumber: `/customer/change-msisdn`,
     ChangeNumberOutstandingFee: `/customer/change-msisdn-outstanding-fee`,
-    DeleteNumber: (selectedNumber) => `/customer/phone-number`,
+    DeleteNumber: (id) => `/customer/phone-number/${id}`,
     premiumTag: "/customer/premium-tag-list",
     individualRegister: "/individual/auth/register",
     tagListCustomer: "/individual/tag-list",

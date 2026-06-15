@@ -175,7 +175,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen, hideFloatingTrigger 
 
             {isSidebarOpen && (
                 <div
-                    className="fixed inset-0 z-[40] bg-black/40 lg:hidden"
+                    className="fixed inset-0 z-[110] bg-black/40 lg:hidden"
                     aria-hidden
                     onClick={() => setIsSidebarOpen(false)}
                 />
@@ -183,16 +183,16 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen, hideFloatingTrigger 
 
             <div
                 ref={sidebarRef}
-                className={`fixed left-0 top-0 z-[45] flex h-[100dvh] w-64 max-w-[min(18rem,88vw)] flex-col bg-white shadow-xl transition-transform duration-300 ease-out lg:static lg:z-0 lg:h-full lg:max-w-none lg:w-72 lg:translate-x-0 lg:shadow-none ${
+                className={`fixed left-0 top-0 z-[120] flex h-[100dvh] w-64 max-w-[min(18rem,88vw)] flex-col bg-white shadow-xl transition-transform duration-300 ease-out lg:static lg:z-0 lg:h-full lg:max-w-none lg:w-72 lg:translate-x-0 lg:shadow-none ${
                     isSidebarOpen ? "translate-x-0" : "-translate-x-full max-lg:pointer-events-none"
                 } lg:pointer-events-auto`}
             >
                 <div className="h-full overflow-y-auto" key={i18n.resolvedLanguage || i18n.language}>
-                    <Card className="px-4 py-4 h-full w-full bg-transparent shadow-none">
+                    <Card className="pr-4 py-4 h-full w-full bg-transparent shadow-none">
                         <List className="text-base min-w-full w-full gap-4 p-0 font-normal text-black">
                             {/* Standard menu items */}
                             {sidebarData.slice(0, 2).map((item, index) => (
-                                <div key={index} className="flex md:gap-6 gap-1">
+                                <div key={index} className="flex md:gap-6 gap-2">
                                     <div className={`${item.active ? "bg-secondary" : "bg-white"} w-2 h-full rounded-tr-[10px] rounded-br-[10px]`} />
                                     <ListItem
                                         disabled={item.disabled}
@@ -220,7 +220,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen, hideFloatingTrigger 
 
                             {/* Manage NameTAG with dropdown */}
                             <div className="flex flex-col">
-                                <div className="flex md:gap-6 gap-1">
+                                <div className="flex md:gap-6 gap-2">
                                     <div className={`${activeThree ? "bg-secondary" : "bg-white"} w-2 h-full rounded-tr-[10px] rounded-br-[10px]`} />
                                     <ListItem
                                         onClick={() => {
@@ -314,7 +314,7 @@ const SidebarCustomer = ({ isSidebarOpen, setIsSidebarOpen, hideFloatingTrigger 
 
                             {/* Remaining menu items */}
                             {sidebarData.slice(2).map((item, index) => (
-                                <div key={index + 2} className="flex md:gap-6 gap-1">
+                                <div key={index + 2} className="flex md:gap-6 gap-2">
                                     <div className={`${item.active ? "bg-secondary" : "bg-white"} w-2 h-full rounded-tr-[10px] rounded-br-[10px]`} />
                                     <ListItem
                                         disabled={item.disabled}

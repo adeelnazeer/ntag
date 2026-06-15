@@ -101,8 +101,6 @@ const CompanyInfo = ({ profileData, userProfileData }) => {
     setUpdating(false);
   };
 
-  console.log({ userProfileData })
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mt-10 grid max-w-3xl mx-auto md:grid-cols-2 grid-cols-1 gap-6">

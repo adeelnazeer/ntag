@@ -285,7 +285,7 @@
       {
         "img": "/telebirr_super_app_dark.png",
         "title": "telebirr Super App",
-        "desc": "Pay directly through the telebirr super app (B2C)"
+        "desc": "Pay directly through the telebirr super app (C2B)"
       },
       {
         "img": "/telebirr_partner_app_blue.png",
@@ -295,7 +295,7 @@
       {
         "img": "/ethio_airtime_green.png",
         "title": "Ethio Airtime",
-        "desc": "Deduct subscription from your Ethio airtime balance"
+        "desc": "Pay subscription from your Ethio airtime balance"
       }
     ]
   },

@@ -74,7 +74,6 @@ const TagNames = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log("err", err);
         setLoading(false);
       });
   };
@@ -588,6 +587,7 @@ const TagNames = () => {
                     tax: single.tax,
                     excisetax: single.excisetax,
                     vatable_total: single.vatable_total,
+                    payment_method: single.payment_method,
                     discount: single.discount,
                     VAT: single.VAT,
                     isReserve: true,
@@ -623,7 +623,6 @@ const TagNames = () => {
       </div>
     );
   }
-  console.log(CompleteResponse, "CompleteResponse");
 
   return (
     <div className="shadow bg-white rounded-xl">

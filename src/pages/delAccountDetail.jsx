@@ -223,7 +223,6 @@ function DelAccountDetail() {
     if (!single) return null;
 
     const isPremium = single?.premium_tag_list;
-    console.log(single);
     const tagInfo =
       isPremium && single?.premium_tag_list
         ? single?.premium_tag_list

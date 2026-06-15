@@ -364,7 +364,7 @@ const CompanyForm = ({
               {...register("password", {
                 required: t("common.form.errors.password"),
                 minLength: {
-                  value: 5,
+                  value: 8,
                   message: t("common.form.errors.passwordMinLength"),
                 },
                 maxLength: {
@@ -372,7 +372,7 @@ const CompanyForm = ({
                   message: t("common.form.errors.passwordMaxLength"),
                 },
                 pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{5,15}$/,
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,15}$/,
                   message: t("common.form.errors.passwordPattern")
                 }
               })}

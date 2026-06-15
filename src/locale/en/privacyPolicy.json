@@ -1,111 +1,107 @@
 {
   "title": "NameTAG Privacy Policy",
   "introduction": {
-    "heading": "Introduction",
-    "text": "At Ethio Telecom (\"we\", \"us\", \"our\"), your privacy matters. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you use the NameTAG service and related platforms."
+    "heading": "1. Introduction",
+    "text1": "At Ethio Telecom (\"we\", \"us\", \"our\"), your privacy matters. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you install and use the NameTAG mobile application (the \"App\"), the NameTAG web portal, the NameTAG virtual number service, and related platforms.",
+    "text2": "By downloading, registering for, or using the NameTAG App or Web Portal, you agree to the collection and use of information in accordance with this policy."
   },
   "definitions": {
-    "heading": "Definitions",
+    "heading": "2. Definitions",
     "personalInformation": {
       "label": "Personal Information:",
       "text": "Any information that identifies, relates to, or can be used to identify an individual."
     },
     "service": {
       "label": "Service:",
-      "text": "The NameTAG virtual number service, including associated websites, apps, and platforms."
+      "text": "The NameTAG mobile application, virtual number service, associated websites, web portals, and telecom utility platforms."
+    },
+    "faydaId": {
+      "label": "Fayda ID:",
+      "text": "The official National ID framework of the Ethiopian Government. For individual customer registrations, NameTAG verifies your identity via official integration with the government's Fayda platform."
     }
   },
   "informationWeCollect": {
-    "heading": "Information We Collect",
-    "personalInformation": {
-      "label": "Personal Information:",
-      "text": "Such as your name, email address, mobile number, and other identifiers provided during registration."
+    "heading": "3. Information We Collect and How We Use It",
+    "intro": "To provide a secure and functional virtual number system, we collect and process the following categories of data:",
+    "accountProfile": {
+      "label": "Account and Profile Information:",
+      "text": "When you register on the NameTAG App or Web Portal, we collect your primary mobile number, full name, and email address to provision your virtual number profile and validate your identity."
+    },
+    "faydaId": {
+      "label": "Fayda ID (National ID):",
+      "text": "For individual account verification, National ID verification data is processed via the official government Fayda Platform to confirm KYC (Know Your Customer) compliance."
+    },
+    "mobileDevice": {
+      "label": "Mobile Device Permissions & Information:",
+      "deviceIdentifiers": {
+        "label": "Device Identifiers:",
+        "text": "We access details like your device IP address, device type, operating system version, and unique device identifiers (such as IMEI or Android ID) to prevent fraudulent account creation and secure your virtual number mapping."
+      },
+      "phoneState": {
+        "label": "Phone State:",
+        "text": "Because NameTAG manages virtual numbers and call routing logic, the App requires runtime access to read your phone state and complete core telecom service utilities."
+      }
     },
     "usageData": {
       "label": "Usage Data:",
-      "text": "Information on how you interact with the Service, including browsing history, search queries, and communication patterns."
-    },
-    "deviceInformation": {
-      "label": "Device Information:",
-      "text": "Details like your IP address, device type, operating system, and browser type."
+      "text": "Information on how you interact with the App and web portal, including network connectivity states, transaction logs, routing configurations, and performance metrics."
     }
   },
   "howWeCollect": {
-    "heading": "How We Collect Information",
+    "heading": "4. How We Collect Information",
     "directly": {
       "label": "Directly from you:",
-      "text": "When you register, contact support, or interact with the Service."
+      "text": "When you complete registration inside the App or web portal."
     },
     "automatically": {
       "label": "Automatically:",
-      "text": "Using cookies and tracking technologies as you use our Service."
+      "text": "Collected via the app interface, system frameworks, and secure background services."
     },
-    "thirdParties": {
-      "label": "From third parties:",
-      "text": "Including our partners, affiliates, social media and publicly available sources."
-    }
-  },
-  "howWeUse": {
-    "heading": "How We Use Information",
-    "intro": "We use your information to:",
-    "items": {
-      "provide": "Provide, operate, and maintain the NameTAG Service.",
-      "improve": "Improve and personalize your user experience.",
-      "communicate": "Communicate important information, updates, and promotional offers (with your consent).",
-      "fulfill": "Fulfill legal and regulatory requirements."
+    "faydaPlatform": {
+      "label": "Fayda Platform:",
+      "text": "When you register as an individual customer, identity verification is facilitated using the Ethiopian Government's Fayda platform integration. You will securely verify your Fayda ID on the platform interface."
     }
   },
   "disclosure": {
-    "heading": "Disclosure of Information",
-    "intro": "We may share your Personal Information with:",
+    "heading": "5. Disclosure of Information",
+    "intro": "We do not sell your personal data. We may share your information only under the following strict scenarios:",
     "serviceProviders": {
-      "label": "Service Providers:",
-      "text": "Who assist in delivering and improving our services."
-    },
-    "partners": {
-      "label": "Partners and Affiliates:",
-      "text": "For service expansion and customer support."
+      "label": "Service Providers & Technical Partners:",
+      "text": "With trusted infrastructure partners who assist us in deploying the technical logic, hosting, and secure server management for the NameTAG service."
     },
     "lawEnforcement": {
       "label": "Law Enforcement or Regulatory Authorities:",
-      "text": "When required to comply with legal obligations or protect rights and safety."
+      "text": "When strictly required to comply with applicable telecommunications laws, regulatory frameworks in Ethiopia, or legally binding court orders."
     }
   },
-  "cookies": {
-    "heading": "Cookies and Tracking Technologies",
-    "intro": "We use cookies and similar technologies to:",
-    "items": {
-      "analyze": "Analyze and understand how our Service is used.",
-      "personalize": "Personalize your experience and content.",
-      "enhance": "Enhance Service functionality and security."
+  "dataRetention": {
+    "heading": "6. Data Retention and Account Deletion Policy (Google Play Compliant)",
+    "intro": "We retain your Personal Information only as long as necessary to provide you with active virtual number services and maintain regional regulatory telecom compliance logs.",
+    "userDeletion": {
+      "label": "User Right to Deletion:",
+      "text": "You have the absolute right to delete your NameTAG account and associated data at any time."
     },
-    "note": "You can manage your cookie preferences through your device or browser settings."
-  },
-  "yourRights": {
-    "heading": "Your Rights",
-    "intro": "You have the right to:",
-    "items": {
-      "access": "Access and review your Personal Information.",
-      "requestCorrections": "Request corrections or updates.",
-      "object": "Object to the processing of your information in certain circumstances.",
-      "requestDeletion": "Request deletion of your Personal Information (subject to legal obligations).",
-      "optOut": "Opt out of receiving marketing communications at any time."
+    "howToDelete": {
+      "label": "How to Delete Your Data:",
+      "text": "You can initiate a deletion request directly within the App Settings menu or the Web Portal dashboard menu, or by submitting a formal request via email to our support team. Upon verification, Ethio Telecom will permanently delete or anonymize your personal account data from our active databases, except where retention is mandated by regional telecom regulatory compliance laws."
     }
   },
   "security": {
-    "heading": "Security",
-    "text": "We implement appropriate technical and organizational security measures to protect your Personal Information from unauthorized access, disclosure, alteration, and destruction."
-  },
-  "dataRetention": {
-    "heading": "Data Retention",
-    "text": "We retain your Personal Information only as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law."
+    "heading": "7. Security",
+    "text": "We implement industry-standard technical, administrative, and organizational security measures—including data encryption in transit and at rest—to protect your Personal Information from unauthorized access, disclosure, alteration, and destruction."
   },
   "changes": {
-    "heading": "Changes to This Privacy Policy",
-    "text": "We may update this Privacy Policy from time to time. Changes will be posted on our website, and we encourage you to review it periodically."
+    "heading": "8. Changes to This Privacy Policy",
+    "text": "We may update our Privacy Policy from time to time. Any updates will be made visible within the App interface and web portal, and the revised date will be updated at the top of the policy page. We encourage you to review it periodically."
   },
-  "acceptance": {
-    "heading": "Acceptance of the Privacy Policy",
-    "text": "By using the NameTAG Service, you confirm that you have read, understood, and agreed to the terms of this Privacy Policy."
+  "contact": {
+    "heading": "9. Contact Us",
+    "intro": "If you have any questions regarding this Privacy Policy or data deletion requests, please contact us at:",
+    "email": "info@tech-vas.com",
+    "contactSupport": "https://nametag.et/contact-us",
+    "website": "https://nametag.et",
+    "emailLabel": "Email:",
+    "contactSupportLabel": "Contact Support:",
+    "websiteLabel": "Website:"
   }
 }

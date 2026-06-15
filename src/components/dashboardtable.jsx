@@ -34,7 +34,9 @@ const Dashboardtable = (props) => {
   const [search, setSearch] = useState("");
   const [reserveData, setReserveData] = useState(null);
   const [hasReservedOrBought, setHasReservedOrBought] = useState(false);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+  const priceLabel = t("dashboard.price");
+  const priceSuffix = t("dashboard.etb");
 
   const reduxUserData = useAppSelector(state => state.user.userData);
   const userData = useMemo(() => {
@@ -233,8 +235,6 @@ const Dashboardtable = (props) => {
       isCustomer: isCustomer,
     };
   };
-
-  console.log({ hasReservedOrBought, docStatus })
 
   const prepareVIPTagData = (tag) => {
     return {
@@ -444,41 +444,37 @@ const Dashboardtable = (props) => {
           {/* Display search results */}
           {data?.length > 0 ? (
             data.map((single) => (
-              <div key={single?.id} className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-6 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
-                <div className="md:flex sm:hidden hidden items-center">
-                  <FaHashtag className="h-5 w-5 text-[#8dc63f]" />
-                </div>
-
-                <div className="flex justify-center bg-[#EBEBEB] rounded-md px-2 py-1 md:px-0 md:py-0 md:bg-transparent sm:col-span-1 items-center">
-                  <span className=" block md:hidden text-[14px] ">#</span>
-                  <Typography className="text-left text-[14px] self-center">
-                    {single?.tag_name || ""}
+              <div key={single?.id} className="mt-3 flex flex-col gap-3 rounded-xl border border-gray-200 p-3 md:flex-row md:flex-nowrap md:items-center md:gap-3">
+                <div className="flex min-w-0 items-center gap-2 md:flex-[1.15]">
+                  <FaHashtag className="hidden h-5 w-5 shrink-0 text-[#8dc63f] md:block" />
+                  <Typography className="text-left text-sm font-medium md:text-[14px]">
+                    {single?.tag_name || "—"}
                   </Typography>
                 </div>
 
-                <div className="col-span-1 sm:col-span-1">
+                <div className="grid w-full grid-cols-2 gap-2 md:contents">
+                <div className="w-full md:w-auto md:min-w-[4.5rem] md:max-w-[7rem] md:shrink-0">
                   <Typography className="bg-[#EBEBEB] text-center text-[14px] rounded-md px-2 py-1">
                     #{single?.tag_no}
                   </Typography>
                 </div>
 
                 {/* Added Tag Type */}
-                <div className="col-span-1 sm:col-span-1">
+                <div className="w-full md:w-auto md:min-w-[4.5rem] md:max-w-[7rem] md:shrink-0">
                   <Typography className="md:bg-[#F5F5F5] text-center  text-[14px]  rounded-md px-2 py-1">
                     {single?.tag_type || t("dashboard.tagTypes.standard")}
                   </Typography>
                 </div>
 
-                <div className=" sm:col-span-1 flex ">
-                  <div className="flex items-center md:block gap-1">
-                    <p className="text-[#7A798A] text-[14px]">{t("dashboard.price")}</p>
-                    <p className="text-secondary text-sm font-bold">
-                      {formatPrice(single?.tag_price)} {t("dashboard.etb")}
-                    </p>
-                  </div>
+                <div className="col-span-2 w-full rounded-md bg-[#F7F7F7] px-2 py-1.5 md:col-span-1 md:flex md:min-w-0 md:flex-[0.9] md:flex-col md:justify-center md:bg-transparent md:px-0 md:py-0">
+                  <p className="text-xs text-[#7A798A] md:text-[14px]">{priceLabel}</p>
+                  <p className="text-sm font-bold text-secondary">
+                    {formatPrice(single?.tag_price)} {priceSuffix}
+                  </p>
+                </div>
                 </div>
 
-                <div className="col-span-2 sm:col-span-2 flex justify-end gap-2 mt-2 sm:mt-0">
+                <div className="flex w-full flex-wrap items-center justify-end gap-2 border-t border-gray-100 pt-3 md:ml-auto md:min-w-[11rem] md:flex-[2.35] md:border-t-0 md:pt-0">
                   {single?.status == 1 && (
                     <div className="flex flex-wrap gap-2">
                       <Button className="bg-[#edf6eb] hidden md:block min-w-[100px] py-1 px-3 text-[14px] text-secondary">
@@ -552,41 +548,37 @@ const Dashboardtable = (props) => {
                 {t("dashboard.sections.subscriber")}
               </Typography>
               {subscriberTags.map((tag, index) => (
-                <div key={index} className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-6 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
-                  <div className="md:flex sm:hidden hidden items-center">
-                    <FaHashtag className="h-5 w-5 text-[#8dc63f]" />
-                  </div>
-
-                  <div className="text-sm">
-                    <span className=" block md:hidden text-[14px] ">#</span>
-                    <Typography className="text-left">
-                      {tag?.tag_name || search || ""}
+                <div key={index} className="mt-3 flex flex-col gap-3 rounded-xl border border-gray-200 p-3 md:flex-row md:flex-nowrap md:items-center md:gap-3">
+                  <div className="flex min-w-0 items-center gap-2 md:flex-[1.15]">
+                    <FaHashtag className="hidden h-5 w-5 shrink-0 text-[#8dc63f] md:block" />
+                    <Typography className="text-left text-sm font-normal md:text-[14px]">
+                      {tag?.tag_name || search || "—"}
                     </Typography>
                   </div>
 
-                  <div className="col-span-1 sm:col-span-1">
+                  <div className="grid w-full grid-cols-2 gap-2 md:contents">
+                  <div className="w-full md:w-auto md:min-w-[4.5rem] md:max-w-[7rem] md:shrink-0">
                     <Typography className="bg-[#EBEBEB] text-center text-xs rounded-md px-2 py-1">
                       #{tag?.tag_no}
                     </Typography>
                   </div>
 
                   {/* Added Tag Type */}
-                  <div className="col-span-1 sm:col-span-1">
+                  <div className="w-full md:w-auto md:min-w-[4.5rem] md:max-w-[7rem] md:shrink-0">
                     <Typography className="md:bg-[#F5F5F5] text-center text-xs rounded-md px-2 py-1">
                       {tag?.tag_type || t("dashboard.tagTypes.standard")}
                     </Typography>
                   </div>
 
-                  <div className=" sm:col-span-1 flex ">
-                    <div className="flex items-center md:block gap-1">
-                      <p className="text-[#7A798A] text-[14px]">{t("dashboard.price")}</p>
-                      <p className="text-secondary text-sm font-bold">
-                        {formatPrice(tag?.tag_price)} {t("dashboard.etb")}
-                      </p>
-                    </div>
+                  <div className="col-span-2 flex flex-col gap-0.5 rounded-md bg-[#F7F7F7] px-2 py-1.5 md:col-span-1 md:flex md:min-w-0 md:flex-[0.9] md:justify-center md:bg-transparent md:px-0 md:py-0">
+                    <p className="text-xs text-[#7A798A] md:text-[14px]">{priceLabel}</p>
+                    <p className="text-sm font-bold text-secondary">
+                      {formatPrice(tag?.tag_price)} {priceSuffix}
+                    </p>
+                  </div>
                   </div>
 
-                  <div className="flex flex-wrap justify-end gap-2 mt-2 sm:mt-0">
+                  <div className="flex w-full flex-wrap items-center justify-end gap-2 border-t border-gray-100 pt-3 md:ml-auto md:min-w-[11rem] md:flex-[2.35] md:border-t-0 md:pt-0">
                     {tag.status == 1 && <Button
                       className="bg-secondary py-1 px-3 text-xs text-white"
 
@@ -644,41 +636,37 @@ const Dashboardtable = (props) => {
                 {t("dashboard.sections.premium")}
               </Typography>
               {vipTags.map((tag, index) => (
-                <div key={index} className="grid grid-cols-2 items-center sm:grid-cols-5 md:grid-cols-6 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
-                  <div className="md:flex sm:hidden hidden items-center">
-                    <FaHashtag className="h-5 w-5 text-[#8dc63f]" />
-                  </div>
-
-                  <div className="flex justify-center bg-[#EBEBEB] rounded-md px-2 py-1 md:px-0 md:py-0 md:bg-transparent sm:col-span-1 items-center">
-                    <span className=" block md:hidden text-[14px] ">#</span>
-                    <Typography className="text-left text-[14px] ">
-                      {tag?.tag_name || search || ""}
+                <div key={index} className="mt-3 flex flex-col gap-3 rounded-xl border border-gray-200 p-3 md:flex-row md:flex-nowrap md:items-center md:gap-3">
+                  <div className="flex min-w-0 items-center gap-2 md:flex-[1.15]">
+                    <FaHashtag className="hidden h-5 w-5 shrink-0 text-[#8dc63f] md:block" />
+                    <Typography className="text-left text-sm font-normal md:text-[14px]">
+                      {tag?.tag_name || search || "—"}
                     </Typography>
                   </div>
 
-                  <div className="col-span-1 sm:col-span-1">
+                  <div className="grid w-full grid-cols-2 gap-2 md:contents">
+                  <div className="w-full md:w-auto md:min-w-[4.5rem] md:max-w-[7rem] md:shrink-0">
                     <Typography className="bg-[#EBEBEB] text-center text-[14px] rounded-md px-2 py-1">
                       #{tag?.tag_no}
                     </Typography>
                   </div>
 
                   {/* Added Tag Type */}
-                  <div className="col-span-1 sm:col-span-1">
+                  <div className="w-full md:w-auto md:min-w-[4.5rem] md:max-w-[7rem] md:shrink-0">
                     <Typography className="md:bg-[#F5F5F5] text-center text-[14px] rounded-md px-2 py-1">
                       {tag?.tag_type || t("dashboard.tagTypes.premium")}
                     </Typography>
                   </div>
 
-                  <div className="col-span-1 sm:col-span-1">
-                    <div className="flex items-center md:block gap-1">
-                      <p className="text-[#7A798A] text-[14px]">{t("dashboard.price")}</p>
-                      <p className="text-secondary text-sm font-bold">
-                        {formatPrice(tag?.tag_price)} {t("dashboard.etb")}
-                      </p>
-                    </div>
+                  <div className="col-span-2 flex flex-col gap-0.5 rounded-md bg-[#F7F7F7] px-2 py-1.5 md:col-span-1 md:flex md:min-w-0 md:flex-[0.9] md:justify-center md:bg-transparent md:px-0 md:py-0">
+                    <p className="text-xs text-[#7A798A] md:text-[14px]">{priceLabel}</p>
+                    <p className="text-sm font-bold text-secondary">
+                      {formatPrice(tag?.tag_price)} {priceSuffix}
+                    </p>
+                  </div>
                   </div>
 
-                  <div className=" flex flex-wrap justify-end gap-2 mt-2 sm:mt-0">
+                  <div className="flex w-full flex-wrap items-center justify-end gap-2 border-t border-gray-100 pt-3 md:ml-auto md:min-w-[11rem] md:flex-[2.35] md:border-t-0 md:pt-0">
                     {tag.status == 1 && (<div className="flex gap-2 flex-wrap justify-end">
                       <Button className="bg-[#edf6eb] py-1 px-3 !text-[13px] text-secondary">
                         {t("buttons.available")}
@@ -738,43 +726,38 @@ const Dashboardtable = (props) => {
                 {t("dashboard.sections.suggested")}
               </Typography>
               {suggestedNumbers.map((tag, index) => (
-                <div key={index} className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-6 gap-2 sm:gap-4 p-3 border rounded-xl mt-3">
-                  <div className="md:flex sm:hidden hidden items-center">
-                    <FaHashtag className="h-5 w-5 text-[#8dc63f]" />
-                  </div>
-
-                  <div className="flex justify-center bg-[#EBEBEB] rounded-md px-2 py-1 md:px-0 md:py-0 md:bg-transparent sm:col-span-1 items-center">
-                    <span className=" block md:hidden text-[14px] ">#</span>
-                    <Typography className="text-left text-[14px] self-center">
-                      {tag?.tag_name || search || ""}
+                <div key={index} className="mt-3 flex flex-col gap-3 rounded-xl border border-gray-200 p-3 md:flex-row md:flex-nowrap md:items-center md:gap-3">
+                  <div className="flex min-w-0 items-center gap-2 md:flex-[1.15]">
+                    <FaHashtag className="hidden h-5 w-5 shrink-0 text-[#8dc63f] md:block" />
+                    <Typography className="text-left text-sm font-normal md:text-[14px]">
+                      {tag?.tag_name || search || "—"}
                     </Typography>
                   </div>
 
-                  <div className="col-span-1 sm:col-span-1">
+                  <div className="grid w-full grid-cols-2 gap-2 md:contents">
+                  <div className="w-full md:w-auto md:min-w-[4.5rem] md:max-w-[7rem] md:shrink-0">
                     <Typography className="bg-[#EBEBEB] text-center text-xs rounded-md px-2 py-1">
                       #{tag?.tag_no}
                     </Typography>
                   </div>
 
                   {/* Added Tag Type */}
-                  <div className="col-span-1 sm:col-span-1">
+                  <div className="w-full md:w-auto md:min-w-[4.5rem] md:max-w-[7rem] md:shrink-0">
                     <Typography className="md:bg-[#F5F5F5] text-center text-xs rounded-md px-2 py-1">
                       {tag?.tag_type || t("dashboard.tagTypes.suggested")}
                     </Typography>
                   </div>
 
-                  <div className=" sm:col-span-1 flex ">
-                    <div className="flex items-center md:block gap-1">
-                      <p className="text-[#7A798A] text-[14px]">{t("dashboard.price")}</p>
-                      <p className="text-secondary text-sm font-bold">
-                        {formatPrice(tag?.tag_price)} {t("dashboard.etb")}
-                      </p>
-                    </div>
+                  <div className="col-span-2 flex flex-col gap-0.5 rounded-md bg-[#F7F7F7] px-2 py-1.5 md:col-span-1 md:flex md:min-w-0 md:flex-[0.9] md:justify-center md:bg-transparent md:px-0 md:py-0">
+                    <p className="text-xs text-[#7A798A] md:text-[14px]">{priceLabel}</p>
+                    <p className="text-sm font-bold text-secondary">
+                      {formatPrice(tag?.tag_price)} {priceSuffix}
+                    </p>
+                  </div>
                   </div>
 
-                  <div className="flex flex-wrap justify-end gap-2 mt-2 sm:mt-0">
-                    <div className=" justify-end">
-                      <Button className="bg-[#edf6eb] py-1 px-3 text-xs text-secondary">
+                  <div className="flex w-full flex-wrap items-center justify-end gap-2 border-t border-gray-100 pt-3 md:ml-auto md:min-w-[11rem] md:flex-[2.35] md:border-t-0 md:pt-0">
+                       <Button className="bg-[#edf6eb] py-1 px-3 text-xs text-secondary">
                         {t("buttons.available")}
                       </Button>
                       <Button
@@ -801,8 +784,7 @@ const Dashboardtable = (props) => {
                       >
                         {(isCustomer || docStatus?.status == 1) ? t("buttons.select") : t("buttons.reserve")}
                       </Button>
-                    </div>
-                  </div>
+                   </div>
                 </div>
               ))}
             </div>

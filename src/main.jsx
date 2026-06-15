@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import "./i18n.js";
+import { initEruda } from "./utilities/initEruda.js";
+void initEruda();
 
 const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "";
 

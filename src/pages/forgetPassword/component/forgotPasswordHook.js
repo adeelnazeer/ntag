@@ -18,7 +18,6 @@ export const useForgotPassword = () => {
 
         setLoading(true);
         const payload = {
-            username: formData?.username,
             phone_number: formData?.phone_number?.replace(/^\+/, ""),
             ...tokens,
         };

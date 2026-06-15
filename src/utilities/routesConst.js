@@ -23,6 +23,7 @@ export const ConstentRoutes = {
    voiceMail: "/voicemail",
    termofuse: "/Terms",
    privacyPolicy: "/privacy-policy",
+   privacyPolicy2: "/policy",
    FrequentlyAskedQuestions: "/faq",
    registerNormalUser: "/register-customer",
    dashboardCustomer: "/customer/dashboard",
@@ -43,6 +44,17 @@ export const ConstentRoutes = {
    bill: "/bill",
    billPayment: "/bill/payment",
    delAccountDetail: "/del-account-detail",
+   logsTest: "/logs-test",
+   brandNameCallBuy: "/brand-name-call/buy",
+   brandNameCallRecurringFee: "/brand-name-call/recurring-fee",
+   brandNameCallIntro: "/brand-name-call/intro",
+   brandNameCallChange: "/brand-name-call/change",
+   brandNameCallNumbers: "/brand-name-call/numbers",
+   brandNameCallIncomingNumber: "/brand-name-call/incoming-number",
+   brandNameCallStartStop: "/brand-name-call/start-stop",
+   brandNameCallSchedule: "/brand-name-call/schedule",
+   brandNameCallUnsubscribe: "/brand-name-call/unsubscribe",
+   brandNameCallHistory: "/brand-name-call/history",
 };
 
 export const getStatus = (status) => {
