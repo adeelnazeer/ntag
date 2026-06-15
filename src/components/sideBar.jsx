@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 const Sidebar = ({
   data,
   isSidebarOpen = false,
-  setIsSidebarOpen = () => {},
+  setIsSidebarOpen = () => { },
   hideFloatingTrigger = false,
 }) => {
   const navigate = useNavigate();
@@ -141,13 +141,15 @@ const Sidebar = ({
     data?.[2]?.doc_status == 0;
 
   const brandPrimaryItems = [
-    { key: "buyBrandName", route: ConstentRoutes.brandNameCallBuy, icon: "🛒" },
+    { key: "brandCallIntro", route: ConstentRoutes.brandNameCallIntro, icon: "ℹ️" },
+
     {
       key: "brandRecurringFee",
       route: ConstentRoutes.brandNameCallRecurringFee,
       icon: "💳",
     },
-    { key: "brandCallIntro", route: ConstentRoutes.brandNameCallIntro, icon: "ℹ️" },
+    { key: "buyBrandName", route: ConstentRoutes.brandNameCallBuy, icon: "🛒" },
+
   ];
 
   const brandManageItems = [
@@ -196,12 +198,11 @@ const Sidebar = ({
         }}
         disabled={isDocumentDisabled}
         className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm
-          ${
-            isActive
-              ? "bg-secondary text-white"
-              : highlightGreen
-                ? "text-secondary hover:bg-[#8dc63f]/10"
-                : "text-[#8A8AA0] hover:bg-gray-100"
+          ${isActive
+            ? "bg-secondary text-white"
+            : highlightGreen
+              ? "text-secondary hover:bg-[#8dc63f]/10"
+              : "text-[#8A8AA0] hover:bg-gray-100"
           }
           ${isDocumentDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
       >
@@ -234,9 +235,8 @@ const Sidebar = ({
 
       <div
         ref={sidebarRef}
-        className={`fixed left-0 top-0 z-[120] flex h-[100dvh] w-64 max-w-[min(18rem,88vw)] flex-col bg-white shadow-xl transition-transform duration-300 ease-out lg:static lg:z-0 lg:h-full lg:max-w-none lg:w-72 lg:translate-x-0 lg:shadow-none ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full max-lg:pointer-events-none"
-        } lg:pointer-events-auto`}
+        className={`fixed left-0 top-0 z-[120] flex h-[100dvh] w-64 max-w-[min(18rem,88vw)] flex-col bg-white shadow-xl transition-transform duration-300 ease-out lg:static lg:z-0 lg:h-full lg:max-w-none lg:w-72 lg:translate-x-0 lg:shadow-none ${isSidebarOpen ? "translate-x-0" : "-translate-x-full max-lg:pointer-events-none"
+          } lg:pointer-events-auto`}
       >
         <div className="h-full overflow-y-auto" key={i18n.resolvedLanguage || i18n.language}>
           <Card className="w-full bg-transparent pr-4 py-4 shadow-none">
@@ -442,9 +442,8 @@ const Sidebar = ({
               <div className="flex flex-col">
                 <div className="flex md:gap-6 gap-2">
                   <div
-                    className={`${
-                      activeBrand ? "bg-secondary" : "bg-white"
-                    } w-2 h-auto rounded-tr-[10px] rounded-br-[10px]`}
+                    className={`${activeBrand ? "bg-secondary" : "bg-white"
+                      } w-2 h-auto rounded-tr-[10px] rounded-br-[10px]`}
                   />
                   <ListItem
                     disabled={userData?.status == 5}
@@ -459,9 +458,8 @@ const Sidebar = ({
                       />
                     </ListItemPrefix>
                     <span
-                      className={`flex flex-1 items-center gap-2 font-medium ${
-                        activeBrand ? "text-white" : "text-secondary"
-                      }`}
+                      className={`flex flex-1 items-center gap-2 font-medium ${activeBrand ? "text-white" : "text-secondary"
+                        }`}
                     >
                       {t("sideBar.brandNameCall")}
                       {/* <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-bold uppercase text-white">

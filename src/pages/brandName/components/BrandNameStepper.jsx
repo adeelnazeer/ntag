@@ -4,19 +4,21 @@ import { useTranslation } from "react-i18next";
 
 const STEPPER_LINE_TOP = "1.375rem";
 
-export default function BrandNameStepper({ currentStep }) {
+export default function BrandNameStepper({ currentStep, stepLabels }) {
   const { t } = useTranslation(["brandName"]);
 
-  const steps = useMemo(
-    () => [
+  const steps = useMemo(() => {
+    if (Array.isArray(stepLabels) && stepLabels.length > 0) {
+      return stepLabels.map((label, index) => ({ id: index + 1, label }));
+    }
+    return [
       { id: 1, label: t("brandName:stepper.step1") },
       { id: 2, label: t("brandName:stepper.step2") },
       { id: 3, label: t("brandName:stepper.step3") },
       { id: 4, label: t("brandName:stepper.step4") },
       { id: 5, label: t("brandName:stepper.step5") },
-    ],
-    [t]
-  );
+    ];
+  }, [t, stepLabels]);
 
   return (
     <div className="relative w-full px-1 sm:px-2 pt-1 pb-2">

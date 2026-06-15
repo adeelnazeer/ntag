@@ -3,6 +3,7 @@ import { Button } from "@material-tailwind/react";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { TbCircleCheck } from "react-icons/tb";
 import { useTranslation } from "react-i18next";
+import RestrictedKeywordsSection from "./RestrictedKeywordsSection";
 
 const BRAND_NAME_PATTERN = /^[a-zA-Z0-9]{3,16}$/;
 
@@ -37,6 +38,7 @@ export default function CheckAvailabilityStep({
           {t("brandName:step1.label")}
         </label>
         <p className="text-xs text-[#9CA3AF]">{t("brandName:step1.hint")}</p>
+
 
         <div className="flex flex-col sm:flex-row gap-3 sm:items-start">
           <div className="flex-1">
@@ -74,6 +76,9 @@ export default function CheckAvailabilityStep({
             </p>
           </div>
         )}
+
+<RestrictedKeywordsSection />
+
       </div>
     </section>
   );

@@ -18,7 +18,59 @@
     "available": "'{{name}}' is available! Please proceed to submit your brand name request below.",
     "invalidFormat": "Brand name must be 3–16 characters and contain letters and numbers only.",
     "unavailable": "'{{name}}' is not available. Please try another name.",
-    "required": "Please enter a brand name."
+    "required": "Please enter a brand name.",
+    "restrictedKeywords": {
+      "title": "View restricted keywords before you apply",
+      "subtitle": "Check this list to avoid an instant rejection",
+      "hide": "Hide",
+      "show": "View",
+      "legend": {
+        "red": "Red",
+        "amber": "Amber",
+        "blue": "Blue",
+        "autoRejected": "auto-rejected",
+        "manualReview": "manual review required (sector license needed)",
+        "platformTerms": "platform terms, never permitted"
+      },
+      "categories": [
+        {
+          "id": "govt",
+          "type": "red",
+          "title": "Govt & authority",
+          "keywords": ["Police", "Ministry", "Federal", "Revenue", "Court", "Immigration"]
+        },
+        {
+          "id": "regulatory",
+          "type": "red",
+          "title": "Central bank & regulatory",
+          "keywords": ["NationalBank", "CentralBank", "NBE", "Regulatory"]
+        },
+        {
+          "id": "emergency",
+          "type": "red",
+          "title": "Emergency services",
+          "keywords": ["Ambulance", "FireBrigade", "Emergency", "Rescue"]
+        },
+        {
+          "id": "financial",
+          "type": "amber",
+          "title": "Financial (review required)",
+          "keywords": ["Bank", "Credit", "Loan", "Insurance", "Finance"]
+        },
+        {
+          "id": "health",
+          "type": "amber",
+          "title": "Health (review required)",
+          "keywords": ["Hospital", "Clinic", "Pharma", "Medical"]
+        },
+        {
+          "id": "platform",
+          "type": "blue",
+          "title": "Platform trust terms",
+          "keywords": ["NameTAG", "Verified", "Official", "Certified", "Trusted"]
+        }
+      ]
+    }
   },
   "step2": {
     "title": "Step 2 — Submit Brand Name Request",
@@ -59,5 +111,176 @@
     "title": "Step 5 — Set Callers & Manage Brand Name",
     "description": "Add caller numbers and manage your Brand Name Call service.",
     "pendingMessage": "You will be able to manage callers after payment is completed."
+  },
+  "intro": {
+    "hero": {
+      "title": "Brand Name Call — service introduction",
+      "description": "Before applying, please read this guide carefully. It explains what Brand Name Call is, how the approval process works, and what brand names are not permitted on the NameTAG platform.",
+      "applyButton": "Apply for a brand name",
+      "downloadButton": "Download policy PDF",
+      "policyPdfUrl": "/Terms"
+    },
+    "stepper": [
+      "Check availability",
+      "Submit request",
+      "Admin review & audit fee",
+      "SMS verification",
+      "Payment & activation"
+    ],
+    "stats": [
+      { "label": "Minimum brand length", "value": "3", "suffix": "characters" },
+      { "label": "Maximum brand length", "value": "16", "suffix": "characters" },
+      { "label": "Max linked callers", "value": "1,000", "suffix": "per brand name" },
+      { "label": "Approval time", "value": "24–48", "suffix": "hours after submission" }
+    ],
+    "formattingRules": {
+      "title": "Brand name formatting rules",
+      "items": [
+        {
+          "type": "allowed",
+          "text": "Letters (A–Z) and numbers (0–9) only — no spaces, hyphens, or special characters."
+        },
+        {
+          "type": "allowed",
+          "text": "Between 3 and 16 characters in length."
+        },
+        {
+          "type": "allowed",
+          "text": "Must relate to your registered company trade name or a translation of it."
+        },
+        {
+          "type": "allowed",
+          "text": "Must not already be registered by another company on NameTAG."
+        },
+        {
+          "type": "denied",
+          "text": "Do not use look-alike characters to mimic another brand — e.g. \"S0NY\" using digit zero instead of letter O."
+        },
+        {
+          "type": "denied",
+          "text": "Do not mix character scripts — e.g. Latin and Cyrillic letters in the same name."
+        },
+        {
+          "type": "warning",
+          "text": "Names that differ by only 1–2 characters from an existing registered brand will be held for manual review."
+        }
+      ]
+    },
+    "restrictedKeywords": {
+      "title": "Restricted & blocked brand name keywords",
+      "subtitle": "Representative examples — the full restricted list applies at review.",
+      "hide": "Hide",
+      "show": "View",
+      "licensedNote": "Licensed entities (banks, hospitals, etc.) can still submit — their application will be flagged for manual review and document verification.",
+      "legend": {
+        "red": "Red",
+        "amber": "Amber",
+        "blue": "Blue",
+        "autoRejected": "auto-rejected",
+        "manualReview": "manual review required (sector license needed)",
+        "platformTerms": "platform terms, never permitted"
+      },
+      "categories": [
+        {
+          "id": "govt",
+          "type": "red",
+          "title": "Government & authority",
+          "note": "Auto-rejected. No exceptions.",
+          "keywords": ["Police", "Court", "Military", "Federal", "Revenue", "Immigration", "Embassy", "Government"]
+        },
+        {
+          "id": "regulatory",
+          "type": "red",
+          "title": "Central bank & regulatory",
+          "note": "Auto-rejected. No exceptions.",
+          "keywords": ["NationalBank", "CentralBank", "Securities", "Regulatory", "NBE"]
+        },
+        {
+          "id": "emergency",
+          "type": "red",
+          "title": "Emergency services",
+          "note": "Auto-rejected. No exceptions.",
+          "keywords": ["Ambulance", "FireBrigade", "Emergency", "Rescue"]
+        },
+        {
+          "id": "financial",
+          "type": "amber",
+          "title": "Financial services",
+          "note": "Flagged for manual review.",
+          "keywords": ["Bank", "Credit", "Loan", "Insurance", "Finance", "Investment", "Microfinance"]
+        },
+        {
+          "id": "health",
+          "type": "amber",
+          "title": "Health & pharma",
+          "note": "Flagged for manual review.",
+          "keywords": ["Hospital", "Clinic", "Pharma", "Health", "Medical"]
+        },
+        {
+          "id": "platform",
+          "type": "blue",
+          "title": "Platform trust terms",
+          "note": "Auto-rejected. Cannot be used.",
+          "keywords": ["NameTAG", "Verified", "Official", "Certified", "Trusted", "Approved"]
+        }
+      ]
+    },
+    "reviewProcess": {
+      "title": "What happens during admin review?",
+      "steps": [
+        "Company profile and trade documents are verified against the requested brand name.",
+        "Admin checks the name against trademark records and reserved lists.",
+        "If approved, a custom price may be set based on brand value and length.",
+        "You receive an SMS to complete payment and activation."
+      ]
+    },
+    "ctaButton": "I understand — apply for a brand name"
+  },
+  "recurringFee": {
+    "brandName": "MIDROC",
+    "registeredDate": "22-05-2026",
+    "serviceSubtitle": "Brand Name Call service — registered {{date}}",
+    "statusActive": "Active",
+    "currency": "ETB",
+    "stats": {
+      "totalCalls": "Total calls made",
+      "totalCallsValue": "4,812",
+      "sinceActivation": "since activation",
+      "linkedCallers": "Linked callers",
+      "maxCallers": "of 1,000 max",
+      "monthlyFee": "Monthly recurring fee",
+      "monthlyFeeBreakdown": "{{count}} callers × {{fee}} ETB"
+    },
+    "subscription": {
+      "title": "Subscription details",
+      "brandName": "Brand name",
+      "subscriptionStatus": "Subscription status",
+      "registeredMobile": "Registered mobile number",
+      "registrationFee": "Registration fee paid (one-time)",
+      "recurringFeePerCaller": "Recurring fee per caller / month",
+      "subscriptionPlan": "Subscription plan",
+      "nextBillingDate": "Next billing date",
+      "paymentMethod": "Payment method",
+      "brandType": "Brand type",
+      "activationDate": "Activation date"
+    },
+    "callers": {
+      "title": "Linked caller numbers",
+      "columns": {
+        "index": "#",
+        "msisdn": "MSISDN",
+        "linkedDate": "Linked date",
+        "status": "Status",
+        "action": "Action"
+      },
+      "remove": "Remove",
+      "empty": "No linked callers."
+    },
+    "unsubscribe": {
+      "title": "Unsubscribe Brand Name Call",
+      "blockedWarning": "You have {{count}} linked caller(s). You must remove all linked callers before you can unsubscribe from the Brand Name Call service. Use the \"Remove\" button next to each caller above, then return here to unsubscribe.",
+      "description": "Unsubscribing will stop your brand name from appearing as the caller ID on all calls. This action cannot be undone. Your subscription reference will be stored for record-keeping.",
+      "button": "Unsubscribe Brand Name Call"
+    }
   }
 }
