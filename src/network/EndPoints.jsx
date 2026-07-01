@@ -68,6 +68,7 @@ const EndPoints = {
     brandNameRequests: "/customer/brandname/requests",
     brandNameRequestCancel: (id) => `/customer/brandname/requests/${id}/cancel`,
     brandNameBuy: "/customer/brandname/buy",
+    subscriberTagStatus: "/customer/subscriber/tag-status",
 
     // Fayda eSignet verification
     faydaAuthUrl: "/individual/auth/fayda/auth-url",

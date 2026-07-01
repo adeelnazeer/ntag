@@ -29,6 +29,7 @@ export default function SubmitBrandRequestStep({
   isSubmitting,
   pricing,
   brandType,
+  hasSubscriber,
 }) {
   const { t } = useTranslation(["brandName"]);
   const approvalPoints = t("brandName:step2.approvalPoints", { returnObjects: true });
@@ -173,7 +174,7 @@ export default function SubmitBrandRequestStep({
       <Button
         type="button"
         onClick={onSubmit}
-        disabled={isSubmitting}
+        disabled={isSubmitting || !hasSubscriber}
         className="flex items-center justify-center gap-2 bg-secondary text-white normal-case text-sm font-semibold py-3 shadow-none hover:shadow-none disabled:opacity-60"
       >
         <HiOutlineDocumentCheck className="h-5 w-5" />

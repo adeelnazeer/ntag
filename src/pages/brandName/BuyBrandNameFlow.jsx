@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import BrandNameStepper from "./components/BrandNameStepper";
@@ -20,6 +20,24 @@ export default function BuyBrandNameFlow() {
   const [isAvailable, setIsAvailable] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [checkResult, setCheckResult] = useState(null);
+  const [hasSubscriber, setHasSubscriber] = useState(null);
+  const [isLoadingEligibility, setIsLoadingEligibility] = useState(true);
+
+  useEffect(() => {
+    const fetchSubscriberStatus = async () => {
+      setIsLoadingEligibility(true);
+      try {
+        const response = await APICall("get", null, EndPoints.customer.subscriberTagStatus);
+        setHasSubscriber(Boolean(response?.data?.has_subscriber));
+      } catch {
+        setHasSubscriber(false);
+      } finally {
+        setIsLoadingEligibility(false);
+      }
+    };
+
+    fetchSubscriberStatus();
+  }, []);
 
   const handleBrandNameChange = (value) => {
     const sanitized = value.replace(/[^a-zA-Z0-9]/g, "");
@@ -35,6 +53,7 @@ export default function BuyBrandNameFlow() {
   const handleCheckAvailability = async () => {
     const trimmed = brandName.trim();
     const userData=JSON.parse(localStorage.getItem("user"))
+
 
     if (!trimmed) {
       setErrorMessage(t("brandName:step1.required"));
@@ -91,6 +110,11 @@ export default function BuyBrandNameFlow() {
   const handleSubmit = async () => {
     const trimmed = brandName.trim();
     const userData=JSON.parse(localStorage.getItem("user"))
+
+    if (!hasSubscriber) {
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const response = await APICall(
@@ -142,6 +166,8 @@ export default function BuyBrandNameFlow() {
               isChecking={isChecking}
               isAvailable={isAvailable}
               errorMessage={errorMessage}
+              hasSubscriber={hasSubscriber}
+              isLoadingEligibility={isLoadingEligibility}
             />
             {isAvailable && currentStep >= 2 && (
               <SubmitBrandRequestStep
@@ -153,6 +179,7 @@ export default function BuyBrandNameFlow() {
                 isSubmitting={isSubmitting}
                 pricing={checkResult?.pricing}
                 brandType={checkResult?.brand_type}
+                hasSubscriber={hasSubscriber}
               />
             )}
           </>
