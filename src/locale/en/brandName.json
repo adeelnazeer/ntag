@@ -8,7 +8,7 @@
   },
   "step1": {
     "title": "Step 1 — Check Brand Name Availability",
-    "description": "Enter your desired brand name. This will appear as the Caller ID (CLI) when your employees make calls. Must be 3–16 characters, letters and numbers only.",
+    "description": "Enter your desired brand name. This will appear as the Caller ID (CLI) when your employees make calls. Must be 18 characters, letters and numbers only.",
     "label": "Enter your preferred Brand Name",
     "hint": "3 to 16 characters — letters and numbers only. No special symbols.",
     "placeholder": "e.g. EthioBank, KFC, MIDROC",
@@ -19,6 +19,8 @@
     "invalidFormat": "Brand name must be 3–16 characters and contain letters and numbers only.",
     "unavailable": "'{{name}}' is not available. Please try another name.",
     "required": "Please enter a brand name.",
+    "notEligible": "Brand Name purchases require an active NameTAG. Please link a NameTAG to your primary account to continue.",
+    "notEligibleTitle": "Purchase Restricted",
     "restrictedKeywords": {
       "title": "View restricted keywords before you apply",
       "subtitle": "Check this list to avoid an instant rejection",
@@ -88,7 +90,7 @@
       "Annually": "Annual"
     },
     "costSummaryTitle": "Estimated Cost Summary",
-    "registrationFee": "Brand Name Registration (one-time)",
+    "registrationFee": "Brand Name Registration Fee (one-time)",
     "perCallerFee": "Per caller / {{plan}}",
     "numberOfCallers": "Number of callers",
     "recurringTotal": "Estimated {{plan}} Recurring Fee",
@@ -138,8 +140,8 @@
     ],
     "stats": [
       { "label": "Minimum brand length", "value": "3", "suffix": "characters" },
-      { "label": "Maximum brand length", "value": "16", "suffix": "characters" },
-      { "label": "Max linked callers", "value": "1,000", "suffix": "per brand name" },
+      { "label": "Maximum brand length", "value": "18", "suffix": "characters" },
+      { "label": "Max linked callers", "value": "50", "suffix": "per brand name" },
       { "label": "Approval time", "value": "24–48", "suffix": "hours after submission" }
     ],
     "formattingRules": {
@@ -151,7 +153,7 @@
         },
         {
           "type": "allowed",
-          "text": "Between 3 and 16 characters in length."
+          "text": "Between 3 and 18 characters in length."
         },
         {
           "type": "allowed",
@@ -342,11 +344,12 @@
     "approvedInfo": "Approved on {{date}} — request {{ref}}",
     "brandMeta": "Approved Brand Name · {{count}} callers requested · {{tier}} tier",
     "currency": "ETB",
-    "registrationFee": "Brand name registration (one-time)",
-    "perCallerFee": "Monthly fee per caller",
+    "registeredMobile": "Registered mobile number",
+    "registrationFee": "Brand Name registration fee (one-time)",
+    "perCallerFee": "{{serviceId}} fee per caller",
     "numberOfCallers": "Number of callers",
-    "monthlyRecurring": "Monthly recurring fee",
-    "totalDueNow": "Total due now",
+    "monthlyRecurring": "Total {{serviceId}} recurring fee",
+    "totalDueNow": "Total Amount",
     "paymentTitle": "Select your payment method",
     "paymentSubtitle": "Choose how you'd like to complete payment to activate your Brand Name Call service.",
     "methods": {
@@ -360,7 +363,13 @@
       }
     },
     "proceedButton": "Proceed to Payment",
-    "processing": "Processing..."
+    "processing": "Processing...",
+    "termError": "You must accept the Terms & Conditions to continue",
+    "confirmModal": {
+      "title": "Confirm payment",
+      "message": "Please confirm the payment details before proceeding.",
+      "brandName": "Brand Name"
+    }
   },
   "emptyState": {
     "title": "You haven't registered a Brand Name yet",

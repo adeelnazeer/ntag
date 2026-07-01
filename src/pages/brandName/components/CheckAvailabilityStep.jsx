@@ -16,8 +16,11 @@ export default function CheckAvailabilityStep({
   isChecking,
   isAvailable,
   errorMessage,
+  hasSubscriber,
+  isLoadingEligibility,
 }) {
   const { t } = useTranslation(["brandName"]);
+  const showNotEligible = !isLoadingEligibility && hasSubscriber === false;
 
   return (
     <section className="flex flex-col gap-4">
@@ -32,11 +35,17 @@ export default function CheckAvailabilityStep({
           </p>
         </div>
       </div>
-
+      {showNotEligible ? (
+        <div>
+          <p className="text-sm text-red-500 font-bold">{t("brandName:step1.notEligibleTitle")}</p>
+          <p className="text-sm text-red-500 mt-1">{t("brandName:step1.notEligible")}</p>
+        </div>
+      ) : null}
       <div className="flex flex-col gap-2">
         <label className="text-sm font-semibold text-brand-blue">
           {t("brandName:step1.label")}
         </label>
+
         <p className="text-xs text-[#9CA3AF]">{t("brandName:step1.hint")}</p>
 
 
@@ -47,7 +56,7 @@ export default function CheckAvailabilityStep({
               value={brandName}
               onChange={(e) => onBrandNameChange(e.target.value)}
               placeholder={t("brandName:step1.placeholder")}
-              maxLength={16}
+              maxLength={18}
               className="w-full rounded-lg border border-[#D1D5DB] bg-white px-4 py-2.5 text-sm text-[#1F2937] outline-none focus:border-secondary focus:ring-1 focus:ring-secondary"
             />
             <p className="mt-1.5 text-xs text-[#9CA3AF]">
@@ -77,7 +86,7 @@ export default function CheckAvailabilityStep({
           </div>
         )}
 
-<RestrictedKeywordsSection />
+        <RestrictedKeywordsSection defaultExpanded={false} />
 
       </div>
     </section>

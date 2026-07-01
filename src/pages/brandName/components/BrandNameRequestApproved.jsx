@@ -1,21 +1,26 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { Button } from "@material-tailwind/react";
+import { Button, Checkbox, Typography } from "@material-tailwind/react";
 import { FaCheck } from "react-icons/fa6";
 import { HiOutlineCreditCard, HiOutlineDevicePhoneMobile, HiOutlineBuildingLibrary } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 import BrandNameStepper from "./BrandNameStepper";
+import BrandNameConfirmPayment from "../../../modals/BrandNameConfirmPayment";
+import { ConstentRoutes } from "../../../utilities/routesConst";
 
 const formatPrice = (value) => Number(value || 0).toFixed(2);
 
 const PAYMENT_METHODS = [
-  { id: "super_app", icon: HiOutlineDevicePhoneMobile, accent: "bg-secondary" },
-  { id: "partner_app", icon: HiOutlineBuildingLibrary, accent: "bg-brand-blue" },
+  { id: "super_app", icon: HiOutlineDevicePhoneMobile, accent: "bg-secondary", businessType: "BuyGoods" },
+  { id: "partner_app", icon: HiOutlineBuildingLibrary, accent: "bg-brand-blue", businessType: "TransferToOtherOrg" },
 ];
 
 export default function BrandNameRequestApproved({ request, onProceed, isProcessing }) {
-  const { t } = useTranslation(["brandName"]);
+  const { t } = useTranslation(["brandName", "common"]);
   const [selectedMethod, setSelectedMethod] = useState(null);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [termError, setTermError] = useState("");
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   if (!request) return null;
 
@@ -28,6 +33,22 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
   const monthlyRecurring =
     request.estimated_monthly_recurring ?? callersCount * perCallerFee;
   const totalDueNow = request.payable_registration_fee ?? registrationFee;
+  const selectedBusinessType =
+    PAYMENT_METHODS.find((method) => method.id === selectedMethod)?.businessType ?? "BuyGoods";
+
+  const handleOpenConfirm = () => {
+    if (!selectedMethod) return;
+    if (!termsAccepted) {
+      setTermError(t("brandName:approved.termError"));
+      return;
+    }
+    setTermError("");
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmPayment = () => {
+    onProceed?.(selectedMethod);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -73,13 +94,17 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
         <div className="mt-4 rounded-lg bg-brand-green-pale px-4 py-4 sm:px-5">
           <div className="space-y-2 text-sm">
             <div className="flex items-center justify-between gap-4">
+              <span className="text-[#4B5563]">{t("brandName:approved.registeredMobile")}</span>
+              <span className="font-semibold text-[#1F2937]">{request.msisdn}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4">
               <span className="text-[#4B5563]">{t("brandName:approved.registrationFee")}</span>
               <span className="font-semibold text-[#1F2937]">
                 {formatPrice(registrationFee)} {t("brandName:approved.currency")}
               </span>
             </div>
             <div className="flex items-center justify-between gap-4">
-              <span className="text-[#4B5563]">{t("brandName:approved.perCallerFee")}</span>
+              <span className="text-[#4B5563]">{t("brandName:approved.perCallerFee", { serviceId: request.service_id })}</span>
               <span className="font-semibold text-[#1F2937]">
                 {formatPrice(perCallerFee)} {t("brandName:approved.currency")}
               </span>
@@ -89,7 +114,7 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
               <span className="font-semibold text-[#1F2937]">{callersCount}</span>
             </div>
             <div className="flex items-center justify-between gap-4">
-              <span className="text-[#4B5563]">{t("brandName:approved.monthlyRecurring")}</span>
+              <span className="text-[#4B5563]">{t("brandName:approved.monthlyRecurring", { serviceId: request.service_id })}</span>
               <span className="font-semibold text-[#1F2937]">
                 {formatPrice(monthlyRecurring)} {t("brandName:approved.currency")}
               </span>
@@ -126,11 +151,10 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
                 key={method.id}
                 type="button"
                 onClick={() => setSelectedMethod(method.id)}
-                className={`flex flex-col items-center gap-2 rounded-xl border p-5 text-center transition ${
-                  active
+                className={`flex flex-col items-center gap-2 rounded-xl border p-5 text-center transition ${active
                     ? "border-secondary bg-brand-green-pale ring-1 ring-secondary"
                     : "border-[#E5E7EB] bg-white hover:border-secondary"
-                }`}
+                  }`}
               >
                 <span className={`grid h-12 w-12 place-items-center rounded-lg ${method.accent} text-white`}>
                   <Icon className="h-6 w-6" aria-hidden />
@@ -146,17 +170,65 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
           })}
         </div>
 
+        <div className="mt-5 px-1">
+          <div className="flex items-center">
+            <span className="text-red-800">*</span>
+            <Checkbox
+              checked={termsAccepted}
+              onChange={(e) => {
+                setTermsAccepted(e.target.checked);
+                if (e.target.checked) setTermError("");
+              }}
+              style={
+                termError
+                  ? { border: "1px solid red" }
+                  : { border: "1px solid #8A8AA033" }
+              }
+            />
+            <Typography className="cursor-pointer text-sm">
+              <span
+                className="text-[#008fd5] hover:underline"
+                onClick={() => window.open(ConstentRoutes.termofuse, "_blank")}
+              >
+                {t("common:dashboard.termAndCondition")}
+              </span>
+            </Typography>
+          </div>
+          {termError ? (
+            <p className="mt-1 text-left text-sm text-[#FF0000]">{termError}</p>
+          ) : null}
+        </div>
+
         <Button
           type="button"
           disabled={!selectedMethod || isProcessing}
-          onClick={() => onProceed?.(selectedMethod)}
-          className="mt-5 w-full bg-secondary py-3 text-sm font-semibold normal-case text-white shadow-none hover:bg-brand-green-dark hover:shadow-none disabled:bg-[#D1D5DB] disabled:opacity-100"
+          onClick={handleOpenConfirm}
+          className="mt-4 w-full bg-secondary py-3 text-sm font-semibold normal-case text-white shadow-none hover:bg-brand-green-dark hover:shadow-none disabled:bg-[#D1D5DB] disabled:opacity-100"
         >
           {isProcessing
             ? t("brandName:approved.processing")
             : t("brandName:approved.proceedButton")}
         </Button>
       </section>
+
+      <BrandNameConfirmPayment
+        isOpen={showConfirmModal}
+        onClose={() => {
+          if (!isProcessing) setShowConfirmModal(false);
+        }}
+        onConfirm={handleConfirmPayment}
+        brandname={request.brandname}
+        phoneNumber={request.msisdn}
+        businessType={selectedBusinessType}
+        serviceId={request.service_id}
+        registrationFee={registrationFee}
+        perCallerFee={perCallerFee}
+        callersCount={callersCount}
+        monthlyRecurring={monthlyRecurring}
+        totalDueNow={totalDueNow}
+        request={request}
+        isProcessing={isProcessing}
+      />
     </div>
   );
 }
