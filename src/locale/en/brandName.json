@@ -79,10 +79,19 @@
     "callersHint": "Enter a number between 1 and 1,000",
     "callersSuffix": "callers (max 1,000)",
     "callersNote": "Each caller number must be an active Ethio Telecom number.",
+    "planLabel": "Subscription plan",
+    "planHint": "Choose how often the recurring fee is billed.",
+    "plans": {
+      "Monthly": "Monthly",
+      "Quarterly": "Quarterly",
+      "Semiannually": "Semi-Annual",
+      "Annually": "Annual"
+    },
     "costSummaryTitle": "Estimated Cost Summary",
     "registrationFee": "Brand Name Registration (one-time)",
-    "perCallerFee": "Per caller / month",
+    "perCallerFee": "Per caller / {{plan}}",
     "numberOfCallers": "Number of callers",
+    "recurringTotal": "Estimated {{plan}} Recurring Fee",
     "monthlyTotal": "Estimated Monthly Recurring Fee",
     "currency": "ETB",
     "approvalTitle": "Approval & Activation Process",
@@ -281,6 +290,95 @@
       "blockedWarning": "You have {{count}} linked caller(s). You must remove all linked callers before you can unsubscribe from the Brand Name Call service. Use the \"Remove\" button next to each caller above, then return here to unsubscribe.",
       "description": "Unsubscribing will stop your brand name from appearing as the caller ID on all calls. This action cannot be undone. Your subscription reference will be stored for record-keeping.",
       "button": "Unsubscribe Brand Name Call"
+    }
+  },
+  "pending": {
+    "loading": "Loading your Brand Name request...",
+    "title": "Your Brand Name request is pending approval",
+    "submittedInfo": "Submitted on {{date}} — request {{ref}}",
+    "reviewTime": "Estimated review time: 24–48 hours.",
+    "reviewTimeDesc": "Your request is currently being reviewed by the NameTAG Admin team against your company profile and uploaded documents. You will receive an SMS on your primary mobile number once a decision has been made.",
+    "detailsTitle": "Submitted request details",
+    "currency": "ETB",
+    "fields": {
+      "requestedBrand": "Requested brand name",
+      "requestId": "Request ID",
+      "requestedCallers": "Requested callers",
+      "registeredMobile": "Registered mobile number",
+      "estimatedRegistrationFee": "Estimated registration fee",
+      "estimatedMonthlyFee": "Estimated monthly fee",
+      "submittedOn": "Submitted on",
+      "currentStatus": "Current status"
+    },
+    "monthlyFeeBreakdown": "{{total}} ETB ({{count}} × {{fee}} ETB)",
+    "note": "Note:",
+    "noteText": "You can only have one active Brand Name request at a time. If you wish to apply for a different brand name, you must first cancel this request.",
+    "cancelButton": "Cancel this request",
+    "cancelling": "Cancelling...",
+    "cancelSuccess": "Your Brand Name request has been cancelled.",
+    "empty": "You don't have any Brand Name requests yet."
+  },
+  "rejected": {
+    "title": "Your Brand Name request was rejected",
+    "reviewedInfo": "Reviewed on {{date}} — request {{ref}}",
+    "reasonTitle": "Reason for rejection",
+    "detailsTitle": "Rejected request details",
+    "reviewedByValue": "NameTAG Admin Team",
+    "fields": {
+      "requestedBrand": "Requested brand name",
+      "requestId": "Request ID",
+      "submittedOn": "Submitted on",
+      "reviewedOn": "Reviewed on",
+      "reviewedBy": "Reviewed by",
+      "currentStatus": "Current status"
+    },
+    "tip": "Tip:",
+    "tipText": "Try a more distinct version of your brand name, or contact support if you believe this was rejected in error. You can submit a new request right away.",
+    "applyNewButton": "Apply for a new Brand Name",
+    "contactSupportButton": "Contact Support"
+  },
+  "approved": {
+    "title": "Your Brand Name request has been approved!",
+    "approvedInfo": "Approved on {{date}} — request {{ref}}",
+    "brandMeta": "Approved Brand Name · {{count}} callers requested · {{tier}} tier",
+    "currency": "ETB",
+    "registrationFee": "Brand name registration (one-time)",
+    "perCallerFee": "Monthly fee per caller",
+    "numberOfCallers": "Number of callers",
+    "monthlyRecurring": "Monthly recurring fee",
+    "totalDueNow": "Total due now",
+    "paymentTitle": "Select your payment method",
+    "paymentSubtitle": "Choose how you'd like to complete payment to activate your Brand Name Call service.",
+    "methods": {
+      "super_app": {
+        "title": "telebirr Super App",
+        "desc": "Pay directly using your telebirr Super App wallet balance."
+      },
+      "partner_app": {
+        "title": "telebirr Partner App",
+        "desc": "Pay using a connected bank or partner application via telebirr."
+      }
+    },
+    "proceedButton": "Proceed to Payment",
+    "processing": "Processing..."
+  },
+  "emptyState": {
+    "title": "You haven't registered a Brand Name yet",
+    "description": "Your request for a Brand Name Call is not yet available. Register your company's brand name as your Caller ID so your customers instantly recognize your calls and trust them.",
+    "registerButton": "Buy / Register a Brand Name",
+    "features": {
+      "showName": {
+        "title": "Show your company name",
+        "desc": "Customers see your brand instead of a plain number when you call."
+      },
+      "trust": {
+        "title": "Build instant trust",
+        "desc": "Branded calls are far more likely to be answered and trusted."
+      },
+      "link": {
+        "title": "Link up to 1,000 numbers",
+        "desc": "Apply your brand across your whole sales or support team."
+      }
     }
   }
 }

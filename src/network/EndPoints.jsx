@@ -63,6 +63,11 @@ const EndPoints = {
     guestBlockNumbers: "/customer/guest/block-numbers",
     guestDeleteBlockNumber: (id) => `/customer/guest/block-numbers/${id}`,
     validateToken: "/customer/payment-due/validate-token",
+    brandNameCheck: "/customer/brandname/check",
+    brandNameRequest: "/customer/brandname/request",
+    brandNameRequests: "/customer/brandname/requests",
+    brandNameRequestCancel: (id) => `/customer/brandname/requests/${id}/cancel`,
+    brandNameBuy: "/customer/brandname/buy",
 
     // Fayda eSignet verification
     faydaAuthUrl: "/individual/auth/fayda/auth-url",

@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { Button } from "@material-tailwind/react";
+import { useEffect, useMemo, useState } from "react";
+import { Button, Spinner } from "@material-tailwind/react";
 import {
   FaCircleExclamation,
   FaCircleXmark,
@@ -7,6 +7,20 @@ import {
 } from "react-icons/fa6";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import APICall from "../../network/APICall";
+import EndPoints from "../../network/EndPoints";
+import { ConstentRoutes } from "../../utilities/routesConst";
+import BrandNameRequestPending from "./components/BrandNameRequestPending";
+import BrandNameRequestRejected from "./components/BrandNameRequestRejected";
+import BrandNameRequestApproved from "./components/BrandNameRequestApproved";
+import BrandNameRequestEmpty from "./components/BrandNameRequestEmpty";
+
+const STATUS_PENDING = 0;
+
+const matchesLabel = (request, label) =>
+  String(request?.status_label || "").toLowerCase() === label;
 
 const MOCK_CALLERS = [
   { id: 1, msisdn: "+251 911 123 456", linkedDate: "22-05-2026", status: "active" },
@@ -29,7 +43,100 @@ const SUBSCRIPTION_DETAILS = [
 
 export default function BrandNameRecurringFeePage() {
   const { t } = useTranslation(["brandName"]);
+  const navigate = useNavigate();
   const [callers, setCallers] = useState(MOCK_CALLERS);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [requests, setRequests] = useState([]);
+  const [isCancelling, setIsCancelling] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+
+  const fetchRequests = async () => {
+    setIsLoading(true);
+    try {
+      const response = await APICall("get", null, EndPoints.customer.brandNameRequests);
+      setRequests(Array.isArray(response?.data) ? response.data : []);
+    } catch (error) {
+      const message = typeof error === "string" ? error : error?.message;
+      if (message) toast.error(message);
+      setRequests([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const pendingRequest = useMemo(
+    () =>
+      requests.find(
+        (request) => request.status === STATUS_PENDING || matchesLabel(request, "pending")
+      ),
+    [requests]
+  );
+
+  const rejectedRequest = useMemo(
+    () => requests.find((request) => matchesLabel(request, "rejected")),
+    [requests]
+  );
+
+  const approvedRequest = useMemo(
+    () => requests.find((request) => matchesLabel(request, "approved") && request.can_pay),
+    [requests]
+  );
+
+  const handleProceedPayment = async (method) => {
+    if (!approvedRequest) return;
+    setIsProcessingPayment(true);
+    try {
+      const isSuperApp = method === "super_app";
+      const payload = {
+        service_id: approvedRequest.service_id,
+        channel: "WEB",
+        payment_method: "Mobile Wallet",
+        business_type: isSuperApp ? "BuyGoods" : "TransferToOtherOrg",
+      };
+
+      const response = await APICall("post", payload, EndPoints.customer.brandNameBuy);
+
+      if (response?.success && response?.data) {
+        window.location.href = response.data;
+      } else {
+        toast.error(response?.message || t("brandName:approved.proceedButton"));
+      }
+    } catch (error) {
+      const message = typeof error === "string" ? error : error?.message;
+      if (message) toast.error(message);
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
+
+  const handleCancelRequest = async () => {
+    if (!pendingRequest) return;
+    setIsCancelling(true);
+    try {
+      const response = await APICall(
+        "post",
+        null,
+        EndPoints.customer.brandNameRequestCancel(pendingRequest.request_id)
+      );
+      if (response?.success) {
+        toast.success(response?.message || t("brandName:pending.cancelSuccess"));
+        await fetchRequests();
+      } else {
+        toast.error(response?.message || t("brandName:pending.cancelButton"));
+      }
+    } catch (error) {
+      const message = typeof error === "string" ? error : error?.message;
+      if (message) toast.error(message);
+    } finally {
+      setIsCancelling(false);
+    }
+  };
 
   const brandName = t("brandName:recurringFee.brandName");
   const perCallerFee = 20;
@@ -56,6 +163,53 @@ export default function BrandNameRecurringFeePage() {
   };
 
   const canUnsubscribe = linkedCount === 0;
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-3 py-20">
+        <Spinner className="h-8 w-8 text-secondary" />
+        <p className="text-sm text-[#6B7280]">{t("brandName:pending.loading")}</p>
+      </div>
+    );
+  }
+
+  if (pendingRequest) {
+    return (
+      <BrandNameRequestPending
+        request={pendingRequest}
+        onCancel={handleCancelRequest}
+        isCancelling={isCancelling}
+      />
+    );
+  }
+
+  if (rejectedRequest) {
+    return (
+      <BrandNameRequestRejected
+        request={rejectedRequest}
+        onApplyNew={() => navigate(ConstentRoutes.brandNameCallBuy)}
+        onContactSupport={() => navigate("/contact")}
+      />
+    );
+  }
+
+  if (approvedRequest) {
+    return (
+      <BrandNameRequestApproved
+        request={approvedRequest}
+        onProceed={handleProceedPayment}
+        isProcessing={isProcessingPayment}
+      />
+    );
+  }
+
+  if (requests.length === 0) {
+    return (
+      <BrandNameRequestEmpty
+        onRegister={() => navigate(ConstentRoutes.brandNameCallBuy)}
+      />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4">
