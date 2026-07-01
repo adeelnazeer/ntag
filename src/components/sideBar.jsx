@@ -469,7 +469,7 @@ const Sidebar = ({
                   </ListItem>
                 </div>
 
-                {openBrandMenu && (
+                {(openBrandMenu && userData?.parent_id == null) &&(
                   <div className="ml-8 mt-1 flex flex-col gap-1 pl-4 mb-2">
                     {brandPrimaryItems.map((item) => renderBrandLink(item, true))}
                     <p className="px-3 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wide text-gray-400">

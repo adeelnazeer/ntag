@@ -5,6 +5,8 @@ import BrandNameStepper from "./components/BrandNameStepper";
 import CheckAvailabilityStep, { BRAND_NAME_PATTERN } from "./components/CheckAvailabilityStep";
 import SubmitBrandRequestStep from "./components/SubmitBrandRequestStep";
 import BrandNamePendingStep from "./components/BrandNamePendingStep";
+import APICall from "../../network/APICall";
+import EndPoints from "../../network/EndPoints";
 
 export default function BuyBrandNameFlow() {
   const { t } = useTranslation(["brandName"]);
@@ -12,16 +14,19 @@ export default function BuyBrandNameFlow() {
   const [currentStep, setCurrentStep] = useState(1);
   const [brandName, setBrandName] = useState("");
   const [callerCount, setCallerCount] = useState(1);
+  const [servicePlan, setServicePlan] = useState("Monthly");
   const [isChecking, setIsChecking] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAvailable, setIsAvailable] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [checkResult, setCheckResult] = useState(null);
 
   const handleBrandNameChange = (value) => {
     const sanitized = value.replace(/[^a-zA-Z0-9]/g, "");
     setBrandName(sanitized);
     setIsAvailable(false);
     setErrorMessage("");
+    setCheckResult(null);
     if (currentStep > 2) {
       setCurrentStep(1);
     }
@@ -29,6 +34,7 @@ export default function BuyBrandNameFlow() {
 
   const handleCheckAvailability = async () => {
     const trimmed = brandName.trim();
+    const userData=JSON.parse(localStorage.getItem("user"))
 
     if (!trimmed) {
       setErrorMessage(t("brandName:step1.required"));
@@ -45,32 +51,74 @@ export default function BuyBrandNameFlow() {
     setIsChecking(true);
     setErrorMessage("");
     setIsAvailable(false);
+    setCheckResult(null);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 600));
+      const response = await APICall(
+        "post",
+        { brandname: trimmed ,phone_number:userData?.phone_number},
+        EndPoints.customer.brandNameCheck
+      );
 
-      const unavailableNames = ["ETHIO", "TELECOM", "NAMETAG"];
-      const isTaken = unavailableNames.includes(trimmed.toUpperCase());
+      const data = response?.data;
 
-      if (isTaken) {
-        setErrorMessage(t("brandName:step1.unavailable", { name: trimmed }));
+      if (response?.success && data?.available) {
+        setCheckResult(data);
+        setIsAvailable(true);
+        setCurrentStep(2);
+      } else {
         setIsAvailable(false);
-        return;
+        setErrorMessage(
+          data?.message ||
+          response?.message ||
+          t("brandName:step1.unavailable", { name: trimmed })
+        );
       }
-
-      setIsAvailable(true);
-      setCurrentStep(2);
+      toast.success(response?.message)
+    } catch (error) {
+      setIsAvailable(false);
+      const message =
+        typeof error === "string"
+          ? error
+          : error?.message || t("brandName:step1.unavailable", { name: trimmed });
+      setErrorMessage(message);
+      toast.error(message);
     } finally {
       setIsChecking(false);
     }
   };
 
   const handleSubmit = async () => {
+    const trimmed = brandName.trim();
+    const userData=JSON.parse(localStorage.getItem("user"))
     setIsSubmitting(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      setCurrentStep(3);
-      toast.success(t("brandName:step3.pendingMessage", { name: brandName.trim() }));
+      const response = await APICall(
+        "post",
+        {
+          brandname: trimmed,
+          callers_count: callerCount,
+          service_id: servicePlan,
+          channel: "WEB",
+          phone_number: userData?.phone_number,
+        },
+        EndPoints.customer.brandNameRequest
+      );
+
+      if (response?.success) {
+        setCurrentStep(3);
+        toast.success(
+          response?.message || t("brandName:step3.pendingMessage", { name: trimmed })
+        );
+      } else {
+        toast.error(response?.message || t("brandName:step1.unavailable", { name: trimmed }));
+      }
+    } catch (error) {
+      const message =
+        typeof error === "string"
+          ? error
+          : error?.message || t("brandName:step1.unavailable", { name: trimmed });
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }
@@ -99,8 +147,12 @@ export default function BuyBrandNameFlow() {
               <SubmitBrandRequestStep
                 callerCount={callerCount}
                 onCallerCountChange={setCallerCount}
+                servicePlan={servicePlan}
+                onServicePlanChange={setServicePlan}
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
+                pricing={checkResult?.pricing}
+                brandType={checkResult?.brand_type}
               />
             )}
           </>

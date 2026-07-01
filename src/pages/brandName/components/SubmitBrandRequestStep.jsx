@@ -5,21 +5,40 @@ import { HiOutlineInformationCircle } from "react-icons/hi2";
 import { HiOutlineDocumentCheck } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 
-const REGISTRATION_FEE = 500;
-const PER_CALLER_MONTHLY = 20;
+const DEFAULT_REGISTRATION_FEE = 500;
+const DEFAULT_PER_CALLER_MONTHLY = 20;
 const MAX_CALLERS = 1000;
+
+const PLAN_OPTIONS = ["Monthly", "Quarterly", "Semiannually", "Annually"];
+
+const PLAN_PRICE_KEYS = {
+  Monthly: "monthly_fee_per_caller",
+  Quarterly: "quarterly_fee_per_caller",
+  Semiannually: "semiannually_fee_per_caller",
+  Annually: "annually_fee_per_caller",
+};
 
 const formatPrice = (value) => Number(value).toFixed(2);
 
 export default function SubmitBrandRequestStep({
   callerCount,
   onCallerCountChange,
+  servicePlan = "Monthly",
+  onServicePlanChange,
   onSubmit,
   isSubmitting,
+  pricing,
+  brandType,
 }) {
   const { t } = useTranslation(["brandName"]);
   const approvalPoints = t("brandName:step2.approvalPoints", { returnObjects: true });
-  const monthlyTotal = callerCount * PER_CALLER_MONTHLY;
+
+  const planLabel = t(`brandName:step2.plans.${servicePlan}`);
+  const registrationFee = Number(pricing?.registration_fee ?? DEFAULT_REGISTRATION_FEE);
+  const perCallerFee = Number(
+    pricing?.[PLAN_PRICE_KEYS[servicePlan]] ?? DEFAULT_PER_CALLER_MONTHLY
+  );
+  const recurringTotal = callerCount * perCallerFee;
 
   const handleCallerChange = (value) => {
     const parsed = parseInt(value, 10);
@@ -65,21 +84,56 @@ export default function SubmitBrandRequestStep({
         <p className="text-xs text-[#9CA3AF]">{t("brandName:step2.callersNote")}</p>
       </div>
 
+      <div className="flex flex-col gap-2">
+        <label className="text-sm font-semibold text-brand-blue">
+          {t("brandName:step2.planLabel")}
+        </label>
+        <p className="text-xs text-[#9CA3AF]">{t("brandName:step2.planHint")}</p>
+        <div className="flex flex-wrap gap-2">
+          {PLAN_OPTIONS.map((plan) => {
+            const active = plan === servicePlan;
+            return (
+              <button
+                key={plan}
+                type="button"
+                onClick={() => onServicePlanChange?.(plan)}
+                className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
+                  active
+                    ? "border-secondary bg-secondary text-white"
+                    : "border-[#D1D5DB] bg-white text-[#4B5563] hover:border-secondary"
+                }`}
+              >
+                {t(`brandName:step2.plans.${plan}`)}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="rounded-lg bg-brand-green-pale px-4 py-4 sm:px-5">
-        <p className="text-xs font-bold uppercase tracking-wide text-brand-green-dark">
-          {t("brandName:step2.costSummaryTitle")}
-        </p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs font-bold uppercase tracking-wide text-brand-green-dark">
+            {t("brandName:step2.costSummaryTitle")}
+          </p>
+          {brandType ? (
+            <span className="rounded-full bg-secondary/15 px-3 py-0.5 text-xs font-semibold text-brand-green-dark">
+              {brandType}
+            </span>
+          ) : null}
+        </div>
         <div className="mt-3 space-y-2 text-sm">
           <div className="flex items-center justify-between gap-4">
             <span className="text-[#4B5563]">{t("brandName:step2.registrationFee")}</span>
             <span className="font-semibold text-[#1F2937]">
-              {formatPrice(REGISTRATION_FEE)} {t("brandName:step2.currency")}
+              {formatPrice(registrationFee)} {t("brandName:step2.currency")}
             </span>
           </div>
           <div className="flex items-center justify-between gap-4">
-            <span className="text-[#4B5563]">{t("brandName:step2.perCallerFee")}</span>
+            <span className="text-[#4B5563]">
+              {t("brandName:step2.perCallerFee", { plan: planLabel })}
+            </span>
             <span className="font-semibold text-[#1F2937]">
-              {formatPrice(PER_CALLER_MONTHLY)} {t("brandName:step2.currency")}
+              {formatPrice(perCallerFee)} {t("brandName:step2.currency")}
             </span>
           </div>
           <div className="flex items-center justify-between gap-4">
@@ -88,10 +142,10 @@ export default function SubmitBrandRequestStep({
           </div>
           <div className="border-t border-secondary/20 pt-2 flex items-center justify-between gap-4">
             <span className="font-semibold text-brand-green-dark">
-              {t("brandName:step2.monthlyTotal")}
+              {t("brandName:step2.recurringTotal", { plan: planLabel })}
             </span>
             <span className="text-base font-bold text-brand-green-dark">
-              {formatPrice(monthlyTotal)} {t("brandName:step2.currency")}
+              {formatPrice(recurringTotal)} {t("brandName:step2.currency")}
             </span>
           </div>
         </div>
