@@ -115,8 +115,31 @@ export default function BrandNameConfirmPayment({
               </Typography>
             </div>
 
-            <div>
-              <Typography className="mt-3 text-sm font-bold text-gray-500">
+            <div className="mb-3 border-t border-secondary/20 pt-3">
+              <Typography className="text-sm text-gray-500">Base Price</Typography>
+              <Typography className="text-base font-medium">
+                {formatPrice(request?.base_price ?? 0)} {t("brandName:approved.currency")}
+              </Typography>
+            </div>
+
+            <div className="mb-3">
+              <Typography className="text-sm text-gray-500">Excise Tax</Typography>
+              <Typography className="text-base font-medium">
+                {formatPrice(request?.excisetax ?? 0)} {t("brandName:approved.currency")}
+              </Typography>
+            </div>
+
+            <div className="mb-3">
+              <Typography className="text-sm text-gray-500">
+                VAT ({request?.vat_percentage ?? 0}%)
+              </Typography>
+              <Typography className="text-base font-medium">
+                {formatPrice(request?.vat ?? 0)} {t("brandName:approved.currency")}
+              </Typography>
+            </div>
+
+            <div className="border-t border-secondary/20 pt-3">
+              <Typography className="text-sm font-bold text-gray-500">
                 {t("brandName:approved.totalDueNow")}
               </Typography>
               <Typography className="text-base font-bold">
