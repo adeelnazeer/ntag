@@ -22,6 +22,7 @@ export default function BuyBrandNameFlow() {
   const [checkResult, setCheckResult] = useState(null);
   const [hasSubscriber, setHasSubscriber] = useState(null);
   const [isRecurringAccepted, setIsRecurringAccepted] = useState(null);
+  const [corpTagCount, setCorpTagCount] = useState(null);
   const [isLoadingEligibility, setIsLoadingEligibility] = useState(true);
 
   const isEligible =
@@ -35,9 +36,11 @@ export default function BuyBrandNameFlow() {
         const data = response?.data;
         setHasSubscriber(Boolean(data?.has_subscriber));
         setIsRecurringAccepted(Boolean(data?.is_recurring_acceptance));
+        setCorpTagCount(Number(data?.corp_tag_count) || 0);
       } catch {
         setHasSubscriber(false);
         setIsRecurringAccepted(false);
+        setCorpTagCount(0);
       } finally {
         setIsLoadingEligibility(false);
       }
@@ -45,6 +48,13 @@ export default function BuyBrandNameFlow() {
 
     fetchSubscriberStatus();
   }, []);
+
+  useEffect(() => {
+    if (corpTagCount == null || corpTagCount <= 0) {
+      return;
+    }
+    setCallerCount((prev) => Math.min(prev, corpTagCount));
+  }, [corpTagCount]);
 
   const handleBrandNameChange = (value) => {
     const sanitized = value.replace(/[^a-zA-Z0-9]/g, "");
@@ -122,7 +132,7 @@ export default function BuyBrandNameFlow() {
     const trimmed = brandName.trim();
     const userData=JSON.parse(localStorage.getItem("user"))
 
-    if (!isEligible) {
+    if (!isEligible || !corpTagCount || callerCount > corpTagCount) {
       return;
     }
 
@@ -192,6 +202,7 @@ export default function BuyBrandNameFlow() {
                 pricing={checkResult?.pricing}
                 brandType={checkResult?.brand_type}
                 isEligible={isEligible}
+                corpTagCount={corpTagCount}
               />
             )}
           </>
