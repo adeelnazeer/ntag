@@ -17,13 +17,31 @@ export default function CheckAvailabilityStep({
   isAvailable,
   errorMessage,
   hasSubscriber,
+  isRecurringAccepted,
   isLoadingEligibility,
 }) {
   const { t } = useTranslation(["brandName"]);
   const showNotEligible = !isLoadingEligibility && hasSubscriber === false;
+  const showRecurringNotEligible =
+    !isLoadingEligibility && hasSubscriber === true && isRecurringAccepted === false;
+  const isBlocked = showNotEligible || showRecurringNotEligible || isLoadingEligibility;
 
   return (
     <section className="flex flex-col gap-4">
+      {showNotEligible ? (
+        <div>
+          <p className="text-sm font-bold text-red-500">{t("brandName:step1.notEligibleTitle")}</p>
+          <p className="mt-1 text-sm text-red-500">{t("brandName:step1.notEligible")}</p>
+        </div>
+      ) : null}
+      {showRecurringNotEligible ? (
+        <div>
+          <p className="text-sm font-bold text-red-500">
+            {t("brandName:step1.notEligibleRecurringTitle")}
+          </p>
+          <p className="mt-1 text-sm text-red-500">{t("brandName:step1.notEligibleRecurring")}</p>
+        </div>
+      ) : null}
       <div className="flex items-start gap-2">
         <HiOutlineMagnifyingGlass className="mt-1 h-5 w-5 shrink-0 text-brand-blue" />
         <div>
@@ -35,12 +53,7 @@ export default function CheckAvailabilityStep({
           </p>
         </div>
       </div>
-      {showNotEligible ? (
-        <div>
-          <p className="text-sm text-red-500 font-bold">{t("brandName:step1.notEligibleTitle")}</p>
-          <p className="text-sm text-red-500 mt-1">{t("brandName:step1.notEligible")}</p>
-        </div>
-      ) : null}
+   
       <div className="flex flex-col gap-2">
         <label className="text-sm font-semibold text-brand-blue">
           {t("brandName:step1.label")}

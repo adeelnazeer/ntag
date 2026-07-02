@@ -21,16 +21,23 @@ export default function BuyBrandNameFlow() {
   const [errorMessage, setErrorMessage] = useState("");
   const [checkResult, setCheckResult] = useState(null);
   const [hasSubscriber, setHasSubscriber] = useState(null);
+  const [isRecurringAccepted, setIsRecurringAccepted] = useState(null);
   const [isLoadingEligibility, setIsLoadingEligibility] = useState(true);
+
+  const isEligible =
+    hasSubscriber === true && isRecurringAccepted === true;
 
   useEffect(() => {
     const fetchSubscriberStatus = async () => {
       setIsLoadingEligibility(true);
       try {
         const response = await APICall("get", null, EndPoints.customer.subscriberTagStatus);
-        setHasSubscriber(Boolean(response?.data?.has_subscriber));
+        const data = response?.data;
+        setHasSubscriber(Boolean(data?.has_subscriber));
+        setIsRecurringAccepted(Boolean(data?.is_recurring_acceptance));
       } catch {
         setHasSubscriber(false);
+        setIsRecurringAccepted(false);
       } finally {
         setIsLoadingEligibility(false);
       }
@@ -66,6 +73,10 @@ export default function BuyBrandNameFlow() {
       setIsAvailable(false);
       return;
     }
+
+    // if (!isEligible) {
+    //   return;
+    // }
 
     setIsChecking(true);
     setErrorMessage("");
@@ -111,7 +122,7 @@ export default function BuyBrandNameFlow() {
     const trimmed = brandName.trim();
     const userData=JSON.parse(localStorage.getItem("user"))
 
-    if (!hasSubscriber) {
+    if (!isEligible) {
       return;
     }
 
@@ -167,6 +178,7 @@ export default function BuyBrandNameFlow() {
               isAvailable={isAvailable}
               errorMessage={errorMessage}
               hasSubscriber={hasSubscriber}
+              isRecurringAccepted={isRecurringAccepted}
               isLoadingEligibility={isLoadingEligibility}
             />
             {isAvailable && currentStep >= 2 && (
@@ -179,7 +191,7 @@ export default function BuyBrandNameFlow() {
                 isSubmitting={isSubmitting}
                 pricing={checkResult?.pricing}
                 brandType={checkResult?.brand_type}
-                hasSubscriber={hasSubscriber}
+                isEligible={isEligible}
               />
             )}
           </>
