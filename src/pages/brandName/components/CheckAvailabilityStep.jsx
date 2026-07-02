@@ -30,13 +30,13 @@ export default function CheckAvailabilityStep({
     <section className="flex flex-col gap-4">
       {showNotEligible ? (
         <div>
-          <p className="text-sm font-bold text-red-500">{t("brandName:step1.notEligibleTitle")}</p>
+          <p className="text-sm font-bold text-brand-blue">{t("brandName:step1.notEligibleTitle")}</p>
           <p className="mt-1 text-sm text-red-500">{t("brandName:step1.notEligible")}</p>
         </div>
       ) : null}
       {showRecurringNotEligible ? (
         <div>
-          <p className="text-sm font-bold text-red-500">
+          <p className="text-sm font-bold text-brand-blue">
             {t("brandName:step1.notEligibleRecurringTitle")}
           </p>
           <p className="mt-1 text-sm text-red-500">{t("brandName:step1.notEligibleRecurring")}</p>

@@ -21,8 +21,8 @@
     "required": "Please enter a brand name.",
     "notEligible": "Brand Name purchases require an active NameTAG. Please link a NameTAG to your primary account to continue.",
     "notEligibleTitle": "Purchase Restricted",
-    "notEligibleRecurringTitle": "Recurring fee required",
-    "notEligibleRecurring": "You are not eligible to buy Brand Name. Please pay your recurring fee first.",
+    "notEligibleRecurringTitle": "Purchase Restricted: Pending Debit Mandate Acceptance",
+    "notEligibleRecurring": "To purchase a Brand Name, your active NameTAG requires an approved debit mandate for recurring fees. Please accept the mandate from your NameTAG dashboard to continue with your purchase.",
     "restrictedKeywords": {
       "title": "View restricted keywords before you apply",
       "subtitle": "Check this list to avoid an instant rejection",
@@ -368,6 +368,31 @@
     "proceedButton": "Proceed to Payment",
     "processing": "Processing...",
     "termError": "You must accept the Terms & Conditions to continue",
+    "linkCallers": {
+      "title": "Link Callers",
+      "subtitle": "Select the corporate NameTAG numbers you want to link with this Brand Name Call before payment.",
+      "button": "Select callers to link",
+      "editButton": "Edit linked callers",
+      "selectedSummary": "{{selected}} of {{max}} caller(s) selected",
+      "noneSelected": "No callers selected yet",
+      "maxHint": "You can link up to {{max}} caller(s) for this request.",
+      "errorRequired": "Please select at least one caller to link before proceeding to payment.",
+      "errorMax": "You can select a maximum of {{max}} caller(s) for this request.",
+      "modalTitle": "Link caller numbers",
+      "modalSubtitle": "Select up to {{max}} caller(s). Currently selected: {{selected}}",
+      "saveSelection": "Save selection ({{count}})",
+      "cancel": "Cancel",
+      "empty": "No corporate callers are available to link.",
+      "active": "Active",
+      "inactive": "Inactive",
+      "columns": {
+        "msisdn": "Mobile number",
+        "nameTag": "NameTAG",
+        "tagNo": "Tag No.",
+        "corpType": "Account type",
+        "status": "Status"
+      }
+    },
     "confirmModal": {
       "title": "Confirm payment",
       "message": "Please confirm the payment details before proceeding.",

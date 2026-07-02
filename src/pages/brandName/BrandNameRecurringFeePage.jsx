@@ -55,11 +55,11 @@ export default function BrandNameRecurringFeePage() {
     setIsLoading(true);
     try {
       const response = await APICall("get", null, EndPoints.customer.brandNameRequests);
-      setRequests(Array.isArray(response?.data) ? response.data : []);
+      setRequests([response.data] || {});
     } catch (error) {
       const message = typeof error === "string" ? error : error?.message;
       if (message) toast.error(message);
-      setRequests([]);
+      setRequests(null);
     } finally {
       setIsLoading(false);
     }
@@ -69,6 +69,7 @@ export default function BrandNameRecurringFeePage() {
     fetchRequests();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   const pendingRequest = useMemo(
     () =>
@@ -88,7 +89,7 @@ export default function BrandNameRecurringFeePage() {
     [requests]
   );
 
-  const handleProceedPayment = async (method) => {
+  const handleProceedPayment = async (method, selectedCallers = []) => {
     if (!approvedRequest) return;
     setIsProcessingPayment(true);
     try {
@@ -98,6 +99,7 @@ export default function BrandNameRecurringFeePage() {
         channel: "WEB",
         payment_method: "Mobile Wallet",
         business_type: isSuperApp ? "BuyGoods" : "TransferToOtherOrg",
+        caller_ids: selectedCallers.map((caller) => caller.msisdn),
       };
 
       const response = await APICall("post", payload, EndPoints.customer.brandNameBuy);
@@ -274,9 +276,8 @@ export default function BrandNameRecurringFeePage() {
           {subscriptionRows.map((row, index) => (
             <div
               key={row.key}
-              className={`flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 ${
-                index % 2 === 0 ? "bg-brand-mint-softer" : "bg-white"
-              }`}
+              className={`flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 ${index % 2 === 0 ? "bg-brand-mint-softer" : "bg-white"
+                }`}
             >
               <p className="text-xs font-medium text-[#6B7280] sm:text-sm">{row.label}</p>
               {row.link ? (
@@ -288,9 +289,8 @@ export default function BrandNameRecurringFeePage() {
                 </button>
               ) : (
                 <p
-                  className={`text-sm font-semibold sm:text-right ${
-                    row.highlight ? "text-secondary" : "text-[#1F2937]"
-                  }`}
+                  className={`text-sm font-semibold sm:text-right ${row.highlight ? "text-secondary" : "text-[#1F2937]"
+                    }`}
                 >
                   {row.displayValue}
                 </p>
