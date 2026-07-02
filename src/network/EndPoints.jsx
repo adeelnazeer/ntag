@@ -66,7 +66,7 @@ const EndPoints = {
     brandNameCheck: "/customer/brandname/check",
     brandNameRequest: "/customer/brandname/request",
     brandNameRequests: "/customer/brandname/requests",
-    brandNameRequestCancel: (id) => `/customer/brandname/requests/${id}/cancel`,
+    brandNameRequestCancel: (id) => `/customer/brandname/cancel-request`,
     brandNameBuy: "/customer/brandname/buy",
     subscriberTagStatus: "/customer/subscriber/tag-status",
 

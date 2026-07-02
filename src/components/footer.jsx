@@ -49,14 +49,14 @@ const Footer = () => {
         <div className="flex md:gap-4 gap-2 items-center flex-wrap mb-2 md:mb-0">
           <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
             onClick={() => {
-              navigate(ConstentRoutes.termofuse);
+              window.open(ConstentRoutes.termofuse, '_blank');
             }}
           >
             {t("footer.terms")}
           </p>
           <p className="text-[#008fd5] hover:underline cursor-pointer text-sm md:text-base"
             onClick={() => {
-              navigate(ConstentRoutes.privacyPolicy2);
+              window.open(ConstentRoutes.privacyPolicy2, '_blank');
             }}
           >
             {t("footer.privacy")}
