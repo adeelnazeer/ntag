@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 
 const DEFAULT_REGISTRATION_FEE = 500;
 const DEFAULT_PER_CALLER_MONTHLY = 20;
-const MAX_CALLERS = 1000;
 
 const PLAN_OPTIONS = ["Monthly", "Quarterly", "Semiannually", "Annually"];
 
@@ -30,8 +29,10 @@ export default function SubmitBrandRequestStep({
   pricing,
   brandType,
   isEligible,
+  corpTagCount,
 }) {
   const { t } = useTranslation(["brandName"]);
+  const maxCallers = corpTagCount > 0 ? corpTagCount : 1;
   const approvalPoints = t("brandName:step2.approvalPoints", { returnObjects: true });
 
   const planLabel = t(`brandName:step2.plans.${servicePlan}`);
@@ -47,7 +48,7 @@ export default function SubmitBrandRequestStep({
       onCallerCountChange(1);
       return;
     }
-    onCallerCountChange(Math.min(MAX_CALLERS, Math.max(1, parsed)));
+    onCallerCountChange(Math.min(maxCallers, Math.max(1, parsed)));
   };
 
   return (
@@ -68,18 +69,26 @@ export default function SubmitBrandRequestStep({
         <label className="text-sm font-semibold text-brand-blue">
           {t("brandName:step2.callersLabel")}
         </label>
-        <p className="text-xs text-[#9CA3AF]">{t("brandName:step2.callersHint")}</p>
+        {corpTagCount > 0 ? (
+          <p className="text-xs font-medium text-brand-blue">
+            {t("brandName:step2.corpTagCount", { count: corpTagCount })}
+          </p>
+        ) : null}
+        <p className="text-xs text-[#9CA3AF]">
+          {t("brandName:step2.callersHint", { max: maxCallers })}
+        </p>
         <div className="flex flex-wrap items-center gap-3">
           <input
             type="number"
             min={1}
-            max={MAX_CALLERS}
+            max={maxCallers}
             value={callerCount}
             onChange={(e) => handleCallerChange(e.target.value)}
-            className="w-24 rounded-lg border border-[#D1D5DB] bg-white px-3 py-2 text-sm text-[#1F2937] outline-none focus:border-secondary focus:ring-1 focus:ring-secondary"
+            disabled={!corpTagCount}
+            className="w-24 rounded-lg border border-[#D1D5DB] bg-white px-3 py-2 text-sm text-[#1F2937] outline-none focus:border-secondary focus:ring-1 focus:ring-secondary disabled:cursor-not-allowed disabled:opacity-60"
           />
           <span className="text-sm text-[#6B7280]">
-            {t("brandName:step2.callersSuffix")}
+            {t("brandName:step2.callersSuffix", { max: maxCallers })}
           </span>
         </div>
         <p className="text-xs text-[#9CA3AF]">{t("brandName:step2.callersNote")}</p>
@@ -174,7 +183,7 @@ export default function SubmitBrandRequestStep({
       <Button
         type="button"
         onClick={onSubmit}
-        disabled={isSubmitting || !isEligible}
+        disabled={isSubmitting || !isEligible || !corpTagCount}
         className="flex items-center justify-center gap-2 bg-secondary text-white normal-case text-sm font-semibold py-3 shadow-none hover:shadow-none disabled:opacity-60"
       >
         <HiOutlineDocumentCheck className="h-5 w-5" />
