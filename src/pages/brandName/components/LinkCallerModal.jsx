@@ -17,6 +17,7 @@ export default function LinkCallerModal({
 }) {
   const { t } = useTranslation(["brandName"]);
   const [draftSelected, setDraftSelected] = useState([]);
+  const requiredCount = maxSelectable;
 
   useEffect(() => {
     if (isOpen) {
@@ -31,7 +32,8 @@ export default function LinkCallerModal({
 
   if (!isOpen) return null;
 
-  const atMax = draftSelected.length >= maxSelectable;
+  const atMax = draftSelected.length >= requiredCount;
+  const hasExactSelection = draftSelected.length === requiredCount;
 
   const toggleCaller = (caller) => {
     if (selectedIds.has(caller.id)) {
@@ -43,18 +45,16 @@ export default function LinkCallerModal({
   };
 
   const toggleAll = () => {
-    if (draftSelected.length === callers.length || draftSelected.length === maxSelectable) {
+    if (hasExactSelection) {
       setDraftSelected([]);
       return;
     }
-    setDraftSelected(callers.slice(0, maxSelectable));
+    setDraftSelected(callers.slice(0, requiredCount));
   };
 
-  const allChecked =
-    callers.length > 0 &&
-    (draftSelected.length === callers.length || draftSelected.length === maxSelectable);
+  const allChecked = callers.length > 0 && hasExactSelection;
   const isIndeterminate =
-    draftSelected.length > 0 && draftSelected.length < Math.min(callers.length, maxSelectable);
+    draftSelected.length > 0 && draftSelected.length < requiredCount;
 
   const handleSave = () => {
     onSave?.(draftSelected);
@@ -75,7 +75,7 @@ export default function LinkCallerModal({
               </Typography>
               <Typography className="mt-1 text-sm text-[#6B7280]">
                 {t("brandName:approved.linkCallers.modalSubtitle", {
-                  max: maxSelectable,
+                  count: requiredCount,
                   selected: draftSelected.length,
                 })}
               </Typography>
@@ -97,7 +97,7 @@ export default function LinkCallerModal({
               <table className="min-w-full text-left text-sm">
                 <thead className="bg-brand-green-pale text-brand-blue">
                   <tr>
-                    <th className="px-4 py-3">
+                    <th className="px-4">
                       <Checkbox
                         checked={allChecked}
                         indeterminate={isIndeterminate}
@@ -191,12 +191,13 @@ export default function LinkCallerModal({
           </Button>
           <Button
             type="button"
-            disabled={draftSelected.length === 0}
+            disabled={!hasExactSelection}
             className="bg-secondary px-6 py-2.5 text-sm font-semibold normal-case text-white shadow-none hover:shadow-none disabled:opacity-60"
             onClick={handleSave}
           >
             {t("brandName:approved.linkCallers.saveSelection", {
               count: draftSelected.length,
+              required: requiredCount,
             })}
           </Button>
         </div>
