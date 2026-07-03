@@ -50,15 +50,14 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
   const totalDueNow = request.total_amount ?? registrationFee;
   const selectedBusinessType =
     PAYMENT_METHODS.find((method) => method.id === selectedMethod)?.businessType ?? "BuyGoods";
+  const hasExactCallerSelection = selectedCallers.length === callersCount;
 
   const handleOpenConfirm = () => {
     if (!selectedMethod) return;
-    if (selectedCallers.length === 0) {
-      setCallerError(t("brandName:approved.linkCallers.errorRequired"));
-      return;
-    }
-    if (selectedCallers.length > callersCount) {
-      setCallerError(t("brandName:approved.linkCallers.errorMax", { max: callersCount }));
+    if (!hasExactCallerSelection) {
+      setCallerError(
+        t("brandName:approved.linkCallers.errorExact", { count: callersCount })
+      );
       return;
     }
     if (!termsAccepted) {
@@ -76,7 +75,9 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
 
   const handleSaveCallers = (callers) => {
     setSelectedCallers(callers);
-    if (callers.length > 0) setCallerError("");
+    if (callers.length === callersCount) {
+      setCallerError("");
+    }
   };
 
   return (
@@ -203,7 +204,7 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
                   {t("brandName:approved.linkCallers.title")}
                 </h2>
                 <p className="mt-1 text-xs leading-relaxed text-[#6B7280] sm:text-sm">
-                  {t("brandName:approved.linkCallers.subtitle")}
+                  {t("brandName:approved.linkCallers.subtitle", { count: callersCount })}
                 </p>
                 <p className="mt-2 text-xs text-[#9CA3AF]">
                   {t("brandName:approved.linkCallers.maxHint", { max: callersCount })}
@@ -228,17 +229,25 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
           </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-secondary/15 px-3 py-1 text-xs font-semibold text-brand-green-dark">
-              {selectedCallers.length > 0
-                ? t("brandName:approved.linkCallers.selectedSummary", {
+            <span
+              className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                hasExactCallerSelection
+                  ? "bg-secondary/15 text-brand-green-dark"
+                  : "bg-amber-50 text-amber-800"
+              }`}
+            >
+              {hasExactCallerSelection
+                ? t("brandName:approved.linkCallers.selectedComplete", {
+                    count: callersCount,
+                  })
+                : t("brandName:approved.linkCallers.selectedSummary", {
                     selected: selectedCallers.length,
                     max: callersCount,
-                  })
-                : t("brandName:approved.linkCallers.noneSelected")}
+                  })}
             </span>
           </div>
 
-          {selectedCallers.length > 0 ? (
+          {/* {selectedCallers.length > 0 ? (
             <div className="mt-3 flex flex-wrap gap-2">
               {selectedCallers.map((caller) => (
                 <span
@@ -250,7 +259,7 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
                 </span>
               ))}
             </div>
-          ) : null}
+          ) : null} */}
 
           {callerError ? (
             <p className="mt-3 text-sm text-[#FF0000]">{callerError}</p>
@@ -326,7 +335,7 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
 
         <Button
           type="button"
-          disabled={!selectedMethod || isProcessing || selectedCallers.length === 0}
+          disabled={!selectedMethod || isProcessing || !hasExactCallerSelection}
           onClick={handleOpenConfirm}
           className="mt-4 w-full bg-secondary py-3 text-sm font-semibold normal-case text-white shadow-none hover:bg-brand-green-dark hover:shadow-none disabled:bg-[#D1D5DB] disabled:opacity-100"
         >

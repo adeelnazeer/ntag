@@ -92,6 +92,7 @@ export default function BrandNameRecurringFeePage() {
   const handleProceedPayment = async (method, selectedCallers = []) => {
     if (!approvedRequest) return;
     setIsProcessingPayment(true);
+    console.log(selectedCallers);
     try {
       const isSuperApp = method === "super_app";
       const payload = {
@@ -99,13 +100,13 @@ export default function BrandNameRecurringFeePage() {
         channel: "WEB",
         payment_method: "Mobile Wallet",
         business_type: isSuperApp ? "BuyGoods" : "TransferToOtherOrg",
-        caller_ids: selectedCallers.map((caller) => caller.msisdn),
+        caller_ids: selectedCallers.map((caller) => (caller.id)?.toString()),
       };
 
       const response = await APICall("post", payload, EndPoints.customer.brandNameBuy);
 
       if (response?.success && response?.data) {
-        window.location.href = response.data;
+        // window.location.href = response.data;
       } else {
         toast.error(response?.message || t("brandName:approved.proceedButton"));
       }
