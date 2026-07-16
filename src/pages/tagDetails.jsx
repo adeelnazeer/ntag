@@ -567,6 +567,7 @@ import { IoMdInformation } from "react-icons/io";
 import moment from "moment/moment";
 import { useTranslation } from "react-i18next";
 import { getTelebirrAppTypeChannel } from "../utilities/telebirrMiniAppChannel";
+import { isBuyTagApiSuccess } from "../utilities/telebirrMiniAppPay";
 
 const TagDetails = () => {
   const location = useLocation();
@@ -1031,14 +1032,15 @@ const TagDetails = () => {
     if (state.mode == "resubscribe") {
       const payload = {
         corp_subscriber_id: state?.reserve_tag_id,
-        payment_method:
+        channel: getTelebirrAppTypeChannel(),
+        payment_method: 
           businessType == "BuyGoods" ? "telebirr" : "telebirr_partnerapp",
-        business_type: businessType,
+        business_type: getTelebirrAppTypeChannel() === "MINI_SUPERAPP" ? "BuyGoods" : businessType,
       };
 
       APICall("post", payload, "customer/re-subscribe")
         .then((res) => {
-          if (res?.success) {
+          if (isBuyTagApiSuccess(res)) {
             setDisableBtn(true);
             setTimeout(() => {
               setDisableBtn(false);
@@ -1048,7 +1050,9 @@ const TagDetails = () => {
                 "merchId",
                 payload?.corp_reserve_tag_id || null
               );
-              window.location.replace(res?.data);
+              dashboard.startTelebirrPaymentFromResponse(res, {
+                successRoute: ConstentRoutes.dashboard,
+              });
             } else {
               toast.success(res?.message || "");
               setIsOpen(true);

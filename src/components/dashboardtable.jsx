@@ -401,8 +401,9 @@ const Dashboardtable = (props) => {
             value={search}
             maxLength={search?.startsWith("#") ? 9 : 8}
             onChange={(e) => {
-              setSearch(e.target.value);
-              if (e.target.value == "") {
+              const value = e.target.value.replace(/[^a-zA-Z0-9#]/g, "");
+              setSearch(value);
+              if (value === "") {
                 setPagination({ ...pagination, search: "" });
               }
             }}

@@ -8,19 +8,187 @@ import {
   DialogHeader,
   IconButton,
   Spinner,
-  Switch,
   Typography,
 } from "@material-tailwind/react";
 import { LuCalendarClock } from "react-icons/lu";
 import useSchedularHook from "./hooks/schedularHook";
 import { forwardRef, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import DatePicker from "react-datepicker";
+import ReactDatePickerPkg from "react-datepicker";
 import { PiXCircleBold } from "react-icons/pi";
 import moment from "moment";
 import { formatPhoneNumberCustom } from "../utilities/formatMobileNumber";
 import { getTagStatusDashboard } from "../utilities/routesConst";
 import { useTranslation } from "react-i18next";
+
+// Production builds can expose react-datepicker as a nested module object — unwrap it.
+const DatePicker =
+  typeof ReactDatePickerPkg === "function"
+    ? ReactDatePickerPkg
+    : ReactDatePickerPkg?.default?.default ??
+      ReactDatePickerPkg?.default ??
+      ReactDatePickerPkg;
+
+const parseDateIOSSafe = (d) => {
+  if (!d) return null;
+  if (d instanceof Date) return isNaN(d.getTime()) ? null : d;
+  if (typeof d !== "string") return null;
+  const trimmed = d.trim();
+  if (trimmed.includes("0000-00-00") || trimmed.startsWith("0000")) return null;
+  const match = trimmed.match(
+    /^(\d{4})-(\d{2})-(\d{2})[T\s](\d{2}):(\d{2}):(\d{2})(?:\.\d+)?\s*$/
+  );
+  if (match) {
+    const y = parseInt(match[1], 10);
+    const mo = parseInt(match[2], 10) - 1;
+    const day = parseInt(match[3], 10);
+    const h = parseInt(match[4], 10);
+    const min = parseInt(match[5], 10);
+    const sec = parseInt(match[6], 10) || 0;
+    const dt = new Date(y, mo, day, h, min, sec, 0);
+    return isNaN(dt.getTime()) ? null : dt;
+  }
+  const normalized = trimmed.replace(/\s+/, "T");
+  const dt = new Date(normalized);
+  return isNaN(dt.getTime()) ? null : dt;
+};
+
+const DatePickerPopper = ({ children }) =>
+  createPortal(children, document.body);
+
+const ExampleCustomInput = forwardRef(({ value, onClick, error, selectedDate }, ref) => {
+  const date =
+    selectedDate != null &&
+    selectedDate instanceof Date &&
+    !isNaN(selectedDate.getTime())
+      ? selectedDate
+      : value
+        ? parseDateIOSSafe(value)
+        : null;
+
+  if (!date) {
+    return (
+      <div className="flex flex-col justify-center align-center min-w-[281px]">
+        <div
+          className="flex cursor-pointer justify-center items-baseline"
+          onClick={onClick}
+          ref={ref}
+        >
+          <span className="md:text-[30px] text-[25px] example-custom-input font-medium text-[#646E82] p-2">
+            Select date & time
+          </span>
+        </div>
+        {error && (
+          <span className="text-xs text-red-500 mt-1 px-2 text-center self-center block">
+            {error}
+          </span>
+        )}
+      </div>
+    );
+  }
+
+  const timeStr = date
+    .toLocaleString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    })
+    .toUpperCase();
+  const dateStr = date.toLocaleString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  return (
+    <div className="flex flex-col justify-center align-center min-w-[281px]">
+      <div
+        className="flex cursor-pointer justify-center items-baseline"
+        onClick={onClick}
+        ref={ref}
+      >
+        <span className="md:text-[30px] text-[25px] example-custom-input font-medium text-[#646E82] p-2">
+          {timeStr} <span className="text-xs ml-2">{dateStr}</span>
+        </span>
+      </div>
+      {error && (
+        <span className="text-xs text-red-500 mt-1 px-2 text-center self-center block">
+          {error}
+        </span>
+      )}
+    </div>
+  );
+});
+ExampleCustomInput.displayName = "ExampleCustomInput";
+
+const MobileTimeInput = forwardRef(({ value, onClick, selectedDate }, ref) => {
+  const date =
+    selectedDate != null &&
+    selectedDate instanceof Date &&
+    !isNaN(selectedDate.getTime())
+      ? selectedDate
+      : value
+        ? parseDateIOSSafe(value)
+        : null;
+  const timeStr = date
+    ? date
+        .toLocaleString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true })
+        .toUpperCase()
+    : "Select time";
+
+  return (
+    <div
+      className="flex cursor-pointer justify-between items-center w-full py-3 px-4 rounded-lg bg-white border border-[#8A8AA033] text-[#646E82] text-[14px]"
+      onClick={onClick}
+      ref={ref}
+    >
+      <span>{timeStr}</span>
+    </div>
+  );
+});
+MobileTimeInput.displayName = "MobileTimeInput";
+
+const MobileDateInput = forwardRef(({ value, onClick, selectedDate }, ref) => {
+  const date =
+    selectedDate != null &&
+    selectedDate instanceof Date &&
+    !isNaN(selectedDate.getTime())
+      ? selectedDate
+      : value
+        ? parseDateIOSSafe(value)
+        : null;
+  const dateStr = date
+    ? date.toLocaleString("en-US", { day: "numeric", month: "short", year: "numeric" })
+    : "Select date";
+
+  return (
+    <div
+      className="flex cursor-pointer justify-between items-center w-full py-3 px-4 rounded-lg bg-white border border-[#8A8AA033] text-[#646E82] text-[14px]"
+      onClick={onClick}
+      ref={ref}
+    >
+      <span>{dateStr}</span>
+    </div>
+  );
+});
+MobileDateInput.displayName = "MobileDateInput";
+
+const ScheduleToggle = ({ id, checked, disabled, onChange }) => (
+  <label
+    htmlFor={id}
+    className={`relative inline-flex items-center ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+  >
+    <input
+      id={id}
+      type="checkbox"
+      className="sr-only peer"
+      checked={checked}
+      disabled={disabled}
+      onChange={(e) => onChange(e.target.checked)}
+    />
+    <span className="relative h-6 w-11 rounded-full bg-gray-200 transition-colors peer-checked:bg-secondary peer-focus-visible:ring-2 peer-focus-visible:ring-secondary peer-focus-visible:ring-offset-2 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:after:translate-x-5" />
+  </label>
+);
 
 const Schedulecall = () => {
   const {
@@ -44,33 +212,6 @@ const Schedulecall = () => {
   const [serverBaseline, setServerBaseline] = useState({}); // { [id]: { enabled, start, end } }
 
   // ---------- Helpers ----------
-  // Parse date in an iOS/Chrome-safe way. Manually parse "YYYY-MM-DD HH:mm:ss" to avoid WebKit quirks.
-  const parseDateIOSSafe = (d) => {
-    if (!d) return null;
-    if (d instanceof Date) return isNaN(d.getTime()) ? null : d;
-    if (typeof d !== "string") return null;
-    const trimmed = d.trim();
-    if (trimmed.includes("0000-00-00") || trimmed.startsWith("0000")) return null;
-    // Manual parse for "2026-03-09 03:54:00" or "2026-03-09T03:54:00" (optional .millis)
-    const match = trimmed.match(
-      /^(\d{4})-(\d{2})-(\d{2})[T\s](\d{2}):(\d{2}):(\d{2})(?:\.\d+)?\s*$/
-    );
-    if (match) {
-      const y = parseInt(match[1], 10);
-      const mo = parseInt(match[2], 10) - 1;
-      const day = parseInt(match[3], 10);
-      const h = parseInt(match[4], 10);
-      const min = parseInt(match[5], 10);
-      const sec = parseInt(match[6], 10) || 0;
-      const dt = new Date(y, mo, day, h, min, sec, 0);
-      return isNaN(dt.getTime()) ? null : dt;
-    }
-    // Fallback: try native after replacing space with T
-    const normalized = trimmed.replace(/\s+/, "T");
-    const dt = new Date(normalized);
-    return isNaN(dt.getTime()) ? null : dt;
-  };
-
   const parseServerDate = (d) => parseDateIOSSafe(d);
 
   // Treat zero/invalid as null
@@ -164,102 +305,6 @@ const Schedulecall = () => {
       return next;
     });
   }, [buyData]);
-
-  const ExampleCustomInput = forwardRef(({ value, onClick, error, selectedDate }, ref) => {
-    // Use selectedDate (Date) when provided; otherwise try parsing value (react-datepicker passes formatted string)
-    const date = selectedDate != null && selectedDate instanceof Date && !isNaN(selectedDate.getTime())
-      ? selectedDate
-      : (value ? parseDateIOSSafe(value) : null);
-    if (!date) {
-      return (
-        <div className="flex flex-col justify-center align-center min-w-[281px]">
-          <div
-            className="flex cursor-pointer justify-center items-baseline"
-            onClick={onClick}
-            ref={ref}
-          >
-            <Typography className="md:text-[30px] text-[25px] example-custom-input font-medium text-[#646E82] p-2">
-              Select date & time
-            </Typography>
-          </div>
-          {error && (
-            <Typography className="text-xs text-red-500 mt-1 px-2 text-center self-center">
-              {error}
-            </Typography>
-          )}
-        </div>
-      );
-    }
-    const timeStr = date
-      .toLocaleString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      })
-      .toUpperCase();
-    const dateStr = date.toLocaleString("en-US", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-
-    return (
-      <div className="flex flex-col justify-center align-center min-w-[281px]">
-        <div
-          className="flex cursor-pointer justify-center items-baseline"
-          onClick={onClick}
-          ref={ref}
-        >
-          <Typography className="md:text-[30px] text-[25px] example-custom-input font-medium text-[#646E82] p-2">
-            {timeStr} <span className="text-xs ml-2">{dateStr}</span>
-          </Typography>
-        </div>
-        {error && (
-          <Typography className="text-xs text-red-500 mt-1 px-2 text-center self-center">
-            {error}
-          </Typography>
-        )}
-      </div>
-    );
-  });
-
-  // Mobile: display time only (for time-first picker)
-  const MobileTimeInput = forwardRef(({ value, onClick, selectedDate }, ref) => {
-    const date = selectedDate != null && selectedDate instanceof Date && !isNaN(selectedDate.getTime())
-      ? selectedDate
-      : (value ? parseDateIOSSafe(value) : null);
-    const timeStr = date
-      ? date.toLocaleString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).toUpperCase()
-      : "Select time";
-    return (
-      <div
-        className="flex cursor-pointer justify-between items-center w-full py-3 px-4 rounded-lg bg-white border border-[#8A8AA033] text-[#646E82] text-[14px]"
-        onClick={onClick}
-        ref={ref}
-      >
-        <span>{timeStr}</span>
-      </div>
-    );
-  });
-
-  // Mobile: display date only (for date picker)
-  const MobileDateInput = forwardRef(({ value, onClick, selectedDate }, ref) => {
-    const date = selectedDate != null && selectedDate instanceof Date && !isNaN(selectedDate.getTime())
-      ? selectedDate
-      : (value ? parseDateIOSSafe(value) : null);
-    const dateStr = date
-      ? date.toLocaleString("en-US", { day: "numeric", month: "short", year: "numeric" })
-      : "Select date";
-    return (
-      <div
-        className="flex cursor-pointer justify-between items-center w-full py-3 px-4 rounded-lg bg-white border border-[#8A8AA033] text-[#646E82] text-[14px]"
-        onClick={onClick}
-        ref={ref}
-      >
-        <span>{dateStr}</span>
-      </div>
-    );
-  });
 
   const formatDateTime = (date) => {
     const dateObj = parseDateIOSSafe(date);
@@ -589,14 +634,12 @@ const Schedulecall = () => {
                             </Typography>
                           </div>
 
-                          {/* Switch: drives ONLY local pending state */}
-                          <Switch
-                            className="checked:bg-secondary"
+                          {/* Checkbox toggle: drives ONLY local pending state */}
+                          <ScheduleToggle
+                            id={`schedule-toggle-${single.id}`}
                             checked={uiEnabled}
                             disabled={!isActive}
-                            onChange={(e) => {
-                              const next = e.target.checked;
-
+                            onChange={(next) => {
                               // remember intent for this row
                               setPendingToggle((prev) => ({
                                 ...prev,
@@ -659,9 +702,7 @@ const Schedulecall = () => {
                                   dateFormat="h:mm aa d MMMM yyyy"
                                   minDate={new Date()}
                                   filterTime={filterPassedTime}
-                                  popperContainer={({ children }) =>
-                                    createPortal(children, document.body)
-                                  }
+                                  popperContainer={DatePickerPopper}
                                   popperClassName="schedule-datepicker-popper"
                                   popperPlacement="auto-start"
                                   popperProps={{ strategy: "fixed" }}
@@ -709,9 +750,7 @@ const Schedulecall = () => {
                                       buyData[index]?.incall_start_dt
                                     )
                                   }
-                                  popperContainer={({ children }) =>
-                                    createPortal(children, document.body)
-                                  }
+                                  popperContainer={DatePickerPopper}
                                   popperClassName="schedule-datepicker-popper"
                                   popperPlacement="auto-start"
                                   popperProps={{ strategy: "fixed" }}
@@ -745,9 +784,7 @@ const Schedulecall = () => {
                                     showTimeSelect={false}
                                     dateFormat="d MMM yyyy"
                                     minDate={new Date()}
-                                    popperContainer={({ children }) =>
-                                      createPortal(children, document.body)
-                                    }
+                                    popperContainer={DatePickerPopper}
                                     popperClassName="schedule-datepicker-popper"
                                     popperPlacement="auto-start"
                                     popperProps={{ strategy: "fixed" }}
@@ -770,9 +807,7 @@ const Schedulecall = () => {
                                     dateFormat="h:mm aa"
                                     minDate={new Date()}
                                     filterTime={filterPassedTime}
-                                    popperContainer={({ children }) =>
-                                      createPortal(children, document.body)
-                                    }
+                                    popperContainer={DatePickerPopper}
                                     popperClassName="schedule-datepicker-popper"
                                     popperPlacement="auto-start"
                                     popperProps={{ strategy: "fixed" }}
@@ -806,9 +841,7 @@ const Schedulecall = () => {
                                         ? parseDateIOSSafe(buyData[index]?.incall_start_dt) || new Date()
                                         : new Date()
                                     }
-                                    popperContainer={({ children }) =>
-                                      createPortal(children, document.body)
-                                    }
+                                    popperContainer={DatePickerPopper}
                                     popperClassName="schedule-datepicker-popper"
                                     popperPlacement="auto-start"
                                     popperProps={{ strategy: "fixed" }}
@@ -837,9 +870,7 @@ const Schedulecall = () => {
                                     filterTime={(time) =>
                                       filterPassedTime(time, buyData[index]?.incall_start_dt)
                                     }
-                                    popperContainer={({ children }) =>
-                                      createPortal(children, document.body)
-                                    }
+                                    popperContainer={DatePickerPopper}
                                     popperClassName="schedule-datepicker-popper"
                                     popperPlacement="auto-start"
                                     popperProps={{ strategy: "fixed" }}

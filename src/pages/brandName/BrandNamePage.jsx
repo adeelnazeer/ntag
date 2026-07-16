@@ -5,6 +5,9 @@ import { ConstentRoutes } from "../../utilities/routesConst";
 import BuyBrandNameFlow from "./BuyBrandNameFlow";
 import BrandNameIntroPage from "./BrandNameIntroPage";
 import BrandNameRecurringFeePage from "./BrandNameRecurringFeePage";
+import BrandNameCallersPage from "./BrandNameCallersPage";
+import BrandNameLinkCallersPage from "./BrandNameLinkCallersPage";
+import BrandNameSchedulePage from "./BrandNameSchedulePage";
 
 const TITLE_KEYS = {
   [ConstentRoutes.brandNameCallBuy]: "buyBrandName",
@@ -34,6 +37,18 @@ export default function BrandNamePage() {
 
   if (pathname === ConstentRoutes.brandNameCallRecurringFee) {
     return <BrandNameRecurringFeePage />;
+  }
+
+  if (pathname === ConstentRoutes.brandNameCallNumbers) {
+    return <BrandNameCallersPage />;
+  }
+
+  if (pathname === ConstentRoutes.brandNameCallLinkNumbers) {
+    return <BrandNameLinkCallersPage />;
+  }
+
+  if (pathname === ConstentRoutes.brandNameCallSchedule) {
+    return <BrandNameSchedulePage />;
   }
 
   return (

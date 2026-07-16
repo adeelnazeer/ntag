@@ -1,63 +1,156 @@
 /* eslint-disable react/prop-types */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button, Checkbox, Typography } from "@material-tailwind/react";
-import { FaCheck } from "react-icons/fa6";
+import { FaCheck, FaTrash, FaXmark } from "react-icons/fa6";
 import {
   HiOutlineCreditCard,
-  HiOutlineDevicePhoneMobile,
-  HiOutlineBuildingLibrary,
   HiOutlineUserGroup,
   HiOutlinePencilSquare,
 } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import TelebirrLogo from "../../../assets/images/Telebirr.png";
+import APICall from "../../../network/APICall";
+import EndPoints from "../../../network/EndPoints";
 import BrandNameStepper from "./BrandNameStepper";
 import BrandNameConfirmPayment from "../../../modals/BrandNameConfirmPayment";
+import BrandNameCancelRequestModal from "../../../modals/BrandNameCancelRequestModal";
 import LinkCallerModal from "./LinkCallerModal";
 import { ConstentRoutes } from "../../../utilities/routesConst";
 
 const formatPrice = (value) => Number(value || 0).toFixed(2);
 
 const PAYMENT_METHODS = [
-  { id: "super_app", icon: HiOutlineDevicePhoneMobile, accent: "bg-secondary", businessType: "BuyGoods" },
-  { id: "partner_app", icon: HiOutlineBuildingLibrary, accent: "bg-brand-blue", businessType: "TransferToOtherOrg" },
+  { id: "super_app", businessType: "BuyGoods" },
+  { id: "partner_app", businessType: "TransferToOtherOrg" },
 ];
 
-export default function BrandNameRequestApproved({ request, onProceed, isProcessing }) {
+export default function BrandNameRequestApproved({
+  request,
+  onProceed,
+  onCancel,
+  isProcessing,
+  isCancelling,
+  initialSelectedCallers = [],
+  linkFlowMode = false,
+}) {
   const { t } = useTranslation(["brandName", "common"]);
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [termError, setTermError] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
   const [showLinkCallerModal, setShowLinkCallerModal] = useState(false);
-  const [selectedCallers, setSelectedCallers] = useState([]);
+  const [selectedCallers, setSelectedCallers] = useState(
+    linkFlowMode ? initialSelectedCallers : []
+  );
+  const [calculatedPricing, setCalculatedPricing] = useState(null);
   const [callerError, setCallerError] = useState("");
+  const [isCalculatingPrice, setIsCalculatingPrice] = useState(linkFlowMode);
 
   const availableCallers = useMemo(
     () => (Array.isArray(request?.callers) ? request.callers : []),
     [request?.callers]
   );
 
+  const handleSaveCallers = async (callers) => {
+    if (!request) return;
+
+    setSelectedCallers(callers);
+
+    if (!linkFlowMode && callers.length === (request.callers_count ?? 0)) {
+      setCalculatedPricing(null);
+      setCallerError("");
+      return;
+    }
+
+    try {
+      const response = await APICall(
+        "post",
+        { new_callers_count: callers.length },
+        EndPoints.customer.brandNameCalculatePrice
+      );
+
+      if (response?.success && response?.data) {
+        setCalculatedPricing(response.data);
+        setCallerError("");
+      } else {
+        setCalculatedPricing(null);
+        setCallerError(response?.message || t("brandName:approved.linkCallers.priceError"));
+        toast.error(response?.message || t("brandName:approved.linkCallers.priceError"));
+      }
+    } catch (error) {
+      setCalculatedPricing(null);
+      const message =
+        typeof error === "string"
+          ? error
+          : error?.message || t("brandName:approved.linkCallers.priceError");
+      setCallerError(message);
+      toast.error(message);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    if (!linkFlowMode || initialSelectedCallers.length === 0) return;
+
+    setSelectedCallers(initialSelectedCallers);
+    setIsCalculatingPrice(true);
+    handleSaveCallers(initialSelectedCallers)
+      .catch(() => { })
+      .finally(() => setIsCalculatingPrice(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [linkFlowMode]);
+
   if (!request) return null;
 
   const requestRef = request.request_ref || `#${request.request_id}`;
   const callersCount = request.callers_count ?? 0;
-  const registrationFee =
-    request.approved_registration_fee ?? request.registration_fee ?? 0;
-  const perCallerFee =
-    request.discounted_fee_per_caller ?? request.monthly_fee_per_caller ?? 0;
-  const monthlyRecurring =
-    request.estimated_monthly_recurring ?? callersCount * perCallerFee;
-  const totalDueNow = request.total_amount ?? registrationFee;
+  const selectedCallersCount = selectedCallers.length || callersCount;
+  const useOriginalPricing = linkFlowMode
+    ? !calculatedPricing
+    : !calculatedPricing || selectedCallers.length === callersCount;
+
+  const registrationFee = useOriginalPricing
+    ? request.approved_registration_fee ?? request.registration_fee ?? 0
+    : calculatedPricing.approved_registration_fee ?? calculatedPricing.registration_fee ?? 0;
+  const perCallerFee = useOriginalPricing
+    ? request.discounted_fee_per_caller ?? request.monthly_fee_per_caller ?? 0
+    : calculatedPricing.discounted_fee_per_caller ??
+    calculatedPricing.recurring_fee_per_caller ??
+    calculatedPricing.approved_fee_per_caller ??
+    0;
+  const monthlyRecurring = useOriginalPricing
+    ? request.estimated_monthly_recurring ?? callersCount * perCallerFee
+    : calculatedPricing.total_recurring ?? selectedCallersCount * perCallerFee;
+  const totalDueNow = useOriginalPricing
+    ? request.total_amount ?? registrationFee
+    : calculatedPricing.total_amount ?? registrationFee;
+  const basePrice = useOriginalPricing
+    ? request?.base_price ?? 0
+    : calculatedPricing?.base_price ?? 0;
+  const exciseTax = useOriginalPricing
+    ? request?.excisetax ?? 0
+    : calculatedPricing?.excisetax ?? 0;
+  const vat = useOriginalPricing ? request?.vat ?? 0 : calculatedPricing?.vat ?? 0;
+  const vatPercentage = useOriginalPricing
+    ? request?.vat_percentage ?? 0
+    : calculatedPricing?.vat_percentage ?? 0;
+  const recurringDiscountPercent = useOriginalPricing
+    ? request?.recurring_discount_percent ?? 0
+    : calculatedPricing?.recurring_discount_percent ?? 0;
+  const displayCallersCount = useOriginalPricing
+    ? callersCount
+    : calculatedPricing?.new_callers_count ?? selectedCallersCount;
+
   const selectedBusinessType =
     PAYMENT_METHODS.find((method) => method.id === selectedMethod)?.businessType ?? "BuyGoods";
-  const hasExactCallerSelection = selectedCallers.length === callersCount;
+  const hasValidCallerSelection = selectedCallers.length > 0;
 
   const handleOpenConfirm = () => {
     if (!selectedMethod) return;
-    if (!hasExactCallerSelection) {
-      setCallerError(
-        t("brandName:approved.linkCallers.errorExact", { count: callersCount })
-      );
+    if (!hasValidCallerSelection) {
+      setCallerError(t("brandName:approved.linkCallers.errorExact"));
       return;
     }
     if (!termsAccepted) {
@@ -73,16 +166,9 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
     onProceed?.(selectedMethod, selectedCallers);
   };
 
-  const handleSaveCallers = (callers) => {
-    setSelectedCallers(callers);
-    if (callers.length === callersCount) {
-      setCallerError("");
-    }
-  };
-
   return (
     <div className="flex flex-col gap-4">
-      <section className="overflow-hidden rounded-xl border border-brand-green/40 bg-brand-green-pale shadow-sm">
+      {!linkFlowMode && <section className="overflow-hidden rounded-xl border border-brand-green/40 bg-brand-green-pale shadow-sm">
         <div className="flex items-start justify-between gap-3 px-5 py-4">
           <div className="flex items-start gap-3">
             <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-secondary text-white">
@@ -104,11 +190,11 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
             {request.status_label}
           </span>
         </div>
-      </section>
+      </section>}
 
-      <section className="rounded-xl border border-[#E5E7EB] bg-white p-4 shadow-sm sm:p-6">
+      {!linkFlowMode && <section className="rounded-xl border border-[#E5E7EB] bg-white p-4 shadow-sm sm:p-6">
         <BrandNameStepper currentStep={4} />
-      </section>
+      </section>}
 
       <section className="rounded-xl border border-brand-green/40 bg-white p-5 shadow-sm sm:p-6">
         <div className="text-center">
@@ -125,7 +211,7 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
           <div className="space-y-2 text-sm">
             <div className="flex items-center justify-between gap-4">
               <span className="text-[#4B5563]">{t("brandName:approved.registeredMobile")}</span>
-              <span className="font-semibold text-[#1F2937]">{request.msisdn}</span>
+              <span className="font-semibold text-[#1F2937]">+{request.msisdn}</span>
             </div>
             <div className="flex items-center justify-between gap-4">
               <span className="text-[#4B5563]">{t("brandName:approved.registrationFee")}</span>
@@ -135,7 +221,7 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
             </div>
             <div className="flex items-center justify-between gap-4">
               <span className="text-[#4B5563]">{t("brandName:approved.numberOfCallers")}</span>
-              <span className="font-semibold text-[#1F2937]">{callersCount}</span>
+              <span className="font-semibold text-[#1F2937]">{displayCallersCount}</span>
             </div>
             <div className="flex items-center justify-between gap-4">
               <span className="text-[#4B5563]">{t("brandName:approved.perCallerFee", { serviceId: request.service_id })}</span>
@@ -147,7 +233,7 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
             <div className="flex items-center justify-between gap-4">
               <span className="text-[#4B5563]">  Discount Percent</span>
               <span className="font-semibold text-[#1F2937]">
-                {request?.recurring_discount_percent ?? 0}%
+                {recurringDiscountPercent}%
               </span>
             </div>
 
@@ -162,19 +248,19 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
             <div className="flex items-center justify-between gap-4 border-t border-secondary/20 pt-2">
               <span className="text-[#4B5563]">Base Price</span>
               <span className="font-semibold text-[#1F2937]">
-                {formatPrice(request?.base_price ?? 0)} {t("brandName:approved.currency")}
+                {formatPrice(basePrice)} {t("brandName:approved.currency")}
               </span>
             </div>
             <div className="flex items-center justify-between gap-4">
               <span className="text-[#4B5563]">Excise Tax</span>
               <span className="font-semibold text-[#1F2937]">
-                {formatPrice(request?.excisetax ?? 0)} {t("brandName:approved.currency")}
+                {formatPrice(exciseTax)} {t("brandName:approved.currency")}
               </span>
             </div>
             <div className="flex items-center justify-between gap-4">
-              <span className="text-[#4B5563]">VAT ({request?.vat_percentage ?? 0}%)</span>
+              <span className="text-[#4B5563]">VAT ({vatPercentage}%)</span>
               <span className="font-semibold text-[#1F2937]">
-                {formatPrice(request?.vat ?? 0)} {t("brandName:approved.currency")}
+                {formatPrice(vat)} {t("brandName:approved.currency")}
               </span>
             </div>
 
@@ -193,78 +279,109 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
       </section>
 
       <section className="rounded-xl border border-[#E5E7EB] bg-white p-4 shadow-sm sm:p-6">
-        <div className="rounded-xl border border-secondary/20 bg-gradient-to-r from-brand-green-pale to-white p-4 sm:p-5">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        {linkFlowMode ? (
+          <div className="rounded-xl border border-secondary/20 bg-gradient-to-r from-brand-green-pale to-white p-4 sm:p-5">
             <div className="flex items-start gap-3">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-secondary text-white shadow-sm">
                 <HiOutlineUserGroup className="h-6 w-6" aria-hidden />
               </span>
               <div>
                 <h2 className="text-sm font-bold text-brand-blue sm:text-base">
-                  {t("brandName:approved.linkCallers.title")}
+                  {t("brandName:addRemoveNumbers.linkSummaryTitle")}
                 </h2>
                 <p className="mt-1 text-xs leading-relaxed text-[#6B7280] sm:text-sm">
-                  {t("brandName:approved.linkCallers.subtitle", { count: callersCount })}
-                </p>
-                <p className="mt-2 text-xs text-[#9CA3AF]">
-                  {t("brandName:approved.linkCallers.maxHint", { max: callersCount })}
+                  {t("brandName:addRemoveNumbers.linkSummarySubtitle", {
+                    count: selectedCallers.length,
+                  })}
                 </p>
               </div>
             </div>
 
-            <Button
-              type="button"
-              onClick={() => setShowLinkCallerModal(true)}
-              className="flex items-center justify-center gap-2 bg-secondary px-5 py-2.5 text-sm font-semibold normal-case text-white shadow-none hover:bg-brand-green-dark hover:shadow-none"
-            >
-              {selectedCallers.length > 0 ? (
-                <HiOutlinePencilSquare className="h-5 w-5" />
-              ) : (
-                <HiOutlineUserGroup className="h-5 w-5" />
-              )}
-              {selectedCallers.length > 0
-                ? t("brandName:approved.linkCallers.editButton")
-                : t("brandName:approved.linkCallers.button")}
-            </Button>
-          </div>
+            {selectedCallers.length > 0 ? (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {selectedCallers.map((caller) => (
+                  <span
+                    key={caller.id}
+                    className="inline-flex items-center gap-2 rounded-lg border border-secondary/20 bg-white px-3 py-1.5 text-xs font-medium text-[#374151]"
+                  >
+                  
+                    <span className="text-[#9CA3AF]">+{caller.msisdn}</span>
+                  </span>
+                ))}
+              </div>
+            ) : null}
 
-          <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span
-              className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                hasExactCallerSelection
+            {callerError ? (
+              <p className="mt-3 text-sm text-[#FF0000]">{callerError}</p>
+            ) : null}
+
+            {isCalculatingPrice ? (
+              <p className="mt-3 text-sm text-[#6B7280]">
+                {t("brandName:approved.linkCallers.priceLoading")}
+              </p>
+            ) : null}
+          </div>
+        ) : (
+          <div className="rounded-xl border border-secondary/20 bg-gradient-to-r from-brand-green-pale to-white p-4 sm:p-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-3">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-secondary text-white shadow-sm">
+                  <HiOutlineUserGroup className="h-6 w-6" aria-hidden />
+                </span>
+                <div>
+                  <h2 className="text-sm font-bold text-brand-blue sm:text-base">
+                    {t("brandName:approved.linkCallers.title")}
+                  </h2>
+                  <p className="mt-1 text-xs leading-relaxed text-[#6B7280] sm:text-sm">
+                    {t("brandName:approved.linkCallers.subtitle", { count: callersCount })}
+                  </p>
+                  <p className="mt-2 text-xs text-[#9CA3AF]">
+                    {t("brandName:approved.linkCallers.maxHint")}
+                  </p>
+                </div>
+              </div>
+
+              <Button
+                type="button"
+                onClick={() => setShowLinkCallerModal(true)}
+                className="flex items-center justify-center gap-2 bg-secondary px-5 py-2.5 text-sm font-semibold normal-case text-white shadow-none hover:bg-brand-green-dark hover:shadow-none"
+              >
+                {selectedCallers.length > 0 ? (
+                  <HiOutlinePencilSquare className="h-5 w-5" />
+                ) : (
+                  <HiOutlineUserGroup className="h-5 w-5" />
+                )}
+                {selectedCallers.length > 0
+                  ? t("brandName:approved.linkCallers.editButton")
+                  : t("brandName:approved.linkCallers.button")}
+              </Button>
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span
+                className={`rounded-full px-3 py-1 text-xs font-semibold ${hasValidCallerSelection
                   ? "bg-secondary/15 text-brand-green-dark"
                   : "bg-amber-50 text-amber-800"
-              }`}
-            >
-              {hasExactCallerSelection
-                ? t("brandName:approved.linkCallers.selectedComplete", {
-                    count: callersCount,
-                  })
-                : t("brandName:approved.linkCallers.selectedSummary", {
-                    selected: selectedCallers.length,
-                    max: callersCount,
-                  })}
-            </span>
-          </div>
-
-          {/* {selectedCallers.length > 0 ? (
-            <div className="mt-3 flex flex-wrap gap-2">
-              {selectedCallers.map((caller) => (
-                <span
-                  key={caller.id}
-                  className="inline-flex items-center gap-2 rounded-lg border border-secondary/20 bg-white px-3 py-1.5 text-xs font-medium text-[#374151]"
-                >
-                  <span className="font-semibold text-brand-blue">{caller.name_tag?.trim() || caller.msisdn}</span>
-                  <span className="text-[#9CA3AF]">{caller.msisdn}</span>
-                </span>
-              ))}
+                  }`}
+              >
+                {hasValidCallerSelection
+                  ? selectedCallers.length === callersCount
+                    ? t("brandName:approved.linkCallers.selectedComplete", {
+                      count: selectedCallers.length,
+                    })
+                    : t("brandName:approved.linkCallers.selectedSummary", {
+                      selected: selectedCallers.length,
+                      max: callersCount,
+                    })
+                  : t("brandName:approved.linkCallers.noneSelected")}
+              </span>
             </div>
-          ) : null} */}
 
-          {callerError ? (
-            <p className="mt-3 text-sm text-[#FF0000]">{callerError}</p>
-          ) : null}
-        </div>
+            {callerError ? (
+              <p className="mt-3 text-sm text-[#FF0000]">{callerError}</p>
+            ) : null}
+          </div>
+        )}
 
         <div className="mb-1 mt-6 flex items-center gap-2">
           <HiOutlineCreditCard className="h-5 w-5 text-brand-blue" aria-hidden />
@@ -278,7 +395,6 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
 
         <div className="grid gap-3 sm:grid-cols-2">
           {PAYMENT_METHODS.map((method) => {
-            const Icon = method.icon;
             const active = selectedMethod === method.id;
             return (
               <button
@@ -290,8 +406,12 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
                   : "border-[#E5E7EB] bg-white hover:border-secondary"
                   }`}
               >
-                <span className={`grid h-12 w-12 place-items-center rounded-lg ${method.accent} text-white`}>
-                  <Icon className="h-6 w-6" aria-hidden />
+                <span className="grid h-14 w-14 place-items-center rounded-lg bg-white">
+                  <img
+                    src={TelebirrLogo}
+                    alt="Telebirr"
+                    className="h-12 w-12 object-contain"
+                  />
                 </span>
                 <span className="text-sm font-bold text-brand-blue">
                   {t(`brandName:approved.methods.${method.id}.title`)}
@@ -335,7 +455,13 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
 
         <Button
           type="button"
-          disabled={!selectedMethod || isProcessing || !hasExactCallerSelection}
+          disabled={
+            !selectedMethod ||
+            isProcessing ||
+            !hasValidCallerSelection ||
+            isCalculatingPrice ||
+            (linkFlowMode && !calculatedPricing)
+          }
           onClick={handleOpenConfirm}
           className="mt-4 w-full bg-secondary py-3 text-sm font-semibold normal-case text-white shadow-none hover:bg-brand-green-dark hover:shadow-none disabled:bg-[#D1D5DB] disabled:opacity-100"
         >
@@ -345,14 +471,58 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
         </Button>
       </section>
 
-      <LinkCallerModal
-        isOpen={showLinkCallerModal}
-        onClose={() => setShowLinkCallerModal(false)}
-        callers={availableCallers}
-        maxSelectable={callersCount}
-        initialSelected={selectedCallers}
-        onSave={handleSaveCallers}
-      />
+      {!linkFlowMode ? (
+        <section className="overflow-hidden rounded-xl border border-red-200 bg-red-50/40 p-5 shadow-sm">
+          <div className="flex items-start gap-3">
+            <FaTrash className="mt-0.5 h-4 w-4 shrink-0 text-red-600" aria-hidden />
+            <h2 className="text-base font-bold text-red-800 sm:text-lg">
+              {t("brandName:cancelModal.title")}
+            </h2>
+          </div>
+          <p className="mt-3 text-sm leading-relaxed text-[#7F1D1D] sm:text-[15px]">
+            {t("brandName:cancelModal.descriptionBefore")}
+            <span className="font-bold text-red-900">&quot;{request.brandname}&quot;</span>
+            {t("brandName:cancelModal.descriptionAfter")}
+          </p>
+          <Button
+            type="button"
+            onClick={() => setShowCancelModal(true)}
+            disabled={isCancelling}
+            className="mt-4 flex w-fit items-center gap-2 border border-[#D1D5DB] bg-white px-5 py-2.5 text-sm font-semibold normal-case text-[#1F2937] shadow-none hover:bg-red-50 hover:shadow-none disabled:opacity-60"
+          >
+            <FaXmark className="h-4 w-4 text-[#374151]" aria-hidden />
+            {t("brandName:cancelModal.confirmButton")}
+          </Button>
+        </section>
+      ) : null}
+
+      {!linkFlowMode ? (
+        <LinkCallerModal
+          isOpen={showLinkCallerModal}
+          onClose={() => setShowLinkCallerModal(false)}
+          callers={availableCallers}
+          maxSelectable={callersCount}
+          initialSelected={selectedCallers}
+          onSave={handleSaveCallers}
+        />
+      ) : null}
+
+      {!linkFlowMode ? (
+        <BrandNameCancelRequestModal
+          isOpen={showCancelModal}
+          onClose={() => {
+            if (!isCancelling) setShowCancelModal(false);
+          }}
+          onConfirm={async () => {
+            try {
+              await onCancel?.();
+            } finally {
+              setShowCancelModal(false);
+            }
+          }}
+          isCancelling={isCancelling}
+        />
+      ) : null}
 
       <BrandNameConfirmPayment
         isOpen={showConfirmModal}
@@ -366,10 +536,16 @@ export default function BrandNameRequestApproved({ request, onProceed, isProcess
         serviceId={request.service_id}
         registrationFee={registrationFee}
         perCallerFee={perCallerFee}
-        callersCount={callersCount}
+        callersCount={displayCallersCount}
         monthlyRecurring={monthlyRecurring}
         totalDueNow={totalDueNow}
-        request={request}
+        request={{
+          ...request,
+          base_price: basePrice,
+          excisetax: exciseTax,
+          vat,
+          vat_percentage: vatPercentage,
+        }}
         isProcessing={isProcessing}
       />
     </div>

@@ -1,7 +1,7 @@
 const EndPoints = {
   customer: {
     corp: "/customer/corptaglist",
-    generateOtp: "/customer/generateotp",
+    generateOtp: "/customer/generate-otp",
     verifyOty: "/customer/verifyotp",
     register: "/customer/auth/register",
     login: "/customer/auth/login",
@@ -13,6 +13,8 @@ const EndPoints = {
     IndividualPostSchedular: "/individual/call-scheduling",
     getReserve: "/customer/reserve/tags",
     verifyAccount: "/customer/auth/very/accounts",
+    verifyAccountType: "/customer/auth/verify-account-type",
+    additionalRegister: "/customer/auth/additional/register",
     getFilter: "/customer/unique-tag-digits",
     forgotPassword: "/customer/auth/forgot/password",
     IndividualforgotPassword: "/individual/auth/forgot/password",
@@ -67,8 +69,11 @@ const EndPoints = {
     brandNameRequest: "/customer/brandname/request",
     brandNameRequests: "/customer/brandname/requests",
     brandNameRequestCancel: (id) => `/customer/brandname/cancel-request`,
+    brandNameCalculatePrice: "/customer/brandname/calculateprice",
+    brandNameCallersList: "/customer/brandname/callers-list",
     brandNameBuy: "/customer/brandname/buy",
     subscriberTagStatus: "/customer/subscriber/tag-status",
+    subscriberSearch: "/customer/subscriber-search",
 
     // Fayda eSignet verification
     faydaAuthUrl: "/individual/auth/fayda/auth-url",
@@ -105,5 +110,6 @@ const EndPoints = {
     },
   },
 };
+
 
 export default EndPoints;

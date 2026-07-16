@@ -10,6 +10,8 @@ const FEATURES = [
   { id: "link", icon: HiOutlineUsers, color: "text-brand-blue" },
 ];
 
+const MAX_ALLOWED_LIMIT = import.meta.env.VITE_MAX_ALLOWED_LIMIT ?? "1000";
+
 export default function BrandNameRequestEmpty({ onRegister }) {
   const { t } = useTranslation(["brandName"]);
 
@@ -43,7 +45,9 @@ export default function BrandNameRequestEmpty({ onRegister }) {
             >
               <Icon className={`h-5 w-5 ${feature.color}`} aria-hidden />
               <p className="mt-2 text-sm font-bold text-brand-blue">
-                {t(`brandName:emptyState.features.${feature.id}.title`)}
+                {feature.id === "link"
+                  ? t("brandName:emptyState.features.link.title", { limit: MAX_ALLOWED_LIMIT })
+                  : t(`brandName:emptyState.features.${feature.id}.title`)}
               </p>
               <p className="mt-1 text-xs leading-relaxed text-[#6B7280]">
                 {t(`brandName:emptyState.features.${feature.id}.desc`)}

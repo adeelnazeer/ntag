@@ -7,9 +7,17 @@ import PhoneInput from "react-phone-number-input";
 import TickIcon from '../../../assets/images/tick.png';
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { ConstentRoutes } from "../../../utilities/routesConst";
+import {
+  PASSWORD_POLICY,
+  validateConfirmPasswordField,
+  validatePasswordField,
+} from "../../../utilities/auth";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { TbCircleCheck } from "react-icons/tb";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
+import { getRegistrationFlowType } from "../../../utilities/registerAccountType";
 
 // Apply CSS fix for autofill styling
 const autofillStyle = `
@@ -43,9 +51,12 @@ const CompanyForm = ({
   setData,
   touchedFields,
   dirtyFields,
+  registrationFlow = "normal",
+  setRegistrationFlow,
 }) => {
   const watchAllFields = watch();
-  const { t } = useTranslation(["common"])
+  const { t } = useTranslation(["common", "auth"])
+  const navigate = useNavigate();
   const [phone, setPhone] = useState();
   const [isValidPhone, setIsValidPhone] = useState(false);
   const [isGetCodeDisabled, setIsGetCodeDisabled] = useState(false);
@@ -55,6 +66,7 @@ const CompanyForm = ({
   const [originalPhoneNumber, setOriginalPhoneNumber] = useState(null);
   const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
   const [lastVerifiedCode, setLastVerifiedCode] = useState(null);
+  const [accountTypeVerifying, setAccountTypeVerifying] = useState(false);
   const lastVerifiedCodeRef = useRef(null);
 
 
@@ -122,7 +134,46 @@ const CompanyForm = ({
   const lastValidatedPhoneRef = useRef(null);
   const validationTimeoutRef = useRef(null);
 
-  // Handle validation - only call API when value length > 3 (or 9 digits for phone)
+  const verifyPhoneAccountType = useCallback(async (value) => {
+    const cleanNumber = value ? value.replace(/^\+/, "").replace(/\s/g, "") : "";
+    if (cleanNumber.length < 12) return;
+
+    setAccountTypeVerifying(true);
+    try {
+      const res = await registerData.verifyAccountType(cleanNumber);
+      if (!res) return;
+
+      const flowType = getRegistrationFlowType(res);
+      if (flowType === "ussd" || flowType === "corporate_additional") {
+        setRegistrationFlow?.(flowType);
+        if (flowType === "corporate_additional" && res?.account_id) {
+          localStorage.setItem("additional_account_id", res.account_id);
+        } else {
+          localStorage.removeItem("additional_account_id");
+        }
+        registerData.setFieldValidationSuccess("phone_number");
+        return;
+      }
+
+      if (!res?.success) {
+        registerData.setFieldValidationError(
+          "phone_number",
+          res?.message || "Phone number validation failed."
+        );
+        setRegistrationFlow?.("normal");
+        localStorage.removeItem("additional_account_id");
+        return;
+      }
+
+      setRegistrationFlow?.("normal");
+      localStorage.removeItem("additional_account_id");
+      registerData.verifyAccount({ phone_number: cleanNumber }, "phone_number");
+    } finally {
+      setAccountTypeVerifying(false);
+    }
+  }, [registerData, setRegistrationFlow]);
+
+  // Handle validation - only call API when value length > 3 (or full phone for account type)
   const handleValidation = useCallback((value, fieldName) => {
     if (!['account_id', 'email', 'phone_number', 'company_name'].includes(fieldName) || !value || value.trim() === '') {
       return;
@@ -130,19 +181,20 @@ const CompanyForm = ({
     const cleanValue = value.replace(/\s/g, "").replace(/^\+/, "");
     if (fieldName === 'phone_number') {
       const cleanNumber = value ? value.replace(/^\+/, "").replace(/\s/g, "") : "";
-      if (cleanNumber.length > 9) {
+      if (cleanNumber.length >= 12) {
         if (cleanNumber === lastValidatedPhoneRef.current) return;
         lastValidatedPhoneRef.current = cleanNumber;
-        registerData.verifyAccount({ phone_number: cleanNumber }, "phone_number");
+        verifyPhoneAccountType(value);
       } else {
         lastValidatedPhoneRef.current = null;
+        setRegistrationFlow?.("normal");
       }
       return;
     }
     if (cleanValue.length > 3) {
       registerData.verifyAccount({ [fieldName]: cleanValue }, fieldName);
     }
-  }, [registerData]);
+  }, [registerData, verifyPhoneAccountType, setRegistrationFlow]);
 
   const debouncedValidation = useCallback((value, fieldName) => {
     if (validationTimeoutRef.current) {
@@ -251,6 +303,22 @@ const CompanyForm = ({
     return Boolean(e);
   }, [registerData]);
 
+  const showUssdRedirectOnly =
+    registrationFlow === "ussd" &&
+    registerData?.state?.success?.phone_number;
+
+  const handleUssdRegisterNavigate = () => {
+    const cleanPhone = phone
+      ? phone.replace(/^\+/, "").replace(/\s/g, "")
+      : "";
+    navigate(ConstentRoutes.registerNormalUser, {
+      state: {
+        phone_number: cleanPhone,
+        registrationFlow: "ussd",
+      },
+    });
+  };
+
 
   return (
     <div className="flex flex-col gap-4">
@@ -275,6 +343,33 @@ const CompanyForm = ({
         </div>
         <hr className="mt-3 mb-5"></hr>
 
+        {showUssdRedirectOnly ? (
+          <>
+            <div
+              className="mb-4 flex items-start gap-3 rounded-lg border border-blue-300 bg-blue-50 px-4 py-3"
+              role="status"
+            >
+              <TbCircleCheck
+                className="mt-0.5 h-5 w-5 shrink-0 text-[#008fd5]"
+                strokeWidth={1.35}
+                aria-hidden
+              />
+              <p className="text-sm leading-snug text-[#008fd5]">
+                {t("auth:accountTypeNotice.ussd")}
+              </p>
+            </div>
+            <div className="mt-4 flex justify-center">
+              <Button
+                type="button"
+                className="bg-secondary"
+                onClick={handleUssdRegisterNavigate}
+              >
+                {t("auth:accountTypeNotice.register_here")}
+              </Button>
+            </div>
+          </>
+        ) : (
+          <>
         {/* Company Name Field */}
         <div>
           <GetLabel name={t("common.form.companyName")} />
@@ -359,22 +454,11 @@ const CompanyForm = ({
             <Input
               className=" w-full rounded-xl px-4 py-2 bg-white outline-none "
               placeholder={t("common.form.password")}
-              maxLength={15}
+              maxLength={PASSWORD_POLICY.MAX_LENGTH}
               type={showPassword ? "text" : "password"}
               {...register("password", {
-                required: t("common.form.errors.password"),
-                minLength: {
-                  value: 8,
-                  message: t("common.form.errors.passwordMinLength"),
-                },
-                maxLength: {
-                  value: 15,
-                  message: t("common.form.errors.passwordMaxLength"),
-                },
-                pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,15}$/,
-                  message: t("common.form.errors.passwordPattern")
-                }
+                validate: (value) =>
+                  validatePasswordField(value, watch("account_id"), "registration"),
               })}
               style={
                 errors?.password
@@ -397,7 +481,7 @@ const CompanyForm = ({
             <p className="text-left mt-1 text-sm text-[#FF0000]">{errors.password.message}</p>
           )}
           <p className="text-xs text-gray-600 mt-1">
-            {t("common.form.passwordLength")}
+            {PASSWORD_POLICY.MESSAGES.POLICY}
           </p>
         </div>
 
@@ -410,7 +494,7 @@ const CompanyForm = ({
               placeholder={t("common.form.confirmPassword")}
               type={showConfirmPassword ? "text" : "password"}
 
-              maxLength={15}
+              maxLength={PASSWORD_POLICY.MAX_LENGTH}
               style={
                 errors?.confirm_password ||
                   watchAllFields?.password != watchAllFields?.confirm_password
@@ -418,13 +502,8 @@ const CompanyForm = ({
                   : { border: "1px solid #8A8AA033" }
               }
               {...register("confirm_password", {
-                required: t("common.form.errors.confirmPassword"),
-                validate: (val) => {
-                  if (watch("password") != val) {
-                    return t("common.form.errors.passwordsDoNotMatch");
-                  }
-                  return true;
-                },
+                validate: (value) =>
+                  validateConfirmPasswordField(getValues("password"), value),
               })}
               onContextMenu={(e) => e.preventDefault()} // disable right-click
               onCopy={(e) => e.preventDefault()}        // disable copy
@@ -482,6 +561,22 @@ const CompanyForm = ({
         {/* Phone Number Field */}
         <div>
           <GetLabel name={t("common.form.mobileNo")} />
+          {registrationFlow === "corporate_additional" &&
+            registerData?.state?.success?.phone_number && (
+              <div
+                className="mt-2 mb-3 flex items-start gap-3 rounded-lg border border-blue-300 bg-blue-50 px-4 py-3"
+                role="status"
+              >
+                <TbCircleCheck
+                  className="mt-0.5 h-5 w-5 shrink-0 text-[#008fd5]"
+                  strokeWidth={1.35}
+                  aria-hidden
+                />
+                <p className="text-sm leading-snug text-[#008fd5]">
+                  {t("auth:accountTypeNotice.corporate_additional")}
+                </p>
+              </div>
+            )}
           <div className="mt-2 flex items-center gap-2">
             <div className="relative items-center flex w-full">
               <Controller
@@ -507,6 +602,9 @@ const CompanyForm = ({
                       onChange={(value) => {
                         field.onChange(value);
                         setPhone(value);
+
+                        setRegistrationFlow?.("normal");
+                        localStorage.removeItem("additional_account_id");
 
                         // Clear OTP and verification code if phone number changes from original
                         if (originalPhoneNumber && value !== originalPhoneNumber) {
@@ -538,7 +636,7 @@ const CompanyForm = ({
 
                         // Only validate complete numbers (debounced, and only if number actually changed)
                         const cleanNumber = value ? value.replace(/^\+/, "").replace(/\s/g, "") : "";
-                        if (cleanNumber?.length > 9) {
+                        if (cleanNumber?.length >= 12) {
                           debouncedValidation(value, "phone_number");
                         } else {
                           lastValidatedPhoneRef.current = null;
@@ -561,25 +659,32 @@ const CompanyForm = ({
                     hasBackendError ||
                     !isValidPhone ||
                     !areRequiredFieldsValid ||
+                    accountTypeVerifying ||
                     (isGetCodeDisabled && !otpExpired) ||
                     !registerData?.isRecaptchaReady
                   }
                   className={`!absolute right-3 bg-[#f5f5f5] p-2 shadow-sm border border-[#8A8AA033] 
-    ${(hasBackendError || !isValidPhone || !areRequiredFieldsValid || (isGetCodeDisabled && !otpExpired) || !registerData?.isRecaptchaReady)
+    ${(hasBackendError || !isValidPhone || !areRequiredFieldsValid || accountTypeVerifying || (isGetCodeDisabled && !otpExpired) || !registerData?.isRecaptchaReady)
                       ? "opacity-50 cursor-not-allowed"
                       : "cursor-pointer hover:bg-gray-100"
                     } text-xs font-medium rounded`}
                   onClick={() => {
-                    !isGetCodeDisabled &&
-                      !hasBackendError &&
-                      isValidPhone &&
-                      areRequiredFieldsValid &&
-                      registerData?.isRecaptchaReady &&
-                     setValue("verification_code", "");
-                    handleOtpRequest(phone)
+                    if (
+                      isGetCodeDisabled ||
+                      hasBackendError ||
+                      !isValidPhone ||
+                      !areRequiredFieldsValid ||
+                      accountTypeVerifying ||
+                      !registerData?.isRecaptchaReady
+                    ) {
+                      return;
+                    }
+                    setValue("verification_code", "");
+                    handleOtpRequest(phone);
                   }}
                 >
-                  {!registerData?.isRecaptchaReady ? t("common.form.pleaseWait") :
+                  {accountTypeVerifying ? t("common.form.pleaseWait") :
+                    !registerData?.isRecaptchaReady ? t("common.form.pleaseWait") :
                     otpExpired ? t("common.form.resendOtp") :
                       isGetCodeDisabled ? t("common.form.pleaseWait") :
                         registerData?.isResend ? t("common.form.resendOtp") : t("common.form.sentOtp")}
@@ -723,6 +828,8 @@ const CompanyForm = ({
             )}
           </div>
         </div>
+          </>
+        )}
       </div>
     </div>
   );

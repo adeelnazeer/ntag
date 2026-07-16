@@ -5,7 +5,7 @@ import { TbCircleCheck } from "react-icons/tb";
 import { useTranslation } from "react-i18next";
 import RestrictedKeywordsSection from "./RestrictedKeywordsSection";
 
-const BRAND_NAME_PATTERN = /^[a-zA-Z0-9]{3,16}$/;
+const BRAND_NAME_PATTERN = /^[a-zA-Z0-9 ]{3,18}$/;
 
 export { BRAND_NAME_PATTERN };
 

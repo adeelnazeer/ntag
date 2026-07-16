@@ -13,6 +13,7 @@ import {
     heroCarouselTrackTranslateClass,
     heroCarouselTrackWidthClass,
 } from "../heroCarouselClasses";
+import SearchTagModal from "./SearchTagModal";
 
 const MAX_HERO_SLIDES = 10;
 const AUTOPLAY_MS = 5000;
@@ -20,6 +21,7 @@ const AUTOPLAY_MS = 5000;
 const HeroSection = () => {
     const { t } = useTranslation("homePage2");
     const navigate = useNavigate();
+    const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
     const HERO_SLIDE_IMAGES = [HeroImg1, Slider2, Slider3];
     const HERO_TOP_IMAGE_PAIRS = [
@@ -133,12 +135,13 @@ const HeroSection = () => {
                                         >
                                             {t("hero.ctaPrimary")}
                                         </button>
-                                        <a
-                                            href="#how"
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsSearchModalOpen(true)}
                                             className="rounded-md border-2 border-brand-blue bg-brand-blue px-6 py-3 text-sm font-bold text-white hover:bg-brand-blue-hover"
                                         >
                                             {t("hero.ctaSecondary")}
-                                        </a>
+                                        </button>
                                     </div>
                                     <div className="flex flex-wrap pb-6 items-center gap-2.5">
                                         <a
@@ -230,6 +233,11 @@ const HeroSection = () => {
                     </div>
                 </div>
             </div>
+
+            <SearchTagModal
+                isOpen={isSearchModalOpen}
+                onClose={() => setIsSearchModalOpen(false)}
+            />
         </section>
     );
 };

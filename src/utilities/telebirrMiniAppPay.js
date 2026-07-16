@@ -138,6 +138,8 @@ export const validateRawRequestStructure = (rawRequest) => {
 
 /** Buy-tag API may return a string, { rawRequest }, or split field object. */
 export const extractRawRequestFromBuyTagResponse = (res) => {
+
+  console.log("res", res);
   const data = res?.data;
   if (typeof data === "string") return data.trim();
   if (!data || typeof data !== "object") return null;
@@ -160,6 +162,51 @@ export const extractRawRequestFromBuyTagResponse = (res) => {
   }
 
   return null;
+};
+
+const isTruthyApiFlag = (value) =>
+  value === true ||
+  value === 1 ||
+  value === "1" ||
+  String(value).toLowerCase() === "true";
+
+/** Parse buy-tag API body (string JSON or nested `data` object). */
+export const normalizeBuyTagApiResponse = (res) => {
+  let parsed = res;
+
+  if (typeof parsed === "string") {
+    try {
+      parsed = JSON.parse(parsed);
+    } catch {
+      return res;
+    }
+  }
+
+  if (!parsed || typeof parsed !== "object") return parsed;
+
+  const inner = parsed.data;
+  const isNestedBody =
+    inner &&
+    typeof inner === "object" &&
+    !Array.isArray(inner) &&
+    (isTruthyApiFlag(inner.success) ||
+      inner.response_code === "00" ||
+      String(inner.response_status).toLowerCase() === "success");
+
+  if (isNestedBody && !isTruthyApiFlag(parsed.success)) {
+    return inner;
+  }
+
+  return parsed;
+};
+
+export const isBuyTagApiSuccess = (res) => {
+  const normalized = normalizeBuyTagApiResponse(res);
+  return (
+    isTruthyApiFlag(normalized?.success) ||
+    normalized?.response_code === "00" ||
+    String(normalized?.response_status).toLowerCase() === "success"
+  );
 };
 
 export const parseTelebirrCallbackResult = (result) => {

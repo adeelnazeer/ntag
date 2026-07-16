@@ -40,6 +40,10 @@ export const isTelebirrMiniAppEntry = () => {
   return channel === "super" || channel === "partner";
 };
 
+export const canUseTelebirrMiniAppPay = () =>
+  isTelebirrMiniAppEntry() ||
+  typeof window.consumerapp?.evaluate === "function";
+
 /** API `channel` field sent to buy-tag endpoints. */
 export const getTelebirrAppTypeChannel = () => {
   const channel = getTelebirrMiniAppChannel();

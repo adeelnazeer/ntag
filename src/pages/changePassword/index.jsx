@@ -8,6 +8,11 @@ import EndPoints from "../../network/EndPoints";
 import { toast } from "react-toastify";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
+import {
+    PASSWORD_POLICY,
+    validateConfirmPasswordField,
+    validatePasswordField,
+} from "../../utilities/auth";
 
 // Apply CSS fix for autofill styling
 const autofillStyle = `
@@ -23,14 +28,21 @@ const autofillStyle = `
 
 const ChangePassword = ({ isCustomer = false }) => {
     const { t } = useTranslation(["auth"]);
-    const { t: t2 } = useTranslation(["common"]);
 
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState({
         password1: false,
         password2: false,
         password3: false
-    })    // Read user data only once during component initialization
+    })
+    const [accountIdentifier] = useState(() => {
+        try {
+            const user = JSON.parse(localStorage.getItem("user"));
+            return user?.account_id || user?.username || user?.customer_account_id;
+        } catch {
+            return null;
+        }
+    });
 
     const {
         register,
@@ -140,8 +152,7 @@ const ChangePassword = ({ isCustomer = false }) => {
                                         <Input
                                             className="w-full rounded-xl p-4 bg-[#F6F7FB] outline-none pr-12"
                                             placeholder={t("changePassword.placeholders.newPassword")}
-                                            maxLength={15}
-                                            min={4}
+                                            maxLength={PASSWORD_POLICY.MAX_LENGTH}
                                             type={showPassword?.password2 ? "text" : "password"}
                                             style={
                                                 errors.password
@@ -149,22 +160,14 @@ const ChangePassword = ({ isCustomer = false }) => {
                                                     : { border: "1px solid #8A8AA033" }
                                             }
                                             {...register("password", {
-                                                required: t("changePassword.validation.passwordRequired"),
-                                                minLength: {
-                                                    value: 5,
-                                                    message: t2("common.form.errors.passwordMinLength"),
-                                                },
-                                                maxLength: {
-                                                    value: 15,
-                                                    message: t2("common.form.errors.passwordMaxLength"),
-                                                },
-                                                pattern: {
-                                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{5,15}$/,
-                                                    message: t2("common.form.errors.passwordPattern")
-                                                },
                                                 validate: (value) => {
-                                                    const oldPassword = getValues("old_password");
-                                                    if (value === oldPassword) {
+                                                    const policyError = validatePasswordField(
+                                                        value,
+                                                        accountIdentifier,
+                                                        "registration"
+                                                    );
+                                                    if (policyError !== true) return policyError;
+                                                    if (value === getValues("old_password")) {
                                                         return t("changePassword.validation.newPasswordSameAsCurrent");
                                                     }
                                                     return true;
@@ -190,6 +193,9 @@ const ChangePassword = ({ isCustomer = false }) => {
                                             {errors.password.message}
                                         </p>
                                     )}
+                                    <p className="text-xs text-gray-600 mt-1">
+                                        {PASSWORD_POLICY.MESSAGES.POLICY}
+                                    </p>
                                 </div>
                                 <div className="mb-4">
                                     <label className="md:text-base text-[16px] text-[#232323]">
@@ -199,8 +205,7 @@ const ChangePassword = ({ isCustomer = false }) => {
                                         <Input
                                             className="w-full rounded-xl p-4 bg-[#F6F7FB] outline-none pr-12"
                                             placeholder={t("changePassword.placeholders.confirmNewPassword")}
-                                            maxLength={15}
-                                            min={4}
+                                            maxLength={PASSWORD_POLICY.MAX_LENGTH}
                                             type={showPassword?.password3 ? "text" : "password"}
                                             style={
                                                 errors?.password_confirmation ||
@@ -209,21 +214,8 @@ const ChangePassword = ({ isCustomer = false }) => {
                                                     : { border: "1px solid #8A8AA033" }
                                             }
                                             {...register("password_confirmation", {
-                                                required: t("changePassword.validation.passwordRequired"),
-                                                minLength: {
-                                                    value: 5,
-                                                    message: t("changePassword.validation.passwordMinLength"),
-                                                },
-                                                maxLength: {
-                                                    value: 15,
-                                                    message: t("changePassword.validation.passwordMaxLength"),
-                                                },
-                                                validate: (val) => {
-                                                    if (watch("password") != val) {
-                                                        return t("changePassword.validation.passwordsDoNotMatch");
-                                                    }
-                                                    return true;
-                                                },
+                                                validate: (value) =>
+                                                    validateConfirmPasswordField(watch("password"), value),
                                             })}
                                             onContextMenu={(e) => e.preventDefault()} // disable right-click
                                             onCopy={(e) => e.preventDefault()}        // disable copy
