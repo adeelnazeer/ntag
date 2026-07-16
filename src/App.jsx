@@ -60,6 +60,7 @@ import Home2Page from "./pages/home2";
 import TelebirrMiniAppHome from "./components/TelebirrMiniAppHome.jsx";
 import BrandNamePage from "./pages/brandName/BrandNamePage.jsx";
 
+
 function App() {
   return (
     <>
@@ -270,86 +271,6 @@ function App() {
           }
         />
         <Route
-          path={ConstentRoutes.brandNameCallBuy}
-          element={
-            <DashboardLayout>
-              <BrandNamePage />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path={ConstentRoutes.brandNameCallRecurringFee}
-          element={
-            <DashboardLayout>
-              <BrandNamePage />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path={ConstentRoutes.brandNameCallIntro}
-          element={
-            <DashboardLayout>
-              <BrandNamePage />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path={ConstentRoutes.brandNameCallChange}
-          element={
-            <DashboardLayout>
-              <BrandNamePage />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path={ConstentRoutes.brandNameCallNumbers}
-          element={
-            <DashboardLayout>
-              <BrandNamePage />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path={ConstentRoutes.brandNameCallIncomingNumber}
-          element={
-            <DashboardLayout>
-              <BrandNamePage />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path={ConstentRoutes.brandNameCallStartStop}
-          element={
-            <DashboardLayout>
-              <BrandNamePage />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path={ConstentRoutes.brandNameCallSchedule}
-          element={
-            <DashboardLayout>
-              <BrandNamePage />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path={ConstentRoutes.brandNameCallUnsubscribe}
-          element={
-            <DashboardLayout>
-              <BrandNamePage />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path={ConstentRoutes.brandNameCallHistory}
-          element={
-            <DashboardLayout>
-              <BrandNamePage />
-            </DashboardLayout>
-          }
-        />
-        <Route
           path={ConstentRoutes.delAccountDetail}
           element={
             <DelAccountDetail />
@@ -462,6 +383,96 @@ function App() {
           element={<DeleteAccount />}
         />
         <Route path="/home-2" element={<Home2Page />} />
+
+        {/* // Brand Name Page Route */}
+          <Route
+          path={ConstentRoutes.brandNameCallBuy}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallRecurringFee}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallIntro}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallChange}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallLinkNumbers}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallNumbers}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallIncomingNumber}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallStartStop}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallSchedule}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallUnsubscribe}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path={ConstentRoutes.brandNameCallHistory}
+          element={
+            <DashboardLayout>
+              <BrandNamePage />
+            </DashboardLayout>
+          }
+        />
       </Routes>
       <ToastContainer
         position="top-right"

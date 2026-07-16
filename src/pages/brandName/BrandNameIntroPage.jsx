@@ -8,6 +8,8 @@ import { ConstentRoutes } from "../../utilities/routesConst";
 import BrandNameStepper from "./components/BrandNameStepper";
 import RestrictedKeywordsSection from "./components/RestrictedKeywordsSection";
 
+const MAX_ALLOWED_LIMIT = import.meta.env.VITE_MAX_ALLOWED_LIMIT ?? "1000";
+
 const RULE_ICONS = {
   allowed: FaCheck,
   denied: FaXmark,
@@ -31,7 +33,13 @@ export default function BrandNameIntroPage() {
 
   const stats = useMemo(() => {
     const items = t("brandName:intro.stats", { returnObjects: true });
-    return Array.isArray(items) ? items : [];
+    if (!Array.isArray(items)) return [];
+
+    return items.map((stat) =>
+      stat.key === "maxLinkedCallers"
+        ? { ...stat, value: String(MAX_ALLOWED_LIMIT) }
+        : stat
+    );
   }, [t]);
 
   const formattingRules = useMemo(() => {

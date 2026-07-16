@@ -24,9 +24,9 @@
     "changeBrandName": "Change Brand Name",
     "brandAddRemoveNumbers": "Add/Remove Numbers",
     "brandIncomingCallNumber": "Set Incoming Call Number",
-    "brandStartStopCalls": "Start/Stop Brand Calls",
+    "brandStartStopCalls": "Start/Stop Brand Name Calls",
     "brandScheduleCalls": "Schedule Brand Name Calls",
-    "brandUnsubscribe": "Unsubscribe Brand Call",
-    "brandCallsHistory": "Brand Calls History"
+    "brandUnsubscribe": "Unsubscribe Brand Name Call",
+    "brandCallsHistory": "Brand Name Calls History"
   }
 }

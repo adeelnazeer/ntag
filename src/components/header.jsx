@@ -51,6 +51,8 @@ const Header = ({ isGuest = false }) => {
   }
 
   const token = localStorage.getItem("token");
+  const isBillTokenRoute =
+    location.pathname.startsWith("/bill/") 
 
   const handleLogout = () => {
     dispatch(clearUserData());
@@ -213,28 +215,32 @@ const Header = ({ isGuest = false }) => {
                             }`
                             : "Individual"}
                         </p>
-                        <MenuItem
-                          className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
-                          onClick={() =>
-                            userData.customer_type == "individual"
-                              ? navigate(ConstentRoutes.profilePageCustomer)
-                              : navigate(ConstentRoutes.profilePage)
-                          }
-                        >
-                          {t("profile")}
-                        </MenuItem>
-                        <MenuItem
-                          className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
-                          onClick={() => {
-                            if (userData?.customer_type === "individual") {
-                              navigate(ConstentRoutes.changePasswordCustomer);
-                            } else {
-                              navigate(ConstentRoutes.changePassword);
-                            }
-                          }}
-                        >
-                          {t("changePassword")}
-                        </MenuItem>
+                        {!isBillTokenRoute && (
+                          <>
+                            <MenuItem
+                              className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
+                              onClick={() =>
+                                userData.customer_type == "individual"
+                                  ? navigate(ConstentRoutes.profilePageCustomer)
+                                  : navigate(ConstentRoutes.profilePage)
+                              }
+                            >
+                              {t("profile")}
+                            </MenuItem>
+                            <MenuItem
+                              className="focus:border-none border-none transition-none hover:border-none focus-within:border-none"
+                              onClick={() => {
+                                if (userData?.customer_type === "individual") {
+                                  navigate(ConstentRoutes.changePasswordCustomer);
+                                } else {
+                                  navigate(ConstentRoutes.changePassword);
+                                }
+                              }}
+                            >
+                              {t("changePassword")}
+                            </MenuItem>
+                          </>
+                        )}
                         <div className="px-3 py-2 border-t border-gray-200">
                           <p className="text-xs text-gray-500 mb-1">
                             {t("language")}
@@ -491,24 +497,28 @@ const Header = ({ isGuest = false }) => {
                     </Button>
                   </div>
                 </div>
-                <Button
-                  className="bg-white text-base font-medium text-secondary py-1 px-2 w-full mt-4"
-                  onClick={() => {
-                    navigate(isIndividual ? ConstentRoutes.profilePageCustomer : ConstentRoutes.profilePage);
-                    setMenuOpen(false);
-                  }}
-                >
-                  {t("profile")}
-                </Button>
-                <Button
-                  className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
-                  onClick={() => {
-                    navigate(isIndividual ? ConstentRoutes.changePasswordCustomer : ConstentRoutes.changePassword);
-                    setMenuOpen(false);
-                  }}
-                >
-                  {t("changePassword")}
-                </Button>
+                {!isBillTokenRoute && (
+                  <>
+                    <Button
+                      className="bg-white text-base font-medium text-secondary py-1 px-2 w-full mt-4"
+                      onClick={() => {
+                        navigate(isIndividual ? ConstentRoutes.profilePageCustomer : ConstentRoutes.profilePage);
+                        setMenuOpen(false);
+                      }}
+                    >
+                      {t("profile")}
+                    </Button>
+                    <Button
+                      className="bg-white text-base font-medium text-secondary py-1 px-2 w-full"
+                      onClick={() => {
+                        navigate(isIndividual ? ConstentRoutes.changePasswordCustomer : ConstentRoutes.changePassword);
+                        setMenuOpen(false);
+                      }}
+                    >
+                      {t("changePassword")}
+                    </Button>
+                  </>
+                )}
                 <div className="w-full border-t border-white/20 pt-4 mt-4">
                   <p className="text-white text-sm font-medium mb-3 px-2">
                     {t("language")}

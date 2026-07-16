@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 import { Button } from "@material-tailwind/react";
 import { HiOutlineClock } from "react-icons/hi2";
 import { HiOutlineInformationCircle } from "react-icons/hi2";
@@ -6,39 +7,37 @@ import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { FaXmark } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 import BrandNameStepper from "./BrandNameStepper";
+import BrandNameCancelRequestModal from "../../../modals/BrandNameCancelRequestModal";
 
 const formatPrice = (value) => Number(value || 0).toFixed(2);
 
 export default function BrandNameRequestPending({ request, onCancel, isCancelling }) {
   const { t } = useTranslation(["brandName"]);
+  const [showCancelModal, setShowCancelModal] = useState(false);
 
   if (!request) return null;
 
+  const requestRef = request.request_ref || `#${request.request_id}`;
+  const callersCount = request.callers_count ?? 0;
   const registrationFee =
     request.approved_registration_fee ?? request.registration_fee ?? 0;
   const perCallerFee =
-    request.approved_monthly_fee_per_caller ?? request.monthly_fee_per_caller ?? 0;
-  const callersCount = request.callers_count ?? 0;
+    request.discounted_fee_per_caller ??
+    request.monthly_fee_per_caller ??
+    request.approved_monthly_fee_per_caller ??
+    0;
   const monthlyRecurring =
     request.estimated_monthly_recurring ?? callersCount * perCallerFee;
+  const totalDueNow = request.total_amount ?? registrationFee;
+  const basePrice = request?.base_price ?? 0;
+  const exciseTax = request?.excisetax ?? 0;
+  const vat = request?.vat ?? 0;
+  const vatPercentage = request?.vat_percentage ?? 0;
+  const recurringDiscountPercent = request?.recurring_discount_percent ?? 0;
 
   const detailRows = [
-    { key: "requestedBrand", value: request.brandname },
-    { key: "requestId", value: request.request_ref || `#${request.request_id}` },
+    { key: "requestId", value: requestRef },
     { key: "requestedCallers", value: callersCount },
-    { key: "registeredMobile", value: request.msisdn },
-    {
-      key: "estimatedRegistrationFee",
-      value: `${formatPrice(registrationFee)} ${t("brandName:pending.currency")}`,
-    },
-    {
-      key: "estimatedMonthlyFee",
-      value: t("brandName:pending.monthlyFeeBreakdown", {
-        total: formatPrice(monthlyRecurring),
-        count: callersCount,
-        fee: formatPrice(perCallerFee),
-      }),
-    },
     { key: "submittedOn", value: request.submitted_at },
     {
       key: "currentStatus",
@@ -62,7 +61,7 @@ export default function BrandNameRequestPending({ request, onCancel, isCancellin
               <p className="mt-0.5 text-xs text-amber-800/90 sm:text-sm">
                 {t("brandName:pending.submittedInfo", {
                   date: request.submitted_at,
-                  ref: request.request_ref || `#${request.request_id}`,
+                  ref: requestRef,
                 })}
               </p>
             </div>
@@ -83,6 +82,85 @@ export default function BrandNameRequestPending({ request, onCancel, isCancellin
           <span className="font-semibold">{t("brandName:pending.reviewTime")}</span>{" "}
           {t("brandName:pending.reviewTimeDesc")}
         </p>
+      </section>
+
+      <section className="rounded-xl border border-brand-green/40 bg-white p-5 shadow-sm sm:p-6">
+        <div className="text-center">
+          <h2 className="text-2xl font-extrabold text-secondary sm:text-3xl">{request.brandname}</h2>
+          <p className="mt-1 text-xs text-[#6B7280] sm:text-sm">
+            {t("brandName:pending.brandMeta", {
+              count: callersCount,
+              tier: request.brand_type,
+            })}
+          </p>
+        </div>
+
+        <div className="mt-4 rounded-lg bg-brand-green-pale px-4 py-4 sm:px-5">
+          <div className="space-y-2 text-sm">
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#4B5563]">{t("brandName:approved.registeredMobile")}</span>
+              <span className="font-semibold text-[#1F2937]">+{request.msisdn}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#4B5563]">{t("brandName:approved.registrationFee")}</span>
+              <span className="font-semibold text-[#1F2937]">
+                {formatPrice(registrationFee)} {t("brandName:approved.currency")}
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#4B5563]">{t("brandName:approved.numberOfCallers")}</span>
+              <span className="font-semibold text-[#1F2937]">{callersCount}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#4B5563]">
+                {t("brandName:approved.perCallerFee", { serviceId: request.service_id })}
+              </span>
+              <span className="font-semibold text-[#1F2937]">
+                {formatPrice(perCallerFee)} {t("brandName:approved.currency")}
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#4B5563]">{t("brandName:pending.discountPercent")}</span>
+              <span className="font-semibold text-[#1F2937]">{recurringDiscountPercent}%</span>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#4B5563]">
+                {t("brandName:approved.monthlyRecurring", { serviceId: request.service_id })}
+              </span>
+              <span className="font-semibold text-[#1F2937]">
+                {formatPrice(monthlyRecurring)} {t("brandName:approved.currency")}
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-4 border-t border-secondary/20 pt-2">
+              <span className="text-[#4B5563]">{t("brandName:pending.basePrice")}</span>
+              <span className="font-semibold text-[#1F2937]">
+                {formatPrice(basePrice)} {t("brandName:approved.currency")}
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#4B5563]">{t("brandName:pending.exciseTax")}</span>
+              <span className="font-semibold text-[#1F2937]">
+                {formatPrice(exciseTax)} {t("brandName:approved.currency")}
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[#4B5563]">
+                {t("brandName:pending.vat", { percent: vatPercentage })}
+              </span>
+              <span className="font-semibold text-[#1F2937]">
+                {formatPrice(vat)} {t("brandName:approved.currency")}
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-4 border-t border-secondary/20 pt-2">
+              <span className="font-bold text-brand-green-dark">
+                {t("brandName:approved.totalDueNow")}
+              </span>
+              <span className="text-base font-bold text-brand-green-dark">
+                {formatPrice(totalDueNow)} {t("brandName:approved.currency")}
+              </span>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="overflow-hidden rounded-xl border border-brand-green/25 bg-white shadow-sm">
@@ -125,13 +203,28 @@ export default function BrandNameRequestPending({ request, onCancel, isCancellin
 
       <Button
         type="button"
-        onClick={onCancel}
+        onClick={() => setShowCancelModal(true)}
         disabled={isCancelling}
         className="flex w-fit items-center gap-2 border border-red-300 bg-white px-5 py-2.5 text-sm font-semibold normal-case text-red-600 shadow-none hover:bg-red-50 hover:shadow-none disabled:opacity-60"
       >
         <FaXmark className="h-4 w-4" aria-hidden />
-        {isCancelling ? t("brandName:pending.cancelling") : t("brandName:pending.cancelButton")}
+        {t("brandName:pending.cancelButton")}
       </Button>
+
+      <BrandNameCancelRequestModal
+        isOpen={showCancelModal}
+        onClose={() => {
+          if (!isCancelling) setShowCancelModal(false);
+        }}
+        onConfirm={async () => {
+          try {
+            await onCancel?.();
+          } finally {
+            setShowCancelModal(false);
+          }
+        }}
+        isCancelling={isCancelling}
+      />
     </div>
   );
 }

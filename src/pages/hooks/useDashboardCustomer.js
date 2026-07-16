@@ -5,15 +5,15 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ConstentRoutes } from "../../utilities/routesConst";
 import {
-  extractRawRequestFromBuyTagResponse,
-  isTelebirrCallbackPaymentSuccess,
-  normalizeTelebirrCallbackParams,
-  redirectToTelebirrPayment,
-  startTelebirrMiniAppPay,
+    extractRawRequestFromBuyTagResponse,
+    isBuyTagApiSuccess,
+    normalizeTelebirrCallbackParams,
+    redirectToTelebirrPayment,
+    startTelebirrMiniAppPay,
 } from "../../utilities/telebirrMiniAppPay";
 import {
-  getTelebirrAppTypeChannel,
-  isTelebirrMiniAppEntry,
+    getTelebirrAppTypeChannel,
+    isTelebirrMiniAppEntry,
 } from "../../utilities/telebirrMiniAppChannel";
 
 const isPaymentStatusSuccess = (status) =>
@@ -123,7 +123,7 @@ export const useTagListCustomer = () => {
             });
     }, []);
 
-    const handleTelebirrCallback = (callbackResult) => {
+    const handleTelebirrCallback = (callbackResult, successRoute = ConstentRoutes.dashboardCustomer) => {
         const paramsObject = normalizeTelebirrCallbackParams(callbackResult);
         const paymentUrlString = localStorage.getItem("merchId");
         let merchOrderId = paramsObject.merch_order_id ?? null;
@@ -139,14 +139,12 @@ export const useTagListCustomer = () => {
         }
 
         paramsObject.merch_order_id = merchOrderId;
-        const isPaymentSuccessful = isTelebirrCallbackPaymentSuccess(paramsObject);
 
         APICall("post", paramsObject, "/individual/call-back", {
             "Content-Type": "application/json",
         })
             .then((apiRes) => {
                 if (apiRes?.success) {
-                    console.log("apiRes", apiRes);
                     if (isApiPaymentSuccess(apiRes)) {
                         toast.success(apiRes?.data?.message || "NameTAG payment completed successfully!");
                         if (apiRes.data?.payment_order_id) {
@@ -155,15 +153,14 @@ export const useTagListCustomer = () => {
                                 apiRes.data.payment_order_id
                             );
                         }
-                        navigate(ConstentRoutes.dashboardCustomer);
-
+                        navigate(successRoute);
                     } else {
                         toast.error(apiRes?.data?.message || "Payment was unsuccessful");
                     }
                 } else {
                     toast.error(
                         apiRes?.message ||
-                            "Something went wrong with the payment verification"
+                        "Something went wrong with the payment verification"
                     );
                 }
             })
@@ -171,6 +168,39 @@ export const useTagListCustomer = () => {
                 console.error("API Error:", err);
                 toast.error(err || "An error occurred during payment processing");
             });
+    };
+
+    const startTelebirrPaymentFromResponse = (res, { successRoute = ConstentRoutes.dashboardCustomer } = {}) => {
+        if (isTelebirrMiniAppEntry()) {
+            const rawRequest = extractRawRequestFromBuyTagResponse(res);
+            let callbackHandled = false;
+
+            const verifyPayment = (result) => {
+                if (callbackHandled) return;
+                callbackHandled = true;
+                handleTelebirrCallback(result, successRoute);
+            };
+
+            const started = startTelebirrMiniAppPay(rawRequest, {
+                onComplete: verifyPayment,
+                onError: (result, meta) => {
+                    // if (meta?.premature || meta?.invalidRawRequest) {
+                    //     toast.error(
+                    //         meta?.invalidRawRequest
+                    //             ? "Invalid payment data from server."
+                    //             : "Payment could not start. Please try again."
+                    //     );
+                    //     return;
+                    // }
+                    verifyPayment(result);
+                },
+            });
+            if (!started) {
+                toast.error("Please open payment in the telebirr Super App");
+            }
+        } else if (!redirectToTelebirrPayment(res?.data)) {
+            toast.error(res?.message || "Payment redirect failed");
+        }
     };
 
     const handleTagDetails = (tagData, setOpenModal, setPaymentType) => {
@@ -181,55 +211,25 @@ export const useTagListCustomer = () => {
                 // channel: data.channel || "WEB",
                 payment_method: data.payment_method || "telebirr",
                 reserve_type: data.reserve_type,
-                tag_no:data?.tag_list?.tag_no,
-                msisdn:data?.msisdn,
-                business_type: data.business_type || "BuyGoods",
+                tag_no: data?.tag_list?.tag_no,
+                msisdn: data?.msisdn,
+                business_type: getTelebirrAppTypeChannel() === "MINI_SUPERAPP" ? "BuyGoods" : data.business_type || "BuyGoods",
                 tag_id: data?.customer_tag_id,
                 type: data?.type,
-                is_premium:data?.is_premium,
-                service_id:data?.tag_list?.service_id,
+                is_premium: data?.is_premium,
+                service_id: data?.tag_list?.service_id,
             };
         };
 
         const payload = ensureRequiredFields(tagData);
         APICall("post", payload, EndPoints.customer.newSecurityEndPoints.individual.buyTag)
             .then((res) => {
-                if (res?.success) {
+                console.log("response from the api call", res);
+                if (isBuyTagApiSuccess(res)) {
                     if (tagData?.type == "buy") {
                         setPaymentType(false);
                         localStorage.setItem('merchId', payload?.corp_reserve_tag_id || null);
-                        if (isTelebirrMiniAppEntry()) {
-                            const rawRequest = extractRawRequestFromBuyTagResponse(res);
-                            const started = startTelebirrMiniAppPay(rawRequest, {
-                                onComplete: (result) => {
-                                    toast.success("Payment completed successfully");
-                                    navigate(ConstentRoutes.dashboardCustomer);
-                                },
-                                onError: (result, meta) => {
-                                    handleTelebirrCallback(result);
-                                    // if (meta?.invalidRawRequest) {
-                                    //     toast.error(
-                                    //         "Invalid payment data from server. rawRequest must start with appid= and include prepay_id."
-                                    //     );
-                                    //     return;
-                                    // }
-                                    // toast.error(
-                                    //     meta?.premature
-                                    //         ? "Payment could not start. Check rawRequest signature in the Super App."
-                                    //         : "Payment was not completed."
-                                    // );
-                                },
-                            });
-                            if (!started) {
-                                toast.error(
-                                    "Please open payment in the telebirr Super App"
-                                );
-                            }
-                        } else {
-                            if (!redirectToTelebirrPayment(res?.data)) {
-                                toast.error(res?.message || "Payment redirect failed");
-                            }
-                        }
+                        startTelebirrPaymentFromResponse(res);
                     } else {
                         toast.success(res?.message || "");
                         // navigate(ConstentRoutes.dashboardCustomer);
@@ -241,7 +241,7 @@ export const useTagListCustomer = () => {
                 setLoadingPayment(false);
             })
             .catch((err) => {
-                toast.error(err ||err?.message || "Your request to buy NameTAG failed please try again later!");
+                toast.error(err || err?.message || "Your request to buy NameTAG failed please try again later!");
                 setLoadingPayment(false);
             }).finally(() => {
                 setPaymentType(false)
@@ -257,19 +257,21 @@ export const useTagListCustomer = () => {
             tag_no: data?.tag_list?.tag_no,
             is_premium: data?.is_premium,
             service_id: data?.service_id,
-            channel: "WEB",
+            channel: getTelebirrAppTypeChannel(),
             payment_method: data?.payment_method,
             tag_name: data?.tag_list?.tag_name,
             payment_type: "CHANGE_TAG",
-            business_type: data?.business_type || "BuyGoods"
-          }
+            channel: getTelebirrAppTypeChannel(),
+            business_type: getTelebirrAppTypeChannel() === "MINI_SUPERAPP" ? "BuyGoods" : data?.business_type || "BuyGoods"
+        }
 
         APICall("post", payloadNew, EndPoints.customer.newSecurityEndPoints.individual.changeTag)
             .then((res) => {
                 setLoadingPayment(false);
-                if (res?.success) {
-                    window.location.replace(res?.data);
-                    toast.success(res?.message || "TAG changed successfully");
+                if (isBuyTagApiSuccess(res)) {
+                    startTelebirrPaymentFromResponse(res, {
+                        successRoute: ConstentRoutes.dashboardCustomer,
+                    });
                     setPaymentType(false)
                     //   setIsOpen(true);
                 } else {

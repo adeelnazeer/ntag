@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, Spinner } from "@material-tailwind/react";
 import {
   FaCircleExclamation,
@@ -12,54 +12,85 @@ import { toast } from "react-toastify";
 import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
 import { ConstentRoutes } from "../../utilities/routesConst";
+import { formatPhoneNumberCustom } from "../../utilities/formatMobileNumber";
 import BrandNameRequestPending from "./components/BrandNameRequestPending";
 import BrandNameRequestRejected from "./components/BrandNameRequestRejected";
 import BrandNameRequestApproved from "./components/BrandNameRequestApproved";
 import BrandNameRequestEmpty from "./components/BrandNameRequestEmpty";
 
 const STATUS_PENDING = 0;
+const MAX_ALLOWED_CALLERS = import.meta.env.VITE_MAX_ALLOWED_LIMIT || "1000";
 
 const matchesLabel = (request, label) =>
   String(request?.status_label || "").toLowerCase() === label;
 
-const MOCK_CALLERS = [
-  { id: 1, msisdn: "+251 911 123 456", linkedDate: "22-05-2026", status: "active" },
-  { id: 2, msisdn: "+251 912 234 567", linkedDate: "22-05-2026", status: "active" },
-  { id: 3, msisdn: "+251 913 345 678", linkedDate: "23-05-2026", status: "active" },
-];
+const isLinkedToBrandCall = (brandCallStatus) => Number(brandCallStatus) === 1;
 
-const SUBSCRIPTION_DETAILS = [
-  { key: "brandName", value: "MIDROC" },
-  { key: "subscriptionStatus", value: "Active", highlight: true },
-  { key: "registeredMobile", value: "+251 918 773 157" },
-  { key: "registrationFee", value: "500.00 ETB" },
-  { key: "recurringFeePerCaller", value: "20.00 ETB" },
-  { key: "subscriptionPlan", value: "Monthly" },
-  { key: "nextBillingDate", value: "22-06-2026" },
-  { key: "paymentMethod", value: "telebirr partner App", link: true },
-  { key: "brandType", value: "Gold" },
-  { key: "activationDate", value: "22-05-2026" },
-];
+const isActiveStatus = (status) => String(status) === "1";
+
+const formatPrice = (value) => Number(value || 0).toFixed(2);
+
+const formatDisplayDate = (value) => value || "—";
+
+const getPaymentMethodLabel = (paymentMethod) => {
+  if (paymentMethod === "telebirr" || paymentMethod === "telebirr_super_app") {
+    return "Telebirr Super App";
+  }
+  if (paymentMethod === "telebirr_partnerapp") {
+    return "telebirr partner App";
+  }
+  return paymentMethod || "—";
+};
+
+const getLinkedDate = (caller) =>
+  caller?.brandname_charge_dt ||
+  caller?.brand_call_linked_at ||
+  caller?.linked_at ||
+  caller?.linked_date ||
+  caller?.created_at ||
+  "—";
+
+const getCallerNameTag = (caller) =>
+  caller?.name_tag?.trim() || caller?.tagname?.trim() || "—";
 
 export default function BrandNameRecurringFeePage() {
   const { t } = useTranslation(["brandName"]);
   const navigate = useNavigate();
-  const [callers, setCallers] = useState(MOCK_CALLERS);
+  const [callers, setCallers] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
   const [requests, setRequests] = useState([]);
   const [isCancelling, setIsCancelling] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
-  const fetchRequests = async () => {
-    setIsLoading(true);
+  const fetchLinkedCallers = useCallback(async () => {
     try {
-      const response = await APICall("get", null, EndPoints.customer.brandNameRequests);
-      setRequests([response.data] || {});
+      const response = await APICall("get", null, EndPoints.customer.brandNameCallersList);
+      if (response?.success) {
+        const allCallers = Array.isArray(response.data) ? response.data : [];
+        setCallers(allCallers.filter((caller) => isLinkedToBrandCall(caller.brand_call_status)));
+      } else {
+        setCallers([]);
+      }
     } catch (error) {
       const message = typeof error === "string" ? error : error?.message;
       if (message) toast.error(message);
-      setRequests(null);
+      setCallers([]);
+    }
+  }, []);
+
+  const fetchRequests = async () => {
+    setIsLoading(true);
+    try {
+      const [requestsResponse] = await Promise.all([
+        APICall("get", null, EndPoints.customer.brandNameRequests),
+        fetchLinkedCallers(),
+      ]);
+      setRequests(requestsResponse?.data == null ? [] : [requestsResponse.data]);
+    } catch (error) {
+      const message = typeof error === "string" ? error : error?.message;
+      if (message) toast.error(message);
+      setRequests([]);
     } finally {
       setIsLoading(false);
     }
@@ -89,6 +120,20 @@ export default function BrandNameRecurringFeePage() {
     [requests]
   );
 
+  const activeSubscription = useMemo(() => {
+    if (!Array.isArray(requests) || requests.length === 0) return null;
+
+    return (
+      requests.find((request) => {
+        const label = String(request?.status_label || "").toLowerCase();
+        if (request.status === STATUS_PENDING || label === "pending") return false;
+        if (label === "rejected") return false;
+        if (label === "approved" && request.can_pay) return false;
+        return true;
+      }) ?? null
+    );
+  }, [requests]);
+
   const handleProceedPayment = async (method, selectedCallers = []) => {
     if (!approvedRequest) return;
     setIsProcessingPayment(true);
@@ -98,7 +143,7 @@ export default function BrandNameRecurringFeePage() {
       const payload = {
         service_id: approvedRequest.service_id,
         channel: "WEB",
-        payment_method: "Mobile Wallet",
+        payment_method: isSuperApp ? "telebirr" : "telebirr_partnerapp",
         business_type: isSuperApp ? "BuyGoods" : "TransferToOtherOrg",
         caller_ids: selectedCallers.map((caller) => (caller.id)?.toString()),
       };
@@ -106,7 +151,7 @@ export default function BrandNameRecurringFeePage() {
       const response = await APICall("post", payload, EndPoints.customer.brandNameBuy);
 
       if (response?.success && response?.data) {
-        // window.location.href = response.data;
+        window.location.href = response.data;
       } else {
         toast.error(response?.message || t("brandName:approved.proceedButton"));
       }
@@ -118,14 +163,14 @@ export default function BrandNameRecurringFeePage() {
     }
   };
 
-  const handleCancelRequest = async () => {
-    if (!pendingRequest) return;
+  const handleCancelRequest = async (request) => {
+    if (!request?.request_id) return;
     setIsCancelling(true);
     try {
       const response = await APICall(
         "post",
         null,
-        EndPoints.customer.brandNameRequestCancel(pendingRequest.request_id)
+        EndPoints.customer.brandNameRequestCancel(request.request_id)
       );
       if (response?.success) {
         toast.success(response?.message || t("brandName:pending.cancelSuccess"));
@@ -141,28 +186,86 @@ export default function BrandNameRecurringFeePage() {
     }
   };
 
-  const brandName = t("brandName:recurringFee.brandName");
-  const perCallerFee = 20;
+  const currency = t("brandName:recurringFee.currency");
+  const brandName = activeSubscription?.brandname || "—";
+  const registeredDate = formatDisplayDate(
+    activeSubscription?.activation_date ||
+    activeSubscription?.status_updated_at ||
+    activeSubscription?.submitted_at
+  );
+  const perCallerFee =
+    activeSubscription?.discounted_fee_per_caller ??
+    activeSubscription?.monthly_fee_per_caller ??
+    activeSubscription?.approved_fee_per_caller ??
+    0;
   const linkedCount = callers.length;
-  const monthlyFee = linkedCount * perCallerFee;
-
-  const subscriptionRows = useMemo(
-    () =>
-      SUBSCRIPTION_DETAILS.map((row) => ({
-        ...row,
-        label: t(`brandName:recurringFee.subscription.${row.key}`),
-        displayValue:
-          row.key === "brandName"
-            ? brandName
-            : row.key === "subscriptionStatus"
-              ? t("brandName:recurringFee.statusActive")
-              : row.value,
-      })),
-    [t, brandName]
+  const monthlyFee =
+    activeSubscription?.estimated_monthly_recurring ??
+    activeSubscription?.total_recurring ??
+    linkedCount * Number(perCallerFee);
+  const totalCalls = Number(
+    activeSubscription?.total_calls ?? activeSubscription?.calls_made ?? 0
   );
 
-  const handleRemoveCaller = (id) => {
-    setCallers((prev) => prev.filter((caller) => caller.id !== id));
+  const subscriptionRows = useMemo(() => {
+    if (!activeSubscription) return [];
+
+    const rows = [
+      { key: "brandName", displayValue: brandName },
+      {
+        key: "subscriptionStatus",
+        displayValue: activeSubscription.status_label || t("brandName:recurringFee.statusActive"),
+        highlight: true,
+      },
+      {
+        key: "registeredMobile",
+        displayValue: activeSubscription.msisdn
+          ? formatPhoneNumberCustom(activeSubscription.msisdn)
+          : "—",
+      },
+      {
+        key: "registrationFee",
+        displayValue: `${formatPrice(
+          activeSubscription.approved_registration_fee ?? activeSubscription.registration_fee
+        )} ${currency}`,
+      },
+      {
+        key: "recurringFeePerCaller",
+        displayValue: `${formatPrice(perCallerFee)} ${currency}`,
+      },
+      {
+        key: "subscriptionPlan",
+        displayValue: activeSubscription.service_id || "—",
+      },
+      {
+        key: "nextBillingDate",
+        displayValue: formatDisplayDate(activeSubscription.next_billing_date),
+      },
+      {
+        key: "paymentMethod",
+        displayValue: getPaymentMethodLabel(activeSubscription.payment_method),
+        link: Boolean(activeSubscription.payment_method),
+      },
+      {
+        key: "brandType",
+        displayValue: activeSubscription.brand_type || "—",
+      },
+      {
+        key: "activationDate",
+        displayValue: formatDisplayDate(
+          activeSubscription.activation_date || activeSubscription.status_updated_at
+        ),
+      },
+    ];
+
+    return rows.map((row) => ({
+      ...row,
+      label: t(`brandName:recurringFee.subscription.${row.key}`),
+    }));
+  }, [activeSubscription, brandName, currency, perCallerFee, t]);
+
+  const handleRemoveCaller = () => {
+    navigate(ConstentRoutes.brandNameCallNumbers);
   };
 
   const canUnsubscribe = linkedCount === 0;
@@ -180,7 +283,7 @@ export default function BrandNameRecurringFeePage() {
     return (
       <BrandNameRequestPending
         request={pendingRequest}
-        onCancel={handleCancelRequest}
+        onCancel={() => handleCancelRequest(pendingRequest)}
         isCancelling={isCancelling}
       />
     );
@@ -201,12 +304,14 @@ export default function BrandNameRecurringFeePage() {
       <BrandNameRequestApproved
         request={approvedRequest}
         onProceed={handleProceedPayment}
+        onCancel={() => handleCancelRequest(approvedRequest)}
         isProcessing={isProcessingPayment}
+        isCancelling={isCancelling}
       />
     );
   }
 
-  if (requests.length === 0) {
+  if (!requests.length || !activeSubscription) {
     return (
       <BrandNameRequestEmpty
         onRegister={() => navigate(ConstentRoutes.brandNameCallBuy)}
@@ -222,16 +327,17 @@ export default function BrandNameRecurringFeePage() {
             <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">{brandName}</h1>
             <p className="mt-1 text-sm text-white/90 sm:text-[15px]">
               {t("brandName:recurringFee.serviceSubtitle", {
-                date: t("brandName:recurringFee.registeredDate"),
+                date: registeredDate,
               })}
             </p>
           </div>
           <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-brand-green-dark shadow-sm sm:text-sm">
             <span className="h-2 w-2 rounded-full bg-secondary" aria-hidden />
-            {t("brandName:recurringFee.statusActive")}
+            {activeSubscription.status_label || t("brandName:recurringFee.statusActive")}
           </span>
         </div>
       </section>
+
 
       <section className="grid gap-3 sm:grid-cols-3">
         <div className="rounded-xl border border-brand-green/30 bg-white px-4 py-4 shadow-sm">
@@ -239,7 +345,7 @@ export default function BrandNameRecurringFeePage() {
             {t("brandName:recurringFee.stats.totalCalls")}
           </p>
           <p className="mt-2 text-2xl font-extrabold text-secondary sm:text-3xl">
-            {t("brandName:recurringFee.stats.totalCallsValue")}
+            {totalCalls.toLocaleString()}
           </p>
           <p className="mt-1 text-xs text-[#9CA3AF]">{t("brandName:recurringFee.stats.sinceActivation")}</p>
         </div>
@@ -248,19 +354,21 @@ export default function BrandNameRecurringFeePage() {
             {t("brandName:recurringFee.stats.linkedCallers")}
           </p>
           <p className="mt-2 text-2xl font-extrabold text-secondary sm:text-3xl">{linkedCount}</p>
-          <p className="mt-1 text-xs text-[#9CA3AF]">{t("brandName:recurringFee.stats.maxCallers")}</p>
+          <p className="mt-1 text-xs text-[#9CA3AF]">
+            {t("brandName:recurringFee.stats.maxCallers", { max: MAX_ALLOWED_CALLERS })}
+          </p>
         </div>
         <div className="rounded-xl border border-brand-green/30 bg-white px-4 py-4 shadow-sm">
           <p className="text-[11px] font-bold uppercase tracking-wide text-[#6B7280] sm:text-xs">
             {t("brandName:recurringFee.stats.monthlyFee")}
           </p>
           <p className="mt-2 text-2xl font-extrabold text-secondary sm:text-3xl">
-            {monthlyFee} {t("brandName:recurringFee.currency")}
+            {formatPrice(monthlyFee)} {currency}
           </p>
           <p className="mt-1 text-xs text-[#9CA3AF]">
             {t("brandName:recurringFee.stats.monthlyFeeBreakdown", {
               count: linkedCount,
-              fee: perCallerFee.toFixed(2),
+              fee: formatPrice(perCallerFee),
             })}
           </p>
         </div>
@@ -310,11 +418,12 @@ export default function BrandNameRecurringFeePage() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full text-left text-sm">
-            <thead className="border-b border-[#E5E7EB] bg-[#FAFAFA] text-xs uppercase tracking-wide text-[#6B7280]">
+          <table className="min-w-full text-left text-xs">
+            <thead className="border-b border-[#E5E7EB] bg-[#FAFAFA] text-xs capitalize tracking-wide text-[#6B7280]">
               <tr>
                 <th className="px-4 py-3 font-semibold">{t("brandName:recurringFee.callers.columns.index")}</th>
                 <th className="px-4 py-3 font-semibold">{t("brandName:recurringFee.callers.columns.msisdn")}</th>
+                <th className="px-4 py-3 font-semibold">{t("brandName:recurringFee.callers.columns.serviceFee")}</th>
                 <th className="px-4 py-3 font-semibold">{t("brandName:recurringFee.callers.columns.linkedDate")}</th>
                 <th className="px-4 py-3 font-semibold">{t("brandName:recurringFee.callers.columns.status")}</th>
                 <th className="px-4 py-3 font-semibold text-center">
@@ -327,15 +436,31 @@ export default function BrandNameRecurringFeePage() {
                 callers.map((caller, index) => (
                   <tr key={caller.id} className={index % 2 === 0 ? "bg-brand-mint-softer" : "bg-white"}>
                     <td className="px-4 py-3 text-[#4B5563]">{index + 1}</td>
-                    <td className="px-4 py-3 font-medium text-[#1F2937]">{caller.msisdn}</td>
-                    <td className="px-4 py-3 text-[#4B5563]">{caller.linkedDate}</td>
+                    <td className="px-4 py-3  text-[#1F2937]">
+                      {formatPhoneNumberCustom(caller.msisdn)}
+                    </td>
+                    <td className="px-4 py-3  text-[#1F2937]">
+                      {formatPrice(caller.brandname_service_fee)} {currency} <br />
+                      Dis: {formatPrice(caller.brandname_fee_discount)} <br />
+                      {caller?.brandname_payment_method}
+
+                    </td>
+
+                    <td className="px-4 py-3 text-[#4B5563]"> Linked Date: {getLinkedDate(caller)}
+                      <br />
+                      Next Charge: {caller?.brandname_next_charge_dt}
+
+
+                    </td>
                     <td className="px-4 py-3 font-semibold text-secondary">
-                      {t("brandName:recurringFee.statusActive")}
+                      {isActiveStatus(caller.status)
+                        ? t("brandName:recurringFee.statusActive")
+                        : t("brandName:approved.linkCallers.inactive")}
                     </td>
                     <td className="px-4 py-3 text-center">
                       <button
                         type="button"
-                        onClick={() => handleRemoveCaller(caller.id)}
+                        onClick={handleRemoveCaller}
                         className="rounded-md border border-red-300 bg-white px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 sm:text-sm"
                       >
                         {t("brandName:recurringFee.callers.remove")}
@@ -345,7 +470,7 @@ export default function BrandNameRecurringFeePage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="px-4 py-6 text-center text-sm text-[#6B7280]">
+                  <td colSpan={8} className="px-4 py-6 text-center text-sm text-[#6B7280]">
                     {t("brandName:recurringFee.callers.empty")}
                   </td>
                 </tr>

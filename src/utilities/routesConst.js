@@ -50,6 +50,7 @@ export const ConstentRoutes = {
    brandNameCallIntro: "/brand-name-call/intro",
    brandNameCallChange: "/brand-name-call/change",
    brandNameCallNumbers: "/brand-name-call/numbers",
+   brandNameCallLinkNumbers: "/brand-name-call/numbers/link",
    brandNameCallIncomingNumber: "/brand-name-call/incoming-number",
    brandNameCallStartStop: "/brand-name-call/start-stop",
    brandNameCallSchedule: "/brand-name-call/schedule",

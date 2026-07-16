@@ -7,6 +7,11 @@ import SubmitBrandRequestStep from "./components/SubmitBrandRequestStep";
 import BrandNamePendingStep from "./components/BrandNamePendingStep";
 import APICall from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
+import {
+  DEFAULT_SERVICE_PLAN,
+  getRecurringFeeTypeFromServiceId,
+  getServicePlanOption,
+} from "./utils/servicePlan";
 
 export default function BuyBrandNameFlow() {
   const { t } = useTranslation(["brandName"]);
@@ -14,7 +19,7 @@ export default function BuyBrandNameFlow() {
   const [currentStep, setCurrentStep] = useState(1);
   const [brandName, setBrandName] = useState("");
   const [callerCount, setCallerCount] = useState(1);
-  const [servicePlan, setServicePlan] = useState("Monthly");
+  const [servicePlan, setServicePlan] = useState(DEFAULT_SERVICE_PLAN);
   const [isChecking, setIsChecking] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAvailable, setIsAvailable] = useState(false);
@@ -57,7 +62,7 @@ export default function BuyBrandNameFlow() {
   }, [corpTagCount]);
 
   const handleBrandNameChange = (value) => {
-    const sanitized = value.replace(/[^a-zA-Z0-9]/g, "");
+    const sanitized = value.replace(/[^a-zA-Z0-9 ]/g, "");
     setBrandName(sanitized);
     setIsAvailable(false);
     setErrorMessage("");
@@ -138,12 +143,14 @@ export default function BuyBrandNameFlow() {
 
     setIsSubmitting(true);
     try {
+      const selectedPlan = getServicePlanOption(servicePlan);
       const response = await APICall(
         "post",
         {
           brandname: trimmed,
           callers_count: callerCount,
-          service_id: servicePlan,
+          service_id: selectedPlan.serviceId,
+          recurring_fee_type: getRecurringFeeTypeFromServiceId(selectedPlan.serviceId),
           channel: "WEB",
           phone_number: userData?.phone_number,
         },

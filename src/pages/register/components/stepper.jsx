@@ -18,6 +18,7 @@ export function MultiStepForm() {
   const [data, setData] = useState(null); // Stores documents from UploadBtn
   const [formSubmissionData, setFormSubmissionData] = useState(null); // Stores combined data for form submission
   const [step0Data, setStep0Data] = useState(null); // Store step 0 (registration) data
+  const [registrationFlow, setRegistrationFlow] = useState("normal");
   const navigate = useNavigate()
   const { t } = useTranslation()
 
@@ -53,7 +54,7 @@ export function MultiStepForm() {
     }
   };
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     if (activeStep == 0) {
       // Step 0: Check if OTP is verified before proceeding
       if (!registerHook.verified) {
@@ -61,7 +62,6 @@ export function MultiStepForm() {
         return;
       }
 
-      // OTP verified, proceed to save data
       // Use getValues() to explicitly get password values to ensure they're captured
       const currentPassword = getValues('password') || values.password;
       const currentConfirmPassword = getValues('confirm_password') || values.confirm_password;
@@ -70,12 +70,24 @@ export function MultiStepForm() {
       const step0DataToSave = {
         ...values,
         password: currentPassword,
-        confirm_password: currentConfirmPassword
+        confirm_password: currentConfirmPassword,
+        additional_account_id: localStorage.getItem("additional_account_id"),
       };
       
       // Verify password is not empty before saving
       if (!currentPassword || currentPassword.trim() === '') {
         console.error('Password is empty when saving step0Data');
+      }
+
+      // Corporate additional number: submit without documents
+      if (registrationFlow === "corporate_additional") {
+        localStorage.setItem(
+          "phone_number",
+          String(values?.phone_number || "").replace(/^\+/, "").replace(/\s/g, "")
+        );
+        localStorage.setItem("otp_code_step1", String(values?.verification_code || "").trim());
+        await registerHook.handleCorporateAdditionalRegister(step0DataToSave, reset);
+        return;
       }
       
       setStep0Data(step0DataToSave);
@@ -136,6 +148,8 @@ export function MultiStepForm() {
                 control={control}
                 setData={setData}
                 registerData={registerHook}
+                registrationFlow={registrationFlow}
+                setRegistrationFlow={setRegistrationFlow}
               />
             ) : (
               <AccountForm
@@ -153,15 +167,19 @@ export function MultiStepForm() {
             )}
           </div>
           {activeStep == 0 ? (
+            registrationFlow !== "ussd" && (
             <div className="mt-10 flex justify-center">
               <Button
                 className=" bg-secondary"
                 type="submit"
                 disabled={Object.entries(registerHook?.state?.error)?.length > 0}
               >
-                {t("common.form.registerBtn")}
+                {registrationFlow === "corporate_additional"
+                  ? t("common.form.submit")
+                  : t("common.form.registerBtn")}
               </Button>
             </div>
+            )
           ) : (
             <div className="mt-10 gap-6 flex justify-center">
               <Button

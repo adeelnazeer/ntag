@@ -32,10 +32,10 @@ export default function BrandNameConfirmPayment({
 
   return (
     <div className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 p-2 backdrop-blur-sm">
-      <div className="relative max-h-[92%] w-full max-w-md overflow-auto rounded-2xl bg-white p-6">
+      <div className="relative max-h-[92%] w-full max-w-xl overflow-auto rounded-2xl bg-white p-6">
         <button
           type="button"
-          className="absolute right-4 top-4 text-xl text-gray-400 hover:text-gray-600"
+          className="absolute right-4 top-4 !text-xl text-gray-400 hover:text-gray-600"
           onClick={onClose}
           aria-label={t("common:buttons.cancel")}
         >
@@ -53,35 +53,35 @@ export default function BrandNameConfirmPayment({
 
         <div className="mt-6">
           <div className="rounded-xl bg-gray-50 p-4">
-            <div className="mb-3">
+            <div className="mb-3 flex justify-between items-center">
               <Typography className="text-sm text-gray-500">
                 {t("brandName:approved.confirmModal.brandName")}
               </Typography>
               <Typography className="text-base font-medium">{brandname}</Typography>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 flex justify-between items-center">
               <Typography className="text-sm text-gray-500">
                 {t("common:dashboard.mobileNo")}
               </Typography>
-              <Typography className="text-base font-medium">{phoneNumber}</Typography>
+              <Typography className="text-base font-medium">+{phoneNumber}</Typography>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 flex justify-between items-center">
               <Typography className="text-sm text-gray-500">
                 {t("common:dashboard.paymentMethod")}
               </Typography>
               <Typography className="text-base font-medium">{paymentMethodLabel}</Typography>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 flex justify-between items-center    ">
               <Typography className="text-sm text-gray-500">
                 {t("common:dashboard.servicePlan")}
               </Typography>
               <Typography className="text-base font-medium">{serviceId}</Typography>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 flex justify-between items-center">
               <Typography className="text-sm text-gray-500">
                 {t("brandName:approved.registrationFee")}
               </Typography>
@@ -90,7 +90,7 @@ export default function BrandNameConfirmPayment({
               </Typography>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 flex justify-between items-center">
               <Typography className="text-sm text-gray-500">
                 {t("brandName:approved.perCallerFee", { serviceId: request.service_id })}
               </Typography>
@@ -99,14 +99,14 @@ export default function BrandNameConfirmPayment({
               </Typography>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 flex justify-between items-center">
               <Typography className="text-sm text-gray-500">
                 {t("brandName:approved.numberOfCallers")}
               </Typography>
               <Typography className="text-base font-medium">{callersCount}</Typography>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 flex justify-between items-center">
               <Typography className="text-sm text-gray-500">
                 {t("brandName:approved.monthlyRecurring", { serviceId: request.service_id })}
               </Typography>
@@ -115,21 +115,21 @@ export default function BrandNameConfirmPayment({
               </Typography>
             </div>
 
-            <div className="mb-3 border-t border-secondary/20 pt-3">
+            <div className="mb-3 flex justify-between items-center border-t border-secondary/20 pt-3">
               <Typography className="text-sm text-gray-500">Base Price</Typography>
               <Typography className="text-base font-medium">
                 {formatPrice(request?.base_price ?? 0)} {t("brandName:approved.currency")}
               </Typography>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 flex justify-between items-center">
               <Typography className="text-sm text-gray-500">Excise Tax</Typography>
               <Typography className="text-base font-medium">
                 {formatPrice(request?.excisetax ?? 0)} {t("brandName:approved.currency")}
               </Typography>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 flex justify-between items-center">
               <Typography className="text-sm text-gray-500">
                 VAT ({request?.vat_percentage ?? 0}%)
               </Typography>
@@ -138,7 +138,7 @@ export default function BrandNameConfirmPayment({
               </Typography>
             </div>
 
-            <div className="border-t border-secondary/20 pt-3">
+            <div className="flex justify-between items-center border-t border-secondary/20 pt-3">
               <Typography className="text-sm font-bold text-gray-500">
                 {t("brandName:approved.totalDueNow")}
               </Typography>

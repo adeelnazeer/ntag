@@ -8,6 +8,11 @@ import PhoneInput from "react-phone-number-input";
 import TickIcon from "../../../assets/images/tick.png";
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { ConstentRoutes } from "../../../utilities/routesConst";
+import {
+    PASSWORD_POLICY,
+    validateConfirmPasswordField,
+    validatePasswordField,
+} from "../../../utilities/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import AccountConfirmation from "../../../modals/account-confirmation";
@@ -18,6 +23,7 @@ import APICall from "../../../network/APICall";
 import EndPoints from "../../../network/EndPoints";
 import { useRecaptchaToken } from "../../../hooks/useRecaptchaToken";
 import OtpInput from "react-otp-input";
+import { getRegistrationFlowType } from "../../../utilities/registerAccountType";
 
 
 // Apply CSS fix for autofill styling
@@ -155,6 +161,9 @@ const UserForm = () => {
     const [checkOtpFaydaLoading, setCheckOtpFaydaLoading] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const [alreadyVerified, setAlreadyVerified] = useState(false);
+    const [registrationFlow, setRegistrationFlow] = useState("normal");
+    const [accountTypeMeta, setAccountTypeMeta] = useState(null);
+    const [accountTypeVerifying, setAccountTypeVerifying] = useState(false);
     const { state } = useLocation();
 
     const isFaydaVerified = Boolean(faydaVerified || state?.faydaData?.success);
@@ -191,6 +200,50 @@ const UserForm = () => {
 
     // Handle validation when field loses focus or on key press - only for username, email, and phone_number
     const lastValidatedPhoneRef = useRef(null);
+
+    const verifyPhoneAccountType = useCallback(async (value) => {
+        const cleanNumber = value ? value.replace(/^\+/, "").replace(/\s/g, "") : "";
+        if (cleanNumber.length < 12) return;
+
+        setAccountTypeVerifying(true);
+        try {
+            const res = await registerData.verifyAccountType(cleanNumber);
+            if (!res) return;
+
+            const flowType = getRegistrationFlowType(res);
+            if (flowType === "ussd" || flowType === "corporate_additional") {
+                setRegistrationFlow(flowType);
+                if (flowType === "corporate_additional" && res?.account_id) {
+                    const meta = { account_id: res.account_id };
+                    setAccountTypeMeta(meta);
+                    localStorage.setItem("additional_account_id", res.account_id);
+                } else {
+                    setAccountTypeMeta(null);
+                    localStorage.removeItem("additional_account_id");
+                }
+                registerData.setFieldValidationSuccess("phone_number");
+                return;
+            }
+
+            if (!res?.success) {
+                registerData.setFieldValidationError(
+                    "phone_number",
+                    res?.message || "Phone number validation failed."
+                );
+                setRegistrationFlow("normal");
+                setAccountTypeMeta(null);
+                return;
+            }
+
+            setRegistrationFlow("normal");
+            setAccountTypeMeta(null);
+            localStorage.removeItem("additional_account_id");
+            registerData.verifyAccount({ phone_number: cleanNumber }, "phone_number");
+        } finally {
+            setAccountTypeVerifying(false);
+        }
+    }, [registerData]);
+
     const handleValidation = useCallback((value, fieldName) => {
         if (!['username', 'email', 'phone_number'].includes(fieldName) || !value || value.trim() === '') {
             return;
@@ -198,19 +251,21 @@ const UserForm = () => {
         const cleanValue = value.replace(/\s/g, "").replace(/^\+/, "");
         if (fieldName === 'phone_number') {
             const cleanNumber = value ? value.replace(/^\+/, "").replace(/\s/g, "") : "";
-            if (cleanNumber.length > 9) {
+            if (cleanNumber.length >= 12) {
                 if (cleanNumber === lastValidatedPhoneRef.current) return;
                 lastValidatedPhoneRef.current = cleanNumber;
-                registerData.verifyAccount({ phone_number: cleanNumber }, "phone_number");
+                verifyPhoneAccountType(value);
             } else {
                 lastValidatedPhoneRef.current = null;
+                setRegistrationFlow("normal");
+                setAccountTypeMeta(null);
             }
             return;
         }
         if (cleanValue.length > 3) {
             registerData.verifyAccount({ [fieldName]: cleanValue }, fieldName);
         }
-    }, [registerData]);
+    }, [registerData, verifyPhoneAccountType]);
 
     const validationTimeoutRef = useRef(null);
     const debouncedValidation = useCallback((value, fieldName) => {
@@ -355,6 +410,21 @@ const UserForm = () => {
     };
 
 
+    const handleCorporateRegisterNavigate = () => {
+        const cleanPhone = phone
+            ? phone.replace(/^\+/, "").replace(/\s/g, "")
+            : "";
+        navigate(ConstentRoutes.register, {
+            state: {
+                phone_number: cleanPhone,
+                additional_account_id:
+                    accountTypeMeta?.account_id ||
+                    localStorage.getItem("additional_account_id"),
+                registrationFlow: "corporate_additional",
+            },
+        });
+    };
+
     const onSubmit = (data) => {
         setData({
             ...data,
@@ -395,6 +465,10 @@ const UserForm = () => {
         // If it’s a string or boolean
         return Boolean(e);
     }, [registerData]);
+
+    const showCorporateRedirectOnly =
+        registrationFlow === "corporate_additional" &&
+        registerData?.state?.success?.phone_number;
 
     return (
         <>
@@ -701,22 +775,11 @@ const UserForm = () => {
                                         <Input
                                             className="w-full rounded-xl px-4 py-2 bg-white outline-none"
                                             placeholder={t("common.form.password")}
-                                            maxLength={15}
+                                            maxLength={PASSWORD_POLICY.MAX_LENGTH}
                                             type={showPassword ? "text" : "password"}
                                             {...register("password", {
-                                                required: t("common.form.errors.password"),
-                                                minLength: {
-                                                    value: 8,
-                                                    message: t("common.form.errors.passwordMinLength"),
-                                                },
-                                                maxLength: {
-                                                    value: 15,
-                                                    message: t("common.form.errors.passwordMaxLength"),
-                                                },
-                                                pattern: {
-                                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,15}$/,
-                                                    message: t("common.form.errors.passwordPattern")
-                                                },
+                                                validate: (value) =>
+                                                    validatePasswordField(value, watch("username"), "registration"),
                                             })}
                                             style={
                                                 errors?.password
@@ -741,7 +804,7 @@ const UserForm = () => {
                                         </p>
                                     )}
                                     <p className="text-xs text-gray-600 mt-1">
-                                        {t("common.form.passwordLength")}
+                                        {PASSWORD_POLICY.MESSAGES.POLICY}
                                     </p>
                                 </div>
                             )}
@@ -754,7 +817,7 @@ const UserForm = () => {
                                             className=" w-full rounded-xl px-4 py-2 bg-white outline-none"
                                             placeholder={t("common.form.confirmPassword")}
                                             type={showConfirmPassword ? "text" : "password"}
-                                            maxLength={15}
+                                            maxLength={PASSWORD_POLICY.MAX_LENGTH}
                                             style={
                                                 errors?.confirm_password ||
                                                     watchAllFields?.password != watchAllFields?.confirm_password
@@ -762,13 +825,8 @@ const UserForm = () => {
                                                     : { border: "1px solid #8A8AA033" }
                                             }
                                             {...register("confirm_password", {
-                                                required: t("common.form.errors.confirmPassword"),
-                                                validate: (val) => {
-                                                    if (watch("password") != val) {
-                                                        return "passwords do not match";
-                                                    }
-                                                    return true;
-                                                },
+                                                validate: (value) =>
+                                                    validateConfirmPasswordField(watch("password"), value),
                                             })}
                                             onContextMenu={(e) => e.preventDefault()} // disable right-click
                                             onCopy={(e) => e.preventDefault()}        // disable copy
@@ -831,126 +889,182 @@ const UserForm = () => {
 
                             {currentStep === 1 && (
                                 <div className="mt-3">
-                                    <h3 className="text-lg font-medium">
-                                        {t("auth:step1.heading")}
-                                    </h3>
-                                    <p className="text-sm mt-2 mb-3 text-gray-600">{t("auth:step1.description")}</p>
-                                    <GetLabel name={t("common.form.mobileNo")} />
-                                    <div className="mt-2 flex items-center gap-2">
-                                        <div className="relative items-center flex w-full">
-                                            <Controller
-                                                name="phone_number"
-                                                control={control}
-                                                defaultValue=""
-                                                rules={{
-                                                    required: currentStep === 1 ? "Phone number is required" : false,
-                                                    validate: (value) =>
-                                                        validatePhoneNumber(value)
-                                                }}
-                                                render={({ field }) => {
-                                                    return (
-                                                        <PhoneInput
-                                                            className="w-full rounded-xl px-4 py-2 border border-[#8A8AA033] bg-white outline-none"
-                                                            defaultCountry="ET"
-                                                            international
-                                                            countryCallingCodeEditable={false}
-                                                            value={field.value}
-                                                            limitMaxLength={true}
-                                                            flagUrl={"/et.png"}
-                                                            disabled={registerData?.expirationTime}
-                                                            countries={["ET"]}
-                                                            onChange={(value) => {
-                                                                // Ensure the value starts with "+2519"
-                                                                if (!value) {
-                                                                    value = "+2519";
-                                                                } else if (!value.startsWith("+2519")) {
-                                                                    // If user tries to change the prefix or remove the 9
-                                                                    const cleanValue = value.replace(/^\+251/, '');
-                                                                    if (cleanValue === '' || !cleanValue.startsWith('9')) {
-                                                                        value = "+2519";
-                                                                    } else {
-                                                                        value = "+251" + cleanValue;
-                                                                    }
-                                                                }
-
-                                                                field.onChange(value);
-                                                                setPhone(value);
-
-                                                                // Reset success state when field is modified
-                                                                if (registerData?.state?.success?.phone_number) {
-                                                                    registerData.resetFieldValidation &&
-                                                                        registerData.resetFieldValidation("phone_number");
-                                                                }
-
-                                                                // Check if phone number is valid
-                                                                const isValid = validatePhoneNumber(value);
-                                                                setIsValidPhone(isValid);
-
-                                                                // Only validate complete numbers
-                                                                const cleanNumber = value ? value.replace(/^\+/, "").replace(/\s/g, "") : "";
-                                                                if (cleanNumber.length > 9) {
-                                                                    debouncedValidation(value, "phone_number");
-                                                                } else {
-                                                                    lastValidatedPhoneRef.current = null;
-                                                                }
-                                                            }}
-                                                        />
-                                                    );
-                                                }}
-                                            />
-                                            {registerData?.expirationTime ? (
-                                                <CountdownTimer
-                                                    expirationTime={registerData?.expirationTime}
-                                                    onExpire={handleExpire}
+                                    {!showCorporateRedirectOnly && (
+                                        <>
+                                            <h3 className="text-lg font-medium">
+                                                {t("auth:step1.heading")}
+                                            </h3>
+                                            <p className="text-sm mt-2 mb-3 text-gray-600">{t("auth:step1.description")}</p>
+                                        </>
+                                    )}
+                                    {registrationFlow === "ussd" &&
+                                        registerData?.state?.success?.phone_number && (
+                                            <div
+                                                className="mb-4 flex items-start gap-3 rounded-lg border border-blue-300 bg-blue-50 px-4 py-3"
+                                                role="status"
+                                            >
+                                                <TbCircleCheck
+                                                    className="mt-0.5 h-5 w-5 shrink-0 text-[#008fd5]"
+                                                    strokeWidth={1.35}
+                                                    aria-hidden
                                                 />
-                                            ) : (
-                                                <button
-                                                    type="button"
-                                                    disabled={
-                                                        hasBackendError ||
-                                                        !isValidPhone ||
-                                                        (isGetCodeDisabled && !otpExpired)
-                                                    }
-                                                    className={`!absolute right-3 bg-[#f5f5f5] p-2 shadow-sm border border-[#8A8AA033] 
-                                                     ${(hasBackendError || !isValidPhone || (isGetCodeDisabled && !otpExpired))
-                                                            ? "opacity-50 cursor-not-allowed"
-                                                            : "cursor-pointer hover:bg-gray-100"
-                                                        } text-xs font-medium rounded`}
-                                                    onClick={() =>
-                                                        !isGetCodeDisabled &&
-                                                        isValidPhone &&
-                                                        !hasBackendError &&
-                                                        handleOtpRequest(phone)
-                                                    }
-                                                >
-                                                    {!registerData?.isRecaptchaReady ? t("common.form.pleaseWait") :
-                                                        otpExpired ? "Resend OTP" :
-                                                            isGetCodeDisabled ? t("common.form.pleaseWait") :
-                                                                registerData?.isResend ? t("common.form.resendOtp") : t("common.form.sentOtp")}
-                                                </button>
-
-                                            )}
-                                        </div>
-                                        {registerData?.state?.success?.phone_number && !errors.phone_number && (
-                                            <div>
-                                                <img className="w-5" src={TickIcon} alt="" />
+                                                <p className="text-sm leading-snug text-[#008fd5]">
+                                                    {t("auth:accountTypeNotice.ussd")}
+                                                </p>
                                             </div>
                                         )}
-                                    </div>
-                                    {phone && !isValidPhone && (touchedFields?.phone_number || dirtyFields?.phone_number) && (
-                                        <p className="text-left mt-1 text-sm text-[#FF0000]">
-                                            {t("auth:step1.mobile_error")}
-                                        </p>
-                                    )}
-                                    {(errors.phone_number || registerData?.state?.error?.phone_number) && (
-                                        <p className="text-left mt-1 text-sm text-[#FF0000]">
-                                            {errors.phone_number?.message || registerData?.state?.error?.phone_number}
-                                        </p>
+                                    {showCorporateRedirectOnly ? (
+                                        <>
+                                            <div
+                                                className="mb-4 flex items-start gap-3 rounded-lg border border-blue-300 bg-blue-50 px-4 py-3"
+                                                role="status"
+                                            >
+                                                <TbCircleCheck
+                                                    className="mt-0.5 h-5 w-5 shrink-0 text-[#008fd5]"
+                                                    strokeWidth={1.35}
+                                                    aria-hidden
+                                                />
+                                                <p className="text-sm leading-snug text-[#008fd5]">
+                                                    {t("auth:accountTypeNotice.corporate_additional")}
+                                                </p>
+                                            </div>
+                                            <div className="mt-6 flex justify-center">
+                                                <Button
+                                                    type="button"
+                                                    className="bg-secondary"
+                                                    onClick={handleCorporateRegisterNavigate}
+                                                >
+                                                    {t("auth:accountTypeNotice.register_here")}
+                                                </Button>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <GetLabel name={t("common.form.mobileNo")} />
+                                            <div className="mt-2 flex items-center gap-2">
+                                                <div className="relative items-center flex w-full">
+                                                    <Controller
+                                                        name="phone_number"
+                                                        control={control}
+                                                        defaultValue=""
+                                                        rules={{
+                                                            required: currentStep === 1 ? "Phone number is required" : false,
+                                                            validate: (value) =>
+                                                                validatePhoneNumber(value)
+                                                        }}
+                                                        render={({ field }) => {
+                                                            return (
+                                                                <PhoneInput
+                                                                    className="w-full rounded-xl px-4 py-2 border border-[#8A8AA033] bg-white outline-none"
+                                                                    defaultCountry="ET"
+                                                                    international
+                                                                    countryCallingCodeEditable={false}
+                                                                    value={field.value}
+                                                                    limitMaxLength={true}
+                                                                    flagUrl={"/et.png"}
+                                                                    disabled={registerData?.expirationTime}
+                                                                    countries={["ET"]}
+                                                                    onChange={(value) => {
+                                                                        // Ensure the value starts with "+2519"
+                                                                        if (!value) {
+                                                                            value = "+2519";
+                                                                        } else if (!value.startsWith("+2519")) {
+                                                                            // If user tries to change the prefix or remove the 9
+                                                                            const cleanValue = value.replace(/^\+251/, '');
+                                                                            if (cleanValue === '' || !cleanValue.startsWith('9')) {
+                                                                                value = "+2519";
+                                                                            } else {
+                                                                                value = "+251" + cleanValue;
+                                                                            }
+                                                                        }
+
+                                                                        field.onChange(value);
+                                                                        setPhone(value);
+
+                                                                        setRegistrationFlow("normal");
+                                                                        setAccountTypeMeta(null);
+                                                                        localStorage.removeItem("additional_account_id");
+
+                                                                        // Reset success state when field is modified
+                                                                        if (registerData?.state?.success?.phone_number) {
+                                                                            registerData.resetFieldValidation &&
+                                                                                registerData.resetFieldValidation("phone_number");
+                                                                        }
+
+                                                                        // Check if phone number is valid
+                                                                        const isValid = validatePhoneNumber(value);
+                                                                        setIsValidPhone(isValid);
+
+                                                                        // Only validate complete numbers
+                                                                        const cleanNumber = value ? value.replace(/^\+/, "").replace(/\s/g, "") : "";
+                                                                        if (cleanNumber.length >= 12) {
+                                                                            debouncedValidation(value, "phone_number");
+                                                                        } else {
+                                                                            lastValidatedPhoneRef.current = null;
+                                                                        }
+                                                                    }}
+                                                                />
+                                                            );
+                                                        }}
+                                                    />
+                                                    {registerData?.expirationTime ? (
+                                                        <CountdownTimer
+                                                            expirationTime={registerData?.expirationTime}
+                                                            onExpire={handleExpire}
+                                                        />
+                                                    ) : (
+                                                        <button
+                                                            type="button"
+                                                            disabled={
+                                                                hasBackendError ||
+                                                                !isValidPhone ||
+                                                                accountTypeVerifying ||
+                                                                (isGetCodeDisabled && !otpExpired)
+                                                            }
+                                                            className={`!absolute right-3 bg-[#f5f5f5] p-2 shadow-sm border border-[#8A8AA033] 
+                                                     ${(hasBackendError || !isValidPhone || accountTypeVerifying || (isGetCodeDisabled && !otpExpired))
+                                                                    ? "opacity-50 cursor-not-allowed"
+                                                                    : "cursor-pointer hover:bg-gray-100"
+                                                                } text-xs font-medium rounded`}
+                                                            onClick={() =>
+                                                                !isGetCodeDisabled &&
+                                                                isValidPhone &&
+                                                                !hasBackendError &&
+                                                                !accountTypeVerifying &&
+                                                                handleOtpRequest(phone)
+                                                            }
+                                                        >
+                                                            {accountTypeVerifying ? t("common.form.pleaseWait") :
+                                                                !registerData?.isRecaptchaReady ? t("common.form.pleaseWait") :
+                                                                    otpExpired ? "Resend OTP" :
+                                                                        isGetCodeDisabled ? t("common.form.pleaseWait") :
+                                                                            registerData?.isResend ? t("common.form.resendOtp") : t("common.form.sentOtp")}
+                                                        </button>
+
+                                                    )}
+                                                </div>
+                                                {registerData?.state?.success?.phone_number && !errors.phone_number && (
+                                                    <div>
+                                                        <img className="w-5" src={TickIcon} alt="" />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            {phone && !isValidPhone && (touchedFields?.phone_number || dirtyFields?.phone_number) && (
+                                                <p className="text-left mt-1 text-sm text-[#FF0000]">
+                                                    {t("auth:step1.mobile_error")}
+                                                </p>
+                                            )}
+                                            {(errors.phone_number || registerData?.state?.error?.phone_number) && (
+                                                <p className="text-left mt-1 text-sm text-[#FF0000]">
+                                                    {errors.phone_number?.message || registerData?.state?.error?.phone_number}
+                                                </p>
+                                            )}
+                                        </>
                                     )}
                                 </div>
                             )}
 
-                            {currentStep === 1 && (
+                            {currentStep === 1 && !showCorporateRedirectOnly && (
                                 <div className="mt-3">
                                     <GetLabel name={t("common.form.verificationCode")} />
                                     <div className="relative mt-2 items-center flex w-full">
@@ -1008,7 +1122,7 @@ const UserForm = () => {
                                 </div>
                             )}
 
-                            {currentStep === 1 && (
+                            {currentStep === 1 && !showCorporateRedirectOnly && (
                                 <div className="mt-6 flex items-center justify-end">
                                     <Button
                                         type="button"

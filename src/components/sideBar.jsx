@@ -153,7 +153,7 @@ const Sidebar = ({
   ];
 
   const brandManageItems = [
-    { key: "changeBrandName", route: ConstentRoutes.brandNameCallChange, icon: "✏️" },
+    // { key: "changeBrandName", route: ConstentRoutes.brandNameCallChange, icon: "✏️" },
     {
       key: "brandAddRemoveNumbers",
       route: ConstentRoutes.brandNameCallNumbers,
@@ -179,11 +179,11 @@ const Sidebar = ({
       route: ConstentRoutes.brandNameCallUnsubscribe,
       icon: "🚫",
     },
-    {
-      key: "brandCallsHistory",
-      route: ConstentRoutes.brandNameCallHistory,
-      icon: "📊",
-    },
+    // {
+    //   key: "brandCallsHistory",
+    //   route: ConstentRoutes.brandNameCallHistory,
+    //   icon: "📊",
+    // },
   ];
 
   const renderBrandLink = (item, highlightGreen = false) => {
@@ -448,17 +448,17 @@ const Sidebar = ({
                   <ListItem
                     disabled={userData?.status == 5}
                     onClick={() => setOpenBrandMenu(!openBrandMenu)}
-                    className={`rounded-lg bg-[#8dc63f]/10 py-4 cursor-pointer
+                    className={`rounded-lg text-[#8A8AA0] py-4 cursor-pointer
                       ${activeBrand ? "bg-secondary text-white hover:bg-secondary" : ""}
                       focus:bg-secondary focus:text-white`}
                   >
                     <ListItemPrefix className="md:mr-4 mr-2">
                       <BsStarFill
-                        className={`h-4 w-4 ${activeBrand ? "text-white" : "text-secondary"}`}
+                        className={`h-4 w-4 ${activeBrand ? "text-white" : "text-[#8A8AA0]"}`}
                       />
                     </ListItemPrefix>
                     <span
-                      className={`flex flex-1 items-center gap-2 font-medium ${activeBrand ? "text-white" : "text-secondary"
+                      className={`flex flex-1 items-center gap-2 font-medium ${activeBrand ? "text-white" : "text-[#8A8AA0]"
                         }`}
                     >
                       {t("sideBar.brandNameCall")}
@@ -471,7 +471,7 @@ const Sidebar = ({
 
                 {(openBrandMenu && userData?.parent_id == null) &&(
                   <div className="ml-8 mt-1 flex flex-col gap-1 pl-4 mb-2">
-                    {brandPrimaryItems.map((item) => renderBrandLink(item, true))}
+                    {brandPrimaryItems.map((item) => renderBrandLink(item, false))}
                     <p className="px-3 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
                       {t("sideBar.manageBrandName")}
                     </p>

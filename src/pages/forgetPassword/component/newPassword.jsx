@@ -9,6 +9,11 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Input } from "@headlessui/react";
 import { useTranslation } from "react-i18next";
 import { useRecaptchaToken } from "../../../hooks/useRecaptchaToken";
+import {
+    PASSWORD_POLICY,
+    validateConfirmPasswordField,
+    validatePasswordField,
+} from "../../../utilities/auth";
 
 const PasswordReset = ({ setStep, data }) => {
     const { t } = useTranslation(["auth"]);
@@ -48,8 +53,9 @@ const PasswordReset = ({ setStep, data }) => {
     };
 
     // Watch the new password field to validate confirm password
-    const newPassword = watch("newPassword");
-    const watchAllFields = watch()
+    const watchAllFields = watch();
+    const accountIdentifier =
+        data?.account_id || data?.username || data?.customer_account_id;
 
     return (
         <>
@@ -63,8 +69,7 @@ const PasswordReset = ({ setStep, data }) => {
                         <Input
                             className="w-full rounded-xl p-4 bg-[#F6F7FB] outline-none pr-12"
                             placeholder={t("newPassword.placeholders.newPassword")}
-                            maxLength={15}
-                            min={4}
+                            maxLength={PASSWORD_POLICY.MAX_LENGTH}
                             type={showPassword?.password1 ? "text" : "password"}
                             style={
                                 errors.newPassword
@@ -72,15 +77,8 @@ const PasswordReset = ({ setStep, data }) => {
                                     : { border: "1px solid #8A8AA033" }
                             }
                             {...register("newPassword", {
-                                required: t("newPassword.validation.passwordRequired"),
-                                minLength: {
-                                    value: 5,
-                                    message: t("newPassword.validation.passwordMinLength"),
-                                },
-                                maxLength: {
-                                    value: 15,
-                                    message: t("newPassword.validation.passwordMaxLength"),
-                                },
+                                validate: (value) =>
+                                    validatePasswordField(value, accountIdentifier, "registration"),
                             })}
                             onContextMenu={(e) => e.preventDefault()} // disable right-click
                             onCopy={(e) => e.preventDefault()}        // disable copy
@@ -97,15 +95,21 @@ const PasswordReset = ({ setStep, data }) => {
                             {showPassword?.password1 ? <AiOutlineEye size={22} /> : <AiOutlineEyeInvisible size={22} />}
                         </div>
                     </div>
-
+                    {errors.newPassword && (
+                        <p className="text-left mt-1 text-sm text-[#FF0000]">
+                            {errors.newPassword.message}
+                        </p>
+                    )}
+                    <p className="text-xs text-gray-600 mt-1">
+                        {PASSWORD_POLICY.MESSAGES.POLICY}
+                    </p>
                 </div>
                 <div className="mb-2">
                     <div className=" relative">
                         <Input
                             className="w-full rounded-xl p-4 bg-[#F6F7FB] outline-none pr-12"
                             placeholder={t("newPassword.placeholders.confirmNewPassword")}
-                            maxLength={15}
-                            min={4}
+                            maxLength={PASSWORD_POLICY.MAX_LENGTH}
                             type={showPassword?.password2 ? "text" : "password"}
                             style={
                                 errors?.confirmPassword ||
@@ -114,21 +118,8 @@ const PasswordReset = ({ setStep, data }) => {
                                     : { border: "1px solid #8A8AA033" }
                             }
                             {...register("confirmPassword", {
-                                required: t("newPassword.validation.passwordRequired"),
-                                minLength: {
-                                    value: 5,
-                                    message: t("newPassword.validation.passwordMinLength"),
-                                },
-                                maxLength: {
-                                    value: 15,
-                                    message: t("newPassword.validation.passwordMaxLength"),
-                                },
-                                validate: (val) => {
-                                    if (watch("newPassword") != val) {
-                                        return t("newPassword.validation.passwordsDoNotMatch");
-                                    }
-                                    return true;
-                                },
+                                validate: (value) =>
+                                    validateConfirmPasswordField(watch("newPassword"), value),
                             })}
                             onContextMenu={(e) => e.preventDefault()} // disable right-click
                             onCopy={(e) => e.preventDefault()}        // disable copy
@@ -145,7 +136,11 @@ const PasswordReset = ({ setStep, data }) => {
                             {showPassword?.password2 ? <AiOutlineEye size={22} /> : <AiOutlineEyeInvisible size={22} />}
                         </div>
                     </div>
-
+                    {errors.confirmPassword && (
+                        <p className="text-left mt-1 text-sm text-[#FF0000]">
+                            {errors.confirmPassword.message}
+                        </p>
+                    )}
                 </div>
                 <Button
                     className="w-full mt-10 px-4 py-2 justify-center bg-secondary text-white text-[22px] font-semibold"

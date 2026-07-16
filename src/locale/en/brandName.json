@@ -8,15 +8,15 @@
   },
   "step1": {
     "title": "Step 1 — Check Brand Name Availability",
-    "description": "Enter your desired brand name. This will appear as the Caller ID (CLI) when your employees make calls. Must be 18 characters, letters and numbers only.",
+    "description": "Enter your desired brand name. This will appear as the Caller ID (CLI) when your employees make calls. Must be 3–18 characters, letters, numbers, and spaces only.",
     "label": "Enter your preferred Brand Name",
-    "hint": "3 to 18 characters — letters and numbers only. No special symbols.",
+    "hint": "3 to 18 characters — letters, numbers, and spaces only. No other special symbols.",
     "placeholder": "e.g. EthioBank, KFC, MIDROC",
     "charCount": "{{count}} / 18 characters",
     "checkButton": "Check Availability",
     "checking": "Checking...",
     "available": "'{{name}}' is available! Please proceed to submit your brand name request below.",
-    "invalidFormat": "Brand name must be 3–18 characters and contain letters and numbers only.",
+    "invalidFormat": "Brand name must be 3–18 characters and contain letters, numbers, and spaces only.",
     "unavailable": "'{{name}}' is not available. Please try another name.",
     "required": "Please enter a brand name.",
     "notEligible": "Brand Name purchases require an active NameTAG. Please link a NameTAG to your primary account to continue.",
@@ -89,7 +89,7 @@
     "plans": {
       "Monthly": "Monthly",
       "Quarterly": "Quarterly",
-      "Semiannually": "Semi-Annual",
+      "Semi-Annually": "Semi-Annual",
       "Annually": "Annual"
     },
     "costSummaryTitle": "Estimated Cost Summary",
@@ -130,8 +130,8 @@
     "hero": {
       "title": "Brand Name Call — service introduction",
       "description": "Before applying, please read this guide carefully. It explains what Brand Name Call is, how the approval process works, and what brand names are not permitted on the NameTAG platform.",
-      "applyButton": "Apply for a brand name",
-      "downloadButton": "Download policy PDF",
+      "applyButton": "Apply for Brand Name",
+      "downloadButton": "Brand Name Discount Policy",
       "policyPdfUrl": "/Terms"
     },
     "stepper": [
@@ -144,7 +144,7 @@
     "stats": [
       { "label": "Minimum brand length", "value": "3", "suffix": "characters" },
       { "label": "Maximum brand length", "value": "18", "suffix": "characters" },
-      { "label": "Max linked callers", "value": "50", "suffix": "per brand name" },
+      { "label": "Max linked callers", "key": "maxLinkedCallers", "value": "50", "suffix": "per brand name" },
       { "label": "Approval time", "value": "24–48", "suffix": "hours after submission" }
     ],
     "formattingRules": {
@@ -152,7 +152,7 @@
       "items": [
         {
           "type": "allowed",
-          "text": "Letters (A–Z) and numbers (0–9) only — no spaces, hyphens, or special characters."
+          "text": "Letters (A–Z) and numbers (0–9) only — no hyphens, or special characters."
         },
         {
           "type": "allowed",
@@ -248,42 +248,42 @@
         "You receive an SMS to complete payment and activation."
       ]
     },
-    "ctaButton": "I understand — apply for a brand name"
+    "ctaButton": "I understand — apply for Brand Name"
   },
   "recurringFee": {
-    "brandName": "MIDROC",
-    "registeredDate": "22-05-2026",
     "serviceSubtitle": "Brand Name Call service — registered {{date}}",
     "statusActive": "Active",
     "currency": "ETB",
     "stats": {
       "totalCalls": "Total calls made",
-      "totalCallsValue": "4,812",
       "sinceActivation": "since activation",
       "linkedCallers": "Linked callers",
-      "maxCallers": "of 1,000 max",
+      "maxCallers": "of {{max}} max",
       "monthlyFee": "Monthly recurring fee",
       "monthlyFeeBreakdown": "{{count}} callers × {{fee}} ETB"
     },
     "subscription": {
-      "title": "Subscription details",
-      "brandName": "Brand name",
-      "subscriptionStatus": "Subscription status",
-      "registeredMobile": "Registered mobile number",
+      "title": "Subscription Details",
+      "brandName": "Brand Name",
+      "subscriptionStatus": "Subscription Status",
+      "registeredMobile": "Registered Mobile Number",
       "registrationFee": "Registration fee paid (one-time)",
       "recurringFeePerCaller": "Recurring fee per caller / month",
-      "subscriptionPlan": "Subscription plan",
-      "nextBillingDate": "Next billing date",
-      "paymentMethod": "Payment method",
-      "brandType": "Brand type",
-      "activationDate": "Activation date"
+      "subscriptionPlan": "Subscription Plan",
+      "nextBillingDate": "Next Billing Date",
+      "paymentMethod": "Payment Method",
+      "brandType": "Brand Type",
+      "activationDate": "Activation Date"
     },
     "callers": {
-      "title": "Linked caller numbers",
+      "title": "Linked Caller Numbers",
       "columns": {
         "index": "#",
-        "msisdn": "MSISDN",
-        "linkedDate": "Linked date",
+        "msisdn": "Mobile Number",
+        "nameTag": "NameTAG",
+        "serviceFee": "Service Fee",
+        "discount": "Discount",
+        "linkedDate": "Registration Date",
         "status": "Status",
         "action": "Action"
       },
@@ -297,31 +297,109 @@
       "button": "Unsubscribe Brand Name Call"
     }
   },
+  "schedule": {
+    "summary": {
+      "brandName": "Display Brand Name",
+      "primaryMobile": "Primary Mobile Number",
+      "registeredAccount": "Registered account number",
+      "activeCallers": "Brand Name Active Callers",
+      "linkedActive": "Linked & active numbers"
+    },
+    "howItWorks": {
+      "title": "How Brand Name Scheduling Works",
+      "point1": "During the scheduled window, your brand name (MIDROC) is displayed as the caller ID on all outgoing calls from linked numbers.",
+      "point2": "Outside the scheduled window, callers will use their normal NameTAG number as the caller ID.",
+      "point3": "When the schedule is OFF, brand name display is disabled entirely — all calls use the standard NameTAG caller ID."
+    },
+    "currentStatus": {
+      "title": "Current Schedule Status",
+      "onDescription": "Schedule is ON — brand name displays only during the set time window.",
+      "offDescription": "Schedule is OFF — brand name display is disabled on all calls."
+    },
+    "active": {
+      "title": "Active Schedule",
+      "runningNow": "Running now",
+      "startDateTime": "Start date & time",
+      "endDateTime": "End date & time",
+      "repeat": "Repeat",
+      "activeDays": "Active days",
+      "callersAffected": "Callers affected",
+      "callersCount": "{{count}} active callers"
+    },
+    "repeat": {
+      "once": "Once",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "alwaysOn": "Always On"
+    },
+    "form": {
+      "title": "Set / Update Schedule",
+      "repeatType": "Repeat type",
+      "activeDays": "Active days",
+      "startDateTime": "Start Date & Time",
+      "endDateTime": "End Date & Time",
+      "startHint": "Brand name calls begin from this date/time",
+      "endHint": "Brand name calls stop after this date/time",
+      "setSchedule": "Set Schedule",
+      "clear": "Clear"
+    },
+    "preview": {
+      "title": "Schedule Preview",
+      "message": "Brand name {{brand}} will be displayed as CLI during the configured window, repeating {{repeat}} on {{days}}. Outside this window, callers will use their normal NameTAG number.",
+      "allDays": "all days",
+      "noDays": "no days selected"
+    },
+    "history": {
+      "title": "Schedule History",
+      "lastCount": "Last {{count}} schedules",
+      "statusActive": "Active now",
+      "statusCompleted": "Completed",
+      "columns": {
+        "start": "Start Date & Time",
+        "end": "End Date & Time",
+        "repeat": "Repeat",
+        "days": "Days",
+        "setBy": "Set By",
+        "status": "Status"
+      }
+    }
+  },
   "pending": {
     "loading": "Loading your Brand Name request...",
     "title": "Your Brand Name request is pending approval",
     "submittedInfo": "Submitted on {{date}} — request {{ref}}",
-    "reviewTime": "Estimated review time: 24–48 hours.",
+    "reviewTime": "Review time: 24–48 hours.",
     "reviewTimeDesc": "Your request is currently being reviewed by the NameTAG Admin team against your company profile and uploaded documents. You will receive an SMS on your primary mobile number once a decision has been made.",
     "detailsTitle": "Submitted request details",
+    "brandMeta": "Requested Brand Name · {{count}} callers · {{tier}} tier",
+    "discountPercent": "Discount percent",
+    "basePrice": "Base price",
+    "exciseTax": "Excise tax",
+    "vat": "VAT ({{percent}}%)",
     "currency": "ETB",
     "fields": {
-      "requestedBrand": "Requested brand name",
       "requestId": "Request ID",
       "requestedCallers": "Requested callers",
-      "registeredMobile": "Registered mobile number",
-      "estimatedRegistrationFee": "Estimated registration fee",
-      "estimatedMonthlyFee": "Estimated monthly fee",
       "submittedOn": "Submitted on",
       "currentStatus": "Current status"
     },
-    "monthlyFeeBreakdown": "{{total}} ETB ({{count}} × {{fee}} ETB)",
     "note": "Note:",
     "noteText": "You can only have one active Brand Name request at a time. If you wish to apply for a different brand name, you must first cancel this request.",
     "cancelButton": "Cancel this request",
     "cancelling": "Cancelling...",
     "cancelSuccess": "Your Brand Name request has been cancelled.",
     "empty": "You don't have any Brand Name requests yet."
+  },
+  "cancelModal": {
+    "title": "Cancel this Brand Name Request",
+    "descriptionBefore": "If you no longer wish to proceed with the brand name ",
+    "descriptionAfter": ", you can cancel this request. The request will be permanently deleted from the system and you will receive an SMS notification. You may immediately submit a new brand name request after cancellation.",
+    "confirmTitle": "Confirm cancellation",
+    "confirmMessage": "Are you sure you want to cancel this brand name request?",
+    "confirmButton": "Cancel Brand Name Request",
+    "keepButton": "Keep Request",
+    "cancelling": "Cancelling..."
   },
   "rejected": {
     "title": "Your Brand Name request was rejected",
@@ -370,17 +448,27 @@
     "termError": "You must accept the Terms & Conditions to continue",
     "linkCallers": {
       "title": "Link Callers",
-      "subtitle": "Select exactly {{count}} corporate NameTAG numbers to link with this Brand Name Call before payment.",
+      "subtitle": "Select corporate NameTAG numbers to link with this Brand Name Call before payment.",
       "button": "Select callers to link",
       "editButton": "Edit linked callers",
-      "selectedSummary": "{{selected}} of {{max}} caller(s) selected",
+      "selectedSummary": "{{selected}} caller(s) selected (approved: {{max}})",
       "selectedComplete": "{{count}} caller(s) selected",
       "noneSelected": "No callers selected yet",
-      "maxHint": "You must select exactly {{max}} caller(s) for this request.",
-      "errorExact": "Please select exactly {{count}} caller(s) before proceeding to payment.",
-      "modalTitle": "Link caller numbers",
-      "modalSubtitle": "Select exactly {{count}} caller(s). Currently selected: {{selected}}",
-      "saveSelection": "Save selection ({{count}}/{{required}})",
+      "maxHint": "You can select any number of callers. Price recalculates if your selection differs from the approved count.",
+      "errorExact": "Please select at least one caller before proceeding to payment.",
+      "modalTitle": "Link Caller Numbers",
+      "modalSubtitle": "Approved callers: {{count}}. Currently selected: {{selected}}",
+      "saveSelection": "Save selection ({{count}} selected)",
+      "priceTitle": "Updated price summary",
+      "priceLoading": "Calculating price...",
+      "priceError": "Unable to calculate price. Please try again.",
+      "selectedCallersCount": "Selected callers",
+      "monthlyRecurring": "Total recurring fee",
+      "totalDueNow": "Total amount due now",
+      "fewerCallersConfirmTitle": "Confirm caller selection",
+      "fewerCallersConfirmMessage": "You selected {{selected}} caller(s). The approved count is {{max}}. The price will be recalculated based on your selection. Do you want to continue?",
+      "fewerCallersConfirmButton": "Confirm selection",
+      "fewerCallersKeepEditing": "Keep editing",
       "cancel": "Cancel",
       "empty": "No corporate callers are available to link.",
       "active": "Active",
@@ -388,7 +476,7 @@
       "columns": {
         "msisdn": "Mobile number",
         "nameTag": "NameTAG",
-        "tagNo": "Tag No.",
+        "tagNo": "NameTAG No",
         "corpType": "Account type",
         "status": "Status"
       }
@@ -398,6 +486,31 @@
       "message": "Please confirm the payment details before proceeding.",
       "brandName": "Brand Name"
     }
+  },
+  "addRemoveNumbers": {
+    "title": "Add / Remove Numbers",
+    "tabs": {
+      "linked": "Linked Number",
+      "unlinked": "Unlinked Number"
+    },
+    "brandNameStatus": "Brand Name status",
+    "action": "Action",
+    "linked": "Linked",
+    "notLinked": "Not linked",
+    "add": "Add",
+    "remove": "Remove",
+    "restrictionTitle": "Action Is Restricted: Pending Debit Mandate Acceptance",
+    "restrictionDescription": "To continue with Brand Name Service, your active NameTAG requires an approved debit mandate for recurring fees. Please accept the mandate from your NameTAG Dashboard to restore full access.",
+    "goToDashboardButton": "Go to Dashboard",
+    "linkCallerButton": "Link Caller ({{count}})",
+    "linkSummaryTitle": "Numbers to link",
+    "linkSummarySubtitle": "{{count}} caller(s) selected from your unlinked numbers.",
+    "selectAtLeastOne": "Please select at least one number to link.",
+    "empty": "No corporate callers found.",
+    "emptyLinked": "No linked numbers found.",
+    "emptyUnlinked": "No unlinked numbers found.",
+    "loadError": "Failed to load caller numbers.",
+    "na": "N/A"
   },
   "emptyState": {
     "title": "You haven't registered a Brand Name yet",
@@ -413,7 +526,7 @@
         "desc": "Branded calls are far more likely to be answered and trusted."
       },
       "link": {
-        "title": "Link up to 1,000 numbers",
+        "title": "Link up to {{limit}} numbers",
         "desc": "Apply your brand across your whole sales or support team."
       }
     }

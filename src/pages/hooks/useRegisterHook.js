@@ -1,5 +1,5 @@
 import { useState } from "react";
-import APICall from "../../network/APICall";
+import APICall, { axiosInstance } from "../../network/APICall";
 import EndPoints from "../../network/EndPoints";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -92,7 +92,7 @@ export const useRegisterHook = () => {
     const tokens = await getRecaptchaPayload("verify_otp");
     if (!tokens) {
       setVerified(false);
-      return;
+      return null;
     }
     const data = {
       otp_id: otpId,
@@ -100,26 +100,27 @@ export const useRegisterHook = () => {
       transaction_type: "OTP_GENRATION",
       ...tokens,
     };
-    APICall("post", data, EndPoints.customer.verifyOty)
-      .then((res) => {
-        if (res?.success) {
-          toast.success(res?.message || "");
-          setVerified(true);
-          setExpirationTime(null); // <-- Stop the timer after OTP is verified
-          if (newNumber) {
-            setNewNumber(false);
-          }
-        } else {
-          toast.error(res?.message);
-          setVerified(false);
+    try {
+      const res = await APICall("post", data, EndPoints.customer.verifyOty);
+      if (res?.success) {
+        toast.success(res?.message || "");
+        setVerified(true);
+        setExpirationTime(null);
+        if (newNumber) {
+          setNewNumber(false);
         }
-      })
-      .catch((err) => {
-        toast.error(
-          err || err?.message || err?.response?.data?.message || "Something went wrong try again!"
-        );
+      } else {
+        toast.error(res?.message);
         setVerified(false);
-      });
+      }
+      return res;
+    } catch (err) {
+      toast.error(
+        err || err?.message || err?.response?.data?.message || "Something went wrong try again!"
+      );
+      setVerified(false);
+      return null;
+    }
   };
 
   const handleCheckOtpFayda = async (otpCode, msisdn) => {
@@ -361,6 +362,63 @@ export const useRegisterHook = () => {
       });
   };
 
+  const setFieldValidationSuccess = (fieldName) => {
+    setState((st) => {
+      const { [fieldName]: _omit, ...restError } = st.error;
+      return {
+        ...st,
+        success: {
+          ...st.success,
+          [fieldName]: true,
+        },
+        error: restError,
+      };
+    });
+  };
+
+  const setFieldValidationError = (fieldName, message) => {
+    setState((st) => ({
+      ...st,
+      error: {
+        ...st.error,
+        [fieldName]: message,
+      },
+      success: {
+        ...st.success,
+        [fieldName]: false,
+      },
+    }));
+  };
+
+  const verifyAccountType = async (phoneNumber) => {
+    const cleanedPhone = String(phoneNumber || "").replace(/^\+/, "").replace(/\s/g, "");
+    const tokens = await getRecaptchaPayload("verify_account_type", { silent: true });
+    if (!tokens) return null;
+    const payload = {
+      channel: "WEB",
+      phone_number: cleanedPhone,
+      ...tokens,
+    };
+    try {
+      const response = await axiosInstance.post(
+        EndPoints.customer.verifyAccountType,
+        payload
+      );
+      return response.data;
+    } catch (error) {
+      const data = error.response?.data;
+      if (data && typeof data === "object") {
+        return data;
+      }
+      toast.error(
+        typeof error === "string"
+          ? error
+          : error?.message || "Something went wrong try again!"
+      );
+      return null;
+    }
+  };
+
   const verifyAccount = async (data, name) => {
     const tokens = await getRecaptchaPayload("verify_account", { silent: true });
     const payload = tokens ? { ...data, ...tokens } : data;
@@ -395,6 +453,58 @@ export const useRegisterHook = () => {
       })
       .catch((err) => {
         toast.error(err || "Something went wrong try again!");
+      });
+  };
+
+  const handleCorporateAdditionalRegister = async (data, reset, setConfirmModal) => {
+    const otp = localStorage.getItem("otp");
+    const otpCode = localStorage.getItem("otp_code_step1") || data?.verification_code || data?.otp_code;
+    const additionalAccountId =
+      data?.additional_account_id || localStorage.getItem("additional_account_id");
+    const phoneNumber =
+      String(data?.phone_number || localStorage.getItem("phone_number") || "")
+        .replace(/^\+/, "")
+        .replace(/\s/g, "");
+
+    const payload = {
+      channel: "WEB",
+      otp_id: otp,
+      otp_code: otpCode,
+      phone_number: phoneNumber,
+      username: data?.username || data?.account_id,
+      password: data?.password,
+      password_confirmation: data?.confirm_password,
+      email: data?.email,
+      company_name: data?.company_name,
+      account_id: additionalAccountId,
+    };
+
+    const tokens = await getRecaptchaPayload("register_corporate_additional", { silent: true });
+    if (tokens) Object.assign(payload, tokens);
+    return APICall("post", payload, EndPoints.customer.additionalRegister)
+      .then((res) => {
+        if (res?.success) {
+          toast.success(res?.message || "");
+          const token = res?.data?.token;
+          localStorage.setItem("token", token);
+          localStorage.setItem("id", res?.data?.customer_account_id);
+          localStorage.setItem("user", JSON.stringify(res?.data));
+          localStorage.setItem("customer_type", JSON.stringify(res?.data?.customer_type || "corporate"));
+          localStorage.setItem("number", phoneNumber);
+          localStorage.removeItem("otp_code_step1");
+          localStorage.removeItem("otp");
+          localStorage.removeItem("phone_number");
+          localStorage.removeItem("additional_account_id");
+          navigate(ConstentRoutes.dashboard);
+          if (typeof reset === "function") reset();
+          if (typeof setConfirmModal === "function") setConfirmModal(false);
+        } else {
+          toast.error(res?.message);
+        }
+        return res;
+      })
+      .catch((err) => {
+        toast.error(err || err?.message || err?.response?.data?.message || "Something went wrong try again!");
       });
   };
 
@@ -449,9 +559,13 @@ export const useRegisterHook = () => {
     handleUpdateUserInfo,
     setVerified,
     verifyAccount,
+    verifyAccountType,
+    setFieldValidationSuccess,
+    setFieldValidationError,
     setExpirationTime,
     resetFieldValidation,
     handleIndividualRegister,
+    handleCorporateAdditionalRegister,
     isResend,
   };
 };

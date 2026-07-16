@@ -4,25 +4,21 @@ import { HiOutlineUserGroup } from "react-icons/hi2";
 import { HiOutlineInformationCircle } from "react-icons/hi2";
 import { HiOutlineDocumentCheck } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
+import {
+  DEFAULT_SERVICE_PLAN,
+  getPricingKeyForServiceId,
+  SERVICE_PLAN_OPTIONS,
+} from "../utils/servicePlan";
 
 const DEFAULT_REGISTRATION_FEE = 500;
 const DEFAULT_PER_CALLER_MONTHLY = 20;
-
-const PLAN_OPTIONS = ["Monthly", "Quarterly", "Semiannually", "Annually"];
-
-const PLAN_PRICE_KEYS = {
-  Monthly: "monthly_fee_per_caller",
-  Quarterly: "quarterly_fee_per_caller",
-  Semiannually: "semiannually_fee_per_caller",
-  Annually: "annually_fee_per_caller",
-};
 
 const formatPrice = (value) => Number(value).toFixed(2);
 
 export default function SubmitBrandRequestStep({
   callerCount,
   onCallerCountChange,
-  servicePlan = "Monthly",
+  servicePlan = DEFAULT_SERVICE_PLAN,
   onServicePlanChange,
   onSubmit,
   isSubmitting,
@@ -38,7 +34,7 @@ export default function SubmitBrandRequestStep({
   const planLabel = t(`brandName:step2.plans.${servicePlan}`);
   const registrationFee = Number(pricing?.registration_fee ?? DEFAULT_REGISTRATION_FEE);
   const perCallerFee = Number(
-    pricing?.[PLAN_PRICE_KEYS[servicePlan]] ?? DEFAULT_PER_CALLER_MONTHLY
+    pricing?.[getPricingKeyForServiceId(servicePlan)] ?? DEFAULT_PER_CALLER_MONTHLY
   );
   const recurringTotal = callerCount * perCallerFee;
 
@@ -100,20 +96,20 @@ export default function SubmitBrandRequestStep({
         </label>
         <p className="text-xs text-[#9CA3AF]">{t("brandName:step2.planHint")}</p>
         <div className="flex flex-wrap gap-2">
-          {PLAN_OPTIONS.map((plan) => {
-            const active = plan === servicePlan;
+          {SERVICE_PLAN_OPTIONS.map((plan) => {
+            const active = plan.serviceId === servicePlan;
             return (
               <button
-                key={plan}
+                key={plan.serviceId}
                 type="button"
-                onClick={() => onServicePlanChange?.(plan)}
+                onClick={() => onServicePlanChange?.(plan.serviceId)}
                 className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
                   active
                     ? "border-secondary bg-secondary text-white"
                     : "border-[#D1D5DB] bg-white text-[#4B5563] hover:border-secondary"
                 }`}
               >
-                {t(`brandName:step2.plans.${plan}`)}
+                {t(`brandName:step2.plans.${plan.serviceId}`)}
               </button>
             );
           })}

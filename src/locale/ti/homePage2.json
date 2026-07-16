@@ -57,6 +57,24 @@
       "appleAria": "ካብ App Store ኣውርዱ",
       "appleTop": "ካብዚ ኣውርዱ",
       "appleBottom": "App Store"
+    },
+    "searchModal": {
+      "title": "Search NameTAG",
+      "subtitle": "Find a NameTAG by tag number or company name.",
+      "searchBy": "Search by",
+      "byTag": "Search by TAG",
+      "byCompany": "Search by Company",
+      "tagLabel": "TAG number",
+      "companyLabel": "Company name",
+      "tagPlaceholder": "e.g. #73774",
+      "companyPlaceholder": "e.g. Ethio Telecom",
+      "searchButton": "Search",
+      "searching": "Searching...",
+      "required": "Please enter a search value.",
+      "error": "Unable to search right now. Please try again.",
+      "empty": "No results found.",
+      "resultsCount": "{{count}} result(s)",
+      "close": "Close"
     }
   },
   "stats": {

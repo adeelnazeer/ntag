@@ -72,7 +72,7 @@ const NumberManagement = ({ profileData }) => {
           {t("profile.numberManagement.title")}
         </Typography>
         <div className="flex items-center gap-2">
-          <Tooltip content="You can add up to 5 mobile numbers to register additional NameTAG numbers.">
+          <Tooltip content={`You can add up to ${MAX_ALLOWED_LIMIT} mobile numbers to register additional NameTAG numbers.`}>
             <div className="flex items-center gap-1 text-gray-600">
               <FaInfoCircle className="h-4 w-4" />
               <Typography variant="small">
